@@ -16,7 +16,7 @@ SET(PROJECT_APP_NAME "run${PROJECT_NAME_STR}")
 ### package configuration
 
 # search for glog
-FIND_PACKAGE(glog REQUIRED)
+FIND_PACKAGE(Glog REQUIRED)
 INCLUDE_DIRECTORIES(${GLOG_INCLUDE_DIRS})
 
 # search for fftw

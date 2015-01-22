@@ -45,7 +45,7 @@ TEST(trapez, sin) {
 	f = std::sin(linear * pi);
 	ASSERT_NEAR(2, integration::trapez(f, 0, pi), 1e-3);
 
-	f = std::sin(linear * 2 * pi);
+	f = std::sin(linear * (2 * pi));
 	ASSERT_NEAR(0, integration::trapez(f, 0, 2 * pi), 1e-10);
 }
 
@@ -61,7 +61,7 @@ TEST(trapez, cos) {
 	f = std::cos(linear * pi);
 	ASSERT_NEAR(0, integration::trapez(f, 0, pi), 1e-10);
 
-	f = std::cos(linear * 2 * pi);
+	f = std::cos(linear * (2 * pi));
 	ASSERT_NEAR(0, integration::trapez(f, 0, 2 * pi), 1e-10);
 }
 
@@ -117,7 +117,7 @@ TEST(simpson, sin) {
 	f = std::sin(linear * pi);
 	ASSERT_NEAR(2, integration::simpson(f, 0, pi), 1e-3);
 
-	f = std::sin(linear * 2 * pi);
+	f = std::sin(linear * (2 * pi));
 	ASSERT_NEAR(0, integration::simpson(f, 0, 2 * pi), 1e-10);
 }
 
@@ -133,7 +133,7 @@ TEST(simpson, cos) {
 	f = std::cos(linear * pi);
 	ASSERT_NEAR(0, integration::simpson(f, 0, pi), 1e-10);
 
-	f = std::cos(linear * 2 * pi);
+	f = std::cos(linear * (2 * pi));
 	ASSERT_NEAR(0, integration::simpson(f, 0, 2 * pi), 1e-10);
 }
 

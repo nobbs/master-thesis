@@ -21,7 +21,9 @@ std::vector<std::valarray<double>> rk2(const std::valarray<double> &q0,
 
 		double t = iter / double(n_t);
 		double delta_t = 1.0 / double(n_t);
-		std::valarray<double> w = (1 - t <= f) * wA + (!(1 - t <= f)) * wB;
+		double tmp1 = (1 - t <= f) ? 1 : 0;
+		double tmp2 = (!(1 - t <= f)) ? 1 : 0;
+		std::valarray<double> w = wA * tmp1 + wB * tmp2;
 		std::valarray<double> W = std::exp(w);
 
 		auto next = last;
