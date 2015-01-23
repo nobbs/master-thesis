@@ -1,0 +1,48 @@
+%!TEX root = main.tex
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Allgemeines
+
+% Mehr Speicher für latex
+\usepackage{etex}
+
+% Encoding und Schriftsystem
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+% Deutsche Silbentrennung
+\usepackage[ngerman]{babel}
+
+% Bessere Standard-Schriftart
+\usepackage{lmodern}
+
+% Typographische Kleinigkeiten
+\usepackage{microtype}
+
+% Graphiken und Farben
+\usepackage{graphicx, color}
+
+% PDF-Verlinkungen und Metadaten
+\usepackage[colorlinks=false]{hyperref}
+
+% Bibliographie-Stil
+\bibliographystyle{amsplain}
+
+% Blindtext
+\usepackage{blindtext}
+\blindmathtrue
+
+% Dashed Linien...
+\usepackage{dashrule}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Mathematik
+
+% Standardpackages
+\usepackage{amsmath, amssymb, stmaryrd, mathtools}
+
+% "Bessere" Theorem-Umgebungen
+\usepackage[standard,amsmath,thmmarks,hyperref]{ntheorem}
+
+% Setze Label-Nummern nur, wenn diese auch referenziert werden
+\mathtoolsset{showonlyrefs=true}

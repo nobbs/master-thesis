@@ -1,0 +1,71 @@
+%!TEX root = main.tex
+
+% griechisches Alphabet
+\renewcommand{\epsilon}{\varepsilon}
+\renewcommand{\theta}{\vartheta}
+
+%%% Operatoren und Funktionen
+\DeclarePairedDelimiter{\abs}{\lvert}{\rvert}
+\DeclarePairedDelimiter{\norm}{\lVert}{\rVert}
+
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+\DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
+
+\newcommand{\skprod}[2]{\left\langle#1,#2\right\rangle}
+\newcommand{\fracpart}[2]{\frac{\partial#1}{\partial#2}}
+
+\newcommand{\Transp}{^{\mathrm T}}
+\newcommand{\Stern}{^{*}}
+\newcommand{\Int}[1]{#1^\circ}
+\newcommand{\Ext}[1]{\overline{#1}}
+
+\DeclareMathOperator{\spn}{span}
+\DeclareMathOperator{\ee}{e}
+\DeclareMathOperator{\ii}{i}
+
+\newcommand{\grad}{\nabla}
+\DeclareMathOperator{\divergenz}{div}
+\newcommand{\hesse}{\nabla^2}
+
+\newcommand\restr[2]{\ensuremath{\left.#1\right|_{#2}}}
+
+\newcommand{\fa}{\text{für alle}~}
+
+% fetter Vektor
+\renewcommand{\v}[1]{\mathbf{#1}}
+
+% ntheorem
+
+\theorempreskipamount 1.5em
+\theoremnumbering{arabic}
+% \theoremstyle{break}
+\theorembodyfont{\itshape}
+\theoremheaderfont{\normalfont\bfseries}
+\theoremseparator{}
+\renewtheorem{Satz}{Satz}
+\renewtheorem{satz}[Satz]{Satz}
+\renewtheorem{Theorem}[Satz]{Theorem}
+\renewtheorem{theorem}[Satz]{Theorem}
+\renewtheorem{Proposition}[Satz]{Proposition}
+\renewtheorem{proposition}[Satz]{Proposition}
+\renewtheorem{Lemma}[Satz]{Lemma}
+\renewtheorem{lemma}[Satz]{Lemma}
+\renewtheorem{Korollar}[Satz]{Korollar}
+\renewtheorem{korollar}[Satz]{Korollar}
+
+\theorembodyfont{\upshape}
+\renewtheorem{Beispiel}[Satz]{Beispiel}
+\renewtheorem{beispiel}[Satz]{Beispiel}
+\renewtheorem{Bemerkung}[Satz]{Bemerkung}
+\renewtheorem{bemerkung}[Satz]{Bemerkung}
+\renewtheorem{Anmerkung}[Satz]{Anmerkung}
+\renewtheorem{anmerkung}[Satz]{Anmerkung}
+\renewtheorem{Definition}[Satz]{Definition}
+\renewtheorem{definition}[Satz]{Definition}
+\newtheorem{Algorithmus}[Satz]{Algorithmus}
+
+% normales Latex-Theorem-Zeugs
+% \newtheorem{satz}{Satz}
+% \newthereom{lemma}[lemma]{Lemma}
+% \newthereom{prop}[prop]{Proposition}
+% \newthereom{koro}[koro]{Korollar}

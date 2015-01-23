@@ -1,0 +1,60 @@
+%!TEX root = main.tex
+
+\documentclass[
+  % draft,
+  a4paper,
+  11pt,
+  % oneside,
+  parskip,
+  toc=bibliography,
+  toc=listof
+]{scrbook}
+
+\input{packages}
+\input{commands}
+\input{meta}
+
+\begin{document}
+
+    % Deckblack / Titelseite
+    \include{misc/deckblatt}
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    %%% Frontmatter-Teil
+    \frontmatter
+
+    % Danksagung
+    % \include{misc/danksagung}
+
+    % Abstrakt
+    % \include{misc/abstrakt}
+
+    % Inhaltsverzeichnis
+    \tableofcontents
+
+    % Abbildungs-, Tabellen- und Symbolverzeichnis
+    % \listoffigures
+    % \listoftables
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    %%% Hauptteil
+    \mainmatter
+
+    % Kapitel
+    \include{chapters/einleitung}
+    \include{chapters/kapitel2}
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    %%% Backmatter
+    \backmatter
+
+    % Literaturverzeichnis
+    \nocite*
+    \bibliography{literature}
+
+    % Anhänge
+
+    % Eidesstattliche Erklärung
+    \include{misc/eidesstattliche_erklaerung}
+
+\end{document}
