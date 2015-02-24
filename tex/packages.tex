@@ -23,10 +23,18 @@
 \usepackage{graphicx, color}
 
 % PDF-Verlinkungen und Metadaten
-\usepackage[colorlinks=false]{hyperref}
+\usepackage[colorlinks=true,backref=page]{hyperref}
 
 % Bibliographie-Stil
-\bibliographystyle{amsplain}
+\usepackage[numbers]{natbib}
+\bibliographystyle{alphadin}
+\usepackage{hypernat}
+
+% Fancyhdr-Ersatz für scrbook
+\usepackage[automark,headsepline]{scrlayer-scrpage}
+
+% enums
+\usepackage{enumitem}
 
 % Blindtext
 \usepackage{blindtext}
@@ -42,7 +50,7 @@
 \usepackage{amsmath, amssymb, stmaryrd, mathtools}
 
 % "Bessere" Theorem-Umgebungen
-\usepackage[standard,amsmath,thmmarks,hyperref]{ntheorem}
+\usepackage[standard,amsmath,thmmarks,hyperref,thref]{ntheorem}
 
 % Setze Label-Nummern nur, wenn diese auch referenziert werden
 \mathtoolsset{showonlyrefs=true}

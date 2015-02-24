@@ -188,3 +188,6 @@ tex/main.pdf
 tex/main.thm
 *-eps-converted-to.pdf
 code/.ycm_extra_conf.py
+tex/main.brf
+tex/main.fls
+tex/main.glsdefs

@@ -4,20 +4,35 @@
   % draft,
   a4paper,
   11pt,
-  % oneside,
+  twoside=semi,
   parskip,
   toc=bibliography,
-  toc=listof
+  toc=listof,
+  chapterprefix=true,
 ]{scrbook}
 
 \input{packages}
 \input{commands}
 \input{meta}
 
+\usepackage{showlabels}
+
+
+% Glossar (Symbolverzeichnis etc)
+\usepackage[
+    nonumberlist,
+    toc
+]{glossaries}
+
+\renewcommand*{\glspostdescription}{}
+
+\makeglossaries
+\loadglsentries{glossar}
+
 \begin{document}
 
     % Deckblack / Titelseite
-    \include{misc/deckblatt}
+    % \include{misc/deckblatt}
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %%% Frontmatter-Teil
@@ -27,34 +42,41 @@
     % \include{misc/danksagung}
 
     % Abstrakt
-    % \include{misc/abstrakt}
+    % \include{chapters/zusammenfassung}
 
     % Inhaltsverzeichnis
-    \tableofcontents
+    % \tableofcontents
 
     % Abbildungs-, Tabellen- und Symbolverzeichnis
     % \listoffigures
     % \listoftables
+    % \glsaddall
+    % \printglossary[title=Symbolverzeichnis,toctitle=Symbolverzeichnis]
+
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %%% Hauptteil
     \mainmatter
 
     % Kapitel
-    \include{chapters/einleitung}
-    \include{chapters/kapitel2}
+    % \include{temp/onedim}
+    \include{temp/wellposed}
+    \include{temp/saetze}
+    % \include{chapters/einleitung}
+    % \include{chapters/grundlagen}
+    % \include{chapters/kapitel2}
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %%% Backmatter
     \backmatter
 
     % Literaturverzeichnis
-    \nocite*
+    % \nocite*
     \bibliography{literature}
 
     % Anhänge
 
     % Eidesstattliche Erklärung
-    \include{misc/eidesstattliche_erklaerung}
+    % \include{misc/eidesstattliche_erklaerung}
 
 \end{document}
