@@ -1,0 +1,223 @@
+%!TEX root = ../main.tex
+
+\chapter{Grundlagen} % (fold)
+\label{cha:grundlagen}
+
+Verschiedenste Grundlagen, die hier abgedeckt werden sollten. 
+Dazu gehören folgende Abschnitte:
+
+\section{Funktionalanalytische Grundlagen} % (fold)
+\label{sec:funktionalanalytische_grundlagen}
+
+\subsection{Hilberträume} % (fold)
+\label{sub:hilbertr_ume}
+
+% subsection hilbertr_ume (end)
+
+\subsection{Sobolev-Räume} % (fold)
+\label{sub:sobolev_r_ume}
+
+% subsection sobolev_r_ume (end)
+
+\subsection{Bochner-Räume} % (fold)
+\label{sub:bochner_r_ume}
+
+\begin{Definition}[Bochner-Räume]
+    Sei $X$ ein Banachraum, $(a, b) \subset \mathbb{R}$, $- \infty \leq a < b \leq \infty$, ein offenes Intervall und $1 \leq p < \infty$.
+    Wir nennen $L_{p}(a, b; X)$ einen Bochner-Raum und meinen damit die Menge der Äquivalenzklassen $L_{p}$-integrierbarer Funktionen $f \colon [a, b] \to X$, das heißt alle Lebesgue-messbaren Funktionen auf $[a, b]$ mit
+    \begin{equation}
+        \norm{f}_{L_{p}(a, b; X)} \coloneqq \left( \int_{a}^{b} \norm{f(t)}_{X}^{p} \diff t \right)^{\frac 1 p} < \infty.
+    \end{equation}
+    Analog bezeichnen wir mit $L_{\infty}(a, b; X)$ die Menge der Äquivalenzklassen die fast überall auf $[a, b]$ beschränkt sind, das heißt
+    \begin{equation}
+        \norm{f}_{L_{\infty}(a, b; X)} \coloneqq \esssup_{t \in [a, b]} \norm{f(t)}_{X} < \infty.
+    \end{equation}
+\end{Definition}
+
+\begin{Lemma}
+    Sei $1 \leq p \leq \infty$. Dann ist $L_{p}(a, b; X)$ ein Banachraum.
+    Ist $H$ ein Hilbertraum, dann ist insbesondere auch $L_{2}(a, b; H)$ ein Hilbertraum.
+\end{Lemma}
+
+\begin{Lemma}[Eigenschaften]
+    \begin{enumerate}
+        \item Ist $[a, b] \subset \mathbb{R}$ ein endliches Intervall, dann gilt die stetige Einbettung
+        \begin{equation}
+            L_{q}(a, b; X) \hookrightarrow L_{p}(a, b; X), \qquad q \geq p \geq 1.
+        \end{equation}
+        \item Sind $X$ und $Y$ Banachräume mit $X \hookrightarrow Y$, dann gilt die stetige Einbettung
+        \begin{equation}
+            L_{p}(a, b; X) \hookrightarrow L_{p}(a, b; Y), \qquad 1 \leq p \leq q.
+        \end{equation}
+    \end{enumerate}
+\end{Lemma}
+
+
+% subsection bochner_r_ume (end)
+
+\subsection{Inf-Sup-Zeugs} % (fold)
+\label{sub:inf_sup_zeugs}
+
+% subsection inf_sup_zeugs (end)
+
+\subsection{Galerkin-Zeugs} % (fold)
+\label{sub:galerkin_zeugs}
+
+% subsection galerkin_zeugs (end)
+
+% section funktionalanalytische_grundlagen (end)
+
+
+\section{Space-Time-Variational-Formulation} % (fold)
+\label{sec:space_time_variational_formulation}
+
+Seien $V$ und $H$ Hilberträume mti $V \hookrightarrow H$.
+Dann bildet $V \hookrightarrow H \cong H' \hookrightarrow V'$ ein sogenanntes
+Gelfand-Triple.
+Wir schreiben $\skprod{\cdot}{\cdot}_{V}$, $\skprod{\cdot}{\cdot}_{H}$ für das
+Skalarprodukt auf $V$ und $\skprod{\cdot}{\cdot}_{V' \times V}$ für das
+\emph{Duality Pairing} auf $V' \times V$.:w
+
+Sei $0 < T < \infty$ und $I \coloneqq [0, T] \subset \mathbb{R}$.
+Für fast alle $t \in I$ sei $A(t) \in \mathcal L(V, V')$ und
+\begin{equation}
+    a(t; \cdot, \cdot) \colon V \times V \to \mathbb{R}
+\end{equation}
+die zugehörige Bilinearform, das heißt es gilt
+\begin{equation}
+    \skprod{A(t)u}{v}_{H} = a(t; u, v)
+\end{equation}
+
+Wir fordern von der Bilinearform $a(\cdot; \cdot, \cdot)$, dass Konstanten $M_a,
+\alpha > 0$ und $\lambda \in \mathbb{R}$ existieren, so dass für fast alle $t
+\in I$ gilt
+\begin{itemize}
+    \item \emph{Stetigkeit:} für alle $u, v \in V$ gilt
+        \begin{equation}
+            \label{eq:stetigkeit}
+            \abs{a(t; u, v)} \leq M_a \norm{u}_V \norm{v}_V,
+        \end{equation}
+    \item \emph{Garding-Ungleichung:} für alle $u \in V$ gilt
+        \begin{equation}
+            \label{eq:garding-inequality}
+            a(t; u, u) + \lambda \norm{u}^2_H \geq \alpha \norm{u}^2_V.
+        \end{equation}
+\end{itemize}
+
+Wir wollen nun die parabolische partielle Differentialgleichung
+\begin{equation}
+    \label{eq:}
+    \begin{aligned}
+        u_t(t) + A(t) u(t) &= g(t) &\qquad \text{in}~V'\\
+        u(0) &= u_0 \qquad \text{in}~H.
+    \end{aligned}
+\end{equation}
+
+Nach Multiplikation mit einer Testfunktion $v \coloneqq (v_1, v_2) \in \mathcal{Y}$ und Integration nach Ort und Zeit erhalten wir
+\begin{equation}
+    \label{eq:bilinearform}
+    b(u, v) = F(v),
+\end{equation}
+wobei
+\begin{equation}
+    b(u,v) = \int_{I} \skprod{u_{t}(t)}{v_{1}(t)}_{H} + a(t; u(t), v_{1}(t)) \diff t + \skprod{u(0)}{v_{2}}_{H}
+\end{equation}
+und
+\begin{equation}
+    F(v) = \int_{I} \skprod{g(t)}{v_{1}(t)}_{H} \diff t + \skprod{u_{0}}{v_{2}}_{H}
+\end{equation}
+
+\subsection{Herleitung} % (fold)
+\label{sub:herleitung}
+
+% subsection herleitung (end)
+
+\subsection{Eindeutigkeit und Existenz von Lösungen} % (fold)
+\label{sub:eindeutigkeit_und_existenz_von_l_sungen}
+
+% subsection eindeutigkeit_und_existenz_von_l_sungen (end)
+
+% section space_time_variational_formulation (end)
+
+\subsection{Beweis und so} % (fold)
+\label{sub:beweis_und_so}
+
+\begin{Satz}[vgl. \cite{Schwab:2009ec}]
+    Sei $B \in \mathcal L(\mathcal X, \mathcal Y')$ definiert wie oben.
+    Dann ist $B$ ein Isomorphismus.
+
+    \begin{Beweis}
+        Wir weisen die Bedingungen von \thref{satz:babuska-aziz} nach.
+
+        Zunächst sei anzumerken, dass wir in \eqref{eq:garding-inequality} ohne Einschränkung $\lambda = 0$ wählen können.
+        Wähle 
+        \begin{equation}
+            u(t) = \hat u(t) e^{\lambda t}, \quad v_{1}(t) = \hat v_{1}(t) e^{- \lambda t}, \quad g(t) = \hat g(t) e^{\lambda t},
+        \end{equation}
+        dann sieht man, dass $u$ die Gleichung \eqref{eq:bilinearform} genau dann löst, wenn $\hat u$ die Gleichung
+        \begin{equation}
+            \label{eq:bilinearform_tmp}
+            \begin{gathered}
+                \int_{I} \skprod{\hat{u}_{t}(t)}{\hat{v}_{1}(t)}_{H} + \lambda \skprod{\hat{u}(t)}{\hat{v}_{1}(t)}_{H} + a(t; \hat{u}(t), \hat{v}_{1}(t)) \diff t + \skprod{\hat{u}(0)}{v_{2}}_{H}
+                    \\= \int_{I} \skprod{\hat{g}(t)}{\hat{v}_{1}(t)}_{H} \diff t + \skprod{u_{0}}{v_{2}}_{H}
+            \end{gathered}
+        \end{equation}
+        für alle $\hat{v} = (\hat{v}_{1}, v) \in \mathcal Y$ löst.
+
+        \paragraph{Stetigkeit} % (fold)
+        \label{par:stetigkeit}
+        Betrachte für $u \in \mathcal X$ und $v = (v_{1}, v_{2}) \in \mathcal Y$ die Bilinearform $b(u, v)$.
+        Nach Anwenden der Dreiecksungleichung erhalten wir
+        \begin{equation}
+            \label{eq:stetigkeit_zweiter_term}
+            \abs{b(u, v)} = \int_{I} \abs{\skprod{u_{t}(t)}{v_{1}(t)}_{H}} + \abs{a(u(t), v_{1}(t))} \diff t + \abs{\skprod{u(0)}{v_{2}}_{H}}.
+        \end{equation}
+        Betrachten wir zunächst den hinteren Term, dann erhalten wir unter Verwendung der Cauchy-Schwarz-Ungleichung und der Einbettungs-Konstante $M_{e}$ die Abschätzung
+        \begin{equation}
+            \abs{\skprod{u(0)}{v_{2}}_{H}} \leq \norm{u(0)}_{H} \norm{v_{2}}_{H} \leq M_{e} \norm{u}_{X} \norm{v_{2}}_{H}.
+        \end{equation}
+        Widmen wir uns nun dem ersten Term und wenden ebenfalls die Cauchy-Schwarz-Ungleichung sowie die Stetigkeit von $a$ an, dann erhalten wir
+        \begin{align}
+            &\int_{I} \abs{\skprod{u_{t}(t)}{v_{1}(t)}_{H}} + \abs{a(u(t), v_{1}(t))} \diff t
+            \\&\qquad
+            \leq \int_{I} \norm{u_{t}(t)}_{H} \norm{v_{1}(t)}_{H} + M_{a} \norm{u(t)}_{H} \norm{v_{1}(t)}_{H} \diff t
+            \\&\qquad
+            \leq \int_{I} \max\{1, M_{a}\} \norm{v_{1}(t)}_{H} \left(  \norm{u_{t}(t)}_{H} + \norm{u(t)}_{H} \right) \diff t
+            \intertext{mittels Hölder-Ungleichung lässt sich dies weiter abschätzen zu}
+            &\qquad
+            \leq \left( \int_{I} \max\{1, M_{a}\}^{2} \norm{v_{1}(t)}_{H}^{2} \diff t \right)^{\frac 12} \left( \int_{I} \left( \norm{u_{t}(t)}_{H} + \norm{u(t)}_{H} \right)^{2} \diff t \right)^{\frac 12},
+            \intertext{und unter Verwendung der Youngschen-Ungleichung zu}
+            &\qquad
+            \leq \left( \int_{I} \max\{1, M_{a}\}^{2} \norm{v_{1}(t)}_{H}^{2} \diff t \right)^{\frac 12} \left( \int_{I} 2 \left( \norm{u_{t}(t)}_{H}^{2} + \norm{u(t)}_{H}^{2} \right) \diff t \right)^{\frac 12}
+            \intertext{was nach Definition der verwendeten Normen auch geschrieben werden kann als}
+            &\qquad
+            = \sqrt{2 \max\{1, M_{a}^{2}\}} \norm{u}_{\mathcal X} \norm{v_{1}}_{L_{2}(I; V)}
+        \end{align}
+        Zusammen mit \eqref{eq:stetigkeit_zweiter_term} liefert dies nach einer erneuten Anwendung der Cauchy-Schwarz-Ungleichung
+        \begin{align}
+        \abs{b(u, v)} 
+        &\leq \sqrt{2 \max\{1, M_{a}\}^{2}} \norm{u}_{\mathcal X} \norm{v_{1}}_{L_{2}(I; V)} + M_{e} \norm{u}_{X} \norm{v_{2}}_{H}
+        \\
+        &\leq \norm{u}_{\mathcal X} \left( \norm{v_{1}}_{L_{2}(I; V)}^{2} + \norm{v_{2}}_{H}^{2} \right)^{\frac 12} \left( 2 \max\{1, M_{a}\}^{2} + M_{e}^{2} \right)^{\frac 12}
+        \\
+        &= \sqrt{2 \max\{1, M_{a}^{2}\} + M_{e}^{2}} \norm{u}_{\mathcal X} \norm{v}_{\mathcal Y}.
+        \end{align}
+        Damit folgt die Stetigkeit.
+        % paragraph stetigkeit (end)
+
+        \paragraph{Inf-Sup-Bedingung} % (fold)
+        \label{par:inf_sup_bedingung}
+
+        % paragraph inf_sup_bedingung (end)
+    \end{Beweis}
+\end{Satz}
+
+% subsection beweis_und_so (end)
+
+
+\section{Reduzierte-Basis-Methoden} % (fold)
+\label{sec:reduzierte_basis_methoden}
+
+% section reduzierte_basis_methoden (end)
+
+% chapter grundlagen (end)

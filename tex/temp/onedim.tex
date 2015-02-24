@@ -1,0 +1,97 @@
+%!TEX root = ../main.tex
+
+\pagestyle{plain}
+
+\section*{Eindimensionaler Fall mit $\omega \in \mathbb{R}$ und ohne Quellterm}
+
+Sei $I := [0, \hat t]$ für ein $0 < \hat t < \infty$ und $\Omega := [0, 1]$.
+Betrachte folgende parametrisierte PDE
+\begin{align}
+    \begin{cases}
+    u_{t}(t, x) = \sigma u_{xx}(t, x) - \omega u(t, x), & (t, x) \in I \times \Omega\\
+    u(0, x) = g(x), & x \in \Omega \\
+    u(t, 0) = u(t, 1) = 0, & t \in I
+    \end{cases}
+\end{align}
+mit Konstanten $\sigma, \omega \in \mathbb{R}$.
+
+Ein Separation der Variablen Ansatz $u(t, x) = X(x) T(t)$ liefert
+\begin{equation}
+    X(x)T'(t) = \sigma X''(x) T(t) - \omega X(x) T(t)
+\end{equation}
+oder auch
+\begin{equation}
+    \frac{T'(t)}{T(t)} = \sigma \frac{X''(x)}{X(x)} - \omega = \lambda
+\end{equation}
+mit $\lambda \in \mathbb{R}$.
+
+Ohne Einschränkung sei $\lambda \neq 0$, dann erhalten wir zum einen die Dgl.
+    $T'(t) = \lambda T(t)$,
+deren Lösung
+\begin{equation}
+    T(t) = d_{3} e^{\lambda t}
+\end{equation}
+ist, und zum anderen die Dgl.
+    $X''(x) =  \frac{\lambda + \omega}{\sigma} X(x)$
+mit der Lösung
+\begin{equation}
+    X(x) = d_{1} e^{\sqrt{\frac{\lambda + \omega}{\sigma}} x} + d_{2} e^{-\sqrt{\frac{\lambda + \omega}{\sigma}}x},
+\end{equation}
+wobei $d_{1}, d_{2}, d_{3} \in \mathbb{R}$.
+
+Als nächstes Verwenden wir die Anfangs- und Randbedingungen um die Konstanten $d_{i}$ zu bestimmen.
+Sei
+\begin{equation}
+    u(t, x) = \left( d_{1} e^{\sqrt{\frac{\lambda + \omega}{\sigma}} x} + d_{2} e^{-\sqrt{\frac{\lambda + \omega}{\sigma}}x} \right) \left( d_{3} e^{\lambda t} \right),
+\end{equation}
+Betrachten wir zunächst die Randbedingung $u(t, 0) = u(t, 1) = 0$, dann erhalten wir aus
+\begin{equation}
+    0 = u(t, 0) = \left( d_{1} + d_{2} \right) \left( d_{3} e^{\lambda t} \right),
+\end{equation}
+oder äquivalent $d_{1} = - d_{2}$, und aus 
+\begin{equation}
+    0 = u(t, 1) = \left( d_{1} e^{\sqrt{\frac{\lambda + \omega}{\sigma}}} + d_{2} e^{-\sqrt{\frac{\lambda + \omega}{\sigma}}} \right) \left( d_{3} e^{\lambda t} \right) = 
+    d_{1} \left( e^{\sqrt{\frac{\lambda + \omega}{\sigma}}} - e^{-\sqrt{\frac{\lambda + \omega}{\sigma}}} \right) \left( d_{3} e^{\lambda t} \right),
+\end{equation}
+ohne Einschränkung $d_{1} \neq 0$, die Gleichung
+\begin{equation}
+    0 = e^{\sqrt{\frac{\lambda + \omega}{\sigma}}} - e^{-\sqrt{\frac{\lambda + \omega}{\sigma}}}.
+\end{equation}
+Aus dieser erhalten wir durch Äquivalenzumformungen
+\begin{align}
+    e^{\sqrt{\frac{\lambda + \omega}{\sigma}}} - e^{-\sqrt{\frac{\lambda + \omega}{\sigma}}} = 0
+    &\quad \iff \quad
+    e^{2\sqrt{\frac{\lambda + \omega}{\sigma}}} = 1
+    \quad \iff \quad
+    \sqrt{\tfrac{\lambda + \omega}{\sigma}} = k \pi i
+    \\&\quad \iff \quad
+    \tfrac{\lambda + \omega}{\sigma} = -k^2 \pi^2
+    \quad \iff \quad
+    \lambda = -k^2 \pi^2 \sigma - \omega,
+\end{align}
+mit $k \in \mathbb{Z}$ beliebig.
+Einsetzen liefert nun
+\begin{align}
+    u_{k}(t, x) &= d_{1} \left( e^{k \pi i x} - e^{-k \pi i x} \right) \left( d_{3} e^{- (k^2 \pi^2 \sigma + \omega) t} \right)
+    \\&= 2 d_{1} d_{3} i \sin(k \pi x) e^{-(k^2 \pi^2 \sigma + \omega)t},
+\end{align}
+wobei wir $\beta_{k} := 2 d_{1} d_{3} i$ setzen.
+
+Da jedes $u_{k}$, $k \in \mathbb{Z}$, eine Lösung ist, erhalten wir durch
+\begin{equation}
+    u(t, x) = \sum_{k = 1}^{\infty} u_{k}(t, x) = \sum_{k = 1}^{\infty} \beta_{k} \sin(k \pi x) e^{-(k^2 \pi^2 \sigma + \omega)t}}
+\end{equation}
+ebenfalls eine Lösung. 
+Damit die Anfangsbedingung erfüllt wird, muss
+\begin{equation}
+    g(x) = u(x, 0) = \sum_{k = 1}^{\infty} \beta_{k} \sin(k \pi x)
+\end{equation}
+gelten, was genau dann der Fall ist, wenn
+\begin{equation}
+    \beta_{k} = 2 \int_{0}^{1} g(x) \sin(k \pi x) \diff x.
+\end{equation}
+
+Da $u_{k}$ analytisch in $\omega$ für alle $k \in \mathbb{Z}$, ist auch $u$ analytisch in $\omega$ und es gilt
+\begin{equation}
+    \frac{\partial^{j} u(t, x; \omega)}{\partial \omega^{j}} = \sum_{k = 1}^{\infty} (-t)^{j} \beta_{k} \sin(k \pi x) e^{-(k^{2} \pi^{2} \sigma + \omega)t}.
+\end{equation}

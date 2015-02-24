@@ -1,0 +1,38 @@
+%!TEX root = ../main.tex
+
+\section{Sätze} % (fold)
+\label{sec:saetze}
+
+\begin{Satz}[Babu{\v{s}}ka-Aziz, \cite{Aziz:2014wf}]
+    \label{satz:babuska-aziz}
+    Seien $H_{1}$ und $H_{2}$ zwei reelle Hilberträume mit Skalarprodukten $\skprod{\cdot}{\cdot}_{H_{1}}$ respektive $\skprod{\cdot}{\cdot}_{H_{2}}$. 
+    Sei $B \colon H_{1} \to H_{2}'$ ein linearer Operator und
+    sei $b \colon H_{1} \times H_{2} \to \mathbb{R}$, $(u, v) \mapsto B(u, v)$ die zugehörige Bilinearform, das heißt $(Bu)(v) = b(u, v)$. 
+    Erfüllt $b$ die sogenannten Babu{\v{s}}ka-Aziz-Bedingungen
+    \begin{itemize}
+        \item \emph{Stetigkeit:} Es existiert ein $C < \infty$ mit 
+        \begin{equation}
+            \abs{B(u, v)} \leq C \norm{u}_{H_{1}} \norm{v}_{H_{2}}, \qquad \text{für alle}~u \in H_{1},~v \in H_{2}
+        \end{equation}
+        \item \emph{$\inf$-$\sup$-Bedingung:} Es existiert ein $\beta > 0$ mit 
+        \begin{equation}
+            \inf_{u \in H_{1}} \sup_{v \in H_{2}} \frac{\abs{B(u, v)}}{\norm{u}_{H_{1}} \norm{v}_{H_{2}}} \geq \beta.
+        \end{equation}
+        \item \emph{Surjektivität:} Es gilt
+        \begin{equation}
+            \sup_{u \in H_{1}} \abs{B(u, v)} > 0, \qquad \text{für alle}~v \neq 0.
+        \end{equation}
+    \end{itemize}
+    Dann ist $B$ ein Isomorphismus.
+\end{Satz}
+
+\begin{Satz}[vgl. {{\cite[Theorem 5.1]{Schwab:2009ec}}}]
+    Der Operator $B \in \mathcal L(\mathcal X, \mathcal Y')$ sei gegeben durch $(Bw)(v) = b(w, v)$ mit $b(\cdot, \cdot)$, $\mathcal X$ und $\mathcal Y$ wie in (...).
+    Dann ist $B$ ein Isomorphismus.
+\end{Satz}
+
+\begin{Satz}[Kunoth-Schwab]
+    
+\end{Satz}
+
+% section saetze (end)

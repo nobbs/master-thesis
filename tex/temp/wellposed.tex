@@ -1,0 +1,202 @@
+%!TEX root = ../main.tex
+
+\subsection{Zu klärende Fragen} % (fold)
+\label{sub:zu_kl_rende_fragen}
+
+\begin{enumerate}
+    \item Well-posedness von
+    \begin{equation}
+        u_{t} = \Delta u - \omega u + f, \quad u(0) = u_{0}
+    \end{equation}
+    für $\omega \in L_{\infty}(\Omega)$, $\Omega$ beschränkt mit Lipschitz-Rand.
+    Genauer: \cite[Theorem 5.1]{Schwab:2009ec}  nachweisen für obiges Problem, d.h.
+    \begin{itemize}
+        \item inf-sup-Bedingungen und so weiter nachrechnen
+        \item Konstanten (in Abhängigkeit von $\omega$) bestimmen
+    \end{itemize}
+    \item Ab hier Bezug auf \cite{Kunoth:2013ef}. Entwicklung des Parameters
+    \begin{equation}
+        \omega = \sum_{j = 0}^{\infty} \sigma_{j} \phi_{j},
+    \end{equation}
+    Zu klären:
+    \begin{itemize}
+        \item Konvergenz? In welchem Raum? Zum Beispiel $Z \hookrightarrow L_{\infty}(\Omega)$, $Z = H^{1}(\Omega)$.
+        \item Bedingungen an $\sigma_{j}$? Zum Beispiel $\abs{\sigma_{j}} \leq 1$.
+        \item Welche $\phi_{j}$? Möglich mit $\phi_{j} = \sin(j \pi \cdot)$ oder $\sin(j \pi \cdot) / j \pi$ oder $\sin(j \pi \cdot) / (j \pi)^{1 + \epsilon}$? Je nach verwendetem Raum anders normalisiert etc.
+        \item Randwerte? Homogene machbar mit obigen $\sin$-Funktionen und $\sigma_{0} = 0$. Periodische mit passender Wahl von $\sigma_{0}$. Sonst?
+    \end{itemize}
+    \item Wie sieht der Operator $G$ aus und wie sieht eine brauchbare Zerlegung in $G = G_{0} + \sum_{j} \sigma_{j} G_{j}$ aus?
+    \item Nachweisen, dass $G_{j}$ beschränkt bzw. die Konvergenz erfüllt.
+    \item Ist \cite[Assumption 2]{Kunoth:2013ef} erfüllt?
+\end{enumerate}
+
+\subsection{Well-posedness} % (fold)
+\label{sub:well_posedness}
+
+Seien $V$, $H$ zwei separable Hilberträume mit der Einbettung $V \hookrightarrow H$.
+Daraus ergibt sich der Gelfand-Dreier $V \hookrightarrow H \hookrightarrow V'$.
+Es sei weiterhin $a \colon V \times V \to \mathbb{R}$ eine Bilinearform, welche die folgenden Eigenschaften:
+\begin{itemize}
+    \item Beschränkheit: es existiert ein $M_{a} > 0$ mit
+    \begin{equation}
+        \abs{a(\eta, \zeta)} \leq M_{a} \norm{\eta}_{V} \norm{\zeta}_{V}, \quad \eta, \zeta \in V.
+    \end{equation}
+    \item G\aa{}rding-Ungleichung: es existieren $\alpha > 0$, $\lambda \in \mathbb{R}$ mit
+    \begin{equation}
+        a(\eta, \eta) + \lambda \norm{\eta}^{2}_{H} \geq \alpha \norm{\eta}^{2}_{V}, \quad \eta \in V.
+    \end{equation}
+\end{itemize}
+Wir bezeichnen mit $A \in \mathcal L(V, V')$ den zugehörigen Operator, das heißt es gilt
+\begin{equation}
+    \skprod{A \eta}{\zeta}_{H} = a(\eta, \zeta).
+\end{equation}
+
+Unser konkretes Setting ist folgendermaßen:
+Sei $\Omega \subset \mathbb{R}^{n}$ beschränkt mit Lipschitz-Rand.
+Wir setzen $V = H^{1}_{0}(\Omega)$ und $H = L_{2}(\Omega)$, das heißt es ist $V' = (H^{1}_{0}(\Omega))' = H^{-1}(\Omega)$.
+Der Operator $A$ ist gegeben durch
+\begin{equation}
+    A \eta = - \sigma \Delta \eta + \omega \eta,
+\end{equation}
+wobei $\sigma \in \mathbb{R}$, $\omega \in L_{\infty}(\Omega)$.
+
+Die zugehörige Bilinearform $a$ wird damit zu
+\begin{equation}
+    a(\eta, \zeta) =
+\end{equation}
+
+% subsection well_posedness (end)
+
+\clearpage
+
+\subsection{Problemstellung} % (fold)
+\label{sub:problemstellung}
+
+Es sei $0 < T < \infty$ und $I = [0, T]$.
+Wir bezeichnen mit $\Omega$ eine beschränkte Teilmenge des $\mathbb{R}^{n}$ mit Lipschitz-Rand.
+
+Weiterhin schreiben wir $V = H^{1}_{0}(\Omega)$ und $H = L_{2}(\Omega)$.
+Da es sich dabei separable Hilberträume handelt, erhalten wir ein Gelfand-Tripel $H^{1}_{0}(\Omega) \hookrightarrow L_{2}(\Omega) \hookrightarrow H^{-1}(\Omega)$.
+Wir verwenden die Notation $\skprod{\cdot}{\cdot}$ sowohl für die inneren Produkte als auch für das \emph{duality Pairing} von $H^{-1}(\Omega)$ und $H^{1}_{0}(\Omega)$.
+
+Seien nun $g \in L_{2}(0, T; H^{-1}(\Omega))$, $u_{0} \in L_{2}(\Omega)$, $\sigma \in \mathbb{R_{+}}$ und $\omega \in L_{\infty}(\Omega)$ gegeben.
+Wir wollen nun das parabolische Problem
+\begin{equation}
+    \begin{cases}
+        u_{t}(t) - \sigma \Delta u(t) + \omega u(t) = g(t) & \text{in}~H^{-1}(\Omega)\\
+        u(0) = u_{0} & \text{in}~L_{2}(\Omega)
+    \end{cases}
+\end{equation}
+lösen.
+
+\subsubsection{Herleitung einer Space-Time-Variationsformulierung} % (fold)
+
+Wir betrachten zunächst nur den \emph{Raum}-Differentialoperator $A \in \mathcal L(H^{1}_{0}(\Omega), H^{-1}(\Omega))$ der durch
+\begin{equation}
+    A \eta = - \sigma \Delta \eta + \omega \eta
+\end{equation}
+gegeben ist und bestimmen die zugehörige Bilinearform $a \colon H^{1}_{0}(\Omega) \times H^{1}_{0}(\Omega) \to \mathbb{R}$ durch Multiplikation mit einer Testfunktion $\zeta \in H^{1}_{0}(\Omega)$ und anschließender Integration.
+Unter Verwendung der Greenschen Formel erhalten wir
+\begin{equation}
+    \label{eq:a_bf}
+    \begin{aligned}
+        a(\eta, \zeta)
+        :&= \skprod{A \eta}{\zeta}_{V' \times V}
+        = \int_{\Omega} A \eta \cdot \zeta \diff x
+        % = \int_{\Omega} \left( - \sigma \Delta \eta + \omega \eta \right) \zeta \diff x
+        \\&= - \sigma \int_{\Omega} \Delta \eta \zeta \diff x + \int_{\Omega} \omega \eta \zeta \diff x
+        \\ &= \sigma \int_{\Omega} \skprod{\grad \eta}{\grad \zeta}_{\mathbb{R}^{n}} \diff x + \int_{\Omega} \omega \eta \zeta \diff x
+        \\&= \sigma \skprod{\grad \eta}{\grad \zeta}_{L_{2(\Omega, \mathbb{R}^{n})}} + \skprod{\omega \eta}{\zeta}_{L_{2}(\Omega)}.
+    \end{aligned}
+\end{equation}
+
+Um nun eine Space-Time-Variationsformulierung für unser parabolisches Problem zu erhalten, definieren wir zunächst die benötigten Räume für \emph{Ansatz-} und \emph{Testfunktionen}
+\begin{equation}
+    \mathcal X = L_{2}(0, T; H^{1}_{0}(\Omega)) \cap H^{1}(0, T; H^{-1}(\Omega))
+\end{equation}
+und
+\begin{equation}
+    \mathcal Y = L_{2}(0, T; H^{1}_{0}(\Omega)) \times L_{2}(\Omega).
+\end{equation}
+
+Multiplikation mit $v = (v_{1}, v_{2}) \in \mathcal Y$ und Integration über die Zeit $t$ liefert uns nun das Variationsproblem: finde $u \in \mathcal X$ mit
+\begin{equation}
+     b(u, v) = F(v) \qquad \text{für alle}~v \in \mathcal Y.
+\end{equation}
+Dabei ist $b \colon \mathcal X \times \mathcal Y \to \mathbb{R}$ eine Bilinearform, gegeben durch
+\begin{equation}
+    b(u, v) = \int_{0}^{T} \skprod{u_{t}(t)}{v_{1}(t)}_{L_{2}(\Omega)} + a(u(t), v_{1}(t)) \diff t + \skprod{u(0)}{v_{2}}_{L_{2}(\Omega)}
+\end{equation}
+und $F \colon \mathcal Y \to \mathbb{R}$ das Funktional
+\begin{equation}
+    F(v) = \int_{0}^{T} \skprod{g(t)}{v_{1}(t)}_{L_{2}(\Omega)} \diff t + \skprod{u_{0}}{v_{2}}_{L_{2}(\Omega)}.
+\end{equation}
+
+
+\subsubsection{Well-posedness} % (fold)
+\label{ssub:well_posedness}
+Um zu klären, ob und unter welchen Bedingungen das obige Variationsproblem \emph{well-posed} ist, das heißt eine eindeutige Lösung existiert, verweisen wir auf \cite{Schwab:2009ec}.
+Es reicht aus, Beschränktheit und eine G\aa{}rding-Ungleichung für die Bilinearform $a(\cdot, \cdot)$ nachzuweisen.
+
+\begin{Lemma}
+    \label{lemma:a_bf_bounded_garding}
+    Sei $a \colon H^{1}_{0}(\Omega) \times H^{1}_{0}(\Omega) \to \mathbb{R}$ wie in \eqref{eq:a_bf}, also
+    \begin{equation}
+        a(\eta, \zeta) = \sigma \skprod{\grad \eta}{\grad \zeta}_{L_{2}(\Omega, \mathbb{R}^{n})} + \skprod{\omega \eta}{\zeta}_{L_{2}(\Omega)}
+    \end{equation}
+    mit $\sigma \in \mathbb{R}$ und $\omega \in L_{\infty}(\Omega)$.
+    Dann erfüllt $a(\cdot, \cdot)$ die folgenden Eigenschaften:
+    \begin{enumerate}[label=(\arabic*),ref=(\arabic*)]
+        \item \emph{Beschränktheit:} es existiert eine Konstante $M_{a} > 0$ mit
+        \begin{equation}
+            \abs{a(\eta, \zeta)} \leq M_{a} \norm{\eta}_{H^{1}_{0}(\Omega)} \norm{\zeta}_{H^{1}_{0}(\Omega)}
+        \end{equation}
+        für alle $\eta, \zeta \in H^{1}_{0}(\Omega)$.
+        \label{lemma:a_bf_bounded_garding:1}
+        \item \emph{G\aa{}rding-Ungleichung:} es existieren Konstanten $\alpha > 0$ und $\lambda \in \mathbb{R}$ mit
+        \begin{equation}
+                a(\eta, \eta) + \lambda \norm{\eta}_{L_{2}(\Omega)}^{2} \geq \alpha \norm{\eta}_{H^{1}_{0}(\Omega)}^{2}
+        \end{equation}
+        für alle $\eta \in H^{1}_{0}(\Omega)$.
+        \label{lemma:a_bf_bounded_garding:2}
+    \end{enumerate}
+
+    \begin{Beweis}
+    Wir zeigen zunächst die Beschränktheit.
+    Seien dazu $\eta, \zeta \in H^{1}_{0}(\Omega)$ beliebig.
+    Unter Verwendung der Dreiecks- und der Cauchy-Schwarz-Ungleichung erhalten wir
+    \begin{align}
+        \abs{a(\eta, \zeta)}
+        &= \abs{\sigma \skprod{\grad \eta}{\grad \zeta}_{L_{2(\Omega, \mathbb{R}^{n})}} + \skprod{\omega \eta}{\zeta}_{L_{2}(\Omega)}}
+        \\&\leq \abs{\sigma} \abs{\skprod{\grad \eta}{\grad \zeta}_{L_{2(\Omega, \mathbb{R}^{n})}}} + \abs{\skprod{\omega \eta}{\zeta}_{L_{2}(\Omega)}}
+        \\&\leq \abs{\sigma} \norm{\grad \eta}_{L_{2}(\Omega)} \norm{\grad \zeta}_{L_{2}(\Omega)} + \norm{\omega}_{L_{\infty}(\Omega)} \norm{\eta}_{L_{2}(\Omega)} \norm{\zeta}_{L_{2}(\Omega)}
+        \\&\leq \max \left\{ \abs{\sigma}, \norm{\omega}_{L_{\infty}(\Omega)} \right\} \norm{\eta}_{H^{1}_{0}(\Omega)} \norm{\zeta}_{H^{1}_{0}(\Omega)}
+        \\&= M_{a} \norm{\eta}_{H^{1}_{0}(\Omega)} \norm{\zeta}_{H^{1}_{0}(\Omega)}
+    \end{align}
+    mit $M_{a} = \max \left\{ \abs{\sigma}, \norm{\omega}_{L_{\infty}(\Omega)} \right\}$.
+
+    Für die G\aa{}rding-Ungleichung seien nun $\eta \in H^{1}_{0}(\Omega)$ und $\lambda \in \mathbb{R}$.
+    Wir betrachten
+    \begin{align}
+        a(\eta, \eta) + \lambda \norm{\eta}^{2}_{L_{2}(\Omega)}
+        &= \sigma \norm{\grad \eta}^{2}_{L_{2}(\Omega)} + \skprod{\omega \eta}{\eta}_{L_{2}(\Omega)} + \lambda \skprod{\eta}{\eta}_{L_{2}(\Omega)}
+        \\&= \sigma \norm{\grad \eta}^{2}_{L_{2}(\Omega)} + \skprod{(\omega + \lambda) \eta}{\eta}_{L_{2}(\Omega)},
+        \intertext{wählen wir nun $\lambda = \norm{\omega}_{L_{\infty}(\Omega)}$, dann gilt $\omega + \lambda \geq 0$ fast überall in $\Omega$ und wir erhalten die Abschätzung}
+        a(\eta, \eta) + \lambda \norm{\eta}^{2}_{L_{2}(\Omega)}
+        &\geq \sigma \norm{\grad \eta}^{2}_{L_{2}(\Omega)},
+        \intertext{woraus wir durch Anwenden der Poincaré-Friedrichs-Ungleichung}
+        a(\eta, \eta) + \lambda \norm{\eta}^{2}_{L_{2}(\Omega)}
+        &\geq \sigma \gamma_{\Omega}^{2} \norm{\eta}^{2}_{H^{1}_{0}(\Omega)}
+        = \alpha \norm{\eta}^{2}_{H^{1}_{0}(\Omega)},
+    \end{align}
+    mit $\alpha = \sigma \gamma_{\Omega}^{2}$, gewinnen.
+    \end{Beweis}
+\end{Lemma}
+
+
+
+% subsubsection well_posedness (end)
+
+% subsection problemstellung (end)
+
+% subsection zu_kl_rende_fragen (end)
