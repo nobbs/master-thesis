@@ -1,7 +1,10 @@
 % Numerische Lösung mittels Linienmethode / Finite Differenzen für den
 % eindimensionalen Fall mit reellwertigem Parameter \omega.
-function [output] = onedim(plot_all)
+function [output] = onedim(N_Sigmas, plot_all)
 if nargin == 0
+    N_Sigmas = 3;
+    plot_all = 0;
+elseif nargin == 1
     plot_all = 0;
 end
 
@@ -10,7 +13,7 @@ t_span  = [0, 1];
 x_span  = [0, 1];
 
 % Ortsdiskretisierung
-x_steps = 25;
+x_steps = 40;
 x_grid  = linspace(x_span(1), x_span(2), x_steps);
 
 X       = x_grid(2:end-1);
@@ -20,6 +23,15 @@ x_N     = x_steps - 2;
 % Konstanten
 sigma = 1;
 
+% Ansatzfunktionen für Reihenentwicklung
+    function phi = ansatz(k)
+       if k == 0
+           phi = @(x) 0 * x + 1;
+       else
+           phi = @(x) sqrt(2 / (1 + k^2 * pi^2)) * sin(pi * k * x);
+       end
+    end
+
 % Anfangsbedingung
     function u = u_0(x)
         u = x.*sin(pi*x);
@@ -27,13 +39,16 @@ sigma = 1;
 %         u = exp(-5 * (x - 0.5).^2) - exp(-5/4) - 0.5 * (exp(-30 * (x - 0.5).^2) - exp(-30/4));
     end
 
-% Reaktionsterm
-N_Sigmas = 5;
+% Reaktionsterm in Reihe entwicklen
 factor = 20;
+Phis = {};
+for j = 1:N_Sigmas
+   Phis{j} = ansatz(j - 1); 
+end
 Sigmas = factor * (rand(N_Sigmas, 1) - 0.5);
 w = generate_w(N_Sigmas, Sigmas);
-%     plot(x_grid, w(x_grid));
-%     return;
+% plot(x_grid, w(x_grid));
+% return;
 
 % Quellterm
     function y = g(t, x)
@@ -50,19 +65,15 @@ w = generate_w(N_Sigmas, Sigmas);
         end
     end
 
-% Erzeuge Massematrix
+% Erzeuge Matrix für Laplace-Operator
 tmp = ones(x_N, 1);
 M   = (1 / x_h)^2 * spdiags([tmp, -2*tmp, tmp], -1:1, x_N, x_N);
 
-
+% Erzeuge Matrix für Reaktionsterm
 W = zeros(x_N, x_N);
 for j = 1:x_N
     for k = 1:N_Sigmas
-        if k == 1
-            W(j, j) = Sigmas(k);
-        else
-            W(j, j) = W(j, j) + Sigmas(k) * sqrt(2 / (1 + k^2 * pi^2)) * sin(pi * k * (j * x_h));
-        end
+        W(j, j) = W(j, j) + Sigmas(k) * Phis{k}(j * x_h);
     end
 end
 
@@ -76,11 +87,7 @@ end
             colsA = 1:x_N;
             colsB = (j * x_N +1):((j+1) * x_N);
             for k = 1:x_N
-                if j == 1
-                    Mat(rows(k), colsA(k)) = -1;
-                else
-                    Mat(rows(k), colsA(k)) = -sqrt(2 / (1 + j^2 * pi^2)) * sin(pi * j * (k * x_h));
-                end
+                Mat(rows(k), colsA(k)) = - Phis{j}(k * x_h);
             end
             Mat(rows, colsB) = sigma * M - W;
         end
@@ -94,7 +101,7 @@ y_0 = zeros((1 + N_Sigmas) * x_N, 1);
 y_0(1:x_N) = arrayfun(@(x) u_0(x), x_grid(2:end-1));
 
 % ODE-Solver loslassen
-[T, Y] = ode23s(@(t, y) ode(t, y), t_span, y_0);
+[T, Y] = ode15s(@(t, y) ode(t, y), t_span, y_0);
 
 % Lösung aufteilen in eigentliche ODE und Sensitivity Analysis Teil
 [T_mesh, X_mesh] = meshgrid(T, X);
@@ -106,13 +113,15 @@ title('Lösung u');
 xlabel('t');
 ylabel('x');
 
-for j = 1:N_Sigmas
-    u_sigma  = Y(:, (j*x_N + 1):((j+1)*x_N));
-    figure(j + 1);
-    mesh(T_mesh, X_mesh, u_sigma');
-    title('Sensitivity u_{\sigma_j}');
-    xlabel('t');
-    ylabel('x');
+if plot_all
+    for j = 1:N_Sigmas
+        u_sigma  = Y(:, (j*x_N + 1):((j+1)*x_N));
+        figure(j + 1);
+        mesh(T_mesh, X_mesh, u_sigma');
+        title('Sensitivity u_{\sigma_j}');
+        xlabel('t');
+        ylabel('x');
+    end
 end
 
 % "exakte" Lösung generieren
