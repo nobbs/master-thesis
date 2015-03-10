@@ -28,7 +28,8 @@ sigma = 1;
        if k == 0
            phi = @(x) 0 * x + 1;
        else
-           phi = @(x) sqrt(2 / (1 + k^2 * pi^2)) * sin(pi * k * x);
+%            phi = @(x) sqrt(2 / (1 + k^2 * pi^2)) * sin(pi * k * x);
+            phi = @(x) sin(pi * k * x) / (k^2 * pi^2);
        end
     end
 
@@ -40,7 +41,7 @@ sigma = 1;
     end
 
 % Reaktionsterm in Reihe entwicklen
-factor = 20;
+factor = 2;
 Phis = {};
 for j = 1:N_Sigmas
    Phis{j} = ansatz(j - 1); 
