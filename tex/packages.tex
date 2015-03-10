@@ -16,6 +16,8 @@
 % Bessere Standard-Schriftart
 \usepackage{lmodern}
 
+\usepackage{eufrak}
+
 % Typographische Kleinigkeiten
 \usepackage{microtype}
 
@@ -23,7 +25,7 @@
 \usepackage{graphicx, color}
 
 % PDF-Verlinkungen und Metadaten
-\usepackage[colorlinks=true,backref=page]{hyperref}
+\usepackage[colorlinks=true, backref=page]{hyperref}
 
 % Bibliographie-Stil
 \usepackage[numbers]{natbib}
@@ -31,10 +33,15 @@
 \usepackage{hypernat}
 
 % Fancyhdr-Ersatz für scrbook
-\usepackage[automark,headsepline]{scrlayer-scrpage}
+\usepackage[automark, headsepline]{scrlayer-scrpage}
 
 % enums
 \usepackage{enumitem}
+\newlist{thmenumerate}{enumerate}{1}
+\setlist[thmenumerate]{label={\upshape(\roman*)}, align=left, widest=iii, leftmargin=*}
+
+% todos
+\usepackage[german]{todonotes}
 
 % Blindtext
 \usepackage{blindtext}
@@ -43,6 +50,9 @@
 % Dashed Linien...
 \usepackage{dashrule}
 
+% Querformatseiten
+% \usepackage{pdflscape}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Mathematik
 
@@ -50,7 +60,7 @@
 \usepackage{amsmath, amssymb, stmaryrd, mathtools}
 
 % "Bessere" Theorem-Umgebungen
-\usepackage[standard,amsmath,thmmarks,hyperref,thref]{ntheorem}
+\usepackage[amsmath, thmmarks, hyperref, thref]{ntheorem}
 
 % Setze Label-Nummern nur, wenn diese auch referenziert werden
 \mathtoolsset{showonlyrefs=true}

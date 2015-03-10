@@ -1,8 +1,6 @@
 %!TEX root = ../main.tex
 
-\pagestyle{plain}
-
-\section*{Eindimensionaler Fall mit $\omega \in \mathbb{R}$ und ohne Quellterm}
+\section{Eindimensionaler Fall mit $\omega \in \mathbb{R}$ und ohne Quellterm}
 
 Sei $I := [0, \hat t]$ für ein $0 < \hat t < \infty$ und $\Omega := [0, 1]$.
 Betrachte folgende parametrisierte PDE
@@ -48,9 +46,9 @@ Betrachten wir zunächst die Randbedingung $u(t, 0) = u(t, 1) = 0$, dann erhalte
 \begin{equation}
     0 = u(t, 0) = \left( d_{1} + d_{2} \right) \left( d_{3} e^{\lambda t} \right),
 \end{equation}
-oder äquivalent $d_{1} = - d_{2}$, und aus 
+oder äquivalent $d_{1} = - d_{2}$, und aus
 \begin{equation}
-    0 = u(t, 1) = \left( d_{1} e^{\sqrt{\frac{\lambda + \omega}{\sigma}}} + d_{2} e^{-\sqrt{\frac{\lambda + \omega}{\sigma}}} \right) \left( d_{3} e^{\lambda t} \right) = 
+    0 = u(t, 1) = \left( d_{1} e^{\sqrt{\frac{\lambda + \omega}{\sigma}}} + d_{2} e^{-\sqrt{\frac{\lambda + \omega}{\sigma}}} \right) \left( d_{3} e^{\lambda t} \right) =
     d_{1} \left( e^{\sqrt{\frac{\lambda + \omega}{\sigma}}} - e^{-\sqrt{\frac{\lambda + \omega}{\sigma}}} \right) \left( d_{3} e^{\lambda t} \right),
 \end{equation}
 ohne Einschränkung $d_{1} \neq 0$, die Gleichung
@@ -79,9 +77,9 @@ wobei wir $\beta_{k} := 2 d_{1} d_{3} i$ setzen.
 
 Da jedes $u_{k}$, $k \in \mathbb{Z}$, eine Lösung ist, erhalten wir durch
 \begin{equation}
-    u(t, x) = \sum_{k = 1}^{\infty} u_{k}(t, x) = \sum_{k = 1}^{\infty} \beta_{k} \sin(k \pi x) e^{-(k^2 \pi^2 \sigma + \omega)t}}
+    u(t, x) = \sum_{k = 1}^{\infty} u_{k}(t, x) = \sum_{k = 1}^{\infty} \beta_{k} \sin(k \pi x) e^{-(k^2 \pi^2 \sigma + \omega)t}
 \end{equation}
-ebenfalls eine Lösung. 
+ebenfalls eine Lösung.
 Damit die Anfangsbedingung erfüllt wird, muss
 \begin{equation}
     g(x) = u(x, 0) = \sum_{k = 1}^{\infty} \beta_{k} \sin(k \pi x)

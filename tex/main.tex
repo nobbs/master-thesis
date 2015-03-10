@@ -26,8 +26,8 @@
 
 \renewcommand*{\glspostdescription}{}
 
-\makeglossaries
-\loadglsentries{glossar}
+% \makeglossaries
+% \loadglsentries{glossar}
 
 \begin{document}
 
@@ -45,7 +45,7 @@
     % \include{chapters/zusammenfassung}
 
     % Inhaltsverzeichnis
-    % \tableofcontents
+    \tableofcontents
 
     % Abbildungs-, Tabellen- und Symbolverzeichnis
     % \listoffigures
@@ -59,19 +59,22 @@
     \mainmatter
 
     % Kapitel
-    % \include{temp/onedim}
-    \include{temp/wellposed}
-    \include{temp/saetze}
-    % \include{chapters/einleitung}
-    % \include{chapters/grundlagen}
-    % \include{chapters/kapitel2}
+    % \input{chapters/einleitung}
+    \input{chapters/grundlagen}
+
+    \input{temp/wellposed}
+    \input{temp/dereindimfall}
+    \input{temp/saetze}
+    \input{temp/sammlung}
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    %%% Backmatter
-    \backmatter
+    %%% Anhang
+    \appendix
+    \chapter{Sonstiges} % (fold)
+    \input{temp/onedim}
 
     % Literaturverzeichnis
-    % \nocite*
+    \nocite*
     \bibliography{literature}
 
     % Anhänge

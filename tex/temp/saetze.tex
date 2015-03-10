@@ -3,18 +3,20 @@
 \section{Sätze} % (fold)
 \label{sec:saetze}
 
+TODO: Deutlich besser formulieren, fehlendes ergänzen!
+
 \begin{Satz}[Babu{\v{s}}ka-Aziz, \cite{Aziz:2014wf}]
     \label{satz:babuska-aziz}
-    Seien $H_{1}$ und $H_{2}$ zwei reelle Hilberträume mit Skalarprodukten $\skprod{\cdot}{\cdot}_{H_{1}}$ respektive $\skprod{\cdot}{\cdot}_{H_{2}}$. 
+    Seien $H_{1}$ und $H_{2}$ zwei reelle Hilberträume mit Skalarprodukten $\skprod{\cdot}{\cdot}_{H_{1}}$ respektive $\skprod{\cdot}{\cdot}_{H_{2}}$.
     Sei $B \colon H_{1} \to H_{2}'$ ein linearer Operator und
-    sei $b \colon H_{1} \times H_{2} \to \mathbb{R}$, $(u, v) \mapsto B(u, v)$ die zugehörige Bilinearform, das heißt $(Bu)(v) = b(u, v)$. 
+    sei $b \colon H_{1} \times H_{2} \to \mathbb{R}$, $(u, v) \mapsto B(u, v)$ die zugehörige Bilinearform, das heißt $(Bu)(v) = b(u, v)$.
     Erfüllt $b$ die sogenannten Babu{\v{s}}ka-Aziz-Bedingungen
-    \begin{itemize}
-        \item \emph{Stetigkeit:} Es existiert ein $C < \infty$ mit 
+    \begin{thmenumerate}
+        \item \emph{Stetigkeit:} Es existiert ein $C < \infty$ mit
         \begin{equation}
             \abs{B(u, v)} \leq C \norm{u}_{H_{1}} \norm{v}_{H_{2}}, \qquad \text{für alle}~u \in H_{1},~v \in H_{2}
         \end{equation}
-        \item \emph{$\inf$-$\sup$-Bedingung:} Es existiert ein $\beta > 0$ mit 
+        \item \emph{$\inf$-$\sup$-Bedingung:} Es existiert ein $\beta > 0$ mit
         \begin{equation}
             \inf_{u \in H_{1}} \sup_{v \in H_{2}} \frac{\abs{B(u, v)}}{\norm{u}_{H_{1}} \norm{v}_{H_{2}}} \geq \beta.
         \end{equation}
@@ -22,17 +24,168 @@
         \begin{equation}
             \sup_{u \in H_{1}} \abs{B(u, v)} > 0, \qquad \text{für alle}~v \neq 0.
         \end{equation}
-    \end{itemize}
+    \end{thmenumerate}
     Dann ist $B$ ein Isomorphismus.
 \end{Satz}
 
 \begin{Satz}[vgl. {{\cite[Theorem 5.1]{Schwab:2009ec}}}]
     Der Operator $B \in \mathcal L(\mathcal X, \mathcal Y')$ sei gegeben durch $(Bw)(v) = b(w, v)$ mit $b(\cdot, \cdot)$, $\mathcal X$ und $\mathcal Y$ wie in (...).
     Dann ist $B$ ein Isomorphismus.
+
+    % \begin{Beweis}
+    %     Wir weisen die Bedingungen von \thref{satz:babuska-aziz} nach.
+
+    %     Zunächst sei anzumerken, dass wir in \eqref{eq:garding-inequality} ohne Einschränkung $\lambda = 0$ wählen können.
+    %     Wähle
+    %     \begin{equation}
+    %         u(t) = \hat u(t) e^{\lambda t}, \quad v_{1}(t) = \hat v_{1}(t) e^{- \lambda t}, \quad g(t) = \hat g(t) e^{\lambda t},
+    %     \end{equation}
+    %     dann sieht man, dass $u$ die Gleichung \eqref{eq:bilinearform} genau dann löst, wenn $\hat u$ die Gleichung
+    %     \begin{equation}
+    %         \label{eq:bilinearform_tmp}
+    %         \begin{gathered}
+    %             \int_{I} \skprod{\hat{u}_{t}(t)}{\hat{v}_{1}(t)}_{H} + \lambda \skprod{\hat{u}(t)}{\hat{v}_{1}(t)}_{H} + a(t; \hat{u}(t), \hat{v}_{1}(t)) \diff t + \skprod{\hat{u}(0)}{v_{2}}_{H}
+    %                 \\= \int_{I} \skprod{\hat{g}(t)}{\hat{v}_{1}(t)}_{H} \diff t + \skprod{u_{0}}{v_{2}}_{H}
+    %         \end{gathered}
+    %     \end{equation}
+    %     für alle $\hat{v} = (\hat{v}_{1}, v) \in \mathcal Y$ löst.
+
+    %     \paragraph{Stetigkeit} % (fold)
+    %     \label{par:stetigkeit}
+    %     Betrachte für $u \in \mathcal X$ und $v = (v_{1}, v_{2}) \in \mathcal Y$ die Bilinearform $b(u, v)$.
+    %     Nach Anwenden der Dreiecksungleichung erhalten wir
+    %     \begin{equation}
+    %         \label{eq:stetigkeit_zweiter_term}
+    %         \abs{b(u, v)} = \int_{I} \abs{\skprod{u_{t}(t)}{v_{1}(t)}_{H}} + \abs{a(u(t), v_{1}(t))} \diff t + \abs{\skprod{u(0)}{v_{2}}_{H}}.
+    %     \end{equation}
+    %     Betrachten wir zunächst den hinteren Term, dann erhalten wir unter Verwendung der Cauchy-Schwarz-Ungleichung und der Einbettungs-Konstante $M_{e}$ die Abschätzung
+    %     \begin{equation}
+    %         \abs{\skprod{u(0)}{v_{2}}_{H}} \leq \norm{u(0)}_{H} \norm{v_{2}}_{H} \leq M_{e} \norm{u}_{X} \norm{v_{2}}_{H}.
+    %     \end{equation}
+    %     Widmen wir uns nun dem ersten Term und wenden ebenfalls die Cauchy-Schwarz-Ungleichung sowie die Stetigkeit von $a$ an, dann erhalten wir
+    %     \begin{align}
+    %         &\int_{I} \abs{\skprod{u_{t}(t)}{v_{1}(t)}_{H}} + \abs{a(u(t), v_{1}(t))} \diff t
+    %         \\&\qquad
+    %         \leq \int_{I} \norm{u_{t}(t)}_{H} \norm{v_{1}(t)}_{H} + M_{a} \norm{u(t)}_{H} \norm{v_{1}(t)}_{H} \diff t
+    %         \\&\qquad
+    %         \leq \int_{I} \max\{1, M_{a}\} \norm{v_{1}(t)}_{H} \left(  \norm{u_{t}(t)}_{H} + \norm{u(t)}_{H} \right) \diff t
+    %         \intertext{mittels Hölder-Ungleichung lässt sich dies weiter abschätzen zu}
+    %         &\qquad
+    %         \leq \left( \int_{I} \max\{1, M_{a}\}^{2} \norm{v_{1}(t)}_{H}^{2} \diff t \right)^{\frac 12} \left( \int_{I} \left( \norm{u_{t}(t)}_{H} + \norm{u(t)}_{H} \right)^{2} \diff t \right)^{\frac 12},
+    %         \intertext{und unter Verwendung der Youngschen-Ungleichung zu}
+    %         &\qquad
+    %         \leq \left( \int_{I} \max\{1, M_{a}\}^{2} \norm{v_{1}(t)}_{H}^{2} \diff t \right)^{\frac 12} \left( \int_{I} 2 \left( \norm{u_{t}(t)}_{H}^{2} + \norm{u(t)}_{H}^{2} \right) \diff t \right)^{\frac 12}
+    %         \intertext{was nach Definition der verwendeten Normen auch geschrieben werden kann als}
+    %         &\qquad
+    %         = \sqrt{2 \max\{1, M_{a}^{2}\}} \norm{u}_{\mathcal X} \norm{v_{1}}_{L_{2}(I; V)}
+    %     \end{align}
+    %     Zusammen mit \eqref{eq:stetigkeit_zweiter_term} liefert dies nach einer erneuten Anwendung der Cauchy-Schwarz-Ungleichung
+    %     \begin{align}
+    %     \abs{b(u, v)}
+    %     &\leq \sqrt{2 \max\{1, M_{a}\}^{2}} \norm{u}_{\mathcal X} \norm{v_{1}}_{L_{2}(I; V)} + M_{e} \norm{u}_{X} \norm{v_{2}}_{H}
+    %     \\
+    %     &\leq \norm{u}_{\mathcal X} \left( \norm{v_{1}}_{L_{2}(I; V)}^{2} + \norm{v_{2}}_{H}^{2} \right)^{\frac 12} \left( 2 \max\{1, M_{a}\}^{2} + M_{e}^{2} \right)^{\frac 12}
+    %     \\
+    %     &= \sqrt{2 \max\{1, M_{a}^{2}\} + M_{e}^{2}} \norm{u}_{\mathcal X} \norm{v}_{\mathcal Y}.
+    %     \end{align}
+    %     Damit folgt die Stetigkeit.
+    %     % paragraph stetigkeit (end)
+
+    %     \paragraph{Inf-Sup-Bedingung} % (fold)
+    %     \label{par:inf_sup_bedingung}
+
+    %     % paragraph inf_sup_bedingung (end)
+    % \end{Beweis}
 \end{Satz}
 
-\begin{Satz}[Kunoth-Schwab]
-    
+\subsubsection{Regularität bezüglich Parameter} % (fold)
+\label{ssub:aus_cite_kunoth_2013ef}
+
+Benötigte Aussagen aus \cite{Kunoth:2013ef} um analytische Abhängigkeit der Lösung von den Parametern zu erhalten.
+
+\begin{Annahme}[{{\cite[Assumption 1]{Kunoth:2013ef}}}]
+    \label{thm:kunoth:assumption1}
+    Die parametrische Operatorfamilie
+    $\{ A(\sigma) \in \mathcal L(X, Y') : \sigma \in \mathcal S\}$ sei eine reguläre $\mathfrak p$-analytische Operatorfamilie für ein $0 < \mathfrak p \leq 1$, das heißt
+    \begin{thmenumerate}
+        \item $A(\sigma) \in \mathcal L(X, Y')$ ist stetig invertierbar für alle $\sigma \in \mathcal S$ mit gleichmäßig beschränkten Inversen $A(\sigma)^{-1} \in \mathcal L(Y', X)$, das heißt es existiert ein $C_{0} > 0$, so dass
+        \begin{equation}
+            \sup_{\sigma \in \mathcal S} \norm{A(\sigma)^{-1}}_{\mathcal L(Y', X)} \leq C_{0},
+        \end{equation}
+        \item für jedes feste $\sigma \in \mathcal S$ sind die Operatoren $A(\sigma)$ analytisch bezüglich $\sigma$. Konkret existiert eine nichtnegative Folge $b = (b_{j})_{j \geq 1} \in \ell^{\mathfrak p}(\mathbb{N})$ so dass
+        \begin{equation}
+            \sup_{\sigma \in \mathcal S} \norm{(A(0)^{-1})(\partial^{\nu}_{\sigma} A(\sigma))}_{\mathcal L(X, X)} \leq C_{0} b^{\nu}
+        \end{equation}
+        für alle $\nu \in \mathfrak F \setminus \{ 0 \}$ gilt.
+        Dabei sei $\partial^{\nu}_{\sigma} A(\sigma) = \frac{\partial^{\nu_{1}}}{\partial \sigma_{1}} \frac{\partial^{\nu_{2}}}{\partial \sigma_{2}} \cdots A(\sigma)$, wobei $b^{\nu}$ für das (endliche, da $\nu \in \mathfrak F$) Produkt $b_{1}^{\nu_{1}} b_{2}^{\nu_{2}} \cdots$ steht; mit der Konvention $0^{0} = 1$.
+    \end{thmenumerate}
+\end{Annahme}
+
+\begin{Annahme}[{{\cite[Assumption 2]{Kunoth:2013ef}}}]
+    \label{thm:kunoth:assumption2}
+    Der parametrische Operator sei affin abhänging von $\sigma$, das heißt es existiert eine Familie von Operatoren $\{A_{j}\}_{j \geq 0} \subset \mathcal L(X, Y')$ so dass
+    \begin{equation}
+        A(\sigma) = A_{0} + \sum_{j \geq 1} \sigma_{j} A_{j} \qquad\text{für alle}~\sigma \in \mathcal S
+    \end{equation}
+    gilt.
+    Die Operatorfamilie $\{ A_{j} \}_{j \geq 0}$ erfülle folgende Eigenschaften:
+    \begin{thmenumerate}
+        \item Der \emph{mean field}-Operator $A_{0} \in \mathcal L(X, Y')$ sei stetig invertierbar, das heißt es existiert ein $\gamma_{0} > 0$ mit
+        \begin{equation}
+            \inf_{0 \neq u \in X} \sup_{0 \neq v \in Y} \frac{a_{0}(u, v)}{\norm{u}_{X} \norm{v}_{Y}} \geq \gamma_{0}
+        \end{equation}
+        und
+        \begin{equation}
+            \inf_{0 \neq v \in Y} \sup_{0 \neq u \in X} \frac{a_{0}(u, v)}{\norm{u}_{X} \norm{v}_{Y}} \geq \gamma_{0}.
+        \end{equation}
+        \item Die \emph{fluctuation}-Operatoren $\{ A_{j} \}_{j \geq 1}$ seien \emph{klein} verglichen mit $A_{0}$ im folgenden Sinne: es existiert eine Konstante $0 < \kappa < 1$ so dass
+        \begin{equation}
+            \sum_{j \geq 1} \norm{A_{j}} \leq \kappa \gamma^{0}
+        \end{equation}
+        gilt.
+    \end{thmenumerate}
+\end{Annahme}
+
+\begin{Korollar}[{{\cite[Corollary 3]{Kunoth:2013ef}}}]
+    \label{thm:kunoth:corollary3}
+    Die affin parametrische Operatorfamilie $\{ A_{j} \}_{j \geq 0}$ erfülle \thref{thm:kunoth:assumption2}, dann wird auch \thref{thm:kunoth:assumption1} mit $\mathfrak p = 1$ und
+    \begin{equation}
+        C_{0} = \frac{1}{(1 - \kappa) \gamma_{0}}, \qquad b_{j} = \frac{\norm{G_{j}}}{(1 - \kappa) \gamma_{0}}, \quad \text{für alle}~j \geq 1,
+    \end{equation}
+    erfüllt.
+\end{Korollar}
+
+\begin{Satz}[{{\cite[Theorem 4]{Kunoth:2013ef}}}]
+    \label{thm:kunoth:theorem4}
+    Die parametrische Operatorfamilie $\{ A(\sigma) \in \mathcal L(X, Y') : \sigma \in \mathcal S \}$ erfülle \thref{thm:kunoth:assumption1} für ein $0 < \mathfrak p \leq 1$.
+    Dann existiert für jedes $f \in Y'$ und jedes $\sigma \in \mathcal S$ eine eindeutige Lösung $u(\sigma) \in X$ der parametrischen Operatorgleichung
+    \begin{equation}
+        A(\sigma) u(\sigma) = f \quad \text{in}~Y'.
+    \end{equation}
+    Die parametrische Familie von Lösungen $u(\sigma)$ hängt analytisch von den Parametern $\sigma$ ab und die partiellen Ableitungen von $u(\sigma)$ erfüllen
+    \begin{equation}
+        \sup_{\sigma \in \mathcal S} \norm{(\partial^{\nu}_{\sigma} u)(\sigma)}_{X} \leq C_{0} \norm{f}_{Y'} \abs{\nu}! \tilde{b}^{\nu}
+    \end{equation}
+    für alle $\nu \in \mathfrak F$, wobei $0! = 1$ und die Folge $\tilde{b} = (\tilde{b}_{j})_{j \geq 1} \in \ell^{\mathfrak p}(\mathbb{N})$ definiert ist durch
+    \begin{equation}
+        \tilde{b}_{j} = \frac{b_{j}}{\ln 2} \qquad \text{für alle j} \in \mathbb{N}.
+    \end{equation}
 \end{Satz}
+
+\begin{Satz}[{{\cite[Theorem 21]{Kunoth:2013ef}}}]
+    \label{thm:kunoth:theorem21}
+    Für jedes $\sigma \in \mathcal S$ ist die parametrische Evolutionsgleichung $B(\sigma) \in \mathcal L(\mathcal X, \mathcal Y')$, definiert durch $\skprod{B(\sigma) u}{v} := b(u, v; \sigma)$ mit $u \in \mathcal X$ und $v \in \mathcal Y$, stetig invertierbar.
+    Konkret existieren Konstanten $0 < \beta_{1} \leq \beta_{2} < \infty$ mit
+    \begin{equation}
+        \sup_{\sigma \in \mathcal S} \norm{B(\sigma)} \leq \beta_{2} \quad \text{und} \quad  \sup_{\sigma \in \mathcal S} \norm{B(\sigma)^{-1}} \leq \frac{1}{\beta_{1}}.
+    \end{equation}
+    Außerdem erfüllt die parametrische Operatorfamilie $\{ B(\sigma) : \sigma \in \mathcal S \}$ \thref{thm:kunoth:assumption1} mit dem selben Regularitätsparameter $\mathfrak p$.
+    Genauer erfüllt die parametrische Familie von Lösungen $u(\sigma)$ die \emph{a priori}-Abschätzung
+    \begin{equation}
+        \sup_{\sigma \in \mathcal S} \norm{(\partial^{\nu}_{\sigma} u)(\sigma)}_{\mathcal X} \leq C_{0} \norm{f}_{\mathcal Y'} \abs{\nu}! \tilde{b}^{\nu}.
+    \end{equation}
+\end{Satz}
+
+% subsubsection aus_cite_kunoth_2013ef (end)
 
 % section saetze (end)
