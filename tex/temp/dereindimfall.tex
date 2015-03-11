@@ -82,11 +82,38 @@ Wir weisen nun einige Eigenschaften für diese Wahl der $\varphi_{j}$ nach.
     \end{equation}
 \end{Lemma}
 
-\begin{Lemma}[Konvergenz der Reihenentwicklung von $\omega$]
-    Unter gewissen, noch zu klärenden, Voraussetzungen konvergiert $\omega(x) = \sum_{j \geq 1} \sigma_{j} \varphi_{j}(x)$ in $H^{1}(\Omega)$.
+\begin{Lemma}[Konvergenz von $\omega$]
+    Sei $\epsilon > 0$ und
+    \begin{equation}
+        \tilde \sigma = \left(  \frac{\sigma_{j}}{j^{\epsilon}} \right)_{j \in \mathbb{N}} \in \ell^{1},
+    \end{equation}
+    dann konvergiert $\omega(x) = \sum_{j \geq 1} \sigma_{j} \varphi_{j}(x)$ in $H^{1}(\Omega)$ und $L_{\infty}(\Omega)$.
 
     \begin{Beweis}
+        Wir zeigen zunächst absolute Konvergenz bezüglich der $H^{1}(\Omega)$-Norm.
+        Betrachte
+        \begin{align}
+            \sum_{j \geq 0} \norm{\sigma_{j} \varphi_{j}}_{H^{1}(\Omega)}
+            &= \sum_{j \geq 0} \abs{\sigma_{j}} \norm{\varphi_{j}}_{H^{1}(\Omega)}
+            = \abs{\sigma_{0}} \norm{\varphi_{0}}_{H^{1}(\Omega)} + \sum_{j \geq 1} \abs{\sigma_{j}} \norm{\varphi_{j}}_{H^{1}(\Omega)}
+            \\&\leq c + \sum_{j \geq 1} \abs{\sigma_{j}} \frac{\sqrt{1 + (j \pi)^{2}}}{\sqrt{2}(j \pi)^{1+\epsilon}}
+            \leq c + \sum_{j \geq 1} \abs{\sigma_{j}} \frac{1 + j \pi}{\sqrt{2}(j \pi)^{1+\epsilon}}
+            \\&\leq c + \sum_{j \geq 1} \abs{\sigma_{j}} \frac{1}{\sqrt{2}(j \pi)^{1+\epsilon}} + \sum_{j \geq 1} \abs{\sigma_{j}} \frac{1}{\sqrt{2}(j \pi)^{\epsilon}}.
+        \end{align}
+        Da $\epsilon > 0$ gilt, konvergiert die erste Reihe.
+        Die Konvergenz der zweiten Reihe folgt aus $\tilde \sigma \in \ell^{1}$.
+        Damit erhalten wir die absolute Konvergenz bezüglich der $H^{1}(\Omega)$-Norm, und daraus auch die Konvergenz von $\omega$ in $H^{1}(\Omega)$.
 
+        Die Konvergenz in $L_{\infty}(\Omega)$ lässt sich analog zeigen.
+        Wir zeigen unter Verwendung von $\sigma \in [0, 1]^{\mathbb{N}}$ die absolute Konvergenz via
+        \begin{align}
+            \sum_{j \geq 0} \norm{\sigma_{j} \varphi_{j}}_{L_{\infty}(\Omega)}
+            &= \sum_{j \geq 0} \abs{\sigma_{j}} \norm{\varphi_{j}}_{L_{\infty}(\Omega)}
+             = \abs{\sigma_{0}} \norm{\varphi_{0}}_{L_{\infty}(\Omega)} + \sum_{j \geq 1} \abs{\sigma_{j}} \norm{\varphi_{j}}_{L_{\infty}(\Omega)}
+            \\&\leq c + \sum_{j \geq 1} \abs{\sigma_{j}} \frac{1}{(j \pi)^{1+\epsilon}}
+               \leq c + \frac{1}{\pi^{1+\epsilon}} \sum_{j \geq 1} \frac{1}{j^{1+\epsilon}}.
+        \end{align}
+        Diese Reihe konvergiert bekanntlich für alle $\epsilon > 0$, womit wir wiederum (absolute) Konvergenz von $\omega$ in $L_{\infty}(\Omega)$ erhalten.
     \end{Beweis}
 \end{Lemma}
 
