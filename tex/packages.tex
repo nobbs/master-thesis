@@ -63,4 +63,9 @@
 \usepackage[amsmath, thmmarks, hyperref, thref]{ntheorem}
 
 % Setze Label-Nummern nur, wenn diese auch referenziert werden
-\mathtoolsset{showonlyrefs=true}
+\mathtoolsset{showonlyrefs=true, showmanualtags=true}
+
+\providecommand\given{} % so it exists
+\newcommand\SetSymbol[1][]{
+   \nonscript\,#1\vert\nonscript\,\mathopen{}\allowbreak}
+\DeclarePairedDelimiterX\Set[1]{\lbrace}{\rbrace}{ \renewcommand\given{\SetSymbol[\delimsize]} #1 }
