@@ -18,12 +18,12 @@
 \input{meta}
 
 % Glossar (Symbolverzeichnis etc)
-\usepackage[
-    nonumberlist,
-    toc
-]{glossaries}
+% \usepackage[
+%     nonumberlist,
+%     toc
+% ]{glossaries}
 
-\renewcommand*{\glspostdescription}{}
+% \renewcommand*{\glspostdescription}{}
 
 % \makeglossaries
 % \loadglsentries{glossar}
@@ -60,28 +60,22 @@
 
     % Kapitel
     % \input{chapters/einleitung}
-    % \input{chapters/grundlagen}
     \input{chapters/einfuehrung}
     \input{chapters/problemstellung}
+    \input{chapters/reduzierte_basis}
 
-    % \input{temp/dereindimfall}
-    % \input{temp/saetze}
-    % \input{temp/sammlung}
+    % \input{temp/onedim}
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %%% Anhang
     \appendix
     \input{chapters/funktionalanalytische_grundlagen}
-    % \chapter{Sonstiges} % (fold)
-    % \input{temp/onedim}
 
     % Literaturverzeichnis
-    % \nocite*
     \bibliography{literature}
 
     % Anhänge
 
     % Eidesstattliche Erklärung
     % \include{misc/eidesstattliche_erklaerung}
-
 \end{document}
