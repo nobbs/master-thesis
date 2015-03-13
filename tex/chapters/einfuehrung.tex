@@ -12,6 +12,7 @@ Dieses Kapitel orientiert sich an den Ausführungen in \cite{Schwab:2009ec, Urba
 
 Zunächst einige notationelle Vorbereitungen.
 Seien $V$ und $H$ zwei separable Hilberträume, wobei eine dichte stetige Einbettung $V \hookrightarrow H$ existiere.
+% Später werden wir oftmals mit $H = L_{2}(\Omega)$ und einem dichten Unterhilbertraum $V \subset H$, $\Omega \subset \mathbb{R}^{n}$, arbeiten
 Durch die Identifikation $H \cong H'$ von $H$ mit seinem Dualraum $H'$ erhalten wir ein Gelfand-Tripel $V \hookrightarrow H \hookrightarrow V'$.
 Wir verwenden die Schreibweise $\skprod{\cdot}{\cdot}$ mit entsprechendem Index sowohl für die inneren Produkte der Hilberträume, als auch für die duale Paarung auf $V' \times V$.
 
@@ -76,12 +77,12 @@ zum Einsatz kommt.
 
 Multiplizieren wir nun die partielle Differentialgleichung \eqref{eq:allgemeine_parabolische_pde} mit $v = (v_{1}, v_{2}) \in \mathcal Y$ und integrieren über den Zeitintervall $I$, \todo{Herleitung aus-x-en?} dann erhalten wir daraus das Variationsproblem:
 
-Gegeben ein $g \in L_{2}(I, V')$. Finde ein $u \in \mathcal X$ mit
+Gegeben ein $g \in L_{2}(I, V')$ und $u_{0} \in H$. Finde ein $u \in \mathcal X$ mit
 \begin{equation}
     \label{eq:var_all_problem}
     b(u, v) = f(v) \quad \text{für alle}~v \in \mathcal Y,
 \end{equation}
-wobei $f$ von $g$ abhängt.
+wobei $f$ von $g$ und $u_{0}$ abhängt.
 Dabei ist $b(\cdot, \cdot) \colon \mathcal X \times \mathcal Y \to \mathbb{R}$ eine Bilinearform definiert durch
 \begin{equation}
     \label{eq:var_all_bf_b}

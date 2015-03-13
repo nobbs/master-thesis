@@ -2,7 +2,10 @@
 
 \chapter{Einmal bunt gemischt}
 
-\section{Zu klärende Fragen} % (fold)
+In diesem Kapitel führen wir die in \cite{Stasiak:2011ba} motivierte parabolische partielle Differentialgleichung ein und betrachten danach eine parametrisierte Variante dieser.
+Anschließend nutzen wir die Aussagen aus Kapitel \ref{cha:einfuehrung} um die Eigenschaften dieses Problems zu diskutieren.
+
+\section*{Zu klärende Fragen} % (fold)
 \label{sub:zu_kl_rende_fragen}
 
 \begin{enumerate}
@@ -33,79 +36,131 @@
     \item Ist \cite[Assumption 2]{Kunoth:2013ef} erfüllt?
 \end{enumerate}
 
+
+
 \section{Problemstellung} % (fold)
 \label{sub:problemstellung}
-
-Wir führen nun zunächst die lineare parabolische Differentialgleichung, für die wir einen Reduzierte-Basis-Ansatz entwickeln wollen, ein.
 
 Es sei $0 < T < \infty$ und $I = [0, T]$.
 Wir bezeichnen mit $\Omega$ eine beschränkte Teilmenge des $\mathbb{R}^{n}$ mit Lipschitz-Rand.
 
-Weiterhin schreiben wir $V = H^{1}_{0}(\Omega)$ und $H = L_{2}(\Omega)$.
-Dabei handelt es sich um separable Hilberträume und wir erhalten ein Gelfand-Tripel $H^{1}_{0}(\Omega) \hookrightarrow L_{2}(\Omega) \hookrightarrow H^{-1}(\Omega)$.
-Wir verwenden die Notation $\skprod{\cdot}{\cdot}$ sowohl für die inneren Produkte als auch für das \emph{duality Pairing} von $H^{-1}(\Omega)$ und $H^{1}_{0}(\Omega)$.
+Wir setzen $V = H^{1}_{0}(\Omega)$ und $H = L_{2}(\Omega)$ und verwenden diese Abkürzungen im Folgenden der notationellen Einfachheit halber.
+Bekanntlich handelt es sich dabei um separable Hilberträume und es existiert eine dichte stetige Einbettung $V \hookrightarrow H$.
+Durch Identifikation von $H$ mit seinem Dualraum $H'$ erhalten wir das Gelfand-Tripel $V \hookrightarrow H \hookrightarrow V'$, wobei $V' = (H^{1}_{0}(\Omega))' = H^{-1}(\Omega)$.
+Wie zuvor verwenden wir $\skprod{\cdot}{\cdot}$ mit entsprechendem Index sowohl für die inneren Produkte als auch für die duale Paarung.
 
-Seien nun $g \in L_{2}(0, T; H^{-1}(\Omega))$, $u_{0} \in L_{2}(\Omega)$, $\sigma \in \mathbb{R_{+}}$ und $\omega \in L_{\infty}(\Omega)$ gegeben.
-Wir wollen nun das parabolische Problem
+Es seien $c \in \mathbb{R}_{+}$ und $\omega \in L_{\infty}(\Omega)$ gegeben, dann definieren wir einen linearen Operator
 \begin{equation}
-    \begin{cases}
-        u_{t}(t) - \sigma \Delta u(t) + \omega u(t) = g(t) & \text{in}~H^{-1}(\Omega)\\
-        u(0) = u_{0} & \text{in}~L_{2}(\Omega)
-    \end{cases}
+    \label{eq:def_op_A}
+    A \colon V \to V', \quad \eta \mapsto A \eta = - c \Delta \eta + \omega \eta,
 \end{equation}
-lösen.
-
-\subsection{Herleitung einer Space-Time-Variationsformulierung} % (fold)
-
-Wir betrachten zunächst nur den \emph{Raum}-Differentialoperator $A \in \mathcal L(H^{1}_{0}(\Omega), H^{-1}(\Omega))$ der durch
+zudem sei ein $g \in L_{2}(I; V')$ und ein $u_{0} \in H$ geben.
+Wir interessieren uns nun für Lösungen der parabolischen partiellen Differentialgleichung \eqref{eq:allgemeine_parabolische_pde} mit $A$ aus \eqref{eq:def_op_A}, das heißt
 \begin{equation}
-    \eta \mapsto A \eta = - \sigma \Delta \eta + \omega \eta
+    \label{eq:parabolische_pde}
+    u_{t}(t) - c \Delta u(t) + \omega u(t) = g(t) \quad \text{in}~V',
+    \qquad
+    u(0) = u_{0} \quad \text{in}~H.
 \end{equation}
-gegeben ist und bestimmen die zugehörige Bilinearform $a \colon H^{1}_{0}(\Omega) \times H^{1}_{0}(\Omega) \to \mathbb{R}$ durch Multiplikation mit einer Testfunktion $\zeta \in H^{1}_{0}(\Omega)$ und anschließender Integration.
-Unter Verwendung der Greenschen Formel erhalten wir
+
+Bevor wir analog zu \autoref{sec:raum_zeit_variationsformulierung} eine Raum-Zeit-Variationsformulierung für \eqref{eq:parabolische_pde} angeben, betrachten wir zunächst den Operator $A$ genauer.
+
+Bezeichne mit $a(\cdot, \cdot)$ die zu $A$ zugehörige Bilinearform, das heißt es gilt $\skprod{A \eta}{\zeta}_{V' \times V} = a(\eta, \zeta)$ für alle $\eta, \zeta \in V$.
+Die Form von $a(\cdot, \cdot)$ lässt sich explizit angeben, denn es gilt\todo{ordentlich formatieren}
 \begin{equation}
-    \label{eq:a_bf}
+    \label{eq:bf_a}
     \begin{aligned}
         a(\eta, \zeta)
-        :&= \skprod{A \eta}{\zeta}_{V' \times V}
-        = \int_{\Omega} A \eta \cdot \zeta \diff x
-        % = \int_{\Omega} \left( - \sigma \Delta \eta + \omega \eta \right) \zeta \diff x
-        \\&= - \sigma \int_{\Omega} \Delta \eta \zeta \diff x + \int_{\Omega} \omega \eta \zeta \diff x
-        \\ &= \sigma \int_{\Omega} \skprod{\grad \eta}{\grad \zeta}_{\mathbb{R}^{n}} \diff x + \int_{\Omega} \omega \eta \zeta \diff x
-        \\&= \sigma \skprod{\grad \eta}{\grad \zeta}_{L_{2}(\Omega, \mathbb{R}^{n})} + \skprod{\omega \eta}{\zeta}_{L_{2}(\Omega)}.
+        &= \skprod{A \eta}{\zeta}_{V' \times V}
+        = \skprod{A \eta}{\zeta}_{H}
+        \\&= \skprod{- c \Delta \eta + \omega \eta}{\zeta}_{H}
+        = - c \skprod{\Delta \eta}{\zeta}_{H} + \skprod{\omega \eta}{\zeta}_{H}
+        \\&= -c \int_{\Omega} \Delta \eta \zeta \diff x + \skprod{\omega \eta}{\zeta}_{H}
+        = c \int_{\Omega} \skprod{\grad \eta}{\grad \zeta}_{\mathbb{R}^{n}} \diff x + \skprod{\omega \eta}{\zeta}_{H}
+        \\&= c \skprod{\grad \eta}{\grad \zeta}_{L_{2}(\Omega, \mathbb{R}^{n})} + \skprod{\omega \eta}{\zeta}_{L_{2}(\Omega)}.
     \end{aligned}
 \end{equation}
 
-Um nun eine Space-Time-Variationsformulierung für unser parabolisches Problem zu erhalten, definieren wir zunächst die benötigten Räume für \emph{Ansatz-} und \emph{Testfunktionen}\todo{Korrekte Bezeichnungen?}.
-Als Ansatzraum verwenden wir
-\begin{equation}
-    \mathcal X = L_{2}(0, T; H^{1}_{0}(\Omega)) \cap H^{1}(0, T; H^{-1}(\Omega))
-\end{equation}
-mit der Norm
-\begin{equation}
-    \norm{u}_{\mathcal X} = \left( \norm{u}_{L_{2}(0, T; H^{1}_{0}(\Omega))}^{2} + \norm{u_{t}}_{L_{2}(0, T; H^{-1}(\Omega))}^{2} \right)^{\frac 12}, \quad u \in \mathcal X
-\end{equation}
-und als Testraum
-\begin{equation}
-    \mathcal Y = L_{2}(0, T; H^{1}_{0}(\Omega)) \times L_{2}(\Omega)
-\end{equation}
-mit der induzierten Produktnorm
-\begin{equation}
-    \norm{v}_{\mathcal Y} = \left( \norm{v_{1}}_{L_{2}(0, T; H^{1}_{0}(\Omega))}^{2} + \norm{v_{2}}_{L_{2}(\Omega)}^{2} \right)^{\frac 12}, \quad v = (v_{1}, v_{2}) \in \mathcal Y.
-\end{equation}
-\todo{Normen einführen}
 
-Multiplikation mit $v = (v_{1}, v_{2}) \in \mathcal Y$ und Integration über die Zeit $t$ liefert uns nun das Variationsproblem: finde $u \in \mathcal X$ mit
+\begin{Lemma}
+    \label{lemma:a_bf_bounded_garding}
+    Sei $a \colon V \times V \to \mathbb{R}$ wie in \eqref{eq:bf_a}, also
+    \begin{equation}
+        a(\eta, \zeta) = c \skprod{\grad \eta}{\grad \zeta}_{L_{2}(\Omega, \mathbb{R}^{n})} + \skprod{\omega \eta}{\zeta}_{L_{2}(\Omega)}
+    \end{equation}
+    mit $c \in \mathbb{R}_{+}$ und $\omega \in L_{\infty}(\Omega)$.
+    Dann erfüllt $a(\cdot, \cdot)$ die folgenden Eigenschaften:
+    \begin{thmenumerate}
+        \item \emph{Beschränktheit:} es existiert eine Konstante $M_{a} > 0$ mit
+        \begin{equation}
+            \abs{a(\eta, \zeta)} \leq M_{a} \norm{\eta}_{V} \norm{\zeta}_{V}
+        \end{equation}
+        für alle $\eta, \zeta \in V$.
+        \label{lemma:a_bf_bounded_garding:1}
+        \item \emph{G\aa{}rding-Ungleichung:} es existieren Konstanten $\alpha > 0$ und $\lambda \geq 0$ mit
+        \begin{equation}
+                a(\eta, \eta) + \lambda \norm{\eta}_{H}^{2} \geq \alpha \norm{\eta}_{V}^{2}
+        \end{equation}
+        für alle $\eta \in V$.
+        \label{lemma:a_bf_bounded_garding:2}
+    \end{thmenumerate}
+
+    \begin{Beweis}
+    Wir zeigen zunächst die Beschränktheit.
+    Seien dazu $\eta, \zeta \in V = H^{1}_{0}(\Omega)$ beliebig.
+    Unter Verwendung der Dreiecks- und der Cauchy-Schwarz-Ungleichung erhalten wir
+    \begin{align}
+        \abs{a(\eta, \zeta)}
+        &= \abs{c \skprod{\grad \eta}{\grad \zeta}_{L_{2(\Omega, \mathbb{R}^{n})}} + \skprod{\omega \eta}{\zeta}_{L_{2}(\Omega)}}
+        \\&\leq c \abs{\skprod{\grad \eta}{\grad \zeta}_{L_{2(\Omega, \mathbb{R}^{n})}}} + \abs{\skprod{\omega \eta}{\zeta}_{L_{2}(\Omega)}}
+        \\&\leq c \norm{\grad \eta}_{L_{2}(\Omega)} \norm{\grad \zeta}_{L_{2}(\Omega)} + \norm{\omega}_{L_{\infty}(\Omega)} \norm{\eta}_{L_{2}(\Omega)} \norm{\zeta}_{L_{2}(\Omega)}
+        \\&\leq \max \left\{ c, \norm{\omega}_{L_{\infty}(\Omega)} \right\} \norm{\eta}_{H^{1}(\Omega)} \norm{\zeta}_{H^{1}(\Omega)}
+        \\&= M_{a} \norm{\eta}_{H^{1}(\Omega)} \norm{\zeta}_{H^{1}(\Omega)}
+    \end{align}
+    mit $M_{a} = \max \left\{ c, \norm{\omega}_{L_{\infty}(\Omega)} \right\}$.
+
+    Für die G\aa{}rding-Ungleichung seien nun $\eta \in V$ und $\lambda \in \mathbb{R}$.
+    Wir betrachten
+    \begin{align}
+        a(\eta, \eta) + \lambda \norm{\eta}^{2}_{L_{2}(\Omega)}
+        &= c \norm{\grad \eta}^{2}_{L_{2}(\Omega)} + \skprod{\omega \eta}{\eta}_{L_{2}(\Omega)} + \lambda \skprod{\eta}{\eta}_{L_{2}(\Omega)}
+        \\&= c \norm{\grad \eta}^{2}_{L_{2}(\Omega)} + \skprod{(\omega + \lambda) \eta}{\eta}_{L_{2}(\Omega)}.
+        \intertext{Wählen wir nun $\lambda = \norm{\omega}_{L_{\infty}(\Omega)} \geq 0$, dann gilt $\omega + \lambda \geq 0$ fast überall in $\Omega$ und wir erhalten die Abschätzung}
+        a(\eta, \eta) + \lambda \norm{\eta}^{2}_{L_{2}(\Omega)}
+        &\geq c \norm{\grad \eta}^{2}_{L_{2}(\Omega)},
+        \intertext{woraus wir durch Anwenden der Poincaré-Friedrichs-Ungleichung\todo{zitieren}}
+        a(\eta, \eta) + \lambda \norm{\eta}^{2}_{L_{2}(\Omega)}
+        &\geq c \gamma_{\Omega}^{2} \norm{\eta}^{2}_{H^{1}_{0}(\Omega)}
+        = \alpha \norm{\eta}^{2}_{H^{1}_{0}(\Omega)},
+    \end{align}
+    mit $\alpha = c \gamma_{\Omega}^{2}$, gewinnen.
+    \end{Beweis}
+\end{Lemma}
+
+Für die Raum-Zeit-Variationsformulierung verwenden wir die aus \eqref{eq:var_all_ansatzraum_x} und \eqref{eq:var_all_testraum_y} bekannten Ansatz- und Testfunktionenräume.
+Mit unserer konkreten Wahl $V = H^{1}_{0}(\Omega)$ und $H = L_{2}(\Omega)$ sind dies also
 \begin{equation}
-     b(u, v) = F(v) \qquad \text{für alle}~v \in \mathcal Y.
+    \label{eq:var_ansatzraum_testraum}
+    \mathcal X = L_{2}(I; H^{1}_{0}(\Omega)) \cap H^{1}(I; H^{-1}(\Omega))
+    \quad \text{und} \quad
+    \mathcal Y = L_{2}(I; H^{1}_{0}(\Omega)) \times L_{2}(\Omega).
 \end{equation}
-Dabei ist $b \colon \mathcal X \times \mathcal Y \to \mathbb{R}$ eine Bilinearform, gegeben durch
+
+Damit ergibt sich analog zu \autoref{sec:raum_zeit_variationsformulierung} das folgende Variationsproblem:
+
+Gegeben ein $g \in L_{2}(I; V')$ und ein $u_{0} \in H$. Finde ein $u \in \mathcal X$ mit
 \begin{equation}
-    b(u, v) = \int_{0}^{T} \skprod{u_{t}(t)}{v_{1}(t)}_{L_{2}(\Omega)} + a(u(t), v_{1}(t)) \diff t + \skprod{u(0)}{v_{2}}_{L_{2}(\Omega)}
+    b(u, v) = f(v) \quad \text{für alle}~v \in \mathcal Y,
 \end{equation}
-und $F \colon \mathcal Y \to \mathbb{R}$ das Funktional
+wobei $b(\cdot, \cdot) \colon \mathcal X \times \mathcal Y \to \mathbb{R}$ eine durch
 \begin{equation}
-    F(v) = \int_{0}^{T} \skprod{g(t)}{v_{1}(t)}_{L_{2}(\Omega)} \diff t + \skprod{u_{0}}{v_{2}}_{L_{2}(\Omega)}.
+    b(u, v)
+        = \int_{I} \skprod{u_{t}(t)}{v_{1}(t)}_{V' \times V} + a(u(t), v_{1}(t)) \diff t + \skprod{u(0)}{v_{2}}_{H}
+\end{equation}
+gegebene Bilinearform und $f(\cdot) \colon \mathcal Y \to \mathbb{R}$ definiert ist durch
+\begin{equation}
+    \label{eq:var_all_f_wiederholung}
+    f(v) = \int_{I} \skprod{g(t)}{v_{1}(t)}_{V' \times V} \diff t + \skprod{u_{0}}{v_{2}}_{H}.
 \end{equation}
 
 
@@ -113,62 +168,6 @@ und $F \colon \mathcal Y \to \mathbb{R}$ das Funktional
 \label{ssub:well_posedness}
 Um zu klären, ob und unter welchen Bedingungen das obige Variationsproblem \emph{well-posed} ist, das heißt eine eindeutige Lösung existiert, verweisen wir auf \cite{Schwab:2009ec}.
 Es reicht aus, Beschränktheit und eine G\aa{}rding-Ungleichung für die Bilinearform $a(\cdot, \cdot)$ nachzuweisen.
-
-\begin{Lemma}
-    \label{lemma:a_bf_bounded_garding}
-    Sei $a \colon H^{1}_{0}(\Omega) \times H^{1}_{0}(\Omega) \to \mathbb{R}$ wie in \eqref{eq:a_bf}, also
-    \begin{equation}
-        a(\eta, \zeta) = \sigma \skprod{\grad \eta}{\grad \zeta}_{L_{2}(\Omega, \mathbb{R}^{n})} + \skprod{\omega \eta}{\zeta}_{L_{2}(\Omega)}
-    \end{equation}
-    mit $\sigma \in \mathbb{R}$ und $\omega \in L_{\infty}(\Omega)$.
-    Dann erfüllt $a(\cdot, \cdot)$ die folgenden Eigenschaften:
-    \begin{thmenumerate}
-        \item \emph{Beschränktheit:} es existiert eine Konstante $M_{a} > 0$ mit
-        \begin{equation}
-            \abs{a(\eta, \zeta)} \leq M_{a} \norm{\eta}_{H^{1}_{0}(\Omega)} \norm{\zeta}_{H^{1}_{0}(\Omega)}
-        \end{equation}
-        für alle $\eta, \zeta \in H^{1}_{0}(\Omega)$.
-        \label{lemma:a_bf_bounded_garding:1}
-        \item \emph{G\aa{}rding-Ungleichung:} es existieren Konstanten $\alpha > 0$ und $\lambda \in \mathbb{R}$ mit
-        \begin{equation}
-                a(\eta, \eta) + \lambda \norm{\eta}_{L_{2}(\Omega)}^{2} \geq \alpha \norm{\eta}_{H^{1}_{0}(\Omega)}^{2}
-        \end{equation}
-        für alle $\eta \in H^{1}_{0}(\Omega)$.
-        \label{lemma:a_bf_bounded_garding:2}
-    \end{thmenumerate}
-
-    \begin{Beweis}
-    Wir zeigen zunächst die Beschränktheit.
-    Seien dazu $\eta, \zeta \in H^{1}_{0}(\Omega)$ beliebig.
-    Unter Verwendung der Dreiecks- und der Cauchy-Schwarz-Ungleichung erhalten wir
-    \begin{align}
-        \abs{a(\eta, \zeta)}
-        &= \abs{\sigma \skprod{\grad \eta}{\grad \zeta}_{L_{2(\Omega, \mathbb{R}^{n})}} + \skprod{\omega \eta}{\zeta}_{L_{2}(\Omega)}}
-        \\&\leq \abs{\sigma} \abs{\skprod{\grad \eta}{\grad \zeta}_{L_{2(\Omega, \mathbb{R}^{n})}}} + \abs{\skprod{\omega \eta}{\zeta}_{L_{2}(\Omega)}}
-        \\&\leq \abs{\sigma} \norm{\grad \eta}_{L_{2}(\Omega)} \norm{\grad \zeta}_{L_{2}(\Omega)} + \norm{\omega}_{L_{\infty}(\Omega)} \norm{\eta}_{L_{2}(\Omega)} \norm{\zeta}_{L_{2}(\Omega)}
-        \\&\leq \max \left\{ \abs{\sigma}, \norm{\omega}_{L_{\infty}(\Omega)} \right\} \norm{\eta}_{H^{1}_{0}(\Omega)} \norm{\zeta}_{H^{1}_{0}(\Omega)}
-        \\&= M_{a} \norm{\eta}_{H^{1}_{0}(\Omega)} \norm{\zeta}_{H^{1}_{0}(\Omega)}
-    \end{align}
-    mit $M_{a} = \max \left\{ \abs{\sigma}, \norm{\omega}_{L_{\infty}(\Omega)} \right\}$.
-
-    Für die G\aa{}rding-Ungleichung seien nun $\eta \in H^{1}_{0}(\Omega)$ und $\lambda \in \mathbb{R}$.
-    Wir betrachten
-    \begin{align}
-        a(\eta, \eta) + \lambda \norm{\eta}^{2}_{L_{2}(\Omega)}
-        &= \sigma \norm{\grad \eta}^{2}_{L_{2}(\Omega)} + \skprod{\omega \eta}{\eta}_{L_{2}(\Omega)} + \lambda \skprod{\eta}{\eta}_{L_{2}(\Omega)}
-        \\&= \sigma \norm{\grad \eta}^{2}_{L_{2}(\Omega)} + \skprod{(\omega + \lambda) \eta}{\eta}_{L_{2}(\Omega)}.
-        \intertext{Wählen wir nun $\lambda = \norm{\omega}_{L_{\infty}(\Omega)}$, dann gilt $\omega + \lambda \geq 0$ fast überall in $\Omega$ und wir erhalten die Abschätzung}
-        a(\eta, \eta) + \lambda \norm{\eta}^{2}_{L_{2}(\Omega)}
-        &\geq \sigma \norm{\grad \eta}^{2}_{L_{2}(\Omega)},
-        \intertext{woraus wir durch Anwenden der Poincaré-Friedrichs-Ungleichung}
-        a(\eta, \eta) + \lambda \norm{\eta}^{2}_{L_{2}(\Omega)}
-        &\geq \sigma \gamma_{\Omega}^{2} \norm{\eta}^{2}_{H^{1}_{0}(\Omega)}
-        = \alpha \norm{\eta}^{2}_{H^{1}_{0}(\Omega)},
-    \end{align}
-    mit $\alpha = \sigma \gamma_{\Omega}^{2}$, gewinnen.
-    \end{Beweis}
-\end{Lemma}
-
 
 Zusätzlich zur eindeutigen Lösbarkeit liefert uns \cite{Schwab:2009ec} auch Schranken für die Stetigkeits- beziehungsweise inf-sup-Konstanten.
 Dazu definieren wir zunächst
