@@ -33,7 +33,10 @@
 \usepackage{hypernat}
 
 % Fancyhdr-Ersatz für scrbook
-\usepackage[automark, headsepline]{scrlayer-scrpage}
+\usepackage[
+    automark,
+    % headsepline
+]{scrlayer-scrpage}
 
 % enums
 \usepackage{enumitem}
@@ -53,6 +56,9 @@
 % Querformatseiten
 % \usepackage{pdflscape}
 
+% Labels am Seitenrand anzeigen
+\usepackage{showlabels}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Mathematik
 
@@ -63,7 +69,7 @@
 \usepackage[amsmath, thmmarks, hyperref, thref]{ntheorem}
 
 % Setze Label-Nummern nur, wenn diese auch referenziert werden
-\mathtoolsset{showonlyrefs, showmanualtags}
+% \mathtoolsset{showonlyrefs, showmanualtags}
 
 \providecommand\given{} % so it exists
 \newcommand\SetSymbol[1][]{

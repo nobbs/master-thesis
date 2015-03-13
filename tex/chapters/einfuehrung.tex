@@ -28,17 +28,16 @@ Wir sind nun an Lösungen der parabolischen partiellen Differentialgleichung
 \end{equation}
 interessiert.
 
-Von der Bilinearform $a(\cdot, \cdot)$ fordern wir außerdem Stetigkeit, das heißt die Existenz einer Konstante $0 < M_{a} < \infty$, so dass für alle $\eta, \zeta \in V$ die Ungleichung
+Von der Bilinearform $a(\cdot, \cdot)$ fordern wir außerdem Stetigkeit, das heißt die Existenz einer Konstante $0 < M_{a} < \infty$, so dass die Ungleichung
 \begin{equation}
     \label{eq:allgemeine_parabolische_pde:bf_stetig}
-    \abs{a(\eta, \zeta)} \leq M_{a} \norm{\eta}_{V} \norm{\zeta}_{V}
+    \abs{a(\eta, \zeta)} \leq M_{a} \norm{\eta}_{V} \norm{\zeta}_{V} \quad \text{für alle}~\eta, \zeta \in V
 \end{equation}
 erfüllt ist, und eine G\aa rding-Ungleichung, das heißt es existieren Konstanten $\alpha > 0$ und $\lambda \geq 0$ mit
 \begin{equation}
     \label{eq:allgemeine_parabolische_pde:bf_garding}
-    a(\eta, \eta) + \lambda \norm{\eta}_{H}^{2} \geq \alpha \norm{\eta}_{V}^{2}
+    a(\eta, \eta) + \lambda \norm{\eta}_{H}^{2} \geq \alpha \norm{\eta}_{V}^{2} \quad \text{für alle}~\eta \in V.
 \end{equation}
-für alle $\eta \in V$.
 
 % section allgemeine_problemstellung (end)
 
@@ -103,6 +102,7 @@ Um Existenz und Eindeutigkeit von Lösungen für das Variationsproblem \eqref{eq
 Folgender Satz fasst das Ganze zusammen:
 
 \begin{Satz}[{{\cite[Theorem 5.1]{Schwab:2009ec}}}]
+    \label{thm:schwab09:theorem51}
     Seien $\mathcal X$ und $\mathcal Y$ gegeben wie in \eqref{eq:var_all_ansatzraum_x} respektive \eqref{eq:var_all_testraum_y} und sei $B \in \mathcal L(\mathcal X, \mathcal Y')$ definiert durch
     \begin{equation}
         \label{eq:var_all_gross_b}
@@ -112,16 +112,79 @@ Folgender Satz fasst das Ganze zusammen:
     Dann ist $B$ stetig invertierbar und es gilt
     \begin{equation}
         \label{eq:var_all_norm_B}
-        \norm{B}_{\mathcal L(\mathcal X, \mathcal Y')} \leq \frac{\sqrt{2\max(1, M_{a}^{2}) + M_{e}^{2}}}{\max(\sqrt{1 + 2 \lambda^{2} \rho^{4}}, \sqrt{2})}
+        \norm{B}_{\mathcal L(\mathcal X, \mathcal Y')} \leq \frac{\sqrt{2\max\Set{1, M_{a}^{2}} + M_{e}^{2}}}{\max\Set{\sqrt{1 + 2 \lambda^{2} \rho^{4}}, \sqrt{2}}}
     \end{equation}
     sowie
     \begin{equation}
         \label{eq:var_all_norm_B_inv}
-        \norm{B^{-1}}_{\mathcal L(\mathcal Y', \mathcal X)} \leq \frac{e^{2 \lambda T} \max(\sqrt{1 + 2 \lambda^{2} \rho^{4}}, \sqrt{2}) \sqrt{2 \max(\alpha^{-2}, 1) + M_{e}^{2}}}{\min(\alpha M_{a}^{-2}, \alpha)}.
+        \norm{B^{-1}}_{\mathcal L(\mathcal Y', \mathcal X)} \leq \frac{e^{2 \lambda T} \max\Set{\sqrt{1 + 2 \lambda^{2} \rho^{4}}, \sqrt{2}} \sqrt{2 \max\Set{ \alpha^{-2}, 1} + M_{e}^{2}}}{\min\Set{\alpha M_{a}^{-2}, \alpha}}.
     \end{equation}
 
     \begin{Beweis}
         Siehe \cite[Appendix A]{Schwab:2009ec}.
+        % \begin{Beweis}
+        %     Wir weisen die Bedingungen von \thref{satz:babuska-aziz} nach.
+
+        %     Zunächst sei anzumerken, dass wir in \eqref{eq:garding-inequality} ohne Einschränkung $\lambda = 0$ wählen können.
+        %     Wähle
+        %     \begin{equation}
+        %         u(t) = \hat u(t) e^{\lambda t}, \quad v_{1}(t) = \hat v_{1}(t) e^{- \lambda t}, \quad g(t) = \hat g(t) e^{\lambda t},
+        %     \end{equation}
+        %     dann sieht man, dass $u$ die Gleichung \eqref{eq:bilinearform} genau dann löst, wenn $\hat u$ die Gleichung
+        %     \begin{equation}
+        %         \label{eq:bilinearform_tmp}
+        %         \begin{gathered}
+        %             \int_{I} \skprod{\hat{u}_{t}(t)}{\hat{v}_{1}(t)}_{H} + \lambda \skprod{\hat{u}(t)}{\hat{v}_{1}(t)}_{H} + a(t; \hat{u}(t), \hat{v}_{1}(t)) \diff t + \skprod{\hat{u}(0)}{v_{2}}_{H}
+        %                 \\= \int_{I} \skprod{\hat{g}(t)}{\hat{v}_{1}(t)}_{H} \diff t + \skprod{u_{0}}{v_{2}}_{H}
+        %         \end{gathered}
+        %     \end{equation}
+        %     für alle $\hat{v} = (\hat{v}_{1}, v) \in \mathcal Y$ löst.
+
+        %     \paragraph{Stetigkeit} % (fold)
+        %     \label{par:stetigkeit}
+        %     Betrachte für $u \in \mathcal X$ und $v = (v_{1}, v_{2}) \in \mathcal Y$ die Bilinearform $b(u, v)$.
+        %     Nach Anwenden der Dreiecksungleichung erhalten wir
+        %     \begin{equation}
+        %         \label{eq:stetigkeit_zweiter_term}
+        %         \abs{b(u, v)} = \int_{I} \abs{\skprod{u_{t}(t)}{v_{1}(t)}_{H}} + \abs{a(u(t), v_{1}(t))} \diff t + \abs{\skprod{u(0)}{v_{2}}_{H}}.
+        %     \end{equation}
+        %     Betrachten wir zunächst den hinteren Term, dann erhalten wir unter Verwendung der Cauchy-Schwarz-Ungleichung und der Einbettungs-Konstante $M_{e}$ die Abschätzung
+        %     \begin{equation}
+        %         \abs{\skprod{u(0)}{v_{2}}_{H}} \leq \norm{u(0)}_{H} \norm{v_{2}}_{H} \leq M_{e} \norm{u}_{X} \norm{v_{2}}_{H}.
+        %     \end{equation}
+        %     Widmen wir uns nun dem ersten Term und wenden ebenfalls die Cauchy-Schwarz-Ungleichung sowie die Stetigkeit von $a$ an, dann erhalten wir
+        %     \begin{align}
+        %         &\int_{I} \abs{\skprod{u_{t}(t)}{v_{1}(t)}_{H}} + \abs{a(u(t), v_{1}(t))} \diff t
+        %         \\&\qquad
+        %         \leq \int_{I} \norm{u_{t}(t)}_{H} \norm{v_{1}(t)}_{H} + M_{a} \norm{u(t)}_{H} \norm{v_{1}(t)}_{H} \diff t
+        %         \\&\qquad
+        %         \leq \int_{I} \max\{1, M_{a}\} \norm{v_{1}(t)}_{H} \left(  \norm{u_{t}(t)}_{H} + \norm{u(t)}_{H} \right) \diff t
+        %         \intertext{mittels Hölder-Ungleichung lässt sich dies weiter abschätzen zu}
+        %         &\qquad
+        %         \leq \left( \int_{I} \max\{1, M_{a}\}^{2} \norm{v_{1}(t)}_{H}^{2} \diff t \right)^{\frac 12} \left( \int_{I} \left( \norm{u_{t}(t)}_{H} + \norm{u(t)}_{H} \right)^{2} \diff t \right)^{\frac 12},
+        %         \intertext{und unter Verwendung der Youngschen-Ungleichung zu}
+        %         &\qquad
+        %         \leq \left( \int_{I} \max\{1, M_{a}\}^{2} \norm{v_{1}(t)}_{H}^{2} \diff t \right)^{\frac 12} \left( \int_{I} 2 \left( \norm{u_{t}(t)}_{H}^{2} + \norm{u(t)}_{H}^{2} \right) \diff t \right)^{\frac 12}
+        %         \intertext{was nach Definition der verwendeten Normen auch geschrieben werden kann als}
+        %         &\qquad
+        %         = \sqrt{2 \max\{1, M_{a}^{2}\}} \norm{u}_{\mathcal X} \norm{v_{1}}_{L_{2}(I; V)}
+        %     \end{align}
+        %     Zusammen mit \eqref{eq:stetigkeit_zweiter_term} liefert dies nach einer erneuten Anwendung der Cauchy-Schwarz-Ungleichung
+        %     \begin{align}
+        %     \abs{b(u, v)}
+        %     &\leq \sqrt{2 \max\{1, M_{a}\}^{2}} \norm{u}_{\mathcal X} \norm{v_{1}}_{L_{2}(I; V)} + M_{e} \norm{u}_{X} \norm{v_{2}}_{H}
+        %     \\
+        %     &\leq \norm{u}_{\mathcal X} \left( \norm{v_{1}}_{L_{2}(I; V)}^{2} + \norm{v_{2}}_{H}^{2} \right)^{\frac 12} \left( 2 \max\{1, M_{a}\}^{2} + M_{e}^{2} \right)^{\frac 12}
+        %     \\
+        %     &= \sqrt{2 \max\{1, M_{a}^{2}\} + M_{e}^{2}} \norm{u}_{\mathcal X} \norm{v}_{\mathcal Y}.
+        %     \end{align}
+        %     Damit folgt die Stetigkeit.
+        %     % paragraph stetigkeit (end)
+
+        %     \paragraph{Inf-Sup-Bedingung} % (fold)
+        %     \label{par:inf_sup_bedingung}
+
+        %     % paragraph inf_sup_bedingung (end)
     \end{Beweis}
 \end{Satz}
 
@@ -208,14 +271,20 @@ Um die Konvergenz von \eqref{eq:all_affiner_operator} sicherzustellen, fordern w
     Die Operatorfamilie $\{ A_{j} \}_{j \geq 0}$ erfülle folgende Eigenschaften:
     \begin{thmenumerate}
         \item Der \emph{mean field}-Operator\todo{Übersetzung} ~$A_{0} \in \mathcal L(X, Y')$ sei stetig invertierbar, das heißt es existiert ein $\gamma_{0} > 0$ mit
-        \begin{equation}
-            \label{eq:kunoth:ass2_gamma_0}
-            \inf_{0 \neq u \in X} \sup_{0 \neq v \in Y} \frac{a_{0}(u, v)}{\norm{u}_{X} \norm{v}_{Y}} \geq \gamma_{0}
-            \quad \text{und} \quad
-            \inf_{0 \neq v \in Y} \sup_{0 \neq u \in X} \frac{a_{0}(u, v)}{\norm{u}_{X} \norm{v}_{Y}} \geq \gamma_{0}.
-        \end{equation}
+        \begin{subequations}
+            % \label{eq:kunoth:ass2_gamma_0}
+            \begin{align}
+                \inf_{0 \neq u \in X} \sup_{0 \neq v \in Y} \frac{a_{0}(u, v)}{\norm{u}_{X} \norm{v}_{Y}} \geq \gamma_{0}
+                \label{eq:kunoth:ass2_gamma_0_a}
+                \intertext{und}
+                \inf_{0 \neq v \in Y} \sup_{0 \neq u \in X} \frac{a_{0}(u, v)}{\norm{u}_{X} \norm{v}_{Y}} \geq \gamma_{0}.
+                \label{eq:kunoth:ass2_gamma_0_b}
+            \end{align}
+            \noeqref{eq:kunoth:ass2_gamma_0_a,eq:kunoth:ass2_gamma_0_b}
+        \end{subequations}
         \item Die \emph{fluctuation}-Operatoren\todo{Übersetzung} ~$\{ A_{j} \}_{j \geq 1}$ seien \emph{klein} relativ zu $A_{0}$ im folgenden Sinne: es existiert eine Konstante $0 < \kappa < 1$ so dass
         \begin{equation}
+            \label{eq:kunoth:ass2_abs_reihe}
             \sum_{j = 1}^{\infty} \norm{A_{j}}_{\mathcal L(X, Y')} \leq \kappa \gamma_{0}
         \end{equation}
         gilt.

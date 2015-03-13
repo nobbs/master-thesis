@@ -2,9 +2,11 @@
 
 \documentclass[
   % draft,
+  % final,
   a4paper,
   11pt,
   twoside=semi,
+  % oneside,
   parskip,
   toc=bibliography,
   toc=listof,
@@ -14,9 +16,6 @@
 \input{packages}
 \input{commands}
 \input{meta}
-
-\usepackage{showlabels}
-
 
 % Glossar (Symbolverzeichnis etc)
 \usepackage[
@@ -32,7 +31,7 @@
 \begin{document}
 
     % Deckblack / Titelseite
-    % \include{misc/deckblatt}
+    \include{misc/deckblatt}
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %%% Frontmatter-Teil
@@ -48,6 +47,7 @@
     \tableofcontents
 
     % Abbildungs-, Tabellen- und Symbolverzeichnis
+    % \listtheorems
     % \listoffigures
     % \listoftables
     % \glsaddall
@@ -62,9 +62,9 @@
     % \input{chapters/einleitung}
     % \input{chapters/grundlagen}
     \input{chapters/einfuehrung}
+    \input{chapters/problemstellung}
 
-    \input{temp/wellposed}
-    \input{temp/dereindimfall}
+    % \input{temp/dereindimfall}
     % \input{temp/saetze}
     % \input{temp/sammlung}
 
