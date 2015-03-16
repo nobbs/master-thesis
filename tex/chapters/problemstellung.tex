@@ -3,7 +3,7 @@
 \chapter{Problemstellung, einmal bunt gemischt}
 
 In diesem Kapitel führen wir die in \cite{Stasiak:2011ba} motivierte parabolische partielle Differentialgleichung ein und betrachten danach eine parametrisierte Variante dieser.
-Anschließend nutzen wir die Aussagen aus Kapitel \ref{cha:einfuehrung} um die Eigenschaften dieses Problems zu diskutieren.
+Anschließend nutzen wir die Aussagen aus \autoref{cha:einfuehrung} um die Eigenschaften dieses Problems zu diskutieren.
 
 \section*{Zu klärende Fragen} % (fold)
 \label{sub:zu_kl_rende_fragen}
@@ -40,12 +40,11 @@ Anschließend nutzen wir die Aussagen aus Kapitel \ref{cha:einfuehrung} um die E
 \label{sub:problemstellung}
 
 Es sei $0 < T < \infty$ und $I = [0, T]$.
-Wir bezeichnen mit $\Omega$ eine beschränkte Teilmenge des $\mathbb{R}^{n}$ mit Lipschitz-Rand.
-
+Mit $\Omega \subset \mathbb{R}^{n}$ bezeichnen wir eine beschränkte Teilmenge des $\mathbb{R}^{n}$ mit Lipschitz-Rand.
 Wir setzen $V = H^{1}_{0}(\Omega)$ und $H = L_{2}(\Omega)$ und verwenden diese Abkürzungen im Folgenden der notationellen Einfachheit halber.
 Bekanntlich handelt es sich dabei um separable Hilberträume und es existiert eine dichte stetige Einbettung $V \hookrightarrow H$.
-Durch Identifikation von $H$ mit seinem Dualraum $H'$ erhalten wir das Gelfand-Tripel $V \hookrightarrow H \hookrightarrow V'$, wobei $V' = (H^{1}_{0}(\Omega))' = H^{-1}(\Omega)$.
-Wie zuvor verwenden wir $\skprod{\cdot}{\cdot}$ mit entsprechendem Index sowohl für die inneren Produkte als auch für die duale Paarung.
+Durch Identifikation von $H$ mit seinem Dualraum $H'$ erhalten wir das sogenannte Gelfand-Tripel $V \hookrightarrow H \hookrightarrow V'$, wobei $V' = (H^{1}_{0}(\Omega))' = H^{-1}(\Omega)$.
+Wie zuvor verwenden wir $\skprod{\cdot}{\cdot}$ mit entsprechendem Index sowohl für die inneren Produkte als auch für die duale Paarung auf $V' \times V$.
 
 Es seien $c \in \mathbb{R}_{+}$ und $\omega \in L_{\infty}(\Omega)$ gegeben, dann definieren wir einen linearen Operator
 \begin{equation}
@@ -91,15 +90,13 @@ Die Form von $a(\cdot, \cdot)$ lässt sich explizit angeben, denn es gilt\todo{o
     \begin{thmenumerate}
         \item \emph{Beschränktheit:} es existiert eine Konstante $M_{a} > 0$ mit
         \begin{equation}
-            \abs{a(\eta, \zeta)} \leq M_{a} \norm{\eta}_{V} \norm{\zeta}_{V}
+            \abs{a(\eta, \zeta)} \leq M_{a} \norm{\eta}_{V} \norm{\zeta}_{V} \quad \text{für alle}~\eta, \zeta \in V.
         \end{equation}
-        für alle $\eta, \zeta \in V$.
         \label{lemma:a_bf_bounded_garding:1}
         \item \emph{G\aa{}rding-Ungleichung:} es existieren Konstanten $\alpha > 0$ und $\lambda \geq 0$ mit
         \begin{equation}
-                a(\eta, \eta) + \lambda \norm{\eta}_{H}^{2} \geq \alpha \norm{\eta}_{V}^{2}
+                a(\eta, \eta) + \lambda \norm{\eta}_{H}^{2} \geq \alpha \norm{\eta}_{V}^{2} \quad \text{für alle}~\eta \in V.
         \end{equation}
-        für alle $\eta \in V$.
         \label{lemma:a_bf_bounded_garding:2}
     \end{thmenumerate}
 
@@ -146,22 +143,24 @@ Mit unserer konkreten Wahl $V = H^{1}_{0}(\Omega)$ und $H = L_{2}(\Omega)$ sind 
 
 Damit ergibt sich analog zu \autoref{sec:raum_zeit_variationsformulierung} das folgende Variationsproblem:
 
-Gegeben ein $g \in L_{2}(I; V')$ und ein $u_{0} \in H$. Finde ein $u \in \mathcal X$ mit
-\begin{equation}
-    \label{eq:varprob}
-    b(u, v) = f(v) \quad \text{für alle}~v \in \mathcal Y,
-\end{equation}
-wobei $b(\cdot, \cdot) \colon \mathcal X \times \mathcal Y \to \mathbb{R}$ eine durch
-\begin{equation}
-    \label{eq:buv}
-    b(u, v)
-        = \int_{I} \skprod{u_{t}(t)}{v_{1}(t)}_{V' \times V} + a(u(t), v_{1}(t)) \diff t + \skprod{u(0)}{v_{2}}_{H}
-\end{equation}
-gegebene Bilinearform und $f(\cdot) \colon \mathcal Y \to \mathbb{R}$ definiert ist durch
-\begin{equation}
-    \label{eq:var_all_f_wiederholung}
-    f(v) = \int_{I} \skprod{g(t)}{v_{1}(t)}_{V' \times V} \diff t + \skprod{u_{0}}{v_{2}}_{H}.
-\end{equation}
+\begin{Problem}
+    Gegeben ein $g \in L_{2}(I; V')$ und ein $u_{0} \in H$. Finde ein $u \in \mathcal X$ mit
+    \begin{equation}
+        \label{eq:varprob}
+        b(u, v) = f(v) \quad \text{für alle}~v \in \mathcal Y,
+    \end{equation}
+    wobei $b(\cdot, \cdot) \colon \mathcal X \times \mathcal Y \to \mathbb{R}$ eine durch
+    \begin{equation}
+        \label{eq:buv}
+        b(u, v)
+            = \int_{I} \skprod{u_{t}(t)}{v_{1}(t)}_{V' \times V} + a(u(t), v_{1}(t)) \diff t + \skprod{u(0)}{v_{2}}_{H}
+    \end{equation}
+    gegebene Bilinearform und $f(\cdot) \colon \mathcal Y \to \mathbb{R}$ definiert ist durch
+    \begin{equation}
+        \label{eq:var_all_f_wiederholung}
+        f(v) = \int_{I} \skprod{g(t)}{v_{1}(t)}_{V' \times V} \diff t + \skprod{u_{0}}{v_{2}}_{H}.
+    \end{equation}
+\end{Problem}
 
 Durch Anwendung von \thref{thm:schwab09:theorem51} erhalten wir nun die Wohldefiniertheit des obigen Variationsproblems und zugleich Schranken für die Operatoren.
 
@@ -191,19 +190,29 @@ Durch Anwendung von \thref{thm:schwab09:theorem51} erhalten wir nun die Wohldefi
 \section{Parametrische Variante} % (fold)
 \label{sec:parametrische_variante}
 
-Da es unser Ziel ist, das Variationsproblem \eqref{eq:varprob} für viele $\omega \in L_{\infty}(\Omega)$ zu berechnen (mittels Reduzierte-Basis-Methode), das heißt, $\omega$ lässt sich als Parameter auffassen.
-
-Um die Ergebnisse aus \autoref{sec:parametrisches_problem}, das heißt insbesondere \thref{thm:kunoth:theorem21}, verwenden zu können, müssen wir den Operator $A \in \mathcal L(V, V')$ aus \eqref{eq:def_op_A} zunächst zu einem parametrischen Operator $A(\sigma)$ mit $\sigma \in \mathcal S$, wobei $\mathcal S \subset \mathbb{R}^{\mathbb{N}}$ ein geeigneter Parameterraum ist, umschreiben.
+Wir wollen nun aus dem gerade beschriebenen Variationsproblem eine parametrische Variante gewinnen und aufbauend auf \autoref{sec:parametrisches_problem} Aussagen dazu treffen.
+Dazu müssen wir den Operator $A \in \mathcal L(V, V')$ aus \eqref{eq:def_op_A} zunächst zu einem parametrischen Operator $A(\sigma)$ mit $\sigma \in \mathcal S$, wobei $\mathcal S \subset \mathbb{R}^{\mathbb{N}}$ ein geeigneter Parameterraum ist, umschreiben.
 Dabei beschränken wir uns auf den affinen Fall \eqref{eq:all_affiner_operator}.
-Diesen können wir erreichen, indem wir $\omega$ als Reihenentwicklung eines passend gewählten Funktionensystems $\Set{ \varphi_{j} }_{j \in \mathbb{N}} \subset Z \subset L_{\infty}(\Omega)$ mit Koeffizienten $\sigma = \Set{\sigma_{j}}_{j \in \mathbb{N}}$ schreiben, das heißt
+
+Dies erreichen wir, indem wir $\omega$ als Reihenentwicklung eines passend gewählten Funktionensystems $\Set{ \varphi_{j} }_{j \in \mathbb{N}} \subset Z \subset L_{\infty}(\Omega)$ mit Koeffizienten $\sigma = \Set{\sigma_{j}}_{j \in \mathbb{N}}$ schreiben, das heißt
 \begin{equation}
     \label{eq:reihenentwicklung_omega}
-    \omega = \sum_{j = 1}^{\infty} \sigma_{j} \varphi_{j}
+    \omega = \sum_{j = 1}^{\infty} \sigma_{j} \varphi_{j}.
 \end{equation}
+
+Der Einfachheit halber beschränken wir uns auf $\mathcal S = [-1, 1]^{\mathbb{N}}$, das heißt $\mathcal S$ sei der Einheitsball aus $\ell^{\infty}(\mathbb{N})$.
+
+Wie man \todo{wo genau?} schnell einsieht ist für die Konvergenz von \eqref{eq:reihenentwicklung_omega} hinreichend, dass $\Set{ \norm{\varphi_{j}}_{L_{\infty}(\Omega)} }_{j \in \mathbb{N}} \in \ell^{1}(\mathbb{N})$ gilt.
+Daraus folgt auch
+\begin{equation}
+    \norm{\omega}_{L_{\infty}(\Omega)} \leq \sum_{j = 1}^{\infty} \norm{\varphi_{j}}_{L_{\infty}(\Omega)} < \infty,
+\end{equation}
+insbesondere ist $\norm{\omega(\sigma)}_{L_{\infty}(\Omega)}$ also gleichmäßig in $\sigma$ beschränkt.
+Diese Eigenschaft wird auch benötigt, denn dadurch erhalten wir die für \thref{thm:kunoth:theorem21} notwendigen, von $\sigma$ unabhängigen, Schranken $\beta_{1}$ und $\beta_{2}$.
 
 Die Wahl des Funktionensystems $\Set{ \varphi_{j} }_{j \in \mathbb{N}} \subset Z \subset L_{\infty}(\Omega)$ ist entscheidend für die Konvergenz von \eqref{eq:reihenentwicklung_omega} in einem passend zu wählenden Unterraum $Z$ von $L_{\infty}(\Omega)$ und die Anwendbarkeit von \thref{thm:kunoth:theorem21}, da es unmittelbaren Einfluss auf die Erfüllbarkeit von \thref{thm:kunoth:assumption1} respektive \thref{thm:kunoth:assumption2} hat.
 
-Für den Allgemeinen\todo{TODO} Fall $\Omega \subset \mathbb{R}^{n}$, $n \geq 1$, noch unklar!
+TODO: Für den Allgemeinen Fall $\Omega \subset \mathbb{R}^{n}$, $n \geq 1$, noch unklar!
 
 % section parametrische_variante (end)
 
@@ -211,12 +220,12 @@ Für den Allgemeinen\todo{TODO} Fall $\Omega \subset \mathbb{R}^{n}$, $n \geq 1$
 \label{sec:der_eindimensionale_fall}
 
 In diesem Abschnitt betrachten wir der Einfachheit halber zunächst den Fall einer Raumdimension, das heißt $\Omega \subset \mathbb{R}$ sei ein Intervall.
-Ohne Beschränktung der Allgemeinheit wählen wir $\Omega = [0, 1]$.
+Ohne Beschränkung der Allgemeinheit wählen wir $\Omega = [0, 1]$.
 
 \subsubsection{Entwicklung von $\omega$} % (fold)
 \label{ssub:entwicklung_von_}
 
-Um die Aussagen aus \thref{sec:parametrisches_problem} zu verwenden, wollen wir den Operator $A \eta = - c \Delta \eta + \omega \eta$ als affin parametrischen Operator der Form
+Um die Aussagen aus \autoref{sec:parametrisches_problem} zu verwenden, wollen wir den Operator $A \eta = - c \Delta \eta + \omega \eta$ als affin parametrischen Operator der Form
 \begin{equation}
     \label{eq:aff_zerlegung_A}
     A(\sigma) = A_{0} + \sum_{j \geq 1} \sigma_{j} A_{j}
@@ -243,6 +252,31 @@ Die zugehörigen Bilinearformen lassen sich ebenfalls direkt angeben, es gilt
 
 \subsubsection{Wahl der Funktionen $\varphi_{j}$} % (fold)
 \label{ssub:wahl_der_funktionen_}
+
+TODO: Die Wahl der Funktionen $\Set{ \varphi_{j} }_{j \in \mathbb{N}}$ ist noch offen, mögliche Kandidaten sind:
+
+\begin{enumerate}
+    \item Sinusfunktionen, konkret skalieren wir die Funktionen abhängig von einer Konstanten $\epsilon > 0$ um Konvergenz in $L_{\infty}(\Omega)$ zu forcieren.
+    Eine Möglichkeit ist zum Beispiel
+    \begin{equation}
+        \varphi_{j} = \frac{\sin(\pi j \cdot)}{(\pi j)^{1 + \epsilon}}, \quad j \geq 1.
+    \end{equation}
+    \item Sinus- und Kosinusfunktionen (vgl. Fourierreihen).
+    Wir setzen also $\Set{ \varphi_{j} }_{j \in \mathbb{Z}}$ mit
+    \begin{equation}
+        \varphi_{j} = \begin{cases}
+            a_{j} \sin(2 \pi j \cdot),    &j \geq 1 \\
+            a_{0},                      &j = 0 \\
+            a_{j} \cos(2 \pi j \cdot),    &j \leq -1.
+        \end{cases}
+    \end{equation}
+    Hierbei ist die Konvergenz in $L_{\infty}(\Omega)$ im Allgemeinen aber nicht gegeben.
+    Unter geeignete Voraussetzungen an $\omega$ erhalten wir Aussagen über das Abklingverhalten der Fourierkoeffizienten.
+    Dieses Verhalten wird wegen $\mathcal S = [-1, 1]^{\mathbb{N}}$ und der benötigten Umskalierung auf die Faktoren $a_{j}$ übertragen, sodass damit Konvergenz in $L_{\infty}(\Omega)$ erreicht werden kann.
+
+    Hinreichend wäre zum Beispiel, dass $\omega$ zwei mal stetig differenzierbar ist.
+    Eventuell reicht auch bereits Hölder-Stetigkeit mit Exponent $\alpha > \frac{1}{2}$.
+\end{enumerate}
 
 Die Wahl der Funktionen $\varphi_{j}$ entscheidet über die Konvergenz und weitere Eigenschaften der Reihenentwicklung \eqref{eq:omega_reihenentwicklung}.
 
@@ -292,7 +326,7 @@ Wir weisen nun einige Eigenschaften für diese Wahl der $\varphi_{j}$ nach.
     das heißt $\{ \varphi_{j} \}_{j \geq 1}$ bilden ein Orthogonalsystem in $H^{1}(\Omega)$.
 \end{Lemma}
 
-\begin{Lemma}[Konvergenz von $\omega$]
+\begin{Lemma}[Konvergenz der Reihenentwicklung]
     Sei $\epsilon > 0$ und
     \begin{equation}
         \tilde \sigma = \left(  \frac{\sigma_{j}}{j^{\epsilon}} \right)_{j \in \mathbb{N}} \in \ell^{1},
@@ -346,12 +380,12 @@ Ist $\epsilon > 1$, dann ist wegen $\sigma \in \mathcal S = [-1, 1]^{\mathbb{N}}
 
     \begin{Beweis}
         Wir weisen zunächst die inf-sup-Bedingungen für $a_{0}(\cdot, \cdot)$ nach und bestimmen die Konstante $\gamma_{0}$.
-        \todo{zitieren}Äquivalent zur inf-sup-Bedingung \eqref{eq:kunoth:ass2_gamma_0_a} ist, dass für alle $u \in V$ ein $v_{u} \in V$ und Konstanten $C_{1}, C_{2} > 0$ existieren, so dass
+        Nach \thref{lemma:sauter:2.1.48} reicht es, für alle $u \in V$ ein $v_{u} \in V$ und von $u$ und $v_{u}$ unabhängige Konstanten $C_{1}, C_{2} > 0$ mit
         \begin{equation}
             a_{0}(u, v_{u}) \geq C_{1} \norm{u}_{V}^{2} \quad \text{und} \quad \norm{v_{u}}_{V} \leq C_{2} \norm{u}_{V}
         \end{equation}
-        gilt.
-        Dann ist insbesondere $\gamma_{0} = \frac{C_{1}}{C_{2}}$.
+        zu finden.
+        Dann ist die inf-sup-Bedingung \eqref{eq:kunoth:ass2_gamma_0_a} mit $\gamma_{0} = \frac{C_{1}}{C_{2}}$ erfüllt.
 
         Sei nun also $u \in V = H^{1}_{0}(\Omega)$ beliebig.
         Wir wählen $v_{u} = u \in V$, es gilt also $C_{2} = 1$.

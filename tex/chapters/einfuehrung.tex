@@ -270,19 +270,18 @@ Um die Konvergenz von \eqref{eq:all_affiner_operator} sicherzustellen, fordern w
     \label{thm:kunoth:assumption2}
     Die Operatorfamilie $\{ A_{j} \}_{j \geq 0}$ erfülle folgende Eigenschaften:
     \begin{thmenumerate}
-        \item Der \emph{mean field}-Operator\todo{Übersetzung} ~$A_{0} \in \mathcal L(X, Y')$ sei stetig invertierbar, das heißt es existiert ein $\gamma_{0} > 0$ mit
+        \item Der \emph{Mean Field}-Operator\todo{Übersetzung} ~$A_{0} \in \mathcal L(X, Y')$ sei stetig invertierbar, das heißt es existiert ein $\gamma_{0} > 0$ mit
         \begin{subequations}
-            % \label{eq:kunoth:ass2_gamma_0}
+            \label{eq:kunoth:ass2_gamma_0}
             \begin{align}
-                \inf_{0 \neq u \in X} \sup_{0 \neq v \in Y} \frac{a_{0}(u, v)}{\norm{u}_{X} \norm{v}_{Y}} \geq \gamma_{0}
                 \label{eq:kunoth:ass2_gamma_0_a}
+                \inf_{0 \neq u \in X} \sup_{0 \neq v \in Y} \frac{a_{0}(u, v)}{\norm{u}_{X} \norm{v}_{Y}} \geq \gamma_{0}
                 \intertext{und}
-                \inf_{0 \neq v \in Y} \sup_{0 \neq u \in X} \frac{a_{0}(u, v)}{\norm{u}_{X} \norm{v}_{Y}} \geq \gamma_{0}.
                 \label{eq:kunoth:ass2_gamma_0_b}
+                \inf_{0 \neq v \in Y} \sup_{0 \neq u \in X} \frac{a_{0}(u, v)}{\norm{u}_{X} \norm{v}_{Y}} \geq \gamma_{0}.
             \end{align}
-            \noeqref{eq:kunoth:ass2_gamma_0_a,eq:kunoth:ass2_gamma_0_b}
         \end{subequations}
-        \item Die \emph{fluctuation}-Operatoren\todo{Übersetzung} ~$\{ A_{j} \}_{j \geq 1}$ seien \emph{klein} relativ zu $A_{0}$ im folgenden Sinne: es existiert eine Konstante $0 < \kappa < 1$ so dass
+        \item Die \emph{Fluctuation}-Operatoren\todo{Übersetzung} ~$\{ A_{j} \}_{j \geq 1}$ seien \emph{klein} relativ zu $A_{0}$ im folgenden Sinne: es existiert eine Konstante $0 < \kappa < 1$ so dass
         \begin{equation}
             \label{eq:kunoth:ass2_abs_reihe}
             \sum_{j = 1}^{\infty} \norm{A_{j}}_{\mathcal L(X, Y')} \leq \kappa \gamma_{0}
@@ -372,7 +371,29 @@ und $f(\cdot) \colon \mathcal Y \to \mathbb{R}$ ein Funktional gegeben durch
         \sup_{\sigma \in \mathcal S} \norm{(\partial^{\nu}_{\sigma} u)(\sigma)}_{\mathcal X} \leq C_{0} \norm{f}_{\mathcal Y'} \abs{\nu}! \tilde{b}^{\nu}
     \end{equation}
     für alle $\nu \in \mathfrak F$, wobei $f$ wie in \eqref{eq:var_all_f_parametrisch} gegeben ist.
+
+    \begin{Beweis}
+        TODO: Bedingungen von \thref{thm:kunoth:assumption1} nachrechnen.
+        Zu (i): Folgt aus \thref{thm:schwab09:theorem51}, da $M_{a}, \alpha, \lambda$ unabhänging von $\sigma$.
+        Zu (ii): Folgt aus nachfolgendem \thref{lemma:norm_B_beschraenkt_durch_norm_A}.
+    \end{Beweis}
 \end{Satz}
+
+\begin{Lemma}
+    \label{lemma:norm_B_beschraenkt_durch_norm_A}
+    Es gilt
+    \begin{equation}
+        \norm{\partial^{\nu}_{\sigma} B(\sigma)}_{\mathcal L(\mathcal X, \mathcal Y')}
+        \leq
+        \norm{\partial^{\nu}_{\sigma} A(\sigma)}_{\mathcal L(V, V')}
+        \quad
+        \text{für alle}~\sigma \in \mathcal S, \nu \in \mathfrak F \setminus \Set{ 0 }.
+    \end{equation}
+
+    \begin{Beweis}
+        TODO!
+    \end{Beweis}
+\end{Lemma}
 
 % subsubsection aus_cite_kunoth_2013ef (end)
 

@@ -53,4 +53,35 @@
     \end{equation}
 \end{Satz}
 
+\begin{Lemma}[vgl {{\cite[Remark 2.1.48]{Sauter:9_WoPZ0Y}}}]
+    \label{lemma:sauter:2.1.48}
+    Seien $X$ und $Y$ zwei reflexive Banachräume und $a \colon X \times Y \to \mathbb{R}$ eine Bilinearform.
+    Finden wir für jedes $x \in X$ ein $y_{x} \in Y$, so dass
+    \begin{equation}
+        \label{eq:lemma:sauter:2.1.48:eq1}
+        \abs{a(x, y_{x})} \geq C_{1} \norm{x}_{X}^{2} \quad \text{und} \quad \norm{y_{x}}_{Y} \leq C_{2} \norm{x}_{X}
+    \end{equation}
+    mit von $x$ und $y_{x}$ unabhängigen Konstanten $C_{1}, C_{2} > 0$ gilt, dann folgt daraus die inf-sup-Bedingung
+    \begin{equation}
+    \label{eq:lemma:sauter:2.1.48:inf_sup}
+        \inf_{0 \neq x \in X} \sup_{0 \neq y \in Y} \frac{a(x, y)}{\norm{x}_{X}\norm{y}_{Y}} \geq \gamma > 0
+    \end{equation}
+    mit $\gamma = \frac{C_{1}}{C_{2}}$.
+
+    \begin{Beweis}
+        Seien $x \in X$ und $y_{x} \in Y$ so, dass \eqref{eq:lemma:sauter:2.1.48:eq1} erfüllt ist.
+        Dann gilt
+        \begin{align}
+            \inf_{0 \neq x \in X} \sup_{0 \neq y \in Y} \frac{\abs{a(x, y)}}{\norm{x}_{X} \norm{y}_{Y}}
+            &\geq
+            \inf_{0 \neq x \in X} \frac{\abs{a(x, y_{x})}}{\norm{x}_{X} \norm{y_{x}}_{Y}}
+            \\&\geq
+            \inf_{0 \neq x \in X} \frac{C_{1} \norm{x}^{2}_{X}}{\norm{x}_{X} C_{2} \norm{x}_{X}}
+            =
+            \frac{C_{1}}{C_{2}}
+            > 0.
+        \end{align}
+    \end{Beweis}
+\end{Lemma}
+
 % section sonstiges (end)
