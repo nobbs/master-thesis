@@ -6,7 +6,7 @@ times = zeros(length(Mspan), length(Qspan));
 density = zeros(length(Mspan), length(Qspan));
 
 for ii = 1:length(Mspan)
-    for jj = 1:length(Qspan)
+    for jj = 1:length(Qtspan)
         num_M = Mspan(ii);
         num_Q = Qspan(jj);
         
