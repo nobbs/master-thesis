@@ -2,7 +2,7 @@ tspan = [0 1];
 xspan = [0 1];
 
 num_M = 15;
-num_Q = 15;
+num_Q = 10;
 
 % Anzahl Basisfunktionen für X
 num_X_j = num_M;
@@ -28,7 +28,7 @@ legendre_polys_derivative = shifted_legendre_polynomials_derivative(max(num_X_k,
 
 % \omega und Anfangswert
 w = @(x) 1 + 0 .* x;
-u0 = @(x) x .* sin(pi*x);
+u0 = @(x) sin(pi*x);
 g = @(t, x) 0 .* t + 0 .* x;
 
 
@@ -48,12 +48,12 @@ for j = 1:num_X_j
 
                 tmp2 = 0;
                 if j == l && k == m
-                    tmp2 = ((2 * pi * j)^2 / (2 * (k - 1) + 1)) / 2;
+                    tmp2 = ((pi * j)^2 / (2 * (k - 1) + 1)) / 2;
                 end;
 
                 tmp3 = 0;
                 if k == m
-                    tmp3 = (1 / (2 * (k - 1) + 1)) * quadgk(@(x) w(x) .* sin(2*pi*j*x) .* sin(2*pi*l*x), xspan(1), xspan(2));
+                    tmp3 = (1 / (2 * (k - 1) + 1)) * quadgk(@(x) w(x) .* sin(pi*j*x) .* sin(pi*l*x), xspan(1), xspan(2));
                 end;
                 
                 x_pos = (j - 1) * num_X_k + k;
@@ -88,12 +88,12 @@ F = sparse(dim_Y, 1);
 for l = 1:num_Y_l
     for m = 1:num_Y_m
         pos = (l - 1) * num_Y_m + m;
-        F(pos) = integral2(@(t, x) g(t, x) .* sin(2*pi*l*x) .* legendre_polys{m}(t), tspan(1), tspan(2), xspan(1), xspan(2));
+        F(pos) = integral2(@(t, x) g(t, x) .* sin(pi*l*x) .* legendre_polys{m}(t), tspan(1), tspan(2), xspan(1), xspan(2));
     end
 end
 for n = 1:num_Y_n
     pos = num_Y_l * num_Y_m + n;
-    F(pos) = integral(@(x) u0(x) .* sin(2*pi*n*x), xspan(1), xspan(2));
+    F(pos) = integral(@(x) u0(x) .* sin(pi*n*x), xspan(1), xspan(2));
 end
 
 % LGS lösen
@@ -103,13 +103,15 @@ u = B \ F;
 ufun = @(t, x) 0;
 for j = 1:num_X_j
     for k = 1:num_X_k
-        ufun = @(t, x) ufun(t, x) + u((j - 1) * num_X_k + k) * sin(2*pi*j*x) * legendre_polys{k}(t);
+        ufun = @(t, x) ufun(t, x) + u((j - 1) * num_X_k + k) * sin(pi*j*x) .* legendre_polys{k}(t);
     end
 end
 
-figure(2)
-tgrid = linspace(tspan(1), tspan(2), 50);
-xgrid = linspace(xspan(1), xspan(2), 50);
-[T, X] = meshgrid(tgrid, xgrid);
-mesh(T, X, ufun(T, X));
+if t_plot
+    figure(2)
+    tgrid = linspace(tspan(1), tspan(2), 50);
+    xgrid = linspace(xspan(1), xspan(2), 50);
+    [T, X] = meshgrid(tgrid, xgrid);
+    mesh(T, X, ufun(T, X));
+end
 
