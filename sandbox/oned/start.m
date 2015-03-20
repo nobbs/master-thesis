@@ -11,9 +11,9 @@ tspan = [0 1];
 xspan = [0 1];
 
 % Anzahl der Sinus-Basisfunktionen für die Raumvariable $x$.
-% num_M = 25;
+num_M = 20;
 % Anzahl der Legendre-Polynome für die Zeitvariable $t$.
-% num_Q = 15;
+num_Q = 20;
 
 % Gesamtzahl der Basisfunktionen für $\mathcal X_N$ festlegen.
 num_X_j = num_M;
@@ -113,59 +113,52 @@ end
 % Steifigkeitsmatrix aus den berechneten Werten erzeugen.
 B = sparse(idy, idx, entry, dim_Y, dim_X);
 
-% % Für den Lastvektor erzeugen wir drei neue Hilfslisten
-% idx = [];
-% idy = [];
-% entry = [];
-% 
-% % Wie zuvor betrachten wir die beiden Komponenten von $\mathcal Y_N$
-% % getrennt. Zunächst also $v = (v_1, 0)$.
-% for l = 1:num_Y_l
-%     for m = 1:num_Y_m
-%         value = integral2(@(t, x) g(t, x) .* sin(pi*l*x) .* ...
-%                           legendre_P(t, m - 1), ...
-%                           tspan(1), tspan(2), xspan(1), xspan(2));
-%         if value ~= 0
-%             idx(end + 1) = (l - 1) * num_Y_m + m;
-%             idy(end + 1) = 1;
-%             entry(end + 1) = value;
-%         end
-%     end
-% end
-% % Und nun $v = (0, v_2)$.
-% for n = 1:num_Y_n
-%     value = integral(@(x) u0(x) .* sin(pi*n*x), xspan(1), xspan(2));
-%     if value ~= 0
-%         idx(end + 1) = num_Y_l * num_Y_m + n;
-%         idy(end + 1) = 1;
-%         entry(end + 1) = value;
-%     end
-% end
-% 
-% F = sparse(idx, idy, entry, dim_Y, 1);
-% 
-% %% Das lineare Gleichungssystem $B u = F$ lösen und die Lösung aufbauen.
-% 
-% % Dazu wird zunächst das LGS gelöst.
-% u = B \ F;
-% 
-% % Und anschließend der daraus resultierende Koeffizientenvektor verwendet
-% % um die Lösung zu rekonstruieren.
-% ufun = @(t, x) 0;
-% for j = 1:num_X_j
-%     for k = 1:num_X_k
-%         ufun = @(t, x) ufun(t, x) + u((j - 1) * num_X_k + k) * ...
-%                 sin(pi*j*x) .* legendre_P(t, k - 1);
-%     end
-% end
-% 
-% % Und weil's so toll ist, plotten wir die Lösung bei Bedarf auch noch.
-% t_plot = 1;
-% if t_plot
-%     figure(2)
-%     tgrid = linspace(tspan(1), tspan(2), 50);
-%     xgrid = linspace(xspan(1), xspan(2), 50);
-%     [T, X] = meshgrid(tgrid, xgrid);
-%     mesh(T, X, ufun(T, X));
-% end
+% Für den Lastvektor erzeugen wir drei neue Hilfslisten
+idx = [];
+idy = [];
+entry = [];
 
+% Wie zuvor betrachten wir die beiden Komponenten von $\mathcal Y_N$
+% getrennt. Zunächst also $v = (v_1, 0)$.
+for l = 1:num_Y_l
+    for m = 1:num_Y_m
+        value = integral2(@(t, x) g(t, x) .* sin(pi*l*x) .* ...
+                          legendre_P(t, m - 1), ...
+                          tspan(1), tspan(2), xspan(1), xspan(2));
+        if value ~= 0
+            idx(end + 1) = (l - 1) * num_Y_m + m;
+            idy(end + 1) = 1;
+            entry(end + 1) = value;
+        end
+    end
+end
+% Und nun $v = (0, v_2)$.
+for n = 1:num_Y_n
+    value = integral(@(x) u0(x) .* sin(pi*n*x), xspan(1), xspan(2));
+    if value ~= 0
+        idx(end + 1) = num_Y_l * num_Y_m + n;
+        idy(end + 1) = 1;
+        entry(end + 1) = value;
+    end
+end
+
+F = sparse(idx, idy, entry, dim_Y, 1);
+
+%% Das lineare Gleichungssystem $B u = F$ lösen und die Lösung aufbauen.
+
+% Dazu wird zunächst das LGS gelöst.
+u = B \ F;
+
+% Und anschließend der daraus resultierende Koeffizientenvektor verwendet
+% um die Lösung zu rekonstruieren.
+ufun = @(t, x) reconstruct_solution(t, x, num_X_j, num_X_k, u);
+
+% Und weil's so toll ist, plotten wir die Lösung bei Bedarf auch noch.
+t_plot = 1;
+if t_plot
+    figure(2)
+    tgrid = linspace(tspan(1), tspan(2), 33);
+    xgrid = linspace(xspan(1), xspan(2), 33);
+    [T, X] = meshgrid(tgrid, xgrid);
+    mesh(T, X, ufun(T, X));
+end
