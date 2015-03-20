@@ -16,6 +16,7 @@
 % Bessere Standard-Schriftart
 \usepackage{lmodern}
 
+% Fraktur-Schriftsatz
 \usepackage{eufrak}
 
 % Typographische Kleinigkeiten
@@ -35,7 +36,7 @@
 % Fancyhdr-Ersatz für scrbook
 \usepackage[
     automark,
-    % headsepline
+    headsepline
 ]{scrlayer-scrpage}
 
 % enums
@@ -43,22 +44,8 @@
 \newlist{thmenumerate}{enumerate}{1}
 \setlist[thmenumerate]{label={\upshape(\roman*)}, align=left, widest=iii, leftmargin=*}
 
-% todos
-\usepackage[textwidth=3cm,german,textsize=footnotesize]{todonotes}
- \setlength{\marginparwidth}{3cm}
-
-% Blindtext
-\usepackage{blindtext}
-\blindmathtrue
-
 % Dashed Linien...
 \usepackage{dashrule}
-
-% Querformatseiten
-% \usepackage{pdflscape}
-
-% Labels am Seitenrand anzeigen
-% \usepackage{showlabels}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Mathematik
@@ -76,3 +63,20 @@
 \newcommand\SetSymbol[1][]{
    \nonscript\,#1\vert\nonscript\,\mathopen{}\allowbreak}
 \DeclarePairedDelimiterX\Set[1]{\lbrace}{\rbrace}{ \renewcommand\given{\SetSymbol[\delimsize]} #1 }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Nebensächliches
+
+% Querformatseiten
+% \usepackage{pdflscape}
+
+% Labels am Seitenrand anzeigen
+% \usepackage{showlabels}
+
+% todos
+% \usepackage[textwidth=3cm,german,textsize=footnotesize]{todonotes}
+% \setlength{\marginparwidth}{3cm}
+
+% Blindtext
+% \usepackage{blindtext}
+% \blindmathtrue{}

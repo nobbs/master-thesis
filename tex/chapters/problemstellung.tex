@@ -1,40 +1,9 @@
 %!TEX root = ../main.tex
 
-\chapter{Problemstellung, einmal bunt gemischt}
+\chapter{Überschrift in Arbeit}
 
 In diesem Kapitel führen wir die in \cite{Stasiak:2011ba} motivierte parabolische partielle Differentialgleichung ein und betrachten danach eine parametrisierte Variante dieser.
 Anschließend nutzen wir die Aussagen aus \autoref{cha:einfuehrung} um die Eigenschaften dieses Problems zu diskutieren.
-
-\section*{Zu klärende Fragen} % (fold)
-\label{sub:zu_kl_rende_fragen}
-
-\begin{enumerate}
-    \item Well-posedness von
-    \begin{equation}
-        u_{t} = \Delta u - \omega u + f, \quad u(0) = u_{0}
-    \end{equation}
-    für $\omega \in L_{\infty}(\Omega)$, $\Omega$ beschränkt mit Lipschitz-Rand.
-    Genauer: \cite[Theorem 5.1]{Schwab:2009ec}  nachweisen für obiges Problem, d.h.
-    \begin{itemize}
-        \item inf-sup-Bedingungen und so weiter nachrechnen \todo{noch offen \dots}
-        \item Konstanten (in Abhängigkeit von $\omega$) bestimmen \todo{noch offen \dots}
-    \end{itemize}
-    \item \todo{Alles noch offen \dots}Ab hier Bezug auf \cite{Kunoth:2013ef}.
-        Entwicklung des Parameters
-    \begin{equation}
-        \omega = \sum_{j = 0}^{\infty} \sigma_{j} \varphi_{j},
-    \end{equation}
-    Zu klären:
-    \begin{itemize}
-        \item Konvergenz? In welchem Raum? Zum Beispiel $Z \hookrightarrow L_{\infty}(\Omega)$, $Z = H^{1}(\Omega)$.
-        \item Bedingungen an $\sigma_{j}$? Zum Beispiel $\abs{\sigma_{j}} \leq 1$.
-        \item Welche $\varphi_{j}$? Möglich mit $\varphi_{j} = \sin(j \pi \cdot)$ oder $\sin(j \pi \cdot) / j \pi$ oder $\sin(j \pi \cdot) / (j \pi)^{1 + \epsilon}$? Je nach verwendetem Raum anders normalisiert etc.
-        \item Randwerte? Homogene machbar mit obigen $\sin$-Funktionen und $\sigma_{0} = 0$. Periodische mit passender Wahl von $\sigma_{0}$. Sonst?
-    \end{itemize}
-    \item Wie sieht der Operator $G$ aus und wie sieht eine brauchbare Zerlegung in $G = G_{0} + \sum_{j} \sigma_{j} G_{j}$ aus?
-    \item Nachweisen, dass $G_{j}$ beschränkt bzw. die Konvergenz erfüllt.
-    \item Ist \cite[Assumption 2]{Kunoth:2013ef} erfüllt?
-\end{enumerate}
 
 \section{Problemstellung} % (fold)
 \label{sub:problemstellung}
@@ -44,26 +13,30 @@ Mit $\Omega \subset \mathbb{R}^{n}$ bezeichnen wir eine beschränkte Teilmenge d
 Wir setzen $V = H^{1}_{0}(\Omega)$ und $H = L_{2}(\Omega)$ und verwenden diese Abkürzungen im Folgenden der notationellen Einfachheit halber.
 Bekanntlich handelt es sich dabei um separable Hilberträume und es existiert eine dichte stetige Einbettung $V \hookrightarrow H$.
 Durch Identifikation von $H$ mit seinem Dualraum $H'$ erhalten wir das sogenannte Gelfand-Tripel $V \hookrightarrow H \hookrightarrow V'$, wobei $V' = (H^{1}_{0}(\Omega))' = H^{-1}(\Omega)$.
-Wie zuvor verwenden wir $\skprod{\cdot}{\cdot}$ mit entsprechendem Index sowohl für die inneren Produkte als auch für die duale Paarung auf $V' \times V$.
+Wie zuvor verwenden wir $\skprod{\blank}{\blank}$ mit entsprechendem Index sowohl für die inneren Produkte als auch für die duale Paarung auf $V' \times V$.
 
-Es seien $c \in \mathbb{R}_{+}$ und $\omega \in L_{\infty}(\Omega)$ gegeben, dann definieren wir einen linearen Operator
+Seien $c \in \mathbb{R}_{+}$ und $\omega \in L_{\infty}(\Omega)$ gegeben, dann definieren wir den linearen Operator $A$ als
 \begin{equation}
     \label{eq:def_op_A}
-    A \colon V \to V', \quad \eta \mapsto A \eta = - c \Delta \eta + \omega \eta,
+    A \colon V \to V', \quad \eta \mapsto A \eta = - c \Delta \eta + \omega \eta.
 \end{equation}
-zudem sei ein $g \in L_{2}(I; V')$ und ein $u_{0} \in H$ geben.
-Wir interessieren uns nun für Lösungen der parabolischen partiellen Differentialgleichung \eqref{eq:allgemeine_parabolische_pde} mit $A$ aus \eqref{eq:def_op_A}, das heißt
+
+Wir interessieren uns nun für Lösungen der parabolischen partiellen Differentialgleichung \eqref{eq:allgemeine_parabolische_pde} mit $A$ aus \eqref{eq:def_op_A}.
+\begin{Problem}
+Seien $g \in L_{2}(I; V')$ und $u_{0} \in H$ gegeben.
+Gesucht ist eine Lösung $u$ von
 \begin{equation}
     \label{eq:parabolische_pde}
     u_{t}(t) - c \Delta u(t) + \omega u(t) = g(t) \quad \text{in}~V',
     \qquad
     u(0) = u_{0} \quad \text{in}~H.
 \end{equation}
+\end{Problem}
 
-Bevor wir analog zu \autoref{sec:raum_zeit_variationsformulierung} eine Raum-Zeit-Variationsformulierung für \eqref{eq:parabolische_pde} angeben, betrachten wir zunächst den Operator $A$ genauer.
+Bevor wir analog zu \autoref{sec:raum_zeit_variationsformulierung} eine Raum-Zeit-Variationsformulierung für \eqref{eq:parabolische_pde} angeben, weisen wir zunächst einige Eigenschaften von $A$ nach.
 
-Bezeichne mit $a(\cdot, \cdot)$ die zu $A$ zugehörige Bilinearform, das heißt es gilt $\skprod{A \eta}{\zeta}_{V' \times V} = a(\eta, \zeta)$ für alle $\eta, \zeta \in V$.
-Die Form von $a(\cdot, \cdot)$ lässt sich explizit angeben, denn es gilt\todo{ordentlich formatieren}
+Bezeichne mit $a(\blank, \blank)$ die zu $A$ zugehörige Bilinearform, es gilt also $\skprod{A \eta}{\zeta}_{V' \times V} = a(\eta, \zeta)$ für alle $\eta, \zeta \in V$.
+Die Form von $a(\blank, \blank)$ lässt sich explizit angeben, denn wegen $V = H^{1}_{0}(\Omega)$ erhalten wir
 \begin{equation}
     \label{eq:bf_a}
     \begin{aligned}
@@ -80,24 +53,26 @@ Die Form von $a(\cdot, \cdot)$ lässt sich explizit angeben, denn es gilt\todo{o
 
 
 \begin{Lemma}
-    \label{lemma:a_bf_bounded_garding}
+\label{lemma:a_bf_bounded_garding}
     Sei $a \colon V \times V \to \mathbb{R}$ wie in \eqref{eq:bf_a}, also
     \begin{equation}
         a(\eta, \zeta) = c \skprod{\grad \eta}{\grad \zeta}_{L_{2}(\Omega, \mathbb{R}^{n})} + \skprod{\omega \eta}{\zeta}_{L_{2}(\Omega)}
     \end{equation}
     mit $c \in \mathbb{R}_{+}$ und $\omega \in L_{\infty}(\Omega)$.
-    Dann erfüllt $a(\cdot, \cdot)$ die folgenden Eigenschaften:
+    Dann erfüllt $a(\blank, \blank)$ die folgenden Eigenschaften:
     \begin{thmenumerate}
-        \item \emph{Beschränktheit:} es existiert eine Konstante $M_{a} > 0$ mit
+        \item\label{lemma:a_bf_bounded_garding:1}
+        \emph{Beschränktheit:} es gilt
         \begin{equation}
-            \abs{a(\eta, \zeta)} \leq M_{a} \norm{\eta}_{V} \norm{\zeta}_{V} \quad \text{für alle}~\eta, \zeta \in V.
+            \abs{a(\eta, \zeta)} \leq M_{a} \norm{\eta}_{V} \norm{\zeta}_{V} \quad \text{für alle}~\eta, \zeta \in V
         \end{equation}
-        \label{lemma:a_bf_bounded_garding:1}
-        \item \emph{G\aa{}rding-Ungleichung:} es existieren Konstanten $\alpha > 0$ und $\lambda \geq 0$ mit
+        mit $M_{a} = \max\Set{c, \norm{\omega}_{L_{\infty}(\Omega)} } \geq 0$.
+        \item\label{lemma:a_bf_bounded_garding:2}
+        \emph{G\aa{}rding-Ungleichung:} es gilt
         \begin{equation}
-                a(\eta, \eta) + \lambda \norm{\eta}_{H}^{2} \geq \alpha \norm{\eta}_{V}^{2} \quad \text{für alle}~\eta \in V.
+                a(\eta, \eta) + \lambda \norm{\eta}_{H}^{2} \geq \alpha \norm{\eta}_{V}^{2} \quad \text{für alle}~\eta \in V
         \end{equation}
-        \label{lemma:a_bf_bounded_garding:2}
+        mit $\alpha = c \gamma_{\Omega}^{2} > 0$ und $\lambda = \norm{\omega}_{L_{\infty}(\Omega)} \geq 0$, wobei $\gamma_{\Omega}$ die Poincaré-Friedrichs-Konstante ist.
     \end{thmenumerate}
 
     \begin{Beweis}
@@ -108,11 +83,10 @@ Die Form von $a(\cdot, \cdot)$ lässt sich explizit angeben, denn es gilt\todo{o
         \abs{a(\eta, \zeta)}
         &= \abs{c \skprod{\grad \eta}{\grad \zeta}_{L_{2(\Omega, \mathbb{R}^{n})}} + \skprod{\omega \eta}{\zeta}_{L_{2}(\Omega)}}
         \\&\leq c \abs{\skprod{\grad \eta}{\grad \zeta}_{L_{2(\Omega, \mathbb{R}^{n})}}} + \abs{\skprod{\omega \eta}{\zeta}_{L_{2}(\Omega)}}
-        \\&\leq c \norm{\grad \eta}_{L_{2}(\Omega)} \norm{\grad \zeta}_{L_{2}(\Omega)} + \norm{\omega}_{L_{\infty}(\Omega)} \norm{\eta}_{L_{2}(\Omega)} \norm{\zeta}_{L_{2}(\Omega)}
-        \\&\leq \max \left\{ c, \norm{\omega}_{L_{\infty}(\Omega)} \right\} \norm{\eta}_{H^{1}(\Omega)} \norm{\zeta}_{H^{1}(\Omega)}
-        \\&= M_{a} \norm{\eta}_{H^{1}(\Omega)} \norm{\zeta}_{H^{1}(\Omega)}
+        \\&\leq c \norm{\grad \eta}_{L_{2}(\Omega, \mathbb{R}^{n})} \norm{\grad \zeta}_{L_{2}(\Omega, \mathbb{R}^{n})} + \norm{\omega}_{L_{\infty}(\Omega)} \norm{\eta}_{L_{2}(\Omega)} \norm{\zeta}_{L_{2}(\Omega)}
+        \\&\leq \max \Set{ c, \norm{\omega}_{L_{\infty}(\Omega)} } \norm{\eta}_{H^{1}(\Omega)} \norm{\zeta}_{H^{1}(\Omega)}
+        \\&= M_{a} \norm{\eta}_{V} \norm{\zeta}_{V}.
     \end{align}
-    mit $M_{a} = \max(c, \norm{\omega}_{L_{\infty}(\Omega)} )$.
 
     Für die G\aa{}rding-Ungleichung seien nun $\eta \in V$ und $\lambda \in \mathbb{R}$.
     Wir betrachten
@@ -123,17 +97,17 @@ Die Form von $a(\cdot, \cdot)$ lässt sich explizit angeben, denn es gilt\todo{o
         \intertext{Wählen wir nun $\lambda = \norm{\omega}_{L_{\infty}(\Omega)} \geq 0$, dann gilt $\omega + \lambda \geq 0$ fast überall in $\Omega$ und wir erhalten die Abschätzung}
         a(\eta, \eta) + \lambda \norm{\eta}^{2}_{L_{2}(\Omega)}
         &\geq c \norm{\grad \eta}^{2}_{L_{2}(\Omega)},
-        \intertext{woraus wir durch Anwenden der Poincaré-Friedrichs-Ungleichung \eqref{eq:grundlagen:poincare_friedrichs_ungleichung}}
+        \intertext{woraus wir durch Anwenden der Poincaré-Friedrichs-Ungleichung \ref{satz:grundlagen:poincare_friedrichs_ungleichung}}
         a(\eta, \eta) + \lambda \norm{\eta}^{2}_{L_{2}(\Omega)}
         &\geq c \gamma_{\Omega}^{2} \norm{\eta}^{2}_{H^{1}_{0}(\Omega)}
-        = \alpha \norm{\eta}^{2}_{H^{1}_{0}(\Omega)},
+        = \alpha \norm{\eta}^{2}_{H^{1}_{0}(\Omega)}
     \end{align}
-    mit $\alpha = c \gamma_{\Omega}^{2}$, gewinnen.
+    folgern.
     \end{Beweis}
 \end{Lemma}
 
 Für die Raum-Zeit-Variationsformulierung verwenden wir die aus \eqref{eq:var_all_ansatzraum_x} und \eqref{eq:var_all_testraum_y} bekannten Ansatz- und Testfunktionenräume.
-Mit unserer konkreten Wahl $V = H^{1}_{0}(\Omega)$ und $H = L_{2}(\Omega)$ sind dies also
+Mit unserer konkreten Wahl $V = H^{1}_{0}(\Omega)$ und $H = L_{2}(\Omega)$ lauten diese also
 \begin{equation}
     \label{eq:var_ansatzraum_testraum}
     \mathcal X = L_{2}(I; H^{1}_{0}(\Omega)) \cap H^{1}(I; H^{-1}(\Omega))
@@ -149,27 +123,28 @@ Damit ergibt sich analog zu \autoref{sec:raum_zeit_variationsformulierung} das f
         \label{eq:varprob}
         b(u, v) = f(v) \quad \text{für alle}~v \in \mathcal Y,
     \end{equation}
-    wobei $b(\cdot, \cdot) \colon \mathcal X \times \mathcal Y \to \mathbb{R}$ eine durch
+    wobei $b(\blank, \blank) \colon \mathcal X \times \mathcal Y \to \mathbb{R}$ die durch
     \begin{equation}
         \label{eq:buv}
         b(u, v)
             = \int_{I} \skprod{u_{t}(t)}{v_{1}(t)}_{V' \times V} + a(u(t), v_{1}(t)) \diff t + \skprod{u(0)}{v_{2}}_{H}
     \end{equation}
-    gegebene Bilinearform und $f(\cdot) \colon \mathcal Y \to \mathbb{R}$ definiert ist durch
+    gegebene Bilinearform und $f(\blank) \colon \mathcal Y \to \mathbb{R}$ definiert ist durch
     \begin{equation}
         \label{eq:var_all_f_wiederholung}
         f(v) = \int_{I} \skprod{g(t)}{v_{1}(t)}_{V' \times V} \diff t + \skprod{u_{0}}{v_{2}}_{H}.
     \end{equation}
 \end{Problem}
 
-Durch Anwendung von \thref{thm:schwab09:theorem51} erhalten wir nun die Wohldefiniertheit des obigen Variationsproblems und zugleich Schranken für die Operatoren.
+Durch Anwenden von \thref{thm:schwab09:theorem51} erhalten wir nun die Wohldefiniertheit des obigen Variationsproblems und zugleich Schranken für die Operatoren.
 
 \begin{Lemma}
-    Seien $\mathcal X$ und $\mathcal Y$ gegeben wie in \eqref{eq:var_ansatzraum_testraum} und sei $B \in \mathcal L (\mathcal X, \mathcal Y')$ definiert durch
+\label{lemma:2.2}
+    Seien $\mathcal X$ und $\mathcal Y$ gegeben wie in \eqref{eq:var_ansatzraum_testraum} und sei $B \colon \mathcal X \to \mathcal Y'$ definiert durch
     \begin{equation}
         \skprod{Bu}{v}_{\mathcal Y' \times \mathcal Y}  = b(u, v), \quad u \in \mathcal X,~ v \in \mathcal Y,
     \end{equation}
-    mit $b(\cdot, \cdot)$ wie in \eqref{eq:buv}.
+    mit $b(\blank, \blank)$ wie in \eqref{eq:buv}.
     Dann ist $B$ stetig invertierbar und es gilt
     \begin{equation}
         \norm{B}_{\mathcal L(\mathcal X, \mathcal Y')}
@@ -192,146 +167,161 @@ Durch Anwendung von \thref{thm:schwab09:theorem51} erhalten wir nun die Wohldefi
 
 Wir wollen nun aus dem gerade beschriebenen Variationsproblem eine parametrische Variante gewinnen und aufbauend auf \autoref{sec:parametrisches_problem} Aussagen dazu treffen.
 Dazu müssen wir den Operator $A \in \mathcal L(V, V')$ aus \eqref{eq:def_op_A} zunächst zu einem parametrischen Operator $A(\sigma)$ mit $\sigma \in \mathcal S$, wobei $\mathcal S \subset \mathbb{R}^{\mathbb{N}}$ ein geeigneter Parameterraum ist, umschreiben.
-Dabei beschränken wir uns auf den affinen Fall \eqref{eq:all_affiner_operator}.
+Dabei beschränken wir uns auf den Fall affiner parametrischer Abhängigkeit \eqref{eq:all_affiner_operator}.
+Der Einfachheit halber wählen wir $\mathcal S = [-1, 1]^{\mathbb{N}}$, das heißt $\mathcal S$ sei die Einheitskugel aus $\ell^{\infty}(\mathbb{N})$.
 
-Dies erreichen wir, indem wir $\omega$ als Reihenentwicklung eines passend gewählten Funktionensystems $\Set{ \varphi_{j} }_{j \in \mathbb{N}} \subset Z \subset L_{\infty}(\Omega)$ mit Koeffizienten $\sigma = \Set{\sigma_{j}}_{j \in \mathbb{N}}$ schreiben, das heißt
+Sei $\Set{ \varphi_{j} }_{j \in \mathbb{N}} \subset Z \subset L_{\infty}(\Omega)$ ein noch näher zu bestimmendes, passend gewähltes Funktionensystem und $\sigma \in \mathcal S$.
+Wir entwickeln nun $\omega$ formal in eine Reihe der Form
 \begin{equation}
     \label{eq:reihenentwicklung_omega}
-    \omega = \sum_{j = 1}^{\infty} \sigma_{j} \varphi_{j}.
+    \omega(\blank; \sigma) = \sum_{j = 1}^{\infty} \sigma_{j} \varphi_{j}.
 \end{equation}
-
-Der Einfachheit halber beschränken wir uns auf $\mathcal S = [-1, 1]^{\mathbb{N}}$, das heißt $\mathcal S$ sei der Einheitsball aus $\ell^{\infty}(\mathbb{N})$.
-
-Wie man \todo{wo genau?} schnell einsieht ist für die Konvergenz von \eqref{eq:reihenentwicklung_omega} hinreichend, dass $\Set{ \norm{\varphi_{j}}_{L_{\infty}(\Omega)} }_{j \in \mathbb{N}} \in \ell^{1}(\mathbb{N})$ gilt.
-Daraus folgt auch
+Offenbar ist für die Konvergenz der Reihe \eqref{eq:reihenentwicklung_omega} hinreichend, dass $\Set{ \norm{\varphi_{j}}_{L_{\infty}(\Omega)} }_{j \in \mathbb{N}} \in \ell^{1}(\mathbb{N})$ gilt, insbesondere folgt daraus
 \begin{equation}
-    \norm{\omega}_{L_{\infty}(\Omega)} \leq \sum_{j = 1}^{\infty} \norm{\varphi_{j}}_{L_{\infty}(\Omega)} < \infty,
+    \norm{\omega(\blank; \sigma)}_{L_{\infty}(\Omega)} \leq \sum_{j = 1}^{\infty} \norm{\varphi_{j}}_{L_{\infty}(\Omega)} < \infty \quad \fa \sigma \in \mathcal S.
 \end{equation}
-insbesondere ist $\norm{\omega(\sigma)}_{L_{\infty}(\Omega)}$ also gleichmäßig in $\sigma$ beschränkt.
-Diese Eigenschaft wird auch benötigt, denn dadurch erhalten wir die für \thref{thm:kunoth:theorem21} notwendigen, von $\sigma$ unabhängigen, Schranken $\beta_{1}$ und $\beta_{2}$.
+% Diese Eigenschaft wird auch benötigt, denn dadurch erhalten wir aus \thref{lemma:2.2} die für \thref{thm:kunoth:theorem21} notwendigen, von $\sigma$ unabhängigen, Schranken $\beta_{1}$ und $\beta_{2}$.
+Die Wahl des Funktionensystems $\Set{ \varphi_{j} }_{j \in \mathbb{N}} \subset Z \subset L_{\infty}(\Omega)$ und des Unterraums $Z$ ist entscheidend für die Konvergenz von \eqref{eq:reihenentwicklung_omega}, sowie für die Erfüllbarkeit von \thref{thm:kunoth:assumption1} respektive \thref{thm:kunoth:assumption2},
+und wird in den nächsten Abschnitten genauer behandelt.
 
-Die Wahl des Funktionensystems $\Set{ \varphi_{j} }_{j \in \mathbb{N}} \subset Z \subset L_{\infty}(\Omega)$ ist entscheidend für die Konvergenz von \eqref{eq:reihenentwicklung_omega} in einem passend zu wählenden Unterraum $Z$ von $L_{\infty}(\Omega)$ und die Anwendbarkeit von \thref{thm:kunoth:theorem21}, da es unmittelbaren Einfluss auf die Erfüllbarkeit von \thref{thm:kunoth:assumption1} respektive \thref{thm:kunoth:assumption2} hat.
+% \subsection{Affiner Operator} % (fold)
+% \label{ssub:entwicklung_von_}
 
-TODO: Für den Allgemeinen Fall $\Omega \subset \mathbb{R}^{n}$, $n \geq 1$, noch unklar!
+Wir wollen den Operator $A$ aus \eqref{eq:def_op_A} als affin parametrischen Operator der Form
+\begin{equation}
+    \label{eq:aff_zerlegung_A}
+    A(\sigma) = A_{0} + \sum_{j \geq 1} \sigma_{j} A_{j}
+\end{equation}
+auffassen, beziehungsweise als Bilinearformen
+\begin{equation}
+     \label{eq:aff_zerelgung_A_bf}
+     a(\eta, \zeta; \sigma) = a_{0}(\eta, \zeta) + \sum_{j \geq 1} \sigma_{j} a_{j}(\eta, \zeta), \quad \eta, \zeta \in V.
+ \end{equation}
+Dazu entwickeln wir $\omega$ in eine Reihe der Form \eqref{eq:reihenentwicklung_omega}, das heißt wir erhalten
+\begin{equation}
+    \label{eq:omega_reihenentwicklung}
+    \omega(\blank; \sigma) \colon \Omega \to \mathbb{R}, \quad x \mapsto \omega(x; \sigma) = \sum_{j \geq 1} \sigma_{j} \varphi_{j}(x)
+\end{equation}
+mit $\sigma \in \mathcal S$.
+Eine naheliegende affine Aufteilung des Operators $A$ erhalten wir damit durch die Wahl
+\begin{equation}
+    \label{eq:affine_zerlegung_A_def}
+    A_{0} = - c \Delta, \qquad
+    A_{j} = \varphi_{j}, \quad j \geq 1.
+\end{equation}
+Die zugehörigen Bilinearformen lassen sich ebenfalls direkt angeben, denn es gilt
+\begin{equation}
+    a_{0}(\eta, \zeta) = \skprod{\grad \eta}{\grad \zeta}_{L_{2}(\Omega)}, \qquad a_{j}(\eta, \zeta) = \skprod{\varphi_{j} \eta}{\zeta}_{L_{2}(\Omega)}, \quad j \geq 1.
+\end{equation}
+
+Die zugehörigen Raum-Zeit-Variationsformulierung lautet nun:
+\begin{Problem}
+    Gegeben ein $g \in L_{2}(I; V')$ und ein $u_{0} \in H$. Finde für alle $\sigma \in \mathcal S$ ein $u(\sigma) \in \mathcal X$ mit
+    \begin{equation}
+        \label{eq:varprob_2}
+        b(u, v; \sigma) = f(v) \quad \text{für alle}~v \in \mathcal Y,
+    \end{equation}
+    wobei $b(\blank, \blank; \sigma) \colon \mathcal X \times \mathcal Y \times \mathcal S \to \mathbb{R}$ die durch
+    \begin{equation}
+        \label{eq:buv_2}
+        b(u, v; \sigma)
+            = \int_{I} \skprod{u_{t}(t)}{v_{1}(t)}_{V' \times V} + a(u(t), v_{1}(t); \sigma) \diff t + \skprod{u(0)}{v_{2}}_{H}
+    \end{equation}
+    gegebene Bilinearform und $f(\blank) \colon \mathcal Y \to \mathbb{R}$ definiert ist durch
+    \begin{equation}
+        \label{eq:var_all_f_wiederholung_2}
+        f(v) = \int_{I} \skprod{g(t)}{v_{1}(t)}_{V' \times V} \diff t + \skprod{u_{0}}{v_{2}}_{H}.
+    \end{equation}
+\end{Problem}
+
+% subsection entwicklung_von_ (end)
 
 % section parametrische_variante (end)
 
 \section{Der eindimensionale Fall} % (fold)
 \label{sec:der_eindimensionale_fall}
 
-In diesem Abschnitt betrachten wir der Einfachheit halber zunächst den Fall einer Raumdimension, das heißt $\Omega \subset \mathbb{R}$ sei ein Intervall.
-Ohne Beschränkung der Allgemeinheit wählen wir $\Omega = [0, 1]$.
+Wir beschränken uns nun zunächst auf den Fall einer Raumdimension.
+Es sei also $\Omega \subset \mathbb{R}$ ein Intervall, ohne Beschränkung der Allgemeinheit wählen wir $\Omega = [0, 1]$.
 
-\subsubsection{Entwicklung von $\omega$} % (fold)
-\label{ssub:entwicklung_von_}
-
-Um die Aussagen aus \autoref{sec:parametrisches_problem} zu verwenden, wollen wir den Operator $A \eta = - c \Delta \eta + \omega \eta$ als affin parametrischen Operator der Form
-\begin{equation}
-    \label{eq:aff_zerlegung_A}
-    A(\sigma) = A_{0} + \sum_{j \geq 1} \sigma_{j} A_{j}
-\end{equation}
-auffassen.
-Dazu schreiben wir den Reaktionsterm $\omega$ als Reihenentwicklung auf, das heißt
-\begin{equation}
-    \label{eq:omega_reihenentwicklung}
-    \omega \colon \Omega \to \mathbb{R}, \quad x \mapsto \omega(x) = \sum_{j \geq 1} \sigma_{j} \varphi_{j}(x).
-\end{equation}
-Auf die Wahl der Funktionen $\{ \varphi_{j} \}_{j \geq 1}$ gehen wir später genauer ein.
-
-Eine offensichtliche Aufteilung des Operators $A$ ist damit gegeben durch
-\begin{equation}
-    A_{0} = - c \Delta, \qquad
-    A_{j} = \varphi_{j}, \quad j \geq 1.
-\end{equation}
-Die zugehörigen Bilinearformen lassen sich ebenfalls direkt angeben, es gilt
-\begin{equation}
-    a_{0}(\eta, \zeta) = \skprod{\grad \eta}{\grad \zeta}_{L_{2}(\Omega)}, \qquad a_{j}(\eta, \zeta) = \skprod{\varphi_{j} \eta}{\zeta}_{L_{2}(\Omega)}, \quad j \geq 1.
-\end{equation}
-
-% subsubsection entwicklung_von_ (end)
-
-\subsubsection{Wahl der Funktionen $\varphi_{j}$} % (fold)
+\subsection{Wahl des Funktionensystems} % (fold)
 \label{ssub:wahl_der_funktionen_}
 
-TODO: Die Wahl der Funktionen $\Set{ \varphi_{j} }_{j \in \mathbb{N}}$ ist noch offen, mögliche Kandidaten sind:
+Die Wahl des Funktionensystems $\Set{ \varphi_{j} }_{j \in \mathbb{N}}$ ist von wesentlicher Bedeutung, denn sie legt fest, welche Funktionen $\omega$ wir durch die Reihenentwicklung \eqref{eq:omega_reihenentwicklung} darstellen können.
+Zudem bestimmen wir damit das Konvergenzverhalten in verschiedenen Räumen und die möglichen Randbedingungen.
 
+Einige Möglichkeiten sind zum Beispiel die folgenden:
 \begin{enumerate}
-    \item Sinusfunktionen, konkret skalieren wir die Funktionen abhängig von einer Konstanten $\epsilon > 0$ um Konvergenz in $L_{\infty}(\Omega)$ zu forcieren.
-    Eine Möglichkeit ist zum Beispiel
+    \item Sinusfunktionen; wir skalieren die Funktionen abhängig von einer Konstanten $\epsilon > 0$ um Konvergenz in $L_{\infty}(\Omega)$ zu forcieren.
+    Eine Möglichkeit ist
     \begin{equation}
-        \varphi_{j} = \frac{\sin(\pi j \cdot)}{(\pi j)^{1 + \epsilon}}, \quad j \geq 1.
+        \varphi_{j} = \frac{\sin(\pi j \blank)}{(\pi j)^{1 + \epsilon}}, \quad j \geq 1.
     \end{equation}
+    Da der Parameter $\sigma$ in $\ell^{\infty}(\mathbb{N})$ normiert ist, müssen die $\varphi_{j}$ eventuell zusätzlich mit einem weiteren Faktor $a_{j} \in \mathbb{R}$, $j \geq 1$, skaliert werden.
+    Um auch inhomogene Randbedingungen abzudecken, kann weiterhin $\varphi_{0} = a_{0} \in \mathbb{R}$ dazugenommen werden.
     \item Sinus- und Kosinusfunktionen (vgl. Fourierreihen).
     Wir setzen also $\Set{ \varphi_{j} }_{j \in \mathbb{Z}}$ mit
     \begin{equation}
         \varphi_{j} = \begin{cases}
-            a_{j} \sin(2 \pi j \cdot),    &j \geq 1 \\
+            a_{j} \sin(2 \pi j \blank),    &j \geq 1 \\
             a_{0},                      &j = 0 \\
-            a_{j} \cos(2 \pi j \cdot),    &j \leq -1.
+            a_{j} \cos(2 \pi j \blank),    &j \leq -1.
         \end{cases}
     \end{equation}
     Hierbei ist die Konvergenz in $L_{\infty}(\Omega)$ im Allgemeinen aber nicht gegeben.
-    Unter geeignete Voraussetzungen an $\omega$ erhalten wir Aussagen über das Abklingverhalten der Fourierkoeffizienten.
-    Dieses Verhalten wird wegen $\mathcal S = [-1, 1]^{\mathbb{N}}$ und der benötigten Umskalierung auf die Faktoren $a_{j}$ übertragen, sodass damit Konvergenz in $L_{\infty}(\Omega)$ erreicht werden kann.
+    Unter geeigneten Voraussetzungen an $\omega$ erhalten wir Aussagen über das Abklingverhalten der Fourierkoeffizienten, woraus die Konvergenz in $L_{\infty}(\Omega)$ erreicht werden kann.
 
     Hinreichend wäre zum Beispiel, dass $\omega$ zwei mal stetig differenzierbar ist.
     Eventuell reicht auch bereits Hölder-Stetigkeit mit Exponent $\alpha > \frac{1}{2}$.
+    % TODO: genauer!
 \end{enumerate}
 
-Die Wahl der Funktionen $\varphi_{j}$ entscheidet über die Konvergenz und weitere Eigenschaften der Reihenentwicklung \eqref{eq:omega_reihenentwicklung}.
+\subsubsection{Entwicklung in Sinusfunktionen} % (fold)
+\label{ssub:entwicklung_in_sinusfunktionen}
 
-Als ersten Ansatz wählen wir
+% subsubsection entwicklung_in_sinusfunktionen (end)
+
+Wir wählen den ersten Ansatz mit einer zusätzlichen, konstanten Funktion, um so inhomogene Randbedingungen für $\omega$ zuzulassen, das heißt wir haben das Funktionensystem $\Set{ \varphi_{j} }_{j \in \mathbb{N}_{0}}$ mit
 \begin{equation}
-    \varphi_{j} = \frac{1}{(j \pi)^{1 + \epsilon}} \sin(j \pi \cdot).
-\end{equation}
-Da wir damit stets $\varphi_{j}(0) = \varphi_{j}(1) = 0$ für alle $j \geq 1$ erhalten, bei $\omega$ aber nicht nur homogene Randvorgaben betrachten wollen, wählen wir zusätzlich
-\begin{equation}
-    \label{eq:entwicklung_phi_0_konstante}
-    \varphi_{0} = c_{\varphi} \in \mathbb{R}_{+}.
+    \label{eq:sinusfunktionen_ansatz}
+    \varphi_{0} = a_{0} \in \mathbb{R}, \qquad
+    \varphi_{j} = \frac{\sin(\pi j \blank)}{(\pi j)^{1 + \epsilon}}, \quad j \geq 1.
 \end{equation}
 
-Wir weisen nun einige Eigenschaften für diese Wahl der $\varphi_{j}$ nach.
-
-\begin{Lemma}[Normen]
+An dieser Stelle weisen wir zunächst einige Eigenschaften für \eqref{eq:sinusfunktionen_ansatz} nach.
+\begin{Lemma}
     Es gilt
-    \begin{equation}
-        \norm{\varphi_{0}}_{L_{\infty(\Omega)}} = c \quad \text{und} \quad \norm{\varphi_{j}}_{L_{\infty(\Omega)}} = \frac{1}{(j \pi)^{1 + \epsilon}}, \quad j \geq 1,
-    \end{equation}
-    sowie
-    \begin{equation}
-        \begin{aligned}
-            \norm{\varphi_{j}}_{L_{2}(\Omega)}  = \frac{1}{\sqrt{2}(j \pi)^{1+ \epsilon}}, \quad
-            \norm{\varphi'_{j}}_{L_{2}(\Omega)} = \frac{1}{\sqrt{2}(j \pi)^{\epsilon}}, \quad
-            \norm{\varphi_{j}}_{H^{1}(\Omega)}  = \frac{\sqrt{1 + (j \pi)^{2}}}{\sqrt 2 (j \pi)^{1 + \epsilon}},
-        \end{aligned}
-    \end{equation}
-    für $j \geq 1$, und
-    \begin{equation}
-        \begin{aligned}
-            \norm{\varphi_{0}}_{L_{2}(\Omega)}  = c, \quad
-            \norm{\varphi'_{0}}_{L_{2}(\Omega)} = 0, \quad
-            \norm{\varphi_{0}}_{H^{1}(\Omega)}  = c.
-        \end{aligned}
-    \end{equation}
+    \begin{alignat}{2}
+        \norm{\varphi_{0}}_{L_{\infty}(\Omega)} &= a_{0},
+        \qquad&
+        \norm{\varphi_{j}}_{L_{\infty}(\Omega)} &= \frac{1}{(j \pi)^{1 + \epsilon}}, \quad j \geq 1,
+    % \end{equation}
+    % sowie
+    % \begin{equation}
+    \intertext{sowie}
+        \norm{\varphi_{0}}_{H^{1}(\Omega)}  &= c,
+        \qquad&
+        \norm{\varphi_{j}}_{H^{1}(\Omega)}  &= \frac{\sqrt{1 + (j \pi)^{2}}}{\sqrt 2 (j \pi)^{1 + \epsilon}}, \quad j \geq 1.
+    \end{alignat}
 \end{Lemma}
 
-\begin{Lemma}[Orthogonalität]
-    Es gilt für $\varphi_{j}$, $j \geq 1$,
+\begin{Lemma}
+    Die Funktionen $\Set{ \varphi_{j} }_{j \in \mathbb{N}}$ bilden ein Orthogonalsystem in $H^{1}(\Omega)$, denn es gilt
     \begin{equation}
         \skprod{\varphi_{j}}{\varphi_{k}}_{H^{1}(\Omega)} = \begin{cases}
             \frac{\sqrt{1 + (j \pi)^{2}}}{\sqrt 2 (j \pi)^{1 + \epsilon}},   &j = k \\
-            0,          &j \neq k,
+            0,          &j \neq k.
         \end{cases}
     \end{equation}
-    das heißt $\{ \varphi_{j} \}_{j \geq 1}$ bilden ein Orthogonalsystem in $H^{1}(\Omega)$.
 \end{Lemma}
 
-\begin{Lemma}[Konvergenz der Reihenentwicklung]
-    Sei $\epsilon > 0$ und
+\begin{Lemma}
+    Es sei $\epsilon > 0$ und $\sigma \in \mathcal S$ mit
     \begin{equation}
-        \tilde \sigma = \left(  \frac{\sigma_{j}}{j^{\epsilon}} \right)_{j \in \mathbb{N}} \in \ell^{1},
+        \label{eq:sigma_tilde}
+        \tilde \sigma = \left(  \frac{\sigma_{j}}{j^{\epsilon}} \right)_{j \in \mathbb{N}_{0}} \in \ell^{1}(\mathbb{N}_{0}),
     \end{equation}
-    dann konvergiert $\omega(x) = \sum_{j \geq 1} \sigma_{j} \varphi_{j}(x)$ in $H^{1}(\Omega)$ und $L_{\infty}(\Omega)$.
+    dann konvergiert $\omega(\blank; \sigma)$ in $H^{1}(\Omega)$ und $L_{\infty}(\Omega)$.
 
     \begin{Beweis}
         Wir zeigen zunächst absolute Konvergenz bezüglich der $H^{1}(\Omega)$-Norm.
@@ -340,46 +330,45 @@ Wir weisen nun einige Eigenschaften für diese Wahl der $\varphi_{j}$ nach.
             \sum_{j \geq 0} \norm{\sigma_{j} \varphi_{j}}_{H^{1}(\Omega)}
             &= \sum_{j \geq 0} \abs{\sigma_{j}} \norm{\varphi_{j}}_{H^{1}(\Omega)}
             = \abs{\sigma_{0}} \norm{\varphi_{0}}_{H^{1}(\Omega)} + \sum_{j \geq 1} \abs{\sigma_{j}} \norm{\varphi_{j}}_{H^{1}(\Omega)}
-            \\&\leq c + \sum_{j \geq 1} \abs{\sigma_{j}} \frac{\sqrt{1 + (j \pi)^{2}}}{\sqrt{2}(j \pi)^{1+\epsilon}}
-            \leq c + \sum_{j \geq 1} \abs{\sigma_{j}} \frac{1 + j \pi}{\sqrt{2}(j \pi)^{1+\epsilon}}
-            \\&\leq c + \sum_{j \geq 1} \abs{\sigma_{j}} \frac{1}{\sqrt{2}(j \pi)^{1+\epsilon}} + \sum_{j \geq 1} \abs{\sigma_{j}} \frac{1}{\sqrt{2}(j \pi)^{\epsilon}}.
+            \\&\leq a_{0} + \sum_{j \geq 1} \abs{\sigma_{j}} \frac{\sqrt{1 + (j \pi)^{2}}}{\sqrt{2}(j \pi)^{1+\epsilon}}
+            \leq a_{0} + \sum_{j \geq 1} \abs{\sigma_{j}} \frac{1 + j \pi}{\sqrt{2}(j \pi)^{1+\epsilon}}
+            \\&\leq a_{0} + \sum_{j \geq 1} \abs{\sigma_{j}} \frac{1}{\sqrt{2}(j \pi)^{1+\epsilon}} + \sum_{j \geq 1} \abs{\sigma_{j}} \frac{1}{\sqrt{2}(j \pi)^{\epsilon}}.
         \end{align}
         Da $\epsilon > 0$ gilt, konvergiert die erste Reihe.
         Die Konvergenz der zweiten Reihe folgt aus $\tilde \sigma \in \ell^{1}$.
-        Damit erhalten wir die absolute Konvergenz bezüglich der $H^{1}(\Omega)$-Norm, und daraus auch die Konvergenz von $\omega$ in $H^{1}(\Omega)$.
+        Damit erhalten wir die absolute Konvergenz bezüglich der $H^{1}(\Omega)$-Norm, und daraus auch die gleichmäßige Konvergenz von $\omega$ in $H^{1}(\Omega)$.
 
         Die Konvergenz in $L_{\infty}(\Omega)$ lässt sich analog zeigen.
-        Wir zeigen unter Verwendung von $\sigma \in [0, 1]^{\mathbb{N}}$ die absolute Konvergenz via
+        Unter Verwendung von $\sigma \in [0, 1]^{\mathbb{N}}$ erhalten wir die absolute Konvergenz via
         \begin{align}
             \sum_{j \geq 0} \norm{\sigma_{j} \varphi_{j}}_{L_{\infty}(\Omega)}
             &= \sum_{j \geq 0} \abs{\sigma_{j}} \norm{\varphi_{j}}_{L_{\infty}(\Omega)}
              = \abs{\sigma_{0}} \norm{\varphi_{0}}_{L_{\infty}(\Omega)} + \sum_{j \geq 1} \abs{\sigma_{j}} \norm{\varphi_{j}}_{L_{\infty}(\Omega)}
-            \\&\leq c + \sum_{j \geq 1} \abs{\sigma_{j}} \frac{1}{(j \pi)^{1+\epsilon}}
-               \leq c + \frac{1}{\pi^{1+\epsilon}} \sum_{j \geq 1} \frac{1}{j^{1+\epsilon}}.
+            \\&\leq a_{0} + \sum_{j \geq 1} \abs{\sigma_{j}} \frac{1}{(j \pi)^{1+\epsilon}}
+               \leq a_{0} + \frac{1}{\pi^{1+\epsilon}} \sum_{j \geq 1} \frac{1}{j^{1+\epsilon}}.
         \end{align}
-        Diese Reihe konvergiert bekanntlich für alle $\epsilon > 0$, womit wir wiederum (absolute) Konvergenz von $\omega$ in $L_{\infty}(\Omega)$ erhalten.
+        Diese Reihe konvergiert bekanntlich für alle $\epsilon > 0$, womit wir wiederum gleichmäßige Konvergenz von $\omega$ in $L_{\infty}(\Omega)$ erhalten.
     \end{Beweis}
 \end{Lemma}
 
-Ist $\epsilon > 1$, dann ist wegen $\sigma \in \mathcal S = [-1, 1]^{\mathbb{N}}$ insbesondere auch $\tilde \sigma \in \ell^{1}$.
+\begin{Korollar}
+    Sei $\epsilon > 1$ und $\sigma \in \mathcal S$, dann konvergiert $\omega(\blank; \sigma)$ in $H^{1}(\Omega)$ und $L_{\infty}(\Omega)$.
+\end{Korollar}
 
-% subsubsection wahl_der_funktionen_ (end)
-
-\subsubsection{Nachrechnen der Eigenschaften für die Regularität und so} % (fold)
-\label{ssub:nachrechnen_von_thref_thm_kunoth_assumption2}
+Wir wollen nun die Regularität von $\omega(\blank; \sigma)$ in Abhängigkeit vom Parameter $\sigma$ nachweisen.
 
 \begin{Satz}
-    \label{satz:regularitaet_nachrechnen}
+\label{satz:regularitaet_nachrechnen}
     Seien $\epsilon > 0$ und $0 < \kappa < 1$ so gewählt, dass
     \begin{equation}
-        \zeta(1 + \epsilon) \leq (c \kappa \gamma_{\Omega}^{2} - c_{\varphi}) \pi^{1+\epsilon}
+        \zeta(1 + \epsilon) \leq (c \gamma_{\Omega}^{2} \kappa - a_{0}) \pi^{1+\epsilon}
     \end{equation}
     gilt,
-    wobei $\zeta$ die Riemannsche-$\zeta$-Funktion, $\gamma_{\Omega}$ die Poincaré-Friedrichs-Konstante von $\Omega$ aus \eqref{eq:grundlagen:poincare_friedrichs_ungleichung} und $c$ und $c_{\varphi}$ die Konstanten aus \eqref{eq:def_op_A} respektive \eqref{eq:entwicklung_phi_0_konstante} sind.
-    Dann erfüllt $A(\sigma)$ aus \eqref{eq:aff_zerlegung_A} die \thref{thm:kunoth:assumption2}.
+    wobei $\zeta$ die Riemannsche-$\zeta$-Funktion, $\gamma_{\Omega}$ die Poincaré-Friedrichs-Konstante von $\Omega$ aus \eqref{eq:grundlagen:poincare_friedrichs_ungleichung} und $c$ und $a_{0}$ die Konstanten aus \eqref{eq:def_op_A} respektive \eqref{eq:sinusfunktionen_ansatz} sind.
+    Dann erfüllt $\Set{ A_{j} }_{j \geq 0}$ aus \eqref{eq:affine_zerlegung_A_def} \thref{thm:kunoth:assumption2}.
 
     \begin{Beweis}
-        Wir weisen zunächst die inf-sup-Bedingungen für $a_{0}(\cdot, \cdot)$ nach und bestimmen die Konstante $\gamma_{0}$.
+        Wir weisen zunächst die inf-sup-Bedingungen für $a_{0}(\blank, \blank)$ nach und bestimmen die Konstante $\gamma_{0}$.
         Nach \thref{lemma:sauter:2.1.48} reicht es, für alle $u \in V$ ein $v_{u} \in V$ und von $u$ und $v_{u}$ unabhängige Konstanten $C_{1}, C_{2} > 0$ mit
         \begin{equation}
             a_{0}(u, v_{u}) \geq C_{1} \norm{u}_{V}^{2} \quad \text{und} \quad \norm{v_{u}}_{V} \leq C_{2} \norm{u}_{V}
@@ -396,19 +385,23 @@ Ist $\epsilon > 1$, dann ist wegen $\sigma \in \mathcal S = [-1, 1]^{\mathbb{N}}
         wobei die letzte Abschätzung aus der Poincaré-Friedrichs-Ungleichung \eqref{eq:grundlagen:poincare_friedrichs_ungleichung} folgt.
         Zusammen liefert dies $\gamma_{0} = c \gamma_{\Omega}^{2}$ als inf-sup-Konstante.
 
-        Da $a_{0}(\cdot, \cdot)$ symmetrisch ist, erhalten wir analog auch die inf-sup-Bedingung \eqref{eq:kunoth:ass2_gamma_0_b} mit dem selben $\gamma_{0}$.
+        Da $a_{0}(\blank, \blank)$ symmetrisch ist, erhalten wir analog auch die inf-sup-Bedingung \eqref{eq:kunoth:ass2_gamma_0_b} mit dem selben $\gamma_{0}$.
 
         Kümmern wir uns nun also um die Abschätzung \eqref{eq:kunoth:ass2_abs_reihe}.
         Betrachte dazu
         \begin{align}
                     \sum_{j = 0}^{\infty} \norm{A_{j}}_{\mathcal L(V, V')}
             \leq    \sum_{j = 0}^{\infty} \norm{\varphi_{j}}_{L_{\infty}(\Omega)}
-            =       c_{\varphi} + \frac{1}{\pi^{1+\epsilon}} \sum_{j = 1}^{\infty} \frac{1}{j^{1+\epsilon}}
-            = c_{\varphi} + \frac{1}{\pi^{1+\epsilon}} \zeta(1+\epsilon).
+            =       a_{0} + \frac{1}{\pi^{1+\epsilon}} \sum_{j = 1}^{\infty} \frac{1}{j^{1+\epsilon}}
+            = a_{0} + \frac{\zeta(1+\epsilon)}{\pi^{1+\epsilon}}.
         \end{align}
-        Dies ist kleiner $\kappa \gamma_{0}$ genau dann, wenn
+        Es gilt nun
         \begin{equation}
-            \zeta(1+ \epsilon) \leq (\kappa \gamma_{\Omega}^{2} c - c_{\varphi}) \pi^{1+\epsilon}
+            \sum_{j \geq 0} \norm{A_{j}}_{\mathcal L(V, V')} \leq \kappa \gamma_{0}
+        \end{equation}
+        genau dann, wenn
+        \begin{equation}
+            \zeta(1+ \epsilon) \leq (\kappa \gamma_{\Omega}^{2} c - a_{0}) \pi^{1+\epsilon}
         \end{equation}
         mit $\epsilon > 0$ und $0 < \kappa < 1$ gilt.
     \end{Beweis}
@@ -417,9 +410,37 @@ Ist $\epsilon > 1$, dann ist wegen $\sigma \in \mathcal S = [-1, 1]^{\mathbb{N}}
 Zusammenfassend erhalten wir für diese Wahl des Funktionensystems $\Set{ \varphi_{j} }_{j \in \mathbb{N}}$ die Aussage
 
 \begin{Korollar}
-    Unter den Voraussetzungen aus \thref{satz:regularitaet_nachrechnen} und ein paar mehr\todo{ach ja?}, sind die Voraussetzungen von \thref{thm:kunoth:theorem21} erfüllt.\todo{das heißt?}
+    Unter den Voraussetzungen von \thref{satz:regularitaet_nachrechnen} gilt \thref{thm:kunoth:theorem21}.
 \end{Korollar}
 
-% subsubsection nachrechnen_von_thref_thm_kunoth_assumption2 (end)
+% subsection nachrechnen_von_thref_thm_kunoth_assumption2 (end)
 
 % section der_eindimensionale_fall (end)
+
+\clearpage
+\section{Zu klärende Fragen} % (fold)
+\label{sub:zu_kl_rende_fragen}
+
+\begin{enumerate}
+    \item Wohldefiniertheit der PDE \eqref{eq:parabolische_pde}, das heißt die Voraussetzungen von \thref{thm:schwab09:theorem51} nachweisen. Weiterhin lassen sich damit die inf-sup-Bedingung von \eqref{eq:varprob} nachrechnen und damit die Schranken für $B$ und $B^{-1}$ bestimmen.
+    \item Parametrische Variante des Variationsproblems herleiten.
+    Dazu Ansetzen mit Entwicklung des Parameters $\omega$ in eine Reihe
+    \begin{equation}
+        \omega = \sum_{j = 0}^{\infty} \sigma_{j} \varphi_{j}.
+    \end{equation}
+    Dabei ergeben sich folgende Fragen:
+    \begin{enumerate}
+        \item Konvergenz der Reihe? Notwendig ist Konvergenz in $L_{\infty}(\Omega)$, da die Norm $\norm{\omega}_{L_{\infty}(\Omega)}$ mehrfach in Abschätzungen verwendet wird.
+        \item Weiterhin ist eventuell Konvergenz in einem Unterraum $Z \hookrightarrow L_{\infty}(\Omega)$ wünschenswert.
+        Zum Beispiel in $H^{1}(\Omega)$?
+        \item Welche Bedingungen ergeben sich an $\sigma_{j}$ und $\varphi_{j}$?
+        \item Welches Funktionensystem $\Set{ \varphi_{j} }_{j}$ ist überhaupt sinnvoll?
+        Die Wahl der $\varphi_{j}$ entscheidet maßgeblich über Konvergenz der Reihenentwicklung.
+        Welche Randvorgaben sind angestrebt?
+        Dies wird ebenfalls durch die $\varphi_{j}$ geregelt.
+    \end{enumerate}
+    \item Welche affine Zerlegung $A(\sigma) = A_{0} + \sum_{j} \sigma_{j} A_{j}$ ist brauchbar?
+    Wie genau sehen die $A_{j}$ aus?
+    \item Nachweisen, dass $A(\sigma)$ \thref{thm:kunoth:assumption1} oder \thref{thm:kunoth:assumption2} erfüllt und mittels \thref{thm:kunoth:theorem21} die gewünschte Regularität von $B(\sigma)$ bezüglich $\sigma$ gewinnen.
+\end{enumerate}
+

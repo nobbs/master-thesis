@@ -1,0 +1,60 @@
+%!TEX root = ../main.tex
+
+\chapter{Numerische Experimente} % (fold)
+\label{cha:numerische_experimente}
+
+\section{Erste Versuche mit Galerkin-Projektion} % (fold)
+\label{sec:erste_versuche_mit_galerkin_projektion}
+
+Wir beschränken uns erneut auf den eindimensionalen Fall und wählen $T = 1$, also $I = [0, 1]$ und $\Omega = [0 ,1]$.
+Um eine Approximation für das Variationsproblem \eqref{eq:varprob} mit fest gewähltem $\omega \in L_{\infty}(\Omega)$ zu bestimmen, verwenden wir die Galerkin-Projektion.
+
+Dazu definieren wir endlichdimensionale Unterräume $\mathcal X_{\mathcal N} \subset \mathcal X$ und $\mathcal Y_{\mathcal M} \subset \mathcal Y$, wobei $\dim(\mathcal X_{\mathcal N}) = \mathcal N$ respektive $\dim(\mathcal Y_{\mathcal M}) = \mathcal M$ sei.
+Der Einfachheit halber fordern wir zunächst $\mathcal N = \mathcal M$.
+Das nun zu lösende Problem lautet damit
+
+\begin{Problem}
+    Gegeben ein $g \in L_{2}(I; V')$ und ein $u_{0} \in H$. Finde ein $u \in \mathcal X_{\mathcal N}$ mit
+    \begin{equation}
+        \label{eq:varprob_3}
+        b(u, v) = f(v) \quad \text{für alle}~v \in \mathcal Y_{\mathcal M}.
+    \end{equation}
+\end{Problem}
+
+Wie wählt man nun die endlichdimensionalen Unterräume $\mathcal X_{\mathcal N}$ und $\mathcal Y_{\mathcal M}$?
+
+\paragraph{Erster Versuch} % (fold)
+\label{par:erster_versuch}
+
+Da wir es mit homogenen Randbedingungen zu tun haben, ist es naheliegend, Sinusfunktionen $\sin(\pi j x)$, $j \geq 1$, als Basisfunktionen für die Raum-Koordinate zu verwenden.
+Für die Zeitkoordinate wählen wir orthogonale Polynome, konkret auf den Intervall $I = [0, 1]$ verschobene Legendre-Polynome $L_{k}$, $k \geq 0$.
+
+Die Idee hinter der Wahl der orthogonalen Polynome, und auch der Sinusfunktionen, ist, dass diese bezüglich der $L_{2}$-Norm jeweils ein orthogonales System bilden, wodurch für die Galerkin-Projektion aufzustellende Steifigkeitsmatrix $\mat B$ dünn besetzt ist.
+
+Da wir $\mathcal N = \mathcal M$ erreichen wollen, wählen wir $M, Q \in \mathbb{N}$ und setzen
+\begin{equation}
+    \mathcal X_{\mathcal N} = \spn\Set{ \sin(\pi j x) L_{k}(t) \given j = 1 \dots M, k = 0 \dots Q }
+\end{equation}
+und
+\begin{equation}
+    \mathcal Y_{\mathcal M} = \spn\Set{ (\sin(\pi l x) L_{m}(t), \sin(\pi n x)) \given l, n = 1 \dots M, m = 0 \dots Q - 1 }.
+\end{equation}
+Damit ergibt sich $\mathcal N = \dim(\mathcal X_{\mathcal N}) = M (Q + 1)$ und $\mathcal M = \dim(\mathcal Y_{\mathcal M}) = M Q + M = M ( Q + 1 )$, also $\mathcal N = \mathcal M$.
+
+Für die Galerkin-Projektion berechnen wir nun
+\begin{equation}
+    \mat B_{ij} = b(u_{j}, v_{i}) \quad\text{und}\quad \vec f_{i} = f(v_{i}),
+\end{equation}
+lösen anschließend das lineare Gleichungssystem
+\begin{equation}
+    \mat B \vec u = \vec f
+\end{equation}
+und bestimmen die Lösung $u \in \mathcal X_{\mathcal N}$ als Linearkombination der Ansatzfunktionen von $\mathcal X_{\mathcal N}$ mit den zugehörigen Koeffizienten aus $\vec u$.
+
+Um die Funktionsweise an einem einfachen Beispiel zu überprüfen, wählen wir $w = 1$, $u_{0}(x) = x \sin(\pi x)$ und $g = 0$.
+
+% paragraph erster_versuch (end)
+
+% section erste_versuche_mit_galerkin_projektion (end)
+
+% chapter numerische_experimente (end)

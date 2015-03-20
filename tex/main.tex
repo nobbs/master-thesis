@@ -31,11 +31,11 @@
 \begin{document}
 
     % Deckblack / Titelseite
-    % \include{misc/deckblatt}
+    \include{misc/deckblatt}
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %%% Frontmatter-Teil
-    \frontmatter
+    \frontmatter{}
 
     % Danksagung
     % \include{misc/danksagung}
@@ -47,7 +47,7 @@
     \tableofcontents
 
     % TODO-Liste
-    \listoftodos
+    % \listoftodos
 
     % Abbildungs-, Tabellen- und Symbolverzeichnis
     % \listtheorems
@@ -59,19 +59,20 @@
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %%% Hauptteil
-    \mainmatter
+    \mainmatter{}
 
     % Kapitel
     % \input{chapters/einleitung}
     \input{chapters/einfuehrung}
     \input{chapters/problemstellung}
-    \input{chapters/reduzierte_basis}
+    % \input{chapters/reduzierte_basis}
+    \input{chapters/numerische_experimente}
 
     % \input{temp/onedim}
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %%% Anhang
-    \appendix
+    \appendix{}
     \input{chapters/funktionalanalytische_grundlagen}
 
     % Literaturverzeichnis

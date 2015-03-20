@@ -60,7 +60,8 @@ Session.vim
 *.ind
 *.ist
 *.lof
-*.log
+#*.log
+*.tdo
 *.lot
 *.maf
 *.mtc
@@ -125,7 +126,7 @@ coverage.xml
 *.pot
 
 # Django stuff:
-*.log
+#*.log
 
 # Sphinx documentation
 docs/_build/
