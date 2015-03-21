@@ -287,12 +287,12 @@ An dieser Stelle weisen wir zunächst einige Eigenschaften für \eqref{eq:sinusf
 \end{Lemma}
 
 \begin{Lemma}
-    Sei $\sigma \in \mathcal S$ und $\epsilon > 0$, dann konvergiert $\omega(\blank; \sigma)$ gleichmäßig in $L_{\infty}(\Omega)$.
-    Ist $\epsilon > 1$, dann gilt auch gleichmäßige Konvergenz in $H^{1}_{0}(\Omega)$.
+    Sei $\sigma \in \mathcal S$ und $\epsilon > 0$, dann konvergiert $\omega(\blank; \sigma)$ in $L_{\infty}(\Omega)$.
+    Ist $\epsilon > 1$, dann gilt auch Konvergenz in $H^{1}_{0}(\Omega)$.
 
     \begin{Beweis}
         Sei zunächst $\epsilon > 0$.
-        Da $\mathcal S = [0, 1]^{\mathbb{N}}$ ist, erhalten wir die gleichmäßige Konvergenz in $L_{\infty}(\Omega)$ nach dem Weierstraßschen Majorantenkriterium via
+        Da $\mathcal S = [0, 1]^{\mathbb{N}}$ ist, erhalten wir die Konvergenz in $L_{\infty}(\Omega)$ nach dem Weierstraßschen Majorantenkriterium via
         \begin{align}
             \sum_{j = 0}^{\infty} \norm{\sigma_{j} \varphi_{j}}_{L_{\infty}(\Omega)}
             &= \sum_{j = 0}^{\infty} \abs{\sigma_{j}} \norm{\varphi_{j}}_{L_{\infty}(\Omega)}
@@ -300,7 +300,7 @@ An dieser Stelle weisen wir zunächst einige Eigenschaften für \eqref{eq:sinusf
             \\&= c_{0} + \sum_{j = 1}^{\infty}  \frac{c_{j}}{(j \pi)^{1+\epsilon}}
                \leq K + \frac{K}{\pi^{1+\epsilon}} \sum_{j = 1}^{\infty} \frac{1}{j^{1+\epsilon}}.
         \end{align}
-        Diese Reihe konvergiert bekanntlich für alle $\epsilon > 0$, womit wir gleichmäßige Konvergenz von $\omega$ in $L_{\infty}(\Omega)$ erhalten.
+        Diese Reihe konvergiert bekanntlich für alle $\epsilon > 0$, womit wir Konvergenz von $\omega$ in $L_{\infty}(\Omega)$ erhalten.
 
         Sei nun $\epsilon > 1$.
         Betrachte
@@ -313,7 +313,7 @@ An dieser Stelle weisen wir zunächst einige Eigenschaften für \eqref{eq:sinusf
             \\&\leq K + \frac{K}{\sqrt{2} \pi^{1 + \epsilon}} \sum_{j = 1}^{\infty} \frac{1}{j^{1+\epsilon}} + \frac{K}{\sqrt{2} \pi^{\epsilon}} \sum_{j = 1}^{\infty} \frac{1}{j^{\epsilon}}.
         \end{align}
         Wegen $\epsilon > 1$ konvergiert sowohl die erste als auch die zweite Reihe.
-        Zusammen liefert dies absolute und gleichmäßige Konvergenz in $H^{1}_{0}(\Omega)$.
+        Zusammen liefert dies die Konvergenz in $H^{1}_{0}(\Omega)$.
     \end{Beweis}
 \end{Lemma}
 
@@ -332,7 +332,7 @@ Wir wollen nun die Regularität von $\omega(\blank; \sigma)$ in Abhängigkeit vo
     \begin{Beweis}
         Wir weisen zunächst die inf-sup-Bedingungen für $a_{0}(\blank, \blank)$ nach und bestimmen die Konstante $\gamma_{0}$.
 
-        Da $a_{0}(\blank, \blank)$ symmetrisch ist, erhalten wir analog auch die inf-sup-Bedingung \eqref{eq:kunoth:ass2_gamma_0_b} mit dem selben $\gamma_{0}$.
+        Da $a_{0}(\blank, \blank)$ symmetrisch ist, genügt es aus die inf-sup-Bedingung \eqref{eq:kunoth:ass2_gamma_0_a} nachzuweisen. Die zweite inf-sup-Bedingung \eqref{eq:kunoth:ass2_gamma_0_b} folgt dann analog mit dem selben $\gamma_{0}$.
 
         Nach \thref{lemma:sauter:2.1.48} reicht es, für alle $u \in V$ ein $v_{u} \in V$ und von $u$ und $v_{u}$ unabhängige Konstanten $C_{1}, C_{2} > 0$ mit
         \begin{equation}
@@ -350,11 +350,10 @@ Wir wollen nun die Regularität von $\omega(\blank; \sigma)$ in Abhängigkeit vo
         wobei die letzte Abschätzung aus der Poincaré-Friedrichs-Ungleichung \eqref{eq:grundlagen:poincare_friedrichs_ungleichung} folgt.
         Zusammen liefert dies $\gamma_{0} = c \gamma_{\Omega}^{2}$ als inf-sup-Konstante.
 
-        Für den vorliegenden Fall können wir $\gamma_{\Omega}^{2}$ exakt bestimmen, den bekanntlich (zitieren!) ist $\gamma_{\Omega}^{2}$ hierbei durch den ersten (also kleinsten) Eigenwert des Laplace-Operators gegeben.
-        Dieser ist für $\Omega = [0, 1]$ gerade $\pi^{2}$, das heißt wir erhalten
-        \begin{equation}
-            \gamma_{0} = c \pi^{2}.
-        \end{equation}
+        Für den vorliegenden Fall können wir $\gamma_{\Omega}^{2}$ exakt bestimmen.
+        Nach \cite[Chapter 11]{Strauss:2007vz} entspricht das Quadrat der optimalen Poincaré-Friedrichs-Konstante $\gamma_{\Omega}^{2}$ gerade dem kleinsten Eigenwert des Laplace-Operators auf $\Omega$ mit Dirichlet-Randbedingung.
+        Dieser hat für $\Omega = [0, 1]$ den Wert $\pi^{2}$.
+        Wir erhalten damit also $\gamma_{0} = c \pi^{2}$.
 
         Seien $u, v \in V$.
         Für $j = 0$ gilt die simple Abschätzung
