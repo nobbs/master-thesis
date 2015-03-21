@@ -36,6 +36,54 @@
 %     \end{enumerate}
 % \end{Lemma}
 
+\section{Orthogonale Funktionen und Polynome}
+\label{sec:orthogonale_funktionen_und_polynome}
+
+\begin{Satz}[Orthogonalität trigonometrischer Funktionen]
+\label{satz:trigonometrische_funktionen_orthogonal}
+    Seien $k, l \in \mathbb{N}$.
+    Dann gilt
+    \begin{align}
+        \skprod{\sin(\pi k x)}{\sin(\pi l x)}_{L_{2}([0, 1])} = \frac{1}{2} \delta_{kl}
+        \quad\text{und}\quad
+        \skprod{\cos(\pi k x)}{\cos(\pi l x)}_{L_{2}([0, 1])} = \frac{1}{2} \delta_{kl}.
+    \end{align}
+\end{Satz}
+
+\begin{Definition}[Legendre-Polynome]
+\label{definition:legendre_polynome}
+    Sei $I = [-1, 1]$.
+    Die Legendre-Polynome $L_{n} \in \Pi_{n}$ sind definiert durch
+    \begin{equation}
+        L_{n}(x) = \frac{1}{2^{n}n!}\frac{\diff^{n}}{\diff x^{n}} (x^{2} - 1)^{n}.
+    \end{equation}
+    Durch die Transformation $x \mapsto 2x - 1$ erhält man die auf das Interval $[0, 1]$ geshifteten Legendre-Polynome $\tilde L_{n}$.
+\end{Definition}
+
+\begin{Satz}[Orthogonalität der Legendre-Polynome]
+\label{satz:legendre_polynome_orthogonal}
+    Die Legendre-Polynome $L_{n}$ sind orthogonal bezüglich der $L_{2}([-1, 1])$-Norm, denn es gilt
+    \begin{equation}
+        \skprod{L_{n}}{L_{m}}_{L_{2}([-1, 1])} = \frac{2}{2n + 1} \delta_{n m}.
+    \end{equation}
+    Auch für die geshifteten Legendre-Polynome $\tilde L_{n}$ gilt Orthogonalität, denn es ist
+    \begin{equation}
+        \skprod{\tilde L_{n}}{\tilde L_{m}}_{L_{2}([0, 1])} = \frac{1}{2n + 1} \delta_{n m}.
+    \end{equation}
+\end{Satz}
+
+\begin{Bemerkung}
+\label{satz:legendre_polynome_rekursion}
+    Die Legendre-Polynome $L_{n}$ erfüllen die Rekursionsformel
+    \begin{equation}
+        n L_{n}(x) = (2n - 1) x L_{n-1}(x) - (n - 1) L_{n-2}(x), \quad L_{0}(x) = 1, L_{1}(x) = x.
+    \end{equation}
+    Analog gilt für die erste Ableitung $L_{n}'$ die Rekursionsformel
+    \begin{equation}
+        (n - 1) L_{n}'(x) = (2n -1) x L_{n-1}'(x) - n L_{n-2}'(x), \quad L_{0}'(x) = 0, L_{1}'(x) = 1.
+    \end{equation}
+\end{Bemerkung}
+
 \section{Sonstiges} % (fold)
 \label{sec:sonstiges}
 

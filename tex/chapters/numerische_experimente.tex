@@ -3,6 +3,55 @@
 \chapter{Numerische Experimente} % (fold)
 \label{cha:numerische_experimente}
 
+\section{Grundlagen zum Galerkin-Verfahren} % (fold)
+\label{sec:grundlagen_zum_galerkin_verfahren}
+
+Wir wollen zunächst in Grundzügen das bekannte Galerkin-Verfahren wiederholen.
+Seien dazu $U$ und $V$ zwei Hilberträume.
+Betrachte das folgende abstrakte Variationsproblem:
+\begin{Problem}
+    Finde ein $u \in U$, so dass
+    \begin{equation}
+        a(u, v) = f(v) \quad \fa v \in V
+    \end{equation}
+    gilt.
+\end{Problem}
+Dabei sei $a(\blank, \blank) \colon U \times V \to \mathbb{R}$ eine Bilinearform und $f(\blank) \colon V \to \mathbb{R}$ ein lineares Funktional.
+Unter gewissen Voraussetzungen an $a(\blank, \blank)$, auf die wir in dieser Wiederholung nicht genauer eingehen, existiert eine eindeutige Lösung $u \in U$ zu diesem Variationsproblem.
+
+Da es sich bei $U$ und $V$ im Allgemeinen um Funktionenräume, damit insbesondere also um unendlichdimensionale Hilberträume, handelt, ist die Idee des Galerkin-Verfahrens nun, die beiden Räume jeweils durch endlichdimensionale Unterräume $U_{n} \subset U$ und $V_{m} \subset V$ zu approximieren.
+Statt dem eigentlichen Variationsproblem betrachtet man die sogenannte Galerkin-Projektion:
+\begin{Problem}
+    Finde ein $u_{n} \in U_{n}$, so dass
+    \begin{equation}
+        a(u_{n}, v_{m}) = f(v_{m}) \quad \fa v_{m} \in V_{m}
+    \end{equation}
+    gilt.
+\end{Problem}
+
+Die endlichdimensionalen Unterräume werden als Spann von endlich vielen Basisfunktionen
+\begin{equation}
+    U_{n} = \spn\Set{\varphi_{i} \given i = 1 \dots n},
+    \qquad
+    V_{m} = \spn\Set{ \psi_{j} \given j = 1 \dots m}
+\end{equation}
+konstruiert.
+Diese Eigenschaft lässt sich ausnutzen, denn dadurch wird es uns ermöglicht eine Lösung der Galerkin-Projektion durch das Aufstellen und Lösen eines linearen Gleichungssystems zu bestimmen.
+Dazu benötigt man die sogenannte Steifigkeitsmatrix $\mat A \in \mathbb{R}^{m \times n}$, welche durch
+\begin{equation}
+    \mat A_{ji} = a(\varphi_{i}, \psi_{j}), \quad i = 1 \dots n, j = 1 \dots m,
+\end{equation}
+definiert ist, und den Lastvektor $\vec f \in \mathbb{R}^{m}$, gegeben durch
+\begin{equation}
+    \vec f_{j} = f(\psi_{j}), \quad j = 1 \dots m.
+\end{equation}
+Löst man nun das lineare Gleichungssystem $\mat A \vec u = \vec f$, dann erhält man aus dem Koeffizientenvektor $\vec u$ die Lösung $u_{n} \in U_{n}$ durch
+\begin{equation}
+    u_{n} = \sum_{i = 1}^{n} \vec u_{i} \varphi_{i}.
+\end{equation}
+
+% section grundlagen_zum_galerkin_verfahren (end)
+
 \section{Erste Versuche mit Galerkin-Projektion} % (fold)
 \label{sec:erste_versuche_mit_galerkin_projektion}
 
@@ -52,9 +101,84 @@ lösen anschließend das lineare Gleichungssystem
 und bestimmen die Lösung $u \in \mathcal X_{\mathcal N}$ als Linearkombination der Ansatzfunktionen von $\mathcal X_{\mathcal N}$ mit den zugehörigen Koeffizienten aus $\vec u$.
 
 Um die Funktionsweise an einem einfachen Beispiel zu überprüfen, wählen wir $w = 1$, $u_{0}(x) = x \sin(\pi x)$ und $g = 0$.
+Damit wird die Bilinearform $b(\blank, \blank)$ für $u(t, x) = \sin(\pi j x) L_{k}(t)$ und $v(t,x) = (v_{1}(t,x), v_{2}(t,x)) = (\sin(\pi l x) L_{m}(t), \sin(\pi n x))$ zu
+\begin{subequations}
+    \begin{align}
+    b(u, v)
+        &= \int_{I} \skprod{u_{t}(t)}{v_{1}(t)}_{V' \times V} + a(u(t), v_{1}(t)) \diff t + \skprod{u(0)}{v_{2}}_{H}
+        \\&= \int_{I} \int_{\Omega} \sin(\pi j x) L_{k}'(t) \sin(\pi l x) L_{m}(t) \diff x \diff t \label{eq:int1}
+        \\&\quad  + \int_{I} \int_{\Omega} j l \pi^2 \cos(\pi j x) L_{k}(t) \cos(\pi l x) L_{m}(t) \diff x \diff t  \label{eq:int2}
+        \\&\quad + \int_{I} \int_{\Omega} \omega(x) \sin(\pi j x) L_{k}(t) \sin(\pi l x) L_{m}(t) \diff x \diff t  \label{eq:int3}
+        \\&\quad + \int_{\Omega} \sin(\pi j x) L_{k}(0) \sin(\pi n x) \diff x  \label{eq:int4}
+        % \\&=
+    \end{align}
+\end{subequations}
+
+Unter Verwendung der Orthogonalität der Legendre-Polynome und der Sinusfunktionen, vgl. \thref{satz:legendre_polynome_orthogonal} respektive \thref{satz:trigonometrische_funktionen_orthogonal}, vereinfachen wir die obigen Integral soweit möglich.
+Für das zweite und das vierte Integral erhalten wir so die expliziten Ausdrücke
+\begin{equation}
+    \int_{I} \int_{\Omega} j l \pi^2 \cos(\pi j x) L_{k}(t) \cos(\pi l x) L_{m}(t) \diff x \diff t
+    = \frac{(j \pi)^{2}}{2(2k + 1)} \delta_{j l}  \delta_{k m},
+\end{equation}
+respektive
+\begin{equation}
+    \int_{\Omega} \sin(\pi j x) L_{k}(0) \sin(\pi n x) \diff x = (-1)^{k} \frac{1}{2} \delta_{jn}.
+\end{equation}
+Das erste und das dritte Integral werden zu
+\begin{equation}
+    \int_{I} \int_{\Omega} \sin(\pi j x) L_{k}'(t) \sin(\pi l x) L_{m}(t) \diff x \diff t
+    = \frac{1}{2} \delta_{j l} \int_{I} L_{k}'(t) L_{m}(t) \diff t
+\end{equation}
+und
+\begin{equation}
+    \int_{I} \int_{\Omega} \omega(x) \sin(\pi j x) L_{k}(t) \sin(\pi l x) L_{m}(t) \diff x \diff t
+    = \frac{1}{2k +1} \delta_{k m} \int_{\Omega} \omega(x) \sin(\pi j x)\sin(\pi l x) \diff x.
+\end{equation}
+
+% TODO: Alten Stuff raus!
+% \begin{align}
+%     &\int_{I} \int_{\Omega} \sin(\pi j x) L_{k}'(t) \sin(\pi l x) L_{m}(t) \diff x \diff t
+%     \\&\qquad = \int_{I} L_{k}'(t) L_{m}(t) \diff t \int_{\Omega} \sin(\pi j x) \sin(\pi l x) \diff x
+%     \\&\qquad= \frac{1}{2} \delta_{j l} \int_{I} L_{k}'(t) L_{m}(t) \diff t
+% \end{align}
+% \begin{align}
+%     &\int_{I} \int_{\Omega} j l \pi^2 \cos(\pi j x) L_{k}(t) \cos(\pi l x) L_{m}(t) \diff x \diff t
+%     \\&\qquad = j l \pi^{2} \int_{I} L_{k}(t) L_{m}(t) \diff t \int_{\Omega} \cos(\pi j x) \cos(\pi l x) \diff x
+%     \\&\qquad = \frac{(j \pi)^{2}}{2(2k + 1)} \delta_{j l}  \delta_{k m}
+% \end{align}
+% \begin{align}
+%     &\int_{I} \int_{\Omega} \omega(x) \sin(\pi j x) L_{k}(t) \sin(\pi l x) L_{m}(t) \diff x \diff t
+%     \\&\qquad = \int_{I} L_{k}(t) L_{m}(t) \diff t \int_{\Omega} \omega(x) \sin(\pi j x)\sin(\pi l x) \diff x
+%     \\&\qquad = \frac{1}{2k +1} \delta_{k m} \int_{\Omega} \omega(x) \sin(\pi j x)\sin(\pi l x) \diff x
+% \end{align}
+
+Neben der Steifigkeitsmatrix $\mat B$ benötigen wir auch den Lastvektor $\vec f$, wobei $\vec f_{i} = f(v_{i})$, $i = 1 \dots \mathcal N$.
+Konkret wird dies, mit dem gleichen $v \in \mathcal Y_{\mathcal N}$ wie oben, zu
+\begin{align}
+    f(v)
+    &= \int_{I} \skprod{g(t)}{v_{1}(t)}_{V' \times V} \diff t + \skprod{u_{0}}{v_{2}}_{H}
+    \\&= \int_{I} \int_{\Omega} g(t, x) \sin(\pi l x) L_{m}(t) \diff x \diff t + \int_{\Omega} u_{0}(x) \sin(\pi n x) \diff x.
+\end{align}
+Diese beiden Integrale können im Allgemeinen nicht wie die vorherigen direkt ausgewertet werden und müssen mittels numerischer Quadratur approximiert werden.
+
+Sind Steifigkeitsmatrix und Lastvektor bestimmt, dann liefert die Lösung $\vec u$ des linearen Gleichungssystems $\mat B \vec u = \vec f$ einen Koeffizientenvektor, aus dem wir mittels
+\begin{equation}
+    u_{\mathcal N}(t, x) = \sum_{j = 1}^{M} \sum_{k = 0}^{Q} \vec u_{jk} \sin(\pi j x) L_{k}(t)
+\end{equation}
+die Näherungslösung $u_{\mathcal N} \in \mathcal X_{\mathcal N}$ des Problems \eqref{eq:varprob_3} erhalten.
 
 % paragraph erster_versuch (end)
 
 % section erste_versuche_mit_galerkin_projektion (end)
+
+\clearpage
+\section{Zu klärende Fragen} % (fold)
+\label{sec:zu_kl_rende_fragen}
+
+Was?
+
+Konditionszahlen?
+
+% section zu_kl_rende_fragen (end)
 
 % chapter numerische_experimente (end)
