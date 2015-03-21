@@ -244,64 +244,35 @@ Die zugehörigen Raum-Zeit-Variationsformulierung lautet nun:
 Wir beschränken uns nun zunächst auf den Fall einer Raumdimension.
 Es sei also $\Omega \subset \mathbb{R}$ ein Intervall, ohne Beschränkung der Allgemeinheit wählen wir $\Omega = [0, 1]$.
 
-\subsection{Wahl des Funktionensystems} % (fold)
-\label{ssub:wahl_der_funktionen_}
-
 Die Wahl des Funktionensystems $\Set{ \varphi_{j} }_{j \in \mathbb{N}}$ ist von wesentlicher Bedeutung, denn sie legt fest, welche Funktionen $\omega$ wir durch die Reihenentwicklung \eqref{eq:omega_reihenentwicklung} darstellen können.
 Zudem bestimmen wir damit das Konvergenzverhalten in verschiedenen Räumen und die möglichen Randbedingungen.
 
-Einige Möglichkeiten sind zum Beispiel die folgenden:
-\begin{enumerate}
-    \item Sinusfunktionen; wir skalieren die Funktionen abhängig von einer Konstanten $\epsilon > 0$ um Konvergenz in $L_{\infty}(\Omega)$ zu forcieren.
-    Eine Möglichkeit ist
-    \begin{equation}
-        \varphi_{j} = \frac{\sin(\pi j \blank)}{(\pi j)^{1 + \epsilon}}, \quad j \geq 1.
-    \end{equation}
-    Da der Parameter $\sigma$ in $\ell^{\infty}(\mathbb{N})$ normiert ist, müssen die $\varphi_{j}$ eventuell zusätzlich mit einem weiteren Faktor $a_{j} \in \mathbb{R}$, $j \geq 1$, skaliert werden.
-    Um auch inhomogene Randbedingungen abzudecken, kann weiterhin $\varphi_{0} = a_{0} \in \mathbb{R}$ dazugenommen werden.
-    \item Sinus- und Kosinusfunktionen (vgl. Fourierreihen).
-    Wir setzen also $\Set{ \varphi_{j} }_{j \in \mathbb{Z}}$ mit
-    \begin{equation}
-        \varphi_{j} = \begin{cases}
-            a_{j} \sin(2 \pi j \blank),    &j \geq 1 \\
-            a_{0},                      &j = 0 \\
-            a_{j} \cos(2 \pi j \blank),    &j \leq -1.
-        \end{cases}
-    \end{equation}
-    Hierbei ist die Konvergenz in $L_{\infty}(\Omega)$ im Allgemeinen aber nicht gegeben.
-    Unter geeigneten Voraussetzungen an $\omega$ erhalten wir Aussagen über das Abklingverhalten der Fourierkoeffizienten, woraus die Konvergenz in $L_{\infty}(\Omega)$ erreicht werden kann.
+% TODO: besser formulieren
+Eine durch die beabsichtigte Anwendung in \cite{Stasiak:2011ba} motivierte Wahl ist die Entwicklung in Sinusfunktionen.
+Da Konvergenz in $L_{\infty}(\Omega)$ wegen $\omega \in L_{\infty}(\Omega)$ notwending ist, erzwingen wir diese durch Gewichtung der Sinusfunktionen.
 
-    Hinreichend wäre zum Beispiel, dass $\omega$ zwei mal stetig differenzierbar ist.
-    Eventuell reicht auch bereits Hölder-Stetigkeit mit Exponent $\alpha > \frac{1}{2}$.
-    % TODO: genauer!
-\end{enumerate}
-
-\subsubsection{Entwicklung in Sinusfunktionen} % (fold)
-\label{ssub:entwicklung_in_sinusfunktionen}
-
-% subsubsection entwicklung_in_sinusfunktionen (end)
-
-Wir wählen den ersten Ansatz mit einer zusätzlichen, konstanten Funktion, um so inhomogene Randbedingungen für $\omega$ zuzulassen, das heißt wir haben das Funktionensystem $\Set{ \varphi_{j} }_{j \in \mathbb{N}_{0}}$ mit
+Zusätzlich zu den Sinusfunktionen fügen wir eine konstante Funktion hinzu, um so inhomogene Randbedingungen für $\omega$ zuzulassen, das heißt wir haben das Funktionensystem $\Set{ \varphi_{j} }_{j \in \mathbb{N}_{0}}$ mit
 \begin{equation}
     \label{eq:sinusfunktionen_ansatz}
-    \varphi_{0} = a_{0} \in \mathbb{R}, \qquad
-    \varphi_{j} = \frac{\sin(\pi j \blank)}{(\pi j)^{1 + \epsilon}}, \quad j \geq 1.
+    \varphi_{0} = c_{0} \in \mathbb{R}, \qquad
+    \varphi_{j} = \frac{c_{j}}{(\pi j)^{1 + \epsilon}} \sin(\pi j \blank), \quad j \geq 1.
 \end{equation}
+Die Faktoren $c_{j}$, $j \geq 0$, seien nichtnegativ und durch eine $K \in \mathbb{R}_{+}$ nach oben beschränkt.
 
 An dieser Stelle weisen wir zunächst einige Eigenschaften für \eqref{eq:sinusfunktionen_ansatz} nach.
 \begin{Lemma}
     Es gilt
     \begin{alignat}{2}
-        \norm{\varphi_{0}}_{L_{\infty}(\Omega)} &= a_{0},
+        \norm{\varphi_{0}}_{L_{\infty}(\Omega)} &= c_{0},
         \qquad&
-        \norm{\varphi_{j}}_{L_{\infty}(\Omega)} &= \frac{1}{(j \pi)^{1 + \epsilon}}, \quad j \geq 1,
+        \norm{\varphi_{j}}_{L_{\infty}(\Omega)} &= \frac{c_{j}}{(j \pi)^{1 + \epsilon}}, \quad j \geq 1,
     % \end{equation}
     % sowie
     % \begin{equation}
     \intertext{sowie}
-        \norm{\varphi_{0}}_{H^{1}(\Omega)}  &= c,
+        \norm{\varphi_{0}}_{H^{1}(\Omega)}  &= c_{0},
         \qquad&
-        \norm{\varphi_{j}}_{H^{1}(\Omega)}  &= \frac{\sqrt{1 + (j \pi)^{2}}}{\sqrt 2 (j \pi)^{1 + \epsilon}}, \quad j \geq 1.
+        \norm{\varphi_{j}}_{H^{1}(\Omega)}  &= \frac{c_{j}}{\sqrt 2 } \frac{\sqrt{1 + (j \pi)^{2}}}{(j \pi)^{1 + \epsilon}}, \quad j \geq 1.
     \end{alignat}
 \end{Lemma}
 
@@ -309,51 +280,42 @@ An dieser Stelle weisen wir zunächst einige Eigenschaften für \eqref{eq:sinusf
     Die Funktionen $\Set{ \varphi_{j} }_{j \in \mathbb{N}}$ bilden ein Orthogonalsystem in $H^{1}(\Omega)$, denn es gilt
     \begin{equation}
         \skprod{\varphi_{j}}{\varphi_{k}}_{H^{1}(\Omega)} = \begin{cases}
-            \frac{\sqrt{1 + (j \pi)^{2}}}{\sqrt 2 (j \pi)^{1 + \epsilon}},   &j = k \\
+            \frac{c_{j}}{\sqrt 2 } \frac{\sqrt{1 + (j \pi)^{2}}}{(j \pi)^{1 + \epsilon}},   &j = k \\
             0,          &j \neq k.
         \end{cases}
     \end{equation}
 \end{Lemma}
 
 \begin{Lemma}
-    Es sei $\epsilon > 0$ und $\sigma \in \mathcal S$ mit
-    \begin{equation}
-        \label{eq:sigma_tilde}
-        \tilde \sigma = \left(  \frac{\sigma_{j}}{j^{\epsilon}} \right)_{j \in \mathbb{N}_{0}} \in \ell^{1}(\mathbb{N}_{0}),
-    \end{equation}
-    dann konvergiert $\omega(\blank; \sigma)$ in $H^{1}(\Omega)$ und $L_{\infty}(\Omega)$.
+    Sei $\sigma \in \mathcal S$ und $\epsilon > 0$, dann konvergiert $\omega(\blank; \sigma)$ gleichmäßig in $L_{\infty}(\Omega)$.
+    Ist $\epsilon > 1$, dann gilt auch gleichmäßige Konvergenz in $H^{1}_{0}(\Omega)$.
 
     \begin{Beweis}
-        Wir zeigen zunächst absolute Konvergenz bezüglich der $H^{1}(\Omega)$-Norm.
+        Sei zunächst $\epsilon > 0$.
+        Da $\mathcal S = [0, 1]^{\mathbb{N}}$ ist, erhalten wir die gleichmäßige Konvergenz in $L_{\infty}(\Omega)$ nach dem Weierstraßschen Majorantenkriterium via
+        \begin{align}
+            \sum_{j = 0}^{\infty} \norm{\sigma_{j} \varphi_{j}}_{L_{\infty}(\Omega)}
+            &= \sum_{j = 0}^{\infty} \abs{\sigma_{j}} \norm{\varphi_{j}}_{L_{\infty}(\Omega)}
+             \leq \norm{\varphi_{0}}_{L_{\infty}(\Omega)} + \sum_{j = 1}^{\infty}  \norm{\varphi_{j}}_{L_{\infty}(\Omega)}
+            \\&= c_{0} + \sum_{j = 1}^{\infty}  \frac{c_{j}}{(j \pi)^{1+\epsilon}}
+               \leq K + \frac{K}{\pi^{1+\epsilon}} \sum_{j = 1}^{\infty} \frac{1}{j^{1+\epsilon}}.
+        \end{align}
+        Diese Reihe konvergiert bekanntlich für alle $\epsilon > 0$, womit wir gleichmäßige Konvergenz von $\omega$ in $L_{\infty}(\Omega)$ erhalten.
+
+        Sei nun $\epsilon > 1$.
         Betrachte
         \begin{align}
-            \sum_{j \geq 0} \norm{\sigma_{j} \varphi_{j}}_{H^{1}(\Omega)}
-            &= \sum_{j \geq 0} \abs{\sigma_{j}} \norm{\varphi_{j}}_{H^{1}(\Omega)}
-            = \abs{\sigma_{0}} \norm{\varphi_{0}}_{H^{1}(\Omega)} + \sum_{j \geq 1} \abs{\sigma_{j}} \norm{\varphi_{j}}_{H^{1}(\Omega)}
-            \\&\leq a_{0} + \sum_{j \geq 1} \abs{\sigma_{j}} \frac{\sqrt{1 + (j \pi)^{2}}}{\sqrt{2}(j \pi)^{1+\epsilon}}
-            \leq a_{0} + \sum_{j \geq 1} \abs{\sigma_{j}} \frac{1 + j \pi}{\sqrt{2}(j \pi)^{1+\epsilon}}
-            \\&\leq a_{0} + \sum_{j \geq 1} \abs{\sigma_{j}} \frac{1}{\sqrt{2}(j \pi)^{1+\epsilon}} + \sum_{j \geq 1} \abs{\sigma_{j}} \frac{1}{\sqrt{2}(j \pi)^{\epsilon}}.
+            \sum_{j = 0}^{\infty} \norm{\sigma_{j} \varphi_{j}}_{H^{1}(\Omega)}
+            &= \sum_{j = 0}^{\infty} \abs{\sigma_{j}} \norm{\varphi_{j}}_{H^{1}(\Omega)}
+            \leq  \norm{\varphi_{0}}_{H^{1}(\Omega)} + \sum_{j \geq 1} \norm{\varphi_{j}}_{H^{1}(\Omega)}
+            \\&= c_{0} + \sum_{j = 1}^{\infty} \frac{c_{j}}{\sqrt 2}\frac{\sqrt{1 + (j \pi)^{2}}}{(j \pi)^{1+\epsilon}}
+            \leq K + \frac{K}{\sqrt{2}} \sum_{j = 1}^{\infty} \frac{1 + j \pi}{(j \pi)^{1+\epsilon}}
+            \\&\leq K + \frac{K}{\sqrt{2} \pi^{1 + \epsilon}} \sum_{j = 1}^{\infty} \frac{1}{j^{1+\epsilon}} + \frac{K}{\sqrt{2} \pi^{\epsilon}} \sum_{j = 1}^{\infty} \frac{1}{j^{\epsilon}}.
         \end{align}
-        Da $\epsilon > 0$ gilt, konvergiert die erste Reihe.
-        Die Konvergenz der zweiten Reihe folgt aus $\tilde \sigma \in \ell^{1}$.
-        Damit erhalten wir die absolute Konvergenz bezüglich der $H^{1}(\Omega)$-Norm, und daraus auch die gleichmäßige Konvergenz von $\omega$ in $H^{1}(\Omega)$.
-
-        Die Konvergenz in $L_{\infty}(\Omega)$ lässt sich analog zeigen.
-        Unter Verwendung von $\sigma \in [0, 1]^{\mathbb{N}}$ erhalten wir die absolute Konvergenz via
-        \begin{align}
-            \sum_{j \geq 0} \norm{\sigma_{j} \varphi_{j}}_{L_{\infty}(\Omega)}
-            &= \sum_{j \geq 0} \abs{\sigma_{j}} \norm{\varphi_{j}}_{L_{\infty}(\Omega)}
-             = \abs{\sigma_{0}} \norm{\varphi_{0}}_{L_{\infty}(\Omega)} + \sum_{j \geq 1} \abs{\sigma_{j}} \norm{\varphi_{j}}_{L_{\infty}(\Omega)}
-            \\&\leq a_{0} + \sum_{j \geq 1} \abs{\sigma_{j}} \frac{1}{(j \pi)^{1+\epsilon}}
-               \leq a_{0} + \frac{1}{\pi^{1+\epsilon}} \sum_{j \geq 1} \frac{1}{j^{1+\epsilon}}.
-        \end{align}
-        Diese Reihe konvergiert bekanntlich für alle $\epsilon > 0$, womit wir wiederum gleichmäßige Konvergenz von $\omega$ in $L_{\infty}(\Omega)$ erhalten.
+        Wegen $\epsilon > 1$ konvergiert sowohl die erste als auch die zweite Reihe.
+        Zusammen liefert dies absolute und gleichmäßige Konvergenz in $H^{1}_{0}(\Omega)$.
     \end{Beweis}
 \end{Lemma}
-
-\begin{Korollar}
-    Sei $\epsilon > 1$ und $\sigma \in \mathcal S$, dann konvergiert $\omega(\blank; \sigma)$ in $H^{1}(\Omega)$ und $L_{\infty}(\Omega)$.
-\end{Korollar}
 
 Wir wollen nun die Regularität von $\omega(\blank; \sigma)$ in Abhängigkeit vom Parameter $\sigma$ nachweisen.
 
@@ -361,14 +323,17 @@ Wir wollen nun die Regularität von $\omega(\blank; \sigma)$ in Abhängigkeit vo
 \label{satz:regularitaet_nachrechnen}
     Seien $\epsilon > 0$ und $0 < \kappa < 1$ so gewählt, dass
     \begin{equation}
-        \zeta(1 + \epsilon) \leq (c \gamma_{\Omega}^{2} \kappa - a_{0}) \pi^{1+\epsilon}
+        \zeta(2 + \epsilon) \leq (\kappa c \pi^{2} - K) \frac{\pi^{2+\epsilon}}{4K}
     \end{equation}
     gilt,
-    wobei $\zeta$ die Riemannsche-$\zeta$-Funktion, $\gamma_{\Omega}$ die Poincaré-Friedrichs-Konstante von $\Omega$ aus \eqref{eq:grundlagen:poincare_friedrichs_ungleichung} und $c$ und $a_{0}$ die Konstanten aus \eqref{eq:def_op_A} respektive \eqref{eq:sinusfunktionen_ansatz} sind.
+    wobei $\zeta$ die Riemannsche-$\zeta$-Funktion, $c$ und $K$ die Konstanten aus \eqref{eq:def_op_A} respektive \eqref{eq:sinusfunktionen_ansatz} sind.
     Dann erfüllt $\Set{ A_{j} }_{j \geq 0}$ aus \eqref{eq:affine_zerlegung_A_def} \thref{thm:kunoth:assumption2}.
 
     \begin{Beweis}
         Wir weisen zunächst die inf-sup-Bedingungen für $a_{0}(\blank, \blank)$ nach und bestimmen die Konstante $\gamma_{0}$.
+
+        Da $a_{0}(\blank, \blank)$ symmetrisch ist, erhalten wir analog auch die inf-sup-Bedingung \eqref{eq:kunoth:ass2_gamma_0_b} mit dem selben $\gamma_{0}$.
+
         Nach \thref{lemma:sauter:2.1.48} reicht es, für alle $u \in V$ ein $v_{u} \in V$ und von $u$ und $v_{u}$ unabhängige Konstanten $C_{1}, C_{2} > 0$ mit
         \begin{equation}
             a_{0}(u, v_{u}) \geq C_{1} \norm{u}_{V}^{2} \quad \text{und} \quad \norm{v_{u}}_{V} \leq C_{2} \norm{u}_{V}
@@ -385,25 +350,83 @@ Wir wollen nun die Regularität von $\omega(\blank; \sigma)$ in Abhängigkeit vo
         wobei die letzte Abschätzung aus der Poincaré-Friedrichs-Ungleichung \eqref{eq:grundlagen:poincare_friedrichs_ungleichung} folgt.
         Zusammen liefert dies $\gamma_{0} = c \gamma_{\Omega}^{2}$ als inf-sup-Konstante.
 
-        Da $a_{0}(\blank, \blank)$ symmetrisch ist, erhalten wir analog auch die inf-sup-Bedingung \eqref{eq:kunoth:ass2_gamma_0_b} mit dem selben $\gamma_{0}$.
+        Für den vorliegenden Fall können wir $\gamma_{\Omega}^{2}$ exakt bestimmen, den bekanntlich (zitieren!) ist $\gamma_{\Omega}^{2}$ hierbei durch den ersten (also kleinsten) Eigenwert des Laplace-Operators gegeben.
+        Dieser ist für $\Omega = [0, 1]$ gerade $\pi^{2}$, das heißt wir erhalten
+        \begin{equation}
+            \gamma_{0} = c \pi^{2}.
+        \end{equation}
 
-        Kümmern wir uns nun also um die Abschätzung \eqref{eq:kunoth:ass2_abs_reihe}.
-        Betrachte dazu
+        Seien $u, v \in V$.
+        Für $j = 0$ gilt die simple Abschätzung
+        \begin{equation}
+            \begin{aligned}
+                a_{0}(u, v)
+                &= \skprod{\varphi_{0} u}{v}_{L_{2}(\Omega)}
+                = c_{0} \skprod{u}{v}_{L_{2}(\Omega)}
+                \\&\leq c_{0} \norm{u}_{L_{2}(\Omega)} \norm{v}_{L_{2}(\Omega)}
+                \leq c_{0} \norm{u}_{H^{1}(\Omega)} \norm{v}_{H^{1}(\Omega)}
+            \end{aligned}
+        \end{equation}
+        Betrachte für $j \geq 1$
+        \begin{align}
+            a_{j}(u, v)
+            &= \skprod{\varphi_{j} u}{v}_{L_{2}(\Omega)}
+            = \int_{I} \varphi_{j} u v \diff x
+            \intertext{da $\varphi_{j}$ offensichtlich integrierbar ist und $\varphi_{j}(0) = 0$, können wir dies umschreiben zu}
+            a_{j}(u, v)
+            &= \int_{I} \frac{\diff}{\diff x} \left( \int_{0}^{x} \varphi_{j}(y) \diff y \right) u v \diff x
+            \intertext{woraus wir mittels partieller Integration folgenden Ausdruck erhalten}
+            a_{j}(u, v)
+            &= - \int_{I} \left( \int_{0}^{x} \varphi_{j}(y) \diff y \right) (u v)' \diff x
+            \leq \norm{\left( \int_{0}^{x} \varphi_{j}(y) \diff y \right) (u v)'}_{L_{1}(\Omega)}.
+            \\&\leq \norm{\int_{0}^{x} \varphi_{j}(y) \diff y }_{L_{\infty}(\Omega)} \norm{(uv)'}_{L_{1}(\Omega)}
+        \end{align}
+        Die erste Norm können wir weiter abschätzen mit
+        \begin{equation}
+            \begin{aligned}
+                \norm{\int_{0}^{x} \varphi_{j}(y) \diff y }_{L_{\infty}(\Omega)}
+                &= \frac{c_{j}}{(\pi j)^{1+\epsilon}} \norm{\int_{0}^{x} \sin(\pi j y) \diff y }_{L_{\infty}(\Omega)}
+                \\&= \frac{c_{j}}{(\pi j)^{2+\epsilon}} \norm{ \cos(\pi j x) - 1 }_{L_{\infty}(\Omega)}
+                \leq \frac{2 c_{j}}{(\pi j)^{2+\epsilon}}.
+            \end{aligned}
+        \end{equation}
+        Aus der zweiten Norm erhalten wir mittels Minkowski- und Hölderungleichung die Abschätzung
+        \begin{equation}
+            \begin{aligned}
+                \norm{(uv)'}_{L_{1}(\Omega)}
+                &= \norm{u'v + uv'}_{L_{1}(\Omega)}
+                \leq \norm{u'v}_{L_{1}(\Omega)} + \norm{uv'}_{L_{1}(\Omega)}
+                \\&\leq \norm{u'}_{L_{2}(\Omega)} \norm{v}_{L_{2}(\Omega)} + \norm{u}_{L_{2}(\Omega)} \norm{v'}_{L_{2}(\Omega)}
+                \\&\leq 2 \norm{u}_{H^{1}(\Omega)} \norm{v}_{H^{1}(\Omega)}
+            \end{aligned}
+        \end{equation}
+        Zusammen also
+        \begin{equation}
+            a_{j}(u, v)
+            \leq \norm{\int_{0}^{x} \varphi_{j}(y) \diff y }_{L_{\infty}(\Omega)} \norm{(uv)'}_{L_{1}(\Omega)}
+            \leq \frac{4 c_{j}}{(\pi j)^{2 + \epsilon}} \norm{u}_{H^{1}(\Omega)} \norm{v}_{H^{1}(\Omega)}.
+        \end{equation}
+
+        Betrachte nun
         \begin{align}
                     \sum_{j = 0}^{\infty} \norm{A_{j}}_{\mathcal L(V, V')}
-            \leq    \sum_{j = 0}^{\infty} \norm{\varphi_{j}}_{L_{\infty}(\Omega)}
-            =       a_{0} + \frac{1}{\pi^{1+\epsilon}} \sum_{j = 1}^{\infty} \frac{1}{j^{1+\epsilon}}
-            = a_{0} + \frac{\zeta(1+\epsilon)}{\pi^{1+\epsilon}}.
+            &= \norm{A_{0}}_{\mathcal L(V, V')} + \sum_{j = 1}^{\infty} \norm{A_{j}}_{\mathcal L(V, V')}
+            \leq c_{0} + \sum_{j = 1}^{\infty} \frac{4 c_{j}}{(\pi j)^{2 + \epsilon}}
+            \\&\leq K + \frac{4 K}{\pi^{2 + \epsilon}} \sum_{j = 1}^{\infty} \frac{1}{j^{2 + \epsilon}}
+            = K + \frac{4 K}{\pi^{2 + \epsilon}} \zeta(2 + \epsilon)
+            % \leq    \sum_{j = 0}^{\infty} \norm{\varphi_{j}}_{L_{\infty}(\Omega)}
+            % =       a_{0} + \frac{1}{\pi^{1+\epsilon}} \sum_{j = 1}^{\infty} \frac{1}{j^{1+\epsilon}}
+            % = a_{0} + \frac{\zeta(1+\epsilon)}{\pi^{1+\epsilon}}.
         \end{align}
-        Es gilt nun
+        Für die Gültigkeit von
         \begin{equation}
             \sum_{j \geq 0} \norm{A_{j}}_{\mathcal L(V, V')} \leq \kappa \gamma_{0}
         \end{equation}
-        genau dann, wenn
+        für ein $0 < \kappa < 1$ ist damit also
         \begin{equation}
-            \zeta(1+ \epsilon) \leq (\kappa \gamma_{\Omega}^{2} c - a_{0}) \pi^{1+\epsilon}
+            \zeta(2 + \epsilon) \leq (\kappa c \pi^{2} - K) \frac{\pi^{2+\epsilon}}{4K}
         \end{equation}
-        mit $\epsilon > 0$ und $0 < \kappa < 1$ gilt.
+        mit $\epsilon > 0$ hinreichend.
     \end{Beweis}
 \end{Satz}
 

@@ -91,13 +91,22 @@
 %     $\mathcal C^{0}([a, b]; X)$ liegt dicht in $L_{p}(a, b; X)$ für $1 \leq p < \infty$.
 % \end{Lemma}
 
-\begin{Satz}[Poincaré-Friedrichs-Ungleichung, vgl. {{\cite[Theorem II.1.7]{Braess:2007wm}}}]
+% TODO: zitieren
+\begin{Satz}[Poincaré-Friedrichs-Ungleichung, vgl. {{\cite[Lemma 89.4]{HankeBourgeois:2009fk}}}]
 \label{satz:grundlagen:poincare_friedrichs_ungleichung}
+    Sei $\Omega \subset \mathbb{R}^{n}$ offen, beschränkt und mit Lipschitz-Rand.
+    Dann existiert eine Konstante $\gamma_{\Omega} > 0$ mit
+    \begin{equation}
+        \label{eq:grundlagen:poincare_friedrichs_ungleichung}
+        \norm{\grad u}_{L_{2}(\Omega)} \geq \gamma_{\Omega} \norm{u}_{H^{1}(\Omega)} \quad \fa u \in H^{1}_{0}(\Omega).
+    \end{equation}
+\end{Satz}
+
+\begin{Satz}[Poincaré-Friedrichs-Ungleichung, vgl. {{\cite[Theorem II.1.7]{Braess:2007wm}}}]
     Es sei $\Omega \subset \mathbb{R}^{n}$ beschränkt und in einem $n$-dimensionalen Würfel mit Seitenlänge $s$ enthalten.
     Dann gilt
     \begin{equation}
-        \label{eq:grundlagen:poincare_friedrichs_ungleichung}
-        \abs{u}_{H^{m}} \leq \norm{u}_{H^{m}} \leq (1 + s)^{m} \abs{u}_{H^{m}} \quad \text{für alle}~u \in H^{m}_{0}(\Omega).
+        (1 + s)^{m} \abs{u}_{H^{m}} \geq \norm{u}_{H^{m}} \geq \abs{u}_{H^{m}} \quad \text{für alle}~u \in H^{m}_{0}(\Omega).
     \end{equation}
 \end{Satz}
 
