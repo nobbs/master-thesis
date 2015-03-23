@@ -35,25 +35,27 @@ sigma = 1;
 
 % Anfangsbedingung
     function u = u_0(x)
-        u = x.*sin(pi*x);
-%         u = exp(-5 * (x - 0.5)^2) - exp(-5/4);
-%         u = exp(-5 * (x - 0.5).^2) - exp(-5/4) - 0.5 * (exp(-30 * (x - 0.5).^2) - exp(-30/4));
+        u = sin(pi*x);
     end
 
 % Reaktionsterm in Reihe entwicklen
-factor = 2;
+factor = 1;
 Phis = {};
 for j = 1:N_Sigmas
    Phis{j} = ansatz(j - 1); 
 end
 Sigmas = factor * (rand(N_Sigmas, 1) - 0.5);
+
+Sigmas = zeros(N_Sigmas, 1);
+Sigmas(1) = 1;
+
 w = generate_w(N_Sigmas, Sigmas);
 % plot(x_grid, w(x_grid));
 % return;
 
 % Quellterm
     function y = g(t, x)
-        y = 0;
+        y = ones(size(t, 1), size(t, 2));
     end
 
 % "exakte" Lösung
@@ -108,14 +110,19 @@ y_0(1:x_N) = arrayfun(@(x) u_0(x), x_grid(2:end-1));
 [T_mesh, X_mesh] = meshgrid(T, X);
 u   =  Y(:, 1:(x_N));
 
+[T_mesh, X_mesh_pad] = meshgrid(T, x_grid);
+
+% Padden und dann plotten
+upad = zeros(size(u, 1), size(u, 2) + 2);
+upad(:, 2:end-1) = u;
 figure(1);
-mesh(T_mesh, X_mesh, u');
+mesh(T_mesh, X_mesh_pad, upad');
 title('Lösung u');
 xlabel('t');
 ylabel('x');
 
 if plot_all
-    for j = 1:N_Sigmas
+    for j = 1:N_Sigmas       
         u_sigma  = Y(:, (j*x_N + 1):((j+1)*x_N));
         figure(j + 1);
         mesh(T_mesh, X_mesh, u_sigma');

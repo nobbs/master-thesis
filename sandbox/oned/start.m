@@ -11,9 +11,9 @@ tspan = [0 1];
 xspan = [0 1];
 
 % Anzahl der Sinus-Basisfunktionen für die Raumvariable $x$.
-num_M = 20;
+num_M = 15;
 % Anzahl der Legendre-Polynome für die Zeitvariable $t$.
-num_Q = 20;
+num_Q = 10;
 
 % Gesamtzahl der Basisfunktionen für $\mathcal X_N$ festlegen.
 num_X_j = num_M;
@@ -30,14 +30,36 @@ dim_X = num_X_j * num_X_k;
 dim_Y = num_Y_l * num_Y_m + num_Y_n;
 assert(dim_X == dim_Y)
 
+%% Parameter der parabolischen PDE
+% PDE lautet: u'(t) - c_0 \Delta u(t) + w u(t) = g(t), u(0) = u_0.
+% Faktor vor Diffusionsterm
+c_D = 1;
+
+% Parameter für die Reihenentwicklung von \omega
+epsilon = 1 / 100;
+kappa = 99 / 100;
+
+% Riemann-Zeta(2+epsilon), approx.
+zeta = 1.65;
+
+% Skalierung des Reaktionsterms
+c_R = 5;
+
+% Koeffizienten des Reaktionsterms
+N_sigmas = 5;
+sigmas = c_R * (rand(N_sigmas + 1, 1) - 0.5);
+
+% Check, ob hinreichende Bedingung für Regularität in sigma vorliegt.
+assert(c_R < (c_D * kappa * pi^(4 + epsilon)) / (pi^(2 + epsilon) + 4));
+
 % "Parameter-Funktion" $\omega$ festlegen.
-w = @(x) 1 + 0 .* x;
+w = @(x) omega_sinus(x, 1/100, N_sigmas, sigmas);
 
 % Anfangsbedingung $u0$ festlegen.
-u0 = @(x) x .* sin(pi*x);
+u0 = @(x) sin(pi*x);
 
 % Und den Quellterm $g$ ebenfalls festlegen.
-g = @(t, x) 0 .* t + 0 .* x;
+g = @(t, x) 1 + 0 .* t + 0 .* x;
 
 %% Aufbau der Steifigkeitsmatrix und des Lastvektors
 
@@ -67,10 +89,10 @@ for j = 1:num_X_j
                             legendre_P(t, m - 1), tspan(1), tspan(2)) / 2;
                 end;
 
-                % $\int_T \int_\Omega \nabla u(t) \nabla v_1(t) dx dt$
+                % $\int_T \int_\Omega c_D \nabla u(t) \nabla v_1(t) dx dt$
                 tmp2 = 0;
                 if j == l && k == m
-                    tmp2 = ((pi * j)^2 / (2 * (k - 1) + 1)) / 2;
+                    tmp2 = c_D * ((pi * j)^2 / (2 * (k - 1) + 1)) / 2;
                 end;
 
                 % $\int_T \int_\Omega \omega u(t) v_1(t) dx dt$
@@ -112,6 +134,7 @@ for j = 1:num_X_j
 end
 % Steifigkeitsmatrix aus den berechneten Werten erzeugen.
 B = sparse(idy, idx, entry, dim_Y, dim_X);
+% return;
 
 % Für den Lastvektor erzeugen wir drei neue Hilfslisten
 idx = [];
@@ -157,8 +180,8 @@ ufun = @(t, x) reconstruct_solution(t, x, num_X_j, num_X_k, u);
 t_plot = 1;
 if t_plot
     figure(2)
-    tgrid = linspace(tspan(1), tspan(2), 33);
-    xgrid = linspace(xspan(1), xspan(2), 33);
+    tgrid = linspace(tspan(1), tspan(2), 100);
+    xgrid = linspace(xspan(1), xspan(2), 50);
     [T, X] = meshgrid(tgrid, xgrid);
     mesh(T, X, ufun(T, X));
 end
