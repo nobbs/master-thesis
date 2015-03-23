@@ -17,17 +17,6 @@
 \input{commands}
 \input{meta}
 
-% Glossar (Symbolverzeichnis etc)
-% \usepackage[
-%     nonumberlist,
-%     toc
-% ]{glossaries}
-
-% \renewcommand*{\glspostdescription}{}
-
-% \makeglossaries
-% \loadglsentries{glossar}
-
 \begin{document}
 
     % Deckblack / Titelseite
@@ -49,14 +38,6 @@
     % TODO-Liste
     % \listoftodos
 
-    % Abbildungs-, Tabellen- und Symbolverzeichnis
-    % \listtheorems
-    % \listoffigures
-    % \listoftables
-    % \glsaddall
-    % \printglossary[title=Symbolverzeichnis,toctitle=Symbolverzeichnis]
-
-
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %%% Hauptteil
     \mainmatter{}
@@ -75,6 +56,12 @@
     %%% Anhang
     \appendix{}
     \input{chapters/funktionalanalytische_grundlagen}
+
+    % Abbildungs-, Tabellen- und Symbolverzeichnis
+    % \listtheorems
+    % \listoffigures
+    % \listoftables
+    \printnomenclature
 
     % Literaturverzeichnis
     \bibliography{literature}
