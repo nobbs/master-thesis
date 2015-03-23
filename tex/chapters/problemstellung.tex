@@ -9,86 +9,87 @@ Anschließend nutzen wir die Aussagen aus \autoref{cha:einfuehrung} um die Eigen
 \label{sub:problemstellung}
 
 Es sei $0 < T < \infty$ und $I = [0, T]$.
-Mit $\Omega \subset \mathbb{R}^{n}$ bezeichnen wir eine beschränkte Teilmenge des $\mathbb{R}^{n}$ mit Lipschitz-Rand.
-Wir setzen $V = H^{1}_{0}(\Omega)$ und $H = L_{2}(\Omega)$ und verwenden diese Abkürzungen im Folgenden der notationellen Einfachheit halber.
-Bekanntlich handelt es sich dabei um separable Hilberträume und es existiert eine dichte stetige Einbettung $V \hookrightarrow H$.
-Durch Identifikation von $H$ mit seinem Dualraum $H'$ erhalten wir das sogenannte Gelfand-Tripel $V \hookrightarrow H \hookrightarrow V'$, wobei $V' = (H^{1}_{0}(\Omega))' = H^{-1}(\Omega)$.
-Wie zuvor verwenden wir $\skprod{\blank}{\blank}$ mit entsprechendem Index sowohl für die inneren Produkte als auch für die duale Paarung auf $V' \times V$.
+Weiter sei $\Omega \subset \mathbb{R}^{n}$ eine beschränkte Teilmenge des $\mathbb{R}^{n}$ mit Lipschitz-Rand.
+Wir wählen als konkrete Hilberträume $V = H^{1}_{0}(\Omega)$ und $H = L_{2}(\Omega)$.
+Bekanntlich sind diese separabel und es existiert eine dichte stetige Einbettung von $H^{1}_{0}(\Omega)$ in $L_{2}(\Omega)$.
+Dies liefert uns wegen $(H^{1}_{0}(\Omega))' = H^{-1}(\Omega)$ das Gelfand-Tripel
+\begin{equation}
+    H^{1}_{0}(\Omega) \denseinclusion L_{2}(\Omega) \denseinclusion H^{-1}(\Omega).
+\end{equation}
+Wie zuvor verwenden wir $\skprod{\blank}{\blank}$ mit entsprechendem Index sowohl für die Skalarprodukte als auch für die duale Paarung auf $H^{-1}(\Omega) \times H^{1}_{0}(\Omega)$.
 
 Seien $c \in \mathbb{R}_{+}$ und $\omega \in L_{\infty}(\Omega)$ gegeben, dann definieren wir den linearen Operator $A$ als
 \begin{equation}
     \label{eq:def_op_A}
-    A \colon V \to V', \quad \eta \mapsto A \eta = - c \Delta \eta + \omega \eta.
+    A \colon H^{1}_{0}(\Omega) \to H^{-1}(\Omega), \quad \eta \mapsto A \eta = - c \Delta \eta + \omega \eta.
 \end{equation}
 
 Wir interessieren uns nun für Lösungen der parabolischen partiellen Differentialgleichung \eqref{eq:allgemeine_parabolische_pde} mit $A$ aus \eqref{eq:def_op_A}.
 \begin{Problem}
-Seien $g \in L_{2}(I; V')$ und $u_{0} \in H$ gegeben.
+Seien $g \in L_{2}(I; H^{-1}(\Omega))$ und $u_{0} \in L_{2}(\Omega)$ gegeben.
 Gesucht ist eine Lösung $u$ von
 \begin{equation}
     \label{eq:parabolische_pde}
-    u_{t}(t) - c \Delta u(t) + \omega u(t) = g(t) \quad \text{in}~V',
+    u_{t}(t) - c \Delta u(t) + \omega u(t) = g(t) \quad \text{in}~H^{-1}(\Omega),
     \qquad
-    u(0) = u_{0} \quad \text{in}~H.
+    u(0) = u_{0} \quad \text{in}~L_{2}(\Omega).
 \end{equation}
 \end{Problem}
 
 Bevor wir analog zu \autoref{sec:raum_zeit_variationsformulierung} eine Raum-Zeit-Variationsformulierung für \eqref{eq:parabolische_pde} angeben, weisen wir zunächst einige Eigenschaften von $A$ nach.
 
-Bezeichne mit $a(\blank, \blank)$ die zu $A$ zugehörige Bilinearform, es gilt also $\skprod{A \eta}{\zeta}_{V' \times V} = a(\eta, \zeta)$ für alle $\eta, \zeta \in V$.
-Die Form von $a(\blank, \blank)$ lässt sich explizit angeben, denn wegen $V = H^{1}_{0}(\Omega)$ erhalten wir
+Bezeichne mit $a(\blank, \blank)$ die zu $A$ zugehörige Bilinearform, es gilt also
 \begin{equation}
-    \label{eq:bf_a}
+    a(\blank, \blank) \colon H^{1}_{0}(\Omega) \times H^{1}_{0}(\Omega) \to \mathbb{R}, \quad a(\eta, \zeta) = \skprod{A \eta}{\zeta}_{H^{-1}(\Omega) \times H^{1}_{0}(\Omega)}.
+\end{equation}
+Unter Verwendung der Greenschen Formeln erhalten wir
+\begin{equation}
     \begin{aligned}
         a(\eta, \zeta)
-        &= \skprod{A \eta}{\zeta}_{V' \times V}
-        = \skprod{A \eta}{\zeta}_{H}
-        \\&= \skprod{- c \Delta \eta + \omega \eta}{\zeta}_{H}
-        = - c \skprod{\Delta \eta}{\zeta}_{H} + \skprod{\omega \eta}{\zeta}_{H}
-        \\&= -c \int_{\Omega} \Delta \eta \zeta \diff x + \skprod{\omega \eta}{\zeta}_{H}
-        = c \int_{\Omega} \skprod{\grad \eta}{\grad \zeta}_{\mathbb{R}^{n}} \diff x + \skprod{\omega \eta}{\zeta}_{H}
-        \\&= c \skprod{\grad \eta}{\grad \zeta}_{L_{2}(\Omega, \mathbb{R}^{n})} + \skprod{\omega \eta}{\zeta}_{L_{2}(\Omega)}.
+        &= \skprod{A \eta}{\zeta}_{H^{-1}(\Omega) \times H^{1}_{0}(\Omega)}
+        \\&= \skprod{- c \Delta \eta + \omega \eta}{\zeta}_{H^{-1}(\Omega) \times H^{1}_{0}(\Omega)}
+        \\&= - c \skprod{\Delta \eta}{\zeta}_{H^{-1}(\Omega) \times H^{1}_{0}(\Omega)} + \skprod{\omega \eta}{\zeta}_{H^{-1}(\Omega) \times H^{1}_{0}(\Omega)}
+        \\&= c \skprod{\grad \eta}{\grad \zeta}_{L_{2}(\Omega)} + \skprod{\omega \eta}{\zeta}_{L_{2}(\Omega)}.
     \end{aligned}
 \end{equation}
 
 
 \begin{Lemma}
 \label{lemma:a_bf_bounded_garding}
-    Sei $a \colon V \times V \to \mathbb{R}$ wie in \eqref{eq:bf_a}, also
+    Seien $c \in \mathbb{R}_{+}$ und $\omega \in L_{\infty}(\Omega)$ und
     \begin{equation}
-        a(\eta, \zeta) = c \skprod{\grad \eta}{\grad \zeta}_{L_{2}(\Omega, \mathbb{R}^{n})} + \skprod{\omega \eta}{\zeta}_{L_{2}(\Omega)}
+    \label{eq:bf_a}
+        a \colon H^{1}_{0}(\Omega) \times H^{1}_{0}(\Omega) \to \mathbb{R}, \quad a(\eta, \zeta) = c \skprod{\grad \eta}{\grad \zeta}_{L_{2}(\Omega)} + \skprod{\omega \eta}{\zeta}_{L_{2}(\Omega)}.
     \end{equation}
-    mit $c \in \mathbb{R}_{+}$ und $\omega \in L_{\infty}(\Omega)$.
     Dann erfüllt $a(\blank, \blank)$ die folgenden Eigenschaften:
     \begin{thmenumerate}
         \item\label{lemma:a_bf_bounded_garding:1}
-        \emph{Beschränktheit:} es gilt
+        \emph{Stetigkeit:} es gilt
         \begin{equation}
-            \abs{a(\eta, \zeta)} \leq M_{a} \norm{\eta}_{V} \norm{\zeta}_{V} \quad \text{für alle}~\eta, \zeta \in V
+            \abs{a(\eta, \zeta)} \leq M_{a} \norm{\eta}_{H^{1}(\Omega)} \norm{\zeta}_{H^{1}(\Omega)} \quad \text{für alle}~\eta, \zeta \in H^{1}_{0}(\Omega)
         \end{equation}
         mit $M_{a} = \max\Set{c, \norm{\omega}_{L_{\infty}(\Omega)} } \geq 0$.
         \item\label{lemma:a_bf_bounded_garding:2}
         \emph{G\aa{}rding-Ungleichung:} es gilt
         \begin{equation}
-                a(\eta, \eta) + \lambda \norm{\eta}_{H}^{2} \geq \alpha \norm{\eta}_{V}^{2} \quad \text{für alle}~\eta \in V
+                a(\eta, \eta) + \lambda \norm{\eta}_{L_{2}(\Omega)}^{2} \geq \alpha \norm{\eta}_{H^{1}(\Omega)}^{2} \quad \text{für alle}~\eta \in H^{1}_{0}(\Omega)
         \end{equation}
         mit $\alpha = c \gamma_{\Omega}^{2} > 0$ und $\lambda = \norm{\omega}_{L_{\infty}(\Omega)} \geq 0$, wobei $\gamma_{\Omega}$ die Poincaré-Friedrichs-Konstante ist.
     \end{thmenumerate}
 
     \begin{Beweis}
-    Wir zeigen zunächst die Beschränktheit.
-    Seien dazu $\eta, \zeta \in V = H^{1}_{0}(\Omega)$ beliebig.
+    Wir zeigen zunächst die Stetigkeit.
+    Seien dazu $\eta, \zeta \in H^{1}_{0}(\Omega)$ beliebig.
     Unter Verwendung der Dreiecks- und der Cauchy-Schwarz-Ungleichung erhalten wir
     \begin{align}
         \abs{a(\eta, \zeta)}
-        &= \abs{c \skprod{\grad \eta}{\grad \zeta}_{L_{2(\Omega, \mathbb{R}^{n})}} + \skprod{\omega \eta}{\zeta}_{L_{2}(\Omega)}}
-        \\&\leq c \abs{\skprod{\grad \eta}{\grad \zeta}_{L_{2(\Omega, \mathbb{R}^{n})}}} + \abs{\skprod{\omega \eta}{\zeta}_{L_{2}(\Omega)}}
-        \\&\leq c \norm{\grad \eta}_{L_{2}(\Omega, \mathbb{R}^{n})} \norm{\grad \zeta}_{L_{2}(\Omega, \mathbb{R}^{n})} + \norm{\omega}_{L_{\infty}(\Omega)} \norm{\eta}_{L_{2}(\Omega)} \norm{\zeta}_{L_{2}(\Omega)}
-        \\&\leq \max \Set{ c, \norm{\omega}_{L_{\infty}(\Omega)} } \norm{\eta}_{H^{1}(\Omega)} \norm{\zeta}_{H^{1}(\Omega)}
-        \\&= M_{a} \norm{\eta}_{V} \norm{\zeta}_{V}.
+        &= \abs{c \skprod{\grad \eta}{\grad \zeta}_{L_{2}(\Omega)} + \skprod{\omega \eta}{\zeta}_{L_{2}(\Omega)}}
+        \\&\leq c \abs{\skprod{\grad \eta}{\grad \zeta}_{L_{2}(\Omega)}} + \abs{\skprod{\omega \eta}{\zeta}_{L_{2}(\Omega)}}
+        \\&\leq c \norm{\grad \eta}_{L_{2}(\Omega)} \norm{\grad \zeta}_{L_{2}(\Omega)} + \norm{\omega}_{L_{\infty}(\Omega)} \norm{\eta}_{L_{2}(\Omega)} \norm{\zeta}_{L_{2}(\Omega)}
+        \\&\leq \max \Set{ c, \norm{\omega}_{L_{\infty}(\Omega)} } \norm{\eta}_{H^{1}(\Omega)} \norm{\zeta}_{H^{1}(\Omega)}.
     \end{align}
 
-    Für die G\aa{}rding-Ungleichung seien nun $\eta \in V$ und $\lambda \in \mathbb{R}$.
+    Für die G\aa{}rding-Ungleichung seien nun $\eta \in H^{1}_{0}(\Omega)$ und $\lambda \in \mathbb{R}$.
     Wir betrachten
     \begin{align}
         a(\eta, \eta) + \lambda \norm{\eta}^{2}_{L_{2}(\Omega)}
@@ -99,8 +100,8 @@ Die Form von $a(\blank, \blank)$ lässt sich explizit angeben, denn wegen $V = H
         &\geq c \norm{\grad \eta}^{2}_{L_{2}(\Omega)},
         \intertext{woraus wir durch Anwenden der Poincaré-Friedrichs-Ungleichung \ref{satz:grundlagen:poincare_friedrichs_ungleichung}}
         a(\eta, \eta) + \lambda \norm{\eta}^{2}_{L_{2}(\Omega)}
-        &\geq c \gamma_{\Omega}^{2} \norm{\eta}^{2}_{H^{1}_{0}(\Omega)}
-        = \alpha \norm{\eta}^{2}_{H^{1}_{0}(\Omega)}
+        &\geq c \gamma_{\Omega}^{2} \norm{\eta}^{2}_{H^{1}(\Omega)}
+        = \alpha \norm{\eta}^{2}_{H^{1}(\Omega)}
     \end{align}
     folgern.
     \end{Beweis}
@@ -118,7 +119,7 @@ Mit unserer konkreten Wahl $V = H^{1}_{0}(\Omega)$ und $H = L_{2}(\Omega)$ laute
 Damit ergibt sich analog zu \autoref{sec:raum_zeit_variationsformulierung} das folgende Variationsproblem:
 
 \begin{Problem}
-    Gegeben ein $g \in L_{2}(I; V')$ und ein $u_{0} \in H$. Finde ein $u \in \mathcal X$ mit
+    Gegeben ein $g \in L_{2}(I; H^{-1}(\Omega))$ und ein $u_{0} \in L_{2}(\Omega)$. Finde ein $u \in \mathcal X$ mit
     \begin{equation}
         \label{eq:varprob}
         b(u, v) = f(v) \quad \text{für alle}~v \in \mathcal Y,
@@ -127,19 +128,19 @@ Damit ergibt sich analog zu \autoref{sec:raum_zeit_variationsformulierung} das f
     \begin{equation}
         \label{eq:buv}
         b(u, v)
-            = \int_{I} \skprod{u_{t}(t)}{v_{1}(t)}_{V' \times V} + a(u(t), v_{1}(t)) \diff t + \skprod{u(0)}{v_{2}}_{H}
+            = \int_{I} \skprod{u_{t}(t)}{v_{1}(t)}_{H^{-1}(\Omega) \times H^{1}_{0}(\Omega)} + a(u(t), v_{1}(t)) \diff t + \skprod{u(0)}{v_{2}}_{L_{2}(\Omega)}
     \end{equation}
     gegebene Bilinearform und $f(\blank) \colon \mathcal Y \to \mathbb{R}$ definiert ist durch
     \begin{equation}
         \label{eq:var_all_f_wiederholung}
-        f(v) = \int_{I} \skprod{g(t)}{v_{1}(t)}_{V' \times V} \diff t + \skprod{u_{0}}{v_{2}}_{H}.
+        f(v) = \int_{I} \skprod{g(t)}{v_{1}(t)}_{H^{-1}(\Omega) \times H^{1}_{0}(\Omega)} \diff t + \skprod{u_{0}}{v_{2}}_{L_{2}(\Omega)}.
     \end{equation}
 \end{Problem}
 
-Durch Anwenden von \thref{thm:schwab09:theorem51} erhalten wir nun die Wohldefiniertheit des obigen Variationsproblems und zugleich Schranken für die Operatoren.
+Aus \thref{thm:schwab09:theorem51} erhalten wir nun die Wohldefiniertheit des obigen Variationsproblems und zugleich Schranken für die Operatoren.
 
-\begin{Lemma}
-\label{lemma:2.2}
+\begin{Korollar}
+\label{korollar:2.2}
     Seien $\mathcal X$ und $\mathcal Y$ gegeben wie in \eqref{eq:var_ansatzraum_testraum} und sei $B \colon \mathcal X \to \mathcal Y'$ definiert durch
     \begin{equation}
         \skprod{Bu}{v}_{\mathcal Y' \times \mathcal Y}  = b(u, v), \quad u \in \mathcal X,~ v \in \mathcal Y,
@@ -160,28 +161,28 @@ Durch Anwenden von \thref{thm:schwab09:theorem51} erhalten wir nun die Wohldefin
         % \frac{\sqrt{2 \max\{ 1, \sigma^{-2} \gamma_{\Omega}^{-4} \} + M_{e}^{2}}}{\min\{ \sigma \gamma_{\Omega}^{2} \norm{\omega}_{L_{\infty}(\Omega)}^{-2}, \sigma \gamma_{\Omega}^{2} \}}
     \end{equation}
     mit $M_{e}$ und $\rho$ wie in \eqref{eq:var_all_M_e} respektive \eqref{eq:var_all_rho}.
-\end{Lemma}
+\end{Korollar}
 
 \section{Parametrische Variante} % (fold)
 \label{sec:parametrische_variante}
 
-Wir wollen nun aus dem gerade beschriebenen Variationsproblem eine parametrische Variante gewinnen und aufbauend auf \autoref{sec:parametrisches_problem} Aussagen dazu treffen.
+Wir wollen nun aus dem gerade beschriebenen Variationsproblem eine parametrische Variante gewinnen und aufbauend auf \autoref{sec:parametrisches_problem} Regularität bezüglich des Parameters folgern.
 Dazu müssen wir den Operator $A \in \mathcal L(V, V')$ aus \eqref{eq:def_op_A} zunächst zu einem parametrischen Operator $A(\sigma)$ mit $\sigma \in \mathcal S$, wobei $\mathcal S \subset \mathbb{R}^{\mathbb{N}}$ ein geeigneter Parameterraum ist, umschreiben.
 Dabei beschränken wir uns auf den Fall affiner parametrischer Abhängigkeit \eqref{eq:all_affiner_operator}.
-Der Einfachheit halber wählen wir $\mathcal S = [-1, 1]^{\mathbb{N}}$, das heißt $\mathcal S$ sei die Einheitskugel aus $\ell^{\infty}(\mathbb{N})$.
+Der Einfachheit halber wählen wir $\mathcal S = [-1, 1]^{\mathbb{N}}$, das heißt $\mathcal S$ sei die Einheitskugel aus $\ell_{\infty}(\mathbb{N})$.
 
-Sei $\Set{ \varphi_{j} }_{j \in \mathbb{N}} \subset Z \subset L_{\infty}(\Omega)$ ein noch näher zu bestimmendes, passend gewähltes Funktionensystem und $\sigma \in \mathcal S$.
+Sei $\Set{ \varphi_{j} }_{j \in \mathbb{N}} \subset L_{\infty}(\Omega)$ ein noch näher zu bestimmendes, passend gewähltes Funktionensystem und $\sigma \in \mathcal S$.
 Wir entwickeln nun $\omega$ formal in eine Reihe der Form
 \begin{equation}
     \label{eq:reihenentwicklung_omega}
     \omega(\blank; \sigma) = \sum_{j = 1}^{\infty} \sigma_{j} \varphi_{j}.
 \end{equation}
-Offenbar ist für die Konvergenz der Reihe \eqref{eq:reihenentwicklung_omega} hinreichend, dass $\Set{ \norm{\varphi_{j}}_{L_{\infty}(\Omega)} }_{j \in \mathbb{N}} \in \ell^{1}(\mathbb{N})$ gilt, insbesondere folgt daraus
+Offenbar ist für die Konvergenz der Reihe \eqref{eq:reihenentwicklung_omega} hinreichend, dass $\Set{ \norm{\varphi_{j}}_{L_{\infty}(\Omega)} }_{j \in \mathbb{N}} \in \ell_{1}(\mathbb{N})$ gilt, insbesondere folgt daraus
 \begin{equation}
     \norm{\omega(\blank; \sigma)}_{L_{\infty}(\Omega)} \leq \sum_{j = 1}^{\infty} \norm{\varphi_{j}}_{L_{\infty}(\Omega)} < \infty \quad \fa \sigma \in \mathcal S.
 \end{equation}
 % Diese Eigenschaft wird auch benötigt, denn dadurch erhalten wir aus \thref{lemma:2.2} die für \thref{thm:kunoth:theorem21} notwendigen, von $\sigma$ unabhängigen, Schranken $\beta_{1}$ und $\beta_{2}$.
-Die Wahl des Funktionensystems $\Set{ \varphi_{j} }_{j \in \mathbb{N}} \subset Z \subset L_{\infty}(\Omega)$ und des Unterraums $Z$ ist entscheidend für die Konvergenz von \eqref{eq:reihenentwicklung_omega}, sowie für die Erfüllbarkeit von \thref{thm:kunoth:assumption1} respektive \thref{thm:kunoth:assumption2},
+Damit ist die Wahl des Funktionensystems $\Set{ \varphi_{j} }_{j \in \mathbb{N}} \subset L_{\infty}(\Omega)$ ist entscheidend für die Konvergenz von \eqref{eq:reihenentwicklung_omega}, aber auch für die Erfüllbarkeit von \thref{thm:kunoth:assumption1} respektive \thref{thm:kunoth:assumption2},
 und wird in den nächsten Abschnitten genauer behandelt.
 
 % \subsection{Affiner Operator} % (fold)
@@ -190,12 +191,12 @@ und wird in den nächsten Abschnitten genauer behandelt.
 Wir wollen den Operator $A$ aus \eqref{eq:def_op_A} als affin parametrischen Operator der Form
 \begin{equation}
     \label{eq:aff_zerlegung_A}
-    A(\sigma) = A_{0} + \sum_{j \geq 1} \sigma_{j} A_{j}
+    A(\sigma) = \overline A + \sum_{j \geq 1} \sigma_{j} A_{j}
 \end{equation}
 auffassen, beziehungsweise als Bilinearformen
 \begin{equation}
      \label{eq:aff_zerelgung_A_bf}
-     a(\eta, \zeta; \sigma) = a_{0}(\eta, \zeta) + \sum_{j \geq 1} \sigma_{j} a_{j}(\eta, \zeta), \quad \eta, \zeta \in V.
+     a(\eta, \zeta; \sigma) = \overline a(\eta, \zeta) + \sum_{j \geq 1} \sigma_{j} a_{j}(\eta, \zeta), \quad \eta, \zeta \in V.
  \end{equation}
 Dazu entwickeln wir $\omega$ in eine Reihe der Form \eqref{eq:reihenentwicklung_omega}, das heißt wir erhalten
 \begin{equation}
@@ -206,17 +207,18 @@ mit $\sigma \in \mathcal S$.
 Eine naheliegende affine Aufteilung des Operators $A$ erhalten wir damit durch die Wahl
 \begin{equation}
     \label{eq:affine_zerlegung_A_def}
-    A_{0} = - c \Delta, \qquad
+    \overline A = - c \Delta, \qquad
     A_{j} = \varphi_{j}, \quad j \geq 1.
 \end{equation}
 Die zugehörigen Bilinearformen lassen sich ebenfalls direkt angeben, denn es gilt
 \begin{equation}
-    a_{0}(\eta, \zeta) = \skprod{\grad \eta}{\grad \zeta}_{L_{2}(\Omega)}, \qquad a_{j}(\eta, \zeta) = \skprod{\varphi_{j} \eta}{\zeta}_{L_{2}(\Omega)}, \quad j \geq 1.
+    \overline a(\eta, \zeta) = \skprod{\grad \eta}{\grad \zeta}_{L_{2}(\Omega)}, \qquad a_{j}(\eta, \zeta) = \skprod{\varphi_{j} \eta}{\zeta}_{L_{2}(\Omega)}, \quad j \geq 1.
 \end{equation}
 
-Die zugehörigen Raum-Zeit-Variationsformulierung lautet nun:
+Die daraus resultierende Raum-Zeit-Variationsformulierung lautet nun:
 \begin{Problem}
-    Gegeben ein $g \in L_{2}(I; V')$ und ein $u_{0} \in H$. Finde für alle $\sigma \in \mathcal S$ ein $u(\sigma) \in \mathcal X$ mit
+    Gegeben ein $g \in L_{2}(I; H^{-1}(\Omega))$ und ein $u_{0} \in L_{2}(\Omega)$.
+    Finde für alle $\sigma \in \mathcal S$ ein $u(\sigma) \in \mathcal X$ mit
     \begin{equation}
         \label{eq:varprob_2}
         b(u, v; \sigma) = f(v) \quad \text{für alle}~v \in \mathcal Y,
@@ -225,12 +227,12 @@ Die zugehörigen Raum-Zeit-Variationsformulierung lautet nun:
     \begin{equation}
         \label{eq:buv_2}
         b(u, v; \sigma)
-            = \int_{I} \skprod{u_{t}(t)}{v_{1}(t)}_{V' \times V} + a(u(t), v_{1}(t); \sigma) \diff t + \skprod{u(0)}{v_{2}}_{H}
+            = \int_{I} \skprod{u_{t}(t)}{v_{1}(t)}_{H^{-1}(\Omega) \times H^{1}_{0}(\Omega)} + a(u(t), v_{1}(t); \sigma) \diff t + \skprod{u(0)}{v_{2}}_{L_{2}(\Omega)}
     \end{equation}
     gegebene Bilinearform und $f(\blank) \colon \mathcal Y \to \mathbb{R}$ definiert ist durch
     \begin{equation}
         \label{eq:var_all_f_wiederholung_2}
-        f(v) = \int_{I} \skprod{g(t)}{v_{1}(t)}_{V' \times V} \diff t + \skprod{u_{0}}{v_{2}}_{H}.
+        f(v) = \int_{I} \skprod{g(t)}{v_{1}(t)}_{H^{-1}(\Omega) \times H^{1}_{0}(\Omega)} \diff t + \skprod{u_{0}}{v_{2}}_{L_{2}(\Omega)}.
     \end{equation}
 \end{Problem}
 
@@ -254,25 +256,25 @@ Da Konvergenz in $L_{\infty}(\Omega)$ wegen $\omega \in L_{\infty}(\Omega)$ notw
 Zusätzlich zu den Sinusfunktionen fügen wir eine konstante Funktion hinzu, um so inhomogene Randbedingungen für $\omega$ zuzulassen, das heißt wir haben das Funktionensystem $\Set{ \varphi_{j} }_{j \in \mathbb{N}_{0}}$ mit
 \begin{equation}
     \label{eq:sinusfunktionen_ansatz}
-    \varphi_{0} = c_{0} \in \mathbb{R}, \qquad
-    \varphi_{j} = \frac{c_{j}}{(\pi j)^{1 + \epsilon}} \sin(\pi j \blank), \quad j \geq 1.
+    \varphi_{0} = K, \qquad
+    \varphi_{j} = \frac{K}{(\pi j)^{1 + \epsilon}} \sin(\pi j \blank), \quad j \geq 1,
 \end{equation}
-Die Faktoren $c_{j}$, $j \geq 0$, seien nichtnegativ und durch eine $K \in \mathbb{R}_{+}$ nach oben beschränkt.
+wobei $K \in \mathbb{R}_{+}$ als Skalierungsfaktor dient.
 
 An dieser Stelle weisen wir zunächst einige Eigenschaften für \eqref{eq:sinusfunktionen_ansatz} nach.
 \begin{Lemma}
     Es gilt
     \begin{alignat}{2}
-        \norm{\varphi_{0}}_{L_{\infty}(\Omega)} &= c_{0},
+        \norm{\varphi_{0}}_{L_{\infty}(\Omega)} &= K,
         \qquad&
-        \norm{\varphi_{j}}_{L_{\infty}(\Omega)} &= \frac{c_{j}}{(j \pi)^{1 + \epsilon}}, \quad j \geq 1,
+        \norm{\varphi_{j}}_{L_{\infty}(\Omega)} &= \frac{K}{(\pi j)^{1 + \epsilon}}, \quad j \geq 1,
     % \end{equation}
     % sowie
     % \begin{equation}
     \intertext{sowie}
-        \norm{\varphi_{0}}_{H^{1}(\Omega)}  &= c_{0},
+        \norm{\varphi_{0}}_{H^{1}(\Omega)}  &= K,
         \qquad&
-        \norm{\varphi_{j}}_{H^{1}(\Omega)}  &= \frac{c_{j}}{\sqrt 2 } \frac{\sqrt{1 + (j \pi)^{2}}}{(j \pi)^{1 + \epsilon}}, \quad j \geq 1.
+        \norm{\varphi_{j}}_{H^{1}(\Omega)}  &= \frac{K}{\sqrt 2 } \frac{\sqrt{1 + (\pi j)^{2}}}{(\pi j)^{1 + \epsilon}}, \quad j \geq 1.
     \end{alignat}
 \end{Lemma}
 
@@ -280,7 +282,7 @@ An dieser Stelle weisen wir zunächst einige Eigenschaften für \eqref{eq:sinusf
     Die Funktionen $\Set{ \varphi_{j} }_{j \in \mathbb{N}}$ bilden ein Orthogonalsystem in $H^{1}(\Omega)$, denn es gilt
     \begin{equation}
         \skprod{\varphi_{j}}{\varphi_{k}}_{H^{1}(\Omega)} = \begin{cases}
-            \frac{c_{j}}{\sqrt 2 } \frac{\sqrt{1 + (j \pi)^{2}}}{(j \pi)^{1 + \epsilon}},   &j = k \\
+            \frac{K}{\sqrt 2 } \frac{\sqrt{1 + (\pi j)^{2}}}{(\pi j)^{1 + \epsilon}},   &j = k \\
             0,          &j \neq k.
         \end{cases}
     \end{equation}
@@ -297,8 +299,7 @@ An dieser Stelle weisen wir zunächst einige Eigenschaften für \eqref{eq:sinusf
             \sum_{j = 0}^{\infty} \norm{\sigma_{j} \varphi_{j}}_{L_{\infty}(\Omega)}
             &= \sum_{j = 0}^{\infty} \abs{\sigma_{j}} \norm{\varphi_{j}}_{L_{\infty}(\Omega)}
              \leq \norm{\varphi_{0}}_{L_{\infty}(\Omega)} + \sum_{j = 1}^{\infty}  \norm{\varphi_{j}}_{L_{\infty}(\Omega)}
-            \\&= c_{0} + \sum_{j = 1}^{\infty}  \frac{c_{j}}{(j \pi)^{1+\epsilon}}
-               \leq K + \frac{K}{\pi^{1+\epsilon}} \sum_{j = 1}^{\infty} \frac{1}{j^{1+\epsilon}}.
+            \\&= K + \frac{K}{\pi^{1+\epsilon}} \sum_{j = 1}^{\infty} \frac{1}{j^{1+\epsilon}}.
         \end{align}
         Diese Reihe konvergiert bekanntlich für alle $\epsilon > 0$, womit wir Konvergenz von $\omega$ in $L_{\infty}(\Omega)$ erhalten.
 
@@ -308,8 +309,7 @@ An dieser Stelle weisen wir zunächst einige Eigenschaften für \eqref{eq:sinusf
             \sum_{j = 0}^{\infty} \norm{\sigma_{j} \varphi_{j}}_{H^{1}(\Omega)}
             &= \sum_{j = 0}^{\infty} \abs{\sigma_{j}} \norm{\varphi_{j}}_{H^{1}(\Omega)}
             \leq  \norm{\varphi_{0}}_{H^{1}(\Omega)} + \sum_{j \geq 1} \norm{\varphi_{j}}_{H^{1}(\Omega)}
-            \\&= c_{0} + \sum_{j = 1}^{\infty} \frac{c_{j}}{\sqrt 2}\frac{\sqrt{1 + (j \pi)^{2}}}{(j \pi)^{1+\epsilon}}
-            \leq K + \frac{K}{\sqrt{2}} \sum_{j = 1}^{\infty} \frac{1 + j \pi}{(j \pi)^{1+\epsilon}}
+            \\&= K + \frac{K}{\sqrt{2}} \sum_{j = 1}^{\infty} \frac{1 + \pi j}{(\pi j)^{1+\epsilon}}
             \\&\leq K + \frac{K}{\sqrt{2} \pi^{1 + \epsilon}} \sum_{j = 1}^{\infty} \frac{1}{j^{1+\epsilon}} + \frac{K}{\sqrt{2} \pi^{\epsilon}} \sum_{j = 1}^{\infty} \frac{1}{j^{\epsilon}}.
         \end{align}
         Wegen $\epsilon > 1$ konvergiert sowohl die erste als auch die zweite Reihe.
@@ -330,22 +330,21 @@ Wir wollen nun die Regularität von $\omega(\blank; \sigma)$ in Abhängigkeit vo
     Dann erfüllt $\Set{ A_{j} }_{j \geq 0}$ aus \eqref{eq:affine_zerlegung_A_def} \thref{thm:kunoth:assumption2}.
 
     \begin{Beweis}
-        Wir weisen zunächst die inf-sup-Bedingungen für $a_{0}(\blank, \blank)$ nach und bestimmen die Konstante $\gamma_{0}$.
+        Wir weisen zunächst die inf-sup-Bedingungen \eqref{eq:kunoth:ass2_gamma_0} für $\overline a(\blank, \blank)$ nach und bestimmen die Konstante $\gamma_{0}$.
+        Da $\overline a(\blank, \blank)$ symmetrisch ist, genügt es die inf-sup-Bedingung \eqref{eq:kunoth:ass2_gamma_0_a} nachzuweisen. Die zweite inf-sup-Bedingung \eqref{eq:kunoth:ass2_gamma_0_b} folgt dann analog mit dem selben $\gamma_{0}$.
 
-        Da $a_{0}(\blank, \blank)$ symmetrisch ist, genügt es aus die inf-sup-Bedingung \eqref{eq:kunoth:ass2_gamma_0_a} nachzuweisen. Die zweite inf-sup-Bedingung \eqref{eq:kunoth:ass2_gamma_0_b} folgt dann analog mit dem selben $\gamma_{0}$.
-
-        Nach \thref{lemma:sauter:2.1.48} reicht es, für alle $u \in V$ ein $v_{u} \in V$ und von $u$ und $v_{u}$ unabhängige Konstanten $C_{1}, C_{2} > 0$ mit
+        Nach \thref{lemma:sauter:2.1.48} reicht es, für alle $u \in H^{1}_{0}(\Omega)$ ein $v_{u} \in H^{1}_{0}(\Omega)$ und von $u$ und $v_{u}$ unabhängige Konstanten $C_{1}, C_{2} > 0$ mit
         \begin{equation}
-            a_{0}(u, v_{u}) \geq C_{1} \norm{u}_{V}^{2} \quad \text{und} \quad \norm{v_{u}}_{V} \leq C_{2} \norm{u}_{V}
+            \overline a(u, v_{u}) \geq C_{1} \norm{u}_{H^{1}(\Omega)}^{2} \quad \text{und} \quad \norm{v_{u}}_{H^{1}(\Omega)} \leq C_{2} \norm{u}_{H^{1}(\Omega)}
         \end{equation}
         zu finden.
         Dann ist die inf-sup-Bedingung \eqref{eq:kunoth:ass2_gamma_0_a} mit $\gamma_{0} = \frac{C_{1}}{C_{2}}$ erfüllt.
 
-        Sei nun also $u \in V = H^{1}_{0}(\Omega)$ beliebig.
+        Sei nun also $u \in H^{1}_{0}(\Omega)$ beliebig.
         Wir wählen $v_{u} = u \in V$, es gilt also $C_{2} = 1$.
         Es ergibt sich
         \begin{align}
-            a_{0}(u, v_{u}) = a_{0}(u, u) = c \skprod{\grad u}{\grad u}_{L_{2}(\Omega)} = c \norm{\grad u}_{L_{2}(\Omega)}^{2} \geq c \gamma_{\Omega}^{2} \norm{u}_{H^{1}_{0}(\Omega)}^{2},
+            \overline a(u, v_{u}) = \overline a(u, u) = c \skprod{\grad u}{\grad u}_{L_{2}(\Omega)} = c \norm{\grad u}_{L_{2}(\Omega)}^{2} \geq c \gamma_{\Omega}^{2} \norm{u}_{H^{1}(\Omega)}^{2},
         \end{align}
         wobei die letzte Abschätzung aus der Poincaré-Friedrichs-Ungleichung \eqref{eq:grundlagen:poincare_friedrichs_ungleichung} folgt.
         Zusammen liefert dies $\gamma_{0} = c \gamma_{\Omega}^{2}$ als inf-sup-Konstante.
@@ -355,15 +354,15 @@ Wir wollen nun die Regularität von $\omega(\blank; \sigma)$ in Abhängigkeit vo
         Dieser hat für $\Omega = [0, 1]$ den Wert $\pi^{2}$.
         Wir erhalten damit also $\gamma_{0} = c \pi^{2}$.
 
-        Seien $u, v \in V$.
+        Seien $u, v \in H^{1}_{0}(\Omega)$.
         Für $j = 0$ gilt die simple Abschätzung
         \begin{equation}
             \begin{aligned}
                 a_{0}(u, v)
                 &= \skprod{\varphi_{0} u}{v}_{L_{2}(\Omega)}
-                = c_{0} \skprod{u}{v}_{L_{2}(\Omega)}
-                \\&\leq c_{0} \norm{u}_{L_{2}(\Omega)} \norm{v}_{L_{2}(\Omega)}
-                \leq c_{0} \norm{u}_{H^{1}(\Omega)} \norm{v}_{H^{1}(\Omega)}
+                = K \skprod{u}{v}_{L_{2}(\Omega)}
+                \\&\leq K \norm{u}_{L_{2}(\Omega)} \norm{v}_{L_{2}(\Omega)}
+                \leq K \norm{u}_{H^{1}(\Omega)} \norm{v}_{H^{1}(\Omega)}
             \end{aligned}
         \end{equation}
         Betrachte für $j \geq 1$
@@ -371,7 +370,7 @@ Wir wollen nun die Regularität von $\omega(\blank; \sigma)$ in Abhängigkeit vo
             a_{j}(u, v)
             &= \skprod{\varphi_{j} u}{v}_{L_{2}(\Omega)}
             = \int_{I} \varphi_{j} u v \diff x
-            \intertext{da $\varphi_{j}$ offensichtlich integrierbar ist und $\varphi_{j}(0) = 0$, können wir dies umschreiben zu}
+            \intertext{da $\varphi_{j}$ integrierbar ist und $\varphi_{j}(0) = 0$, können wir dies umschreiben zu}
             a_{j}(u, v)
             &= \int_{I} \frac{\diff}{\diff x} \left( \int_{0}^{x} \varphi_{j}(y) \diff y \right) u v \diff x
             \intertext{woraus wir mittels partieller Integration folgenden Ausdruck erhalten}
@@ -384,9 +383,9 @@ Wir wollen nun die Regularität von $\omega(\blank; \sigma)$ in Abhängigkeit vo
         \begin{equation}
             \begin{aligned}
                 \norm{\int_{0}^{x} \varphi_{j}(y) \diff y }_{L_{\infty}(\Omega)}
-                &= \frac{c_{j}}{(\pi j)^{1+\epsilon}} \norm{\int_{0}^{x} \sin(\pi j y) \diff y }_{L_{\infty}(\Omega)}
-                \\&= \frac{c_{j}}{(\pi j)^{2+\epsilon}} \norm{ \cos(\pi j x) - 1 }_{L_{\infty}(\Omega)}
-                \leq \frac{2 c_{j}}{(\pi j)^{2+\epsilon}}.
+                &= \frac{K}{(\pi j)^{1+\epsilon}} \norm{\int_{0}^{x} \sin(\pi j y) \diff y }_{L_{\infty}(\Omega)}
+                \\&= \frac{K}{(\pi j)^{2+\epsilon}} \norm{ \cos(\pi j x) - 1 }_{L_{\infty}(\Omega)}
+                \leq \frac{2 K}{(\pi j)^{2+\epsilon}}.
             \end{aligned}
         \end{equation}
         Aus der zweiten Norm erhalten wir mittels Minkowski- und Hölderungleichung die Abschätzung
@@ -403,14 +402,14 @@ Wir wollen nun die Regularität von $\omega(\blank; \sigma)$ in Abhängigkeit vo
         \begin{equation}
             a_{j}(u, v)
             \leq \norm{\int_{0}^{x} \varphi_{j}(y) \diff y }_{L_{\infty}(\Omega)} \norm{(uv)'}_{L_{1}(\Omega)}
-            \leq \frac{4 c_{j}}{(\pi j)^{2 + \epsilon}} \norm{u}_{H^{1}(\Omega)} \norm{v}_{H^{1}(\Omega)}.
+            \leq \frac{4 K}{(\pi j)^{2 + \epsilon}} \norm{u}_{H^{1}(\Omega)} \norm{v}_{H^{1}(\Omega)}.
         \end{equation}
 
         Betrachte nun
         \begin{align}
                     \sum_{j = 0}^{\infty} \norm{A_{j}}_{\mathcal L(V, V')}
             &= \norm{A_{0}}_{\mathcal L(V, V')} + \sum_{j = 1}^{\infty} \norm{A_{j}}_{\mathcal L(V, V')}
-            \leq c_{0} + \sum_{j = 1}^{\infty} \frac{4 c_{j}}{(\pi j)^{2 + \epsilon}}
+            \leq K + \sum_{j = 1}^{\infty} \frac{4 K}{(\pi j)^{2 + \epsilon}}
             \\&\leq K + \frac{4 K}{\pi^{2 + \epsilon}} \sum_{j = 1}^{\infty} \frac{1}{j^{2 + \epsilon}}
             = K + \frac{4 K}{\pi^{2 + \epsilon}} \zeta(2 + \epsilon)
             % \leq    \sum_{j = 0}^{\infty} \norm{\varphi_{j}}_{L_{\infty}(\Omega)}

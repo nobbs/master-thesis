@@ -4,7 +4,7 @@
 \label{cha:grundlagen}
 
 In diesem Kapitel fassen wir die für diese Arbeit benötigten Grundlagen aus verschiedenen mathematischen Bereichen, wie der Funktionalanalysis und der Numerik, zusammen.
-Wir orientieren uns dabei maßgeblich an \cite{Dautray:1992by}.
+Wir orientieren uns dabei maßgeblich an \cite{Dautray:1992by,Lions:1972tg}.
 
 \section{Bochner-Räume} % (fold)
 \label{sec:bochner_r_ume}
@@ -17,14 +17,14 @@ Dabei handelt es sich um Verallgemeinerungen der Lebesgue-Räume $L_{p}$ auf Ban
     Sei $X$ ein Banachraum, $- \infty \leq a < b \leq \infty$ und $1 \leq p < \infty$.
     Als Bochner-Raum $L_{p}(a, b; X)$ bezeichnen wir die Menge (der Äquivalenzklassen) $L_{p}$-integrierbarer Funktionen $f \colon [a, b] \to X$, das heißt aller Lebesgue-messbarer Funktionen auf $[a, b]$ mit
     \begin{equation}
-        \norm{f}_{L_{p}(a, b; X)} \deq \left( \int_{a}^{b} \norm{f(t)}_{X}^{p} \diff t \right)^{\frac{1}{p}} < \infty.
+        \norm{f}_{L_{p}(a, b; X)} \deq \left( \int_{a}^{b} \norm{f(t)}_{X}^{p} \diff t \right)^{1 / p} < \infty.
     \end{equation}
     Weiterhin ist der Bochner-Raum $L_{\infty}(a, b; X)$ definiert als die Menge (der Äquivalenzklassen) der für fast alle $t \in [a, b]$ wesentlich beschränkten Funktionen mit
     \begin{equation}
         \norm{f}_{L_{\infty}(a, b; X)} \deq \esssup_{t \in [a, b]} \norm{f(t)}_{X} < \infty.
     \end{equation}
 \end{Definition}
-\nomenclature{$X$}{Banachraum}
+\nomenclature{$X, Y$}{Banachräume}
 
 \begin{Lemma}[{{\cite[Prop. XVIII.1.1]{Dautray:1992by}}}, {{\cite[Abs. 1.1.3]{Lions:1972tg}}}]
 \label{lemma:gl:bochner_ist_banach}
@@ -37,7 +37,7 @@ Dabei handelt es sich um Verallgemeinerungen der Lebesgue-Räume $L_{p}$ auf Ban
     Seien $X$ und $Y$ Banachräume mit $X \hookrightarrow Y$ und $u \in L_{2}(a, b; X)$.
     Die distributionelle Ableitung $\frac{\partial}{\partial t} u \in L_{2}(a, b; Y)$ sei definiert als das $v \in L_{2}(a, b; Y)$, welches
     \begin{equation}
-        \int_{a}^{b} v(t) \varphi(t) \diff t = - \int_{a}^{b} u(t) \frac{\partial}{\partial t} \varphi(t) \diff t \quad \fa \phi \in C^{\infty}_{0}(a, b)
+        \int_{a}^{b} v(t) \varphi(t) \diff t = - \int_{a}^{b} u(t) \frac{\partial}{\partial t} \varphi(t) \diff t \quad \fa \phi \in C^{\infty}_{0}((a, b), \mathbb{R})
     \end{equation}
     erfüllt, falls ein solches $v$ existiert.
 \end{Definition}
@@ -46,29 +46,29 @@ Dabei handelt es sich um Verallgemeinerungen der Lebesgue-Räume $L_{p}$ auf Ban
     Je nach Situation werden wir der Einfachheit halber eine der Schreibweisen $\frac{\partial}{\partial t} u = u' = u_{t}$ verwenden.
 \end{Bemerkung*}
 
-Im Zuge dieser Arbeit werden wir fast immer mit Hilberträumen zu tun haben.
+Im Zuge dieser Arbeit werden wir es stets mit Hilberträumen zu tun haben.
 Dabei werden wir oft auf folgendes Konstrukt zurückgreifen.
 
-\begin{Definition}[Gelfand-Tripel]
+\begin{Definition}
 \label{definition:gl:gelfand_tripel}
     Seien $V$ und $H$ separable Hilberträume mit den Dualräumen $V'$ und $H'$.
     Weiter sei $V$ ein dichter Unterraum von $H$.
-    Durch Identifikation von $H$ mit seinem Dualraum $H'$ erhalten wir das sogenannte Gelfand-Tripel
+    Durch Identifikation von $H$ mit seinem Dualraum $H'$ erhalten wir das sogenannte \emph{Gelfand-Tripel}
     \begin{equation}
-        V \denseinclusion H \cong H' \denseinclusion V',
+        V \denseinclusion H \simeq H' \denseinclusion V',
     \end{equation}
     wobei die Inklusionen jeweils dichte stetige Einbettungen sind.
 \end{Definition}
 \nomenclature{$V, H$}{Hilberträume}
 
-\begin{Bemerkung*}
+\begin{Bemerkung}
     Mit $\skprod{\blank}{\blank}_{V}$ und $\skprod{\blank}{\blank}_{H}$ bezeichnen wir das Skalarprodukt auf $V$ respektive $H$.
     Weiterhin $\skprod{\blank}{\blank}_{V' \times V}$ wird auch für die duale Paarung auf $V' \times V$, die als die eindeutige stetige Fortsetzung von $\skprod{\blank}{\blank}_{H}$ definiert ist, verwendet.
     Insbesondere gilt für $u \in H$ und $v \in V$ die Gleichheit
     \begin{equation}
         \skprod{u}{v}_{V' \times V} = \skprod{u}{v}_{H}.
     \end{equation}
-\end{Bemerkung*}
+\end{Bemerkung}
 \nomenclature{$\skprod{\blank}{\blank}$}{Je nach Index Skalarprodukt oder duale Paarung}
 
 \begin{Definition}[{{{\cite[Def. XVIII.2.4]{Dautray:1992by}}}}]
@@ -92,15 +92,19 @@ Dabei werden wir oft auf folgendes Konstrukt zurückgreifen.
 
 % TODO: ordentlich formulieren
 \begin{Lemma}[{{{\cite[Prop. XVIII.2.6]{Dautray:1992by}}}}]
-    Zusammen mit der Norm
+    Mit dem Skalarprodukt
+    \begin{equation}
+        \skprod{u}{v}_{W(a, b; V, V')} \deq \skprod{u'}{v'}_{L_{2}(a, b; V')} +  \skprod{u}{v}_{L_{2}(a, b; V)}
+    \end{equation}
+    und der induzierten Norm
     \begin{equation}
         \begin{aligned}
             \norm{u}_{W(a, b; V, V')}
-            &\deq \left( \int_{a}^{b} \norm{u'(t)}_{V'}^{2} \diff t + \int_{a}^{b} \norm{u(t)}_{V}^{2} \diff t \right)^{\frac 12}
-            \\&= \left( \norm{u'}_{L_{2}(a, b; V')}^{2} + \norm{u}_{L_{2}(a, b; V)}^{2} \right)^{\frac 12},
+            &\deq \left( \int_{a}^{b} \norm{u'(t)}_{V'}^{2} \diff t + \int_{a}^{b} \norm{u(t)}_{V}^{2} \diff t \right)^{1/2}
+            \\&= \left( \norm{u'}_{L_{2}(a, b; V')}^{2} + \norm{u}_{L_{2}(a, b; V)}^{2} \right)^{1/2}
         \end{aligned}
     \end{equation}
-    und dem induzierten Skalarprodukt TODO ist $W(a, b)$ ein Hilbertraum.
+    ist $W(a, b; V, V')$ ein Hilbertraum.
 \end{Lemma}
 
 \begin{Definition}
@@ -113,10 +117,15 @@ Dabei werden wir oft auf folgendes Konstrukt zurückgreifen.
     Seien $a, b \in \mathbb{R}$, dann stimmt jedes $u \in W(a, b)$ fast überall mit einer stetigen Funktion von $[a, b]$ nach $H$ überein.
     Genauer gilt
     \begin{equation}
-        W(a, b; V, V') \hookrightarrow C^{0}([a, b]; H).
+        W(a, b; V, V') \hookrightarrow \mathcal C^{0}([a, b]; H).
     \end{equation}
 \end{Satz}
 \nomenclature{$\hookrightarrow$}{Stetige Einbettung}
+
+\begin{Korollar}[{{{\cite[Remark XVIII.2.4]{Dautray:1992by}}}}]
+    Sei $a, b \in \mathbb{R}$ und $u \in W(a, b; V, V')$.
+    Dann sind $u(a), u(b) \in H$ wohldefiniert.
+\end{Korollar}
 
 % section bochner_r_ume (end)
 
