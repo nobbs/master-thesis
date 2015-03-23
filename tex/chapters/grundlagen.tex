@@ -3,8 +3,123 @@
 \chapter{Grundlagen} % (fold)
 \label{cha:grundlagen}
 
-\begin{Definition}[Lebesgue-Räume]
+In diesem Kapitel fassen wir die für diese Arbeit benötigten Grundlagen aus verschiedenen mathematischen Bereichen, wie der Funktionalanalysis und der Numerik, zusammen.
+Wir orientieren uns dabei maßgeblich an \cite{Dautray:1992by}.
 
+\section{Bochner-Räume} % (fold)
+\label{sec:bochner_r_ume}
+
+Wir beginnen mit der Einführung sogenannter Bochner-Räume.
+Dabei handelt es sich um Verallgemeinerungen der Lebesgue-Räume $L_{p}$ auf Banachraum-wertige Funktionen.
+
+\begin{Definition}[Bochner-Raum, {{{\cite[Def. XVIII.1.1]{Dautray:1992by}}}}]
+\label{definition:gl:bochner_raum}
+    Sei $X$ ein Banachraum, $- \infty \leq a < b \leq \infty$ und $1 \leq p < \infty$.
+    Als Bochner-Raum $L_{p}(a, b; X)$ bezeichnen wir die Menge (der Äquivalenzklassen) $L_{p}$-integrierbarer Funktionen $f \colon [a, b] \to X$, das heißt aller Lebesgue-messbarer Funktionen auf $[a, b]$ mit
+    \begin{equation}
+        \norm{f}_{L_{p}(a, b; X)} \deq \left( \int_{a}^{b} \norm{f(t)}_{X}^{p} \diff t \right)^{\frac{1}{p}} < \infty.
+    \end{equation}
+    Weiterhin ist der Bochner-Raum $L_{\infty}(a, b; X)$ definiert als die Menge (der Äquivalenzklassen) der für fast alle $t \in [a, b]$ wesentlich beschränkten Funktionen mit
+    \begin{equation}
+        \norm{f}_{L_{\infty}(a, b; X)} \deq \esssup_{t \in [a, b]} \norm{f(t)}_{X} < \infty.
+    \end{equation}
+\end{Definition}
+\nomenclature{$X$}{Banachraum}
+
+\begin{Lemma}[{{\cite[Prop. XVIII.1.1]{Dautray:1992by}}}, {{\cite[Abs. 1.1.3]{Lions:1972tg}}}]
+\label{lemma:gl:bochner_ist_banach}
+    Für $1 \leq p \leq \infty$ ist $L_{p}(a, b; X)$ ein Banachraum.
+    Ist $H$ ein Hilbertraum, dann ist $L_{2}(a, b; H)$ ebenfalls ein Hilbertraum.
+\end{Lemma}
+
+\begin{Definition}[Schwache Zeitableitung, {{{\cite{Dautray:1992by}}}}]
+\label{definition:gl:schwache_zeitableitung}
+    Seien $X$ und $Y$ Banachräume mit $X \hookrightarrow Y$ und $u \in L_{2}(a, b; X)$.
+    Die distributionelle Ableitung $\frac{\partial}{\partial t} u \in L_{2}(a, b; Y)$ sei definiert als das $v \in L_{2}(a, b; Y)$, welches
+    \begin{equation}
+        \int_{a}^{b} v(t) \varphi(t) \diff t = - \int_{a}^{b} u(t) \frac{\partial}{\partial t} \varphi(t) \diff t \quad \fa \phi \in C^{\infty}_{0}(a, b)
+    \end{equation}
+    erfüllt, falls ein solches $v$ existiert.
 \end{Definition}
 
+\begin{Bemerkung*}
+    Je nach Situation werden wir der Einfachheit halber eine der Schreibweisen $\frac{\partial}{\partial t} u = u' = u_{t}$ verwenden.
+\end{Bemerkung*}
+
+Im Zuge dieser Arbeit werden wir fast immer mit Hilberträumen zu tun haben.
+Dabei werden wir oft auf folgendes Konstrukt zurückgreifen.
+
+\begin{Definition}[Gelfand-Tripel]
+\label{definition:gl:gelfand_tripel}
+    Seien $V$ und $H$ separable Hilberträume mit den Dualräumen $V'$ und $H'$.
+    Weiter sei $V$ ein dichter Unterraum von $H$.
+    Durch Identifikation von $H$ mit seinem Dualraum $H'$ erhalten wir das sogenannte Gelfand-Tripel
+    \begin{equation}
+        V \denseinclusion H \cong H' \denseinclusion V',
+    \end{equation}
+    wobei die Inklusionen jeweils dichte stetige Einbettungen sind.
+\end{Definition}
+\nomenclature{$V, H$}{Hilberträume}
+
+\begin{Bemerkung*}
+    Mit $\skprod{\blank}{\blank}_{V}$ und $\skprod{\blank}{\blank}_{H}$ bezeichnen wir das Skalarprodukt auf $V$ respektive $H$.
+    Weiterhin $\skprod{\blank}{\blank}_{V' \times V}$ wird auch für die duale Paarung auf $V' \times V$, die als die eindeutige stetige Fortsetzung von $\skprod{\blank}{\blank}_{H}$ definiert ist, verwendet.
+    Insbesondere gilt für $u \in H$ und $v \in V$ die Gleichheit
+    \begin{equation}
+        \skprod{u}{v}_{V' \times V} = \skprod{u}{v}_{H}.
+    \end{equation}
+\end{Bemerkung*}
+\nomenclature{$\skprod{\blank}{\blank}$}{Je nach Index Skalarprodukt oder duale Paarung}
+
+\begin{Definition}[{{{\cite[Def. XVIII.2.4]{Dautray:1992by}}}}]
+\label{definition:gl:bochner_raum_W}
+    Sei $V \denseinclusion H \denseinclusion V'$ ein Gelfand-Tripel.
+    Definiere den Raum $W(a, b; V, V')$ als
+    \begin{equation}
+        W(a, b; V, V') \deq \Set{u \in L_{2}(a, b; V) \given u' \in L_{2}(a, b; V')}
+    \end{equation}
+    wobei $u'$ im Sinne von \thref{definition:gl:schwache_zeitableitung} zu verstehen ist.
+\end{Definition}
+\nomenclature{$\denseinclusion$}{Dichte stetige Einbettung}
+
+\begin{Bemerkung}
+\label{bemerkung:gl:alternative_darstellung_bochner}
+    Eine alternative Darstellung von $W(a, b; V, V')$ ist
+    \begin{equation}
+        W(a, b; V, V') = L_{2}(a, b; V) \cap H^{1}(a, b; V').
+    \end{equation}
+\end{Bemerkung}
+
+% TODO: ordentlich formulieren
+\begin{Lemma}[{{{\cite[Prop. XVIII.2.6]{Dautray:1992by}}}}]
+    Zusammen mit der Norm
+    \begin{equation}
+        \begin{aligned}
+            \norm{u}_{W(a, b; V, V')}
+            &\deq \left( \int_{a}^{b} \norm{u'(t)}_{V'}^{2} \diff t + \int_{a}^{b} \norm{u(t)}_{V}^{2} \diff t \right)^{\frac 12}
+            \\&= \left( \norm{u'}_{L_{2}(a, b; V')}^{2} + \norm{u}_{L_{2}(a, b; V)}^{2} \right)^{\frac 12},
+        \end{aligned}
+    \end{equation}
+    und dem induzierten Skalarprodukt TODO ist $W(a, b)$ ein Hilbertraum.
+\end{Lemma}
+
+\begin{Definition}
+\label{definition:gl:stetige_funktionen}
+    Mit $\mathcal C^{0}([a, b]; X)$ bezeichnen wir die Menge aller bezüglich der Norm $\norm{f} = \sup_{t \in [a, b]} \norm{f(t)}_{X}$ stetigen Funktionen $f \colon [a, b] \to X$.
+\end{Definition}
+
+\begin{Satz}[{{{\cite[Thm. XVIII.2.1]{Dautray:1992by}}}}]
+\label{satz:gl:einbettung_bochner_stetig}
+    Seien $a, b \in \mathbb{R}$, dann stimmt jedes $u \in W(a, b)$ fast überall mit einer stetigen Funktion von $[a, b]$ nach $H$ überein.
+    Genauer gilt
+    \begin{equation}
+        W(a, b; V, V') \hookrightarrow C^{0}([a, b]; H).
+    \end{equation}
+\end{Satz}
+\nomenclature{$\hookrightarrow$}{Stetige Einbettung}
+
+% section bochner_r_ume (end)
+
 % chapter grundlagen (end)
+
+
