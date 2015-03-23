@@ -10,14 +10,12 @@ Dieses Kapitel orientiert sich an den Ausführungen in~\cite{Schwab:2009ec, Urba
 \section{Allgemeine Problemstellung} % (fold)
 \label{sec:allgemeine_problemstellung}
 
-Zunächst einige notationelle Vorbereitungen.
-Seien $V$ und $H$ zwei separable Hilberträume, wobei eine dichte stetige Einbettung $V \hookrightarrow H$ existiere.
-% Später werden wir oftmals mit $H = L_{2}(\Omega)$ und einem dichten Unterhilbertraum $V \subset H$, $\Omega \subset \mathbb{R}^{n}$, arbeiten
-Durch die Identifikation $H \cong H'$ von $H$ mit seinem Dualraum $H'$ erhalten wir ein Gelfand-Tripel $V \hookrightarrow H \hookrightarrow V'$.
-Wir verwenden die Schreibweise $\skprod{\blank}{\blank}$ mit entsprechendem Index sowohl für die inneren Produkte der Hilberträume, als auch für die duale Paarung auf $V' \times V$.
+% Zunächst einige notationelle Vorbereitungen.
+Wie in \thref{definition:gl:gelfand_tripel} seien $V$ und $H$ zwei separable Hilberträume und $V \denseinclusion H \denseinclusion V'$ das zugehörige Gelfand-Tripel.
+Wie zuvor verwenden wir $\skprod{\blank}{\blank}$ mit entsprechendem Index sowohl für die Skalarprodukte auf $V$ und $H$, als auch für die duale Paarung auf $V' \times V$.
 
 Es sei $0 < T < \infty$ und $I = [0, T]$.
-Weiterhin sei $A \in \mathcal L(V, V')$ ein stetiger linearer Operator und $a(\blank, \blank) \colon V \times V \to \mathbb{R}$ die zugehörige Bilinearform, das heißt es gilt $\skprod{A \eta}{\zeta}_{V' \times V} = a(\eta, \zeta)$ für $\eta, \zeta \in V$.
+Weiterhin sei $A \in \mathcal L(V, V')$ ein stetiger linearer Operator und $a(\blank, \blank) \colon V \times V \to \mathbb{R}$ die durch $a(\eta, \zeta) \deq \skprod{A \eta}{\zeta}_{V' \times V}$, $\eta, \zeta \in V$, induzierte Bilinearform.
 Seien außerdem $g \in L_{2}(I; V')$ und $u_{0} \in H$ gegeben.
 Wir sind nun an Lösungen der parabolischen partiellen Differentialgleichung
 \begin{equation}
@@ -28,16 +26,24 @@ Wir sind nun an Lösungen der parabolischen partiellen Differentialgleichung
 \end{equation}
 interessiert.
 
-Von der Bilinearform $a(\blank, \blank)$ fordern wir außerdem Stetigkeit, das heißt die Existenz einer Konstante $0 < M_{a} < \infty$, so dass die Ungleichung
-\begin{equation}
-    \label{eq:allgemeine_parabolische_pde:bf_stetig}
-    \abs{a(\eta, \zeta)} \leq M_{a} \norm{\eta}_{V} \norm{\zeta}_{V} \quad \text{für alle}~\eta, \zeta \in V
-\end{equation}
-erfüllt ist, und eine G\r{a}rding-Ungleichung, das heißt es existieren Konstanten $\alpha > 0$ und $\lambda \geq 0$ mit
-\begin{equation}
-    \label{eq:allgemeine_parabolische_pde:bf_garding}
-    a(\eta, \eta) + \lambda \norm{\eta}_{H}^{2} \geq \alpha \norm{\eta}_{V}^{2} \quad \text{für alle}~\eta \in V.
-\end{equation}
+In den nachfolgenden Abschnitten werden wir von der Bilinearform $a(\blank, \blank)$ die folgenden zwei Eigenschaften fordern.
+
+\begin{Annahme}
+\label{annahme:eigenschaften_bf_a}
+    Die Bilinearform $a \colon V \times V \to \mathbb{R}$ erfüllt:
+    \begin{thmenumerate}
+        \item \emph{Stetigkeit:} es existiert eine Konstante $0 < M_{a} < \infty$ mit
+        \begin{equation}
+            \label{eq:allgemeine_parabolische_pde:bf_stetig}
+            \abs{a(\eta, \zeta)} \leq M_{a} \norm{\eta}_{V} \norm{\zeta}_{V} \quad \text{für alle}~\eta, \zeta \in V.
+        \end{equation}
+        \item \emph{G\r{a}rding-Ungleichung:} es existieren Konstanten $\alpha > 0$ und $\lambda \geq 0$ mit
+        \begin{equation}
+            \label{eq:allgemeine_parabolische_pde:bf_garding}
+            a(\eta, \eta) + \lambda \norm{\eta}_{H}^{2} \geq \alpha \norm{\eta}_{V}^{2} \quad \text{für alle}~\eta \in V.
+        \end{equation}
+    \end{thmenumerate}
+\end{Annahme}
 
 % section allgemeine_problemstellung (end)
 
@@ -53,12 +59,12 @@ Hierbei werden Raum- und Zeitkoordinaten oftmals verschieden behandelt, das hei�
 Dies wollen wir vermeiden und führen eine Raum-Zeit-Variationsformulierung ein, bei der die Raum- und Zeitkoordinaten gleichwertig behandelt werden.
 
 Wir benötigen für die Variationsformulierung zunächst einen Ansatz- und einen Testfunktionenraum.
-Der Ansatzraum sei gegeben durch
+Als Ansatzraum $\mathcal X$ wählen wir $W(I; V, V')$ aus \thref{definition:gl:bochner_raum_W}, es ist also
 \begin{equation}
     \label{eq:var_all_ansatzraum_x}
     \mathcal X = L_{2}(I; V) \cap H^{1}(I; V') = \Set*{ u \given u \in L_{2}(I; V),~u_{t} \in L_{2}(I; V') }
 \end{equation}
-ausgestattet mit der Graphnorm
+ausgestattet mit der Norm
 \begin{equation}
     \label{eq:var_all_ansatzraum_x_norm}
     \norm{u}_{\mathcal X} = \left( \norm{u}_{L_{2}{(I; V)}}^{2} + \norm{u_{t}}_{L_{2}{(I; V')}}^{2} \right)^{\frac 12}, \quad u \in \mathcal X.

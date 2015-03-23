@@ -3,39 +3,6 @@
 \chapter{Funktionalanalytische Grundlagen} % (fold)
 \label{cha:funktionalanalytische_grundlagen}
 
-\section{Bochner-Integrale und Bochner-Räume} % (fold)
-\label{sec:bochner_r_ume}
-
-\begin{Definition}[Bochner-Räume]
-    Sei $X$ ein Banachraum, $(a, b) \subset \mathbb{R}$, $- \infty \leq a < b \leq \infty$, ein offenes Intervall und $1 \leq p < \infty$.
-    Wir nennen $L_{p}(a, b; X)$ einen Bochner-Raum und meinen damit die Menge der Äquivalenzklassen $L_{p}$-integrierbarer Funktionen $f \colon [a, b] \to X$, das heißt alle Lebesgue-messbaren Funktionen auf $[a, b]$ mit
-    \begin{equation}
-        \norm{f}_{L_{p}(a, b; X)} \coloneqq \left( \int_{a}^{b} \norm{f(t)}_{X}^{p} \diff t \right)^{\frac 1 p} < \infty.
-    \end{equation}
-    Analog bezeichnen wir mit $L_{\infty}(a, b; X)$ die Menge der Äquivalenzklassen die fast überall auf $[a, b]$ beschränkt sind, das heißt
-    \begin{equation}
-        \norm{f}_{L_{\infty}(a, b; X)} \coloneqq \esssup_{t \in [a, b]} \norm{f(t)}_{X} < \infty.
-    \end{equation}
-\end{Definition}
-
-\begin{Lemma}
-    Sei $1 \leq p \leq \infty$. Dann ist $L_{p}(a, b; X)$ ein Banachraum.
-    Ist $H$ ein Hilbertraum, dann ist insbesondere auch $L_{2}(a, b; H)$ ein Hilbertraum.
-\end{Lemma}
-
-% \begin{Lemma}[Eigenschaften]
-%     \begin{enumerate}
-%         \item Ist $[a, b] \subset \mathbb{R}$ ein endliches Intervall, dann gilt die stetige Einbettung
-%         \begin{equation}
-%             L_{q}(a, b; X) \hookrightarrow L_{p}(a, b; X), \qquad q \geq p \geq 1.
-%         \end{equation}
-%         \item Sind $X$ und $Y$ Banachräume mit $X \hookrightarrow Y$, dann gilt die stetige Einbettung
-%         \begin{equation}
-%             L_{p}(a, b; X) \hookrightarrow L_{p}(a, b; Y), \qquad 1 \leq p \leq q.
-%         \end{equation}
-%     \end{enumerate}
-% \end{Lemma}
-
 \section{Orthogonale Funktionen und Polynome}
 \label{sec:orthogonale_funktionen_und_polynome}
 
