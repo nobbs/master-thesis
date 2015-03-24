@@ -15,7 +15,7 @@ Wie in \thref{definition:gl:gelfand_tripel} seien $V$ und $H$ zwei separable Hil
 Wie zuvor verwenden wir $\skprod{\blank}{\blank}$ mit entsprechendem Index sowohl für die Skalarprodukte auf $V$ und $H$, als auch für die duale Paarung auf $V' \times V$.
 
 Es sei $0 < T < \infty$ und $I = [0, T]$.
-Weiterhin sei $a$ eine Bilinearform auf $V \times V$ und $A$ der zugehörige durch $\skprod{A \eta}{\zeta}_{H} \deq a(\eta, \zeta)$, $\eta, \zeta \in V$, induzierte lineare Operator.
+Weiterhin sei $a \colon V \times V \to \mathbb{R}$ eine Bilinearform und $A$ der zugehörige, durch $\skprod{A \eta}{\zeta}_{H} \deq a(\eta, \zeta)$, $\eta, \zeta \in V$, induzierte lineare Operator.
 Seien außerdem $g \in L_{2}(I; V')$ und $u_{0} \in H$ gegeben.
 Wir sind nun an Lösungen der parabolischen partiellen Differentialgleichung
 \begin{equation}
@@ -26,11 +26,11 @@ Wir sind nun an Lösungen der parabolischen partiellen Differentialgleichung
 \end{equation}
 interessiert.
 
-In den nachfolgenden Abschnitten werden wir von der Bilinearform $a(\blank, \blank)$ die folgenden zwei Eigenschaften fordern.
+In den nachfolgenden Abschnitten werden wir von der Bilinearform $a$ die folgenden zwei Eigenschaften fordern.
 
 \begin{Annahme}
 \label{annahme:eigenschaften_bf_a}
-    Die Bilinearform $a \colon V \times V \to \mathbb{R}$ erfüllt:
+    Die Bilinearform $a \colon V \times V \to \mathbb{R}$ erfülle:
     \begin{thmenumerate}
         \item \emph{Stetigkeit:} es existiert eine Konstante $0 < M_{a} < \infty$ mit
         \begin{equation}
@@ -90,7 +90,7 @@ Gegeben ein $g \in L_{2}(I, V')$ und $u_{0} \in H$. Finde ein $u \in \mathcal X$
     b(u, v) = f(v) \quad \fa v \in \mathcal Y,
 \end{equation}
 wobei $f$ von $g$ und $u_{0}$ abhängt.
-Dabei ist $b(\blank, \blank) \colon \mathcal X \times \mathcal Y \to \mathbb{R}$ eine Bilinearform  und $f(\blank) \colon \mathcal Y \to \mathbb{R}$ ein Funktional definiert durch
+Dabei ist $b \colon \mathcal X \times \mathcal Y \to \mathbb{R}$ eine Bilinearform  und $f \colon \mathcal Y \to \mathbb{R}$ ein Funktional definiert durch
 \begin{equation}
     \label{eq:var_all_bf_b}
     b(u, v) = \int_{I} \skprod{u_{t}(t)}{v_{1}(t)}_{H} + a(u(t), v_{1}(t)) \diff t + \skprod{u(0)}{v_{2}}_{H},
@@ -106,7 +106,12 @@ respektive
 \subsection{Existenz und Eindeutigkeit von Lösungen} % (fold)
 \label{sub:existenz_und_eindeutigkeit_von_l_sungen}
 
-Um Existenz und Eindeutigkeit von Lösungen für das Variationsproblem~\eqref{eq:var_all_problem} zu erhalten, zeigen wir, dass die Bilinearform $b(\blank, \blank)$ einen stetig invertierbaren Operator $B \in \mathcal L(\mathcal X, \mathcal Y')$ definiert.
+Um Existenz und Eindeutigkeit von Lösungen für das Variationsproblem~\eqref{eq:var_all_problem} zu erhalten, zeigen wir, dass die Bilinearform $b$ einen stetig invertierbaren Operator $B \in \mathcal L(\mathcal X, \mathcal Y')$ definiert.
+Da die Variationsformulierung auch als
+\begin{equation}
+    B u = f \quad \text{in}~\mathcal Y'
+\end{equation}
+aufgefasst werden kann, ist dann durch $u = B^{-1} f$ eine Lösung gegeben.
 Folgender Satz fasst das Ganze zusammen:
 
 \begin{Satz}[{{\cite[Theorem 5.1]{Schwab:2009ec}}}]
@@ -210,6 +215,7 @@ beziehungsweise
     \rho = \sup_{0 \neq \eta \in V} \frac{\norm{\eta}_{H}}{\norm{\eta}_{V}}
 \end{equation}
 definiert sind.
+Nach \thref{satz:gl:einbettung_bochner_stetig} gilt $\mathcal X \hookrightarrow \mathcal C([0, T]; H)$ und $M$, wobei aus dem Beweis in \cite{Dautray:1992by} zudem folgt, dass $M_{e}$ gleichmäßig beschränkt in der Wahl von $V \hookrightarrow H$ ist und nur im Fall $T \to 0$ von $T$ abhängt.
 
 % subsection existenz_und_eindeutigkeit_von_l_sungen (end)
 
@@ -335,7 +341,7 @@ Aus diesen Ergebnissen erhalten wir nun die gewünschten Aussagen für die param
 Wir arbeiten nun wieder im Setting aus \autoref{sec:allgemeine_problemstellung}.
 
 Für $\sigma \in \mathcal S$ sei $A(\sigma) \in \mathcal L(V, V')$ ein stetiger linearer Operator und $a(\blank, \blank; \sigma) \colon V \times V \to \mathbb{R}$ die zugehörige Bilinearform, also $a(\eta, \zeta; \sigma) = \skprod{A(\sigma) \eta}{\zeta}_{V' \times V}$ für $\eta, \zeta \in V$.
-Die Bilinearform $a(\blank, \blank; \sigma)$ sei stetig und erfülle eine G\r{a}rding-Ungleichung gleichmäßig in $\sigma$, das heißt es existieren von $\sigma$ unabhängige Konstanten $0 < M_{a} < \infty$, $\alpha > 0$ und $\lambda \geq 0$ mit
+Die Bilinearform $a(\blank, \blank; \sigma)$ erfülle \thref{annahme:eigenschaften_bf_a} gleichmäßig in $\sigma$, sie sei also stetig und erfülle eine G\r{a}rding-Ungleichung, das heißt es existieren von $\sigma$ unabhängige Konstanten $0 < M_{a} < \infty$, $\alpha > 0$ und $\lambda \geq 0$ mit
 \begin{equation}
     \label{eq:allgemeine_parabolische_pde:bf_stetig_parametrisch}
     \abs{a(\eta, \zeta; \sigma)} \leq M_{a} \norm{\eta}_{V} \norm{\zeta}_{V} \quad \fa \eta, \zeta \in V
@@ -357,12 +363,12 @@ wobei $f$ von $g$ und $u_{0}$ abhängt.
 Dabei ist $b(\blank, \blank; \sigma) \colon \mathcal X \times \mathcal Y \to \mathbb{R}$ eine Bilinearform definiert durch
 \begin{equation}
     \label{eq:var_all_bf_b_parametrisch}
-    b(u, v; \sigma) = \int_{I} \skprod{u_{t}(t)}{v_{1}(t)}_{V' \times V} + a(u(t), v_{1}(t); \sigma) \diff t + \skprod{u(0)}{v_{2}}_{H},
+    b(u, v; \sigma) = \int_{I} \skprod{u_{t}(t)}{v_{1}(t)}_{H} + a(u(t), v_{1}(t); \sigma) \diff t + \skprod{u(0)}{v_{2}}_{H},
 \end{equation}
 und $f(\blank) \colon \mathcal Y \to \mathbb{R}$ das durch
 \begin{equation}
     \label{eq:var_all_f_parametrisch}
-    f(v) = \int_{I} \skprod{g(t)}{v_{1}(t)}_{V' \times V} \diff t + \skprod{u_{0}}{v_{2}}_{H}
+    f(v) = \int_{I} \skprod{g(t)}{v_{1}(t)}_{H} \diff t + \skprod{u_{0}}{v_{2}}_{H}
 \end{equation}
 gegebene Funktional.
 

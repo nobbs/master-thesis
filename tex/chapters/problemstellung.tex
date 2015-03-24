@@ -38,17 +38,17 @@ Gesucht ist eine Lösung $u$ von
 
 Bevor wir analog zu \autoref{sec:raum_zeit_variationsformulierung} eine Raum-Zeit-Variationsformulierung für \eqref{eq:parabolische_pde} angeben, weisen wir zunächst einige Eigenschaften von $A$ nach.
 
-Bezeichne mit $a(\blank, \blank)$ die zu $A$ zugehörige Bilinearform, es gilt also
+Bezeichne mit $a$ die zu $A$ zugehörige Bilinearform, es gilt also
 \begin{equation}
-    a(\blank, \blank) \colon H^{1}_{0}(\Omega) \times H^{1}_{0}(\Omega) \to \mathbb{R}, \quad a(\eta, \zeta) = \skprod{A \eta}{\zeta}_{H^{-1}(\Omega) \times H^{1}_{0}(\Omega)}.
+    a \colon H^{1}_{0}(\Omega) \times H^{1}_{0}(\Omega) \to \mathbb{R}, \quad a(\eta, \zeta) = \skprod{A \eta}{\zeta}_{L_{2}(\Omega)}.
 \end{equation}
 Unter Verwendung der Greenschen Formeln erhalten wir
 \begin{equation}
     \begin{aligned}
         a(\eta, \zeta)
-        &= \skprod{A \eta}{\zeta}_{H^{-1}(\Omega) \times H^{1}_{0}(\Omega)}
-        \\&= \skprod{- c \Delta \eta + \omega \eta}{\zeta}_{H^{-1}(\Omega) \times H^{1}_{0}(\Omega)}
-        \\&= - c \skprod{\Delta \eta}{\zeta}_{H^{-1}(\Omega) \times H^{1}_{0}(\Omega)} + \skprod{\omega \eta}{\zeta}_{H^{-1}(\Omega) \times H^{1}_{0}(\Omega)}
+        &= \skprod{A \eta}{\zeta}_{L_{2}(\Omega)}
+        \\&= \skprod{- c \Delta \eta + \omega \eta}{\zeta}_{L_{2}(\Omega)}
+        \\&= - c \skprod{\Delta \eta}{\zeta}_{L_{2}(\Omega)} + \skprod{\omega \eta}{\zeta}_{L_{2}(\Omega)}
         \\&= c \skprod{\grad \eta}{\grad \zeta}_{L_{2}(\Omega)} + \skprod{\omega \eta}{\zeta}_{L_{2}(\Omega)}.
     \end{aligned}
 \end{equation}
@@ -61,7 +61,7 @@ Unter Verwendung der Greenschen Formeln erhalten wir
     \label{eq:bf_a}
         a \colon H^{1}_{0}(\Omega) \times H^{1}_{0}(\Omega) \to \mathbb{R}, \quad a(\eta, \zeta) = c \skprod{\grad \eta}{\grad \zeta}_{L_{2}(\Omega)} + \skprod{\omega \eta}{\zeta}_{L_{2}(\Omega)}.
     \end{equation}
-    Dann erfüllt $a(\blank, \blank)$ die folgenden Eigenschaften:
+    Dann erfüllt $a(\blank, \blank)$ die Eigenschaften aus \ref{annahme:eigenschaften_bf_a}:
     \begin{thmenumerate}
         \item\label{lemma:a_bf_bounded_garding:1}
         \emph{Stetigkeit:} es gilt
@@ -95,13 +95,14 @@ Unter Verwendung der Greenschen Formeln erhalten wir
         a(\eta, \eta) + \lambda \norm{\eta}^{2}_{L_{2}(\Omega)}
         &= c \norm{\grad \eta}^{2}_{L_{2}(\Omega)} + \skprod{\omega \eta}{\eta}_{L_{2}(\Omega)} + \lambda \skprod{\eta}{\eta}_{L_{2}(\Omega)}
         \\&= c \norm{\grad \eta}^{2}_{L_{2}(\Omega)} + \skprod{(\omega + \lambda) \eta}{\eta}_{L_{2}(\Omega)}.
-        \intertext{Wählen wir nun $\lambda = \norm{\omega}_{L_{\infty}(\Omega)} \geq 0$, dann gilt $\omega + \lambda \geq 0$ fast überall in $\Omega$ und wir erhalten die Abschätzung}
+    \end{align}
+    Wählen wir nun $\lambda = \norm{\omega}_{L_{\infty}(\Omega)} \geq 0$, dann gilt $\omega + \lambda \geq 0$ fast überall in $\Omega$ und wir erhalten die Abschätzung
+    \begin{align}
         a(\eta, \eta) + \lambda \norm{\eta}^{2}_{L_{2}(\Omega)}
         &\geq c \norm{\grad \eta}^{2}_{L_{2}(\Omega)},
         \intertext{woraus wir durch Anwenden der Poincaré-Friedrichs-Ungleichung \ref{satz:grundlagen:poincare_friedrichs_ungleichung}}
         a(\eta, \eta) + \lambda \norm{\eta}^{2}_{L_{2}(\Omega)}
         &\geq c \gamma_{\Omega}^{2} \norm{\eta}^{2}_{H^{1}(\Omega)}
-        = \alpha \norm{\eta}^{2}_{H^{1}(\Omega)}
     \end{align}
     folgern.
     \end{Beweis}
@@ -128,12 +129,12 @@ Damit ergibt sich analog zu \autoref{sec:raum_zeit_variationsformulierung} das f
     \begin{equation}
         \label{eq:buv}
         b(u, v)
-            = \int_{I} \skprod{u_{t}(t)}{v_{1}(t)}_{H^{-1}(\Omega) \times H^{1}_{0}(\Omega)} + a(u(t), v_{1}(t)) \diff t + \skprod{u(0)}{v_{2}}_{L_{2}(\Omega)}
+            = \int_{I} \skprod{u_{t}(t)}{v_{1}(t)}_{L_{2}(\Omega)} + a(u(t), v_{1}(t)) \diff t + \skprod{u(0)}{v_{2}}_{L_{2}(\Omega)}
     \end{equation}
     gegebene Bilinearform und $f(\blank) \colon \mathcal Y \to \mathbb{R}$ definiert ist durch
     \begin{equation}
         \label{eq:var_all_f_wiederholung}
-        f(v) = \int_{I} \skprod{g(t)}{v_{1}(t)}_{H^{-1}(\Omega) \times H^{1}_{0}(\Omega)} \diff t + \skprod{u_{0}}{v_{2}}_{L_{2}(\Omega)}.
+        f(v) = \int_{I} \skprod{g(t)}{v_{1}(t)}_{L_{2}(\Omega)} \diff t + \skprod{u_{0}}{v_{2}}_{L_{2}(\Omega)}.
     \end{equation}
 \end{Problem}
 
@@ -191,12 +192,12 @@ und wird in den nächsten Abschnitten genauer behandelt.
 Wir wollen den Operator $A$ aus \eqref{eq:def_op_A} als affin parametrischen Operator der Form
 \begin{equation}
     \label{eq:aff_zerlegung_A}
-    A(\sigma) = \overline A + \sum_{j \geq 1} \sigma_{j} A_{j}
+    A(\sigma) = \hat A + \sum_{j \geq 1} \sigma_{j} A_{j}
 \end{equation}
 auffassen, beziehungsweise als Bilinearformen
 \begin{equation}
      \label{eq:aff_zerelgung_A_bf}
-     a(\eta, \zeta; \sigma) = \overline a(\eta, \zeta) + \sum_{j \geq 1} \sigma_{j} a_{j}(\eta, \zeta), \quad \eta, \zeta \in V.
+     a(\eta, \zeta; \sigma) = \hat a(\eta, \zeta) + \sum_{j \geq 1} \sigma_{j} a_{j}(\eta, \zeta), \quad \eta, \zeta \in V.
  \end{equation}
 Dazu entwickeln wir $\omega$ in eine Reihe der Form \eqref{eq:reihenentwicklung_omega}, das heißt wir erhalten
 \begin{equation}
@@ -207,12 +208,12 @@ mit $\sigma \in \mathcal S$.
 Eine naheliegende affine Aufteilung des Operators $A$ erhalten wir damit durch die Wahl
 \begin{equation}
     \label{eq:affine_zerlegung_A_def}
-    \overline A = - c \Delta, \qquad
+    \hat A = - c \Delta, \qquad
     A_{j} = \varphi_{j}, \quad j \geq 1.
 \end{equation}
 Die zugehörigen Bilinearformen lassen sich ebenfalls direkt angeben, denn es gilt
 \begin{equation}
-    \overline a(\eta, \zeta) = \skprod{\grad \eta}{\grad \zeta}_{L_{2}(\Omega)}, \qquad a_{j}(\eta, \zeta) = \skprod{\varphi_{j} \eta}{\zeta}_{L_{2}(\Omega)}, \quad j \geq 1.
+    \hat a(\eta, \zeta) = \skprod{\grad \eta}{\grad \zeta}_{L_{2}(\Omega)}, \qquad a_{j}(\eta, \zeta) = \skprod{\varphi_{j} \eta}{\zeta}_{L_{2}(\Omega)}, \quad j \geq 1.
 \end{equation}
 
 Die daraus resultierende Raum-Zeit-Variationsformulierung lautet nun:
@@ -227,12 +228,12 @@ Die daraus resultierende Raum-Zeit-Variationsformulierung lautet nun:
     \begin{equation}
         \label{eq:buv_2}
         b(u, v; \sigma)
-            = \int_{I} \skprod{u_{t}(t)}{v_{1}(t)}_{H^{-1}(\Omega) \times H^{1}_{0}(\Omega)} + a(u(t), v_{1}(t); \sigma) \diff t + \skprod{u(0)}{v_{2}}_{L_{2}(\Omega)}
+            = \int_{I} \skprod{u_{t}(t)}{v_{1}(t)}_{L_{2}(\Omega)} + a(u(t), v_{1}(t); \sigma) \diff t + \skprod{u(0)}{v_{2}}_{L_{2}(\Omega)}
     \end{equation}
     gegebene Bilinearform und $f(\blank) \colon \mathcal Y \to \mathbb{R}$ definiert ist durch
     \begin{equation}
         \label{eq:var_all_f_wiederholung_2}
-        f(v) = \int_{I} \skprod{g(t)}{v_{1}(t)}_{H^{-1}(\Omega) \times H^{1}_{0}(\Omega)} \diff t + \skprod{u_{0}}{v_{2}}_{L_{2}(\Omega)}.
+        f(v) = \int_{I} \skprod{g(t)}{v_{1}(t)}_{L_{2}(\Omega)} \diff t + \skprod{u_{0}}{v_{2}}_{L_{2}(\Omega)}.
     \end{equation}
 \end{Problem}
 
@@ -246,7 +247,7 @@ Die daraus resultierende Raum-Zeit-Variationsformulierung lautet nun:
 Wir beschränken uns nun zunächst auf den Fall einer Raumdimension.
 Es sei also $\Omega \subset \mathbb{R}$ ein Intervall, ohne Beschränkung der Allgemeinheit wählen wir $\Omega = [0, 1]$.
 
-Die Wahl des Funktionensystems $\Set{ \varphi_{j} }_{j \in \mathbb{N}}$ ist von wesentlicher Bedeutung, denn sie legt fest, welche Funktionen $\omega$ wir durch die Reihenentwicklung \eqref{eq:omega_reihenentwicklung} darstellen können.
+Die Wahl des Funktionensystems $\Set{ \varphi_{j} }_{j}$ ist von wesentlicher Bedeutung, denn sie legt fest, welche Funktionen $\omega$ wir durch die Reihenentwicklung \eqref{eq:omega_reihenentwicklung} darstellen können.
 Zudem bestimmen wir damit das Konvergenzverhalten in verschiedenen Räumen und die möglichen Randbedingungen.
 
 % TODO: besser formulieren
@@ -327,15 +328,15 @@ Wir wollen nun die Regularität von $\omega(\blank; \sigma)$ in Abhängigkeit vo
     \end{equation}
     gilt,
     wobei $\zeta$ die Riemannsche-$\zeta$-Funktion, $c$ und $K$ die Konstanten aus \eqref{eq:def_op_A} respektive \eqref{eq:sinusfunktionen_ansatz} sind.
-    Dann erfüllt $\Set{ A_{j} }_{j \geq 0}$ aus \eqref{eq:affine_zerlegung_A_def} \thref{thm:kunoth:assumption2}.
+    Dann erfüllt $\Set{\hat A} \cup \Set{ A_{j} }_{j \geq 0}$ \thref{thm:kunoth:assumption2}.
 
     \begin{Beweis}
-        Wir weisen zunächst die inf-sup-Bedingungen \eqref{eq:kunoth:ass2_gamma_0} für $\overline a(\blank, \blank)$ nach und bestimmen die Konstante $\gamma_{0}$.
-        Da $\overline a(\blank, \blank)$ symmetrisch ist, genügt es die inf-sup-Bedingung \eqref{eq:kunoth:ass2_gamma_0_a} nachzuweisen. Die zweite inf-sup-Bedingung \eqref{eq:kunoth:ass2_gamma_0_b} folgt dann analog mit dem selben $\gamma_{0}$.
+        Wir weisen zunächst die inf-sup-Bedingungen \eqref{eq:kunoth:ass2_gamma_0} für $\hat a(\blank, \blank)$ nach und bestimmen die Konstante $\gamma_{0}$.
+        Da $\hat a(\blank, \blank)$ symmetrisch ist, genügt es die inf-sup-Bedingung \eqref{eq:kunoth:ass2_gamma_0_a} nachzuweisen. Die zweite inf-sup-Bedingung \eqref{eq:kunoth:ass2_gamma_0_b} folgt dann analog mit dem selben $\gamma_{0}$.
 
         Nach \thref{lemma:sauter:2.1.48} reicht es, für alle $u \in H^{1}_{0}(\Omega)$ ein $v_{u} \in H^{1}_{0}(\Omega)$ und von $u$ und $v_{u}$ unabhängige Konstanten $C_{1}, C_{2} > 0$ mit
         \begin{equation}
-            \overline a(u, v_{u}) \geq C_{1} \norm{u}_{H^{1}(\Omega)}^{2} \quad \text{und} \quad \norm{v_{u}}_{H^{1}(\Omega)} \leq C_{2} \norm{u}_{H^{1}(\Omega)}
+            \hat a(u, v_{u}) \geq C_{1} \norm{u}_{H^{1}(\Omega)}^{2} \quad \text{und} \quad \norm{v_{u}}_{H^{1}(\Omega)} \leq C_{2} \norm{u}_{H^{1}(\Omega)}
         \end{equation}
         zu finden.
         Dann ist die inf-sup-Bedingung \eqref{eq:kunoth:ass2_gamma_0_a} mit $\gamma_{0} = \frac{C_{1}}{C_{2}}$ erfüllt.
@@ -344,7 +345,7 @@ Wir wollen nun die Regularität von $\omega(\blank; \sigma)$ in Abhängigkeit vo
         Wir wählen $v_{u} = u \in V$, es gilt also $C_{2} = 1$.
         Es ergibt sich
         \begin{align}
-            \overline a(u, v_{u}) = \overline a(u, u) = c \skprod{\grad u}{\grad u}_{L_{2}(\Omega)} = c \norm{\grad u}_{L_{2}(\Omega)}^{2} \geq c \gamma_{\Omega}^{2} \norm{u}_{H^{1}(\Omega)}^{2},
+            \hat a(u, v_{u}) = \hat a(u, u) = c \skprod{\grad u}{\grad u}_{L_{2}(\Omega)} = c \norm{\grad u}_{L_{2}(\Omega)}^{2} \geq c \gamma_{\Omega}^{2} \norm{u}_{H^{1}(\Omega)}^{2},
         \end{align}
         wobei die letzte Abschätzung aus der Poincaré-Friedrichs-Ungleichung \eqref{eq:grundlagen:poincare_friedrichs_ungleichung} folgt.
         Zusammen liefert dies $\gamma_{0} = c \gamma_{\Omega}^{2}$ als inf-sup-Konstante.
@@ -428,7 +429,7 @@ Wir wollen nun die Regularität von $\omega(\blank; \sigma)$ in Abhängigkeit vo
     \end{Beweis}
 \end{Satz}
 
-Zusammenfassend erhalten wir für diese Wahl des Funktionensystems $\Set{ \varphi_{j} }_{j \in \mathbb{N}}$ die Aussage
+Zusammenfassend erhalten wir für diese Wahl des Funktionensystems $\Set{ \varphi_{j} }_{j}$ die Aussage
 
 \begin{Korollar}
     Unter den Voraussetzungen von \thref{satz:regularitaet_nachrechnen} gilt \thref{thm:kunoth:theorem21}.
