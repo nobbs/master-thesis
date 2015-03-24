@@ -4,7 +4,7 @@
 \label{cha:grundlagen}
 
 In diesem Kapitel fassen wir die für diese Arbeit benötigten Grundlagen aus verschiedenen mathematischen Bereichen, wie der Funktionalanalysis und der Numerik, zusammen.
-Wir orientieren uns dabei maßgeblich an \cite{Dautray:1992by,Lions:1972tg}.
+Wir orientieren uns dabei maßgeblich an \cite{Dautray:1992by,Lions:1971wp,Lions:1972tg}.
 
 \section{Bochner-Räume} % (fold)
 \label{sec:bochner_r_ume}
@@ -53,7 +53,7 @@ Dabei werden wir oft auf folgendes Konstrukt zurückgreifen.
 \label{definition:gl:gelfand_tripel}
     Seien $V$ und $H$ separable Hilberträume mit den Dualräumen $V'$ und $H'$.
     Weiter sei $V$ ein dichter Unterraum von $H$.
-    Durch Identifikation von $H$ mit seinem Dualraum $H'$ erhalten wir das sogenannte \emph{Gelfand-Tripel}
+    Durch Identifikation von $H$ mit seinem Dualraum $H'$ erhalten wir das sogenannte \emph{Gelfand-Tripel} $(V, H, V')$, oder auch
     \begin{equation}
         V \denseinclusion H \simeq H' \denseinclusion V',
     \end{equation}
@@ -123,11 +123,13 @@ Dabei werden wir oft auf folgendes Konstrukt zurückgreifen.
 \nomenclature{$\hookrightarrow$}{Stetige Einbettung}
 
 \begin{Korollar}[{{{\cite[Remark XVIII.2.4]{Dautray:1992by}}}}]
+\label{korollar:gl:spur_wohldefiniert}
     Sei $a, b \in \mathbb{R}$ und $u \in W(a, b; V, V')$.
     Dann sind $u(a), u(b) \in H$ wohldefiniert.
 \end{Korollar}
 
 \begin{Korollar}
+\label{korollar:gl:einbettungskonstante_M_e}
     Seien $a, b \in \mathbb{R}$.
     Die Einbettungskonstante
     \begin{equation}
@@ -142,6 +144,427 @@ Dabei werden wir oft auf folgendes Konstrukt zurückgreifen.
 \end{Korollar}
 
 % section bochner_r_ume (end)
+
+\section{Lineare Evolutionsgleichungen} % (fold)
+\label{sec:lineare_evolutionsgleichungen}
+\label{sec:allgemeine_problemstellung}
+
+In diesem Abschnitt führen wir lineare Evolutionsgleichungen, eine bestimmte Art parabolischer partieller Differentialgleichungen, ein.
+Dies geschieht analog zu \cite{Lions:1971wp,Schwab:2009ec,Urban:2014kg}.
+
+Dabei sei folgendes Setting gegeben: wie in \thref{definition:gl:gelfand_tripel} seien $V$ und $H$ zwei separable Hilberträume und $(V, H, V')$ das zugehörige Gelfand-Tripel.
+Wie zuvor verwenden wir $\skprod{\blank}{\blank}$ mit entsprechendem Index sowohl für die Skalarprodukte auf $V$ und $H$, als auch für die duale Paarung auf $V' \times V$.
+
+Es sei $0 < T < \infty$ und $I = [0, T]$.
+Weiterhin sei für fast alle $t \in I$ eine Familie $a(\blank, \blank; t)$ von Bilinearformen
+\begin{equation}
+    a(\blank, \blank; t) \colon V \times V \to \mathbb{R}, \quad (\eta, \zeta) \mapsto a(\eta, \zeta; t)
+\end{equation}
+gegeben.
+Für alle $\eta, \zeta \in V$ sei die Abbildung $t \mapsto a(\eta, \zeta; t)$ messbar auf $I$ und erfülle folgende Annahme.
+
+\begin{Annahme}
+\label{annahme:eigenschaften_bf_a}
+    Für fast alle $t \in I$ erfülle die Familie $a(\blank, \blank; t)$:
+    \begin{thmenumerate}
+        \item \emph{Stetigkeit:} es existiert eine Konstante $0 < M_{a} < \infty$ mit
+        \begin{equation}
+            \label{eq:allgemeine_parabolische_pde:bf_stetig}
+            \abs{a(\eta, \zeta); t} \leq M_{a} \norm{\eta}_{V} \norm{\zeta}_{V} \quad \fa \eta, \zeta \in V.
+        \end{equation}
+        \item \emph{G\r{a}rding-Ungleichung:} es existieren Konstanten $\alpha > 0$ und $\lambda \geq 0$ mit
+        \begin{equation}
+            \label{eq:allgemeine_parabolische_pde:bf_garding}
+            a(\eta, \eta; t) + \lambda \norm{\eta}_{H}^{2} \geq \alpha \norm{\eta}_{V}^{2} \quad \fa \eta \in V.
+        \end{equation}
+    \end{thmenumerate}
+\end{Annahme}
+
+Nach dem Rieszschen Darstellungssatz [zitieren] wird für fast alle $t \in I$ ein stetiger linearer Operator $A(t) \in \mathcal L(V, V')$ induziert durch
+\begin{equation}
+    \skprod{A(t)\eta}{\zeta}_{H} = a(\eta, \zeta; t).
+\end{equation}
+Seien außerdem $g \in L_{2}(I; V')$ und $u_{0} \in H$ gegeben.
+Wir sind nun an Lösungen der parabolischen partiellen Differentialgleichung
+\begin{equation}
+    \label{eq:allgemeine_parabolische_pde}
+    u_{t}(t) + A(t) u(t) = g(t) \quad \text{in}~V',
+    \qquad
+    u(0) = u_{0} \quad \text{in}~H
+\end{equation}
+interessiert.
+Die Anfangswertbedingung $u(0) = u_{0}$ ist wegen \thref{korollar:gl:spur_wohldefiniert} wohldefiniert.
+
+% section allgemeine_problemstellung (end)
+
+\section{Raum-Zeit-Variationsformulierung} % (fold)
+\label{sec:raum_zeit_variationsformulierung}
+
+Da, wie so oft, klassische Lösungen von partiellen Differentialgleichungen in der Numerik nur von geringem Interesse sind, leiten wir nun eine Variationsformulierung für das Problem~\eqref{eq:allgemeine_parabolische_pde} her.
+% TODO: Quelle
+Hierbei werden Raum- und Zeitkoordinaten oftmals verschieden behandelt, das heißt die Variationsformulierung wird nur bezüglich der Raumkoordinaten hergeleitet und die Zeitkoordinate wird separat behandelt.
+Dies wollen wir vermeiden und führen eine Raum-Zeit-Variationsformulierung ein, bei der die Raum- und Zeitkoordinaten gleichwertig behandelt werden.
+
+Wir benötigen für die Variationsformulierung zunächst einen Ansatz- und einen Testfunktionenraum.
+Als Ansatzraum $\mathcal X$ kommt $W(I; V, V')$ aus \thref{definition:gl:bochner_raum_W} zum Einsatz, es ist also
+\begin{equation}
+    \label{eq:var_all_ansatzraum_x}
+    \mathcal X = L_{2}(I; V) \cap H^{1}(I; V') = \Set*{ u \in L_{2}(I; V) \given u_{t} \in L_{2}(I; V') }
+\end{equation}
+ausgestattet mit der Norm
+\begin{equation}
+    \label{eq:var_all_ansatzraum_x_norm}
+    \norm{u}_{\mathcal X} = \left( \norm{u}_{L_{2}{(I; V)}}^{2} + \norm{u_{t}}_{L_{2}{(I; V')}}^{2} \right)^{1 / 2}, \quad u \in \mathcal X.
+\end{equation}
+Als Testfunktionenraum verwenden wir
+\begin{equation}
+    \label{eq:var_all_testraum_y}
+    \mathcal Y = L_{2}(I; V) \times H,
+\end{equation}
+wobei die Norm durch
+\begin{equation}
+    \label{eq:var_all_testraum_y_norm}
+    \norm{v}_{\mathcal Y} = \left( \norm{v_{1}}_{L_{2}(I; V)}^{2} + \norm{v_{2}}_{H}^{2} \right)^{1 / 2}, \quad v = (v_{1}, v_{2}) \in \mathcal Y,
+\end{equation}
+gegeben ist.
+
+% TODO: Herleitung aus-x-en?
+Multiplizieren wir die partielle Differentialgleichung~\eqref{eq:allgemeine_parabolische_pde} mit $v = (v_{1}, v_{2}) \in \mathcal Y$ und integrieren über den Zeitintervall $I$, dann erhalten wir daraus das Variationsproblem:
+
+Gegeben ein $g \in L_{2}(I, V')$ und $u_{0} \in H$. Finde ein $u \in \mathcal X$ mit
+\begin{equation}
+    \label{eq:var_all_problem}
+    b(u, v) = f(v) \quad \fa v \in \mathcal Y,
+\end{equation}
+wobei $f$ von $g$ und $u_{0}$ abhängt.
+Dabei ist $b \colon \mathcal X \times \mathcal Y \to \mathbb{R}$ eine Bilinearform  und $f \colon \mathcal Y \to \mathbb{R}$ ein Funktional definiert durch
+\begin{equation}
+    \label{eq:var_all_bf_b}
+    b(u, v) = \int_{I} \skprod{u_{t}(t)}{v_{1}(t)}_{H} + a(u(t), v_{1}(t); t) \diff t + \skprod{u(0)}{v_{2}}_{H},
+\end{equation}
+respektive
+\begin{equation}
+    \label{eq:var_all_f}
+    f(v) = \int_{I} \skprod{g(t)}{v_{1}(t)}_{H} \diff t + \skprod{u_{0}}{v_{2}}_{H}.
+\end{equation}
+
+Um Existenz und Eindeutigkeit von Lösungen für das Variationsproblem~\eqref{eq:var_all_problem} zu erhalten, zeigen wir, dass die Bilinearform $b$ einen stetig invertierbaren Operator $B \in \mathcal L(\mathcal X, \mathcal Y')$ definiert.
+Da die Variationsformulierung auch als
+\begin{equation}
+    B u = f \quad \text{in}~\mathcal Y'
+\end{equation}
+aufgefasst werden kann, ist dann durch $u = B^{-1} f$ eine Lösung gegeben.
+Folgender Satz fasst das Ganze zusammen:
+
+\begin{Satz}[{{\cite[Theorem 5.1]{Schwab:2009ec}}}]
+\label{thm:schwab09:theorem51}
+    Seien $\mathcal X$ und $\mathcal Y$ gegeben wie in~\eqref{eq:var_all_ansatzraum_x} respektive~\eqref{eq:var_all_testraum_y} und sei $B \colon \mathcal X \to \mathcal Y'$ definiert durch
+    \begin{equation}
+        \label{eq:var_all_gross_b}
+        \skprod{B u}{v}_{\mathcal Y' \times \mathcal Y} = b(u, v), \quad u \in \mathcal X,~v \in \mathcal Y,
+    \end{equation}
+    mit $b(\blank, \blank)$ wie in~\eqref{eq:var_all_bf_b}.
+    Dann ist $B$ stetig invertierbar.
+    Ferner gilt
+    \begin{equation}
+        \label{eq:var_all_norm_B}
+        \norm{B}_{\mathcal L(\mathcal X, \mathcal Y')} \leq \frac{\sqrt{2\max\Set{1, M_{a}^{2}} + M_{e}^{2}}}{\max\Set{\sqrt{1 + 2 \lambda^{2} \rho^{4}}, \sqrt{2}}}
+    \end{equation}
+    sowie
+    \begin{equation}
+        \label{eq:var_all_norm_B_inv}
+        \norm{B^{-1}}_{\mathcal L(\mathcal Y', \mathcal X)} \leq \frac{e^{2 \lambda T} \max\Set{\sqrt{1 + 2 \lambda^{2} \rho^{4}}, \sqrt{2}} \sqrt{2 \max\Set{ \alpha^{-2}, 1} + M_{e}^{2}}}{\min\Set{\alpha M_{a}^{-2}, \alpha}}.
+    \end{equation}
+
+    \begin{Beweis}
+        Siehe~\cite[Appendix A]{Schwab:2009ec}.
+        % \begin{Beweis}
+        %     Wir weisen die Bedingungen von \thref{satz:babuska-aziz} nach.
+
+        %     Zunächst sei anzumerken, dass wir in \eqref{eq:garding-inequality} ohne Einschränkung $\lambda = 0$ wählen können.
+        %     Wähle
+        %     \begin{equation}
+        %         u(t) = \hat u(t) e^{\lambda t}, \quad v_{1}(t) = \hat v_{1}(t) e^{- \lambda t}, \quad g(t) = \hat g(t) e^{\lambda t},
+        %     \end{equation}
+        %     dann sieht man, dass $u$ die Gleichung \eqref{eq:bilinearform} genau dann löst, wenn $\hat u$ die Gleichung
+        %     \begin{equation}
+        %         \label{eq:bilinearform_tmp}
+        %         \begin{gathered}
+        %             \int_{I} \skprod{\hat{u}_{t}(t)}{\hat{v}_{1}(t)}_{H} + \lambda \skprod{\hat{u}(t)}{\hat{v}_{1}(t)}_{H} + a(t; \hat{u}(t), \hat{v}_{1}(t)) \diff t + \skprod{\hat{u}(0)}{v_{2}}_{H}
+        %                 \\= \int_{I} \skprod{\hat{g}(t)}{\hat{v}_{1}(t)}_{H} \diff t + \skprod{u_{0}}{v_{2}}_{H}
+        %         \end{gathered}
+        %     \end{equation}
+        %     für alle $\hat{v} = (\hat{v}_{1}, v) \in \mathcal Y$ löst.
+
+        %     \paragraph{Stetigkeit} % (fold)
+        %     \label{par:stetigkeit}
+        %     Betrachte für $u \in \mathcal X$ und $v = (v_{1}, v_{2}) \in \mathcal Y$ die Bilinearform $b(u, v)$.
+        %     Nach Anwenden der Dreiecksungleichung erhalten wir
+        %     \begin{equation}
+        %         \label{eq:stetigkeit_zweiter_term}
+        %         \abs{b(u, v)} = \int_{I} \abs{\skprod{u_{t}(t)}{v_{1}(t)}_{H}} + \abs{a(u(t), v_{1}(t))} \diff t + \abs{\skprod{u(0)}{v_{2}}_{H}}.
+        %     \end{equation}
+        %     Betrachten wir zunächst den hinteren Term, dann erhalten wir unter Verwendung der Cauchy-Schwarz-Ungleichung und der Einbettungs-Konstante $M_{e}$ die Abschätzung
+        %     \begin{equation}
+        %         \abs{\skprod{u(0)}{v_{2}}_{H}} \leq \norm{u(0)}_{H} \norm{v_{2}}_{H} \leq M_{e} \norm{u}_{X} \norm{v_{2}}_{H}.
+        %     \end{equation}
+        %     Widmen wir uns nun dem ersten Term und wenden ebenfalls die Cauchy-Schwarz-Ungleichung sowie die Stetigkeit von $a$ an, dann erhalten wir
+        %     \begin{align}
+        %         &\int_{I} \abs{\skprod{u_{t}(t)}{v_{1}(t)}_{H}} + \abs{a(u(t), v_{1}(t))} \diff t
+        %         \\&\qquad
+        %         \leq \int_{I} \norm{u_{t}(t)}_{H} \norm{v_{1}(t)}_{H} + M_{a} \norm{u(t)}_{H} \norm{v_{1}(t)}_{H} \diff t
+        %         \\&\qquad
+        %         \leq \int_{I} \max\{1, M_{a}\} \norm{v_{1}(t)}_{H} \left(  \norm{u_{t}(t)}_{H} + \norm{u(t)}_{H} \right) \diff t
+        %         \intertext{mittels Hölder-Ungleichung lässt sich dies weiter abschätzen zu}
+        %         &\qquad
+        %         \leq \left( \int_{I} \max\{1, M_{a}\}^{2} \norm{v_{1}(t)}_{H}^{2} \diff t \right)^{\frac 12} \left( \int_{I} \left( \norm{u_{t}(t)}_{H} + \norm{u(t)}_{H} \right)^{2} \diff t \right)^{\frac 12},
+        %         \intertext{und unter Verwendung der Youngschen-Ungleichung zu}
+        %         &\qquad
+        %         \leq \left( \int_{I} \max\{1, M_{a}\}^{2} \norm{v_{1}(t)}_{H}^{2} \diff t \right)^{\frac 12} \left( \int_{I} 2 \left( \norm{u_{t}(t)}_{H}^{2} + \norm{u(t)}_{H}^{2} \right) \diff t \right)^{\frac 12}
+        %         \intertext{was nach Definition der verwendeten Normen auch geschrieben werden kann als}
+        %         &\qquad
+        %         = \sqrt{2 \max\{1, M_{a}^{2}\}} \norm{u}_{\mathcal X} \norm{v_{1}}_{L_{2}(I; V)}
+        %     \end{align}
+        %     Zusammen mit \eqref{eq:stetigkeit_zweiter_term} liefert dies nach einer erneuten Anwendung der Cauchy-Schwarz-Ungleichung
+        %     \begin{align}
+        %     \abs{b(u, v)}
+        %     &\leq \sqrt{2 \max\{1, M_{a}\}^{2}} \norm{u}_{\mathcal X} \norm{v_{1}}_{L_{2}(I; V)} + M_{e} \norm{u}_{X} \norm{v_{2}}_{H}
+        %     \\
+        %     &\leq \norm{u}_{\mathcal X} \left( \norm{v_{1}}_{L_{2}(I; V)}^{2} + \norm{v_{2}}_{H}^{2} \right)^{\frac 12} \left( 2 \max\{1, M_{a}\}^{2} + M_{e}^{2} \right)^{\frac 12}
+        %     \\
+        %     &= \sqrt{2 \max\{1, M_{a}^{2}\} + M_{e}^{2}} \norm{u}_{\mathcal X} \norm{v}_{\mathcal Y}.
+        %     \end{align}
+        %     Damit folgt die Stetigkeit.
+        %     % paragraph stetigkeit (end)
+
+        %     \paragraph{Inf-Sup-Bedingung} % (fold)
+        %     \label{par:inf_sup_bedingung}
+
+        %     % paragraph inf_sup_bedingung (end)
+    \end{Beweis}
+\end{Satz}
+
+Die Größen $M_{a}$, $\alpha$ und $\lambda$ stammen aus \thref{annahme:eigenschaften_bf_a},
+während die Konstanten $M_{e}$ und $\rho$ als die Einbettungskonstanten
+% TODO: genauer?
+\begin{equation}
+    \label{eq:var_all_M_e}
+    M_{e} = \sup_{0 \neq u \in \mathcal X} \frac{\norm{u(0)}_{H}}{\norm{u}_{\mathcal X}}
+\end{equation}
+beziehungsweise
+\begin{equation}
+    \label{eq:var_all_rho}
+    \rho = \sup_{0 \neq \eta \in V} \frac{\norm{\eta}_{H}}{\norm{\eta}_{V}}
+\end{equation}
+definiert sind.
+Nach \thref{korollar:gl:einbettungskonst_M_e} ist $M_{e}$ gleichmäßig beschränkt in der Wahl von $V \hookrightarrow H$ und nur im Fall $T \to 0$ von $T$ abhängig.
+
+% subsection existenz_und_eindeutigkeit_von_l_sungen (end)
+
+
+% section lineare_evolutionsgleichungen (end)
+
+% section raum_zeit_variationsformulierung (end)
+
+\section{Parametrisches Problem} % (fold)
+\label{sec:parametrisches_problem}
+
+TODO: Anpassen an Zeitabhängige lineare Operatoren bzw. Bilinearformen!
+
+Wir beschäftigen uns nun mit einer parametrischen Variante der parabolischen partiellen Differentialgleichung~\eqref{eq:allgemeine_parabolische_pde}, folgern erneut Existenz und Eindeutigkeit von Lösungen und zeigen die analytische Abhängigkeit der Lösung vom Parameter.
+Dieser Abschnitt basiert auf~\cite{Kunoth:2013ef}.
+
+Bevor wir die gewünschten Aussagen für die später vorgestellte parametrische Variante der parabolischen partiellen Differentialgleichung~\eqref{eq:allgemeine_parabolische_pde} folgern können, müssen wir uns zunächst mit einer parametrischen Operatorgleichung beschäftigen.
+
+Es seien $X$ und $Y$ zwei reflexive Banachräume und $\mathcal S \subset \mathbb{R}^{\mathbb{N}}$ bezeichne den sogenannten Parameterraum, ohne Einschränkung wählen wir $\mathcal S = {[-1, 1]}^{\mathbb{N}}$.
+Für alle $\sigma \in \mathcal S$ sei nun durch $A(\sigma) \in \mathcal L(X, Y')$ ein stetiger linearer Operator gegeben.
+Wir betrachten nun für $g \in Y'$ die parametrische Operatorgleichung
+\begin{equation}
+    \label{eq:allgemeine_parametrische_elliptische_pde}
+    A(\sigma) u(\sigma) = g \quad \text{in}~Y'.
+\end{equation}
+Um Aussagen über diese Operatorgleichung treffen zu können, müssen wir zunächst die Abhängigkeit des Operators $A(\sigma)$ vom Parameter $\sigma$ konkretisieren.
+Zunächst aber einige Notationen.
+
+\begin{Bemerkung}
+    Wir bezeichnen mit $\mathfrak F = \Set{ \nu \in \mathbb{N}^{\mathbb{N}}_{0} \given \abs{\nu} < \infty }$ die Menge aller Folgen nichtnegativer ganzer Zahlen mit endlichem Träger, das heißt nur endlich vielen Einträgen ungleich Null.
+    % NOTE: Eventuell mehr definieren, siehe $\mathfrak n$ und $\mathfrak m$
+
+    Sei $\nu \in \mathfrak F$ und $b \in \ell_{p}(\mathbb{N})$, $p > 0$, dann schreiben wir
+    \begin{equation}
+        b^{\nu} = \prod_{j = 1}^{\infty} b_{j}^{\nu_{j}}
+    \end{equation}
+    mit der Konvention $0^{0} = 1$.
+    Wegen $\abs{\nu} < \infty$ ist dieses Produkt stets endlich.
+\end{Bemerkung}
+
+
+\begin{Annahme}[{{\cite[Assumption 1]{Kunoth:2013ef}}}]
+\label{thm:kunoth:assumption1}
+    Die parametrische Familie von Operatoren
+    $\Set{ A(\sigma) \in \mathcal L(X, Y') \given \sigma \in \mathcal S }$ sei $\mathfrak p$-regulär für ein $0 < \mathfrak p \leq 1$, das heißt
+    \begin{thmenumerate}
+        \item $A(\sigma) \in \mathcal L(X, Y')$ sei stetig invertierbar für alle $\sigma \in \mathcal S$ mit gleichmäßig beschränktem Inversen $A{(\sigma)}^{-1} \in \mathcal L(Y', X)$, das heißt es existiert ein $C_{0} > 0$ mit
+        \begin{equation}
+            \sup_{\sigma \in \mathcal S} \norm{A{(\sigma)}^{-1}}_{\mathcal L(Y', X)} \leq C_{0},
+        \end{equation}
+        \item für jedes feste $\sigma \in \mathcal S$ seien die Operatoren $A(\sigma)$ analytisch bezüglich $\sigma$, konkret existiert eine nichtnegative Folge $b = (b_{j})_{j \geq 1} \in \ell_{\mathfrak p}(\mathbb{N})$ so dass
+        \begin{equation}
+            \sup_{\sigma \in \mathcal S} \norm{(A{(0)}^{-1})(\partial^{\nu}_{\sigma} A(\sigma))}_{\mathcal L(X, X)} \leq C_{0} b^{\nu}
+        \end{equation}
+        für alle $\nu \in \mathfrak F \setminus \{ 0 \}$ gilt, wobei $\partial^{\nu}_{\sigma} A(\sigma) = \frac{\partial^{\nu_{1}}}{\partial \sigma_{1}} \frac{\partial^{\nu_{2}}}{\partial \sigma_{2}} \cdots A(\sigma)$ sei.
+    \end{thmenumerate}
+\end{Annahme}
+
+Der für uns wichtigste Fall der parametrischen Abhängigkeit von $A(\sigma)$ ist die affine Abhängigkeit, das heißt es existiert eine Familie von Operatoren $\Set{\hat A} \cup \Set{ A_{j} }_{j \geq 1} \subset \mathcal L(X, Y')$, so dass
+\begin{equation}
+    \label{eq:all_affiner_operator}
+    A(\sigma) = \hat A + \sum_{j = 1}^{\infty} \sigma_{j} A_{j} \qquad\fa \sigma \in \mathcal S
+\end{equation}
+gilt.
+Wir bezeichnen mit $\hat a, a_{j} \colon X \times Y \to \mathbb{R}$ die zu $\hat A$ respektive $A_{j}$, $j \geq 1$, zugehörigen Bilinearformen, also
+\begin{equation}
+    \label{eq:allg_affine_bf}
+    \begin{aligned}
+    \hat a(\eta, \zeta) &= \skprod{\hat A \eta}{\zeta}_{Y' \times Y}
+    \\a_{j}(\eta, \zeta) &= \skprod{A_{j} \eta}{\zeta}_{Y' \times Y}
+    \end{aligned}
+\end{equation}
+für $\eta \in X$, $\zeta \in Y$.
+
+Um die Konvergenz von~\eqref{eq:all_affiner_operator} sicherzustellen, fordern wir:
+
+\begin{Annahme}[{{\cite[Assumption 2]{Kunoth:2013ef}}}]
+\label{thm:kunoth:assumption2}
+    Die Operatorfamilie $\Set{\hat A} \cup \Set{ A_{j} }_{j \geq 1}$ erfülle folgende Eigenschaften:
+    \begin{thmenumerate}
+        \item Der \emph{Mean Field}-Operator $\hat A \in \mathcal L(X, Y')$ sei stetig invertierbar, das heißt es existiert ein $\gamma_{0} > 0$ mit
+        \begin{subequations}\label{eq:kunoth:ass2_gamma_0}
+            \begin{align}
+                \label{eq:kunoth:ass2_gamma_0_a}
+                \inf_{0 \neq u \in X} \sup_{0 \neq v \in Y} \frac{\hat a(u, v)}{\norm{u}_{X} \norm{v}_{Y}} \geq \gamma_{0}
+                \intertext{und}
+                \label{eq:kunoth:ass2_gamma_0_b}
+                \inf_{0 \neq v \in Y} \sup_{0 \neq u \in X} \frac{\hat a(u, v)}{\norm{u}_{X} \norm{v}_{Y}} \geq \gamma_{0}.
+            \end{align}
+        \end{subequations}
+        \item Die \emph{Fluctuation}-Operatoren $\Set{ A_{j} }_{j \geq 1}$ seien \emph{klein} relativ zu $\hat A$ im folgenden Sinne: es existiert eine Konstante $0 < \kappa < 1$ so dass
+        \begin{equation}
+            \label{eq:kunoth:ass2_abs_reihe}
+            \sum_{j = 1}^{\infty} \norm{A_{j}}_{\mathcal L(X, Y')} \leq \kappa \gamma_{0}
+        \end{equation}
+        gilt.
+    \end{thmenumerate}
+\end{Annahme}
+
+\begin{Korollar}[{{\cite[Corollary 3]{Kunoth:2013ef}}}]
+\label{thm:kunoth:corollary3}
+    Die affin parametrische Operatorfamilie $\Set{\hat A} \cup \Set{ A_{j} }_{j \geq 1}$ erfülle \thref{thm:kunoth:assumption2}, dann wird auch \thref{thm:kunoth:assumption1} mit $\mathfrak p = 1$ und
+    \begin{equation}
+        C_{0} = \frac{1}{(1 - \kappa) \gamma_{0}}, \qquad b_{j} = \frac{\norm{A_{j}}_{\mathcal L(X, Y')}}{(1 - \kappa) \gamma_{0}}, \quad \fa j \geq 1,
+    \end{equation}
+    erfüllt.
+\end{Korollar}
+
+\begin{Satz}[{{\cite[Theorem 4]{Kunoth:2013ef}}}]
+\label{thm:kunoth:theorem4}
+    Die parametrische Familie $\Set{ A(\sigma) \in \mathcal L(X, Y') \given \sigma \in \mathcal S }$ erfülle \thref{thm:kunoth:assumption1} für ein $0 < \mathfrak p \leq 1$.
+    Dann existiert für jedes $g \in Y'$ und jedes $\sigma \in \mathcal S$ eine eindeutige Lösung $u(\sigma) \in X$ der parametrischen Operatorgleichung
+    \begin{equation}
+        A(\sigma) u(\sigma) = g \quad \text{in}~Y'.
+    \end{equation}
+    Die parametrische Familie von Lösungen $u(\sigma)$ hängt analytisch vom Parameter $\sigma$ ab und die partiellen Ableitungen von $u(\sigma)$ erfüllen
+    \begin{equation}
+        \label{eq:kunoth:schranke_part_abl}
+        \sup_{\sigma \in \mathcal S} \norm{(\partial^{\nu}_{\sigma} u)(\sigma)}_{X} \leq C_{0} \norm{g}_{Y'} \abs{\nu}! \tilde{b}^{\nu}
+    \end{equation}
+    für alle $\nu \in \mathfrak F$, wobei die Folge $\tilde{b} = (\tilde{b}_{j})_{j \geq 1} \in \ell_{\mathfrak p}(\mathbb{N})$ definiert ist durch
+    \begin{equation}
+        \tilde{b}_{j} = \frac{b_{j}}{\ln 2} \qquad \text{für alle j} \in \mathbb{N}.
+    \end{equation}
+\end{Satz}
+
+Aus diesen Ergebnissen erhalten wir nun die gewünschten Aussagen für die parametrische Variante von~\eqref{eq:allgemeine_parabolische_pde}, diese müssen wir aber nun zunächst konkretisieren.
+Wir arbeiten nun wieder im Setting aus \autoref{sec:allgemeine_problemstellung}.
+
+Für $\sigma \in \mathcal S$ sei $A(\sigma) \in \mathcal L(V, V')$ ein stetiger linearer Operator und $a(\blank, \blank; \sigma) \colon V \times V \to \mathbb{R}$ die zugehörige Bilinearform, also $a(\eta, \zeta; \sigma) = \skprod{A(\sigma) \eta}{\zeta}_{V' \times V}$ für $\eta, \zeta \in V$.
+Die Bilinearform $a(\blank, \blank; \sigma)$ erfülle \thref{annahme:eigenschaften_bf_a} gleichmäßig in $\sigma$, sie sei also stetig und erfülle eine G\r{a}rding-Ungleichung, das heißt es existieren von $\sigma$ unabhängige Konstanten $0 < M_{a} < \infty$, $\alpha > 0$ und $\lambda \geq 0$ mit
+\begin{equation}
+    \label{eq:allgemeine_parabolische_pde:bf_stetig_parametrisch}
+    \abs{a(\eta, \zeta; \sigma)} \leq M_{a} \norm{\eta}_{V} \norm{\zeta}_{V} \quad \fa \eta, \zeta \in V
+\end{equation}
+und
+\begin{equation}
+    \label{eq:allgemeine_parabolische_pde:bf_garding_parametrisch}
+    a(\eta, \eta; \sigma) + \lambda \norm{\eta}_{H}^{2} \geq \alpha \norm{\eta}_{V}^{2} \quad \fa \eta \in V.
+\end{equation}
+
+Analog zu der Herleitung in \autoref{sec:raum_zeit_variationsformulierung} erhalten wir das parametrische Variationsproblem:
+
+Gegeben ein $g \in L_{2}(I; V')$ und $u_{0} \in H$. Finde für alle $\sigma \in \mathcal S$ ein $u(\sigma) \in \mathcal X$ mit
+\begin{equation}
+    \label{eq:var_all_problem_parametrisch}
+    b(u(\sigma), v; \sigma) = f(v) \quad \fa v \in \mathcal Y,
+\end{equation}
+wobei $f$ von $g$ und $u_{0}$ abhängt.
+Dabei ist $b(\blank, \blank; \sigma) \colon \mathcal X \times \mathcal Y \to \mathbb{R}$ eine Bilinearform definiert durch
+\begin{equation}
+    \label{eq:var_all_bf_b_parametrisch}
+    b(u, v; \sigma) = \int_{I} \skprod{u_{t}(t)}{v_{1}(t)}_{H} + a(u(t), v_{1}(t); \sigma) \diff t + \skprod{u(0)}{v_{2}}_{H},
+\end{equation}
+und $f(\blank) \colon \mathcal Y \to \mathbb{R}$ das durch
+\begin{equation}
+    \label{eq:var_all_f_parametrisch}
+    f(v) = \int_{I} \skprod{g(t)}{v_{1}(t)}_{H} \diff t + \skprod{u_{0}}{v_{2}}_{H}
+\end{equation}
+gegebene Funktional.
+
+\begin{Satz}[{{\cite[Theorem 21]{Kunoth:2013ef}}}]
+\label{thm:kunoth:theorem21}
+    Seien $\mathcal X$ und $\mathcal Y$ gegeben wie in~\eqref{eq:var_all_ansatzraum_x} respektive~\eqref{eq:var_all_testraum_y} und die Familie von Operatoren $\Set{ A(\sigma) \in \mathcal L(V, V') \given \sigma \in \mathcal S }$ erfülle \thref{thm:kunoth:assumption1} für ein $0 < \mathfrak p \leq 1$.
+    Für jedes $\sigma \in \mathcal S$ sei $B(\sigma) \in \mathcal L(\mathcal X, \mathcal Y')$ definiert durch
+    \begin{equation}
+        \label{eq:var_all_gross_b_parametrisch}
+        \skprod{B(\sigma) u}{v}_{\mathcal Y' \times \mathcal Y} = b(u, v; \sigma), \quad u \in \mathcal X,~y \in \mathcal Y,
+    \end{equation}
+    mit $b(\blank, \blank; \sigma)$ wie in~\eqref{eq:var_all_bf_b_parametrisch}.
+    Dann ist $B(\sigma)$ für jedes $\sigma \in \mathcal S$ stetig invertierbar und es existieren Konstanten $0 < \beta_{1} \leq \beta_{2} < \infty$ mit
+    \begin{equation}
+        \label{eq:var_all_norm_B_und_B_inv_parametrisch}
+        \sup_{\sigma \in \mathcal S} \norm{B(\sigma)}_{\mathcal L(\mathcal X, \mathcal Y')} \leq \beta_{2} \quad \text{und} \quad  \sup_{\sigma \in \mathcal S} \norm{B(\sigma)^{-1}}_{\mathcal L(\mathcal Y', \mathcal X)} \leq \frac{1}{\beta_{1}}.
+    \end{equation}
+    Die parametrische Familie von Operatoren $\Set{ B(\sigma) \in \mathcal L(\mathcal X, \mathcal Y') \given \sigma \in \mathcal S }$ erfüllt \thref{thm:kunoth:assumption1} mit dem selben Regularitätsparameter $\mathfrak p$, die parametrische Familie von Lösungen $u(\sigma)$ hängt analytisch von $\sigma$ ab und erfüllt die \emph{a priori}-Abschätzung
+    \begin{equation}
+        \label{eq:var_all_a_priori_schranke}
+        \sup_{\sigma \in \mathcal S} \norm{(\partial^{\nu}_{\sigma} u)(\sigma)}_{\mathcal X} \leq C_{0} \norm{f}_{\mathcal Y'} \abs{\nu}! \tilde{b}^{\nu}
+    \end{equation}
+    für alle $\nu \in \mathfrak F$, wobei $f$ wie in~\eqref{eq:var_all_f_parametrisch} gegeben ist.
+
+    \begin{Beweis}
+        TODO:\@ Bedingungen von \thref{thm:kunoth:assumption1} nachrechnen.
+        Zu (i): Folgt aus \thref{thm:schwab09:theorem51}, da $M_{a}, \alpha, \lambda$ unabhänging von $\sigma$.
+        Zu (ii): Folgt aus nachfolgendem \thref{lemma:norm_B_beschraenkt_durch_norm_A}.
+    \end{Beweis}
+\end{Satz}
+
+\begin{Lemma}
+\label{lemma:norm_B_beschraenkt_durch_norm_A}
+    Sei $\sigma \in \mathcal S$ und $\nu \in \mathfrak F \setminus \Set{ 0 }$, dann gilt
+    \begin{equation}
+        \norm{\partial^{\nu}_{\sigma} B(\sigma)}_{\mathcal L(\mathcal X, \mathcal Y')}
+        \leq
+        \norm{\partial^{\nu}_{\sigma} A(\sigma)}_{\mathcal L(V, V')}
+    \end{equation}
+
+    % \begin{Beweis}
+        % TODO: Moo.
+    % \end{Beweis}
+\end{Lemma}
+
+% subsubsection aus_cite_kunoth_2013ef (end)
+
+% section parametrisches_problem (end)
+
 
 % chapter grundlagen (end)
 

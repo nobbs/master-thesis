@@ -1,6 +1,24 @@
 %!TEX root = ../main.tex
 
-\chapter{Einleitung} % (fold)
+\chapter*{Einleitung} % (fold)
+\addcontentsline{toc}{chapter}{Einleitung}
 \label{cha:einleitung}
+
+Lineare Evolutiongsgleichungen treten in vielen Bereichen der Mathematik und der Naturwissenschaften auf.
+Zu den prominentesten Vertreten gehören sicherlich die Wärmeleitungsgleichung, die Wellengleichung und viele lineare Reaktionsdiffusionsgleichungen.
+Auch in der Polymerchemie lassen sie sich antreffen, so zum Beispiel bei der Modellierung von Copolymer-Melts [zitieren, Helfand oder Stasiak], wo auch die Motivation für diese Arbeit herrührt.
+
+Konkret stammt das vorliegende Problem aus dem Bereich der \emph{Self Consistent Field Theory}.
+Diese wird zum Beispiel verwendet um in obengenannten Copolymer-Melts Gleichgewichte, oder auch Konfigurationen, durch Minimierung eines Funktionals zu finden.
+Dazu werden Iterationsverfahren verwendet, die darauf zurückgreifen in jedem Schritt eine Reaktionsdiffusionsgleichung zu lösen, wobei der Reaktionsterm durch das Iterationsverfahren in jedem Schritt variiert wird.
+Dies motiviert dazu, die Reaktionsdiffusionsgleichung als parametrische partielle Differentialgleichung aufzufassen und bereits bekannte Methoden zur Dimensionsreduktion zu verwenden.
+
+Eines dieser Verfahren ist die Reduzierte-Basis-Methode.
+Ziel dieser ist es, die Eigenschaft, dass die Abhängigkeit der Lösung der parametrischen partiellen Differentialgleichung eine gewisse Regularität bezüglich des Parameters aufweist, auszunutzen.
+Die Reduzierte-Basis-Methode beruht, wie zum Beispiel auch die Finite-Elemente-Methode, auf der Galerkin-Projektion auf einen endlichdimensionalen Unterraum.
+Anders als bei der Finite-Elemente-Methode werden die Unterräume aber von Lösungen der parametrischen partiellen Differentialgleichung zu gewissen, clever gewählten, Parametern aufgespannt.
+Zur Wahl dieser Parameter gibt es verschiedene Ansätze, zum Beispiel \emph{Greedy-Verfahren}, oder auch die \emph{Proper Orthogonal Decomposition}.
+Für die meisten dieser Ansätze werden \emph{a priori}-Fehlerschätzer benötigt.
+
 
 % chapter einleitung (end)
