@@ -13,6 +13,9 @@
 % Deutsche Silbentrennung
 \usepackage[ngerman]{babel}
 
+% Deutsche Anführungszeichen
+\usepackage[babel,german=quotes]{csquotes}
+
 % Bessere Standard-Schriftart
 \usepackage{lmodern}
 
@@ -26,17 +29,22 @@
 \usepackage{graphicx, color}
 
 % PDF-Verlinkungen und Metadaten
-\usepackage[colorlinks=true, backref=page]{hyperref}
+\usepackage[
+    colorlinks=true,
+]{hyperref}
 
 % Bibliographie-Stil
-\usepackage[numbers]{natbib}
-\bibliographystyle{alphadin}
-\usepackage{hypernat}
+\usepackage[%
+    backend=biber,
+    style=alphabetic,
+    backref=true,
+]{biblatex}
+\bibliography{literature}
 
 % Fancyhdr-Ersatz für scrbook
 \usepackage[
     automark,
-    % headsepline
+    headsepline
 ]{scrlayer-scrpage}
 
 % enums
@@ -73,7 +81,7 @@
 %%% Nebensächliches
 
 % Querformatseiten
-% \usepackage{pdflscape}
+\usepackage{pdflscape}
 
 % Labels am Seitenrand anzeigen
 % \usepackage{showlabels}

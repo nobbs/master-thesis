@@ -3,33 +3,35 @@
 \chapter{Grundlagen} % (fold)
 \label{cha:grundlagen}
 
-In diesem Kapitel fassen wir die für diese Arbeit benötigten Grundlagen aus verschiedenen mathematischen Bereichen, wie der Funktionalanalysis und der Numerik, zusammen.
-Wir orientieren uns dabei maßgeblich an \cite{Dautray:1992by,Lions:1971wp,Lions:1972tg}.
+In diesem ersten Kapitel werden die für diese Arbeit benötigten Grundlagen aus der Funktionalanalysis und der Numerik zusammengefasst und wiederholt.
+Wir orientieren uns dabei maßgeblich an \textcite{Dautray:1992by,Lions:1972tg}.
 
 \section{Bochner-Räume} % (fold)
 \label{sec:bochner_r_ume}
 
 Wir beginnen mit der Einführung sogenannter Bochner-Räume.
 Dabei handelt es sich um Verallgemeinerungen der Lebesgue-Räume $L_{p}$ auf Banachraum-wertige Funktionen.
+Bochner-Räume treten bei der Betrachtung parabolischer partieller Differentialgleichungen in natürlicher Weise auf.
 
-\begin{Definition}[Bochner-Raum, {{{\cite[Def. XVIII.1.1]{Dautray:1992by}}}}]
+\begin{Definition}[{{{\cite[Definition XVIII.1.1]{Dautray:1992by}}}}]
 \label{definition:gl:bochner_raum}
-    Sei $X$ ein Banachraum, $- \infty \leq a < b \leq \infty$ und $1 \leq p < \infty$.
-    Als Bochner-Raum $L_{p}(a, b; X)$ bezeichnen wir die Menge (der Äquivalenzklassen) $L_{p}$-integrierbarer Funktionen $f \colon [a, b] \to X$, das heißt aller Lebesgue-messbarer Funktionen auf $[a, b]$ mit
+    Sei $X$ ein Banachraum.
+    Weiter seien $- \infty \leq a < b \leq \infty$ und $1 \leq p < \infty$.
+    Als \emph{Bochner-Raum} $L_{p}(a, b; X)$ bezeichnen wir die Menge (der Äquivalenzklassen) $L_{p}$-integrierbarer Funktionen $f \colon [a, b] \to X$, das heißt, aller Lebesgue-messbarer Funktionen auf $[a, b]$ mit
     \begin{equation}
         \norm{f}_{L_{p}(a, b; X)} \deq \left( \int_{a}^{b} \norm{f(t)}_{X}^{p} \diff t \right)^{1 / p} < \infty.
     \end{equation}
-    Weiterhin ist der Bochner-Raum $L_{\infty}(a, b; X)$ definiert als die Menge (der Äquivalenzklassen) der für fast alle $t \in [a, b]$ wesentlich beschränkten Funktionen mit
+    Weiterhin ist der \emph{Bochner-Raum} $L_{\infty}(a, b; X)$ definiert als die Menge (der Äquivalenzklassen) der für fast alle $t \in [a, b]$ wesentlich beschränkten Funktionen mit
     \begin{equation}
         \norm{f}_{L_{\infty}(a, b; X)} \deq \esssup_{t \in [a, b]} \norm{f(t)}_{X} < \infty.
     \end{equation}
 \end{Definition}
 \nomenclature{$X, Y$}{Banachräume}
 
-\begin{Lemma}[{{\cite[Prop. XVIII.1.1]{Dautray:1992by}}}, {{\cite[Abs. 1.1.3]{Lions:1972tg}}}]
+\begin{Lemma}[{{\cite[Proposition XVIII.1.1]{Dautray:1992by}}}, {{\cite[Abschnitt 1.1.3]{Lions:1972tg}}}]
 \label{lemma:gl:bochner_ist_banach}
-    Für $1 \leq p \leq \infty$ ist $L_{p}(a, b; X)$ ein Banachraum.
-    Ist $H$ ein Hilbertraum, dann ist $L_{2}(a, b; H)$ ebenfalls ein Hilbertraum.
+    Für alle $1 \leq p \leq \infty$ ist $L_{p}(a, b; X)$ ein Banachraum.
+    Falls $H$ ein Hilbertraum ist, so auch $L_{2}(a, b; H)$.
 \end{Lemma}
 
 \begin{Definition}[Schwache Zeitableitung, {{{\cite{Dautray:1992by}}}}]
@@ -42,9 +44,9 @@ Dabei handelt es sich um Verallgemeinerungen der Lebesgue-Räume $L_{p}$ auf Ban
     erfüllt, falls ein solches $v$ existiert.
 \end{Definition}
 
-\begin{Bemerkung*}
+\begin{Bemerkung}
     Je nach Situation werden wir der Einfachheit halber eine der Schreibweisen $\frac{\partial}{\partial t} u = u' = u_{t}$ verwenden.
-\end{Bemerkung*}
+\end{Bemerkung}
 
 Im Zuge dieser Arbeit werden wir es stets mit Hilberträumen zu tun haben.
 Dabei werden wir oft auf folgendes Konstrukt zurückgreifen.
@@ -64,14 +66,14 @@ Dabei werden wir oft auf folgendes Konstrukt zurückgreifen.
 \begin{Bemerkung}
     Mit $\skprod{\blank}{\blank}_{V}$ und $\skprod{\blank}{\blank}_{H}$ bezeichnen wir das Skalarprodukt auf $V$ respektive $H$.
     Weiterhin $\skprod{\blank}{\blank}_{V' \times V}$ wird auch für die duale Paarung auf $V' \times V$, die als die eindeutige stetige Fortsetzung von $\skprod{\blank}{\blank}_{H}$ definiert ist, verwendet.
-    Insbesondere gilt für $u \in H$ und $v \in V$ die Gleichheit
+    Insbesondere gilt für $u \in H \subset V'$ und $v \in V$ die Gleichheit
     \begin{equation}
         \skprod{u}{v}_{V' \times V} = \skprod{u}{v}_{H}.
     \end{equation}
 \end{Bemerkung}
 \nomenclature{$\skprod{\blank}{\blank}$}{Je nach Index Skalarprodukt oder duale Paarung}
 
-\begin{Definition}[{{{\cite[Def. XVIII.2.4]{Dautray:1992by}}}}]
+\begin{Definition}[{{{\cite[Definition XVIII.2.4]{Dautray:1992by}}}}]
 \label{definition:gl:bochner_raum_W}
     Sei $V \denseinclusion H \denseinclusion V'$ ein Gelfand-Tripel.
     Definiere den Raum $W(a, b; V, V')$ als
@@ -90,8 +92,8 @@ Dabei werden wir oft auf folgendes Konstrukt zurückgreifen.
     \end{equation}
 \end{Bemerkung}
 
-% TODO: ordentlich formulieren
-\begin{Lemma}[{{{\cite[Prop. XVIII.2.6]{Dautray:1992by}}}}]
+\begin{Lemma}[{{{\cite[Proposition XVIII.2.6]{Dautray:1992by}}}}]
+\label{lemma:gl:w_a_v_v_ist_hilbertraum}
     Mit dem Skalarprodukt
     \begin{equation}
         \skprod{u}{v}_{W(a, b; V, V')} \deq \skprod{u'}{v'}_{L_{2}(a, b; V')} +  \skprod{u}{v}_{L_{2}(a, b; V)}
@@ -100,8 +102,8 @@ Dabei werden wir oft auf folgendes Konstrukt zurückgreifen.
     \begin{equation}
         \begin{aligned}
             \norm{u}_{W(a, b; V, V')}
-            &\deq \left( \int_{a}^{b} \norm{u'(t)}_{V'}^{2} \diff t + \int_{a}^{b} \norm{u(t)}_{V}^{2} \diff t \right)^{1/2}
-            \\&= \left( \norm{u'}_{L_{2}(a, b; V')}^{2} + \norm{u}_{L_{2}(a, b; V)}^{2} \right)^{1/2}
+            \deq& \left( \int_{a}^{b} \norm{u'(t)}_{V'}^{2} \diff t + \int_{a}^{b} \norm{u(t)}_{V}^{2} \diff t \right)^{1/2}
+            \\=& \left( \norm{u'}_{L_{2}(a, b; V')}^{2} + \norm{u}_{L_{2}(a, b; V)}^{2} \right)^{1/2}
         \end{aligned}
     \end{equation}
     ist $W(a, b; V, V')$ ein Hilbertraum.
@@ -109,15 +111,15 @@ Dabei werden wir oft auf folgendes Konstrukt zurückgreifen.
 
 \begin{Definition}
 \label{definition:gl:stetige_funktionen}
-    Mit $\mathcal C^{0}([a, b]; X)$ bezeichnen wir die Menge aller bezüglich der Norm $\norm{f} = \sup_{t \in [a, b]} \norm{f(t)}_{X}$ stetigen Funktionen $f \colon [a, b] \to X$.
+    Mit $\mathcal C([a, b]; X)$ bezeichnen wir die Menge aller bezüglich der Norm $\norm{f} = \sup_{t \in [a, b]} \norm{f(t)}_{X}$ stetigen Funktionen $f \colon [a, b] \to X$.
 \end{Definition}
 
-\begin{Satz}[{{{\cite[Thm. XVIII.2.1]{Dautray:1992by}}}}]
+\begin{Satz}[{{{\cite[Theorem XVIII.2.1]{Dautray:1992by}}}}]
 \label{satz:gl:einbettung_bochner_stetig}
     Seien $a, b \in \mathbb{R}$, dann stimmt jedes $u \in W(a, b)$ fast überall mit einer stetigen Funktion von $[a, b]$ nach $H$ überein.
     Genauer gilt
     \begin{equation}
-        W(a, b; V, V') \hookrightarrow \mathcal C^{0}([a, b]; H).
+        W(a, b; V, V') \hookrightarrow \mathcal C([a, b]; H).
     \end{equation}
 \end{Satz}
 \nomenclature{$\hookrightarrow$}{Stetige Einbettung}
@@ -128,18 +130,20 @@ Dabei werden wir oft auf folgendes Konstrukt zurückgreifen.
     Dann sind $u(a), u(b) \in H$ wohldefiniert.
 \end{Korollar}
 
+% TODO: überprüfen, ob's so stimmt!
+% TODO: Die Norm sieht grauenhaft aus...
 \begin{Korollar}
 \label{korollar:gl:einbettungskonstante_M_e}
     Seien $a, b \in \mathbb{R}$.
     Die Einbettungskonstante
     \begin{equation}
         \label{eq:gl:einbettungskonst_M_e}
-        M_{e} \deq \sup_{\substack{u\in W(a, b; V, V')\\u \neq 0}} \frac{\norm{u(0)}_{H}}{\norm{u}_{\mathcal X}}
+        M_{e} \deq \sup_{\substack{u\in W(a, b; V, V')\\u \neq 0}} \frac{\norm{u(0)}_{H}}{\norm{u}_{W(a, b; V, V')}}
     \end{equation}
     ist gleichmäßig beschränkt in der Wahl $V \hookrightarrow H$ und hängt nur im Fall $T \to 0$ von $T$ ab.
 
     \begin{Beweis}
-        Siehe \cite{Dautray:1992by}.
+        Siehe \textcite[Beweis zu Theorem XVIII.2.1]{Dautray:1992by}.
     \end{Beweis}
 \end{Korollar}
 
@@ -148,145 +152,194 @@ Dabei werden wir oft auf folgendes Konstrukt zurückgreifen.
 \section{Lineare Evolutionsgleichungen} % (fold)
 \label{sec:lineare_evolutionsgleichungen}
 \label{sec:allgemeine_problemstellung}
+\label{sec:raum_zeit_variationsformulierung}
 
-In diesem Abschnitt führen wir lineare Evolutionsgleichungen, eine bestimmte Art parabolischer partieller Differentialgleichungen, ein.
-Dies geschieht analog zu \cite{Lions:1971wp,Schwab:2009ec,Urban:2014kg}.
+In diesem Abschnitt werden lineare Evolutionsgleichungen, eine bestimmte Unterart parabolischer partieller Differentialgleichungen, eingeführt.
+Diese Einführung orientiert sich an \textcite{Lions:1971wp,Schwab:2009ec,Urban:2014kg}.
 
-Dabei sei folgendes Setting gegeben: wie in \thref{definition:gl:gelfand_tripel} seien $V$ und $H$ zwei separable Hilberträume und $(V, H, V')$ das zugehörige Gelfand-Tripel.
+Zunächst definieren wir, was wir unter dem Begriff einer linearen Evolutionsgleichungen verstehen wollen.
+Anschließend leiten wir eine Raum-Zeit-Variationsformulierung her und geben einen Satz an, der unter geeigneten Voraussetzungen Existenz und Eindeutigkeit einer Lösung dieser Variationsformulierung garantiert.
+
+Wir befinden uns nun im Folgenden Setting:
+wie in \thref{definition:gl:gelfand_tripel} seien $V$ und $H$ zwei separable Hilberträume und $(V, H, V')$ das daraus resultierende Gelfand-Tripel.
 Wie zuvor verwenden wir $\skprod{\blank}{\blank}$ mit entsprechendem Index sowohl für die Skalarprodukte auf $V$ und $H$, als auch für die duale Paarung auf $V' \times V$.
 
-Es sei $0 < T < \infty$ und $I = [0, T]$.
-Weiterhin sei für fast alle $t \in I$ eine Familie $a(\blank, \blank; t)$ von Bilinearformen
+Es sei $0 < T < \infty$ und damit $[0, T]$ ein endliches Zeitintervall.
+Weiterhin sei für fast alle $t \in [0, T]$ eine Familie $a(\blank, \blank; t)$ von Bilinearformen
 \begin{equation}
+    \label{eq:gl:familie_bf_a}
     a(\blank, \blank; t) \colon V \times V \to \mathbb{R}, \quad (\eta, \zeta) \mapsto a(\eta, \zeta; t)
 \end{equation}
 gegeben.
-Für alle $\eta, \zeta \in V$ sei die Abbildung $t \mapsto a(\eta, \zeta; t)$ messbar auf $I$ und erfülle folgende Annahme.
+Für alle $\eta, \zeta \in V$ sei die Abbildung $t \mapsto a(\eta, \zeta; t)$ messbar auf $[0, T]$ und erfülle die folgenden Bedingungen:
 
 \begin{Annahme}
 \label{annahme:eigenschaften_bf_a}
-    Für fast alle $t \in I$ erfülle die Familie $a(\blank, \blank; t)$:
+    \leavevmode
     \begin{thmenumerate}
-        \item \emph{Stetigkeit:} es existiert eine Konstante $0 < M_{a} < \infty$ mit
+        \item \emph{Stetigkeit.}
+        Es existiert eine Konstante $0 < M_{a} < \infty$ mit
         \begin{equation}
             \label{eq:allgemeine_parabolische_pde:bf_stetig}
-            \abs{a(\eta, \zeta); t} \leq M_{a} \norm{\eta}_{V} \norm{\zeta}_{V} \quad \fa \eta, \zeta \in V.
+            \abs{a(\eta, \zeta; t)} \leq M_{a} \norm{\eta}_{V} \norm{\zeta}_{V} \quad \fa \eta, \zeta \in V
         \end{equation}
-        \item \emph{G\r{a}rding-Ungleichung:} es existieren Konstanten $\alpha > 0$ und $\lambda \geq 0$ mit
+        für fast alle $t \in [0, T]$.
+        \item \emph{G\r{a}rding-Ungleichung}.
+        Es existieren Konstanten $\alpha > 0$ und $\lambda \geq 0$ mit
         \begin{equation}
             \label{eq:allgemeine_parabolische_pde:bf_garding}
-            a(\eta, \eta; t) + \lambda \norm{\eta}_{H}^{2} \geq \alpha \norm{\eta}_{V}^{2} \quad \fa \eta \in V.
+            a(\eta, \eta; t) + \lambda \norm{\eta}_{H}^{2} \geq \alpha \norm{\eta}_{V}^{2} \quad \fa \eta \in V
         \end{equation}
+        für fast alle $t \in [0, T]$.
     \end{thmenumerate}
 \end{Annahme}
 
-Nach dem Rieszschen Darstellungssatz [zitieren] wird für fast alle $t \in I$ ein stetiger linearer Operator $A(t) \in \mathcal L(V, V')$ induziert durch
+Nach dem Rieszschen Darstellungssatz, vergleiche \cite[Theorem \S{}22.1]{Halmos:1957vd}, wird durch die Familie $a(\blank, \blank; t)$ für fast alle $t \in [0, T]$ durch
 \begin{equation}
-    \skprod{A(t)\eta}{\zeta}_{H} = a(\eta, \zeta; t).
+    \skprod{A(t)\eta}{\zeta}_{H} = a(\eta, \zeta; t)
 \end{equation}
-Seien außerdem $g \in L_{2}(I; V')$ und $u_{0} \in H$ gegeben.
-Wir sind nun an Lösungen der parabolischen partiellen Differentialgleichung
-\begin{equation}
-    \label{eq:allgemeine_parabolische_pde}
-    u_{t}(t) + A(t) u(t) = g(t) \quad \text{in}~V',
-    \qquad
-    u(0) = u_{0} \quad \text{in}~H
-\end{equation}
-interessiert.
-Die Anfangswertbedingung $u(0) = u_{0}$ ist wegen \thref{korollar:gl:spur_wohldefiniert} wohldefiniert.
+eine Familie stetiger linearer Operatoren $A(t) \in \mathcal L(V, V')$ induziert.
 
-% section allgemeine_problemstellung (end)
+Mit dieser Vorarbeit können wir nun definieren, was wir unter einer linearen Evolutionsgleichung verstehen wollen.
 
-\section{Raum-Zeit-Variationsformulierung} % (fold)
-\label{sec:raum_zeit_variationsformulierung}
+% TODO: Quelle?
+\begin{Definition}
+\label{definition:lineare_evolutionsgleichung}
+    Seien $a(\blank, \blank; t)$ und $A(t)$ wie oben gegeben.
+    Weiterhin sei ein \emph{Quellterm} $g \in L_{2}(0, T; V')$ und ein \emph{Anfangswert} $u_{0} \in H$ gegeben.
+    Als \emph{lineare Evolutionsgleichung} bezeichnen wir die parabolische partielle Differentialgleichung
+    \begin{equation}
+        \label{eq:allgemeine_parabolische_pde}
+        \begin{cases}
+            u_{t}(t) + A(t) u(t) = g(t)     &\text{in}~V', \quad \text{für fast alle}~t \in I, \\
+            u(0) = u_{0}                    &\text{in}~H.
+        \end{cases}
+    \end{equation}
+\end{Definition}
 
-Da, wie so oft, klassische Lösungen von partiellen Differentialgleichungen in der Numerik nur von geringem Interesse sind, leiten wir nun eine Variationsformulierung für das Problem~\eqref{eq:allgemeine_parabolische_pde} her.
-% TODO: Quelle
-Hierbei werden Raum- und Zeitkoordinaten oftmals verschieden behandelt, das heißt die Variationsformulierung wird nur bezüglich der Raumkoordinaten hergeleitet und die Zeitkoordinate wird separat behandelt.
-Dies wollen wir vermeiden und führen eine Raum-Zeit-Variationsformulierung ein, bei der die Raum- und Zeitkoordinaten gleichwertig behandelt werden.
+\begin{Bemerkung}
+\leavevmode
+\begin{thmenumerate}
+    \item Die Anfangswertbedingung $u(0) = u_{0}$ in $H$ ist wegen \thref{korollar:gl:spur_wohldefiniert} wohldefiniert.
+    \item Ist die Bilinearform $a(\blank, \blank; t)$ respektive der zugehörige stetige lineare Operator $A(t)$ unabhängig von $t \in [0, T]$, dann sprechen wir von einer \emph{autonomen} linearen Evolutionsgleichung.
+\end{thmenumerate}
+\end{Bemerkung}
 
-Wir benötigen für die Variationsformulierung zunächst einen Ansatz- und einen Testfunktionenraum.
-Als Ansatzraum $\mathcal X$ kommt $W(I; V, V')$ aus \thref{definition:gl:bochner_raum_W} zum Einsatz, es ist also
-\begin{equation}
-    \label{eq:var_all_ansatzraum_x}
-    \mathcal X = L_{2}(I; V) \cap H^{1}(I; V') = \Set*{ u \in L_{2}(I; V) \given u_{t} \in L_{2}(I; V') }
-\end{equation}
-ausgestattet mit der Norm
-\begin{equation}
-    \label{eq:var_all_ansatzraum_x_norm}
-    \norm{u}_{\mathcal X} = \left( \norm{u}_{L_{2}{(I; V)}}^{2} + \norm{u_{t}}_{L_{2}{(I; V')}}^{2} \right)^{1 / 2}, \quad u \in \mathcal X.
-\end{equation}
-Als Testfunktionenraum verwenden wir
-\begin{equation}
-    \label{eq:var_all_testraum_y}
-    \mathcal Y = L_{2}(I; V) \times H,
-\end{equation}
-wobei die Norm durch
-\begin{equation}
-    \label{eq:var_all_testraum_y_norm}
-    \norm{v}_{\mathcal Y} = \left( \norm{v_{1}}_{L_{2}(I; V)}^{2} + \norm{v_{2}}_{H}^{2} \right)^{1 / 2}, \quad v = (v_{1}, v_{2}) \in \mathcal Y,
-\end{equation}
-gegeben ist.
+Als nächstes leiten wir eine Raum-Zeit-Variationsformulierung für~\eqref{eq:allgemeine_parabolische_pde} her.
+Dazu werden geeignete Ansatz- und Testfunktionenräume benötigt.
+Hier kommen nun die in \autoref{sec:bochner_r_ume} definierten Bochner-Räume zum Einsatz.
 
-% TODO: Herleitung aus-x-en?
-Multiplizieren wir die partielle Differentialgleichung~\eqref{eq:allgemeine_parabolische_pde} mit $v = (v_{1}, v_{2}) \in \mathcal Y$ und integrieren über den Zeitintervall $I$, dann erhalten wir daraus das Variationsproblem:
+\begin{Definition}
+    Als Ansatzfunktionenraum $\mathcal X$ bezeichnen wir den Raum $W(0, T; V, V')$ aus \thref{definition:gl:bochner_raum_W}.
+    Es ist also
+    \begin{equation}
+        \label{eq:var_all_ansatzraum_x}
+        \begin{aligned}
+            \mathcal X &= L_{2}(0, T; V) \cap H^{1}(0, T; V')
+            \\&= \Set*{ u \in L_{2}(0, T; V) \given u_{t} \in L_{2}(0, T; V') }
+        \end{aligned}
+    \end{equation}
+    ausgestattet mit der Norm
+    \begin{equation}
+        \label{eq:var_all_ansatzraum_x_norm}
+        \norm{u}_{\mathcal X} = \left( \norm{u}_{L_{2}{(0, T; V)}}^{2} + \norm{u_{t}}_{L_{2}{(0, T; V')}}^{2} \right)^{1 / 2}, \quad u \in \mathcal X.
+    \end{equation}
+    Der Testfunktionenraum $\mathcal Y$ sei gegeben durch
+    \begin{equation}
+        \label{eq:var_all_testraum_y}
+        \mathcal Y = L_{2}(0, T; V) \oplus H
+    \end{equation}
+    mit der Norm
+    \begin{equation}
+        \label{eq:var_all_testraum_y_norm}
+        \norm{v}_{\mathcal Y} = \left( \norm{v_{1}}_{L_{2}(0, T; V)}^{2} + \norm{v_{2}}_{H}^{2} \right)^{1 / 2}, \quad v = (v_{1}, v_{2}) \in \mathcal Y.
+    \end{equation}
+\end{Definition}
 
-Gegeben ein $g \in L_{2}(I, V')$ und $u_{0} \in H$. Finde ein $u \in \mathcal X$ mit
-\begin{equation}
-    \label{eq:var_all_problem}
-    b(u, v) = f(v) \quad \fa v \in \mathcal Y,
-\end{equation}
-wobei $f$ von $g$ und $u_{0}$ abhängt.
-Dabei ist $b \colon \mathcal X \times \mathcal Y \to \mathbb{R}$ eine Bilinearform  und $f \colon \mathcal Y \to \mathbb{R}$ ein Funktional definiert durch
-\begin{equation}
-    \label{eq:var_all_bf_b}
-    b(u, v) = \int_{I} \skprod{u_{t}(t)}{v_{1}(t)}_{H} + a(u(t), v_{1}(t); t) \diff t + \skprod{u(0)}{v_{2}}_{H},
-\end{equation}
-respektive
-\begin{equation}
-    \label{eq:var_all_f}
-    f(v) = \int_{I} \skprod{g(t)}{v_{1}(t)}_{H} \diff t + \skprod{u_{0}}{v_{2}}_{H}.
-\end{equation}
+Beide Räume sind Hilberträume, $\mathcal X$ nach \thref{lemma:gl:w_a_v_v_ist_hilbertraum} und $\mathcal Y$ als direkte Summe zweier Hilberträume.
 
-Um Existenz und Eindeutigkeit von Lösungen für das Variationsproblem~\eqref{eq:var_all_problem} zu erhalten, zeigen wir, dass die Bilinearform $b$ einen stetig invertierbaren Operator $B \in \mathcal L(\mathcal X, \mathcal Y')$ definiert.
-Da die Variationsformulierung auch als
-\begin{equation}
-    B u = f \quad \text{in}~\mathcal Y'
-\end{equation}
-aufgefasst werden kann, ist dann durch $u = B^{-1} f$ eine Lösung gegeben.
-Folgender Satz fasst das Ganze zusammen:
+Um aus~\eqref{eq:allgemeine_parabolische_pde} eine Variationsformulierung zu erhalten, multiplizieren wir die lineare Evolutionsgleichung mit $v = (v_{1}, v_{2}) \in \mathcal Y$ und integrieren anschließend über das Zeitintervall $[0, T]$.
+Dadurch ergibt sich folgende schwache Formulierung der linearen Evolutionsgleichung aus \thref{definition:lineare_evolutionsgleichung}:
+
+\begin{Definition}
+\label{definition:variationsformulierung}
+    Seien $\mathcal X$ und $\mathcal Y$ wie in~\eqref{eq:var_all_ansatzraum_x} respektive~\eqref{eq:var_all_testraum_y}.
+    Weiter sei ein Quellterm $g \in L_{2}(0, T; V')$ und ein Anfangswert $u_{0} \in H$ gegeben.
+    Als \emph{Raum-Zeit-Variationsfor"-mu"-lie"-rung} der linearen Evolutionsgleichung~\eqref{eq:allgemeine_parabolische_pde} bezeichnen wir das folgende Problem:
+    Finde ein $u \in \mathcal X$ mit
+    \begin{equation}
+        \label{eq:var_all_problem}
+        b(u, v) = f(v) \quad \fa v \in \mathcal Y.
+    \end{equation}
+    Dabei ist $b \colon \mathcal X \times \mathcal Y \to \mathbb{R}$ die durch
+    \begin{equation}
+        \label{eq:var_all_bf_b}
+        b(u, v) = \int_{0}^{T} \skprod{u_{t}(t)}{v_{1}(t)}_{H} + a(u(t), v_{1}(t); t) \diff t + \skprod{u(0)}{v_{2}}_{H}
+    \end{equation}
+    definierte Bilinearform und $f \colon \mathcal Y \to \mathbb{R}$ das durch
+    \begin{equation}
+        \label{eq:var_all_f}
+        f(v) = \int_{0}^{T} \skprod{g(t)}{v_{1}(t)}_{H} \diff t + \skprod{u_{0}}{v_{2}}_{H}
+    \end{equation}
+    gegebene Funktional.
+\end{Definition}
+
+Es bleibt nun zu zeigen, dass obige Raum-Zeit-Variationsformulierung \emph{sachgemäß gestellt} (nach Hadamard [TODO]) ist, das heißt, das eine Lösung existiert, diese eindeutig ist und zudem stetig von den Eingangsdaten, also $f$, abhängt.
+Dazu wird der folgende wichtige Satz, welcher in dieser oder ähnlicher Form bei \textcites[Theorem 2.1]{Babuska:1971fx}[Theorem 5.2.1]{Aziz:2014wf}[Theorem \S{}3.3.6]{Braess:2007wm} zu finden ist, verwendet.
+
+\begin{Satz}[Banach-Ne{\v c}as-Babu{\v s}ka-Theorem]
+    Seien $H_{1}$ und $H_{2}$ Hilberträume.
+    Eine lineare Abbildung $A \colon H_{1} \to H_{2}'$ ist genau dann ein Isomorphismus, das heißt stetig invertierbar, wenn die zugehörige Bilinearform $a \colon H_{1} \times H_{2} \to \mathbb{R}$ die folgenden Bedingungen erfüllt:
+    \begin{thmenumerate}
+        \item \emph{Stetigkeit}.
+        Es existiert ein $0 < C < \infty$ mit
+        \begin{equation}
+            \abs{a(u, v)} \leq C \norm{u}_{H_{1}} \norm{v}_{H_{2}} \quad \fa u \in H_{1},~v\in H_{2}.
+        \end{equation}
+        \item \emph{Inf-sup-Bedingung}.
+        Es existiert ein $\alpha > 0$ mit
+        \begin{equation}
+            \inf_{u \in H_{1}} \sup_{v \in H_{2}} \frac{a(u, v)}{\norm{u}_{H_{1}} \norm{v}_{H_{2}}} \geq \alpha.
+        \end{equation}
+        \item Zu jedem $v \in H_{2}$, $v \neq 0$, existiert ein $u \in H_{1}$ mit
+        \begin{equation}
+            a(u, v) \neq 0.
+        \end{equation}
+    \end{thmenumerate}
+    Ist dies der Fall und ist weiter ein Funktional $f \in H_{2}'$ gegeben, dann existiert eine eindeutige Lösung $\hat u \in H_{1}$ mit
+    \begin{equation}
+        a(\hat u, v) = f(v) \quad \fa v \in H_{2}
+    \end{equation}
+    und es gilt
+    \begin{equation}
+        \norm{\hat u}_{H_{1}} \leq \frac{1}{\alpha} \norm{f}_{H_{2}'}.
+    \end{equation}
+\end{Satz}
+
+Für das Raum-Zeit-Variationsproblem aus \thref{definition:variationsformulierung} lässt sich die Tatsache, dass es sachgemäß gestellt ist, zu folgendem Satz zusammenfassen.
 
 \begin{Satz}[{{\cite[Theorem 5.1]{Schwab:2009ec}}}]
 \label{thm:schwab09:theorem51}
-    Seien $\mathcal X$ und $\mathcal Y$ gegeben wie in~\eqref{eq:var_all_ansatzraum_x} respektive~\eqref{eq:var_all_testraum_y} und sei $B \colon \mathcal X \to \mathcal Y'$ definiert durch
+    Seien $\mathcal X$ und $\mathcal Y$ wie in~\eqref{eq:var_all_ansatzraum_x} respektive~\eqref{eq:var_all_testraum_y}.
+    Sei weiter $B \colon \mathcal X \to \mathcal Y'$ definiert durch
     \begin{equation}
         \label{eq:var_all_gross_b}
         \skprod{B u}{v}_{\mathcal Y' \times \mathcal Y} = b(u, v), \quad u \in \mathcal X,~v \in \mathcal Y,
     \end{equation}
-    mit $b(\blank, \blank)$ wie in~\eqref{eq:var_all_bf_b}.
+    wobei $b$ die Bilinearform aus~\eqref{eq:var_all_bf_b} sei.
     Dann ist $B$ stetig invertierbar.
-    Ferner gilt
-    \begin{equation}
-        \label{eq:var_all_norm_B}
-        \norm{B}_{\mathcal L(\mathcal X, \mathcal Y')} \leq \frac{\sqrt{2\max\Set{1, M_{a}^{2}} + M_{e}^{2}}}{\max\Set{\sqrt{1 + 2 \lambda^{2} \rho^{4}}, \sqrt{2}}}
-    \end{equation}
-    sowie
-    \begin{equation}
-        \label{eq:var_all_norm_B_inv}
-        \norm{B^{-1}}_{\mathcal L(\mathcal Y', \mathcal X)} \leq \frac{e^{2 \lambda T} \max\Set{\sqrt{1 + 2 \lambda^{2} \rho^{4}}, \sqrt{2}} \sqrt{2 \max\Set{ \alpha^{-2}, 1} + M_{e}^{2}}}{\min\Set{\alpha M_{a}^{-2}, \alpha}}.
-    \end{equation}
 
     \begin{Beweis}
-        Siehe~\cite[Appendix A]{Schwab:2009ec}.
+        Ein ausführlicher Beweis in dem die Bedingungen des Banach-Ne\v{c}as-Babu\v{s}ka-Theorems nachgewiesen werden, ist bei \textcite[Appendix A]{Schwab:2009ec} zu finden.
         % \begin{Beweis}
         %     Wir weisen die Bedingungen von \thref{satz:babuska-aziz} nach.
 
-        %     Zunächst sei anzumerken, dass wir in \eqref{eq:garding-inequality} ohne Einschränkung $\lambda = 0$ wählen können.
+        %     Zunächst sei anzumerken, dass wir in~\eqref{eq:garding-inequality} ohne Einschränkung $\lambda = 0$ wählen können.
         %     Wähle
         %     \begin{equation}
         %         u(t) = \hat u(t) e^{\lambda t}, \quad v_{1}(t) = \hat v_{1}(t) e^{- \lambda t}, \quad g(t) = \hat g(t) e^{\lambda t},
         %     \end{equation}
-        %     dann sieht man, dass $u$ die Gleichung \eqref{eq:bilinearform} genau dann löst, wenn $\hat u$ die Gleichung
+        %     dann sieht man, dass $u$ die Gleichung~\eqref{eq:bilinearform} genau dann löst, wenn $\hat u$ die Gleichung
         %     \begin{equation}
         %         \label{eq:bilinearform_tmp}
         %         \begin{gathered}
@@ -325,7 +378,7 @@ Folgender Satz fasst das Ganze zusammen:
         %         &\qquad
         %         = \sqrt{2 \max\{1, M_{a}^{2}\}} \norm{u}_{\mathcal X} \norm{v_{1}}_{L_{2}(I; V)}
         %     \end{align}
-        %     Zusammen mit \eqref{eq:stetigkeit_zweiter_term} liefert dies nach einer erneuten Anwendung der Cauchy-Schwarz-Ungleichung
+        %     Zusammen mit~\eqref{eq:stetigkeit_zweiter_term} liefert dies nach einer erneuten Anwendung der Cauchy-Schwarz-Ungleichung
         %     \begin{align}
         %     \abs{b(u, v)}
         %     &\leq \sqrt{2 \max\{1, M_{a}\}^{2}} \norm{u}_{\mathcal X} \norm{v_{1}}_{L_{2}(I; V)} + M_{e} \norm{u}_{X} \norm{v_{2}}_{H}
@@ -344,21 +397,35 @@ Folgender Satz fasst das Ganze zusammen:
     \end{Beweis}
 \end{Satz}
 
-Die Größen $M_{a}$, $\alpha$ und $\lambda$ stammen aus \thref{annahme:eigenschaften_bf_a},
-während die Konstanten $M_{e}$ und $\rho$ als die Einbettungskonstanten
-% TODO: genauer?
-\begin{equation}
-    \label{eq:var_all_M_e}
-    M_{e} = \sup_{0 \neq u \in \mathcal X} \frac{\norm{u(0)}_{H}}{\norm{u}_{\mathcal X}}
-\end{equation}
-beziehungsweise
-\begin{equation}
-    \label{eq:var_all_rho}
-    \rho = \sup_{0 \neq \eta \in V} \frac{\norm{\eta}_{H}}{\norm{\eta}_{V}}
-\end{equation}
-definiert sind.
-Nach \thref{korollar:gl:einbettungskonst_M_e} ist $M_{e}$ gleichmäßig beschränkt in der Wahl von $V \hookrightarrow H$ und nur im Fall $T \to 0$ von $T$ abhängig.
+Aus dem Beweis des vorherigen Satzes ergeben sich zugleich auch Abschätzungen für die Operatornormen von $B$ und $B^{-1}$.
 
+% TODO: Ungleichung der stetigen Abhängigkeit einbauen
+\begin{Korollar}
+    Unter den Gegebenheiten aus \thref{thm:schwab09:theorem51} gilt ferner
+    \begin{equation}
+        \label{eq:var_all_norm_B}
+        \norm{B}_{\mathcal L(\mathcal X, \mathcal Y')} \leq \frac{\sqrt{2\max\Set{1, M_{a}^{2}} + M_{e}^{2}}}{\max\Set{\sqrt{1 + 2 \lambda^{2} \rho^{4}}, \sqrt{2}}}
+    \end{equation}
+    und
+    \begin{equation}
+        \label{eq:var_all_norm_B_inv}
+        \norm{B^{-1}}_{\mathcal L(\mathcal Y', \mathcal X)} \leq \frac{e^{2 \lambda T} \max\Set{\sqrt{1 + 2 \lambda^{2} \rho^{4}}, \sqrt{2}} \sqrt{2 \max\Set{ \alpha^{-2}, 1} + M_{e}^{2}}}{\min\Set{\alpha M_{a}^{-2}, \alpha}}.
+    \end{equation}
+    Die Größen $M_{a}$, $\alpha$ und $\lambda$ stammen aus \thref{annahme:eigenschaften_bf_a},
+    während die Konstanten $M_{e}$ und $\rho$ als die Einbettungskonstanten
+    % TODO: genauer?
+    \begin{equation}
+        \label{eq:var_all_M_e}
+        M_{e} = \sup_{0 \neq u \in \mathcal X} \frac{\norm{u(0)}_{H}}{\norm{u}_{\mathcal X}},
+    \end{equation}
+    vergleiche \thref{korollar:gl:einbettungskonstante_M_e}, beziehungsweise
+    \begin{equation}
+        \label{eq:var_all_rho}
+        \rho = \sup_{0 \neq \eta \in V} \frac{\norm{\eta}_{H}}{\norm{\eta}_{V}}
+    \end{equation}
+    definiert sind.
+    % Nach \thref{korollar:gl:einbettungskonst_M_e} ist $M_{e}$ gleichmäßig beschränkt in der Wahl von $V \hookrightarrow H$ und nur im Fall $T \to 0$ von $T$ abhängig.
+\end{Korollar}
 % subsection existenz_und_eindeutigkeit_von_l_sungen (end)
 
 
