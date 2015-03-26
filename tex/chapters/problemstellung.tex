@@ -2,11 +2,29 @@
 
 \chapter{Überschrift in Arbeit}
 
-In diesem Kapitel führen wir die in \cite{Stasiak:2011ba} motivierte parabolische partielle Differentialgleichung ein und betrachten danach eine parametrisierte Variante dieser.
-Anschließend nutzen wir die Aussagen aus \autoref{cha:einfuehrung} um die Eigenschaften dieses Problems zu diskutieren.
+% TODO: Originalquelle?
+In diesem Kapitel führen wir die durch die Arbeit von \textcite{Stasiak:2011ba} motivierte parabolische partielle Differentialgleichung ein und motivieren eine parametrische Variante dieser.
+Anschließend beziehen wir die Ergebnisse aus den ersten beiden Kapiteln auf das gewonnene Problem.
+
+\section{Motivation aus der Polymerchemie} % (fold)
+\label{sec:motivation}
+
+\blindtext
+
+\blindtext
+
+% section motivation (end)
 
 \section{Problemstellung} % (fold)
 \label{sub:problemstellung}
+
+Wie im vorherigen Abschnitt bereits diskutiert, betrachten wir die parabolische partielle Differentialgleichung
+\begin{equation}
+    \begin{cases}
+        u_{t}(t, x) = c \Delta u(t, x) - \omega(x) u(t, x) &\\
+        u(0, x) = u_0(x) &
+    \end{cases}
+\end{equation}
 
 Es sei $0 < T < \infty$ und $I = [0, T]$.
 Weiter sei $\Omega \subset \mathbb{R}^{n}$ eine beschränkte Teilmenge des $\mathbb{R}^{n}$ mit Lipschitz-Rand.
@@ -324,10 +342,10 @@ Wir wollen nun die Regularität von $\omega(\blank; \sigma)$ in Abhängigkeit vo
 \label{satz:regularitaet_nachrechnen}
     Seien $\epsilon > 0$ und $0 < \kappa < 1$ so gewählt, dass
     \begin{equation}
-        \zeta(2 + \epsilon) \leq (\kappa c \pi^{2} - K) \frac{\pi^{2+\epsilon}}{4K}
+        \zeta(2 + \epsilon) \leq (\kappa c \pi^{2} - K) \frac{\pi^{2+\epsilon}}{4K C_{\infty}}
     \end{equation}
     gilt,
-    wobei $\zeta$ die Riemannsche-$\zeta$-Funktion, $c$ und $K$ die Konstanten aus \eqref{eq:def_op_A} respektive \eqref{eq:sinusfunktionen_ansatz} sind.
+    wobei $\zeta$ die Riemannsche-$\zeta$-Funktion, $c$ und $K$ die Konstanten aus \eqref{eq:def_op_A} respektive \eqref{eq:sinusfunktionen_ansatz} und $C_{\infty}$ die Einbettungskonstante von $H^{1}_{0}(\Omega) \hookrightarrow L_{\infty}(\Omega)$ sind.
     Dann erfüllt $\Set{\hat A} \cup \Set{ A_{j} }_{j \geq 0}$ \thref{thm:kunoth:assumption2}.
 
     \begin{Beweis}
@@ -377,42 +395,44 @@ Wir wollen nun die Regularität von $\omega(\blank; \sigma)$ in Abhängigkeit vo
             \intertext{woraus wir mittels partieller Integration folgenden Ausdruck erhalten}
             a_{j}(u, v)
             &= - \int_{I} \left( \int_{0}^{x} \varphi_{j}(y) \diff y \right) (u v)' \diff x
-            \leq \norm{\left( \int_{0}^{x} \varphi_{j}(y) \diff y \right) (u v)'}_{L_{1}(\Omega)}.
-            \\&\leq \norm{\int_{0}^{x} \varphi_{j}(y) \diff y }_{L_{\infty}(\Omega)} \norm{(uv)'}_{L_{1}(\Omega)}
+            \leq \norm*{\left( \int_{0}^{x} \varphi_{j}(y) \diff y \right) (u v)'}_{L_{1}(\Omega)}.
+            \\&\leq \norm*{\int_{0}^{x} \varphi_{j}(y) \diff y }_{L_{\infty}(\Omega)} \norm{(uv)'}_{L_{1}(\Omega)}
         \end{align}
         Die erste Norm können wir weiter abschätzen mit
         \begin{equation}
             \begin{aligned}
-                \norm{\int_{0}^{x} \varphi_{j}(y) \diff y }_{L_{\infty}(\Omega)}
-                &= \frac{K}{(\pi j)^{1+\epsilon}} \norm{\int_{0}^{x} \sin(\pi j y) \diff y }_{L_{\infty}(\Omega)}
+                \norm*{\int_{0}^{x} \varphi_{j}(y) \diff y }_{L_{\infty}(\Omega)}
+                &= \frac{K}{(\pi j)^{1+\epsilon}} \norm*{\int_{0}^{x} \sin(\pi j y) \diff y }_{L_{\infty}(\Omega)}
                 \\&= \frac{K}{(\pi j)^{2+\epsilon}} \norm{ \cos(\pi j x) - 1 }_{L_{\infty}(\Omega)}
                 \leq \frac{2 K}{(\pi j)^{2+\epsilon}}.
             \end{aligned}
         \end{equation}
-        Aus der zweiten Norm erhalten wir mittels Minkowski- und Hölderungleichung die Abschätzung
+        Aus der zweiten Norm erhalten wir mittels Minkowski- und Hölderungleichung sowie der Einbettung $H^{1}_{0}(\Omega) \hookrightarrow L_{\infty}(\Omega)$ die Abschätzung
         \begin{equation}
             \begin{aligned}
                 \norm{(uv)'}_{L_{1}(\Omega)}
                 &= \norm{u'v + uv'}_{L_{1}(\Omega)}
                 \leq \norm{u'v}_{L_{1}(\Omega)} + \norm{uv'}_{L_{1}(\Omega)}
-                \\&\leq \norm{u'}_{L_{2}(\Omega)} \norm{v}_{L_{2}(\Omega)} + \norm{u}_{L_{2}(\Omega)} \norm{v'}_{L_{2}(\Omega)}
-                \\&\leq 2 \norm{u}_{H^{1}(\Omega)} \norm{v}_{H^{1}(\Omega)}
+                \\&\leq \norm{u'}_{L_{1}(\Omega)} \norm{v}_{L_{\infty}(\Omega)} + \norm{u}_{L_{\infty}(\Omega)} \norm{v'}_{L_{1}(\Omega)}
+                \\&\leq \norm{1}_{L_{2}(\Omega)} \norm{u'}_{L_{2}(\Omega)} \norm{v}_{L_{\infty}(\Omega)} + \norm{u}_{L_{\infty}(\Omega)} \norm{1}_{L_{2}(\Omega)} \norm{v'}_{L_{2}(\Omega)}
+                \\&\leq C_{\infty} \norm{u'}_{L_{2}(\Omega)} \norm{v}_{H^{1}(\Omega)} + C_{\infty} \norm{u}_{H^{1}(\Omega)} \norm{v'}_{L_{2}(\Omega)}
+                % \\&\leq \norm{u'}_{L_{2}(\Omega)} \norm{v}_{L_{2}(\Omega)} + \norm{u}_{L_{2}(\Omega)} \norm{v'}_{L_{2}(\Omega)}
+                \\&\leq 2 C_{\infty} \norm{u}_{H^{1}(\Omega)} \norm{v}_{H^{1}(\Omega)}
             \end{aligned}
         \end{equation}
         Zusammen also
         \begin{equation}
             a_{j}(u, v)
-            \leq \norm{\int_{0}^{x} \varphi_{j}(y) \diff y }_{L_{\infty}(\Omega)} \norm{(uv)'}_{L_{1}(\Omega)}
-            \leq \frac{4 K}{(\pi j)^{2 + \epsilon}} \norm{u}_{H^{1}(\Omega)} \norm{v}_{H^{1}(\Omega)}.
+            \leq \norm*{\int_{0}^{x} \varphi_{j}(y) \diff y }_{L_{\infty}(\Omega)} \norm{(uv)'}_{L_{1}(\Omega)}
+            \leq \frac{4 K C_{\infty}}{(\pi j)^{2 + \epsilon}} \norm{u}_{H^{1}(\Omega)} \norm{v}_{H^{1}(\Omega)}.
         \end{equation}
-
         Betrachte nun
         \begin{align}
                     \sum_{j = 0}^{\infty} \norm{A_{j}}_{\mathcal L(V, V')}
             &= \norm{A_{0}}_{\mathcal L(V, V')} + \sum_{j = 1}^{\infty} \norm{A_{j}}_{\mathcal L(V, V')}
-            \leq K + \sum_{j = 1}^{\infty} \frac{4 K}{(\pi j)^{2 + \epsilon}}
-            \\&\leq K + \frac{4 K}{\pi^{2 + \epsilon}} \sum_{j = 1}^{\infty} \frac{1}{j^{2 + \epsilon}}
-            = K + \frac{4 K}{\pi^{2 + \epsilon}} \zeta(2 + \epsilon)
+            \leq K + \sum_{j = 1}^{\infty} \frac{4 K  C_{\infty}}{(\pi j)^{2 + \epsilon}}
+            \\&\leq K + \frac{4 K  C_{\infty}}{\pi^{2 + \epsilon}} \sum_{j = 1}^{\infty} \frac{1}{j^{2 + \epsilon}}
+            = K + \frac{4 K  C_{\infty}}{\pi^{2 + \epsilon}} \zeta(2 + \epsilon)
             % \leq    \sum_{j = 0}^{\infty} \norm{\varphi_{j}}_{L_{\infty}(\Omega)}
             % =       a_{0} + \frac{1}{\pi^{1+\epsilon}} \sum_{j = 1}^{\infty} \frac{1}{j^{1+\epsilon}}
             % = a_{0} + \frac{\zeta(1+\epsilon)}{\pi^{1+\epsilon}}.
@@ -423,7 +443,7 @@ Wir wollen nun die Regularität von $\omega(\blank; \sigma)$ in Abhängigkeit vo
         \end{equation}
         für ein $0 < \kappa < 1$ ist damit also
         \begin{equation}
-            \zeta(2 + \epsilon) \leq (\kappa c \pi^{2} - K) \frac{\pi^{2+\epsilon}}{4K}
+            \zeta(2 + \epsilon) \leq (\kappa c \pi^{2} - K) \frac{\pi^{2+\epsilon}}{4K  C_{\infty}}
         \end{equation}
         mit $\epsilon > 0$ hinreichend.
     \end{Beweis}

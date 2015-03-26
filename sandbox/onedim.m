@@ -1,6 +1,6 @@
 % Numerische Lösung mittels Linienmethode / Finite Differenzen für den
 % eindimensionalen Fall mit reellwertigem Parameter \omega.
-function [output] = onedim(N_Sigmas, plot_all)
+function [T_mesh,X_mesh_pad, upad] = onedim(N_Sigmas, plot_all)
 if nargin == 0
     N_Sigmas = 3;
     plot_all = 0;
@@ -34,9 +34,12 @@ sigma = 1;
     end
 
 % Anfangsbedingung
-    function u = u_0(x)
-        u = sin(pi*x);
-    end
+%     function u = u_0(x)
+%         u = sin(pi*x);
+%     end
+
+u_0 = @(x) -(x) .* (x-1) .* (x+3);
+
 
 % Reaktionsterm in Reihe entwicklen
 factor = 1;
@@ -46,8 +49,13 @@ for j = 1:N_Sigmas
 end
 Sigmas = factor * (rand(N_Sigmas, 1) - 0.5);
 
-Sigmas = zeros(N_Sigmas, 1);
-Sigmas(1) = 1;
+
+N_sigmas = 5;
+% sigmas = c_R * (rand(N_sigmas + 1, 1) - 0.5);
+Sigmas = (ones(N_sigmas + 1, 1) - 0.5) ./ ((N_sigmas + 1):-1:1)';
+
+% Sigmas = zeros(N_Sigmas, 1);
+% Sigmas(1) = 1;
 
 w = generate_w(N_Sigmas, Sigmas);
 % plot(x_grid, w(x_grid));
@@ -55,7 +63,7 @@ w = generate_w(N_Sigmas, Sigmas);
 
 % Quellterm
     function y = g(t, x)
-        y = ones(size(t, 1), size(t, 2));
+        y = zeros(size(t, 1), size(t, 2));
     end
 
 % "exakte" Lösung

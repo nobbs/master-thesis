@@ -11,7 +11,7 @@ for ii = 1:length(Nspan)
     ii
     tic;
     t_plot = 0;
-    start;
+    B = start(num_M, num_Q);
     
     density(ii) = nnz(B) / numel(B);
     s = svds(B, length(B));

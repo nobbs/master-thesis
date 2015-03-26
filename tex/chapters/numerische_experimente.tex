@@ -3,53 +3,6 @@
 \chapter{Numerische Experimente} % (fold)
 \label{cha:numerische_experimente}
 
-\section{Grundlagen zum Galerkin-Verfahren} % (fold)
-\label{sec:grundlagen_zum_galerkin_verfahren}
-
-Wir wollen zunächst in Grundzügen das bekannte Galerkin-Verfahren wiederholen.
-Seien dazu $U$ und $V$ zwei Hilberträume.
-Betrachte das folgende abstrakte Variationsproblem:
-\begin{Problem}
-    Finde ein $u \in U$, so dass
-    \begin{equation}
-        a(u, v) = f(v) \quad \fa v \in V
-    \end{equation}
-    gilt.
-\end{Problem}
-Dabei sei $a(\blank, \blank) \colon U \times V \to \mathbb{R}$ eine Bilinearform und $f(\blank) \colon V \to \mathbb{R}$ ein lineares Funktional.
-Unter gewissen Voraussetzungen an $a(\blank, \blank)$, auf die wir in dieser Wiederholung nicht genauer eingehen, existiert eine eindeutige Lösung $u \in U$ zu diesem Variationsproblem.
-
-Da es sich bei $U$ und $V$ im Allgemeinen um Funktionenräume, damit insbesondere also um unendlichdimensionale Hilberträume, handelt, ist die Idee des Galerkin-Verfahrens nun, die beiden Räume jeweils durch endlichdimensionale Unterräume $U_{n} \subset U$ und $V_{m} \subset V$ zu approximieren.
-Statt dem eigentlichen Variationsproblem betrachtet man die sogenannte Galerkin-Projektion:
-\begin{Problem}
-    Finde ein $u_{n} \in U_{n}$, so dass
-    \begin{equation}
-        a(u_{n}, v_{m}) = f(v_{m}) \quad \fa v_{m} \in V_{m}
-    \end{equation}
-    gilt.
-\end{Problem}
-
-Die endlichdimensionalen Unterräume werden als Spann von endlich vielen Basisfunktionen
-\begin{equation}
-    U_{n} = \spn\Set{\varphi_{i} \given i = 1 \dots n},
-    \qquad
-    V_{m} = \spn\Set{ \psi_{j} \given j = 1 \dots m}
-\end{equation}
-konstruiert.
-Diese Eigenschaft lässt sich ausnutzen, denn dadurch wird es uns ermöglicht eine Lösung der Galerkin-Projektion durch das Aufstellen und Lösen eines linearen Gleichungssystems zu bestimmen.
-Dazu benötigt man die sogenannte Steifigkeitsmatrix $\mat A \in \mathbb{R}^{m \times n}$, welche durch
-\begin{equation}
-    \mat A_{ji} = a(\varphi_{i}, \psi_{j}), \quad i = 1 \dots n, j = 1 \dots m,
-\end{equation}
-definiert ist, und den Lastvektor $\vec f \in \mathbb{R}^{m}$, gegeben durch
-\begin{equation}
-    \vec f_{j} = f(\psi_{j}), \quad j = 1 \dots m.
-\end{equation}
-Löst man nun das lineare Gleichungssystem $\mat A \vec u = \vec f$, dann erhält man aus dem Koeffizientenvektor $\vec u$ die Lösung $u_{n} \in U_{n}$ durch
-\begin{equation}
-    u_{n} = \sum_{i = 1}^{n} \vec u_{i} \varphi_{i}.
-\end{equation}
-
 % section grundlagen_zum_galerkin_verfahren (end)
 
 \section{Erste Versuche mit Galerkin-Projektion} % (fold)
@@ -170,6 +123,59 @@ die Näherungslösung $u_{\mathcal N} \in \mathcal X_{\mathcal N}$ des Problems 
 % paragraph erster_versuch (end)
 
 % section erste_versuche_mit_galerkin_projektion (end)
+
+\clearpage
+\begin{figure}[tb]
+    \begin{center}
+        \includegraphics[width=0.9\textwidth]{figures/oned/conds.pdf}
+    \end{center}
+\end{figure}
+
+\begin{figure}[tb]
+    \begin{center}
+        \includegraphics[width=0.9\textwidth]{figures/oned/condest.pdf}
+    \end{center}
+\end{figure}
+
+\begin{figure}[tb]
+    \begin{center}
+        \includegraphics[width=0.9\textwidth]{figures/oned/times.pdf}
+    \end{center}
+\end{figure}
+
+\begin{figure}[tb]
+    \begin{center}
+        \includegraphics[width=0.9\textwidth]{figures/oned/density.pdf}
+    \end{center}
+\end{figure}
+
+\clearpage
+\begin{landscape}
+\thispagestyle{empty}
+\begin{table}[tb]
+    % \begin{center}
+        \hspace{-7em}
+        \begin{tabular}{|l|c|c|c|c|c|c|c|c|c|c|c|c|c|c|} \hline
+           & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 15 & 20 & 25 & 30 \\  \hline
+         1 & 9.09784 & 8.54907 & 7.75467 & 7.69798 & 8.86198 & 10.0584 & 11.1324 & 12.0175 & 12.8546 & 13.5568 & 16.4579 & 18.4241 & 20.2776 & 21.9363 \\ \hline
+         2 & 38.2208 & 37.3662 & 35.2039 & 32.6658 & 33.1234 & 37.5904 & 41.4423 & 44.7317 & 47.6463 & 50.2432 & 60.0249 & 66.1611 & 70.1308 & 72.7527 \\ \hline
+         3 & 87.5332 &  86.601 & 84.0109 & 80.7416 & 77.0524 & 83.8761 &  92.449 & 99.7869 & 106.263 & 112.055 & 133.772 & 147.373 & 156.093 &  161.84 \\ \hline
+         4 & 156.542 & 155.581 &  152.82 & 149.248 & 145.031 & 148.588 & 163.768 & 176.767 & 188.231 &  198.49 &  236.93 & 260.997 & 276.405 & 286.556 \\ \hline
+         5 & 245.341 & 244.366 & 241.521 & 237.801 & 233.316 & 231.839 & 255.522 & 275.803 & 293.687 & 309.694 & 369.657 & 407.197 &  431.22 & 447.047 \\ \hline
+         6 & 353.892 & 352.909 & 350.018 & 346.215 & 341.578 & 336.131 & 367.678 & 396.861 & 422.594 & 445.626 & 531.902 & 585.913 & 620.473 & 643.239 \\ \hline
+         7 & 482.188 & 481.201 & 478.282 & 474.427 & 469.696 & 464.107 & 500.232 & 539.936 & 574.944 &  606.28 & 723.655 & 797.135 & 844.149 &  875.12 \\ \hline
+         8 & 630.227 & 629.237 & 626.299 &  622.41 & 617.618 & 611.934 & 653.181 & 705.025 & 750.737 & 791.654 & 944.914 & 1040.86 & 1102.25 & 1142.68 \\ \hline
+         9 & 798.007 & 797.014 & 794.063 & 790.152 & 785.316 & 779.568 & 826.525 & 892.128 &  949.97 & 1001.75 & 1195.68 & 1317.08 & 1394.76 & 1445.93 \\ \hline
+         10 & 985.526 & 984.533 & 981.572 & 977.644 & 972.778 & 966.982 & 1020.26 & 1101.24 & 1172.64 & 1236.56 & 1475.94 & 1625.81 & 1721.69 & 1784.85 \\ \hline
+         15 & 2219.22 & 2218.22 & 2215.24 & 2211.27 & 2206.33 & 2200.42 & 2294.86 & 2477.01 & 2637.61 & 2781.37 & 3319.82 & 3656.89 & 3872.55 & 4014.61 \\ \hline
+         20 &  3946.4 &  3945.4 & 3942.41 & 3938.43 & 3933.46 & 3927.51 & 4079.31 & 4403.09 & 4688.57 & 4944.11 & 5901.24 & 6500.43 & 6883.77 &  7136.3 \\ \hline
+         25 & 6167.06 & 6166.06 & 6163.07 & 6159.08 &  6154.1 & 6148.13 &  6373.6 & 6879.48 & 7325.51 & 7724.77 & 9220.22 & 10156.4 & 10755.3 & 11149.9 \\ \hline
+         30 &  8881.2 &  8880.2 & 8877.21 & 8873.21 & 8868.23 & 8862.25 & 9177.72 & 9906.18 & 10548.4 & 11123.4 & 13276.8 & 14624.8 & 15487.3 & 16055.4 \\ \hline
+        \end{tabular}
+        \caption{Konditionszahl der Steifigkeitsmatrix $B$. Berechnet anhand der Singulärwerte. Horizontal variiert die Anzahl der Lengdre-Basisfunktionen für die Zeit, vertikal die Anzahl der Sinus-Basisfunktionen für den Raum.}
+    % \end{center}
+\end{table}
+\end{landscape}
 
 \clearpage
 \section{Zu klärende Fragen} % (fold)

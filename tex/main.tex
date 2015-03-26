@@ -6,7 +6,7 @@
   a4paper,
   % 11pt,
   twoside=semi,
-  % oneside,
+  oneside,
   % parskip,
   toc=bibliography,
   toc=listof,
@@ -45,10 +45,10 @@
     % Kapitel
     % \input{chapters/einleitung}
     \input{chapters/grundlagen}
-    \input{chapters/einfuehrung}
+    \input{chapters/parametrisches_problem.tex}
     \input{chapters/problemstellung}
-    % \input{chapters/reduzierte_basis}
-    \input{chapters/numerische_experimente}
+    \input{chapters/reduzierte_basis}
+    % \input{chapters/numerische_experimente}
 
     % \input{temp/onedim}
 
@@ -58,13 +58,16 @@
     \input{chapters/funktionalanalytische_grundlagen}
 
     % Abbildungs-, Tabellen- und Symbolverzeichnis
-    % \listtheorems
-    % \listoffigures
-    % \listoftables
-    \printnomenclature
+    \chapter*{Theoremverzeichnis}
+    \addcontentsline{toc}{chapter}{Theoremverzeichnis}
+    \listtheorems{Satz,Lemma,Definition,Lemma,Annahme,Bemerkung}
+    %
+    \listoffigures
+    \listoftables
+    \printnomenclature{}
 
     % Literaturverzeichnis
-    \bibliography{literature}
+    \printbibliography
 
     % Anhänge
 

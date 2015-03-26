@@ -1,4 +1,4 @@
-function B = start( num_M, num_Q )
+function [B, ufun] = start( num_M, num_Q )
 %% Galerkin-Verfahren für eindimensionale Raum-Zeit-Variationsformulierung.
 % Das Variationsproblem $b(u, v) = f(v)$ mit $u \in \mathcal X$ und $v \in \mathcal Y$ wird durch
 % Galerkin-Projektion auf endlichdimensionale Unterräume $\mathcal X_N$ und $\mathcal Y_N$
@@ -49,7 +49,7 @@ kappa = 99 / 100;
 zeta = 1.65;
 
 % Skalierung des Reaktionsterms
-c_R = 5;
+c_R = 1;
 
 % Koeffizienten des Reaktionsterms
 N_sigmas = 5;
@@ -67,7 +67,8 @@ omega = @(x) omega_sinus(x, 1/100, N_sigmas, sigmas);
 % return;
 
 % Anfangsbedingung $u0$ festlegen.
-u0 = @(x) sin(pi*x);
+% u0 = @(x) 1 / 2 * sin(pi*x);
+u0 = @(x) -(x) .* (x-1) .* (x+3);
 
 % Und den Quellterm $g$ ebenfalls festlegen.
 g = @(t, x) 0 + 0 .* t + 0 .* x;
