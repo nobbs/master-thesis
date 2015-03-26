@@ -4,7 +4,7 @@
 \label{cha:grundlagen}
 
 In diesem ersten Kapitel werden die für diese Arbeit benötigten Grundlagen aus der Funktionalanalysis und der Numerik zusammengefasst und wiederholt.
-Wir orientieren uns dabei maßgeblich an \textcite{Dautray:1992by,Lions:1972tg}.
+Wir orientieren uns in den ersten beiden, funktionalanalytischen Abschnitten maßgeblich an \textcite{Dautray:1992by,Lions:1972tg}, während für die nachfolgenden Abschnitte [Quelle].
 
 \section{Bochner-Räume} % (fold)
 \label{sec:bochner_r_ume}
@@ -230,6 +230,7 @@ Dazu werden geeignete Ansatz- und Testfunktionenräume benötigt.
 Hier kommen nun die in \autoref{sec:bochner_r_ume} definierten Bochner-Räume zum Einsatz.
 
 \begin{Definition}
+\label{definition:gl:ansatz_und_testraum}
     Als Ansatzfunktionenraum $\mathcal X$ bezeichnen wir den Raum $W(0, T; V, V')$ aus \thref{definition:gl:bochner_raum_W}.
     Es ist also
     \begin{equation}
@@ -264,8 +265,9 @@ Dadurch ergibt sich folgende schwache Formulierung der linearen Evolutionsgleich
 \begin{Definition}
 \label{definition:variationsformulierung}
     Seien $\mathcal X$ und $\mathcal Y$ wie in~\eqref{eq:var_all_ansatzraum_x} respektive~\eqref{eq:var_all_testraum_y}.
-    Weiter sei ein Quellterm $g \in L_{2}(0, T; V')$ und ein Anfangswert $u_{0} \in H$ gegeben.
-    Als \emph{Raum-Zeit-Variationsfor"-mu"-lie"-rung} der linearen Evolutionsgleichung~\eqref{eq:allgemeine_parabolische_pde} bezeichnen wir das folgende Problem:
+    Als \emph{Raum-Zeit-Variations"-for"-mu"-lie"-rung} der linearen Evolutionsgleichung~\eqref{eq:allgemeine_parabolische_pde} bezeichnen wir das folgende Problem:
+
+    Gegeben ein Quellterm $g \in L_{2}(0, T; V')$ und ein Anfangswert $u_{0} \in H$.
     Finde ein $u \in \mathcal X$ mit
     \begin{equation}
         \label{eq:var_all_problem}
@@ -440,6 +442,55 @@ Aus dem Beweis des vorherigen Satzes ergeben sich zugleich auch Abschätzungen f
 \end{Korollar}
 
 % section lineare_evolutionsgleichungen (end)
+
+\section{Galerkin-Verfahren} % (fold)
+\label{sec:galerkin_verfahren}
+
+Wir wollen zunächst in Grundzügen das bekannte Galerkin-Verfahren wiederholen.
+Seien dazu $U$ und $V$ zwei Hilberträume.
+Betrachte das folgende abstrakte Variationsproblem:
+\begin{Problem}
+    Finde ein $u \in U$, so dass
+    \begin{equation}
+        a(u, v) = f(v) \quad \fa v \in V
+    \end{equation}
+    gilt.
+\end{Problem}
+Dabei sei $a(\blank, \blank) \colon U \times V \to \mathbb{R}$ eine Bilinearform und $f(\blank) \colon V \to \mathbb{R}$ ein lineares Funktional.
+Unter gewissen Voraussetzungen an $a(\blank, \blank)$, auf die wir in dieser Wiederholung nicht genauer eingehen, existiert eine eindeutige Lösung $u \in U$ zu diesem Variationsproblem.
+
+Da es sich bei $U$ und $V$ im Allgemeinen um Funktionenräume, damit insbesondere also um unendlichdimensionale Hilberträume, handelt, ist die Idee des Galerkin-Verfahrens nun, die beiden Räume jeweils durch endlichdimensionale Unterräume $U_{n} \subset U$ und $V_{m} \subset V$ zu approximieren.
+Statt dem eigentlichen Variationsproblem betrachtet man die sogenannte Galerkin-Projektion:
+\begin{Problem}
+    Finde ein $u_{n} \in U_{n}$, so dass
+    \begin{equation}
+        a(u_{n}, v_{m}) = f(v_{m}) \quad \fa v_{m} \in V_{m}
+    \end{equation}
+    gilt.
+\end{Problem}
+
+Die endlichdimensionalen Unterräume werden als Spann von endlich vielen Basisfunktionen
+\begin{equation}
+    U_{n} = \spn\Set{\varphi_{i} \given i = 1 \dots n},
+    \qquad
+    V_{m} = \spn\Set{ \psi_{j} \given j = 1 \dots m}
+\end{equation}
+konstruiert.
+Diese Eigenschaft lässt sich ausnutzen, denn dadurch wird es uns ermöglicht eine Lösung der Galerkin-Projektion durch das Aufstellen und Lösen eines linearen Gleichungssystems zu bestimmen.
+Dazu benötigt man die sogenannte Steifigkeitsmatrix $\mat A \in \mathbb{R}^{m \times n}$, welche durch
+\begin{equation}
+    \mat A_{ji} = a(\varphi_{i}, \psi_{j}), \quad i = 1 \dots n, j = 1 \dots m,
+\end{equation}
+definiert ist, und den Lastvektor $\vec f \in \mathbb{R}^{m}$, gegeben durch
+\begin{equation}
+    \vec f_{j} = f(\psi_{j}), \quad j = 1 \dots m.
+\end{equation}
+Löst man nun das lineare Gleichungssystem $\mat A \vec u = \vec f$, dann erhält man aus dem Koeffizientenvektor $\vec u$ die Lösung $u_{n} \in U_{n}$ durch
+\begin{equation}
+    u_{n} = \sum_{i = 1}^{n} \vec u_{i} \varphi_{i}.
+\end{equation}
+
+% section galerkin_verfahren (end)
 
 % chapter grundlagen (end)
 

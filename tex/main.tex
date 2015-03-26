@@ -5,7 +5,7 @@
   % final,
   a4paper,
   % 11pt,
-  % twoside=semi,
+  twoside=semi,
   oneside,
   % parskip,
   toc=bibliography,
@@ -46,9 +46,8 @@
     % \input{chapters/einleitung}
     \input{chapters/grundlagen}
     \input{chapters/parametrisches_problem.tex}
-    % \input{chapters/einfuehrung}
     \input{chapters/problemstellung}
-    % \input{chapters/reduzierte_basis}
+    \input{chapters/reduzierte_basis}
     % \input{chapters/numerische_experimente}
 
     % \input{temp/onedim}
@@ -61,11 +60,11 @@
     % Abbildungs-, Tabellen- und Symbolverzeichnis
     \chapter*{Theoremverzeichnis}
     \addcontentsline{toc}{chapter}{Theoremverzeichnis}
-    \listtheorems{Satz,Lemma,Definition,Lemma,Annahme}
-
-    % \listoffigures
-    % \listoftables
-    \printnomenclature
+    \listtheorems{Satz,Lemma,Definition,Lemma,Annahme,Bemerkung}
+    %
+    \listoffigures
+    \listoftables
+    \printnomenclature{}
 
     % Literaturverzeichnis
     \printbibliography

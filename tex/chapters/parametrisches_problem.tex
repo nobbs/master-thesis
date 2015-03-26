@@ -8,7 +8,7 @@
 In diesem Kapitel liegt das Augenmerk erneut auf der linearen Evolutionsgleichung \eqref{eq:allgemeine_parabolische_pde}, diesmal aber mit der Erweiterung, dass der lineare Operator $A(t)$ zusätzlich von einem Parameter $\sigma$ abhängt.
 
 Zunächst konkretisieren wir diese Parameterabhängigkeit für einen linearen Operator $A$, betrachten dann eine parametrische lineare Operatorgleichung, leiten Regularitätsergebnisse für diese her und übertragen diese anschließend auf die Raum-Zeit-Variationsformulierung einer parametrischen linearen Evolutionsgleichung.
-Dabei orientieren wir uns hauptsächlich an den Arbeiten von \textcite{Kunoth:2013ef,Cohen:2015vp}.
+Dabei orientieren wir uns hauptsächlich an den Arbeiten von \textcite{Kunoth:2013ef,Cohen:2010kz}.
 
 \section{Parametrische Operatorgleichung} % (fold)
 \label{sec:parametrische_operatorgleichung}
@@ -177,67 +177,99 @@ Weiter erhält man unter den Bedingungen aus \thref{thm:kunoth:assumption1} folg
 \section{Parametrische lineare Evolutionsgleichung} % (fold)
 \label{sec:parametrische_lineare_evolutionsgleichung}
 
-Aus diesen Ergebnissen erhalten wir nun die gewünschten Aussagen für die parametrische Variante von~\eqref{eq:allgemeine_parabolische_pde}, diese müssen wir aber nun zunächst konkretisieren.
-Wir arbeiten nun wieder im Setting aus \autoref{sec:allgemeine_problemstellung}.
+Dieser Abschnitt soll nun dazu dienen, aufbauend auf \autoref{sec:lineare_evolutionsgleichungen} eine parametrische lineare Evolutionsgleichung zu definieren und anschließend die Regularitätsergebnisse aus dem vorherigen Abschnitt auf diese zu übertragen.
 
-Für $\sigma \in \mathcal S$ sei $A(\sigma) \in \mathcal L(V, V')$ ein stetiger linearer Operator und $a(\blank, \blank; \sigma) \colon V \times V \to \mathbb{R}$ die zugehörige Bilinearform, also $a(\eta, \zeta; \sigma) = \skprod{A(\sigma) \eta}{\zeta}_{V' \times V}$ für $\eta, \zeta \in V$.
-Die Bilinearform $a(\blank, \blank; \sigma)$ erfülle \thref{annahme:eigenschaften_bf_a} gleichmäßig in $\sigma$, sie sei also stetig und erfülle eine G\r{a}rding-Ungleichung, das heißt es existieren von $\sigma$ unabhängige Konstanten $0 < M_{a} < \infty$, $\alpha > 0$ und $\lambda \geq 0$ mit
+Wir wiederholen kurz das Setting aus \autoref{sec:lineare_evolutionsgleichungen}, in dem wir hier erneut arbeiten.
+Seien $V$ und $H$ separable Hilberträume mit einer dichten stetigen Einbettung von $V$ in $H$ und $(V, H, V')$ sei das zugehörige Gelfand-Tripel.
+Weiter seien ein $0 < T < \infty$ und ein endliches Zeitintervall $[0, T]$ gegeben.
+
+Wir bezeichnen $\mathcal S = [-1, 1]^{\mathbb{N}}$ weiterhin als Parameterraum.
+Es sei für fast alle $t \in [0, T]$ und für alle $\sigma \in \mathcal S$ eine Familie von Bilinearformen
 \begin{equation}
-    \label{eq:allgemeine_parabolische_pde:bf_stetig_parametrisch}
-    \abs{a(\eta, \zeta; \sigma)} \leq M_{a} \norm{\eta}_{V} \norm{\zeta}_{V} \quad \fa \eta, \zeta \in V
+    a(\blank, \blank; \sigma, t) \colon V \times V \to \mathbb{R}, \quad (\eta, \zeta) \mapsto a(\eta, \zeta; \sigma, t)
 \end{equation}
-und
+gegeben, so dass $t \mapsto a(\eta, \zeta; \sigma, t)$ für alle $\sigma \in \mathcal S$ messbar auf $[0, T]$ ist.
+Analog zu \thref{annahme:eigenschaften_bf_a} fordern wir diesmal für den Rest dieses Abschnitts:
+\begin{Annahme}
+\label{annahme:pp:eigenschaften_bf_a}
+    \leavevmode
+    \begin{thmenumerate}
+        \item \emph{Stetigkeit.}
+        Es existiert eine Konstante $0 < M_{a} < \infty$, so dass
+        \begin{equation}
+            \label{eq:allgemeine_parabolische_pde:bf_stetig}
+            \abs{a(\eta, \zeta; \sigma, t)} \leq M_{a} \norm{\eta}_{V} \norm{\zeta}_{V} \quad \fa \eta, \zeta \in V
+        \end{equation}
+        für fast alle $t \in [0, T]$ und alle $\sigma \in \mathcal S$ gilt.
+        \item \emph{G\r{a}rding-Ungleichung}.
+        Es existieren Konstanten $\alpha > 0$ und $\lambda \geq 0$ mit
+        \begin{equation}
+            \label{eq:allgemeine_parabolische_pde:bf_garding}
+            a(\eta, \eta; \sigma, t) + \lambda \norm{\eta}_{H}^{2} \geq \alpha \norm{\eta}_{V}^{2} \quad \fa \eta \in V
+        \end{equation}
+        für fast alle $t \in [0, T]$ und alle $\sigma \in \mathcal S$.
+    \end{thmenumerate}
+\end{Annahme}
+
+Unter diesen Voraussetzungen existiert nach dem Rieszschen Darstellungssatz für jedes $\sigma \in \mathcal S$ und fast alle $t \in [0, T]$ ein stetiger linearer Operator $A(\sigma, t) \in \mathcal L(V, V')$ und es gilt für alle $\sigma \in \mathcal S$ die Gleichheit
 \begin{equation}
-    \label{eq:allgemeine_parabolische_pde:bf_garding_parametrisch}
-    a(\eta, \eta; \sigma) + \lambda \norm{\eta}_{H}^{2} \geq \alpha \norm{\eta}_{V}^{2} \quad \fa \eta \in V.
+    \skprod{A(\sigma, t) \eta}{\zeta} = a(\eta, \zeta; \sigma, t) \quad \eta, \zeta \in V.
 \end{equation}
 
-Analog zu der Herleitung in \autoref{sec:raum_zeit_variationsformulierung} erhalten wir das parametrische Variationsproblem:
+Vollkommen analog zur Herleitung der Raum-Zeit-Variationsformulierung in \autoref{sec:raum_zeit_variationsformulierung} erhalten wir damit das folgende parametrische Raum-Zeit-Variationsproblem:
 
-Gegeben ein $g \in L_{2}(I; V')$ und $u_{0} \in H$. Finde für alle $\sigma \in \mathcal S$ ein $u(\sigma) \in \mathcal X$ mit
-\begin{equation}
-    \label{eq:var_all_problem_parametrisch}
-    b(u(\sigma), v; \sigma) = f(v) \quad \fa v \in \mathcal Y,
-\end{equation}
-wobei $f$ von $g$ und $u_{0}$ abhängt.
-Dabei ist $b(\blank, \blank; \sigma) \colon \mathcal X \times \mathcal Y \to \mathbb{R}$ eine Bilinearform definiert durch
-\begin{equation}
-    \label{eq:var_all_bf_b_parametrisch}
-    b(u, v; \sigma) = \int_{I} \skprod{u_{t}(t)}{v_{1}(t)}_{H} + a(u(t), v_{1}(t); \sigma) \diff t + \skprod{u(0)}{v_{2}}_{H},
-\end{equation}
-und $f(\blank) \colon \mathcal Y \to \mathbb{R}$ das durch
-\begin{equation}
-    \label{eq:var_all_f_parametrisch}
-    f(v) = \int_{I} \skprod{g(t)}{v_{1}(t)}_{H} \diff t + \skprod{u_{0}}{v_{2}}_{H}
-\end{equation}
-gegebene Funktional.
+\begin{Definition}
+\label{definition:pp:variationsformulierung}
+    Seien $\mathcal X$ und $\mathcal Y$ wie in \thref{definition:gl:ansatz_und_testraum}.
+    Als \emph{parametrische Raum-Zeit-Variationsfor"-mu"-lie"-rung}
+    %der linearen Evolutionsgleichung~\eqref{eq:allgemeine_parabolische_pde}
+    bezeichnen wir das folgende Problem:
+
+    Seien ein Quellterm $g \in L_{2}(0, T; V')$ und ein Anfangswert $u_{0} \in H$ gegeben.
+    Finde für alle $\sigma \in \mathcal S$ ein $u(\sigma) \in \mathcal X$ mit
+    \begin{equation}
+        \label{eq:pp:var_all_problem}
+        b(u(\sigma), v; \sigma) = f(v) \quad \fa v \in \mathcal Y.
+    \end{equation}
+    Dabei ist $b \colon \mathcal X \times \mathcal Y \to \mathbb{R}$ die durch
+    \begin{equation}
+        \label{eq:pp:var_all_bf_b}
+        b(u, v; \sigma) = \int_{0}^{T} \skprod{u_{t}(t)}{v_{1}(t)}_{H} + a(u(t), v_{1}(t); \sigma, t) \diff t + \skprod{u(0)}{v_{2}}_{H}
+    \end{equation}
+    definierte Bilinearform und $f \colon \mathcal Y \to \mathbb{R}$ das durch
+    \begin{equation}
+        \label{eq:pp:var_all_f}
+        f(v) = \int_{0}^{T} \skprod{g(t)}{v_{1}(t)}_{H} \diff t + \skprod{u_{0}}{v_{2}}_{H}
+    \end{equation}
+    gegebene Funktional.
+\end{Definition}
+
+Als nächstes wollen wir nachweisen, dass obiges Raum-Zeit-Variationsproblem sachgemäß gestellt ist und zudem die Lösungen $u(\sigma)$ analytisch vom Parameter $\sigma \in \mathcal S$ abhängen.
+Ersteres erhalten wir analog zu \thref{thm:schwab09:theorem51} für den nichtparametrischen Fall.
+Bezüglich der Regularität stellt sich heraus, dass wir lediglich Bedingungen an die Familie von stetigen linearen Operatoren $\Set{ A(\sigma, t) \in \mathcal L(V, V') \given \sigma \in \mathcal S, t \in [0, T] }$ stellen müssen, wie folgender Satz zeigt:
 
 \begin{Satz}[{{\cite[Theorem 21]{Kunoth:2013ef}}}]
 \label{thm:kunoth:theorem21}
-    Seien $\mathcal X$ und $\mathcal Y$ gegeben wie in~\eqref{eq:var_all_ansatzraum_x} respektive~\eqref{eq:var_all_testraum_y} und die Familie von Operatoren $\Set{ A(\sigma) \in \mathcal L(V, V') \given \sigma \in \mathcal S }$ erfülle \thref{thm:kunoth:assumption1} für ein $0 < \mathfrak p \leq 1$.
+    Seien $\mathcal X$ und $\mathcal Y$ gegeben wie in~\eqref{eq:var_all_ansatzraum_x} respektive~\eqref{eq:var_all_testraum_y}.
+    Weiter erfülle die Familie von Operatoren $\Set{ A(\sigma, t) \in \mathcal L(V, V') \given \sigma \in \mathcal S, t \in [0, T] }$ \thref{thm:kunoth:assumption1} für ein $0 < \mathfrak p \leq 1$.
     Für jedes $\sigma \in \mathcal S$ sei $B(\sigma) \in \mathcal L(\mathcal X, \mathcal Y')$ definiert durch
     \begin{equation}
         \label{eq:var_all_gross_b_parametrisch}
         \skprod{B(\sigma) u}{v}_{\mathcal Y' \times \mathcal Y} = b(u, v; \sigma), \quad u \in \mathcal X,~y \in \mathcal Y,
     \end{equation}
-    mit $b(\blank, \blank; \sigma)$ wie in~\eqref{eq:var_all_bf_b_parametrisch}.
+    mit $b(\blank, \blank; \sigma)$ wie in~\eqref{eq:pp:var_all_bf_b}.
     Dann ist $B(\sigma)$ für jedes $\sigma \in \mathcal S$ stetig invertierbar und es existieren Konstanten $0 < \beta_{1} \leq \beta_{2} < \infty$ mit
     \begin{equation}
         \label{eq:var_all_norm_B_und_B_inv_parametrisch}
         \sup_{\sigma \in \mathcal S} \norm{B(\sigma)}_{\mathcal L(\mathcal X, \mathcal Y')} \leq \beta_{2} \quad \text{und} \quad  \sup_{\sigma \in \mathcal S} \norm{B(\sigma)^{-1}}_{\mathcal L(\mathcal Y', \mathcal X)} \leq \frac{1}{\beta_{1}}.
     \end{equation}
-    Die parametrische Familie von Operatoren $\Set{ B(\sigma) \in \mathcal L(\mathcal X, \mathcal Y') \given \sigma \in \mathcal S }$ erfüllt \thref{thm:kunoth:assumption1} mit dem selben Regularitätsparameter $\mathfrak p$, die parametrische Familie von Lösungen $u(\sigma)$ hängt analytisch von $\sigma$ ab und erfüllt die \emph{a priori}-Abschätzung
+
+    Zudem erfüllt die parametrische Familie von Operatoren $\Set{ B(\sigma) \in \mathcal L(\mathcal X, \mathcal Y') \given \sigma \in \mathcal S }$ \thref{thm:kunoth:assumption1} mit dem gleichen Regularitätsparameter $\mathfrak p$, die parametrische Familie von Lösungen $u(\sigma)$ des parametrischen Raum-Zeit-Variationsproblems \eqref{eq:pp:var_all_problem} hängt analytisch von $\sigma$ ab und erfüllt die A-Priori-Abschätzung
     \begin{equation}
         \label{eq:var_all_a_priori_schranke}
         \sup_{\sigma \in \mathcal S} \norm{(\partial^{\nu}_{\sigma} u)(\sigma)}_{\mathcal X} \leq C_{0} \norm{f}_{\mathcal Y'} \abs{\nu}! \tilde{b}^{\nu}
     \end{equation}
-    für alle $\nu \in \mathfrak F$, wobei $f$ wie in~\eqref{eq:var_all_f_parametrisch} gegeben ist.
-
-    \begin{Beweis}
-        TODO:\@ Bedingungen von \thref{thm:kunoth:assumption1} nachrechnen.
-        Zu (i): Folgt aus \thref{thm:schwab09:theorem51}, da $M_{a}, \alpha, \lambda$ unabhänging von $\sigma$.
-        Zu (ii): Folgt aus nachfolgendem \thref{lemma:norm_B_beschraenkt_durch_norm_A}.
-    \end{Beweis}
+    für alle $\nu \in \mathfrak F$, wobei $f$ wie in~\eqref{eq:pp:var_all_f} gegeben ist.
 \end{Satz}
 
 \begin{Lemma}
@@ -249,10 +281,16 @@ gegebene Funktional.
         \norm{\partial^{\nu}_{\sigma} A(\sigma)}_{\mathcal L(V, V')}
     \end{equation}
 
-    % \begin{Beweis}
-        % TODO: Moo.
-    % \end{Beweis}
+    \begin{Beweis}
+        TODO: Moo.
+    \end{Beweis}
 \end{Lemma}
+
+\begin{Beweis}[\thref{thm:kunoth:theorem21}]
+TODO:\@ Bedingungen von \thref{thm:kunoth:assumption1} nachrechnen.
+Zu (i): Folgt aus \thref{thm:schwab09:theorem51}, da $M_{a}, \alpha, \lambda$ unabhänging von $\sigma$.
+Zu (ii): Folgt aus nachfolgendem \thref{lemma:norm_B_beschraenkt_durch_norm_A}.
+\end{Beweis}
 
 % section parametrische_lineare_evolutionsgleichung (end)
 
