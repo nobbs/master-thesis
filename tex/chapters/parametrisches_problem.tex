@@ -7,22 +7,27 @@
 
 In diesem Kapitel liegt das Augenmerk erneut auf der linearen Evolutionsgleichung \eqref{eq:allgemeine_parabolische_pde}, diesmal aber mit der Erweiterung, dass der lineare Operator $A(t)$ zusätzlich von einem Parameter $\sigma$ abhängt.
 
-Zunächst konkretisieren wir diese Parameterabhängigkeit, betrachten dann eine parametrische Operatorgleichung, leiten Regularitätsergebnisse für diese her und übertragen diese anschließend auf die Raum-Zeit-Variationsformulierung einer parametrischen linearen Evolutionsgleichung.
+Zunächst konkretisieren wir diese Parameterabhängigkeit für einen linearen Operator $A$, betrachten dann eine parametrische lineare Operatorgleichung, leiten Regularitätsergebnisse für diese her und übertragen diese anschließend auf die Raum-Zeit-Variationsformulierung einer parametrischen linearen Evolutionsgleichung.
 Dabei orientieren wir uns hauptsächlich an den Arbeiten von \textcite{Kunoth:2013ef,Cohen:2015vp}.
 
 \section{Parametrische Operatorgleichung} % (fold)
 \label{sec:parametrische_operatorgleichung}
 
-Es seien $X$ und $Y$ zwei reflexive Banachräume und $\mathcal S \subset \mathbb{R}^{\mathbb{N}}$ bezeichne den sogenannten Parameterraum, ohne Einschränkung wählen wir $\mathcal S = {[-1, 1]}^{\mathbb{N}}$.
-Für alle $\sigma \in \mathcal S$ sei nun durch $A(\sigma) \in \mathcal L(X, Y')$ ein stetiger linearer Operator gegeben.
-Wir betrachten nun für $g \in Y'$ die parametrische Operatorgleichung
+Seien $X$ und $Y$ zwei reflexive Banachräume.
+Weiter sei $\mathcal S \subset \mathbb{R}^{\mathbb{N}}$ der sogenannte Parameterraum.
+Der Einfachheit halber wählen wir $\mathcal S = [-1, 1]^{\mathbb{N}}$. % TODO: warum?
+
+Wir betrachten parametrische Familien stetiger linearer Operatoren $A(\sigma) \in \mathcal L(X, Y')$ mit $\sigma \in \mathcal S$.
+Folgende lineare Operatorgleichung ist für uns von Interesse:
+Sei ein $g \in Y'$ gegeben.
+Finde für alle $\sigma \in \mathcal S$ eine Lösung $u(\sigma) \in X$ von
 \begin{equation}
     \label{eq:allgemeine_parametrische_elliptische_pde}
     A(\sigma) u(\sigma) = g \quad \text{in}~Y'.
 \end{equation}
-Um Aussagen über diese Operatorgleichung treffen zu können, müssen wir zunächst die Abhängigkeit des Operators $A(\sigma)$ vom Parameter $\sigma$ konkretisieren.
-Zunächst aber einige Notationen.
+Wie zuvor sei $a(\blank, \blank; \sigma) \colon X \times Y \to \mathbb{R}$ die zugehörige Bilinearform.
 
+Zunächst einige notationelle Vorbemerkungen.
 \begin{Bemerkung}
     Wir bezeichnen mit $\mathfrak F = \Set{ \nu \in \mathbb{N}^{\mathbb{N}}_{0} \given \abs{\nu} < \infty }$ die Menge aller Folgen nichtnegativer ganzer Zahlen mit endlichem Träger, das heißt nur endlich vielen Einträgen ungleich Null.
     % NOTE: Eventuell mehr definieren, siehe $\mathfrak n$ und $\mathfrak m$
@@ -35,47 +40,57 @@ Zunächst aber einige Notationen.
     Wegen $\abs{\nu} < \infty$ ist dieses Produkt stets endlich.
 \end{Bemerkung}
 
-
+Für die nachfolgenden Regularitätsaussagen über die Lösung $u(\sigma)$ von \eqref{eq:allgemeine_parametrische_elliptische_pde} benötigen wir Regularität der Operatorfamilie $A(\sigma)$ bezüglich $\sigma \in \mathcal S$.
+Konkret fordern wir:
 \begin{Annahme}[{{\cite[Assumption 1]{Kunoth:2013ef}}}]
 \label{thm:kunoth:assumption1}
     Die parametrische Familie von Operatoren
-    $\Set{ A(\sigma) \in \mathcal L(X, Y') \given \sigma \in \mathcal S }$ sei $\mathfrak p$-regulär für ein $0 < \mathfrak p \leq 1$, das heißt
+    $\Set{ A(\sigma) \in \mathcal L(X, Y') \given \sigma \in \mathcal S }$ sei eine $\mathfrak p$-reguläre Operatorfamilie für ein $0 < \mathfrak p \leq 1$, das heißt,
     \begin{thmenumerate}
-        \item $A(\sigma) \in \mathcal L(X, Y')$ sei stetig invertierbar für alle $\sigma \in \mathcal S$ mit gleichmäßig beschränktem Inversen $A{(\sigma)}^{-1} \in \mathcal L(Y', X)$, das heißt es existiert ein $C_{0} > 0$ mit
+        \item $A(\sigma) \in \mathcal L(X, Y')$ sei stetig invertierbar für alle $\sigma \in \mathcal S$ mit gleichmäßig beschränktem Inversen $A{(\sigma)}^{-1} \in \mathcal L(Y', X)$, das heißt, es existiert ein $C_{0} > 0$ mit
         \begin{equation}
             \sup_{\sigma \in \mathcal S} \norm{A{(\sigma)}^{-1}}_{\mathcal L(Y', X)} \leq C_{0},
         \end{equation}
-        \item für jedes feste $\sigma \in \mathcal S$ seien die Operatoren $A(\sigma)$ analytisch bezüglich $\sigma$, konkret existiert eine nichtnegative Folge $b = (b_{j})_{j \geq 1} \in \ell_{\mathfrak p}(\mathbb{N})$ so dass
+        \item für jedes feste $\sigma \in \mathcal S$ seien die Operatoren $A(\sigma)$ analytisch bezüglich $\sigma$.
+        Konkret existiert eine nichtnegative Folge $b = (b_{j})_{j \in \mathbb{N}} \in \ell_{\mathfrak p}(\mathbb{N})$, so dass
         \begin{equation}
-            \sup_{\sigma \in \mathcal S} \norm{(A{(0)}^{-1})(\partial^{\nu}_{\sigma} A(\sigma))}_{\mathcal L(X, X)} \leq C_{0} b^{\nu}
+            \sup_{\sigma \in \mathcal S} \norm{(A{(0)})^{-1}(\partial^{\nu}_{\sigma} A(\sigma))}_{\mathcal L(X, X)} \leq C_{0} b^{\nu}
         \end{equation}
-        für alle $\nu \in \mathfrak F \setminus \{ 0 \}$ gilt, wobei $\partial^{\nu}_{\sigma} A(\sigma) = \frac{\partial^{\nu_{1}}}{\partial \sigma_{1}} \frac{\partial^{\nu_{2}}}{\partial \sigma_{2}} \cdots A(\sigma)$ sei.
+        für alle $\nu \in \mathfrak F \setminus \{ 0 \}$ gilt.
+        Dabei sei $\partial^{\nu}_{\sigma} A(\sigma) \deq \frac{\partial^{\nu_{1}}}{\partial \sigma_{1}} \frac{\partial^{\nu_{2}}}{\partial \sigma_{2}} \cdots A(\sigma)$.
     \end{thmenumerate}
 \end{Annahme}
 
-Der für uns wichtigste Fall der parametrischen Abhängigkeit von $A(\sigma)$ ist die affine Abhängigkeit, das heißt es existiert eine Familie von Operatoren $\Set{\hat A} \cup \Set{ A_{j} }_{j \geq 1} \subset \mathcal L(X, Y')$, so dass
-\begin{equation}
-    \label{eq:all_affiner_operator}
-    A(\sigma) = \hat A + \sum_{j = 1}^{\infty} \sigma_{j} A_{j} \qquad\fa \sigma \in \mathcal S
-\end{equation}
-gilt.
-Wir bezeichnen mit $\hat a, a_{j} \colon X \times Y \to \mathbb{R}$ die zu $\hat A$ respektive $A_{j}$, $j \geq 1$, zugehörigen Bilinearformen, also
+Die bisherigen Anforderungen an $A(\sigma)$ decken einen noch sehr weiten Bereich ab.
+Wir beschränken uns in dieser Arbeit ausschließlich auf den folgenden Fall, der affin parametrischen Operatoren.
+
+\begin{Definition}
+    Sei $\Set{ A(\sigma) \in \mathcal L(X, Y') \given \sigma \in \cal S }$ eine parametrische Operatorfamilie.
+    Wir nennen $A(\sigma)$ einen \emph{affin parametrischen Operator}, falls eine Familie von Operatoren $\Set{ \hat A, A_{j} \given j \in \mathbb{N} } \subset \cal L(X, Y')$ existiert, so dass
+    \begin{equation}
+        \label{eq:all_affiner_operator}
+        A(\sigma) = \hat A + \sum_{j = 1}^{\infty} \sigma_{j} A_{j} \qquad\fa \sigma \in \mathcal S
+    \end{equation}
+    gilt.
+\end{Definition}
+
+Seien $\hat a, a_{j} \colon X \times Y \to \mathbb{R}$ die durch den Rieszschen Darstellungssatz von $\hat A$ respektive $A_{j}$ induzierten Bilinearformen, das heißt also,
 \begin{equation}
     \label{eq:allg_affine_bf}
     \begin{aligned}
     \hat a(\eta, \zeta) &= \skprod{\hat A \eta}{\zeta}_{Y' \times Y}
-    \\a_{j}(\eta, \zeta) &= \skprod{A_{j} \eta}{\zeta}_{Y' \times Y}
+    \\
+    a_{j}(\eta, \zeta) &= \skprod{A_{j} \eta}{\zeta}_{Y' \times Y}, \quad j \in \mathbb{N},
     \end{aligned}
 \end{equation}
 für $\eta \in X$, $\zeta \in Y$.
 
-Um die Konvergenz von~\eqref{eq:all_affiner_operator} sicherzustellen, fordern wir:
-
+Um die Wohldefiniertheit von $A(\sigma)$, das heißt Konvergenz von \eqref{eq:all_affiner_operator}, sicherzustellen, stellen wir folgende Bedingungen:
 \begin{Annahme}[{{\cite[Assumption 2]{Kunoth:2013ef}}}]
 \label{thm:kunoth:assumption2}
-    Die Operatorfamilie $\Set{\hat A} \cup \Set{ A_{j} }_{j \geq 1}$ erfülle folgende Eigenschaften:
+    Die Operatorfamilie $\Set{\hat A, A_{j} \given j \in \mathbb{N}}$ erfülle folgende Eigenschaften:
     \begin{thmenumerate}
-        \item Der \emph{Mean Field}-Operator $\hat A \in \mathcal L(X, Y')$ sei stetig invertierbar, das heißt es existiert ein $\gamma_{0} > 0$ mit
+        \item Der \emph{Mean Field}-Operator $\hat A \in \mathcal L(X, Y')$ sei stetig invertierbar, das heißt, es existiert ein $\gamma_{0} > 0$ mit
         \begin{subequations}\label{eq:kunoth:ass2_gamma_0}
             \begin{align}
                 \label{eq:kunoth:ass2_gamma_0_a}
@@ -94,14 +109,45 @@ Um die Konvergenz von~\eqref{eq:all_affiner_operator} sicherzustellen, fordern w
     \end{thmenumerate}
 \end{Annahme}
 
+Unter diesen Bedingungen liefert das Banach-Ne{\v c}as-Babu{\v s}ka-Theorem, \thref{satz:gl:bnb_theorem}, die stetige Invertierbarkeit von $A(\sigma)$ aus \eqref{eq:all_affiner_operator} gleichmäßig in $\sigma$.
+
+\begin{Satz}[{{\cite[Theorem 2]{Kunoth:2013ef}}}]
+    Der affin parametrische Operator $A(\sigma)$ erfülle \thref{thm:kunoth:assumption2}.
+    Dann ist $A(\sigma)$ für alle $\sigma \in \mathcal S$ stetig invertierbar.
+
+    Konkret gilt
+    \begin{equation}
+        \inf_{u \in H_{1}} \sup_{v \in H_{2}} \frac{a(u, v)}{\norm{u}_{H_{1}} \norm{v}_{H_{2}}} \geq (1 - \kappa) \gamma_{0} > 0 \quad \fa \sigma \in \mathcal S
+    \end{equation}
+    und
+    \begin{equation}
+        \inf_{v \in H_{2}} \sup_{u \in H_{1}} \frac{a(u, v)}{\norm{u}_{H_{1}} \norm{v}_{H_{2}}} \geq (1 - \kappa) \gamma_{0} > 0 \quad \fa \sigma \in \mathcal S.
+    \end{equation}
+
+    Ist ferner ein $g \in Y'$ gegeben, dann existiert für jedes $\sigma \in \mathcal S$ ein $\hat u(\sigma) \in X$ mit
+    \begin{equation}
+        a(\hat u(\sigma), v; \sigma) = \skprod{g}{v}_{Y' \times Y} \quad \fa v \in Y
+    \end{equation}
+    und es gilt die A-Priori-Abschätzung
+    \begin{equation}
+        \sup_{\sigma \in \mathcal S} \norm{\hat u(\sigma)}_{X} \leq \frac{\norm{g}_{Y'}}{(1 - \kappa) \gamma_{0}}.
+    \end{equation}
+
+    \begin{Beweis}
+        Nachrechnen der beiden inf-sup-Bedingungen unter Verwendung der affinen Zerlegung von $A(\sigma)$ und anschließendes Anwenden des Banach-Ne{\v c}as-Babu{\v s}ka-Theorems liefert die gewünschten Aussagen.
+    \end{Beweis}
+\end{Satz}
+
 \begin{Korollar}[{{\cite[Corollary 3]{Kunoth:2013ef}}}]
 \label{thm:kunoth:corollary3}
-    Die affin parametrische Operatorfamilie $\Set{\hat A} \cup \Set{ A_{j} }_{j \geq 1}$ erfülle \thref{thm:kunoth:assumption2}, dann wird auch \thref{thm:kunoth:assumption1} mit $\mathfrak p = 1$ und
+    Die affin parametrische Operatorfamilie $\Set{\hat A, A_{j} \given j \in \mathbb{N}}$ erfülle \thref{thm:kunoth:assumption2}, dann wird auch \thref{thm:kunoth:assumption1} mit $\mathfrak p = 1$ und
     \begin{equation}
-        C_{0} = \frac{1}{(1 - \kappa) \gamma_{0}}, \qquad b_{j} = \frac{\norm{A_{j}}_{\mathcal L(X, Y')}}{(1 - \kappa) \gamma_{0}}, \quad \fa j \geq 1,
+        C_{0} = \frac{1}{(1 - \kappa) \gamma_{0}}, \qquad b_{j} = \frac{\norm{A_{j}}_{\mathcal L(X, Y')}}{(1 - \kappa) \gamma_{0}} \quad \fa j \in \mathbb{N},
     \end{equation}
     erfüllt.
 \end{Korollar}
+
+Weiter erhält man unter den Bedingungen aus \thref{thm:kunoth:assumption1} folgendes Regularitätsergebnis bezüglich des Parameters $\sigma$.
 
 \begin{Satz}[{{\cite[Theorem 4]{Kunoth:2013ef}}}]
 \label{thm:kunoth:theorem4}
@@ -110,6 +156,7 @@ Um die Konvergenz von~\eqref{eq:all_affiner_operator} sicherzustellen, fordern w
     \begin{equation}
         A(\sigma) u(\sigma) = g \quad \text{in}~Y'.
     \end{equation}
+
     Die parametrische Familie von Lösungen $u(\sigma)$ hängt analytisch vom Parameter $\sigma$ ab und die partiellen Ableitungen von $u(\sigma)$ erfüllen
     \begin{equation}
         \label{eq:kunoth:schranke_part_abl}
@@ -119,15 +166,16 @@ Um die Konvergenz von~\eqref{eq:all_affiner_operator} sicherzustellen, fordern w
     \begin{equation}
         \tilde{b}_{j} = \frac{b_{j}}{\ln 2} \qquad \text{für alle j} \in \mathbb{N}.
     \end{equation}
+
+    \begin{Beweis}
+        TODO: etwas dazu sagen.
+    \end{Beweis}
 \end{Satz}
 
 % section parametrische_operatorgleichung (end)
 
 \section{Parametrische lineare Evolutionsgleichung} % (fold)
 \label{sec:parametrische_lineare_evolutionsgleichung}
-
-% section parametrische_lineare_evolutionsgleichung (end)
-
 
 Aus diesen Ergebnissen erhalten wir nun die gewünschten Aussagen für die parametrische Variante von~\eqref{eq:allgemeine_parabolische_pde}, diese müssen wir aber nun zunächst konkretisieren.
 Wir arbeiten nun wieder im Setting aus \autoref{sec:allgemeine_problemstellung}.
@@ -206,6 +254,6 @@ gegebene Funktional.
     % \end{Beweis}
 \end{Lemma}
 
-% subsubsection aus_cite_kunoth_2013ef (end)
+% section parametrische_lineare_evolutionsgleichung (end)
 
 % chapter parametrisches_problem (end)

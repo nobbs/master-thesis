@@ -288,20 +288,24 @@ Es bleibt nun zu zeigen, dass obige Raum-Zeit-Variationsformulierung \emph{sachg
 Dazu wird der folgende wichtige Satz, welcher in dieser oder ähnlicher Form bei \textcites[Theorem 2.1]{Babuska:1971fx}[Theorem 5.2.1]{Aziz:2014wf}[Theorem \S{}3.3.6]{Braess:2007wm} zu finden ist, verwendet.
 
 \begin{Satz}[Banach-Ne{\v c}as-Babu{\v s}ka-Theorem]
+\label{satz:gl:bnb_theorem}
     Seien $H_{1}$ und $H_{2}$ Hilberträume.
     Eine lineare Abbildung $A \colon H_{1} \to H_{2}'$ ist genau dann ein Isomorphismus, das heißt stetig invertierbar, wenn die zugehörige Bilinearform $a \colon H_{1} \times H_{2} \to \mathbb{R}$ die folgenden Bedingungen erfüllt:
     \begin{thmenumerate}
-        \item \emph{Stetigkeit}.
+        \item \label{satz:gl:bnb_theorem:bedingung:stetig}
+        \emph{Stetigkeit}.
         Es existiert ein $0 < C < \infty$ mit
         \begin{equation}
             \abs{a(u, v)} \leq C \norm{u}_{H_{1}} \norm{v}_{H_{2}} \quad \fa u \in H_{1},~v\in H_{2}.
         \end{equation}
-        \item \emph{Inf-sup-Bedingung}.
+        \item \label{satz:gl:bnb_theorem:bedingung:inf_sup}
+        \emph{Inf-sup-Bedingung}.
         Es existiert ein $\alpha > 0$ mit
         \begin{equation}
             \inf_{u \in H_{1}} \sup_{v \in H_{2}} \frac{a(u, v)}{\norm{u}_{H_{1}} \norm{v}_{H_{2}}} \geq \alpha.
         \end{equation}
-        \item Zu jedem $v \in H_{2}$, $v \neq 0$, existiert ein $u \in H_{1}$ mit
+        \item \label{satz:gl:bnb_theorem:bedingung:surjektiv}
+        Zu jedem $v \in H_{2}$, $v \neq 0$, existiert ein $u \in H_{1}$ mit
         \begin{equation}
             a(u, v) \neq 0.
         \end{equation}
@@ -315,6 +319,14 @@ Dazu wird der folgende wichtige Satz, welcher in dieser oder ähnlicher Form bei
         \norm{\hat u}_{H_{1}} \leq \frac{1}{\alpha} \norm{f}_{H_{2}'}.
     \end{equation}
 \end{Satz}
+
+\begin{Bemerkung}
+    Die letzte Bedingung im vorherigen Satz kann durch eine stärkere inf-sup-Bedingung ersetzt werden, denn existiert ein $\beta > 0$ mit
+    \begin{equation}
+        \inf_{v \in H_{2}} \sup_{u \in H_{1}} \frac{a(u, v)}{\norm{u}_{H_{1}} \norm{v}_{H_{2}}} \geq \beta,
+    \end{equation}
+    dann gilt insbesondere auch \ref{satz:gl:bnb_theorem:bedingung:surjektiv}.
+\end{Bemerkung}
 
 Für das Raum-Zeit-Variationsproblem aus \thref{definition:variationsformulierung} lässt sich die Tatsache, dass es sachgemäß gestellt ist, zu folgendem Satz zusammenfassen.
 
