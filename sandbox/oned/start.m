@@ -69,6 +69,7 @@ omega = @(x) omega_sinus(x, 1/100, N_sigmas, sigmas);
 % Anfangsbedingung $u0$ festlegen.
 % u0 = @(x) 1 / 2 * sin(pi*x);
 u0 = @(x) -(x) .* (x-1) .* (x+3);
+% u0 = @(x) 1 + 0 .* x;
 
 % Und den Quellterm $g$ ebenfalls festlegen.
 g = @(t, x) 0 + 0 .* t + 0 .* x;
@@ -189,8 +190,52 @@ for j = 1:num_X_j
 end
 % Steifigkeitsmatrix aus den berechneten Werten erzeugen.
 B = sparse(idy, idx, entry, dim_Y, dim_X);
-return;
 
+
+%% Massematrizen
+% Zunächst X
+% alte Variante
+% MX  = zeros(dim_X);
+% MX = zeros(dim_X);
+% MX1 = zeros(dim_X);
+% for j = 1:num_X_j
+%     for k = 1:num_X_k
+%         pos = (j - 1) * num_X_k + k;
+%         MX1(pos, pos) = (1 / 2) * (1 / (2 * (k - 1) + 1));
+%     end
+% end
+% 
+% for j = 1:num_X_j
+%     for k1 = 1:num_X_k
+%         for k2 = 1:num_X_k
+%             if mod(k1 + k2, 2) == 0
+%                 x_pos = (j - 1) * num_X_k + k1;
+%                 y_pos = (j - 1) * num_X_k + k2;
+%                 MX2(x_pos, y_pos) = (1 / 2) * integral(@(x) legendre_dP(x, k1 - 1) .* legendre_dP(x, k2 - 1), xspan(1), xspan(2));
+%             end
+%         end
+%     end
+% end 
+
+% Neue Variante
+MX1 = spdiags(repmat((1 / 2) * (1 ./ (2*((1:num_X_k) - 1) + 1)), 1, num_X_j)', [0], dim_X, dim_X);
+
+MX2b = zeros(num_X_k);
+for k1 = 1:num_X_k
+    for k2 = 1:num_X_k
+        if mod(k1 + k2, 2) == 0
+            MX2b(k1, k2) = (1 / 2) * integral(@(x) legendre_dP(x, k1 - 1) .* legendre_dP(x, k2 - 1), xspan(1), xspan(2));
+        end
+    end
+end
+MX2 = kron(speye(num_X_j), MX2b);
+MX = MX1 + MX2;
+
+% Y
+
+
+% return;
+%% Lastvektor
 % Für den Lastvektor erzeugen wir drei neue Hilfslisten
 idx = [];
 idy = [];
