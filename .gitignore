@@ -192,3 +192,6 @@ code/.ycm_extra_conf.py
 tex/main.brf
 tex/main.fls
 tex/main.glsdefs
+tex/main.bcf
+tex/main.nls
+tex/main.run.xml

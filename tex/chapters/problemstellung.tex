@@ -21,10 +21,11 @@ Anschließend beziehen wir die Ergebnisse aus den ersten beiden Kapiteln auf das
 Wie im vorherigen Abschnitt bereits diskutiert, betrachten wir die parabolische partielle Differentialgleichung
 \begin{equation}
     \begin{cases}
-        u_{t}(t, x) = c \Delta u(t, x) - \omega(x) u(t, x) &\\
-        u(0, x) = u_0(x) &
+        u_{t}(t, x) = c \Delta_x u(t, x) - \omega(x) u(t, x) & \text{in}~[0,1] \times \Omega\\
+        u(0, x) = u_0(x) & \text{auf}~\Omega.
     \end{cases}
 \end{equation}
+Dabei seien $\Omega \subset \mathbb{R}^{n}$ ein beschränktes Gebiet mit Lipschitz-Rand, $c$ eine positive Konstante, $u_{0} \colon \Omega \to \mathbb{R}$ eine Anfangsbedingung und $\omega \colon \Omega \to \mathbb{R}$ eine Abbildung, die wir später als Parameter auffassen werden.
 
 Es sei $0 < T < \infty$ und $I = [0, T]$.
 Weiter sei $\Omega \subset \mathbb{R}^{n}$ eine beschränkte Teilmenge des $\mathbb{R}^{n}$ mit Lipschitz-Rand.
