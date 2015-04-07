@@ -1,59 +1,82 @@
 %!TEX root = ../main.tex
 
-\chapter{Überschrift in Arbeit}
-
-\todo[inline]{Kapitel komplett überarbeiten}
-
-\section{Der eindimensionale Fall} % (fold)
+\chapter{Der eindimensionale Fall}
 \label{sec:der_eindimensionale_fall}
+\label{cha:der_eindimensionale_fall}
 
-Wir beschränken uns nun zunächst auf den Fall einer Raumdimension.
-Es sei also $\Omega \subset \mathbb{R}$ ein Intervall, ohne Beschränkung der Allgemeinheit wählen wir $\Omega = [0, L]$ für ein $0 < L < \infty$.
+\todo[inline]{Kapitel ordentlich überarbeiten. Mittlerweile besser, aber noch deutlich verbesserungswürdig!}
+\todo[inline]{Sind ein paar notationelle Kleinigkeiten zu korrigieren, also mal ordentlich durchlesen!}
+\todo[inline]{Die Abschätzung in Satz 4.4. ist schon heftig. Da bleibt ja so gut wie kein Spielraum für den Faktor K...}
 
-Die Wahl des Funktionensystems $\Set{ \varphi_{j} }_{j}$ ist von wesentlicher Bedeutung, denn sie legt fest, welche Funktionen $\omega$ wir durch die Reihenentwicklung \eqref{eq:omega_reihenentwicklung} darstellen können.
-Zudem bestimmen wir damit das Konvergenzverhalten in verschiedenen Räumen und die möglichen Randbedingungen.
+In diesem Kapitel beschränken wir uns zunächst auf den vereinfachten Fall einer Raumdimension.
+Es sei also $\Omega \subset \mathbb{R}$ ein Intervall.
+Ohne Beschränkung der Allgemeinheit wählen wir $\Omega = [0, L]$ für ein $0 < L < \infty$.
 
-% TODO: besser formulieren
-Eine durch die beabsichtigte Anwendung in \cite{Stasiak:2011ba} motivierte Wahl ist die Entwicklung in Sinusfunktionen.
-Da Konvergenz in $L_{\infty}(\Omega)$ wegen $\omega \in L_{\infty}(\Omega)$ notwending ist, erzwingen wir diese durch Gewichtung der Sinusfunktionen.
+\todo[inline]{Eventuell wäre, insbesondere mit der gewünschten Anwendung bei SCFT-Verfahren, eine Entwicklung in Cosinus-Funktionen (oder direkt Fourier-Reihen) sinnvoller.
+Insbesondere wären Cosinus-Funktionen achsensymmetrisch und automatisch nicht-homogen; beides Eigenschaften, welche die Felder $\omega$ bei der SCFT oftmals aufweisen.}
 
-Zusätzlich zu den Sinusfunktionen fügen wir eine konstante Funktion hinzu, um so inhomogene Randbedingungen für $\omega$ zuzulassen, das heißt wir haben das Funktionensystem $\Set{ \varphi_{j} }_{j \in \mathbb{N}_{0}}$ mit
+
+Als Ansatzfunktionen für eine geeignete Entwicklung des Operators $A$ in eine affin parametrische Darstellung wählen wir Sinusfunktionen, welche zusätzlich gewichtet werden, so dass wir die gewünschten Konvergenzeigenschaften erhalten.
+Zusätzlich zu den Sinusfunktionen fügen wir eine konstante Funktion $\varphi_{0}$ hinzu, um so inhomogene Randbedingungen für $\omega$ zuzulassen.
+
+Da die Parameter $\sigma$ weiterhin aus der Menge $\mathcal S = [-1, 1]^{\mathbb{N}}$ kommen, skalieren wir die Ansatzfunktionen mit einem Faktor $K \in \mathbb{R}_{+}$.
+Dieser Faktor wird später durch die Anforderungen, die wir durch die gewünschte analytische Abhängigkeit vom Parameter erhalten, genauer bestimmt.
+
+Konkret kommt nun
 \begin{equation}
     \label{eq:sinusfunktionen_ansatz}
     \varphi_{0} = K, \qquad
-    \varphi_{j} = K \left( \frac{L}{\pi j} \right)^{1 + \epsilon} \sin(\tfrac{\pi j}{L} \blank), \quad j \geq 1,
+    \varphi_{j} = \frac{K}{(\pi j)^{1 + \epsilon}} \sin(\tfrac{\pi j}{L} \blank), \quad j \geq 1,
 \end{equation}
-wobei $K \in \mathbb{R}_{+}$ als Skalierungsfaktor dient.
+als Funktionensystem $\Set{ \varphi_{j} }_{j \geq 0}$ zum Einsatz.
+Damit schreiben wir den parametrischen Faktor $\omega$ der linearen Evolutionsgleichung aus dem vorherigen Kapitel als
+\begin{equation}
+    w(\blank; \sigma) \colon \Omega \to \mathbb{R}, \quad w(x; \sigma) = \sum_{j = 0}^{\infty} \sigma_{j} \varphi_{j}(x)
+\end{equation}
+mit $\sigma \in \mathcal S$.
+Damit schreibt sich die affine Zerlegung des Differentialoperators $A = - c \Delta + \omega$ als
+\begin{equation}
+    A = \hat A + \sum_{j = 0}^{\infty} \sigma_{j} A_{j}
+\end{equation}
+mit
+\begin{equation}
+    \label{eq:1d:affine_zerlegung}
+    \hat A = - c \Delta, \qquad A_{j} = \varphi_{j}
+\end{equation}
+und den zugehörigen Bilinearformen
+\begin{equation}
+    \hat a(\eta, \zeta) = c \skprod{\grad \eta}{\grad \zeta}_{L_{2}(\Omega)}, \qquad a_{j}(\eta, \zeta) = \skprod{\varphi_{j} \eta}{\zeta}_{L_{2}(\Omega)}.
+\end{equation}
 
-An dieser Stelle weisen wir zunächst einige Eigenschaften für \eqref{eq:sinusfunktionen_ansatz} nach.
+
+Zunächst rechnen wir nun verschiedene, später benötigte, Normen nach.
 \begin{Lemma}
     Es gilt
     \begin{alignat}{2}
         \norm{\varphi_{0}}_{L_{\infty}(\Omega)} &= K,
         \qquad&
-        \norm{\varphi_{j}}_{L_{\infty}(\Omega)} &= K \left( \frac{L}{\pi j} \right)^{1 + \epsilon} , \quad j \geq 1,
-    % \end{equation}
-    % sowie
-    % \begin{equation}
+        \norm{\varphi_{j}}_{L_{\infty}(\Omega)} &= \frac{K}{(\pi j)^{1 + \epsilon}} , \quad j \geq 1,
     \intertext{sowie}
         \norm{\varphi_{0}}_{H^{1}(\Omega)}  &= K \sqrt{L},
         \qquad&
-        \norm{\varphi_{j}}_{H^{1}(\Omega)}  &= \frac{K}{\sqrt{2}} \left( \frac{L}{\pi j} \right)^{\epsilon} \left( 1 +   \left( \frac{L}{\pi j} \right)^{2} \right)^{1 / 2} , \quad j \geq 1.
+        \norm{\varphi_{j}}_{H^{1}(\Omega)}  &= \frac{K \sqrt{L^{2} + (\pi j)^{2}}}{\sqrt{2L} (\pi j)^{1 + \epsilon}}
+        , \quad j \geq 1.
     \end{alignat}
 \end{Lemma}
 
 \begin{Lemma}
-    Die Funktionen $\Set{ \varphi_{j} }_{j \in \mathbb{N}}$ bilden ein Orthogonalsystem in $H^{1}(\Omega)$, denn es gilt
+    Die Funktionen $\Set{ \varphi_{j} }_{j \geq 1}$ bilden ein Orthogonalsystem in $H^{1}(\Omega)$, denn es gilt
     \begin{equation}
         \skprod{\varphi_{j}}{\varphi_{k}}_{H^{1}(\Omega)} = \begin{cases}
-            \frac{K^2}{2} \left( \frac{L}{\pi j} \right)^{2\epsilon} \left( 1 +   \left( \frac{L}{\pi j} \right)^{2} \right),   &j = k \\
+            \frac{K^{2}}{2L} \frac{L^{2} + (\pi j)^{2}}{(\pi j)^{2(1 + \epsilon)}}
+            ,   &j = k \\
             0,          &j \neq k.
         \end{cases}
     \end{equation}
 \end{Lemma}
 
 \begin{Lemma}
-    Sei $\sigma \in \mathcal S$ und $\epsilon > 0$, dann konvergiert $\omega(\blank; \sigma)$ in $L_{\infty}(\Omega)$.
+    Sei $\sigma \in \mathcal S$ und $\epsilon > 0$, dann konvergiert obiges $\omega(\blank; \sigma)$ in $L_{\infty}(\Omega)$.
     Ist $\epsilon > 1$, dann gilt auch Konvergenz in $H^{1}_{0}(\Omega)$.
 
     \begin{Beweis}
@@ -63,22 +86,21 @@ An dieser Stelle weisen wir zunächst einige Eigenschaften für \eqref{eq:sinusf
             \sum_{j = 0}^{\infty} \norm{\sigma_{j} \varphi_{j}}_{L_{\infty}(\Omega)}
             &= \sum_{j = 0}^{\infty} \abs{\sigma_{j}} \norm{\varphi_{j}}_{L_{\infty}(\Omega)}
              \leq \norm{\varphi_{0}}_{L_{\infty}(\Omega)} + \sum_{j = 1}^{\infty}  \norm{\varphi_{j}}_{L_{\infty}(\Omega)}
-            \\&= K +  K \left( \frac{L}{\pi} \right)^{1 + \epsilon} \sum_{j = 1}^{\infty} \frac{1}{j^{1+\epsilon}}
+            \\&= K + \sum_{j = 1}^{\infty} \frac{K}{(\pi j)^{1 + \epsilon}}
+            = K + \frac{K}{\pi^{1 + \epsilon}} \sum_{j = 1}^{\infty} \frac{1}{j^{1+\epsilon}}
         \end{align}
-        Diese Reihe konvergiert bekanntlich für alle $\epsilon > 0$, womit wir Konvergenz von $\omega$ in $L_{\infty}(\Omega)$ erhalten.
+        Diese Reihe konvergiert bekanntlich für alle $\epsilon > 0$, womit wir bereits die Konvergenz von $\omega$ in $L_{\infty}(\Omega)$ erhalten.
 
         Sei nun $\epsilon > 1$.
         Betrachte
         \begin{align}
             \sum_{j = 0}^{\infty} \norm{\sigma_{j} \varphi_{j}}_{H^{1}(\Omega)}
             &= \sum_{j = 0}^{\infty} \abs{\sigma_{j}} \norm{\varphi_{j}}_{H^{1}(\Omega)}
-            \\&\leq  \norm{\varphi_{0}}_{H^{1}(\Omega)} + \sum_{j = 1}^{\infty} \norm{\varphi_{j}}_{H^{1}(\Omega)}
-            \\&= K \sqrt{L} +
-            \frac{K}{\sqrt{2}} \sum_{j = 1}^{\infty} \left( \frac{L}{\pi j} \right)^{\epsilon} \left( 1 + \left( \frac{L}{\pi j} \right)^{2} \right)^{1 / 2}
-            \\&\leq K \sqrt{L} +
-            \frac{K}{\sqrt{2}} \sum_{j = 1}^{\infty} \left( \frac{L}{\pi j} \right)^{\epsilon} \left( 1 + \frac{L}{\pi j} \right)
-            \\&= K \sqrt{L} +
-            \frac{K}{\sqrt{2}} \left( \frac{L}{\pi}  \right)^{\epsilon} \sum_{j = 1}^{\infty} \frac{1}{j^{\epsilon}} + \frac{K}{\sqrt{2}} \left( \frac{L}{\pi}  \right)^{1 + \epsilon} \sum_{j = 1}^{\infty} \frac{1}{j^{1+\epsilon}}
+            \leq  \norm{\varphi_{0}}_{H^{1}(\Omega)} + \sum_{j = 1}^{\infty} \norm{\varphi_{j}}_{H^{1}(\Omega)}
+            \\&= K \sqrt{L} + \sum_{j = 1}^{\infty} \frac{K \sqrt{L^{2} + (\pi j)^{2}}}{\sqrt{2L} (\pi j)^{1 + \epsilon}}
+            \\&= K \sqrt{L} + \frac{K}{\sqrt{2L}} \sum_{j = 1}^{\infty} \frac{\sqrt{L^{2} + (\pi j)^{2}}}{(\pi j)^{1 + \epsilon}}
+            \\&\leq K \sqrt{L} + \frac{K}{\sqrt{2L}} \sum_{j = 1}^{\infty} \frac{L + \pi j}{(\pi j)^{1 + \epsilon}}
+            \\&= K \sqrt{L} + \frac{K}{\sqrt{2L}} \sum_{j = 1}^{\infty} \frac{L}{(\pi j)^{1 + \epsilon}} + \frac{K}{\sqrt{2L}} \sum_{j = 1}^{\infty} \frac{1}{(\pi j)^{\epsilon}}
         \end{align}
         Wegen $\epsilon > 1$ konvergiert sowohl die erste als auch die zweite Reihe.
         Zusammen liefert dies die Konvergenz in $H^{1}_{0}(\Omega)$.
@@ -92,28 +114,28 @@ Wir wollen nun die Regularität von $\omega(\blank; \sigma)$ in Abhängigkeit vo
 \label{satz:regularitaet_nachrechnen}
     Seien $\epsilon > 0$ und $0 < \kappa < 1$ so gewählt, dass
     \begin{equation}
-        \zeta(2 + \epsilon) \leq \frac{(\kappa c \left( \frac{\pi}{L}  \right)^{2}  - K) \pi^{2 + \epsilon}}{4 K C_{\infty} L^{3 + \epsilon}}
+        \sum_{j = 1}^{\infty} \frac{1}{j^{2 + \epsilon}} \leq \frac{(\kappa c (\tfrac{\pi}{L})^{2} - K) \pi^{2 + \epsilon}}{4 C_{\infty} K L^{3/2}}
     \end{equation}
     gilt,
-    wobei $\zeta$ die Riemannsche-$\zeta$-Funktion, $c$ und $K$ die Konstanten aus \eqref{eq:def_op_A} respektive \eqref{eq:sinusfunktionen_ansatz} und $C_{\infty}$ die Einbettungskonstante von $H^{1}_{0}(\Omega) \hookrightarrow L_{\infty}(\Omega)$ sind.
-    Dann erfüllt $\Set{\hat A} \cup \Set{ A_{j} }_{j \geq 0}$ \thref{thm:kunoth:assumption2}.
+    wobei $c$ und $K$ die Konstanten aus \eqref{eq:def_op_A} respektive \eqref{eq:sinusfunktionen_ansatz} und $C_{\infty}$ die Einbettungskonstante von $H^{1}_{0}(\Omega) \hookrightarrow L_{\infty}(\Omega)$ sind.
+    Dann erfüllt die affine Zerlegung $\Set{\hat A, A_{j} \given j \in \mathbb{N}_{0}}$ \thref{thm:kunoth:assumption2}.
 
     \begin{Beweis}
         Wir weisen zunächst die inf-sup-Bedingungen \eqref{eq:kunoth:ass2_gamma_0} für $\hat a(\blank, \blank)$ nach und bestimmen die Konstante $\gamma_{0}$.
-        Da $\hat a(\blank, \blank)$ symmetrisch ist, genügt es die inf-sup-Bedingung \eqref{eq:kunoth:ass2_gamma_0_a} nachzuweisen. Die zweite inf-sup-Bedingung \eqref{eq:kunoth:ass2_gamma_0_b} folgt dann analog mit dem selben $\gamma_{0}$.
+        Da $\hat a(\blank, \blank)$ symmetrisch ist, genügt es, die inf-sup-Bedingung \eqref{eq:kunoth:ass2_gamma_0_a} nachzuweisen. Die zweite inf-sup-Bedingung \eqref{eq:kunoth:ass2_gamma_0_b} folgt dann analog mit dem selben $\gamma_{0}$.
 
-        Nach \thref{lemma:sauter:2.1.48} reicht es, für alle $u \in H^{1}_{0}(\Omega)$ ein $v_{u} \in H^{1}_{0}(\Omega)$ und von $u$ und $v_{u}$ unabhängige Konstanten $C_{1}, C_{2} > 0$ mit
+        Nach \thref{lemma:sauter:2.1.48} reicht es, für alle $\eta \in H^{1}_{0}(\Omega)$ ein $\zeta = \zeta(\eta) \in H^{1}_{0}(\Omega)$ und von $\eta$ und $\zeta$ unabhängige Konstanten $C_{1}, C_{2} > 0$ mit
         \begin{equation}
-            \hat a(u, v_{u}) \geq C_{1} \norm{u}_{H^{1}(\Omega)}^{2} \quad \text{und} \quad \norm{v_{u}}_{H^{1}(\Omega)} \leq C_{2} \norm{u}_{H^{1}(\Omega)}
+            \hat a(\eta, \zeta) \geq C_{1} \norm{\eta}_{H^{1}(\Omega)}^{2} \quad \text{und} \quad \norm{\zeta}_{H^{1}(\Omega)} \leq C_{2} \norm{\eta}_{H^{1}(\Omega)}
         \end{equation}
         zu finden.
         Dann ist die inf-sup-Bedingung \eqref{eq:kunoth:ass2_gamma_0_a} mit $\gamma_{0} = \frac{C_{1}}{C_{2}}$ erfüllt.
 
-        Sei nun also $u \in H^{1}_{0}(\Omega)$ beliebig.
-        Wir wählen $v_{u} = u \in V$, es gilt also $C_{2} = 1$.
+        Sei nun also $\eta \in H^{1}_{0}(\Omega)$ beliebig.
+        Wir wählen $\zeta = \eta \in H^{1}_{0}(\Omega)$, das heißt, es gilt $C_{2} = 1$.
         Es ergibt sich
         \begin{align}
-            \hat a(u, v_{u}) = \hat a(u, u) = c \skprod{\grad u}{\grad u}_{L_{2}(\Omega)} = c \norm{\grad u}_{L_{2}(\Omega)}^{2} \geq c \gamma_{\Omega}^{2} \norm{u}_{H^{1}(\Omega)}^{2},
+            \hat a(\eta, \zeta) = \hat a(\eta, \eta) = c \skprod{\grad \eta}{\grad \eta}_{L_{2}(\Omega)} = c \norm{\grad \eta}_{L_{2}(\Omega)}^{2} \geq c \gamma_{\Omega}^{2} \norm{\eta}_{H^{1}(\Omega)}^{2},
         \end{align}
         wobei die letzte Abschätzung aus der Poincaré-Friedrichs-Ungleichung \eqref{eq:grundlagen:poincare_friedrichs_ungleichung} folgt.
         Zusammen liefert dies $\gamma_{0} = c \gamma_{\Omega}^{2}$ als inf-sup-Konstante.
@@ -123,88 +145,96 @@ Wir wollen nun die Regularität von $\omega(\blank; \sigma)$ in Abhängigkeit vo
         Dieser hat für $\Omega = [0, L]$ den Wert $\frac{\pi^{2}}{L^{2}}$.
         Wir erhalten damit also $\gamma_{0} = c \frac{\pi^{2}}{L^{2}}$.
 
-        Seien $u, v \in H^{1}_{0}(\Omega)$.
+        Seien nun $\eta, \zeta \in H^{1}_{0}(\Omega)$.
         Für $j = 0$ gilt die simple Abschätzung
         \begin{equation}
             \begin{aligned}
-                a_{0}(u, v)
-                &= \skprod{\varphi_{0} u}{v}_{L_{2}(\Omega)}
-                = K \skprod{u}{v}_{L_{2}(\Omega)}
-                \\&\leq K \norm{u}_{L_{2}(\Omega)} \norm{v}_{L_{2}(\Omega)}
-                \leq K \norm{u}_{H^{1}(\Omega)} \norm{v}_{H^{1}(\Omega)}
+                a_{0}(\eta, \zeta)
+                &= \skprod{\varphi_{0} \eta}{\zeta}_{L_{2}(\Omega)}
+                = K \skprod{\eta}{\zeta}_{L_{2}(\Omega)}
+                \\&\leq K \norm{\eta}_{L_{2}(\Omega)} \norm{\zeta}_{L_{2}(\Omega)}
+                \leq K \norm{\eta}_{H^{1}(\Omega)} \norm{\zeta}_{H^{1}(\Omega)}
             \end{aligned}
         \end{equation}
         Betrachte für $j \geq 1$
         \begin{align}
-            a_{j}(u, v)
-            &= \skprod{\varphi_{j} u}{v}_{L_{2}(\Omega)}
-            = \int_{I} \varphi_{j} u v \diff x
+            a_{j}(\eta, \zeta)
+            &= \skprod{\varphi_{j} \eta}{\zeta}_{L_{2}(\Omega)}
+            = \int_{0}^{L} \varphi_{j} \eta \zeta \diff x
             \intertext{da $\varphi_{j}$ integrierbar ist und $\varphi_{j}(0) = 0$, können wir dies umschreiben zu}
-            a_{j}(u, v)
-            &= \int_{I} \frac{\diff}{\diff x} \left( \int_{0}^{x} \varphi_{j}(y) \diff y \right) u v \diff x
-            \intertext{woraus wir mittels partieller Integration folgenden Ausdruck erhalten}
-            a_{j}(u, v)
-            &= - \int_{I} \left( \int_{0}^{x} \varphi_{j}(y) \diff y \right) (u v)' \diff x
-            \leq \norm*{\left( \int_{0}^{x} \varphi_{j}(y) \diff y \right) (u v)'}_{L_{1}(\Omega)}.
-            \\&\leq \norm*{\int_{0}^{x} \varphi_{j}(y) \diff y }_{L_{\infty}(\Omega)} \norm{(uv)'}_{L_{1}(\Omega)}
+            a_{j}(\eta, \zeta)
+            &= \int_{0}^{L} \frac{\diff}{\diff x} \left( \int_{0}^{x} \varphi_{j}(y) \diff y \right) \eta \zeta \diff x
+            \intertext{woraus wir mittels partieller Integration und $\eta, \zeta \in H^{1}_{0}(\Omega)$ folgenden Ausdruck erhalten}
+            a_{j}(\eta, \zeta)
+            &= - \int_{0}^{L} \left( \int_{0}^{x} \varphi_{j}(y) \diff y \right) (\eta \zeta)' \diff x
+            \leq \norm*{\left( \int_{0}^{x} \varphi_{j}(y) \diff y \right) (\eta \zeta)'}_{L_{1}(\Omega)}
+            \\&\leq \norm*{\int_{0}^{x} \varphi_{j}(y) \diff y }_{L_{\infty}(\Omega)} \norm{(\eta \zeta)'}_{L_{1}(\Omega)}.
         \end{align}
         Die erste Norm können wir weiter abschätzen mit
         \begin{equation}
             \begin{aligned}
                 \norm*{\int_{0}^{x} \varphi_{j}(y) \diff y }_{L_{\infty}(\Omega)}
-                &= K \left( \frac{L}{\pi j} \right)^{1+\epsilon} \norm*{\int_{0}^{x} \sin(\tfrac{\pi j}{L} y) \diff y }_{L_{\infty}(\Omega)}
-                \\&= K \left( \frac{L}{\pi j} \right)^{2+\epsilon} \norm{ \cos(\tfrac{\pi j}{L} x) - 1 }_{L_{\infty}(\Omega)}
-                \leq 2 K \left( \frac{L}{\pi j} \right)^{2+\epsilon}.
+                &= \norm*{\int_{0}^{x} \frac{K}{(\pi j)^{1 + \epsilon}} \sin(\tfrac{\pi j}{L} y) \diff y}_{L_{\infty}(\Omega)}
+                \\&= \norm*{\frac{K L}{(\pi j)^{2 + \epsilon}} \left( 1 - \cos(\tfrac{\pi j}{L} x) \right) }_{L_{\infty}(\Omega)}
+                \leq \frac{2 K L}{(\pi j)^{2 + \epsilon}}
             \end{aligned}
         \end{equation}
         Aus der zweiten Norm erhalten wir mittels Minkowski- und Hölderungleichung sowie der Einbettung $H^{1}_{0}(\Omega) \hookrightarrow L_{\infty}(\Omega)$ die Abschätzung
         \begin{equation}
             \begin{aligned}
-                \norm{(uv)'}_{L_{1}(\Omega)}
-                &= \norm{u'v + uv'}_{L_{1}(\Omega)}
-                \leq \norm{u'v}_{L_{1}(\Omega)} + \norm{uv'}_{L_{1}(\Omega)}
-                \\&\leq \norm{u'}_{L_{1}(\Omega)} \norm{v}_{L_{\infty}(\Omega)} + \norm{u}_{L_{\infty}(\Omega)} \norm{v'}_{L_{1}(\Omega)}
-                \\&\leq \norm{1}_{L_{2}(\Omega)} \norm{u'}_{L_{2}(\Omega)} \norm{v}_{L_{\infty}(\Omega)} + \norm{u}_{L_{\infty}(\Omega)} \norm{1}_{L_{2}(\Omega)} \norm{v'}_{L_{2}(\Omega)}
-                \\&\leq L C_{\infty} \norm{u'}_{L_{2}(\Omega)} \norm{v}_{H^{1}(\Omega)} + L C_{\infty} \norm{u}_{H^{1}(\Omega)} \norm{v'}_{L_{2}(\Omega)}
-                % \\&\leq \norm{u'}_{L_{2}(\Omega)} \norm{v}_{L_{2}(\Omega)} + \norm{u}_{L_{2}(\Omega)} \norm{v'}_{L_{2}(\Omega)}
-                \\&\leq 2 L C_{\infty} \norm{u}_{H^{1}(\Omega)} \norm{v}_{H^{1}(\Omega)}
+                \norm{(\eta \zeta)'}_{L_{1}(\Omega)}
+                &= \norm{\eta' \zeta + \eta \zeta'}_{L_{1}(\Omega)}
+                \leq \norm{\eta' \zeta}_{L_{1}(\Omega)} + \norm{\eta \zeta'}_{L_{1}(\Omega)}
+                \\&\leq \norm{\eta'}_{L_{1}(\Omega)} \norm{\zeta}_{L_{\infty}(\Omega)} + \norm{\eta}_{L_{\infty}(\Omega)} \norm{\zeta'}_{L_{1}(\Omega)}
+                \\&\leq \norm{1}_{L_{2}(\Omega)} \norm{\eta'}_{L_{2}(\Omega)} \norm{\zeta}_{L_{\infty}(\Omega)} + \norm{\eta}_{L_{\infty}(\Omega)} \norm{1}_{L_{2}(\Omega)} \norm{\zeta'}_{L_{2}(\Omega)}
+                \\&\leq \sqrt{L} C_{\infty} \norm{\eta'}_{L_{2}(\Omega)} \norm{\zeta}_{H^{1}(\Omega)} + \sqrt{L} C_{\infty} \norm{\eta}_{H^{1}(\Omega)} \norm{\zeta'}_{L_{2}(\Omega)}
+                % \\&\leq \norm{\eta'}_{L_{2}(\Omega)} \norm{\zeta}_{L_{2}(\Omega)} + \norm{\eta}_{L_{2}(\Omega)} \norm{\zeta'}_{L_{2}(\Omega)}
+                \\&\leq 2 \sqrt{L} C_{\infty} \norm{\eta}_{H^{1}(\Omega)} \norm{\zeta}_{H^{1}(\Omega)}
             \end{aligned}
         \end{equation}
         Zusammen also
         \begin{equation}
             a_{j}(u, v)
-            \leq \norm*{\int_{0}^{x} \varphi_{j}(y) \diff y }_{L_{\infty}(\Omega)} \norm{(uv)'}_{L_{1}(\Omega)}
-            \leq 4 K L C_{\infty} \left( \frac{L}{\pi j} \right)^{2+\epsilon} \norm{u}_{H^{1}(\Omega)} \norm{v}_{H^{1}(\Omega)}.
+            &\leq \norm*{\int_{0}^{x} \varphi_{j}(y) \diff y }_{L_{\infty}(\Omega)} \norm{(\eta \zeta)'}_{L_{1}(\Omega)}
+            \\&\leq \frac{4 K L^{3 / 2} C_{\infty}}{(\pi j)^{2 + \epsilon}} \norm{\eta}_{H^{1}(\Omega)} \norm{\zeta}_{H^{1}(\Omega)}.
         \end{equation}
         Betrachte nun
         \begin{align}
                     \sum_{j = 0}^{\infty} \norm{A_{j}}_{\mathcal L(V, V')}
             &= \norm{A_{0}}_{\mathcal L(V, V')} + \sum_{j = 1}^{\infty} \norm{A_{j}}_{\mathcal L(V, V')}
-            \leq K + \sum_{j = 1}^{\infty} 4 K L C_{\infty} \left( \frac{L}{\pi j} \right)^{2+\epsilon}
-            \\&\leq K + 4 K L C_{\infty} \left( \frac{L}{\pi} \right)^{2+\epsilon} \sum_{j = 1}^{\infty} \frac{1}{j^{2 + \epsilon}}
-            = K +  K L C_{\infty} \left( \frac{L}{\pi} \right)^{2+\epsilon}\zeta(2 + \epsilon)
-            % \leq    \sum_{j = 0}^{\infty} \norm{\varphi_{j}}_{L_{\infty}(\Omega)}
-            % =       a_{0} + \frac{1}{\pi^{1+\epsilon}} \sum_{j = 1}^{\infty} \frac{1}{j^{1+\epsilon}}
-            % = a_{0} + \frac{\zeta(1+\epsilon)}{\pi^{1+\epsilon}}.
+            \\&\leq K + \sum_{j = 1}^{\infty} \frac{4 K L^{3 / 2} C_{\infty}}{(\pi j)^{2 + \epsilon}}
+            \\&\leq K + \frac{4 K L^{3 / 2} C_{\infty}}{\pi^{2+ \epsilon}} \sum_{j = 1}^{\infty} \frac{1}{j^{2 + \epsilon}}
         \end{align}
-        Für die Gültigkeit von
+        Fordern wir nun die Gültigkeit von \eqref{eq:kunoth:ass2_abs_reihe}, also
         \begin{equation}
             \sum_{j \geq 0} \norm{A_{j}}_{\mathcal L(V, V')} \leq \kappa \gamma_{0}
         \end{equation}
-        für ein $0 < \kappa < 1$ ist damit also
+        für ein $0 < \kappa < 1$, dann ist damit also
         \begin{equation}
-            \zeta(2 + \epsilon) \leq \frac{(\kappa c \left( \frac{\pi}{L}  \right)^{2}  - K) \pi^{2 + \epsilon}}{4 K C_{\infty} L^{3 + \epsilon}}
+            \sum_{j = 1}^{\infty} \frac{1}{j^{2 + \epsilon}} \leq \frac{(\kappa (\tfrac{\pi}{L})^{2} - K) \pi^{2+ \epsilon}}{4 K L^{3/2} C_{\infty}}
         \end{equation}
         mit $\epsilon > 0$ hinreichend.
     \end{Beweis}
 \end{Satz}
 
-Zusammenfassend erhalten wir für diese Wahl des Funktionensystems $\Set{ \varphi_{j} }_{j}$ die Aussage
+Zusammenfassend erhalten wir damit die folgende Aussage.
 
 \todo[inline]{Besser ausformulieren}
-\begin{Korollar}
-    Unter den Voraussetzungen von \thref{satz:regularitaet_nachrechnen} gilt \thref{thm:kunoth:theorem21}.
-\end{Korollar}
+\begin{Satz}
+    Seien $\mathcal X$ und $\mathcal Y$ gegeben wie in~\eqref{eq:var_ansatzraum_testraum}.
+    Weiter sei $\Set{\hat A, A_{j} \given j \in \mathbb{N}_{0}}$ die affine Zerlegung von $A = -c \Delta + \omega$ wie in \eqref{eq:1d:affine_zerlegung} und es gelte \thref{satz:regularitaet_nachrechnen}.
+    Für jedes $\sigma \in \mathcal S$ sei $B(\sigma) \in \mathcal L(\mathcal X, \mathcal Y')$ definiert durch
+    \begin{equation}
+        \label{eq:var_all_gross_b_parametrisch}
+        \skprod{B(\sigma) u}{v}_{\mathcal Y' \times \mathcal Y} = b(u, v; \sigma), \quad u \in \mathcal X,~y \in \mathcal Y,
+    \end{equation}
+    mit $b(\blank, \blank; \sigma)$ wie in~\eqref{eq:buv_2}.
+    Dann ist $B(\sigma)$ für jedes $\sigma \in \mathcal S$ stetig invertierbar und die parametrische Familie von Lösungen $u(\sigma)$ des parametrischen Raum-Zeit-Variationsproblems \eqref{eq:varprob_2} hängt analytisch von $\sigma$ ab.
+
+    \begin{Beweis}
+        Direkte Folgerung aus \thref{satz:regularitaet_nachrechnen} und \thref{thm:kunoth:theorem21}.
+    \end{Beweis}
+\end{Satz}
 
 % subsection nachrechnen_von_thref_thm_kunoth_assumption2 (end)
 
