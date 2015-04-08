@@ -297,41 +297,41 @@ Dazu wird der folgende wichtige Satz, welcher in dieser oder ähnlicher Form bei
 
 \begin{Satz}[Banach-Ne{\v c}as-Babu{\v s}ka-Theorem]
 \label{satz:gl:bnb_theorem}
-    Seien $H_{1}$ und $H_{2}$ Hilberträume.
-    Eine lineare Abbildung $A \colon H_{1} \to H_{2}'$ ist genau dann ein Isomorphismus, das heißt stetig invertierbar, wenn die zugehörige Bilinearform $a \colon H_{1} \times H_{2} \to \mathbb{R}$ die folgenden Bedingungen erfüllt:
+    Seien $U$ und $V$ Hilberträume.
+    Eine lineare Abbildung $A \colon U \to V'$ ist genau dann ein Isomorphismus, das heißt stetig invertierbar, wenn die zugehörige Bilinearform $a \colon U \times V \to \mathbb{R}$ die folgenden Bedingungen erfüllt:
     \begin{thmenumerate}
         \item \label{satz:gl:bnb_theorem:bedingung:stetig}
         \emph{Stetigkeit}.
         Es existiert ein $0 < C < \infty$ mit
         \begin{equation}
-            \abs{a(u, v)} \leq C \norm{u}_{H_{1}} \norm{v}_{H_{2}} \quad \fa u \in H_{1},~v\in H_{2}.
+            \abs{a(u, v)} \leq C \norm{u}_{U} \norm{v}_{V} \quad \fa u \in U,~v\in V.
         \end{equation}
         \item \label{satz:gl:bnb_theorem:bedingung:inf_sup}
         \emph{Inf-sup-Bedingung}.
         Es existiert ein $\alpha > 0$ mit
         \begin{equation}
-            \inf_{u \in H_{1}} \sup_{v \in H_{2}} \frac{a(u, v)}{\norm{u}_{H_{1}} \norm{v}_{H_{2}}} \geq \alpha.
+            \inf_{u \in U} \sup_{v \in V} \frac{a(u, v)}{\norm{u}_{U} \norm{v}_{V}} \geq \alpha.
         \end{equation}
         \item \label{satz:gl:bnb_theorem:bedingung:surjektiv}
-        Zu jedem $v \in H_{2}$, $v \neq 0$, existiert ein $u \in H_{1}$ mit
+        Zu jedem $v \in V$, $v \neq 0$, existiert ein $u \in U$ mit
         \begin{equation}
             a(u, v) \neq 0.
         \end{equation}
     \end{thmenumerate}
-    Ist dies der Fall und ist weiter ein Funktional $f \in H_{2}'$ gegeben, dann existiert eine eindeutige Lösung $\hat u \in H_{1}$ mit
+    Ist dies der Fall und ist weiter ein Funktional $f \in V'$ gegeben, dann existiert eine eindeutige Lösung $\hat u \in U$ mit
     \begin{equation}
-        a(\hat u, v) = f(v) \quad \fa v \in H_{2}
+        a(\hat u, v) = f(v) \quad \fa v \in V
     \end{equation}
     und es gilt
     \begin{equation}
-        \norm{\hat u}_{H_{1}} \leq \frac{1}{\alpha} \norm{f}_{H_{2}'}.
+        \norm{\hat u}_{U} \leq \frac{1}{\alpha} \norm{f}_{V'}.
     \end{equation}
 \end{Satz}
 
 \begin{Bemerkung}
     Die letzte Bedingung im vorherigen Satz kann durch eine stärkere inf-sup-Bedingung ersetzt werden, denn existiert ein $\beta > 0$ mit
     \begin{equation}
-        \inf_{v \in H_{2}} \sup_{u \in H_{1}} \frac{a(u, v)}{\norm{u}_{H_{1}} \norm{v}_{H_{2}}} \geq \beta,
+        \inf_{v \in V} \sup_{u \in U} \frac{a(u, v)}{\norm{u}_{U} \norm{v}_{V}} \geq \beta,
     \end{equation}
     dann gilt insbesondere auch \ref{satz:gl:bnb_theorem:bedingung:surjektiv}.
 \end{Bemerkung}
@@ -456,53 +456,79 @@ Aus dem Beweis des vorherigen Satzes ergeben sich zugleich auch Abschätzungen f
 \section{Galerkin-Verfahren} % (fold)
 \label{sec:galerkin_verfahren}
 
-\todo[inline]{Abschnitt mal ordentlich aufschreiben. Momentan ist das ja eher eine Sammlung von Notizen.}
+\todo[inline]{Abschnitt sauber aufziehen, d.h. Formulierungen verbessern, eventuell ausführlicher.}
 
-Wir wollen zunächst in Grundzügen das bekannte Galerkin-Verfahren wiederholen.
-Seien dazu $U$ und $V$ zwei Hilberträume.
-Betrachte das folgende abstrakte Variationsproblem:
-\begin{Problem}
-    Finde ein $u \in U$, so dass
+Wir wiederholen nun in Grundzügen das bekannte Galerkin-Verfahren, konzentrieren uns dabei aber auf das sogenannte \emph{Petrov-Galerkin-Verfahren}, welches eine Verallgemeinerung auf nicht-symmetrische Bilinearformen innerhalb der Variationsformulierung darstellt.
+
+Seien $U$ und $V$ zwei Hilberträume, $a \colon U \times V \to \mathbb{R}$ eine Bilinearform und $f \colon V \to \mathbb{R}$ ein lineares Funktional.
+Wir betrachten das folgende abstrakte Variationsproblem:
+Finde ein $u \in U$, so dass
+\begin{equation}
+    \label{eq:gv:variationsproblem}
+    a(u, v) = f(v) \quad \fa v \in V
+\end{equation}
+gilt.
+
+Unter gewissen Voraussetzungen, zum Beispiel, wenn die Bilinearform $a$ die Bedingungen des Banach-Ne{\v c}as-Babu{\v s}ka-Theorems (\thref{satz:gl:bnb_theorem}) erfüllt, existiert eine eindeutige Lösung $u \in U$ des obigen Variationsproblems.
+
+Bei den Räumen $U$ und $V$ handelt es sich im Allgemeinen um unendlichdimensionale Hilberträume, wodurch eine numerische Bestimmung der Lösung $u \in U$ nicht ohne Weiteres möglich ist.
+Um eine approximative Lösung von \eqref{eq:gv:variationsproblem} zu bestimmen, muss zunächst eine Diskretisierung durchgeführt werden.
+Diese wird bei Petrov-Galerkin-Verfahren dadurch erreicht, dass für Ansatz- und Testfunktionenraum endlichdimensionale Unterräume $U_{n} \subset U$ mit $\dim U_{n} = n$ respektive $V_{m} \subset V$ mit $\dim V_{m} = m$ konstruiert werden.
+
+Statt dem obigen Variationsproblem \eqref{eq:gv:variationsproblem} betrachtet man dann:
+Finde ein $u_{n} \in U_{n}$, so dass
+\begin{equation}
+    \label{eq:gv:variationsproblem_diskret}
+    a_{n,m}(u_{n}, v_{m}) = f_{m}(v_{m}) \quad \fa v_{m} \in V_{m}
+\end{equation}
+gilt, wobei $a_{n, m} \colon U_{n} \times V_{m} \to \mathbb{R}$ die Einschränkung $a_{n,m} = \restr{a}{U_{n} \times V_{m}}$ beziehungsweise $f_{m} \colon V_{m} \to \mathbb{R}$ die Einschränkung $f_{m} = \restr{f}{V_{m}}$ bezeichne.
+
+Zu Beachten ist, dass selbst wenn das eigentliche Variationsproblem \eqref{eq:gv:variationsproblem} eindeutig lösbar ist, dies noch nicht für das diskretisierte Variationsproblem \eqref{eq:gv:variationsproblem_diskret} gelten muss.
+Auch muss im Falle einer existierenden Lösung $u_{n} \in U_{n}$ diese im Allgemeinen für $n \to \infty$ nicht gegen die Lösung $u \in U$ von \eqref{eq:gv:variationsproblem} konvergieren.
+
+\todo[inline]{Quellen prüfen}
+Der folgende Satz, welcher in verschiedenen Varianten bei \cites[Theorem 6.2.1]{Aziz:2014wf}[Theorem 5.3.1]{Quarteroni:2009hp}[Lemma III.3.7]{Braess:2007wm} zu finden ist, liefert hinreichende Bedingungen für die eindeutige Lösbarkeit von \eqref{eq:gv:variationsproblem_diskret} und zudem eine A priori-Fehlerabschätzung.
+
+\begin{Satz}
+    Seien $U$ und $V$ zwei Hilberträume und $U_{n} \subset U$, respektive $V_{m} \subset V$ Unterräume.
+    Weiter seien $a \colon U \times V \to \mathbb{R}$ eine Bilinearform und $f \colon V \to \mathbb{R}$ ein lineares Funktional, wobei $a$ die Bedingungen aus \thref{satz:gl:bnb_theorem} erfülle.
+    Bezeichne ferner mit $a_{n, m} = \restr{a}{U_{n} \times V_{m}}$ respektive $f_{m} = \restr{f}{V_{m}}$ die Einschränkungen von $a$ beziehungsweise $f$ auf die Unterräume $U_{n}$ und $V_{m}$.
+
+    Erfüllt $a_{n, m}$ die Bedingungen \ref{satz:gl:bnb_theorem:bedingung:inf_sup} und \ref{satz:gl:bnb_theorem:bedingung:surjektiv} aus \thref{satz:gl:bnb_theorem} mit der inf-sup-Konstante $\alpha_{n, m} > 0$ statt $\alpha$, dann existiert eine eindeutige Lösung $u_{n} \in U_{n}$ des Variationsproblems \eqref{eq:gv:variationsproblem_diskret} und diese erfüllt
     \begin{equation}
-        a(u, v) = f(v) \quad \fa v \in V
+        \norm{u_{n}}_{U} \leq \frac{1}{\alpha_{n, m}} \norm{f_{m}}_{V_m'}.
     \end{equation}
-    gilt.
-\end{Problem}
-Dabei sei $a(\blank, \blank) \colon U \times V \to \mathbb{R}$ eine Bilinearform und $f(\blank) \colon V \to \mathbb{R}$ ein lineares Funktional.
-Unter gewissen Voraussetzungen an $a(\blank, \blank)$, auf die wir in dieser Wiederholung nicht genauer eingehen, existiert eine eindeutige Lösung $u \in U$ zu diesem Variationsproblem.
 
-Da es sich bei $U$ und $V$ im Allgemeinen um Funktionenräume, damit insbesondere also um unendlichdimensionale Hilberträume, handelt, ist die Idee des Galerkin-Verfahrens nun, die beiden Räume jeweils durch endlichdimensionale Unterräume $U_{n} \subset U$ und $V_{m} \subset V$ zu approximieren.
-Statt dem eigentlichen Variationsproblem betrachtet man die sogenannte Galerkin-Projektion:
-\begin{Problem}
-    Finde ein $u_{n} \in U_{n}$, so dass
+    Ist weiter $u \in U$ eine Lösung des Variationsproblems \eqref{eq:gv:variationsproblem}, dann gilt
     \begin{equation}
-        a(u_{n}, v_{m}) = f(v_{m}) \quad \fa v_{m} \in V_{m}
+        \norm{u - u_{n}} \leq \left( 1 + \frac{C}{\alpha_{n, m}} \right)  \inf_{w_{n} \in U_{n}} \norm{u - w_{n}}.
     \end{equation}
-    gilt.
-\end{Problem}
 
-Die endlichdimensionalen Unterräume werden als Spann von endlich vielen Basisfunktionen
-\begin{equation}
-    U_{n} = \spn\Set{\varphi_{i} \given i = 1 \dots n},
-    \qquad
-    V_{m} = \spn\Set{ \psi_{j} \given j = 1 \dots m}
-\end{equation}
-konstruiert.
-Diese Eigenschaft lässt sich ausnutzen, denn dadurch wird es uns ermöglicht eine Lösung der Galerkin-Projektion durch das Aufstellen und Lösen eines linearen Gleichungssystems zu bestimmen.
-Dazu benötigt man die sogenannte Steifigkeitsmatrix $\mat A \in \mathbb{R}^{m \times n}$, welche durch
-\begin{equation}
-    \mat A_{ji} = a(\varphi_{i}, \psi_{j}), \quad i = 1 \dots n, j = 1 \dots m,
-\end{equation}
-definiert ist, und den Lastvektor $\vec f \in \mathbb{R}^{m}$, gegeben durch
-\begin{equation}
-    \vec f_{j} = f(\psi_{j}), \quad j = 1 \dots m.
-\end{equation}
-Löst man nun das lineare Gleichungssystem $\mat A \vec u = \vec f$, dann erhält man aus dem Koeffizientenvektor $\vec u$ die Lösung $u_{n} \in U_{n}$ durch
-\begin{equation}
-    u_{n} = \sum_{i = 1}^{n} \vec u_{i} \varphi_{i}.
-\end{equation}
+    \begin{Beweis}$\;$
+        \todo[inline]{Nötig?}
+    \end{Beweis}
+\end{Satz}
 
-% section galerkin_verfahren (end)
+Um nun tatsächlich eine Lösung $u_{n} \in U_{n}$ zu bestimmen, verfährt man wie folgt:
+Seien $\Set{ \varphi_{i} \in U \given i = 1 \dots n }$ und $\Set{ \psi_{j} \in V \given j = 1 \dots m}$ jeweils eine Basis von $U_{n}$ respektive $V_{m}$.
+
+Schreibt man nun die Ansatz- beziehungsweise Testfunktionen als Linearkombination
+\begin{equation}
+    u_{n} = \sum_{i = 1}^{n} \vec{u}_{i} \varphi_{i}, \quad v_{m} = \sum_{j = 1}^{m} \vec{v}_{j} \psi_{j}, \qquad \vec u \in \mathbb{R}^{n},~\vec v \in \mathbb{R}^{m},
+\end{equation}
+dieser Basisfunktionen und setzt diese in das Variationsproblem \eqref{eq:gv:variationsproblem_diskret} ein, dann führt dies unmittelbar zu dem linearen Gleichungssystem $\mat{A} \vec{u} = \vec{f}$, wobei wir
+\begin{equation}
+    \mat A_{ji} = a_{n, m}(\varphi_{j}, \psi_{i}), \quad i = 1 \dots n,~j = 1 \dots m,
+\end{equation}
+als \emph{Steifigkeitsmatrix} $\mat A \in \mathbb{R}^{m \times n}$, und
+\begin{equation}
+    \vec f_{j} = f_{m}(\psi_{j}), \quad j = 1 \dots m,
+\end{equation}
+als \emph{Lastvektor} $\vec f \in \mathbb{R}^{m}$ bezeichnen.
+Besitzt das lineare Gleichungssystems eine Lösung $\vec u \in \mathbb{R}^{n}$, dann erhält man die zugehörige Lösung $u_{n} \in U_{n}$ des obigen Variationsproblems \eqref{eq:gv:variationsproblem_diskret} durch die Linearkombination
+\begin{equation}
+    u_{n} = \sum_{i = 1}^{n} \vec{u}_{i} \varphi_{i}.
+\end{equation}
 
 % chapter grundlagen (end)
 
