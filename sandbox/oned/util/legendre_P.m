@@ -1,6 +1,6 @@
 function pn = legendre_P( x, n )
 %LEGENDRE_P Berechnet die auf [0, 1] geshifteten Legendre-Polynome.
-% Berechnet das Legendre-Polynom n-ten Grades, geshiftet auf das Interval 
+% Berechnet das Legendre-Polynom n-ten Grades, geshiftet auf das Interval
 % [0, 1], und wertet es in x aus. Die Implementierung basiert auf der
 % Rekursionsformel von Bonet.
 
