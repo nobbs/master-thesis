@@ -7,6 +7,8 @@ density  = zeros(length(Mspan), length(Qspan));
 relconds = zeros(length(Mspan), length(Qspan));
 
 for ii = 1:length(Mspan)
+    ii
+
     for jj = 1:length(Qspan)
         num_M = Mspan(ii);
         num_Q = Qspan(jj);
@@ -14,7 +16,6 @@ for ii = 1:length(Mspan)
         % Daten und Einstellungen laden
         [data, opt, omega] = setup(num_M, num_Q);
 
-        ii
         tic;
         t_plot = 0;
 

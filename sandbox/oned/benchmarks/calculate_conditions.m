@@ -1,18 +1,19 @@
-Nspan = 1:50;
+Nspan = 1:20;
 
-conds = zeros(length(Nspan), 1);
-times = zeros(length(Nspan), 1);
-density = zeros(length(Nspan), 1);
+conds    = zeros(length(Nspan), 1);
+times    = zeros(length(Nspan), 1);
+density  = zeros(length(Nspan), 1);
 relconds = zeros(length(Nspan), 1);
 
-parfor ii = 1:length(Nspan)
+for ii = 1:length(Nspan)
+	ii
+
     num_M = Nspan(ii);
     num_Q = Nspan(ii);
 
     % Daten und Einstellungen laden
     [data, opt, omega] = setup(num_M, num_Q);
 
-    ii
     tic;
     t_plot = 0;
 

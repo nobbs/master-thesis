@@ -1,3 +1,4 @@
+function [B, ufun] = start(num_M, num_Q)
 % Galerkin-Verfahren für eindimensionale Raum-Zeit-Variationsformulierung.
 % Das Variationsproblem $b(u, v) = f(v)$ mit $u \in \mathcal X$ und $v \in \mathcal Y$ wird durch
 % Galerkin-Projektion auf endlichdimensionale Unterräume $\mathcal X_N$ und $\mathcal Y_N$
@@ -29,11 +30,13 @@ u = B \ F;
 ufun = @(t, x) solution(t, x, opt, u);
 
 % Und weil's so toll ist, plotten wir die Lösung bei Bedarf auch noch.
-t_plot = 0;
+t_plot = 1;
 if t_plot
     figure(2)
     tgrid = linspace(data.tspan(1), data.tspan(2), 100);
     xgrid = linspace(data.xspan(1), data.xspan(2), 50);
     [T, X] = meshgrid(tgrid, xgrid);
     mesh(T, X, ufun(T, X));
+end
+
 end

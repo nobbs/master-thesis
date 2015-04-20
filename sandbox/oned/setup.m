@@ -9,7 +9,7 @@ data = {};
 % Varianten der Auswertung der einzelnen Integrale der Bilinearform
 % Zur Auswahl stehen 0 und 1 für numerische Quadratur, respektive exakte Auswertung.
 opt.variante_term1 = 1;
-opt.variante_term3 = 1;
+opt.variante_term3 = 0;
 
 % Anzahl der Sinus-Basisfunktionen für die Raumvariable $x$.
 opt.num.M = num_M;
@@ -61,8 +61,13 @@ assert(data.c_R < (data.c_D * data.kappa * pi^(4 + data.eps)) / (pi^(2 + data.ep
 % "Parameter-Funktion" $\omega$ festlegen.
 omega.fun = @(x) omega_sinus(x, 1/100, omega.N, omega.sigmas);
 
+omega.N = 0;
+omega.sigmas = [1];
+omega.fun = @(x) ones(size(x, 1), size(x, 2));
+
 % Anfangsbedingung $u0$ festlegen.
 data.u0 = @(x) -(x) .* (x-1) .* (x+3);
+% data.u0 = @(x) sin(pi*x);
 
 % Und den Quellterm $g$ ebenfalls festlegen.
 data.g = @(t, x) 0 + 0 .* t + 0 .* x;
