@@ -1,4 +1,4 @@
-function [data, opt, omega] = setup(num_M, num_Q)
+function [data, opt, omega] = setup(num_M, num_Q, u0)
 % SETUP Einstellungen und Bedingungen
 
 %% Vorbereitung
@@ -66,8 +66,9 @@ omega.sigmas = [1];
 omega.fun = @(x) ones(size(x, 1), size(x, 2));
 
 % Anfangsbedingung $u0$ festlegen.
-data.u0 = @(x) -(x) .* (x-1) .* (x+3);
+% data.u0 = @(x) -(x) .* (x-1) .* (x+3);
 % data.u0 = @(x) sin(pi*x);
+data.u0 = u0;
 
 % Und den Quellterm $g$ ebenfalls festlegen.
 data.g = @(t, x) 0 + 0 .* t + 0 .* x;
