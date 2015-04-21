@@ -23,7 +23,7 @@ bounds = zeros(length(Lspan), 1);
 approxs = zeros(length(Lspan), 1);
 
 % Einbettungskonstante
-Cinfty = einbettung();
+% Cinfty = einbettung();
 
 for idx_l = 1:length(Lspan)
     idx_l
@@ -33,8 +33,8 @@ for idx_l = 1:length(Lspan)
 
     % Abschätzung berechenen
     % bounds(idx_l) = (4 * K * Cinfty) / (l * pi)^(2 + epsilon);
-%     bounds(idx_l) = (4 * K) * L * (L / (l * pi))^(2 + epsilon);
-    bounds(idx_l) = (4 * K) * Cinfty * L * (L / (l * pi))^(2 + epsilon);
+    bounds(idx_l) = (4 * K) * (L / (l * pi))^(2 + epsilon);
+%     bounds(idx_l) = (4 * K) * Cinfty * L * (L / (l * pi))^(2 + epsilon);
 
     % values = zeros(N * M, 1);
     max_val = 0;
