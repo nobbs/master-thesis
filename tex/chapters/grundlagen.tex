@@ -1,5 +1,12 @@
 %!TEX root = ../main.tex
 
+\setchapterpreamble[ul][0.8\textwidth]{%
+    % \dictum[Terry Pratchett]{%
+    % Coffee is a way of stealing time that should by rights belong to your older self.
+    % }
+    \dictum[Alfréd Rényi]{A mathematician is a device for turning coffee into theorems.}
+    \vspace*{2\baselineskip}
+}
 \chapter{Grundlagen} % (fold)
 \label{cha:grundlagen}
 
@@ -458,6 +465,125 @@ Aus dem Beweis des vorherigen Satzes ergeben sich zugleich auch Abschätzungen f
 \todo[inline]{Beweise ausführlich aufschreiben?}
 
 % section lineare_evolutionsgleichungen (end)
+
+% \section{Homogenisierung} % (fold)
+% \label{sec:homogenisierung}
+
+% \todo[inline]{Ist das nützlich?}
+% \todo[inline]{Quelle!}
+% Die im vorherigen Abschnitt hergeleitete inhomogene Raum-Zeit-Variationsformulierung lässt sich zu einer äquivalenten homogenen Raum-Zeit-Variationsformulierung umformen.
+
+% Dazu definieren wir erneut zunächst die benötigten Ansatz- und Testfunktionenräume und anschließend das darauf aufbauende homogene Raum-Zeit-Variationsproblem.
+
+% \begin{Definition}
+% \label{definition:gl:ansatz_und_testraum_homogen}
+%     Der Ansatzfunktionenraum $\hat{\mathcal X}$ sei als der folgende Unterraum von $W(0, T; V, V')$
+%     \begin{equation}
+%         \label{eq:var_all_ansatzraum_x_homogen}
+%         \begin{aligned}
+%             \hat{\mathcal X} &= L_{2}(0, T; V) \cap H^{1}_{\{0\}}(0, T; V')
+%             \\&= \Set*{ u \in L_{2}(0, T; V) \given u_{t} \in L_{2}(0, T; V'),~u(0) = 0 }
+%         \end{aligned}
+%     \end{equation}
+%     definiert, ausgestattet mit der bekannten Norm
+%     \begin{equation}
+%         \label{eq:var_all_ansatzraum_x_norm_homogen}
+%         \norm{u}_{\hat{\mathcal X}} = \left( \norm{u}_{L_{2}{(0, T; V)}}^{2} + \norm{u_{t}}_{L_{2}{(0, T; V')}}^{2} \right)^{1 / 2}, \quad u \in \hat{\mathcal X}.
+%     \end{equation}
+%     Der zugehörige Testfunktionenraum $\hat{\mathcal Y}$ sei gegeben durch
+%     \begin{equation}
+%         \label{eq:var_all_testraum_y_homogen}
+%         \hat{\mathcal Y} = L_{2}(0, T; V)
+%     \end{equation}
+%     mit der üblichen Norm
+%     \begin{equation}
+%         \label{eq:var_all_testraum_y_norm_homogen}
+%         \norm{v}_{\hat{\mathcal Y}} = \norm{v_{1}}_{L_{2}(0, T; V)}, \quad v \in \hat{\mathcal Y}.
+%     \end{equation}
+% \end{Definition}
+
+% \begin{Definition}
+% \label{definition:variationsformulierung_homogen}
+%     Seien $\hat{\mathcal X}$ und $\hat{\mathcal Y}$ wie in~\eqref{eq:var_all_ansatzraum_x_homogen} respektive~\eqref{eq:var_all_testraum_y_homogen}.
+%     Als \emph{homogenisierte Raum-Zeit-Variations"-for"-mu"-lie"-rung} der linearen Evolutionsgleichung~\eqref{eq:allgemeine_parabolische_pde} bezeichnen wir das folgende Problem:
+
+%     Gegeben ein Quellterm $g \in L_{2}(0, T; V')$ und ein Anfangswert $u_{0} \in H$, sodass ein $\hat u_{0} \in \mathcal X$ existiert, welches $\hat{u}_{0}(0) = u_{0}$ erfüllt.
+%     Finde ein $u \in \hat{\mathcal X}$ mit
+%     \begin{equation}
+%         \label{eq:var_all_problem_homogen}
+%         \hat{b}(u, v) = \hat{f}(v) \quad \fa v \in \hat{\mathcal Y}.
+%     \end{equation}
+%     Dabei ist $\hat{b} \colon \hat{\mathcal X} \times \hat{\mathcal Y} \to \mathbb{R}$ die durch
+%     \begin{equation}
+%         \label{eq:var_all_bf_b_homogen}
+%         \hat{b}(u, v) = \int_{0}^{T} \skp{u_{t}(t)}{v(t)}{V' \times V} + a(u(t), v(t); t) \diff t
+%     \end{equation}
+%     definierte Bilinearform und $\hat{f} \colon \hat{\mathcal Y} \to \mathbb{R}$ das durch
+%     \begin{equation}
+%         \label{eq:var_all_f_homogen}
+%         \hat{f}(v) = \int_{0}^{T} \skp{\hat g(t)}{v(t)}{V' \times V} \diff t
+%     \end{equation}
+%     gegebene Funktional,
+%     wobei $\hat{g} \in $ als
+%     \begin{equation}
+%         \hat{g} = g(t) - \left[ (\hat u_{0})_{t}(t) + A(t) \hat u_{0}(t) \right]
+%     \end{equation}
+%     definiert sei.
+% \end{Definition}
+
+% Das es sich hierbei tatsächlich um eine Homogenisierung handelt, liefert der folgende Satz.
+
+% \begin{Satz}
+%     Sei $H = L_{2}(\Omega)$ für ein beschränktes Gebiet $\Omega \in \mathbb{R}^{n}$.
+%     Dann gilt: $\hat u \in \tilde{\mathcal X}$ ist genau dann eine Lösung des homogenisierten RZVP aus \thref{definition:variationsformulierung_homogen}, wenn $u := \hat u + \hat u_{0} \in \mathcal X$ eine Lösung  des RZVP aus \thref{definition:variationsformulierung} ist.
+
+%     \todo[inline]{Beweis}
+%     % \begin{Beweis}
+%     %     \emph{Hinrichtung.} Sei $\hat u \in \tilde{\mathcal X}$ eine Lösung, dann gilt
+%     %     \begin{equation}
+%     %         u(0) = \hat u(0) + \hat u_{0}(0) = 0 + u_{0} = u_{0}.
+%     %     \end{equation}
+%     %     Seien nun $v = (v_{1}, v_{2}) \in \mathcal Y$ beliebig.
+%     %     Dann gilt
+%     %     \begin{align}
+%     %         b(u, v)
+%     %           &= b(u, (v_{1}, v_{2}))
+%     %         \\&= \hat b(u, v_{1}) + \skp{u(0)}{v_{2}}{H}
+%     %         \\&= \hat b(\hat u, v_{1}) + \hat b(\hat u_{0}, v_{1}) + \skp{u(0)}{v_{2}}{H}
+%     %         \\&= \hat f(v_{1}) + \int_{0}^{T} \skp{\hat u_{0})_{t}(t) + A(t) \hat u_{0}(t)}{V' \times V} + \skp{u(0)}{v_{2}}{H}
+%     %         \\&= \int_{0}^{T} \skp{\hat g(t) + \hat u_{0})_{t}(t) + A(t) \hat u_{0}(t)}{v_{1}(t)}{V' \times V} + \skp{u(0)}{v_{2}}{H}
+%     %         \\&= \int_{0}^{T} \skp{g(t)}{v_{1}(t)}{V' \times V} + \skp{u(0)}{v_{2}}{H}
+%     %         \\&= f(v).
+%     %     \end{align}
+
+%     %     \emph{Rückrichtung.} Sei $u \in \mathcal X$ eine Lösung.
+%     %     Dann gilt
+%     %     \begin{equation}
+%     %             \hat u(0) = u(0) - \hat u_{0}(0) = u_{0} - u_{0} = 0.
+%     %     \end{equation}
+%     %     \todo[inline]{Bla?}
+%     %     Damit ist insbesondere $\hat u \in \tilde{\mathcal X}$.
+%     %     Sei nun $v_{1} \in \tilde{\mathcal Y}$ beliebig und $v_{2} \in H$, dann gilt
+%     %     \begin{align}
+%     %         \hat b(u, v_{1})
+%     %           &= \hat b(u - \hat u_{0}, v_{1})
+%     %         \\&= (b(u, (v_{1}, v_{2})) - \skp{u(0)}{v_{2}}{H}) - (b(\hat u_{0}, (v_{1}, v_{2})) - \skp{\hat u_{0}(0)}{v_{2}}{H})
+%     %         \\&= f(v_{1}, v_{2}) - b(\hat u_{0}, (v_{1}, v_{2}) - \skp{u(0) - \hat u_{0}(0)}{v_{2}}{H}
+%     %         \\&= f(v_{1}, v_{2}) - b(\hat u_{0}, (v_{1}, v_{2}) - \skp{u(0)
+%     %         \\&= \int_{0}^{T} \skp{g(t)}{v_{1}(t)}{V' \times V} \diff t + \skp{u_{0}}{v_{2}}{H}
+%     %                 - \int_{0}^{T} \skp{(\hat u_{0})_{t}(t)}{v_{1}(t)}{V' \times V} + a(\hat u_{0}(t), v_{1}(t); t) \diff t - \skp{u_{0}}{v_{2}}_{H}
+%     %         \\&= \hat f(v_{1}).
+%     %     \end{align}
+%     %     Damit ist die Äquivalenz gezeigt.
+%     % \end{Beweis}
+% \end{Satz}
+
+% \begin{Bemerkung}
+%     Ist $u_{0} \in V$ gegeben, dann erhalten wir $\hat{u}_{0}$ via $\hat{u}_{0} = 1 \otimes u_{0}$, denn dann gilt
+%     $\hat{u}_{0}(0) = u_{0}$ und $\hat{u}_{0} \in \mathcal X$.
+% \end{Bemerkung}
+
+% section homogenisierung (end)
 
 \section{Galerkin-Verfahren} % (fold)
 \label{sec:galerkin_verfahren}

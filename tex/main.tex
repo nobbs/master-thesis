@@ -19,6 +19,7 @@
 
 \begin{document}
 
+
     % Deckblack / Titelseite
     \include{misc/deckblatt}
 
@@ -43,12 +44,15 @@
     \mainmatter{}
 
     % Kapitel
+    % \input{misc/lorem}
+
     % \input{chapters/einleitung}
     \input{chapters/grundlagen}
-    \input{chapters/parametrisches_problem}
-    \input{chapters/kapitel3}
-    \input{chapters/problemstellung}
-    \input{chapters/reduzierte_basis}
+    % \input{chapters/parametrisches_problem}
+    % \input{chapters/paraprob}
+    % \input{chapters/kapitel3}
+    % \input{chapters/problemstellung}
+    % \input{chapters/reduzierte_basis}
     % \input{chapters/numerische_experimente}
 
     % \input{temp/onedim}
@@ -63,9 +67,9 @@
     \addcontentsline{toc}{chapter}{Theoremverzeichnis}
     \listtheorems{Satz,Lemma,Definition,Lemma,Annahme,Bemerkung}
     %
-    \listoffigures
-    \listoftables
-    \printnomenclature{}
+    % \listoffigures
+    % \listoftables
+    % \printnomenclature{}
 
     % Literaturverzeichnis
     \printbibliography
@@ -73,5 +77,5 @@
     % Anhänge
 
     % Eidesstattliche Erklärung
-    % \include{misc/eidesstattliche_erklaerung}
+    \include{misc/eidesstattliche_erklaerung}
 \end{document}

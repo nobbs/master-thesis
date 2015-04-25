@@ -26,12 +26,25 @@
 \usepackage{microtype}
 
 % Graphiken und Farben
-\usepackage{graphicx, color}
+\usepackage{graphicx, xcolor}
+\definecolor{jgu:rot}{RGB}{193,0,42}
+\definecolor{jgu:hgrau}{RGB}{172,172,172}
+\definecolor{jgu:dgrau}{RGB}{99,99,99}
 
 % PDF-Verlinkungen und Metadaten
 \usepackage[
-    colorlinks=true,
+	colorlinks=true,
+	linkcolor=jgu:rot,          % color of internal links (change box color with linkbordercolor)
+	citecolor=jgu:rot,        % color of links to bibliography
+	filecolor=jgu:rot,      % color of file links
+	urlcolor=jgu:rot
 ]{hyperref}
+
+\newcommand{\changefont}[3]{
+\fontfamily{#1} \fontseries{#2} \fontshape{#3} \selectfont}
+
+% Andere Titles
+% \usepackage{titlesec}
 
 % \usepackage{nameref}
 
@@ -46,7 +59,7 @@
 % Fancyhdr-Ersatz für scrbook
 \usepackage[
     automark,
-    headsepline
+    % headsepline
 ]{scrlayer-scrpage}
 
 % enums
@@ -82,11 +95,13 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Nebensächliches
 
+\newcommand{\altfont}{\fontfamily{qpl}}
+
 % Querformatseiten
 \usepackage{pdflscape}
 
 % Labels am Seitenrand anzeigen
-\usepackage{showlabels}
+% \usepackage{showlabels}
 
 % todos
 \usepackage[german]{todonotes}
@@ -94,3 +109,46 @@
 % Blindtext
 \usepackage{blindtext}
 % \blindmathtrue{}
+
+
+\usepackage{tocstyle}
+\usetocstyle{KOMAlike}
+
+%%% Chapter-Style und mehr
+% Überschriften in Dunkelgrau
+\addtokomafont{disposition}{\color{jgu:dgrau}}
+% Überschriften in TeX Gyre Pagella
+\addtokomafont{disposition}{\normalfont\altfont\selectfont}
+
+% Chapterstyle
+\renewcommand*{\chapterheadstartvskip}{\vspace*{5\baselineskip}}
+\renewcommand*{\chapterheadendvskip}{\vspace*{2\baselineskip}}
+\renewcommand*{\chapterformat}{%
+				\raggedright
+				\color{jgu:rot}
+                \fontsize{80}{30}\selectfont\thechapter
+                \fontsize{20}{30}\scshape\selectfont\enskip\chapappifchapterprefix
+                }
+\renewcommand*{\raggedchapter}{\raggedleft}
+
+% Schriften für Überschriften (einzeln)
+% \addtokomafont{chapter}{\normalfont\altfont\selectfont}
+% \addtokomafont{chapter}{\color{black}}
+% \addtokomafont{section}{\normalfont\altfont\selectfont}
+% \addtokomafont{subsection}{\normalfont\altfont\selectfont}
+% \addtokomafont{subsubsection}{\normalfont\altfont\selectfont}
+% \addtokomafont{minisec}{\normalfont\altfont\selectfont}
+% \addtokomafont{paragraph}{\normalfont\altfont\selectfont}
+
+\addtokomafont{pageheadfoot}{\color{jgu:dgrau}\normalfont\altfont\selectfont}% Fußzeile normale Schrift
+
+\renewcommand*\dictumwidth{.95\linewidth}
+\renewcommand*\dictumrule{}
+\renewcommand*\dictumauthorformat[1]{--- #1}
+\addtokomafont{dictumtext}{\color{jgu:dgrau}\normalfont\altfont\selectfont\itshape\small}
+\addtokomafont{dictumauthor}{\color{jgu:dgrau}\normalfont\altfont\selectfont\small}
+
+\addtokomafont{pagenumber}{\color{jgu:dgrau}\normalfont\altfont\selectfont}
+
+% \addtokomafont{sectionentrypagenumber}{\color{black}}
+\addtokomafont{chapterentrypagenumber}{\color{black}\rmfamily}
