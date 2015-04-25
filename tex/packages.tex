@@ -104,7 +104,10 @@
 % \usepackage{showlabels}
 
 % todos
-\usepackage[german]{todonotes}
+\usepackage[%
+    german,
+    % disable
+]{todonotes}
 
 % Blindtext
 \usepackage{blindtext}
@@ -126,7 +129,7 @@
 \renewcommand*{\chapterformat}{%
 				\raggedright
 				\color{jgu:rot}
-                \fontsize{80}{30}\selectfont\thechapter
+                \fontsize{60}{30}\selectfont\thechapter
                 \fontsize{20}{30}\scshape\selectfont\enskip\chapappifchapterprefix
                 }
 \renewcommand*{\raggedchapter}{\raggedleft}
