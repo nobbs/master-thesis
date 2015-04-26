@@ -96,6 +96,8 @@
 %%% Nebensächliches
 
 \newcommand{\altfont}{\fontfamily{qpl}}
+\newcommand{\altsffont}{\fontfamily{phv}}
+% \newcommand{\altsffont}{\fontfamily{pfr}\fontseries{l}}
 
 % Querformatseiten
 \usepackage{pdflscape}
@@ -119,7 +121,7 @@
 
 %%% Chapter-Style und mehr
 % Überschriften in Dunkelgrau
-\addtokomafont{disposition}{\color{jgu:dgrau}}
+% \addtokomafont{disposition}{\color{jgu:dgrau}}
 % Überschriften in TeX Gyre Pagella
 \addtokomafont{disposition}{\normalfont\altfont\selectfont}
 
@@ -129,7 +131,7 @@
 \renewcommand*{\chapterformat}{%
 				\raggedright
 				\color{jgu:rot}
-                \fontsize{60}{30}\selectfont\thechapter
+                \altfont\fontsize{60}{30}\selectfont\thechapter
                 \fontsize{20}{30}\scshape\selectfont\enskip\chapappifchapterprefix
                 }
 \renewcommand*{\raggedchapter}{\raggedleft}
@@ -148,10 +150,12 @@
 \renewcommand*\dictumwidth{.95\linewidth}
 \renewcommand*\dictumrule{}
 \renewcommand*\dictumauthorformat[1]{--- #1}
-\addtokomafont{dictumtext}{\color{jgu:dgrau}\normalfont\altfont\selectfont\itshape\small}
-\addtokomafont{dictumauthor}{\color{jgu:dgrau}\normalfont\altfont\selectfont\small}
+\addtokomafont{dictumtext}{\color{jgu:dgrau}\normalfont\altsffont\fontsize{9}{12}\selectfont\itshape}
+\addtokomafont{dictumauthor}{\color{jgu:dgrau}\normalfont\altsffont\fontsize{8}{12}\selectfont}
 
 \addtokomafont{pagenumber}{\color{jgu:dgrau}\normalfont\altfont\selectfont}
 
 % \addtokomafont{sectionentrypagenumber}{\color{black}}
 \addtokomafont{chapterentrypagenumber}{\color{black}\rmfamily}
+\addtokomafont{chapterentry}{\rmfamily\bfseries}
+
