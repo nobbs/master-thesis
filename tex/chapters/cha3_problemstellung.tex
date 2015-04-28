@@ -5,184 +5,126 @@
 experience".}}
     \vspace*{2\baselineskip}
 }
-\chapter{Parametrische Problem - Neuer Versuch} % (fold)
+\chapter{Problemstellung} % (fold)
 \label{cha:parametrische_problem_neuer_versuch}
 
-In diesem Kapitel führen wir nun die konkrete PPDE, welche ihren Ursprung in der Polymerchemie hat, ein, wandeln sie anschließend in eine parametrische PPDE um und weisen dann Regularität bezüglich der Parameter nach.
+In diesem Kapitel konkretisieren wir die parabolische partielle Differentialgleichung aus \autoref{cha:einleitung} und reinterpretieren diese als eine parametrische Differentialgleichung.
+Zudem leiten wir Variationsformulierungen her und weisen anhand dieser nach, dass die Lösungen der parametrischen partiellen Differentialgleichung eine gewisse Regularität bezüglich der Parameter aufweisen.
+% Hierbei orientieren wir uns an den Arbeiten von !TODO!.
 
-\section{Der betrachtete Fall} % (fold)
-\label{sec:der_betrachtete_fall}
+\section{Problemstellung} % (fold)
+\label{sec:problemstellung}
 
-Wir betrachten in diesem Abschnitt zunächst eine vereinfachte Variante der vorgestellten Differentialgleichung.
-Zunächst ignorieren wir den Wechsel des Feldes $\omega$ ab einem bestimmten Zeitpunkt und erhalten dadurch einen autonomen linearen Differentialoperator $A$.
-Weiter schränken wir uns auf homogene Dirichlet- statt periodischen Randbedingungen ein.
+\subsection{Konkretisierung} % (fold)
+\label{sub:konkretisierung}
 
-Unter diesen Gegebenheiten bietet es sich an, die Hilberträume als $V = H^{1}_{0}(\Omega)$ und $H = L_{2}(\Omega)$ zu wählen.
-Bekanntlich sind diese separabel und es existiert eine dichte stetige Einbettung von $H^{1}_{0}(\Omega)$ in $L_{2}(\Omega)$.
-Wegen $(H^{1}_{0}(\Omega))' = H^{-1}(\Omega)$ ergibt dies das Gelfand-Tripel
+% subsection konkretisierung (end)
+
+Wir greifen nun die parabolische partielle Differentialgleichung aus \autoref{cha:einleitung} auf und leiten daraus die für diese Arbeit relevante Problemstellung her.
+
+Sei also $0 < T < \infty$ eine Konstante und $I = [0, T]$ ein reelles Intervall.
+Weiter sei $\Omega \subset \mathbb{R}^{n}$ eine beschränkte abgeschlossene Menge mit Lipschitz-Rand !TODO!.
+Wir betrachten nun die partielle Differentialgleichung
 \begin{equation}
-    H^{1}_{0}(\Omega) \denseinclusion L_{2}(\Omega) \denseinclusion H^{-1}(\Omega).
+    u_{t}(t, x) = c \Delta_{x} u(t, x) - \omega(t, x) u(t, x) - \mu u(t, x) \quad \text{auf}~I \times \Omega,
 \end{equation}
-Wie zuvor verwenden wir $\skprod{\blank}{\blank}$ mit entsprechendem Index sowohl für die Skalarprodukte als auch für die duale Paarung auf $H^{-1}(\Omega) \times H^{1}_{0}(\Omega)$.
-
-Um obige partielle Differentialgleichung in das Setting aus \autoref{sec:lineare_evolutionsgleichungen} zu übertragen, definieren wir einen linearen Operator $A$ als
+wobei $c \in \mathbb{R}_{+}$ und $\mu \in \mathbb{R}$ Konstanten seien.
+Weiter sei
 \begin{equation}
-    \label{eq:def_op_A}
-    A \colon H^{1}_{0}(\Omega) \to H^{-1}(\Omega), \quad \eta \mapsto A \eta = - c \Delta \eta + \omega \eta
+\label{eq:pp:def_omega}
+    \omega \colon I \times \Omega \to \mathbb{R}, \quad (t, x) \mapsto
+    \begin{cases}
+        \omega_{1}(x), & t \leq f, \\
+        \omega_{2}(x), & t > f,
+    \end{cases}
 \end{equation}
-und weiter die zugehörige Bilinearform
+mit $L_{\infty}(\Omega)$-Abbildungen $\omega_{1}, \omega_{2}$ und einer Konstante $f \in I$.
+An dieser Stelle beschränken wir uns auf den Fall homogener Randbedingungen in $\Omega$, das heißt es gilt $\restr{u(t, \blank)}{\partial \Omega} = 0$ für alle $t \in I$.
+
+\todo[inline]{Das Mu erklären!}
+
+Unter diesen Gegebenheiten können wir die obige partielle Differentialgleichung konkretisieren; es bietet sich an, dazu die Räume $V = H^{1}_{0}(\Omega)$ und $H = L_{2}(\Omega)$ zu verwenden.
+Dabei handelt es sich um separable Hilberträume und es existiert eine dichte stetige Einbettung $H^{1}_{0}(\Omega) \denseinclusion L_{2}(\Omega)$.
+Nach \thref{definition:gl:gelfand_tripel} liefert dies das Gelfand-Tripel
 \begin{equation}
-    a \colon H^{1}_{0}(\Omega) \times H^{1}_{0}(\Omega) \to \mathbb{R}, \quad a(\eta, \zeta) = \skprod{A \eta}{\zeta}_{L_{2}(\Omega)}.
-\end{equation}
-Diese lässt sich unter Verwendung der Greenschen Formeln (TODO!) auch schreiben als
-\begin{equation}
-    \begin{aligned}
-        a(\eta, \zeta)
-        &= \skprod{- c \Delta \eta + \omega \eta}{\zeta}_{L_{2}(\Omega)}
-        = - c \skprod{\Delta \eta}{\zeta}_{L_{2}(\Omega)} + \skprod{\omega \eta}{\zeta}_{L_{2}(\Omega)}
-        \\&= c \skprod{\grad \eta}{\grad \zeta}_{L_{2}(\Omega)} + \skprod{\omega \eta}{\zeta}_{L_{2}(\Omega)}.
-    \end{aligned}
+    H^{1}_{0}(\Omega) \denseinclusion L_{2}(\Omega) \denseinclusion (H^{1}_{0}(\Omega))' = H^{-1}(\Omega).
 \end{equation}
 
-Diese Bilinearform ist stetig und erfüllt eine G\aa{}rding-Ungleichung, wie das folgende Lemma zeigt.
+Mit diesen Vorbemerkungen erhalten wir nun unter Hinzunahme eines Quellterms und einer Anfangsbedingung das folgende Problem.
 
-\begin{Lemma}
-\label{lemma:a_bf_bounded_garding}
-    Seien $c \in \mathbb{R}_{+}$, $\omega \in L_{\infty}(\Omega)$ und
+\begin{Definition}[Starke Formulierung]
+\label{definition:pp:starke_formulierung}
+    Seien eine \emph{Anfangsbedingung} $u_{0} \in L_{2}(\Omega)$, ein \emph{Quellterm} $g \in L_{2}(I) \times H^{-1}(\Omega)$ und $\omega$ wie in \eqref{eq:pp:def_omega} gegeben.
+    Als \emph{starke Formulierung} bezeichnen wir die parabolische partielle Differentialgleichung
     \begin{equation}
-    \label{eq:bf_a}
-        a \colon H^{1}_{0}(\Omega) \times H^{1}_{0}(\Omega) \to \mathbb{R}, \quad a(\eta, \zeta) = c \skprod{\grad \eta}{\grad \zeta}_{L_{2}(\Omega)} + \skprod{\omega \eta}{\zeta}_{L_{2}(\Omega)}.
+    \label{eq:pp:starke_formulierung}
+        \left\{
+        \begin{aligned}
+            u_{t}(t, x) - c \Delta u(t, x) + \omega(t, x) u(t, x) + \mu u(t, x) &= g(t, x) \quad &&\text{auf}~I \times \Omega,\\
+            u(0, x) &= u_{0}(x) \quad &&\text{auf}~\Omega.
+        \end{aligned}
+        \right.
     \end{equation}
-    Dann erfüllt $a$ die Eigenschaften aus \thref{annahme:eigenschaften_bf_a}:
-    \begin{thmenumerate}
-        \item\label{lemma:a_bf_bounded_garding:1}
-        \emph{Stetigkeit:} es gilt
-        \begin{equation}
-            \abs{a(\eta, \zeta)} \leq M_{a} \norm{\eta}_{H^{1}(\Omega)} \norm{\zeta}_{H^{1}(\Omega)} \quad \text{für alle}~\eta, \zeta \in H^{1}_{0}(\Omega)
-        \end{equation}
-        mit $M_{a} = \max\Set{c, \norm{\omega}_{L_{\infty}(\Omega)} } \geq 0$.
-        \item\label{lemma:a_bf_bounded_garding:2}
-        \emph{G\aa{}rding-Ungleichung:} es gilt
-        \begin{equation}
-                a(\eta, \eta) + \lambda \norm{\eta}_{L_{2}(\Omega)}^{2} \geq \alpha \norm{\eta}_{H^{1}(\Omega)}^{2} \quad \text{für alle}~\eta \in H^{1}_{0}(\Omega)
-        \end{equation}
-        mit $\alpha = c \gamma_{\Omega}^{2} > 0$ und $\lambda = \norm{\omega}_{L_{\infty}(\Omega)} \geq 0$, wobei $\gamma_{\Omega}$ die Poincaré-Friedrichs-Konstante ist.
-    \end{thmenumerate}
+\end{Definition}
 
-    \begin{Beweis}
-    Wir zeigen zunächst die Stetigkeit.
-    Seien dazu $\eta, \zeta \in H^{1}_{0}(\Omega)$ beliebig.
-    Unter Verwendung der Dreiecks- und der Cauchy-Schwarz-Ungleichung erhalten wir
-    \begin{align}
-        \abs{a(\eta, \zeta)}
-        &= \abs{c \skprod{\grad \eta}{\grad \zeta}_{L_{2}(\Omega)} + \skprod{\omega \eta}{\zeta}_{L_{2}(\Omega)}}
-        \\&\leq c \abs{\skprod{\grad \eta}{\grad \zeta}_{L_{2}(\Omega)}} + \abs{\skprod{\omega \eta}{\zeta}_{L_{2}(\Omega)}}
-        \\&\leq c \norm{\grad \eta}_{L_{2}(\Omega)} \norm{\grad \zeta}_{L_{2}(\Omega)} + \norm{\omega}_{L_{\infty}(\Omega)} \norm{\eta}_{L_{2}(\Omega)} \norm{\zeta}_{L_{2}(\Omega)}
-        \\&\leq \max \Set{ c, \norm{\omega}_{L_{\infty}(\Omega)} } \norm{\eta}_{H^{1}(\Omega)} \norm{\zeta}_{H^{1}(\Omega)}.
-    \end{align}
+\begin{Bemerkung}
+\label{bemerkung:pp:definition_operator_A}
+    Der notationellen Einfachheit halber definieren wir für $t \in I$ den Operator
+    \begin{equation}
+    \label{eq:pp:definition_operator_A}
+        A(t) \colon H^{1}_{0}(\Omega) \to H^{-1}(\Omega), \quad \eta \mapsto A(t) \eta = - c \Delta \eta + \omega(t, \blank) \eta + \mu \eta.
+    \end{equation}
+    Damit lässt sich die starke Formulierung \eqref{eq:pp:starke_formulierung} auch schreiben als
+    \begin{equation}
+        \left\{
+        \begin{aligned}
+            u_t(t) + A(t)u(t) &= g(t) \quad &&\text{in}~H^{-1}(\Omega),\\
+            u(0) &= u_{0} \quad &&\text{in}~L_{2}(\Omega).
+        \end{aligned}
+        \right.
+    \end{equation}
+\end{Bemerkung}
 
-    Für die G\aa{}rding-Ungleichung seien nun $\eta \in H^{1}_{0}(\Omega)$ und $\lambda \in \mathbb{R}$.
-    Wir betrachten
-    \begin{align}
-        a(\eta, \eta) + \lambda \norm{\eta}^{2}_{L_{2}(\Omega)}
-        &= c \norm{\grad \eta}^{2}_{L_{2}(\Omega)} + \skprod{\omega \eta}{\eta}_{L_{2}(\Omega)} + \lambda \skprod{\eta}{\eta}_{L_{2}(\Omega)}
-        \\&= c \norm{\grad \eta}^{2}_{L_{2}(\Omega)} + \skprod{(\omega + \lambda) \eta}{\eta}_{L_{2}(\Omega)}.
-    \end{align}
-    Wählen wir nun $\lambda = \norm{\omega}_{L_{\infty}(\Omega)} \geq 0$, dann gilt $\omega + \lambda \geq 0$ fast überall in $\Omega$ und wir erhalten die Abschätzung
-    \begin{align}
-        a(\eta, \eta) + \lambda \norm{\eta}^{2}_{L_{2}(\Omega)}
-        &\geq c \norm{\grad \eta}^{2}_{L_{2}(\Omega)},
-        \intertext{woraus wir durch Anwenden der Poincaré-Friedrichs-Ungleichung \ref{satz:grundlagen:poincare_friedrichs_ungleichung}}
-        a(\eta, \eta) + \lambda \norm{\eta}^{2}_{L_{2}(\Omega)}
-        &\geq c \gamma_{\Omega}^{2} \norm{\eta}^{2}_{H^{1}(\Omega)}
-    \end{align}
-    folgern.
-    \end{Beweis}
-\end{Lemma}
+\subsection{Raum-Zeit-Variationsformulierung} % (fold)
+\label{sub:variationsformulierungen}
 
-Unter diesen Gegebenheiten erhalten wir nach \autoref{sec:lineare_evolutionsgleichungen} eine sachgemäß gestellte Raum-Zeit-Variationsformulierung.
-Ansatz- und Testfunktionenraum ergeben sich mit den konkret gewählten Hilberträumen zu
+% subsection variationsformulierungen (end)
+
+Wir wollen nun eine Raum-Zeit-Variationsformulierung, auch schwache Formulierung genannt, von \eqref{eq:pp:starke_formulierung} herleiten.
+Dazu ist es nützlich, den Operator $A(t)$ in Form einer Bilinearform zu schreiben.
+Betrachte dazu die folgende duale Paarung auf $H^{-1}(\Omega) \times H^{1}_{0}(\Omega)$
 \begin{equation}
-    \label{eq:var_ansatzraum_testraum}
-    \mathcal X = L_{2}(I; H^{1}_{0}(\Omega)) \cap H^{1}(I; H^{-1}(\Omega))
-    \quad \text{und} \quad
-    \mathcal Y = L_{2}(I; H^{1}_{0}(\Omega)) \times L_{2}(\Omega).
+    (A(t)\eta)\zeta = \dual{A(t)\eta}{\zeta},
 \end{equation}
-Das Variationsproblem lautet damit:
-    Gegeben ein $g \in L_{2}(I; H^{-1}(\Omega))$ und ein $u_{0} \in L_{2}(\Omega)$. Finde ein $u \in \mathcal X$ mit
-    \begin{equation}
-        \label{eq:varprob}
-        b(u, v) = f(v) \quad \text{für alle}~v \in \mathcal Y,
-    \end{equation}
-    wobei $b(\blank, \blank) \colon \mathcal X \times \mathcal Y \to \mathbb{R}$ die durch
-    \begin{equation}
-        \label{eq:buv}
-        b(u, v)
-            = \int_{I} \skprod{u_{t}(t)}{v_{1}(t)}_{L_{2}(\Omega)} + a(u(t), v_{1}(t)) \diff t + \skprod{u(0)}{v_{2}}_{L_{2}(\Omega)}
-    \end{equation}
-    gegebene Bilinearform und $f(\blank) \colon \mathcal Y \to \mathbb{R}$ definiert ist durch
-    \begin{equation}
-        \label{eq:var_all_f_wiederholung}
-        f(v) = \int_{I} \skprod{g(t)}{v_{1}(t)}_{L_{2}(\Omega)} \diff t + \skprod{u_{0}}{v_{2}}_{L_{2}(\Omega)}.
-    \end{equation}
-
-Aus \thref{thm:schwab09:theorem51} und \thref{thm:schwab09:theorem51:ungleichungen} erhalten wir nun die Wohldefiniertheit des obigen Variationsproblems und zugleich Schranken für die Operatoren.
-
-\begin{Korollar}
-\label{korollar:2.2}
-    Seien $\mathcal X$ und $\mathcal Y$ gegeben wie in \eqref{eq:var_ansatzraum_testraum} und sei $B \colon \mathcal X \to \mathcal Y'$ definiert durch
-    \begin{equation}
-        \skprod{Bu}{v}_{\mathcal Y' \times \mathcal Y}  = b(u, v), \quad u \in \mathcal X,~ v \in \mathcal Y,
-    \end{equation}
-    mit $b(\blank, \blank)$ wie in \eqref{eq:buv}.
-    Dann ist $B$ stetig invertierbar und es gilt
-    \begin{equation}
-        \norm{B}_{\mathcal L(\mathcal X, \mathcal Y')}
-        \leq
-        \frac{\sqrt{2 \max\Set{1, c^{2}, \norm{\omega}_{L_{\infty}(\Omega)}^{2}} + M_{e}^{2}}}{\max\Set{\sqrt{1 + 2 \norm{\omega}_{L_{\infty}(\Omega)}^{2} \rho^{4}}, \sqrt{2} }}
-    \end{equation}
-    und
-    \begin{equation}
-        \norm{B^{-1}}_{\mathcal L( \mathcal Y', \mathcal X)}
-        \leq \frac{e^{2 T \norm{\omega}_{L_{\infty}(\Omega)}} \max\Set{\sqrt{1 + 2 \norm{\omega}_{L_{\infty}(\Omega)}^{2} \rho^{4}}, \sqrt{2}} \sqrt{2 \max\Set{c^{-2} \gamma_{\Omega}^{-4}, 1} + M_{e}^{2}}}{\min\Set{c^{-1} \gamma_{\Omega}^{2}, c \gamma_{\Omega}^{2} \norm{\omega}_{L_{\infty}(\Omega)}^{-2}, c \gamma_{\Omega}^{2} }}.
-        % \leq
-        % \frac{\max\{\sqrt{ 1 + 2 \norm{\omega}_{L_{\infty}(\Omega)} \rho^{4}}, \sqrt{2} \}}{e^{-2 \norm{\omega}_{L_{\infty}(\Omega)} T}}
-        % \frac{\sqrt{2 \max\{ 1, \sigma^{-2} \gamma_{\Omega}^{-4} \} + M_{e}^{2}}}{\min\{ \sigma \gamma_{\Omega}^{2} \norm{\omega}_{L_{\infty}(\Omega)}^{-2}, \sigma \gamma_{\Omega}^{2} \}}
-    \end{equation}
-    mit $M_{e}$ und $\rho$ wie in \eqref{eq:var_all_M_e} respektive \eqref{eq:var_all_rho}.
-\end{Korollar}
-
-% section der_betrachtete_fall (end)
-
-\section{Parametrische Formulierung} % (fold)
-\label{sec:parametrische_formulierung}
-
-\todo[inline]{Ordentlich aufschreiben}
-
-Dieser Abschnitt dient der Einführung einer parametrischen Variante der zuvor vorgestellten parabolischen partiellen Differentialgleichung.
-
-Für den weiteren Verlauf der Arbeit wählen wir $V = H^{1}_{0}(\Omega)$, $H = L_{2}(\Omega)$ und $V' = H^{-1}(\Omega)$.
-% Diese separablen Hilberträume bilden ein Gelfand-Tripel $V \denseinclusion H \denseinclusion V'$.
-
-Wir betrachten nun zunächst die folgende parametrische Operatorgleichung: Sei ein $g \in V'$ gegeben, finde für alle $\omega$ ein $u(\omega) \in V$, so dass
+nach dem Rieszschen Darstellungssatz, vergleiche \cite[Theorem \S{}22.1]{Halmos:1957vd}, existiert eine Bilinearform
 \begin{equation}
-    A(\omega) u(\omega) = g \in V'
+    a \colon H^{1}_{0}(\Omega) \times H^{1}_{0}(\Omega) \to \mathbb{R},
+\end{equation}
+so dass
+\begin{equation}
+    (A(t)\eta)\zeta = \dual{A(t)\eta}{\zeta} = a(\eta, \zeta; t) \quad \fa \eta, \zeta \in H^{1}(\Omega)
 \end{equation}
 gilt.
-Durch die Wahl $V = H^{1}_{0}(\Omega)$ sind die Randbedingungen $\restr{u(\omega)}{\partial \Omega} = 0$ bereits implizit gegeben.
-Dabei sei der Operator $A(\omega)$ gegeben durch
-\begin{equation}
-    \label{eq:pp:op_a}
-    A(\omega) \colon V \to V', \quad A(\omega) u = - c \Delta u + \omega u + \mu u.
-\end{equation}
-Die zugehörige Bilinearform $a(\blank, \blank; \omega)$ ergibt sich damit zu
-\begin{equation}
-    \label{eq:pp:bf_a}
-    a(\blank, \blank; \omega) \colon V \times V \to \mathbb{R},
-    \quad (u, v) \mapsto c\skp{\grad u}{\grad v}{H} + \skp{\omega u}{v}{H} + \mu \skp{u}{v}{H}.
-\end{equation}
 
-Unter diesen Bedingungen erhalten wir für die Bilinearform aus \eqref{eq:pp:bf_a} respektive \eqref{eq:pp:bf_a_sigma} die folgenden Eigenschaften.
+\todo[inline]{Was geht hier ab?!}
+Für den gegebenen Fall lässt sich diese Bilinearform explizit angeben, denn es gilt !TODO!
+\begin{equation}
+    \begin{aligned}
+        a(\eta, \zeta; t)
+        &=    \dual{A(t)\eta}{\zeta}
+        =  \skp{A(t)\eta}{\zeta}{L_{2}(\Omega)}
+        \\&= - c \skp{\Delta \eta}{\zeta}{L_{2}(\Omega)}
+                + \skp{\omega(t, \blank) \eta}{\zeta}{L_{2}(\Omega)}
+                + \mu \skp{\eta}{\zeta}{L_{2}(\Omega)}
+        \\&= c \skp{\grad \eta}{\grad \zeta}{L_{2}(\Omega)}
+                + \skp{\omega(t, \blank) \eta}{\zeta}{L_{2}(\Omega)}
+                + \mu \skp{\eta}{\zeta}{L_{2}(\Omega)},
+    \end{aligned}
+\end{equation}
+wobei bei der letzten Gleichheit der Gaußsche Intregalsatz !TODO! verwendet wurde.
+
+
+Unter diesen Bedingungen erhalten wir für die obige Bilinearform für ein festes $t \in I$ die folgende Aussage.
 %
 \begin{Satz}
 \label{satz:pp:a_bf_bounded_garding}
@@ -191,10 +133,10 @@ Unter diesen Bedingungen erhalten wir für die Bilinearform aus \eqref{eq:pp:bf_
     \label{eq:bf_a}
         \begin{aligned}
             &a(\blank, \blank) \colon H^{1}_{0}(\Omega) \times H^{1}_{0}(\Omega) \to \mathbb{R}, \\
-            &(u, v) \mapsto c\skp{\grad u}{\grad v}{L_{2}(\Omega)} + \skp{\omega u}{v}{L_{2}(\Omega)} + \mu \skp{u}{v}{L_{2}(\Omega)}.
+            &(\eta, \zeta) \mapsto c\skp{\grad \eta}{\grad \zeta}{L_{2}(\Omega)} + \skp{\omega \eta}{\zeta}{L_{2}(\Omega)} + \mu \skp{\eta}{\zeta}{L_{2}(\Omega)}.
         \end{aligned}
     \end{equation}
-    Dann erfüllt $a$ die Eigenschaften aus \thref{annahme:eigenschaften_bf_a}:
+    Dann erfüllt $a$ die folgenden Eigenschaften:
     \begin{thmenumerate}
         \item\label{satz:pp:a_bf_bounded_garding:1}
         \emph{Stetigkeit:} es gilt
@@ -242,8 +184,82 @@ Unter diesen Bedingungen erhalten wir für die Bilinearform aus \eqref{eq:pp:bf_
 \end{Satz}
 
 \begin{Korollar}
-    Ist $\mu \geq \norm{\omega}_{L_{\infty}(\Omega)}$, dann ist die Bilinearform koerziv.
+    Ist $\mu \geq \norm{\omega}_{L_{\infty}(\Omega)}$, dann ist die Bilinearform $a$ aus \thref{satz:pp:a_bf_bounded_garding} koerziv.
 \end{Korollar}
+
+Unter diesen Gegebenheiten erhalten wir nach \autoref{sec:lineare_evolutionsgleichungen} eine sachgemäß gestellte Raum-Zeit-Variationsformulierung.
+Ansatz- und Testfunktionenraum ergeben sich mit den konkret gewählten Hilberträumen zu
+\begin{equation}
+    \label{eq:var_ansatzraum_testraum}
+    \mathcal X = L_{2}(I; H^{1}_{0}(\Omega)) \cap H^{1}(I; H^{-1}(\Omega))
+    \quad \text{und} \quad
+    \mathcal Y = L_{2}(I; H^{1}_{0}(\Omega)) \times L_{2}(\Omega).
+\end{equation}
+Das Raum-Zeit-Variationsproblem lautet damit:
+\begin{Definition}[Schwache Formulierung]
+    Als \emph{schwache Formulierung}, oder auch \emph{Raum"=Zeit"=Va"-ri"-a"-ti"-ons"-for"-mu"-lie"-rung}, der parabolischen partiellen Differentialgleichung aus \thref{definition:pp:starke_formulierung} bezeichnen wir das folgende Variationsproblem:
+    Gegeben einen Quellterm $g \in L_{2}(I; H^{-1}(\Omega))$ und eine Anfangsbedingung $u_{0} \in L_{2}(\Omega)$.
+    Finde ein $u \in \mathcal X$ mit
+    \begin{equation}
+        \label{eq:varprob}
+        b(u, v) = f(v) \quad \text{für alle}~v \in \mathcal Y,
+    \end{equation}
+    wobei $b(\blank, \blank) \colon \mathcal X \times \mathcal Y \to \mathbb{R}$ die durch
+    \begin{equation}
+        \label{eq:buv}
+        b(u, v)
+            = \int_{I} \skprod{u_{t}(t)}{v_{1}(t)}_{L_{2}(\Omega)} + a(u(t), v_{1}(t); t) \diff t + \skprod{u(0)}{v_{2}}_{L_{2}(\Omega)}
+    \end{equation}
+    gegebene Bilinearform und $f(\blank) \colon \mathcal Y \to \mathbb{R}$ definiert ist durch
+    \begin{equation}
+        \label{eq:var_all_f_wiederholung}
+        f(v) = \int_{I} \skprod{g(t)}{v_{1}(t)}_{L_{2}(\Omega)} \diff t + \skprod{u_{0}}{v_{2}}_{L_{2}(\Omega)}.
+    \end{equation}
+\end{Definition}
+
+Diese Variationsformulierung wird uns in den nachfolgenden Kapiteln als Ausgangspunkt dienen.
+
+\subsection{Existenz und Eindeutigkeit von Lösungen} % (fold)
+\label{sub:existenz_und_eindeutigkeit_von_l_sungen}
+
+In diesem Abschnitt wollen wir für die gegebene Raum-Zeit-Variationsformulierung die Existenz und Eindeutigkeit von Lösungen nachweisen.
+Dabei werden wir auf die Aussagen aus \thref{sec:lineare_evolutionsgleichungen}, vor allem das Banach-Ne{\v c}as-Babu{\v s}ka-Theorem, zurückgreifen.
+
+\todo[inline]{Anpassen}
+
+Aus \thref{thm:schwab09:theorem51} und \thref{thm:schwab09:theorem51:ungleichungen} erhalten wir nun die Wohldefiniertheit des obigen Variationsproblems und zugleich Schranken für die Operatoren.
+
+\begin{Korollar}
+\label{korollar:2.2}
+    Seien $\mathcal X$ und $\mathcal Y$ gegeben wie in \eqref{eq:var_ansatzraum_testraum} und sei $B \colon \mathcal X \to \mathcal Y'$ definiert durch
+    \begin{equation}
+        \skprod{Bu}{v}_{\mathcal Y' \times \mathcal Y}  = b(u, v), \quad u \in \mathcal X,~ v \in \mathcal Y,
+    \end{equation}
+    mit $b(\blank, \blank)$ wie in \eqref{eq:buv}.
+    Dann ist $B$ stetig invertierbar und es gilt
+    \begin{equation}
+        \norm{B}_{\mathcal L(\mathcal X, \mathcal Y')}
+        \leq
+        \frac{\sqrt{2 \max\Set{1, c^{2}, \norm{\omega}_{L_{\infty}(\Omega)}^{2}} + M_{e}^{2}}}{\max\Set{\sqrt{1 + 2 \norm{\omega}_{L_{\infty}(\Omega)}^{2} \rho^{4}}, \sqrt{2} }}
+    \end{equation}
+    und
+    \begin{equation}
+        \norm{B^{-1}}_{\mathcal L( \mathcal Y', \mathcal X)}
+        \leq \frac{e^{2 T \norm{\omega}_{L_{\infty}(\Omega)}} \max\Set{\sqrt{1 + 2 \norm{\omega}_{L_{\infty}(\Omega)}^{2} \rho^{4}}, \sqrt{2}} \sqrt{2 \max\Set{c^{-2} \gamma_{\Omega}^{-4}, 1} + M_{e}^{2}}}{\min\Set{c^{-1} \gamma_{\Omega}^{2}, c \gamma_{\Omega}^{2} \norm{\omega}_{L_{\infty}(\Omega)}^{-2}, c \gamma_{\Omega}^{2} }}.
+        % \leq
+        % \frac{\max\{\sqrt{ 1 + 2 \norm{\omega}_{L_{\infty}(\Omega)} \rho^{4}}, \sqrt{2} \}}{e^{-2 \norm{\omega}_{L_{\infty}(\Omega)} T}}
+        % \frac{\sqrt{2 \max\{ 1, \sigma^{-2} \gamma_{\Omega}^{-4} \} + M_{e}^{2}}}{\min\{ \sigma \gamma_{\Omega}^{2} \norm{\omega}_{L_{\infty}(\Omega)}^{-2}, \sigma \gamma_{\Omega}^{2} \}}
+    \end{equation}
+    mit $M_{e}$ und $\rho$ wie in \eqref{eq:var_all_M_e} respektive \eqref{eq:var_all_rho}.
+\end{Korollar}
+
+
+% subsection existenz_und_eindeutigkeit_von_l_sungen (end)
+
+% section problemstellung (end)
+
+\section{Parametrische Formulierung} % (fold)
+\label{sec:parametrische_formulierung}
 
 \begin{Satz}
 \label{satz:pp:lax_auf_elliptisch}
@@ -262,7 +278,30 @@ Unter diesen Bedingungen erhalten wir für die Bilinearform aus \eqref{eq:pp:bf_
     \end{Beweis}
 \end{Satz}
 
-\todo[inline]{Ab hier parametrisch}
+
+
+Dieser Abschnitt dient der Einführung einer parametrischen Variante der zuvor vorgestellten parabolischen partiellen Differentialgleichung.
+
+Für den weiteren Verlauf der Arbeit wählen wir $V = H^{1}_{0}(\Omega)$, $H = L_{2}(\Omega)$ und $V' = H^{-1}(\Omega)$.
+% Diese separablen Hilberträume bilden ein Gelfand-Tripel $V \denseinclusion H \denseinclusion V'$.
+
+Wir betrachten nun zunächst die folgende parametrische Operatorgleichung: Sei ein $g \in V'$ gegeben, finde für alle $\omega$ ein $u(\omega) \in V$, so dass
+\begin{equation}
+    A(\omega) u(\omega) = g \in V'
+\end{equation}
+gilt.
+Durch die Wahl $V = H^{1}_{0}(\Omega)$ sind die Randbedingungen $\restr{u(\omega)}{\partial \Omega} = 0$ bereits implizit gegeben.
+Dabei sei der Operator $A(\omega)$ gegeben durch
+\begin{equation}
+    \label{eq:pp:op_a}
+    A(\omega) \colon V \to V', \quad A(\omega) u = - c \Delta u + \omega u + \mu u.
+\end{equation}
+Die zugehörige Bilinearform $a(\blank, \blank; \omega)$ ergibt sich damit zu
+\begin{equation}
+    \label{eq:pp:bf_a}
+    a(\blank, \blank; \omega) \colon V \times V \to \mathbb{R},
+    \quad (u, v) \mapsto c\skp{\grad u}{\grad v}{H} + \skp{\omega u}{v}{H} + \mu \skp{u}{v}{H}.
+\end{equation}
 
 Wir wollen nun die Abhängigkeit des Operators $A(\omega)$ von dem Parameter $\omega$ konkretisieren.
 
@@ -311,8 +350,9 @@ Hieraus folgt wegen $\mathcal S = [-1, 1]^{\mathbb{N}}$ insbesondere
 
 % section parametrische_formulierung (end)
 
-\section{Regularität bezüglich des Parameters} % (fold)
-\label{sec:regularit_t_bez_glich_des_parameters}
+
+\section{Regularität bezüglich der Parameter} % (fold)
+\label{sec:regularit_t_bez_glich_der_parameter}
 
 In diesem Abschnitt wollen wir nun unter geeigneten, noch näher zu bestimmenden Bedingungen, die analytische Abhängigkeit der Lösung $u(\sigma)$ der zuvor eingeführten PPDE vom Parameter $\sigma \in \mathcal S$ nachweisen.
 Dabei orientieren wir uns vor allem an den Arbeiten von \textcite{Cohen:2010kz,Kunoth:2013ef}.
@@ -531,6 +571,531 @@ Seien $b := (b_{j})_{j} \in \mathbb{R}$ und $b_{j} := \frac{\norm{\varphi_{j}}_{
 \end{Satz}
 
 \todo[inline]{Daraus folgern, dass es für den parabolischen auch gilt.}
+
+% section regularit_t_bez_glich_der_parameter (end)
+
+
+% \section{Der betrachtete Fall} % (fold)
+% \label{sec:der_betrachtete_fall}
+
+% Wir betrachten in diesem Abschnitt zunächst eine vereinfachte Variante der vorgestellten Differentialgleichung.
+% Zunächst ignorieren wir den Wechsel des Feldes $\omega$ ab einem bestimmten Zeitpunkt und erhalten dadurch einen autonomen linearen Differentialoperator $A$.
+% Weiter schränken wir uns auf homogene Dirichlet- statt periodischen Randbedingungen ein.
+
+% Unter diesen Gegebenheiten bietet es sich an, die Hilberträume als $V = H^{1}_{0}(\Omega)$ und $H = L_{2}(\Omega)$ zu wählen.
+% Bekanntlich sind diese separabel und es existiert eine dichte stetige Einbettung von $H^{1}_{0}(\Omega)$ in $L_{2}(\Omega)$.
+% Wegen $(H^{1}_{0}(\Omega))' = H^{-1}(\Omega)$ ergibt dies das Gelfand-Tripel
+% \begin{equation}
+%     H^{1}_{0}(\Omega) \denseinclusion L_{2}(\Omega) \denseinclusion H^{-1}(\Omega).
+% \end{equation}
+% Wie zuvor verwenden wir $\skprod{\blank}{\blank}$ mit entsprechendem Index sowohl für die Skalarprodukte als auch für die duale Paarung auf $H^{-1}(\Omega) \times H^{1}_{0}(\Omega)$.
+
+% Um obige partielle Differentialgleichung in das Setting aus \autoref{sec:lineare_evolutionsgleichungen} zu übertragen, definieren wir einen linearen Operator $A$ als
+% \begin{equation}
+%     \label{eq:def_op_A}
+%     A \colon H^{1}_{0}(\Omega) \to H^{-1}(\Omega), \quad \eta \mapsto A \eta = - c \Delta \eta + \omega \eta
+% \end{equation}
+% und weiter die zugehörige Bilinearform
+% \begin{equation}
+%     a \colon H^{1}_{0}(\Omega) \times H^{1}_{0}(\Omega) \to \mathbb{R}, \quad a(\eta, \zeta) = \skprod{A \eta}{\zeta}_{L_{2}(\Omega)}.
+% \end{equation}
+% Diese lässt sich unter Verwendung der Greenschen Formeln (TODO!) auch schreiben als
+% \begin{equation}
+%     \begin{aligned}
+%         a(\eta, \zeta)
+%         &= \skprod{- c \Delta \eta + \omega \eta}{\zeta}_{L_{2}(\Omega)}
+%         = - c \skprod{\Delta \eta}{\zeta}_{L_{2}(\Omega)} + \skprod{\omega \eta}{\zeta}_{L_{2}(\Omega)}
+%         \\&= c \skprod{\grad \eta}{\grad \zeta}_{L_{2}(\Omega)} + \skprod{\omega \eta}{\zeta}_{L_{2}(\Omega)}.
+%     \end{aligned}
+% \end{equation}
+
+% Diese Bilinearform ist stetig und erfüllt eine G\aa{}rding-Ungleichung, wie das folgende Lemma zeigt.
+
+% \begin{Lemma}
+% \label{lemma:a_bf_bounded_garding}
+%     Seien $c \in \mathbb{R}_{+}$, $\omega \in L_{\infty}(\Omega)$ und
+%     \begin{equation}
+%     \label{eq:bf_a}
+%         a \colon H^{1}_{0}(\Omega) \times H^{1}_{0}(\Omega) \to \mathbb{R}, \quad a(\eta, \zeta) = c \skprod{\grad \eta}{\grad \zeta}_{L_{2}(\Omega)} + \skprod{\omega \eta}{\zeta}_{L_{2}(\Omega)}.
+%     \end{equation}
+%     Dann erfüllt $a$ die Eigenschaften aus \thref{annahme:eigenschaften_bf_a}:
+%     \begin{thmenumerate}
+%         \item\label{lemma:a_bf_bounded_garding:1}
+%         \emph{Stetigkeit:} es gilt
+%         \begin{equation}
+%             \abs{a(\eta, \zeta)} \leq M_{a} \norm{\eta}_{H^{1}(\Omega)} \norm{\zeta}_{H^{1}(\Omega)} \quad \text{für alle}~\eta, \zeta \in H^{1}_{0}(\Omega)
+%         \end{equation}
+%         mit $M_{a} = \max\Set{c, \norm{\omega}_{L_{\infty}(\Omega)} } \geq 0$.
+%         \item\label{lemma:a_bf_bounded_garding:2}
+%         \emph{G\aa{}rding-Ungleichung:} es gilt
+%         \begin{equation}
+%                 a(\eta, \eta) + \lambda \norm{\eta}_{L_{2}(\Omega)}^{2} \geq \alpha \norm{\eta}_{H^{1}(\Omega)}^{2} \quad \text{für alle}~\eta \in H^{1}_{0}(\Omega)
+%         \end{equation}
+%         mit $\alpha = c \gamma_{\Omega}^{2} > 0$ und $\lambda = \norm{\omega}_{L_{\infty}(\Omega)} \geq 0$, wobei $\gamma_{\Omega}$ die Poincaré-Friedrichs-Konstante ist.
+%     \end{thmenumerate}
+
+%     \begin{Beweis}
+%     Wir zeigen zunächst die Stetigkeit.
+%     Seien dazu $\eta, \zeta \in H^{1}_{0}(\Omega)$ beliebig.
+%     Unter Verwendung der Dreiecks- und der Cauchy-Schwarz-Ungleichung erhalten wir
+%     \begin{align}
+%         \abs{a(\eta, \zeta)}
+%         &= \abs{c \skprod{\grad \eta}{\grad \zeta}_{L_{2}(\Omega)} + \skprod{\omega \eta}{\zeta}_{L_{2}(\Omega)}}
+%         \\&\leq c \abs{\skprod{\grad \eta}{\grad \zeta}_{L_{2}(\Omega)}} + \abs{\skprod{\omega \eta}{\zeta}_{L_{2}(\Omega)}}
+%         \\&\leq c \norm{\grad \eta}_{L_{2}(\Omega)} \norm{\grad \zeta}_{L_{2}(\Omega)} + \norm{\omega}_{L_{\infty}(\Omega)} \norm{\eta}_{L_{2}(\Omega)} \norm{\zeta}_{L_{2}(\Omega)}
+%         \\&\leq \max \Set{ c, \norm{\omega}_{L_{\infty}(\Omega)} } \norm{\eta}_{H^{1}(\Omega)} \norm{\zeta}_{H^{1}(\Omega)}.
+%     \end{align}
+
+%     Für die G\aa{}rding-Ungleichung seien nun $\eta \in H^{1}_{0}(\Omega)$ und $\lambda \in \mathbb{R}$.
+%     Wir betrachten
+%     \begin{align}
+%         a(\eta, \eta) + \lambda \norm{\eta}^{2}_{L_{2}(\Omega)}
+%         &= c \norm{\grad \eta}^{2}_{L_{2}(\Omega)} + \skprod{\omega \eta}{\eta}_{L_{2}(\Omega)} + \lambda \skprod{\eta}{\eta}_{L_{2}(\Omega)}
+%         \\&= c \norm{\grad \eta}^{2}_{L_{2}(\Omega)} + \skprod{(\omega + \lambda) \eta}{\eta}_{L_{2}(\Omega)}.
+%     \end{align}
+%     Wählen wir nun $\lambda = \norm{\omega}_{L_{\infty}(\Omega)} \geq 0$, dann gilt $\omega + \lambda \geq 0$ fast überall in $\Omega$ und wir erhalten die Abschätzung
+%     \begin{align}
+%         a(\eta, \eta) + \lambda \norm{\eta}^{2}_{L_{2}(\Omega)}
+%         &\geq c \norm{\grad \eta}^{2}_{L_{2}(\Omega)},
+%         \intertext{woraus wir durch Anwenden der Poincaré-Friedrichs-Ungleichung \ref{satz:grundlagen:poincare_friedrichs_ungleichung}}
+%         a(\eta, \eta) + \lambda \norm{\eta}^{2}_{L_{2}(\Omega)}
+%         &\geq c \gamma_{\Omega}^{2} \norm{\eta}^{2}_{H^{1}(\Omega)}
+%     \end{align}
+%     folgern.
+%     \end{Beweis}
+% \end{Lemma}
+
+% Unter diesen Gegebenheiten erhalten wir nach \autoref{sec:lineare_evolutionsgleichungen} eine sachgemäß gestellte Raum-Zeit-Variationsformulierung.
+% Ansatz- und Testfunktionenraum ergeben sich mit den konkret gewählten Hilberträumen zu
+% \begin{equation}
+%     \label{eq:var_ansatzraum_testraum}
+%     \mathcal X = L_{2}(I; H^{1}_{0}(\Omega)) \cap H^{1}(I; H^{-1}(\Omega))
+%     \quad \text{und} \quad
+%     \mathcal Y = L_{2}(I; H^{1}_{0}(\Omega)) \times L_{2}(\Omega).
+% \end{equation}
+% Das Variationsproblem lautet damit:
+%     Gegeben ein $g \in L_{2}(I; H^{-1}(\Omega))$ und ein $u_{0} \in L_{2}(\Omega)$. Finde ein $u \in \mathcal X$ mit
+%     \begin{equation}
+%         \label{eq:varprob}
+%         b(u, v) = f(v) \quad \text{für alle}~v \in \mathcal Y,
+%     \end{equation}
+%     wobei $b(\blank, \blank) \colon \mathcal X \times \mathcal Y \to \mathbb{R}$ die durch
+%     \begin{equation}
+%         \label{eq:buv}
+%         b(u, v)
+%             = \int_{I} \skprod{u_{t}(t)}{v_{1}(t)}_{L_{2}(\Omega)} + a(u(t), v_{1}(t)) \diff t + \skprod{u(0)}{v_{2}}_{L_{2}(\Omega)}
+%     \end{equation}
+%     gegebene Bilinearform und $f(\blank) \colon \mathcal Y \to \mathbb{R}$ definiert ist durch
+%     \begin{equation}
+%         \label{eq:var_all_f_wiederholung}
+%         f(v) = \int_{I} \skprod{g(t)}{v_{1}(t)}_{L_{2}(\Omega)} \diff t + \skprod{u_{0}}{v_{2}}_{L_{2}(\Omega)}.
+%     \end{equation}
+
+% Aus \thref{thm:schwab09:theorem51} und \thref{thm:schwab09:theorem51:ungleichungen} erhalten wir nun die Wohldefiniertheit des obigen Variationsproblems und zugleich Schranken für die Operatoren.
+
+% \begin{Korollar}
+% \label{korollar:2.2}
+%     Seien $\mathcal X$ und $\mathcal Y$ gegeben wie in \eqref{eq:var_ansatzraum_testraum} und sei $B \colon \mathcal X \to \mathcal Y'$ definiert durch
+%     \begin{equation}
+%         \skprod{Bu}{v}_{\mathcal Y' \times \mathcal Y}  = b(u, v), \quad u \in \mathcal X,~ v \in \mathcal Y,
+%     \end{equation}
+%     mit $b(\blank, \blank)$ wie in \eqref{eq:buv}.
+%     Dann ist $B$ stetig invertierbar und es gilt
+%     \begin{equation}
+%         \norm{B}_{\mathcal L(\mathcal X, \mathcal Y')}
+%         \leq
+%         \frac{\sqrt{2 \max\Set{1, c^{2}, \norm{\omega}_{L_{\infty}(\Omega)}^{2}} + M_{e}^{2}}}{\max\Set{\sqrt{1 + 2 \norm{\omega}_{L_{\infty}(\Omega)}^{2} \rho^{4}}, \sqrt{2} }}
+%     \end{equation}
+%     und
+%     \begin{equation}
+%         \norm{B^{-1}}_{\mathcal L( \mathcal Y', \mathcal X)}
+%         \leq \frac{e^{2 T \norm{\omega}_{L_{\infty}(\Omega)}} \max\Set{\sqrt{1 + 2 \norm{\omega}_{L_{\infty}(\Omega)}^{2} \rho^{4}}, \sqrt{2}} \sqrt{2 \max\Set{c^{-2} \gamma_{\Omega}^{-4}, 1} + M_{e}^{2}}}{\min\Set{c^{-1} \gamma_{\Omega}^{2}, c \gamma_{\Omega}^{2} \norm{\omega}_{L_{\infty}(\Omega)}^{-2}, c \gamma_{\Omega}^{2} }}.
+%         % \leq
+%         % \frac{\max\{\sqrt{ 1 + 2 \norm{\omega}_{L_{\infty}(\Omega)} \rho^{4}}, \sqrt{2} \}}{e^{-2 \norm{\omega}_{L_{\infty}(\Omega)} T}}
+%         % \frac{\sqrt{2 \max\{ 1, \sigma^{-2} \gamma_{\Omega}^{-4} \} + M_{e}^{2}}}{\min\{ \sigma \gamma_{\Omega}^{2} \norm{\omega}_{L_{\infty}(\Omega)}^{-2}, \sigma \gamma_{\Omega}^{2} \}}
+%     \end{equation}
+%     mit $M_{e}$ und $\rho$ wie in \eqref{eq:var_all_M_e} respektive \eqref{eq:var_all_rho}.
+% \end{Korollar}
+
+% section der_betrachtete_fall (end)
+
+% \section{Parametrische Formulierung} % (fold)
+% \label{sec:parametrische_formulierung}
+
+% \todo[inline]{Ordentlich aufschreiben}
+
+% Dieser Abschnitt dient der Einführung einer parametrischen Variante der zuvor vorgestellten parabolischen partiellen Differentialgleichung.
+
+% Für den weiteren Verlauf der Arbeit wählen wir $V = H^{1}_{0}(\Omega)$, $H = L_{2}(\Omega)$ und $V' = H^{-1}(\Omega)$.
+% % Diese separablen Hilberträume bilden ein Gelfand-Tripel $V \denseinclusion H \denseinclusion V'$.
+
+% Wir betrachten nun zunächst die folgende parametrische Operatorgleichung: Sei ein $g \in V'$ gegeben, finde für alle $\omega$ ein $u(\omega) \in V$, so dass
+% \begin{equation}
+%     A(\omega) u(\omega) = g \in V'
+% \end{equation}
+% gilt.
+% Durch die Wahl $V = H^{1}_{0}(\Omega)$ sind die Randbedingungen $\restr{u(\omega)}{\partial \Omega} = 0$ bereits implizit gegeben.
+% Dabei sei der Operator $A(\omega)$ gegeben durch
+% \begin{equation}
+%     \label{eq:pp:op_a}
+%     A(\omega) \colon V \to V', \quad A(\omega) u = - c \Delta u + \omega u + \mu u.
+% \end{equation}
+% Die zugehörige Bilinearform $a(\blank, \blank; \omega)$ ergibt sich damit zu
+% \begin{equation}
+%     \label{eq:pp:bf_a}
+%     a(\blank, \blank; \omega) \colon V \times V \to \mathbb{R},
+%     \quad (u, v) \mapsto c\skp{\grad u}{\grad v}{H} + \skp{\omega u}{v}{H} + \mu \skp{u}{v}{H}.
+% \end{equation}
+
+% Unter diesen Bedingungen erhalten wir für die Bilinearform aus \eqref{eq:pp:bf_a} respektive \eqref{eq:pp:bf_a_sigma} die folgenden Eigenschaften.
+% %
+% \begin{Satz}
+% \label{satz:pp:a_bf_bounded_garding}
+%     Seien $c \in \mathbb{R}_{+}$, $\mu \in \mathbb{R}$, $\omega \in L_{\infty}(\Omega)$ und
+%     \begin{equation}
+%     \label{eq:bf_a}
+%         \begin{aligned}
+%             &a(\blank, \blank) \colon H^{1}_{0}(\Omega) \times H^{1}_{0}(\Omega) \to \mathbb{R}, \\
+%             &(u, v) \mapsto c\skp{\grad u}{\grad v}{L_{2}(\Omega)} + \skp{\omega u}{v}{L_{2}(\Omega)} + \mu \skp{u}{v}{L_{2}(\Omega)}.
+%         \end{aligned}
+%     \end{equation}
+%     Dann erfüllt $a$ die Eigenschaften aus \thref{annahme:eigenschaften_bf_a}:
+%     \begin{thmenumerate}
+%         \item\label{satz:pp:a_bf_bounded_garding:1}
+%         \emph{Stetigkeit:} es gilt
+%         \begin{equation}
+%             \abs{a(\eta, \zeta)} \leq M_{a} \norm{\eta}_{H^{1}(\Omega)} \norm{\zeta}_{H^{1}(\Omega)} \quad \text{für alle}~\eta, \zeta \in H^{1}_{0}(\Omega)
+%         \end{equation}
+%         mit $M_{a} = \max\Set{c, \norm{\omega}_{L_{\infty}(\Omega)} + \abs{\mu}} \geq 0$.
+%         \item\label{satz:pp:a_bf_bounded_garding:2}
+%         \emph{G\aa{}rding-Ungleichung:} es gilt
+%         \begin{equation}
+%                 a(\eta, \eta) + \lambda \norm{\eta}_{L_{2}(\Omega)}^{2} \geq \alpha \norm{\eta}_{H^{1}(\Omega)}^{2} \quad \text{für alle}~\eta \in H^{1}_{0}(\Omega)
+%         \end{equation}
+%         mit $\alpha = c \gamma_{\Omega}^{2} > 0$ und $\lambda = \min\Set{\norm{\omega}_{L_{\infty}(\Omega)} - \mu, 0} \geq 0$, wobei $\gamma_{\Omega}$ die Poincaré-Friedrichs-Konstante ist.
+%     \end{thmenumerate}
+
+%     \begin{Beweis}
+%     Wir zeigen zunächst die Stetigkeit.
+%     Seien dazu $\eta, \zeta \in H^{1}_{0}(\Omega)$ beliebig.
+%     Unter Verwendung der Dreiecks- und der Cauchy-Schwarz-Ungleichung erhalten wir
+%     \begin{align}
+%         \abs{a(\eta, \zeta)}
+%         &= \abs{c \skprod{\grad \eta}{\grad \zeta}_{L_{2}(\Omega)} + \skprod{\omega \eta}{\zeta}_{L_{2}(\Omega)} + \mu \skp{\eta}{\zeta}{L_{2}(\Omega)} }
+%         \\&\leq c \abs{\skprod{\grad \eta}{\grad \zeta}_{L_{2}(\Omega)}} + \abs{\skprod{\omega \eta}{\zeta}_{L_{2}(\Omega)}} + \abs{\mu} \abs{\skp{\eta}{\zeta}{L_{2}(\Omega)}}
+%         \\&\leq c \norm{\grad \eta}_{L_{2}(\Omega)} \norm{\grad \zeta}_{L_{2}(\Omega)} + (\norm{\omega}_{L_{\infty}(\Omega)} + \abs{\mu}) \norm{\eta}_{L_{2}(\Omega)} \norm{\zeta}_{L_{2}(\Omega)}
+%         \\&\leq \max \Set{ c, \norm{\omega}_{L_{\infty}(\Omega)} + \abs{\mu}} \norm{\eta}_{H^{1}(\Omega)} \norm{\zeta}_{H^{1}(\Omega)}.
+%     \end{align}
+
+%     Für die G\aa{}rding-Ungleichung seien nun $\eta \in H^{1}_{0}(\Omega)$ und $\lambda \in \mathbb{R}$.
+%     Wir betrachten
+%     \begin{align}
+%         a(\eta, \eta) + \lambda \norm{\eta}^{2}_{L_{2}(\Omega)}
+%         &= c \norm{\grad \eta}^{2}_{L_{2}(\Omega)} + \skprod{\omega \eta}{\eta}_{L_{2}(\Omega)} + \mu \skprod{\eta}{\eta}_{L_{2}(\Omega)} + \lambda \skprod{\eta}{\eta}_{L_{2}(\Omega)}
+%         \\&= c \norm{\grad \eta}^{2}_{L_{2}(\Omega)} + \skprod{(\omega + \mu + \lambda) \eta}{\eta}_{L_{2}(\Omega)}.
+%     \end{align}
+%     Wählen wir nun $\lambda = \min\Set{\norm{\omega}_{L_{\infty}(\Omega)} - \mu, 0} \geq 0$, dann gilt $\omega + \mu + \lambda \geq 0$ fast überall in $\Omega$ und wir erhalten die Abschätzung
+%     \begin{align}
+%         a(\eta, \eta) + \lambda \norm{\eta}^{2}_{L_{2}(\Omega)}
+%         &\geq c \norm{\grad \eta}^{2}_{L_{2}(\Omega)},
+%         \intertext{woraus wir durch Anwenden der Poincaré-Friedrichs-Ungleichung \ref{satz:grundlagen:poincare_friedrichs_ungleichung}}
+%         a(\eta, \eta) + \lambda \norm{\eta}^{2}_{L_{2}(\Omega)}
+%         &\geq c \gamma_{\Omega}^{2} \norm{\eta}^{2}_{H^{1}(\Omega)}
+%     \end{align}
+%     folgern.
+%     \end{Beweis}
+% \end{Satz}
+
+% \begin{Korollar}
+%     Ist $\mu \geq \norm{\omega}_{L_{\infty}(\Omega)}$, dann ist die Bilinearform koerziv.
+% \end{Korollar}
+
+% \begin{Satz}
+% \label{satz:pp:lax_auf_elliptisch}
+%     Seien $\omega \in L_{\infty}(\Omega)$, $\mu \geq \norm{\omega}_{L_{\infty}(\Omega)}$ und weiter $g \in H^{-1}(\Omega)$ und $A(\omega)$ wie in \eqref{eq:pp:op_a}, dann besitzt die Operatorgleichung
+%     \begin{equation}
+%         A(\omega) u(\omega) = g
+%     \end{equation}
+%     eine eindeutige Lösung $u(\omega) \in H^{1}_{0}(\Omega)$ und diese erfüllt
+%     \begin{equation}
+%         \norm{u(\omega)}_{H^{1}(\Omega)} \leq \frac{\norm{g}_{H^{-1}(\Omega)}}{\alpha}
+%     \end{equation}
+%     mit $\alpha$ aus \thref{satz:pp:a_bf_bounded_garding}.
+
+%     \begin{Beweis}
+%         Folgt aus dem Banach-Ne\v{c}as-Babu\v{s}ka-Theorem, \thref{satz:gl:bnb_theorem}.
+%     \end{Beweis}
+% \end{Satz}
+
+% \todo[inline]{Ab hier parametrisch}
+
+% Wir wollen nun die Abhängigkeit des Operators $A(\omega)$ von dem Parameter $\omega$ konkretisieren.
+
+% \begin{Definition}
+% \label{definition:pp:omega_affin}
+%     Die Funktion $\omega$ ist affin darstellbar.
+%     Genauer sei $\mathcal S \subset \mathbb{R}^{\mathbb{N}}$ ein Parameterraum und $\Set{ \varphi_{j} }_{j \in \mathbb{N}} \in L_{\infty}(\Omega)$ eine Folge von Funktion, so dass $\omega$ sich für $\sigma \in \mathcal S$ schreiben lässt als
+%     \begin{equation}
+%         w(\blank; \sigma) \colon \Omega \to \mathbb{R}, \quad w(x; \sigma) = \sum_{j = 1}^{\infty} \sigma_{j} \varphi_{j}(x).
+%     \end{equation}
+% \end{Definition}
+
+% \begin{Bemerkung}
+%     Wir wählen für den Rest der Arbeit $\mathcal S = [-1, 1]^{\mathbb{N}}$.
+%     Dies stellt keine Einschränkung dar, da die Funktionen $\Set{ \varphi_{j} }_{j \in \mathbb{N}}$ beliebig umskaliert werden können.
+% \end{Bemerkung}
+
+% Setzen wir diese affine Darstellung nun zunächst in den Operator $A(\omega)$ ein, dann erhalten wir die Darstellung
+% \begin{equation}
+%     A(\omega(\sigma)) \colon V \to V', \quad A(\omega(\sigma)) u = -c \Delta u + \sum_{j = 1}^{\infty} \sigma_{j} \varphi_{j} u + \mu u,
+% \end{equation}
+% und als zugehörige Bilinearform $a(\blank, \blank; \omega(\sigma))$ ergibt sich
+% \begin{equation}
+% \label{eq:pp:bf_a_sigma}
+%     a(\blank, \blank; \omega(\sigma)) \colon V \times V \to \mathbb{R}, \quad a(u, v) \mapsto c\skp{\grad u}{\grad v}{H} + \sum_{j = 1}^{\infty} \sigma_{j} \skp{\varphi_{j} u}{v}{H} + \mu \skp{u}{v}{H}.
+% \end{equation}
+
+% \begin{Bemerkung}
+%     Um die Schreibweisen zu verkürzen, verwenden wir meist $\omega(\sigma)$ statt $w(\blank; \sigma)$, sowie $A(\sigma)$ und $a(\blank, \blank; \sigma)$ statt $A(\omega(\sigma))$ respektive $a(\blank, \blank; \omega(\sigma))$.
+% \end{Bemerkung}
+
+% Damit der Operator $A(\sigma)$ sowie die Bilinearform $a(\blank, \blank; \sigma)$ wohldefiniert sind, müssen wir Wohldefiniertheit, dass heißt gleichmäßige Konvergenz, der obigen affinen Zerlegung von $\omega$ aus \thref{definition:pp:omega_affin} fordern.
+% Dies wird durch folgende Bedingung sichergestellt.
+% %%
+% \begin{Annahme}
+%     Das Funktionensystem $\Set{ \varphi_{j} }_{j \in \mathbb{N}} \in L_{\infty}(\Omega)$ sei einfach summierbar in der $L_{\infty}$-Norm, das heißt es gelte
+%     \begin{equation}
+%         \Set{ \norm{\varphi_{j}}_{L_{\infty}(\Omega) } }_{j \in \mathbb{N}} \in \ell_{1}(\mathbb{N}).
+%     \end{equation}
+% \end{Annahme}
+% %%
+% Hieraus folgt wegen $\mathcal S = [-1, 1]^{\mathbb{N}}$ insbesondere
+% \begin{equation}
+%     \sup_{\sigma \in \mathcal S} \norm{\omega(\sigma)}_{L_{\infty}(\Omega)} \leq \sum_{j = 1}^{\infty} \norm{\varphi_{j}}_{L_{\infty}(\Omega)} < \infty.
+% \end{equation}
+
+% section parametrische_formulierung (end)
+
+% \section{Regularität bezüglich des Parameters} % (fold)
+% \label{sec:regularit_t_bez_glich_des_parameters}
+
+% In diesem Abschnitt wollen wir nun unter geeigneten, noch näher zu bestimmenden Bedingungen, die analytische Abhängigkeit der Lösung $u(\sigma)$ der zuvor eingeführten PPDE vom Parameter $\sigma \in \mathcal S$ nachweisen.
+% Dabei orientieren wir uns vor allem an den Arbeiten von \textcite{Cohen:2010kz,Kunoth:2013ef}.
+
+% \begin{Lemma}
+% \label{lemma:pp:norm_abschaetzung}
+%     Seien $\omega_{1}, \omega_{2} \in L_{\infty}(\Omega)$ und $u_{1}, u_{2}$ die zugehörigen Lösungen, dann gilt
+%     \begin{equation}
+%         \norm{u_{1} - u_{2}}_{V} \leq \frac{\norm{f}_{V'}}{\gamma_{0}^{2}} \norm{\omega_{1} - \omega_{2}}_{L_{\infty}}.
+%     \end{equation}
+
+%     \begin{Beweis}
+%         Durch Subtraktion der beiden Variationsformulierungen erhalten wir für $v \in V$ die Gleichung
+%         \begin{align}
+%             0 &= a(u_{1}, v; \omega_{1}) - a(u_{2}, v; \omega_{2})
+%             \\&= c \skp{\grad u_{1} - \grad u_{2}}{\grad v}{H} + \skp{\omega_{1}u_{1} - \omega_{2} u_{2}}{v}{H} + \mu \skp{u_{1} - u_{2}}{v}{H},
+%             \intertext{durch setzen von $z = u_{1} - u_{2}$ erhalten wir weiter}
+%             0 &= c \skp{\grad z}{\grad v}{H} + \skp{\omega_{1} z}{v}{H} + \mu \skp{z}{v}{H} + \skp{(\omega_{1} - \omega_{2}) u_{2}}{v}{H}
+%             \\&= a(z, v; \omega_{1}) + \skp{(\omega_{1} - \omega_{2}) u_{2}}{v}{H}.
+%         \end{align}
+%         Dies lässt sich nun wieder in Form des Variationsproblems schreiben, konkret
+%         \begin{equation}
+%             a(z, v; \omega_{1}) = g(v) \quad \fa v \in V,
+%         \end{equation}
+%         mit
+%         \begin{equation}
+%             g(v) = - \skp{(\omega_{1} - \omega_{2}) u_{2}}{v}{H}.
+%         \end{equation}
+
+%         Nach \thref{satz:pp:lax_auf_elliptisch} ist die Lösung $z = u_{1} - u_{2} \in V$ eindeutig und erfüllt
+%         \begin{equation}
+%             \norm{z}_{V} \leq \frac{\norm{g}_{V'}}{\gamma_{0}}.
+%         \end{equation}
+
+%         Die Operatornorm von $g$ lässt sich mittels der Cauchy-Schwarz-Ungleichung bestimmen zu
+%         \begin{equation}
+%             \begin{aligned}
+%                 \norm{g}_{V'}
+%                   &=    \sup_{\norm{v}_{V} = 1} \abs{g(v)}
+%                    =    \sup_{\norm{v}_{V} = 1} \abs{\skp{(\omega_{1} - \omega_{2}) u_{2}}{v}{H}}
+%                 \\&\leq \sup_{\norm{v}_{V} = 1} \norm{\omega_{1} - \omega_{2}}_{L_{\infty}(\Omega)} \norm{u_{1}}_{H} \norm{v}_{H}
+%                    \leq \sup_{\norm{v}_{V} = 1} \norm{\omega_{1} - \omega_{2}}_{L_{\infty}(\Omega)} \norm{u_{1}}_{V} \norm{v}_{V}
+%                 \\&=    \norm{\omega_{1} - \omega_{2}}_{L_{\infty}(\Omega)} \norm{u_{1}}_{V}
+%                    \leq \norm{\omega_{1} - \omega_{2}}_{L_{\infty}(\Omega)} \frac{\norm{f}_{V'}}{\gamma_{0}}.
+%             \end{aligned}
+%         \end{equation}
+%         Zusammen liefert dies die Ungleichung
+%         \begin{equation}
+%             \norm{u_{1} - u_{2}}_{V}
+%             = \norm{z}_{V} \leq \norm{\omega_{1} - \omega_{2}}_{L_{\infty}(\Omega)} \frac{\norm{f}_{V'}}{\gamma_{0}^{2}}
+%         \end{equation}
+%         und damit die Behauptung.
+%     \end{Beweis}
+% \end{Lemma}
+
+% \begin{Satz}
+%     Die Abbildung $\mathcal S \ni \sigma \mapsto u(\sigma) \in V$ besitzt für alle $\nu \in \mathfrak F$ die partielle Ableitung $\partial^{\nu}_{\sigma} u(\sigma)$.
+
+%     \begin{Beweis}
+%         Wir zeigen die Behauptung exemplarisch für für die partiellen Ableitungen erster Ordnung für ein festes $\sigma \in \mathcal S$.
+%         Seien dazu $\nu = e_{j}$ für ein $j \in \mathbb{N}$ und sei weiter $h \in \mathbb{R} \setminus \Set{ 0 }$.
+%         Definiere
+%         \begin{equation}
+%             u_{h} := \frac{u(\sigma + h e_{j}) - u(\sigma)}{h}.
+%         \end{equation}
+
+%         \todo[inline]{wohldfiniertheit?}
+%         Ist $\abs{h}$ klein genug, so dass $\sigma + h e_{j} \in \mathcal S$ gilt, dann existieren die eindeutigen Lösungen $u(\sigma + h e_{j})$ und $u(\sigma)$ des Variationsproblems (??) zu den jeweiligen Parametern.
+%         Betrachte nun die Differenz der beiden Variationsformulierungen, dann gilt
+%         \begin{align}
+%             0 &= a(u(\sigma + h e_{j}), v; \sigma + h e_{j}) - a(u(\sigma), v; \sigma)
+%             %
+%             \\ &= c \skp{u(\sigma + h e_{j})}{v}{L_{2}(\Omega)} + \skp{\omega(\sigma + h e_{j}) u(\sigma + h e_{j})}{v}{L_{2}(\Omega)} + \mu \skp{u(\sigma + h e_{j})}{v}{L_{2}(\Omega)}
+%             \\&\qquad - c \skp{u(\sigma)}{v}{L_{2}(\Omega)} - \skp{\omega(\sigma) u(\sigma)}{v}{L_{2}(\Omega)} - \mu \skp{u(\sigma)}{v}{L_{2}(\Omega)}
+%             %
+%             \\&= c \skp{u(\sigma + h e_{j}) - u(\sigma)}{v}{L_{2}(\Omega)} + \skp{\omega(\sigma + h e_{j}) u(\sigma + h e_{j}) - \omega(\sigma) u(\sigma)}{v}{L_{2}(\Omega)}
+%             \\&\qquad  + \mu \skp{u(\sigma + h e_{j}) - u(\sigma)}{v}{L_{2}(\Omega)}
+%             %
+%             \\&= c \skp{u(\sigma + h e_{j}) - u(\sigma)}{v}{L_{2}(\Omega)} + \skp{\omega(\sigma) (u(\sigma + h e_{j}) - u(\sigma))}{v}{L_{2}(\Omega)}
+%             \\&\qquad + \skp{(\omega(\sigma + h e_{j}) - \omega(\sigma)) u(\sigma + h e_{j})}{v}{L_{2}(\Omega)} + \mu \skp{u(\sigma + h e_{j}) - u(\sigma)}{v}{L_{2}(\Omega)}
+%             %
+%             \\&= h \left(
+%                 c \skp{u_{h}}{v}{L_{2}(\Omega)} + \skp{\omega(\sigma) u_{h}}{v}{L_{2}(\Omega)} + \mu \skp{u_{h}}{v}{L_{2}(\Omega)}
+%              \right) + h \skp{\varphi_{j} u(\sigma + h e_{j})}{v}{L_{2}(\Omega)}
+%             \\&= h a(u_{h}, v; \sigma) + h \skp{\varphi_{j} u(\sigma + h e_{j})}{v}{L_{2}(\Omega)}
+%         \end{align}
+%         Dies lässt sich zu folgendem Variationsproblem
+%         \begin{equation}
+%             a(u_{h}, v; \sigma) = F_{h}(v) \quad \fa v \in V.
+%         \end{equation}
+%         Dabei ist
+%         \begin{equation}
+%             F_{h} \colon V \to \mathbb{R}, \quad v \mapsto - \skp{\varphi_{j} u(\sigma + h e_{j})}{v}{L_{2}(\Omega)}
+%         \end{equation}
+%         ein lineares stetiges Funktional.
+%         Weiter ist $F_{h}(\blank)$ stetig in $h = 0$, denn es gilt für festes $v \in V$ die Abschätzung
+%         \begin{align}
+%             \abs{F_{h}(v) - F_{0}(v)}
+%             &= \abs{\skp{\varphi_{j} (u(\sigma + h e_{j}) - u(\sigma))}{v}{L_{2}(\Omega)}}
+%             \\&\leq \norm{\varphi_{j}}_{L_{\infty}(\Omega)} \abs{\skp{u(\sigma + h e_{j}) - u(\sigma)}{v}{L_{2}(\Omega)}}
+%             \\&\leq \norm{\varphi_{j}}_{L_{\infty}(\Omega)} \norm{u(\sigma + h e_{j}) - u(\sigma)}_{L_{2}(\Omega)} \norm{v}_{L_{2}(\Omega)}
+%             \\&\leq \norm{\varphi_{j}}_{L_{\infty}(\Omega)} \norm{u(\sigma + h e_{j}) - u(\sigma)}_{H^{1}(\Omega)} \norm{v}_{H^{1}(\Omega)}.
+%         \end{align}
+%         Weiter liefert \thref{lemma:pp:norm_abschaetzung} die Ungleichung
+%         \begin{align}
+%             \norm{u(\sigma + h e_{j}) - u(\sigma)}_{H^{1}(\Omega)}
+%             &\leq \frac{\norm{f}_{V'}}{\gamma_{0}^{2}} \norm{\omega(\sigma + h e_{j}) - \omega(\sigma)}_{L_{\infty}(\Omega)}
+%             \\&\leq \abs{h} \norm{\varphi_{j}}_{L_{\infty}(\Omega)} \frac{\norm{f}_{V'}}{\gamma_{0}^{2}}.
+%         \end{align}
+%         Zusammen liefern die beiden Abschätzungen
+%         \begin{equation}
+%             \abs{F_{h}(v) - F_{0}(v)} \leq \abs{h} \norm{\varphi_{j}}^{2}_{L_{\infty}(\Omega)} \norm{v}_{H^{1}(\Omega)} \frac{\norm{f}_{V'}}{\gamma_{0}^{2}} \to 0 \quad \text{für}~h \to 0,
+%         \end{equation}
+%         das heißt es gilt $F_{h} \to F_{0}$ in $V'$ für $h \to 0$.
+
+%         Dies impliziert insbesondere $u_{h} \to u_{0}$ in $V$ für $h \to 0$.
+%         Weiter erfüllt $u_{0}$ die Gleichung
+%         \begin{equation}
+%             a(u_{0}, v; \sigma) = F_{0}(v) \quad \fa v \in V.
+%         \end{equation}
+%         Damit existiert $\partial_{\sigma_{j}} u(\sigma) = u_{0}$ in $V$ und ist die eindeutige Lösung des Variationsproblems
+%         \begin{equation}
+%             a(\partial_{\sigma_{j}} u(\sigma), v; \sigma) = - \skp{\varphi_{j} u(\sigma)}{v}{L_{2}(\Omega)} \quad \fa v \in V.
+%         \end{equation}
+
+%         Alternativ erhält man dieses Variationsproblem auch durch formales Differenzieren der eigentlichen Variationsformulierung nach $\sigma_{j}$, denn dann gilt
+%         \begin{align}
+%             \partial_{\sigma_{j}} a(u(\sigma), v; \sigma)
+%             &= \partial_{\sigma_{j}} \left( c \skp{\grad u(\sigma)}{\grad v}{L_{2}(\Omega)} + \skp{w(\sigma)u(\sigma)}{v}{L_{2}(\Omega)} + \mu \skp{u(\sigma)}{v}{L_{2}(\Omega)} \right)
+%             \\&= c \skp{\grad \partial_{\sigma_{j}} u(\sigma)}{\grad v}{L_{2}(\Omega)} + \skp{ \partial_{\sigma_{j}} w(\sigma)u(\sigma) + w(\sigma) u(\sigma) }{v}{L_{2}(\Omega)} + \mu \skp{\partial_{\sigma_{j}}u(\sigma)}{v}{L_{2}(\Omega)}
+%             \\&= a(\partial_{\sigma_{j}} u(\sigma), v; \sigma) + \skp{\partial_{\sigma_{j}}\omega(\sigma)u(\sigma)}{v}{L_{2}(\Omega)}
+%             \\&= a(\partial_{\sigma_{j}} u(\sigma), v; \sigma) + \skp{\varphi_{j} u(\sigma)}{v}{L_{2}(\Omega)}
+%         \end{align}
+%         und
+%         \begin{equation}
+%             \partial_{\sigma_{j}} \skp{f}{v}{L_{2}(\Omega)} = 0,
+%         \end{equation}
+%         woraus man ingesamt erneut das Variationsproblem
+%         \begin{equation}
+%             a(\partial_{\sigma_{j}} u(\sigma), v; \sigma) = - \skp{\varphi u(\sigma)}{v}{L_{2}(\Omega)} \quad \fa v \in V
+%         \end{equation}
+%         erhält.
+
+%         Durch wiederholtes Anwenden des beschriebenen Vorgehens erhält man damit auch die Existenz der höheren partiellen Ableitungen.
+%     \end{Beweis}
+% \end{Satz}
+
+% Seien $b := (b_{j})_{j} \in \mathbb{R}$ und $b_{j} := \frac{\norm{\varphi_{j}}_{L_{\infty}}}{\gamma_{0}}$.
+
+% \begin{Satz}
+%     Es gilt
+%     \begin{equation}
+%         \sup_{\sigma \in \mathcal S} \norm{\partial^{\nu}_{\sigma} u(\sigma)} \leq B \abs{\nu}! b^{\nu}.
+%     \end{equation}
+
+%     \begin{Beweis}
+%         Wir betrachten zunächst die Variationsprobleme, welche von den partiellen Ableitungen $\partial^{\nu}_{\sigma} u(\sigma)$ erfüllt werden.
+%         Diese Variationsprobleme haben die folgende rekurisve Darstellung
+%         \begin{equation}
+%             a(\partial^{\nu}_{\sigma} u(\sigma), v; \sigma)
+%             = - \sum_{\Set{j \given \nu_{j} \neq 0}} \nu_{j} \skp{\varphi_{j} \partial^{\nu - e_{j}}_{\sigma} u(\sigma)}{v}{L_{2}(\Omega)}.
+%         \end{equation}
+%         Die Gültigkeit dieser Formel beweisen wir per Induktion.
+%         Der Fall $\abs{\nu} = 1$ ergibt sich aus (??).
+%         Betrachte also $abs{\nu} > 1$.
+%         Sei $k \in \mathbb{N}$ ein Index mit $\nu_{k} \neq 0$, dann definieren wir $\tilde{\nu} := \nu - e_{k}$ und es gilt offenbar $\abs{\tilde{\nu}} = \abs{\nu} - 1$.
+%         Nach Induktionsvoraussetzung gilt weiter
+%         \begin{equation}
+%             a(\partial^{\tilde{\nu}}_{\sigma} u(\sigma), v; \sigma) + \sum_{\Set{j \given \tilde{\nu}_{j} \neq 0}} \tilde{\nu}_{j} \skp{\varphi_{j} \partial^{\tilde{\nu} - e_{j}}_{\sigma} u(\sigma)}{v}{L_{2}(\Omega)} = 0,
+%         \end{equation}
+%         wobei $\nu_{j} = \tilde{\nu}_{j}$ für $j \neq k$ und $\tilde{\nu}_{k} = \nu_{k} - 1$ gilt.
+
+%         Partielles Differenzieren dieser Gleichung nach $\sigma_{k}$ liefert
+%         \begin{align}
+%             0 &=
+%                 a(\partial^{\nu}_{\sigma} u(\sigma), v; \sigma)
+%                 + \skp{\varphi_{k} \partial^{\nu - e_{k}}_{\sigma} u(\sigma)}{v}{L_{2}(\Omega)}
+%                 + \sum_{\Set{j \neq k \given \nu_{j} \neq 0}} \nu_{j} \skp{\varphi_{j} \partial^{\nu - e_{j}}_{\sigma} u(\sigma)}{v}{L_{2}(\Omega)}
+%             \\&\qquad     + (\nu_{k} - 1) \skp{\varphi_{k} \partial^{\nu - e_{k}}_{\sigma} u(\sigma) }{v}{L_{2}(\Omega)}
+%         \end{align}
+
+%         Wählt man nun $v = \partial^{\nu}_{\sigma} u(\sigma)$, dann gilt damit aufgrund der Koerzivität von $a(\blank, \blank; \sigma)$ die Ungleichung
+%         \begin{equation}
+%             a(\partial^{\nu}_{\sigma} u(\sigma), \partial^{\nu}_{\sigma} u(\sigma); \sigma) \geq \alpha \norm{\partial^{\nu}_{\sigma} u(\sigma)}_{H^{1}(\Omega)}^{2}.
+%         \end{equation}
+%         Außerdem erhalten wir mit Hilfe er Cauchy-Schwarz-Ungleichung die Abschätzung
+%         \begin{align}
+%             a(\partial^{\nu}_{\sigma} u(\sigma), \partial^{\nu}_{\sigma} u(\sigma); \sigma)
+%             &= - \sum_{\Set{j \given \nu_{j} \neq 0}} \nu_{j} \skp{\varphi_{j} \partial^{\nu - e_{j}}_{\sigma} u(\sigma) }{\partial^{\nu}_{\sigma} u(\sigma)}{L_{2}(\Omega)}
+%             \\&\leq \sum_{\Set{j \given \nu_{j} \neq 0}} \nu_{j} \norm{\varphi_{j}}_{L_{\infty}(\Omega)} \norm{\partial^{\nu - e_{j}}_{\sigma} u(\sigma)}_{H^{1}(\Omega)} \norm{\partial^{\nu}_{\sigma} u(\sigma)}_{H^{1}(\Omega)}.
+%         \end{align}
+%         Beide Ungleichungen zusammen ergeben
+%         \begin{equation}
+%             \norm{\partial^{\nu}_{\sigma} u(\sigma)}_{H^{1}(\Omega)} \leq \sum_{\Set{j \given \nu_{j} \neq 0}} \nu_{j} \frac{\norm{\varphi_{j}}_{L_{\infty}(\Omega)}}{\alpha} \norm{\partial^{\nu - e_{j}}_{\sigma} u(\sigma)}_{H^{1}(\Omega)}.
+%         \end{equation}
+
+%         Um nun die eigentliche Behauptung zu beweisen, verfolgen wir erneut einen Induktionsansatz.
+%         Sei zunächst $\abs{\nu} = 0$, dann haben wir die Ungleichung
+%         \begin{equation}
+%             \norm{u(\sigma)}_{H^{1}(\Omega)} \leq \frac{\norm{\varphi_{j}}_{L_{\infty}(\Omega)}}{\alpha},
+%         \end{equation}
+%         welche nach Satz (??) erfüllt ist.
+%         Sei also weiter $\abs{\nu} > 0$, dann gilt mit obiger Ungleichung unter Verwendung der Induktionsvoraussetzung für $\norm{\partial^{\nu - e_{j}}_{\sigma} u(\sigma)}_{H^{1}(\Omega)}$ die Abschätzung
+%         \begin{align}
+%             \norm{\partial^{\nu}_{\sigma} u(\sigma)}_{H^{1}(\Omega)}
+%             &\leq
+%             \sum_{\Set{j \given \nu_{j} \neq 0}} \nu_{j} \frac{\norm{\varphi_{j}}_{L_{\infty}(\Omega)}}{\alpha} \norm{\partial^{\nu - e_{j}}_{\sigma} u(\sigma)}_{H^{1}(\Omega)}
+%             \\&\leq
+%             \sum_{\Set{j \given \nu_{j} \neq 0}} \nu_{j} \frac{\norm{\varphi_{j}}_{L_{\infty}(\Omega)}}{\alpha} B \abs{\nu - e_{j}}! b^{\nu - e_{j}}
+%             \\&\leq
+%             \left( \sum_{\Set{j \given \nu_{j} \neq 0}} \nu_{j} \right)  \frac{\norm{\varphi_{j}}_{L_{\infty}(\Omega)}}{\alpha} B (\abs{\nu} - 1)! b^{\nu}
+%             \\&\leq
+%             \frac{\norm{\varphi_{j}}_{L_{\infty}(\Omega)}}{\alpha} B \abs{\nu}! b^{\nu}
+%         \end{align}
+%     \end{Beweis}
+% \end{Satz}
+
+% \todo[inline]{Daraus folgern, dass es für den parabolischen auch gilt.}
 
 % section regularit_t_bez_glich_des_parameters (end)
 
@@ -839,241 +1404,241 @@ Zu (ii): Folgt aus nachfolgendem \thref{lemma:norm_B_beschraenkt_durch_norm_A}.
 
 % chapter parametrisches_problem (end)
 
-\newpage
+% \newpage
 
-\todo[inline]{Ebenfalls verarbeiten}
+% \todo[inline]{Ebenfalls verarbeiten}
 
-\todo[inline]{Kapitel komplett überarbeiten und am besten nochmal nachrechnen.}
+% \todo[inline]{Kapitel komplett überarbeiten und am besten nochmal nachrechnen.}
 
-In diesem Kapitel konzentrieren wir uns nun auf die in der Polymerchemie motivierte parabolische partielle Differentialgleichung.
-Eine ausführliche Herleitung findet sich bei \textcite{Fredrickson:2006th}.
+% In diesem Kapitel konzentrieren wir uns nun auf die in der Polymerchemie motivierte parabolische partielle Differentialgleichung.
+% Eine ausführliche Herleitung findet sich bei \textcite{Fredrickson:2006th}.
 
-\section{Motivation} % (fold)
-\label{sec:motivation}
+% \section{Motivation} % (fold)
+% \label{sec:motivation}
 
-\todo[inline]{schreiben!}
+% \todo[inline]{schreiben!}
 
-% section motivation (end)
+% % section motivation (end)
 
-\section{Vereinfachte Variante} % (fold)
-\label{sec:vereinfachte_variante}
+% \section{Vereinfachte Variante} % (fold)
+% \label{sec:vereinfachte_variante}
 
-Wir betrachten in diesem Abschnitt zunächst eine vereinfachte Variante der vorgestellten Differentialgleichung.
-Zunächst ignorieren wir den Wechsel des Feldes $\omega$ ab einem bestimmten Zeitpunkt und erhalten dadurch einen autonomen linearen Differentialoperator $A$.
-Weiter schränken wir uns auf homogene Dirichlet- statt periodischen Randbedingungen ein.
+% Wir betrachten in diesem Abschnitt zunächst eine vereinfachte Variante der vorgestellten Differentialgleichung.
+% Zunächst ignorieren wir den Wechsel des Feldes $\omega$ ab einem bestimmten Zeitpunkt und erhalten dadurch einen autonomen linearen Differentialoperator $A$.
+% Weiter schränken wir uns auf homogene Dirichlet- statt periodischen Randbedingungen ein.
 
-Unter diesen Gegebenheiten bietet es sich an, die Hilberträume als $V = H^{1}_{0}(\Omega)$ und $H = L_{2}(\Omega)$ zu wählen.
-Bekanntlich sind diese separabel und es existiert eine dichte stetige Einbettung von $H^{1}_{0}(\Omega)$ in $L_{2}(\Omega)$.
-Wegen $(H^{1}_{0}(\Omega))' = H^{-1}(\Omega)$ ergibt dies das Gelfand-Tripel
-\begin{equation}
-    H^{1}_{0}(\Omega) \denseinclusion L_{2}(\Omega) \denseinclusion H^{-1}(\Omega).
-\end{equation}
-Wie zuvor verwenden wir $\skprod{\blank}{\blank}$ mit entsprechendem Index sowohl für die Skalarprodukte als auch für die duale Paarung auf $H^{-1}(\Omega) \times H^{1}_{0}(\Omega)$.
+% Unter diesen Gegebenheiten bietet es sich an, die Hilberträume als $V = H^{1}_{0}(\Omega)$ und $H = L_{2}(\Omega)$ zu wählen.
+% Bekanntlich sind diese separabel und es existiert eine dichte stetige Einbettung von $H^{1}_{0}(\Omega)$ in $L_{2}(\Omega)$.
+% Wegen $(H^{1}_{0}(\Omega))' = H^{-1}(\Omega)$ ergibt dies das Gelfand-Tripel
+% \begin{equation}
+%     H^{1}_{0}(\Omega) \denseinclusion L_{2}(\Omega) \denseinclusion H^{-1}(\Omega).
+% \end{equation}
+% Wie zuvor verwenden wir $\skprod{\blank}{\blank}$ mit entsprechendem Index sowohl für die Skalarprodukte als auch für die duale Paarung auf $H^{-1}(\Omega) \times H^{1}_{0}(\Omega)$.
 
-Um obige partielle Differentialgleichung in das Setting aus \autoref{sec:lineare_evolutionsgleichungen} zu übertragen, definieren wir einen linearen Operator $A$ als
-\begin{equation}
-    \label{eq:def_op_A}
-    A \colon H^{1}_{0}(\Omega) \to H^{-1}(\Omega), \quad \eta \mapsto A \eta = - c \Delta \eta + \omega \eta
-\end{equation}
-und weiter die zugehörige Bilinearform
-\begin{equation}
-    a \colon H^{1}_{0}(\Omega) \times H^{1}_{0}(\Omega) \to \mathbb{R}, \quad a(\eta, \zeta) = \skprod{A \eta}{\zeta}_{L_{2}(\Omega)}.
-\end{equation}
-Diese lässt sich unter Verwendung der Greenschen Formeln (TODO!) auch schreiben als
-\begin{equation}
-    \begin{aligned}
-        a(\eta, \zeta)
-        &= \skprod{- c \Delta \eta + \omega \eta}{\zeta}_{L_{2}(\Omega)}
-        = - c \skprod{\Delta \eta}{\zeta}_{L_{2}(\Omega)} + \skprod{\omega \eta}{\zeta}_{L_{2}(\Omega)}
-        \\&= c \skprod{\grad \eta}{\grad \zeta}_{L_{2}(\Omega)} + \skprod{\omega \eta}{\zeta}_{L_{2}(\Omega)}.
-    \end{aligned}
-\end{equation}
+% Um obige partielle Differentialgleichung in das Setting aus \autoref{sec:lineare_evolutionsgleichungen} zu übertragen, definieren wir einen linearen Operator $A$ als
+% \begin{equation}
+%     \label{eq:def_op_A}
+%     A \colon H^{1}_{0}(\Omega) \to H^{-1}(\Omega), \quad \eta \mapsto A \eta = - c \Delta \eta + \omega \eta
+% \end{equation}
+% und weiter die zugehörige Bilinearform
+% \begin{equation}
+%     a \colon H^{1}_{0}(\Omega) \times H^{1}_{0}(\Omega) \to \mathbb{R}, \quad a(\eta, \zeta) = \skprod{A \eta}{\zeta}_{L_{2}(\Omega)}.
+% \end{equation}
+% Diese lässt sich unter Verwendung der Greenschen Formeln (TODO!) auch schreiben als
+% \begin{equation}
+%     \begin{aligned}
+%         a(\eta, \zeta)
+%         &= \skprod{- c \Delta \eta + \omega \eta}{\zeta}_{L_{2}(\Omega)}
+%         = - c \skprod{\Delta \eta}{\zeta}_{L_{2}(\Omega)} + \skprod{\omega \eta}{\zeta}_{L_{2}(\Omega)}
+%         \\&= c \skprod{\grad \eta}{\grad \zeta}_{L_{2}(\Omega)} + \skprod{\omega \eta}{\zeta}_{L_{2}(\Omega)}.
+%     \end{aligned}
+% \end{equation}
 
-Diese Bilinearform ist stetig und erfüllt eine G\aa{}rding-Ungleichung, wie das folgende Lemma zeigt.
+% Diese Bilinearform ist stetig und erfüllt eine G\aa{}rding-Ungleichung, wie das folgende Lemma zeigt.
 
-\begin{Lemma}
-\label{lemma:a_bf_bounded_garding}
-    Seien $c \in \mathbb{R}_{+}$, $\omega \in L_{\infty}(\Omega)$ und
-    \begin{equation}
-    \label{eq:bf_a}
-        a \colon H^{1}_{0}(\Omega) \times H^{1}_{0}(\Omega) \to \mathbb{R}, \quad a(\eta, \zeta) = c \skprod{\grad \eta}{\grad \zeta}_{L_{2}(\Omega)} + \skprod{\omega \eta}{\zeta}_{L_{2}(\Omega)}.
-    \end{equation}
-    Dann erfüllt $a$ die Eigenschaften aus \thref{annahme:eigenschaften_bf_a}:
-    \begin{thmenumerate}
-        \item\label{lemma:a_bf_bounded_garding:1}
-        \emph{Stetigkeit:} es gilt
-        \begin{equation}
-            \abs{a(\eta, \zeta)} \leq M_{a} \norm{\eta}_{H^{1}(\Omega)} \norm{\zeta}_{H^{1}(\Omega)} \quad \text{für alle}~\eta, \zeta \in H^{1}_{0}(\Omega)
-        \end{equation}
-        mit $M_{a} = \max\Set{c, \norm{\omega}_{L_{\infty}(\Omega)} } \geq 0$.
-        \item\label{lemma:a_bf_bounded_garding:2}
-        \emph{G\aa{}rding-Ungleichung:} es gilt
-        \begin{equation}
-                a(\eta, \eta) + \lambda \norm{\eta}_{L_{2}(\Omega)}^{2} \geq \alpha \norm{\eta}_{H^{1}(\Omega)}^{2} \quad \text{für alle}~\eta \in H^{1}_{0}(\Omega)
-        \end{equation}
-        mit $\alpha = c \gamma_{\Omega}^{2} > 0$ und $\lambda = \norm{\omega}_{L_{\infty}(\Omega)} \geq 0$, wobei $\gamma_{\Omega}$ die Poincaré-Friedrichs-Konstante ist.
-    \end{thmenumerate}
+% \begin{Lemma}
+% \label{lemma:a_bf_bounded_garding}
+%     Seien $c \in \mathbb{R}_{+}$, $\omega \in L_{\infty}(\Omega)$ und
+%     \begin{equation}
+%     \label{eq:bf_a}
+%         a \colon H^{1}_{0}(\Omega) \times H^{1}_{0}(\Omega) \to \mathbb{R}, \quad a(\eta, \zeta) = c \skprod{\grad \eta}{\grad \zeta}_{L_{2}(\Omega)} + \skprod{\omega \eta}{\zeta}_{L_{2}(\Omega)}.
+%     \end{equation}
+%     Dann erfüllt $a$ die Eigenschaften aus \thref{annahme:eigenschaften_bf_a}:
+%     \begin{thmenumerate}
+%         \item\label{lemma:a_bf_bounded_garding:1}
+%         \emph{Stetigkeit:} es gilt
+%         \begin{equation}
+%             \abs{a(\eta, \zeta)} \leq M_{a} \norm{\eta}_{H^{1}(\Omega)} \norm{\zeta}_{H^{1}(\Omega)} \quad \text{für alle}~\eta, \zeta \in H^{1}_{0}(\Omega)
+%         \end{equation}
+%         mit $M_{a} = \max\Set{c, \norm{\omega}_{L_{\infty}(\Omega)} } \geq 0$.
+%         \item\label{lemma:a_bf_bounded_garding:2}
+%         \emph{G\aa{}rding-Ungleichung:} es gilt
+%         \begin{equation}
+%                 a(\eta, \eta) + \lambda \norm{\eta}_{L_{2}(\Omega)}^{2} \geq \alpha \norm{\eta}_{H^{1}(\Omega)}^{2} \quad \text{für alle}~\eta \in H^{1}_{0}(\Omega)
+%         \end{equation}
+%         mit $\alpha = c \gamma_{\Omega}^{2} > 0$ und $\lambda = \norm{\omega}_{L_{\infty}(\Omega)} \geq 0$, wobei $\gamma_{\Omega}$ die Poincaré-Friedrichs-Konstante ist.
+%     \end{thmenumerate}
 
-    \begin{Beweis}
-    Wir zeigen zunächst die Stetigkeit.
-    Seien dazu $\eta, \zeta \in H^{1}_{0}(\Omega)$ beliebig.
-    Unter Verwendung der Dreiecks- und der Cauchy-Schwarz-Ungleichung erhalten wir
-    \begin{align}
-        \abs{a(\eta, \zeta)}
-        &= \abs{c \skprod{\grad \eta}{\grad \zeta}_{L_{2}(\Omega)} + \skprod{\omega \eta}{\zeta}_{L_{2}(\Omega)}}
-        \\&\leq c \abs{\skprod{\grad \eta}{\grad \zeta}_{L_{2}(\Omega)}} + \abs{\skprod{\omega \eta}{\zeta}_{L_{2}(\Omega)}}
-        \\&\leq c \norm{\grad \eta}_{L_{2}(\Omega)} \norm{\grad \zeta}_{L_{2}(\Omega)} + \norm{\omega}_{L_{\infty}(\Omega)} \norm{\eta}_{L_{2}(\Omega)} \norm{\zeta}_{L_{2}(\Omega)}
-        \\&\leq \max \Set{ c, \norm{\omega}_{L_{\infty}(\Omega)} } \norm{\eta}_{H^{1}(\Omega)} \norm{\zeta}_{H^{1}(\Omega)}.
-    \end{align}
+%     \begin{Beweis}
+%     Wir zeigen zunächst die Stetigkeit.
+%     Seien dazu $\eta, \zeta \in H^{1}_{0}(\Omega)$ beliebig.
+%     Unter Verwendung der Dreiecks- und der Cauchy-Schwarz-Ungleichung erhalten wir
+%     \begin{align}
+%         \abs{a(\eta, \zeta)}
+%         &= \abs{c \skprod{\grad \eta}{\grad \zeta}_{L_{2}(\Omega)} + \skprod{\omega \eta}{\zeta}_{L_{2}(\Omega)}}
+%         \\&\leq c \abs{\skprod{\grad \eta}{\grad \zeta}_{L_{2}(\Omega)}} + \abs{\skprod{\omega \eta}{\zeta}_{L_{2}(\Omega)}}
+%         \\&\leq c \norm{\grad \eta}_{L_{2}(\Omega)} \norm{\grad \zeta}_{L_{2}(\Omega)} + \norm{\omega}_{L_{\infty}(\Omega)} \norm{\eta}_{L_{2}(\Omega)} \norm{\zeta}_{L_{2}(\Omega)}
+%         \\&\leq \max \Set{ c, \norm{\omega}_{L_{\infty}(\Omega)} } \norm{\eta}_{H^{1}(\Omega)} \norm{\zeta}_{H^{1}(\Omega)}.
+%     \end{align}
 
-    Für die G\aa{}rding-Ungleichung seien nun $\eta \in H^{1}_{0}(\Omega)$ und $\lambda \in \mathbb{R}$.
-    Wir betrachten
-    \begin{align}
-        a(\eta, \eta) + \lambda \norm{\eta}^{2}_{L_{2}(\Omega)}
-        &= c \norm{\grad \eta}^{2}_{L_{2}(\Omega)} + \skprod{\omega \eta}{\eta}_{L_{2}(\Omega)} + \lambda \skprod{\eta}{\eta}_{L_{2}(\Omega)}
-        \\&= c \norm{\grad \eta}^{2}_{L_{2}(\Omega)} + \skprod{(\omega + \lambda) \eta}{\eta}_{L_{2}(\Omega)}.
-    \end{align}
-    Wählen wir nun $\lambda = \norm{\omega}_{L_{\infty}(\Omega)} \geq 0$, dann gilt $\omega + \lambda \geq 0$ fast überall in $\Omega$ und wir erhalten die Abschätzung
-    \begin{align}
-        a(\eta, \eta) + \lambda \norm{\eta}^{2}_{L_{2}(\Omega)}
-        &\geq c \norm{\grad \eta}^{2}_{L_{2}(\Omega)},
-        \intertext{woraus wir durch Anwenden der Poincaré-Friedrichs-Ungleichung \ref{satz:grundlagen:poincare_friedrichs_ungleichung}}
-        a(\eta, \eta) + \lambda \norm{\eta}^{2}_{L_{2}(\Omega)}
-        &\geq c \gamma_{\Omega}^{2} \norm{\eta}^{2}_{H^{1}(\Omega)}
-    \end{align}
-    folgern.
-    \end{Beweis}
-\end{Lemma}
+%     Für die G\aa{}rding-Ungleichung seien nun $\eta \in H^{1}_{0}(\Omega)$ und $\lambda \in \mathbb{R}$.
+%     Wir betrachten
+%     \begin{align}
+%         a(\eta, \eta) + \lambda \norm{\eta}^{2}_{L_{2}(\Omega)}
+%         &= c \norm{\grad \eta}^{2}_{L_{2}(\Omega)} + \skprod{\omega \eta}{\eta}_{L_{2}(\Omega)} + \lambda \skprod{\eta}{\eta}_{L_{2}(\Omega)}
+%         \\&= c \norm{\grad \eta}^{2}_{L_{2}(\Omega)} + \skprod{(\omega + \lambda) \eta}{\eta}_{L_{2}(\Omega)}.
+%     \end{align}
+%     Wählen wir nun $\lambda = \norm{\omega}_{L_{\infty}(\Omega)} \geq 0$, dann gilt $\omega + \lambda \geq 0$ fast überall in $\Omega$ und wir erhalten die Abschätzung
+%     \begin{align}
+%         a(\eta, \eta) + \lambda \norm{\eta}^{2}_{L_{2}(\Omega)}
+%         &\geq c \norm{\grad \eta}^{2}_{L_{2}(\Omega)},
+%         \intertext{woraus wir durch Anwenden der Poincaré-Friedrichs-Ungleichung \ref{satz:grundlagen:poincare_friedrichs_ungleichung}}
+%         a(\eta, \eta) + \lambda \norm{\eta}^{2}_{L_{2}(\Omega)}
+%         &\geq c \gamma_{\Omega}^{2} \norm{\eta}^{2}_{H^{1}(\Omega)}
+%     \end{align}
+%     folgern.
+%     \end{Beweis}
+% \end{Lemma}
 
-Unter diesen Gegebenheiten erhalten wir nach \autoref{sec:lineare_evolutionsgleichungen} eine sachgemäß gestellte Raum-Zeit-Variationsformulierung.
-Ansatz- und Testfunktionenraum ergeben sich mit den konkret gewählten Hilberträumen zu
-\begin{equation}
-    \label{eq:var_ansatzraum_testraum}
-    \mathcal X = L_{2}(I; H^{1}_{0}(\Omega)) \cap H^{1}(I; H^{-1}(\Omega))
-    \quad \text{und} \quad
-    \mathcal Y = L_{2}(I; H^{1}_{0}(\Omega)) \times L_{2}(\Omega).
-\end{equation}
-Das Variationsproblem lautet damit:
-    Gegeben ein $g \in L_{2}(I; H^{-1}(\Omega))$ und ein $u_{0} \in L_{2}(\Omega)$. Finde ein $u \in \mathcal X$ mit
-    \begin{equation}
-        \label{eq:varprob}
-        b(u, v) = f(v) \quad \text{für alle}~v \in \mathcal Y,
-    \end{equation}
-    wobei $b(\blank, \blank) \colon \mathcal X \times \mathcal Y \to \mathbb{R}$ die durch
-    \begin{equation}
-        \label{eq:buv}
-        b(u, v)
-            = \int_{I} \skprod{u_{t}(t)}{v_{1}(t)}_{L_{2}(\Omega)} + a(u(t), v_{1}(t)) \diff t + \skprod{u(0)}{v_{2}}_{L_{2}(\Omega)}
-    \end{equation}
-    gegebene Bilinearform und $f(\blank) \colon \mathcal Y \to \mathbb{R}$ definiert ist durch
-    \begin{equation}
-        \label{eq:var_all_f_wiederholung}
-        f(v) = \int_{I} \skprod{g(t)}{v_{1}(t)}_{L_{2}(\Omega)} \diff t + \skprod{u_{0}}{v_{2}}_{L_{2}(\Omega)}.
-    \end{equation}
+% Unter diesen Gegebenheiten erhalten wir nach \autoref{sec:lineare_evolutionsgleichungen} eine sachgemäß gestellte Raum-Zeit-Variationsformulierung.
+% Ansatz- und Testfunktionenraum ergeben sich mit den konkret gewählten Hilberträumen zu
+% \begin{equation}
+%     \label{eq:var_ansatzraum_testraum}
+%     \mathcal X = L_{2}(I; H^{1}_{0}(\Omega)) \cap H^{1}(I; H^{-1}(\Omega))
+%     \quad \text{und} \quad
+%     \mathcal Y = L_{2}(I; H^{1}_{0}(\Omega)) \times L_{2}(\Omega).
+% \end{equation}
+% Das Variationsproblem lautet damit:
+%     Gegeben ein $g \in L_{2}(I; H^{-1}(\Omega))$ und ein $u_{0} \in L_{2}(\Omega)$. Finde ein $u \in \mathcal X$ mit
+%     \begin{equation}
+%         \label{eq:varprob}
+%         b(u, v) = f(v) \quad \text{für alle}~v \in \mathcal Y,
+%     \end{equation}
+%     wobei $b(\blank, \blank) \colon \mathcal X \times \mathcal Y \to \mathbb{R}$ die durch
+%     \begin{equation}
+%         \label{eq:buv}
+%         b(u, v)
+%             = \int_{I} \skprod{u_{t}(t)}{v_{1}(t)}_{L_{2}(\Omega)} + a(u(t), v_{1}(t)) \diff t + \skprod{u(0)}{v_{2}}_{L_{2}(\Omega)}
+%     \end{equation}
+%     gegebene Bilinearform und $f(\blank) \colon \mathcal Y \to \mathbb{R}$ definiert ist durch
+%     \begin{equation}
+%         \label{eq:var_all_f_wiederholung}
+%         f(v) = \int_{I} \skprod{g(t)}{v_{1}(t)}_{L_{2}(\Omega)} \diff t + \skprod{u_{0}}{v_{2}}_{L_{2}(\Omega)}.
+%     \end{equation}
 
-Aus \thref{thm:schwab09:theorem51} und \thref{thm:schwab09:theorem51:ungleichungen} erhalten wir nun die Wohldefiniertheit des obigen Variationsproblems und zugleich Schranken für die Operatoren.
+% Aus \thref{thm:schwab09:theorem51} und \thref{thm:schwab09:theorem51:ungleichungen} erhalten wir nun die Wohldefiniertheit des obigen Variationsproblems und zugleich Schranken für die Operatoren.
 
-\begin{Korollar}
-\label{korollar:2.2}
-    Seien $\mathcal X$ und $\mathcal Y$ gegeben wie in \eqref{eq:var_ansatzraum_testraum} und sei $B \colon \mathcal X \to \mathcal Y'$ definiert durch
-    \begin{equation}
-        \skprod{Bu}{v}_{\mathcal Y' \times \mathcal Y}  = b(u, v), \quad u \in \mathcal X,~ v \in \mathcal Y,
-    \end{equation}
-    mit $b(\blank, \blank)$ wie in \eqref{eq:buv}.
-    Dann ist $B$ stetig invertierbar und es gilt
-    \begin{equation}
-        \norm{B}_{\mathcal L(\mathcal X, \mathcal Y')}
-        \leq
-        \frac{\sqrt{2 \max\Set{1, c^{2}, \norm{\omega}_{L_{\infty}(\Omega)}^{2}} + M_{e}^{2}}}{\max\Set{\sqrt{1 + 2 \norm{\omega}_{L_{\infty}(\Omega)}^{2} \rho^{4}}, \sqrt{2} }}
-    \end{equation}
-    und
-    \begin{equation}
-        \norm{B^{-1}}_{\mathcal L( \mathcal Y', \mathcal X)}
-        \leq \frac{e^{2 T \norm{\omega}_{L_{\infty}(\Omega)}} \max\Set{\sqrt{1 + 2 \norm{\omega}_{L_{\infty}(\Omega)}^{2} \rho^{4}}, \sqrt{2}} \sqrt{2 \max\Set{c^{-2} \gamma_{\Omega}^{-4}, 1} + M_{e}^{2}}}{\min\Set{c^{-1} \gamma_{\Omega}^{2}, c \gamma_{\Omega}^{2} \norm{\omega}_{L_{\infty}(\Omega)}^{-2}, c \gamma_{\Omega}^{2} }}.
-        % \leq
-        % \frac{\max\{\sqrt{ 1 + 2 \norm{\omega}_{L_{\infty}(\Omega)} \rho^{4}}, \sqrt{2} \}}{e^{-2 \norm{\omega}_{L_{\infty}(\Omega)} T}}
-        % \frac{\sqrt{2 \max\{ 1, \sigma^{-2} \gamma_{\Omega}^{-4} \} + M_{e}^{2}}}{\min\{ \sigma \gamma_{\Omega}^{2} \norm{\omega}_{L_{\infty}(\Omega)}^{-2}, \sigma \gamma_{\Omega}^{2} \}}
-    \end{equation}
-    mit $M_{e}$ und $\rho$ wie in \eqref{eq:var_all_M_e} respektive \eqref{eq:var_all_rho}.
-\end{Korollar}
+% \begin{Korollar}
+% \label{korollar:2.2}
+%     Seien $\mathcal X$ und $\mathcal Y$ gegeben wie in \eqref{eq:var_ansatzraum_testraum} und sei $B \colon \mathcal X \to \mathcal Y'$ definiert durch
+%     \begin{equation}
+%         \skprod{Bu}{v}_{\mathcal Y' \times \mathcal Y}  = b(u, v), \quad u \in \mathcal X,~ v \in \mathcal Y,
+%     \end{equation}
+%     mit $b(\blank, \blank)$ wie in \eqref{eq:buv}.
+%     Dann ist $B$ stetig invertierbar und es gilt
+%     \begin{equation}
+%         \norm{B}_{\mathcal L(\mathcal X, \mathcal Y')}
+%         \leq
+%         \frac{\sqrt{2 \max\Set{1, c^{2}, \norm{\omega}_{L_{\infty}(\Omega)}^{2}} + M_{e}^{2}}}{\max\Set{\sqrt{1 + 2 \norm{\omega}_{L_{\infty}(\Omega)}^{2} \rho^{4}}, \sqrt{2} }}
+%     \end{equation}
+%     und
+%     \begin{equation}
+%         \norm{B^{-1}}_{\mathcal L( \mathcal Y', \mathcal X)}
+%         \leq \frac{e^{2 T \norm{\omega}_{L_{\infty}(\Omega)}} \max\Set{\sqrt{1 + 2 \norm{\omega}_{L_{\infty}(\Omega)}^{2} \rho^{4}}, \sqrt{2}} \sqrt{2 \max\Set{c^{-2} \gamma_{\Omega}^{-4}, 1} + M_{e}^{2}}}{\min\Set{c^{-1} \gamma_{\Omega}^{2}, c \gamma_{\Omega}^{2} \norm{\omega}_{L_{\infty}(\Omega)}^{-2}, c \gamma_{\Omega}^{2} }}.
+%         % \leq
+%         % \frac{\max\{\sqrt{ 1 + 2 \norm{\omega}_{L_{\infty}(\Omega)} \rho^{4}}, \sqrt{2} \}}{e^{-2 \norm{\omega}_{L_{\infty}(\Omega)} T}}
+%         % \frac{\sqrt{2 \max\{ 1, \sigma^{-2} \gamma_{\Omega}^{-4} \} + M_{e}^{2}}}{\min\{ \sigma \gamma_{\Omega}^{2} \norm{\omega}_{L_{\infty}(\Omega)}^{-2}, \sigma \gamma_{\Omega}^{2} \}}
+%     \end{equation}
+%     mit $M_{e}$ und $\rho$ wie in \eqref{eq:var_all_M_e} respektive \eqref{eq:var_all_rho}.
+% \end{Korollar}
 
-% section vereinfachte_variante (end)
+% % section vereinfachte_variante (end)
 
-\section{Parametrische Variante} % (fold)
-\label{sec:parametrische_variante}
+% \section{Parametrische Variante} % (fold)
+% \label{sec:parametrische_variante}
 
-Wir wollen nun aus dem gerade beschriebenen Variationsproblem eine parametrische Variante gewinnen und aufbauend auf \autoref{sec:parametrisches_problem} Regularität bezüglich des Parameters folgern.
-Dazu müssen wir den Operator $A \in \mathcal L(V, V')$ aus \eqref{eq:def_op_A} zunächst zu einem parametrischen Operator $A(\sigma)$ mit $\sigma \in \mathcal S$, wobei $\mathcal S \subset \mathbb{R}^{\mathbb{N}}$ ein geeigneter Parameterraum ist, umschreiben.
-Dabei beschränken wir uns auf den Fall affiner parametrischer Abhängigkeit \eqref{eq:all_affiner_operator}.
-Der Einfachheit halber wählen wir $\mathcal S = [-1, 1]^{\mathbb{N}}$, das heißt $\mathcal S$ sei die Einheitskugel aus $\ell_{\infty}(\mathbb{N})$.
+% Wir wollen nun aus dem gerade beschriebenen Variationsproblem eine parametrische Variante gewinnen und aufbauend auf \autoref{sec:parametrisches_problem} Regularität bezüglich des Parameters folgern.
+% Dazu müssen wir den Operator $A \in \mathcal L(V, V')$ aus \eqref{eq:def_op_A} zunächst zu einem parametrischen Operator $A(\sigma)$ mit $\sigma \in \mathcal S$, wobei $\mathcal S \subset \mathbb{R}^{\mathbb{N}}$ ein geeigneter Parameterraum ist, umschreiben.
+% Dabei beschränken wir uns auf den Fall affiner parametrischer Abhängigkeit \eqref{eq:all_affiner_operator}.
+% Der Einfachheit halber wählen wir $\mathcal S = [-1, 1]^{\mathbb{N}}$, das heißt $\mathcal S$ sei die Einheitskugel aus $\ell_{\infty}(\mathbb{N})$.
 
-Sei $\Set{ \varphi_{j} }_{j \in \mathbb{N}} \subset L_{\infty}(\Omega)$ ein noch näher zu bestimmendes, passend gewähltes Funktionensystem und $\sigma \in \mathcal S$.
-Wir entwickeln nun $\omega$ formal in eine Reihe der Form
-\begin{equation}
-    \label{eq:reihenentwicklung_omega}
-    \omega(\blank; \sigma) = \sum_{j = 1}^{\infty} \sigma_{j} \varphi_{j}.
-\end{equation}
-Offenbar ist für die Konvergenz der Reihe \eqref{eq:reihenentwicklung_omega} hinreichend, dass $\Set{ \norm{\varphi_{j}}_{L_{\infty}(\Omega)} }_{j \in \mathbb{N}} \in \ell_{1}(\mathbb{N})$ gilt, insbesondere folgt daraus
-\begin{equation}
-    \norm{\omega(\blank; \sigma)}_{L_{\infty}(\Omega)} \leq \sum_{j = 1}^{\infty} \norm{\varphi_{j}}_{L_{\infty}(\Omega)} < \infty \quad \fa \sigma \in \mathcal S.
-\end{equation}
-% Diese Eigenschaft wird auch benötigt, denn dadurch erhalten wir aus \thref{lemma:2.2} die für \thref{thm:kunoth:theorem21} notwendigen, von $\sigma$ unabhängigen, Schranken $\beta_{1}$ und $\beta_{2}$.
-Damit ist die Wahl des Funktionensystems $\Set{ \varphi_{j} }_{j \in \mathbb{N}} \subset L_{\infty}(\Omega)$ ist entscheidend für die Konvergenz von \eqref{eq:reihenentwicklung_omega}, aber auch für die Erfüllbarkeit von \thref{thm:kunoth:assumption1} respektive \thref{thm:kunoth:assumption2},
-und wird in den nächsten Abschnitten genauer behandelt.
+% Sei $\Set{ \varphi_{j} }_{j \in \mathbb{N}} \subset L_{\infty}(\Omega)$ ein noch näher zu bestimmendes, passend gewähltes Funktionensystem und $\sigma \in \mathcal S$.
+% Wir entwickeln nun $\omega$ formal in eine Reihe der Form
+% \begin{equation}
+%     \label{eq:reihenentwicklung_omega}
+%     \omega(\blank; \sigma) = \sum_{j = 1}^{\infty} \sigma_{j} \varphi_{j}.
+% \end{equation}
+% Offenbar ist für die Konvergenz der Reihe \eqref{eq:reihenentwicklung_omega} hinreichend, dass $\Set{ \norm{\varphi_{j}}_{L_{\infty}(\Omega)} }_{j \in \mathbb{N}} \in \ell_{1}(\mathbb{N})$ gilt, insbesondere folgt daraus
+% \begin{equation}
+%     \norm{\omega(\blank; \sigma)}_{L_{\infty}(\Omega)} \leq \sum_{j = 1}^{\infty} \norm{\varphi_{j}}_{L_{\infty}(\Omega)} < \infty \quad \fa \sigma \in \mathcal S.
+% \end{equation}
+% % Diese Eigenschaft wird auch benötigt, denn dadurch erhalten wir aus \thref{lemma:2.2} die für \thref{thm:kunoth:theorem21} notwendigen, von $\sigma$ unabhängigen, Schranken $\beta_{1}$ und $\beta_{2}$.
+% Damit ist die Wahl des Funktionensystems $\Set{ \varphi_{j} }_{j \in \mathbb{N}} \subset L_{\infty}(\Omega)$ ist entscheidend für die Konvergenz von \eqref{eq:reihenentwicklung_omega}, aber auch für die Erfüllbarkeit von \thref{thm:kunoth:assumption1} respektive \thref{thm:kunoth:assumption2},
+% und wird in den nächsten Abschnitten genauer behandelt.
 
-% \subsection{Affiner Operator} % (fold)
-% \label{ssub:entwicklung_von_}
+% % \subsection{Affiner Operator} % (fold)
+% % \label{ssub:entwicklung_von_}
 
-Wir wollen den Operator $A$ aus \eqref{eq:def_op_A} als affin parametrischen Operator der Form
-\begin{equation}
-    \label{eq:aff_zerlegung_A}
-    A(\sigma) = \hat A + \sum_{j \geq 1} \sigma_{j} A_{j}
-\end{equation}
-auffassen, beziehungsweise als Bilinearformen
-\begin{equation}
-     \label{eq:aff_zerelgung_A_bf}
-     a(\eta, \zeta; \sigma) = \hat a(\eta, \zeta) + \sum_{j \geq 1} \sigma_{j} a_{j}(\eta, \zeta), \quad \eta, \zeta \in V.
- \end{equation}
-Dazu entwickeln wir $\omega$ in eine Reihe der Form \eqref{eq:reihenentwicklung_omega}, das heißt wir erhalten
-\begin{equation}
-    \label{eq:omega_reihenentwicklung}
-    \omega(\blank; \sigma) \colon \Omega \to \mathbb{R}, \quad x \mapsto \omega(x; \sigma) = \sum_{j \geq 1} \sigma_{j} \varphi_{j}(x)
-\end{equation}
-mit $\sigma \in \mathcal S$.
-Eine naheliegende affine Aufteilung des Operators $A$ erhalten wir damit durch die Wahl
-\begin{equation}
-    \label{eq:affine_zerlegung_A_def}
-    \hat A = - c \Delta, \qquad
-    A_{j} = \varphi_{j}, \quad j \geq 1.
-\end{equation}
-Die zugehörigen Bilinearformen lassen sich ebenfalls direkt angeben, denn es gilt
-\begin{equation}
-    \hat a(\eta, \zeta) = \skprod{\grad \eta}{\grad \zeta}_{L_{2}(\Omega)}, \qquad a_{j}(\eta, \zeta) = \skprod{\varphi_{j} \eta}{\zeta}_{L_{2}(\Omega)}, \quad j \geq 1.
-\end{equation}
+% Wir wollen den Operator $A$ aus \eqref{eq:def_op_A} als affin parametrischen Operator der Form
+% \begin{equation}
+%     \label{eq:aff_zerlegung_A}
+%     A(\sigma) = \hat A + \sum_{j \geq 1} \sigma_{j} A_{j}
+% \end{equation}
+% auffassen, beziehungsweise als Bilinearformen
+% \begin{equation}
+%      \label{eq:aff_zerelgung_A_bf}
+%      a(\eta, \zeta; \sigma) = \hat a(\eta, \zeta) + \sum_{j \geq 1} \sigma_{j} a_{j}(\eta, \zeta), \quad \eta, \zeta \in V.
+%  \end{equation}
+% Dazu entwickeln wir $\omega$ in eine Reihe der Form \eqref{eq:reihenentwicklung_omega}, das heißt wir erhalten
+% \begin{equation}
+%     \label{eq:omega_reihenentwicklung}
+%     \omega(\blank; \sigma) \colon \Omega \to \mathbb{R}, \quad x \mapsto \omega(x; \sigma) = \sum_{j \geq 1} \sigma_{j} \varphi_{j}(x)
+% \end{equation}
+% mit $\sigma \in \mathcal S$.
+% Eine naheliegende affine Aufteilung des Operators $A$ erhalten wir damit durch die Wahl
+% \begin{equation}
+%     \label{eq:affine_zerlegung_A_def}
+%     \hat A = - c \Delta, \qquad
+%     A_{j} = \varphi_{j}, \quad j \geq 1.
+% \end{equation}
+% Die zugehörigen Bilinearformen lassen sich ebenfalls direkt angeben, denn es gilt
+% \begin{equation}
+%     \hat a(\eta, \zeta) = \skprod{\grad \eta}{\grad \zeta}_{L_{2}(\Omega)}, \qquad a_{j}(\eta, \zeta) = \skprod{\varphi_{j} \eta}{\zeta}_{L_{2}(\Omega)}, \quad j \geq 1.
+% \end{equation}
 
-Die daraus resultierende Raum-Zeit-Variationsformulierung lautet nun:
-\begin{Problem}
-    Gegeben ein $g \in L_{2}(I; H^{-1}(\Omega))$ und ein $u_{0} \in L_{2}(\Omega)$.
-    Finde für alle $\sigma \in \mathcal S$ ein $u(\sigma) \in \mathcal X$ mit
-    \begin{equation}
-        \label{eq:varprob_2}
-        b(u, v; \sigma) = f(v) \quad \text{für alle}~v \in \mathcal Y,
-    \end{equation}
-    wobei $b(\blank, \blank; \sigma) \colon \mathcal X \times \mathcal Y \times \mathcal S \to \mathbb{R}$ die durch
-    \begin{equation}
-        \label{eq:buv_2}
-        b(u, v; \sigma)
-            = \int_{I} \skprod{u_{t}(t)}{v_{1}(t)}_{L_{2}(\Omega)} + a(u(t), v_{1}(t); \sigma) \diff t + \skprod{u(0)}{v_{2}}_{L_{2}(\Omega)}
-    \end{equation}
-    gegebene Bilinearform und $f(\blank) \colon \mathcal Y \to \mathbb{R}$ definiert ist durch
-    \begin{equation}
-        \label{eq:var_all_f_wiederholung_2}
-        f(v) = \int_{I} \skprod{g(t)}{v_{1}(t)}_{L_{2}(\Omega)} \diff t + \skprod{u_{0}}{v_{2}}_{L_{2}(\Omega)}.
-    \end{equation}
-\end{Problem}
+% Die daraus resultierende Raum-Zeit-Variationsformulierung lautet nun:
+% \begin{Problem}
+%     Gegeben ein $g \in L_{2}(I; H^{-1}(\Omega))$ und ein $u_{0} \in L_{2}(\Omega)$.
+%     Finde für alle $\sigma \in \mathcal S$ ein $u(\sigma) \in \mathcal X$ mit
+%     \begin{equation}
+%         \label{eq:varprob_2}
+%         b(u, v; \sigma) = f(v) \quad \text{für alle}~v \in \mathcal Y,
+%     \end{equation}
+%     wobei $b(\blank, \blank; \sigma) \colon \mathcal X \times \mathcal Y \times \mathcal S \to \mathbb{R}$ die durch
+%     \begin{equation}
+%         \label{eq:buv_2}
+%         b(u, v; \sigma)
+%             = \int_{I} \skprod{u_{t}(t)}{v_{1}(t)}_{L_{2}(\Omega)} + a(u(t), v_{1}(t); \sigma) \diff t + \skprod{u(0)}{v_{2}}_{L_{2}(\Omega)}
+%     \end{equation}
+%     gegebene Bilinearform und $f(\blank) \colon \mathcal Y \to \mathbb{R}$ definiert ist durch
+%     \begin{equation}
+%         \label{eq:var_all_f_wiederholung_2}
+%         f(v) = \int_{I} \skprod{g(t)}{v_{1}(t)}_{L_{2}(\Omega)} \diff t + \skprod{u_{0}}{v_{2}}_{L_{2}(\Omega)}.
+%     \end{equation}
+% \end{Problem}
 
 
-% \section{Periodische Randbedingungen} % (fold)
-% \label{sec:periodische_randbedingungen}
+% % \section{Periodische Randbedingungen} % (fold)
+% % \label{sec:periodische_randbedingungen}
 
-% section periodische_randbedingungen (end)
+% % section periodische_randbedingungen (end)
