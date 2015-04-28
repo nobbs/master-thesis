@@ -96,8 +96,8 @@
 %%% Nebensächliches
 
 \newcommand{\altfont}{\fontfamily{qpl}}
-\newcommand{\altsffont}{\fontfamily{phv}}
-% \newcommand{\altsffont}{\fontfamily{pfr}\fontseries{l}}
+% \newcommand{\altsffont}{\fontfamily{phv}}
+\newcommand{\altsffont}{\fontfamily{pfr}\fontseries{l}}
 
 % Querformatseiten
 \usepackage{pdflscape}
@@ -108,7 +108,7 @@
 % todos
 \usepackage[%
     german,
-    % disable
+    disable
 ]{todonotes}
 
 % Blindtext
@@ -144,6 +144,7 @@
 % \addtokomafont{subsubsection}{\normalfont\altfont\selectfont}
 % \addtokomafont{minisec}{\normalfont\altfont\selectfont}
 % \addtokomafont{paragraph}{\normalfont\altfont\selectfont}
+\addtokomafont{paragraph}{\bfseries}
 
 \addtokomafont{pageheadfoot}{\color{jgu:dgrau}\normalfont\altfont\selectfont}% Fußzeile normale Schrift
 

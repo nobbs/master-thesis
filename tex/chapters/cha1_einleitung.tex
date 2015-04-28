@@ -20,5 +20,78 @@ Anders als bei der Finite-Elemente-Methode werden die Unterräume aber von Lösu
 Zur Wahl dieser Parameter gibt es verschiedene Ansätze, zum Beispiel \emph{Greedy-Verfahren}, oder auch die \emph{Proper Orthogonal Decomposition}.
 Für die meisten dieser Ansätze werden \emph{a priori}-Fehlerschätzer benötigt.
 
+\section{Problemherkunft} % (fold)
+\label{sec:problemherkunft}
+
+Dieser Abschnitt dient als Einführung in das zugrundeliegende Problem und die physikalischen und chemischen Motivationen und Modelle dahinter.
+Als Quellen dienen vor allem die ausführlichen Arbeiten von \textcite{Fredrickson:2006th} und \textcite{Matsen:2002do,Matsen:2006ud}, wobei diese eine leicht andere Herangehensweise verfolgt.
+Es folgt eine einfach gehaltene und dadurch formal nicht all zu exakte Einführung in die physikalischen Hintergründe.
+
+\subsection{Begriffsklärung} % (fold)
+\label{sub:begriffskl_rung}
+
+% subsection begriffskl_rung (end)
+% A polymer is any molecule constructed by linking together chemical units or monomers to form a long-chain molecule.
+
+Als Polymer, oder auch Makromolekül, bezeichnet man ein Molekül, welches sich aus vielen kleineren Molekülen, sogenannten Monomeren, zusammensetzt.
+Typischerweise sind Polymere lange lineare Ketten, die durch aneinanderreihen von Monomoren entstehen.
+Besteht das Polymer aus einer einzigen Monomer-Gattung, dann sprechen wir von einem Homopolymer, sonst von einem Copolymer.
+Bilden die verschiedenen Monomer-Gattung im Falle eines Copolymers größere, homogene zusammenhängende Gruppen, welche wiederum durch Aneinanderreihen das Polymer bilden, dann sprechen wir von einem Blockcopolymer.
+
+
+Es existieren unüberschaubar viele Konfigurationen solcher Blockcopolymere, weswegen man das Studium dieser anhand vergleichsweise simpler Anordnungen, das heißt, von AB-Diblockcopolymeren, beginnt.
+Diese werden, wie der Name schon vermuten lässt, durch längere homogene Bläcke zweier verschiedener Monomere, kurz A und B genannt, gebildet.
+
+\subsection{Modell} % (fold)
+\label{sub:modell}
+
+% subsection modell (end)
+
+\subsection{Self-Consistent-Field-Theory} % (fold)
+\label{sub:self_consistent_field_theory}
+
+% subsection self_consistent_field_theory (end)
+
+\subsection{Mean-Field-Theory} % (fold)
+\label{sub:mean_field_theory}
+
+% subsection mean_field_theory (end)
+
+% section problemherkunft (end)
+
+\section{Motivation} % (fold)
+\label{sec:einf_hrung_der_ppde}
+
+Dieser Abschnitt führt die PPDE ein und leitet eine parametrische Variante dieser her.
+Eine umfangreiche Beschreibung der physikalischen und chemischen Hintergründe, sowie eine ausführliche Herleitung der darauf aufbauenden mathematischen Modellierung findet sich bei \textcite{Fredrickson:2006th}.
+
+Wir beschränken uns auf die daraus resultierende parabolische partielle Differentialgleichung, da diese den Mittelpunkt dieser Arbeit bildet.
+
+Seien dazu $0 < T < \infty$ und $I = [0, T]$ ein endliches Zeitintervall und weiter $\Omega \subset \mathbb{R}^{n}$ eine offene, beschränkte Teilmenge mit Lipschitz-Rand.
+In den tatsächlich auftretenden Fällen wird meist $T = 1$ und $\Omega = [0, L]^n$ für ein $0 < L < \infty$ und $n \in \Set{1, 2, 3}$ gelten, wir wollen dies aber zunächst ignorieren, da die folgenden Aussagen auch für den allgemeinen Fall gelten.
+
+Gegeben seien weiter $\omega_{1}, \omega_{2} \colon \Omega \to \mathbb{R}$ zwei $L_{\infty}(\Omega)$-Abbildungen und ein $f \in (0, T)$.
+Wir definieren damit
+\begin{equation}
+    \omega \colon I \times \Omega \to \mathbb{R}, \quad (t, x) \mapsto
+    \begin{cases}
+        \omega_{1}(x), & t \leq f \\
+        \omega_{2}(x), & t > f.
+    \end{cases}
+\end{equation}
+
+Wir betrachten nun die folgende parabolische partielle Differentialgleichung.
+\begin{equation}
+    u_{t}(t, x) = c \Delta_{x} u(t, x) - w(t, x) u(t, x) \qquad \text{auf}~I \times \Omega,
+\end{equation}
+wobei $c \in \mathbb{R}$ eine Konstante ist, und es seien weiter Anfangs- und Randwertbedingungen gegeben.
+Diese sind im Falle der bei \textcite{Stasiak:2011ba} betrachteten Variante zum Beispiel periodische Randbedingungen in $\partial \Omega$ mit der Anfangsbedingung $u(0, \blank) = 1$.
+Wir beschränken uns bei dieser Arbeit auf den Fall homogener Randbedingungen und
+dazu kompatiblen Anfangsbedingungen.
+
+\todo[inline]{Die Einleitung ist mies...}
+
+% section einf_hrung_der_ppde (end)
+
 
 % chapter einleitung (end)

@@ -1,43 +1,14 @@
 %!TEX root = ../main.tex
 
+\setchapterpreamble[ul][0.6\textwidth]{%
+    \dictum[Andy Weir, \textit{The Martian}]{\enquote{I guess you could call it a "failure", but I prefer the term "learning
+experience".}}
+    \vspace*{2\baselineskip}
+}
 \chapter{Parametrische Problem - Neuer Versuch} % (fold)
 \label{cha:parametrische_problem_neuer_versuch}
 
 In diesem Kapitel führen wir nun die konkrete PPDE, welche ihren Ursprung in der Polymerchemie hat, ein, wandeln sie anschließend in eine parametrische PPDE um und weisen dann Regularität bezüglich der Parameter nach.
-
-\section{Motivation} % (fold)
-\label{sec:einf_hrung_der_ppde}
-
-Dieser Abschnitt führt die PPDE ein und leitet eine parametrische Variante dieser her.
-Eine umfangreiche Beschreibung der physikalischen und chemischen Hintergründe, sowie eine ausführliche Herleitung der darauf aufbauenden mathematischen Modellierung findet sich bei \textcite{Fredrickson:2006th}.
-
-Wir beschränken uns auf die daraus resultierende parabolische partielle Differentialgleichung, da diese den Mittelpunkt dieser Arbeit bildet.
-
-Seien dazu $0 < T < \infty$ und $I = [0, T]$ ein endliches Zeitintervall und weiter $\Omega \subset \mathbb{R}^{n}$ eine offene, beschränkte Teilmenge mit Lipschitz-Rand.
-In den tatsächlich auftretenden Fällen wird meist $T = 1$ und $\Omega = [0, L]^n$ für ein $0 < L < \infty$ und $n \in \Set{1, 2, 3}$ gelten, wir wollen dies aber zunächst ignorieren, da die folgenden Aussagen auch für den allgemeinen Fall gelten.
-
-Gegeben seien weiter $\omega_{1}, \omega_{2} \colon \Omega \to \mathbb{R}$ zwei $L_{\infty}(\Omega)$-Abbildungen und ein $f \in (0, T)$.
-Wir definieren damit
-\begin{equation}
-    \omega \colon I \times \Omega \to \mathbb{R}, \quad (t, x) \mapsto
-    \begin{cases}
-        \omega_{1}(x), & t \leq f \\
-        \omega_{2}(x), & t > f.
-    \end{cases}
-\end{equation}
-
-Wir betrachten nun die folgende parabolische partielle Differentialgleichung.
-\begin{equation}
-    u_{t}(t, x) = c \Delta_{x} u(t, x) - w(t, x) u(t, x) \qquad \text{auf}~I \times \Omega,
-\end{equation}
-wobei $c \in \mathbb{R}$ eine Konstante ist, und es seien weiter Anfangs- und Randwertbedingungen gegeben.
-Diese sind im Falle der bei \textcite{Stasiak:2011ba} betrachteten Variante zum Beispiel periodische Randbedingungen in $\partial \Omega$ mit der Anfangsbedingung $u(0, \blank) = 1$.
-Wir beschränken uns bei dieser Arbeit auf den Fall homogener Randbedingungen und
-dazu kompatiblen Anfangsbedingungen.
-
-\todo[inline]{Die Einleitung ist mies...}
-
-% section einf_hrung_der_ppde (end)
 
 \section{Der betrachtete Fall} % (fold)
 \label{sec:der_betrachtete_fall}
@@ -347,6 +318,7 @@ In diesem Abschnitt wollen wir nun unter geeigneten, noch näher zu bestimmenden
 Dabei orientieren wir uns vor allem an den Arbeiten von \textcite{Cohen:2010kz,Kunoth:2013ef}.
 
 \begin{Lemma}
+\label{lemma:pp:norm_abschaetzung}
     Seien $\omega_{1}, \omega_{2} \in L_{\infty}(\Omega)$ und $u_{1}, u_{2}$ die zugehörigen Lösungen, dann gilt
     \begin{equation}
         \norm{u_{1} - u_{2}}_{V} \leq \frac{\norm{f}_{V'}}{\gamma_{0}^{2}} \norm{\omega_{1} - \omega_{2}}_{L_{\infty}}.
@@ -400,49 +372,91 @@ Dabei orientieren wir uns vor allem an den Arbeiten von \textcite{Cohen:2010kz,K
     Die Abbildung $\mathcal S \ni \sigma \mapsto u(\sigma) \in V$ besitzt für alle $\nu \in \mathfrak F$ die partielle Ableitung $\partial^{\nu}_{\sigma} u(\sigma)$.
 
     \begin{Beweis}
-        Sei $\sigma \in \mathcal S$ fest.
-        Wir zeigen die Behauptung für die partiellen Ableitungen erster Ordnung, das heißt, es sei $\nu = e_{j}$ und $j \in \mathbb{N}$.
-        Sei weiter $h \in \mathbb{R} \setminus \Set{ 0 }$ gegeben, dann definieren wir $\omega_{h} := \omega(\sigma + h e_{j})$ und
+        Wir zeigen die Behauptung exemplarisch für für die partiellen Ableitungen erster Ordnung für ein festes $\sigma \in \mathcal S$.
+        Seien dazu $\nu = e_{j}$ für ein $j \in \mathbb{N}$ und sei weiter $h \in \mathbb{R} \setminus \Set{ 0 }$.
+        Definiere
         \begin{equation}
-            u_{h}(\omega_{0}) := \frac{u(\omega_{h}) - u(\omega_{0})}{h}.
+            u_{h} := \frac{u(\sigma + h e_{j}) - u(\sigma)}{h}.
         \end{equation}
-        Dieser Ausdruck ist wohldefiniert?!?! TODO?!?!?!
 
-        Wir subtrahieren erneut die beiden Variationsformulierungen für $\omega_{h}$ und $\omega_{0}$ von einander und erhalten damit
-        \todo[inline]{Zwischenschritte beschreiben}
+        \todo[inline]{wohldfiniertheit?}
+        Ist $\abs{h}$ klein genug, so dass $\sigma + h e_{j} \in \mathcal S$ gilt, dann existieren die eindeutigen Lösungen $u(\sigma + h e_{j})$ und $u(\sigma)$ des Variationsproblems (??) zu den jeweiligen Parametern.
+        Betrachte nun die Differenz der beiden Variationsformulierungen, dann gilt
         \begin{align}
-            0
-                &=  a(u(\omega_{h}), v; \omega_{h})
-                    - a(u(\omega_{0}), v; \omega_{0})
-            \\  &=
-                    c \skp{\grad u(\omega_{h})}{\grad v}{H}
-                    + \skp{\omega_{h} u(\omega_{h})}{v}{H}
-                    + \mu \skp{u(\omega_{h})}{v}{H}
-            \\&\qquad
-                    - c \skp{\grad u(\omega_{0})}{\grad v}{H}
-                    - \skp{\omega_{0} u(\omega_{0})}{v}{H}
-                    - \mu \skp{u(\omega_{0})}{v}{H}
-            \\  &=
-                    c \skp{\grad u(\omega_{h}) - \grad u(\omega_{0})}{\grad v}{H}
-                    + \skp{\omega_{h} u(\omega_{h}) - \omega_{0} u(\omega_{0})}{v}{H}
-            \\&\qquad
-                    + \mu \skp{u(\omega_{h}) - u(\omega_{0})}{v}{H}
-            \\  &=
-                    h c \skp{\grad u_{h}(\omega_{0})}{v}{H}
-                    + \skp{\omega_{0} ( u(\omega_{h}) - u(\omega) ) }{v}{H}
-            \\&\qquad
-                    + \skp{(\omega_{h} - \omega) u(\omega_{h})}{v}{H}
-                    + h \mu \skp{u_{h}(\omega_{0})}{v}{H}
-            \\  &=
-                    h c \skp{\grad u_{h}(\omega_{0})}{v}{H}
-                    + h \skp{\omega_{h} u_{h}(\omega_{0}) }{v}{H}
-                    + h \mu \skp{u_{h}(\omega_{0})}{v}{H}
-            \\&\qquad
-                    + \skp{(\omega_{h} - \omega) u(\omega_{h})}{v}{H}
-            \\  &=
-                    h a(u_{h}(\omega_{0}), v; \omega)
-                    + \skp{(\omega_{h} - \omega) u(\omega_{h})}{v}{H}
+            0 &= a(u(\sigma + h e_{j}), v; \sigma + h e_{j}) - a(u(\sigma), v; \sigma)
+            %
+            \\ &= c \skp{u(\sigma + h e_{j})}{v}{L_{2}(\Omega)} + \skp{\omega(\sigma + h e_{j}) u(\sigma + h e_{j})}{v}{L_{2}(\Omega)} + \mu \skp{u(\sigma + h e_{j})}{v}{L_{2}(\Omega)}
+            \\&\qquad - c \skp{u(\sigma)}{v}{L_{2}(\Omega)} - \skp{\omega(\sigma) u(\sigma)}{v}{L_{2}(\Omega)} - \mu \skp{u(\sigma)}{v}{L_{2}(\Omega)}
+            %
+            \\&= c \skp{u(\sigma + h e_{j}) - u(\sigma)}{v}{L_{2}(\Omega)} + \skp{\omega(\sigma + h e_{j}) u(\sigma + h e_{j}) - \omega(\sigma) u(\sigma)}{v}{L_{2}(\Omega)}
+            \\&\qquad  + \mu \skp{u(\sigma + h e_{j}) - u(\sigma)}{v}{L_{2}(\Omega)}
+            %
+            \\&= c \skp{u(\sigma + h e_{j}) - u(\sigma)}{v}{L_{2}(\Omega)} + \skp{\omega(\sigma) (u(\sigma + h e_{j}) - u(\sigma))}{v}{L_{2}(\Omega)}
+            \\&\qquad + \skp{(\omega(\sigma + h e_{j}) - \omega(\sigma)) u(\sigma + h e_{j})}{v}{L_{2}(\Omega)} + \mu \skp{u(\sigma + h e_{j}) - u(\sigma)}{v}{L_{2}(\Omega)}
+            %
+            \\&= h \left(
+                c \skp{u_{h}}{v}{L_{2}(\Omega)} + \skp{\omega(\sigma) u_{h}}{v}{L_{2}(\Omega)} + \mu \skp{u_{h}}{v}{L_{2}(\Omega)}
+             \right) + h \skp{\varphi_{j} u(\sigma + h e_{j})}{v}{L_{2}(\Omega)}
+            \\&= h a(u_{h}, v; \sigma) + h \skp{\varphi_{j} u(\sigma + h e_{j})}{v}{L_{2}(\Omega)}
         \end{align}
+        Dies lässt sich zu folgendem Variationsproblem
+        \begin{equation}
+            a(u_{h}, v; \sigma) = F_{h}(v) \quad \fa v \in V.
+        \end{equation}
+        Dabei ist
+        \begin{equation}
+            F_{h} \colon V \to \mathbb{R}, \quad v \mapsto - \skp{\varphi_{j} u(\sigma + h e_{j})}{v}{L_{2}(\Omega)}
+        \end{equation}
+        ein lineares stetiges Funktional.
+        Weiter ist $F_{h}(\blank)$ stetig in $h = 0$, denn es gilt für festes $v \in V$ die Abschätzung
+        \begin{align}
+            \abs{F_{h}(v) - F_{0}(v)}
+            &= \abs{\skp{\varphi_{j} (u(\sigma + h e_{j}) - u(\sigma))}{v}{L_{2}(\Omega)}}
+            \\&\leq \norm{\varphi_{j}}_{L_{\infty}(\Omega)} \abs{\skp{u(\sigma + h e_{j}) - u(\sigma)}{v}{L_{2}(\Omega)}}
+            \\&\leq \norm{\varphi_{j}}_{L_{\infty}(\Omega)} \norm{u(\sigma + h e_{j}) - u(\sigma)}_{L_{2}(\Omega)} \norm{v}_{L_{2}(\Omega)}
+            \\&\leq \norm{\varphi_{j}}_{L_{\infty}(\Omega)} \norm{u(\sigma + h e_{j}) - u(\sigma)}_{H^{1}(\Omega)} \norm{v}_{H^{1}(\Omega)}.
+        \end{align}
+        Weiter liefert \thref{lemma:pp:norm_abschaetzung} die Ungleichung
+        \begin{align}
+            \norm{u(\sigma + h e_{j}) - u(\sigma)}_{H^{1}(\Omega)}
+            &\leq \frac{\norm{f}_{V'}}{\gamma_{0}^{2}} \norm{\omega(\sigma + h e_{j}) - \omega(\sigma)}_{L_{\infty}(\Omega)}
+            \\&\leq \abs{h} \norm{\varphi_{j}}_{L_{\infty}(\Omega)} \frac{\norm{f}_{V'}}{\gamma_{0}^{2}}.
+        \end{align}
+        Zusammen liefern die beiden Abschätzungen
+        \begin{equation}
+            \abs{F_{h}(v) - F_{0}(v)} \leq \abs{h} \norm{\varphi_{j}}^{2}_{L_{\infty}(\Omega)} \norm{v}_{H^{1}(\Omega)} \frac{\norm{f}_{V'}}{\gamma_{0}^{2}} \to 0 \quad \text{für}~h \to 0,
+        \end{equation}
+        das heißt es gilt $F_{h} \to F_{0}$ in $V'$ für $h \to 0$.
+
+        Dies impliziert insbesondere $u_{h} \to u_{0}$ in $V$ für $h \to 0$.
+        Weiter erfüllt $u_{0}$ die Gleichung
+        \begin{equation}
+            a(u_{0}, v; \sigma) = F_{0}(v) \quad \fa v \in V.
+        \end{equation}
+        Damit existiert $\partial_{\sigma_{j}} u(\sigma) = u_{0}$ in $V$ und ist die eindeutige Lösung des Variationsproblems
+        \begin{equation}
+            a(\partial_{\sigma_{j}} u(\sigma), v; \sigma) = - \skp{\varphi_{j} u(\sigma)}{v}{L_{2}(\Omega)} \quad \fa v \in V.
+        \end{equation}
+
+        Alternativ erhält man dieses Variationsproblem auch durch formales Differenzieren der eigentlichen Variationsformulierung nach $\sigma_{j}$, denn dann gilt
+        \begin{align}
+            \partial_{\sigma_{j}} a(u(\sigma), v; \sigma)
+            &= \partial_{\sigma_{j}} \left( c \skp{\grad u(\sigma)}{\grad v}{L_{2}(\Omega)} + \skp{w(\sigma)u(\sigma)}{v}{L_{2}(\Omega)} + \mu \skp{u(\sigma)}{v}{L_{2}(\Omega)} \right)
+            \\&= c \skp{\grad \partial_{\sigma_{j}} u(\sigma)}{\grad v}{L_{2}(\Omega)} + \skp{ \partial_{\sigma_{j}} w(\sigma)u(\sigma) + w(\sigma) u(\sigma) }{v}{L_{2}(\Omega)} + \mu \skp{\partial_{\sigma_{j}}u(\sigma)}{v}{L_{2}(\Omega)}
+            \\&= a(\partial_{\sigma_{j}} u(\sigma), v; \sigma) + \skp{\partial_{\sigma_{j}}\omega(\sigma)u(\sigma)}{v}{L_{2}(\Omega)}
+            \\&= a(\partial_{\sigma_{j}} u(\sigma), v; \sigma) + \skp{\varphi_{j} u(\sigma)}{v}{L_{2}(\Omega)}
+        \end{align}
+        und
+        \begin{equation}
+            \partial_{\sigma_{j}} \skp{f}{v}{L_{2}(\Omega)} = 0,
+        \end{equation}
+        woraus man ingesamt erneut das Variationsproblem
+        \begin{equation}
+            a(\partial_{\sigma_{j}} u(\sigma), v; \sigma) = - \skp{\varphi u(\sigma)}{v}{L_{2}(\Omega)} \quad \fa v \in V
+        \end{equation}
+        erhält.
+
+        Durch wiederholtes Anwenden des beschriebenen Vorgehens erhält man damit auch die Existenz der höheren partiellen Ableitungen.
     \end{Beweis}
 \end{Satz}
 
@@ -455,7 +469,64 @@ Seien $b := (b_{j})_{j} \in \mathbb{R}$ und $b_{j} := \frac{\norm{\varphi_{j}}_{
     \end{equation}
 
     \begin{Beweis}
-        folgt.
+        Wir betrachten zunächst die Variationsprobleme, welche von den partiellen Ableitungen $\partial^{\nu}_{\sigma} u(\sigma)$ erfüllt werden.
+        Diese Variationsprobleme haben die folgende rekurisve Darstellung
+        \begin{equation}
+            a(\partial^{\nu}_{\sigma} u(\sigma), v; \sigma)
+            = - \sum_{\Set{j \given \nu_{j} \neq 0}} \nu_{j} \skp{\varphi_{j} \partial^{\nu - e_{j}}_{\sigma} u(\sigma)}{v}{L_{2}(\Omega)}.
+        \end{equation}
+        Die Gültigkeit dieser Formel beweisen wir per Induktion.
+        Der Fall $\abs{\nu} = 1$ ergibt sich aus (??).
+        Betrachte also $abs{\nu} > 1$.
+        Sei $k \in \mathbb{N}$ ein Index mit $\nu_{k} \neq 0$, dann definieren wir $\tilde{\nu} := \nu - e_{k}$ und es gilt offenbar $\abs{\tilde{\nu}} = \abs{\nu} - 1$.
+        Nach Induktionsvoraussetzung gilt weiter
+        \begin{equation}
+            a(\partial^{\tilde{\nu}}_{\sigma} u(\sigma), v; \sigma) + \sum_{\Set{j \given \tilde{\nu}_{j} \neq 0}} \tilde{\nu}_{j} \skp{\varphi_{j} \partial^{\tilde{\nu} - e_{j}}_{\sigma} u(\sigma)}{v}{L_{2}(\Omega)} = 0,
+        \end{equation}
+        wobei $\nu_{j} = \tilde{\nu}_{j}$ für $j \neq k$ und $\tilde{\nu}_{k} = \nu_{k} - 1$ gilt.
+
+        Partielles Differenzieren dieser Gleichung nach $\sigma_{k}$ liefert
+        \begin{align}
+            0 &=
+                a(\partial^{\nu}_{\sigma} u(\sigma), v; \sigma)
+                + \skp{\varphi_{k} \partial^{\nu - e_{k}}_{\sigma} u(\sigma)}{v}{L_{2}(\Omega)}
+                + \sum_{\Set{j \neq k \given \nu_{j} \neq 0}} \nu_{j} \skp{\varphi_{j} \partial^{\nu - e_{j}}_{\sigma} u(\sigma)}{v}{L_{2}(\Omega)}
+            \\&\qquad     + (\nu_{k} - 1) \skp{\varphi_{k} \partial^{\nu - e_{k}}_{\sigma} u(\sigma) }{v}{L_{2}(\Omega)}
+        \end{align}
+
+        Wählt man nun $v = \partial^{\nu}_{\sigma} u(\sigma)$, dann gilt damit aufgrund der Koerzivität von $a(\blank, \blank; \sigma)$ die Ungleichung
+        \begin{equation}
+            a(\partial^{\nu}_{\sigma} u(\sigma), \partial^{\nu}_{\sigma} u(\sigma); \sigma) \geq \alpha \norm{\partial^{\nu}_{\sigma} u(\sigma)}_{H^{1}(\Omega)}^{2}.
+        \end{equation}
+        Außerdem erhalten wir mit Hilfe er Cauchy-Schwarz-Ungleichung die Abschätzung
+        \begin{align}
+            a(\partial^{\nu}_{\sigma} u(\sigma), \partial^{\nu}_{\sigma} u(\sigma); \sigma)
+            &= - \sum_{\Set{j \given \nu_{j} \neq 0}} \nu_{j} \skp{\varphi_{j} \partial^{\nu - e_{j}}_{\sigma} u(\sigma) }{\partial^{\nu}_{\sigma} u(\sigma)}{L_{2}(\Omega)}
+            \\&\leq \sum_{\Set{j \given \nu_{j} \neq 0}} \nu_{j} \norm{\varphi_{j}}_{L_{\infty}(\Omega)} \norm{\partial^{\nu - e_{j}}_{\sigma} u(\sigma)}_{H^{1}(\Omega)} \norm{\partial^{\nu}_{\sigma} u(\sigma)}_{H^{1}(\Omega)}.
+        \end{align}
+        Beide Ungleichungen zusammen ergeben
+        \begin{equation}
+            \norm{\partial^{\nu}_{\sigma} u(\sigma)}_{H^{1}(\Omega)} \leq \sum_{\Set{j \given \nu_{j} \neq 0}} \nu_{j} \frac{\norm{\varphi_{j}}_{L_{\infty}(\Omega)}}{\alpha} \norm{\partial^{\nu - e_{j}}_{\sigma} u(\sigma)}_{H^{1}(\Omega)}.
+        \end{equation}
+
+        Um nun die eigentliche Behauptung zu beweisen, verfolgen wir erneut einen Induktionsansatz.
+        Sei zunächst $\abs{\nu} = 0$, dann haben wir die Ungleichung
+        \begin{equation}
+            \norm{u(\sigma)}_{H^{1}(\Omega)} \leq \frac{\norm{\varphi_{j}}_{L_{\infty}(\Omega)}}{\alpha},
+        \end{equation}
+        welche nach Satz (??) erfüllt ist.
+        Sei also weiter $\abs{\nu} > 0$, dann gilt mit obiger Ungleichung unter Verwendung der Induktionsvoraussetzung für $\norm{\partial^{\nu - e_{j}}_{\sigma} u(\sigma)}_{H^{1}(\Omega)}$ die Abschätzung
+        \begin{align}
+            \norm{\partial^{\nu}_{\sigma} u(\sigma)}_{H^{1}(\Omega)}
+            &\leq
+            \sum_{\Set{j \given \nu_{j} \neq 0}} \nu_{j} \frac{\norm{\varphi_{j}}_{L_{\infty}(\Omega)}}{\alpha} \norm{\partial^{\nu - e_{j}}_{\sigma} u(\sigma)}_{H^{1}(\Omega)}
+            \\&\leq
+            \sum_{\Set{j \given \nu_{j} \neq 0}} \nu_{j} \frac{\norm{\varphi_{j}}_{L_{\infty}(\Omega)}}{\alpha} B \abs{\nu - e_{j}}! b^{\nu - e_{j}}
+            \\&\leq
+            \left( \sum_{\Set{j \given \nu_{j} \neq 0}} \nu_{j} \right)  \frac{\norm{\varphi_{j}}_{L_{\infty}(\Omega)}}{\alpha} B (\abs{\nu} - 1)! b^{\nu}
+            \\&\leq
+            \frac{\norm{\varphi_{j}}_{L_{\infty}(\Omega)}}{\alpha} B \abs{\nu}! b^{\nu}
+        \end{align}
     \end{Beweis}
 \end{Satz}
 
