@@ -1,0 +1,57 @@
+\documentclass[tikz, border=10pt]{standalone}
+
+\usepackage{xcolor}
+\definecolor{jgurot}{RGB}{193,0,42}
+\definecolor{jguhgrau}{RGB}{172,172,172}
+\definecolor{jgudgrau}{RGB}{99,99,99}
+
+
+\begin{document}
+    \begin{tikzpicture}[
+      declare function={
+        fx(\x) = \x;
+        fy(\x) = 1 + sin(\x*50);
+        fz(\x) = -cos(\x*20);
+      },
+      every node/.style={
+        draw,
+        shape=circle,
+        scale=0.5,
+        inner sep=2pt,
+        outer sep=-2pt
+      },
+      % x={(1cm,0cm)},
+      % y={(0cm,1cm)},
+      % z={(-1cm,-1cm)}
+    ]
+
+      % Achsen
+      \draw [->] (0,0,0) -- (2,0,0); % node[right] {};
+      \draw [->] (0,0,0) -- (0,2,0) node[above left, draw=none] {$X^{\mathcal N}$};
+      \draw [->] (0,0,0) -- (0,0,2); % node[above] {};
+
+      % Kurve
+      \draw [jgurot] ({fx(-2)}, {fy(-2)}, {fz(-2)})
+      \foreach \x in {-2,-1.9,...,3}
+      { -- ({fx(\x)}, {fy(\x)}, {fz(\x)})
+      };
+
+      % RB-Punkte
+      \draw ({fx(-1.5)}, {fy(-1.5)}, {fz(-1.5)}) node [label=above left:$u^{\mathcal N}(\mu_{1})$,fill=jguhgrau] {};
+      \draw ({fx(-0.7)}, {fy(-0.7)}, {fz(-0.7)}) node [label=above left:$u^{\mathcal N}(\mu_{2})$,fill=jguhgrau] {};
+      \draw ({fx(0.7)}, {fy(0.7)}, {fz(0.7)}) node [label=above left:$u^{\mathcal N}(\mu_{i})$,fill=jguhgrau] {};
+      \draw ({fx(1.9)}, {fy(1.9)}, {fz(1.9)}) node [label=above right:$u^{\mathcal N}(\mu_{N})$,fill=jguhgrau] {};
+
+      % FE-Punkt
+      \draw ({fx(0)}, {fy(0)}, {fz(0)}) node [label=below right:$u_{N}(\mu)$,fill=jgudgrau] {};
+
+      % Dots
+      \draw ({fx(-0.5)}, {fy(-0.5)}, {fz(-0.5)}) node [draw=none,fill=none,label=above:$\cdot$,outer sep=7pt] {};
+      \draw ({fx(-0.2)}, {fy(-0.2)}, {fz(-0.2)}) node [draw=none,fill=none,label=above:$\cdot$,outer sep=7pt] {};
+      \draw ({fx(0.1)}, {fy(0.1)}, {fz(0.1)}) node [draw=none,fill=none,label=above:$\cdot$,outer sep=7pt] {};
+      \draw ({fx(0.4)}, {fy(0.4)}, {fz(0.4)}) node [draw=none,fill=none,label=above:$\cdot$,outer sep=7pt] {};
+      \draw ({fx(1.0)}, {fy(1.0)}, {fz(1.0)}) node [draw=none,fill=none,label=above:$\cdot$,outer sep=7pt] {};
+      \draw ({fx(1.3)}, {fy(1.3)}, {fz(1.3)}) node [draw=none,fill=none,label=above:$\cdot$,outer sep=7pt] {};
+      \draw ({fx(1.6)}, {fy(1.6)}, {fz(1.6)}) node [draw=none,fill=none,label=above:$\cdot$,outer sep=7pt] {};
+    \end{tikzpicture}
+\end{document}

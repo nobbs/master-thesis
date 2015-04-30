@@ -4,7 +4,7 @@
 % \addcontentsline{toc}{chapter}{Einleitung}
 \label{cha:einleitung}
 
-\section{Motivation} % (fold)
+\subsection*{Motivation} % (fold)
 \label{sec:motivation}
 
 Ein Polymer, oder auch Makromolekül, ist ein Molekül, welches sich aus vielen kleineren, sich wiederholenden Molekülen, sogenannten Monomeren, zusammensetzt.
@@ -75,12 +75,12 @@ Stattdessen kommt es zu einer periodischen, mikroskopischen Separation.
 Da die experimentelle Bestimmung ohne Vorwissen über die möglichen, stabilen Anordnungen nur wenig erfolgversprechend ist, wird eine fundierte Theorie benötigt, auf Basis derer theoretische Vorhersagen getroffen werden können, die vorzugsweise wiederum experimentell belegbar sein sollten.
 Da Diblockcopolymere einen relativ simplen Fall eines Copolymers darstellen, wurde sowohl in die experimentelle als auch theoretische Untersuchung dieser bereits vergleichsweise viel Arbeit investiert.
 
-Als besonders nützliche und dennoch relativ einfache Theorie hat sich das auf der sogenannten selbstkonsistenten Feldtheorie, im Weiteren wird der englische Ausdruck \emph{self-consistent field theory}, kurz SCFT, verwendet, basierende Modell herausgestellt.
+Als besonders nützliche und dennoch relativ einfache Theorie hat sich das auf der sogenannten \acp{scft} basierende Modell herausgestellt.
 
-\paragraph{Self-consistent field theory} % (fold)
+\subsection*{Selbstkonsistente Feldtheorie} % (fold)
 \label{par:self_consistent_field_theory}
 
-Die self-consistent field theory ist ein weit verbreitetes theoretisches Modell der Physik um das Verhalten von Teilchen unter Einwirkung von Kräften, die durch Wechselwirkung mit anderen Teilchen auftreten, zu studieren.
+Die \acl{scft} ist ein weit verbreitetes theoretisches Modell der Physik um das Verhalten von Teilchen unter Einwirkung von Kräften, die durch Wechselwirkung mit anderen Teilchen auftreten, zu studieren.
 Mit Hilfe dieses Modells lässt sich die statistische räumliche Verteilung eines Teilchens bestimmen.
 Hierbei wird zur Vereinfachung des Modells das eigentlich vorliegende Mehrkörperproblem durch mitteln der Wechselwirkungen auf ein Einkörperproblem reduziert.
 
@@ -102,7 +102,7 @@ liefert dies die notwendige Bedingung
 \end{equation}
 für jeden Punkt $\vec{r}$ im betrachteten System.
 
-Bei der self-consistent field theory wird das Mehrkörperproblem der Wechselwirkungen zwischen den Polymeren umgangen, indem die einzelnen Polymerketten als Random Walk, der durch ein \emph{chemical potential field} gesteuert wird, interpretiert werden.
+Bei der \ac{scft} wird das Mehrkörperproblem der Wechselwirkungen zwischen den Polymeren umgangen, indem die einzelnen Polymerketten als Random Walk, der durch ein \emph{chemical potential field} gesteuert wird, interpretiert werden.
 
 Diese Felder werden approximiert durch
 \begin{equation}
@@ -154,10 +154,9 @@ Ist eine selbstkonsistente Lösung gefunden, dann lässt sich die freie Energie 
     \frac{F}{n k_{B} T} = - \ln(\frac{Q}{V}) + \frac{1}{V} \int \chi N \phi_{A}(\vec{r}) \phi_{B}(\vec{r}) \diff \vec{r} - \frac{1}{V} \int \omega_{A}(\vec{r}) \phi_{A}(\vec{r}) + \omega_{B}(\vec{r}) \phi_{B}(\vec{r}) \diff \vec{r}.
 \end{equation}
 
-\section{Einsatz numerischer Methoden} % (fold)
-\label{sec:bisherige_numerische_methoden}
+\subsection*{Einsatz numerischer Methoden} % (fold)
 
-Unter Verwendung des theoretischen Grundgerüsts der selbstkonsistenten Feldtheorie aus dem vorherigen Abschnitt lassen sich numerische Iterationsverfahren konstruieren, mit denen stabile Anordnungen von Polymerketten in der Schmelze eines Diblockcopolymers bestimmt werden können.
+Unter Verwendung des theoretischen Grundgerüsts der \ac{scft} aus dem vorherigen Abschnitt lassen sich numerische Iterationsverfahren konstruieren, mit denen stabile Anordnungen von Polymerketten in der Schmelze eines Diblockcopolymers bestimmt werden können.
 Dazu wird ein Sattelpunkt des Funktionals der freien Energie \eqref{eq:einleitung:freie_energie} gesucht.
 Dieser muss nicht eindeutig sein.
 Wie aus dem vorherigen Abschnitt bekannt ist, erfüllt ein solcher Sattelpunkt gerade die Inkompressibilität \eqref{eq:einleitung:inkompressible} und weiter die Bedingung \eqref{}.
@@ -193,12 +192,14 @@ Die verwendeten Pseudospektralverfahren kommen zwar nicht an die Genauigkeit der
 Dazu wird bei \textcite{Rasmussen:2002kt} der Differentialoperator mittels Operator-Splitting so zerlegt, dass man das Lösen der Differentialgleichung mittels schneller Fourier-Transformation im Wesentlichen auf komponentenweise Vektor-Multiplikationen zurückführt.
 Das daraus resultierende Verfahren zweiter Ordnung wurde von \textcite{GarciaCervera:2006uu,Ranjan:2007kl} auf unterschiedliche Weisen zu Verfahren vierter Ordnung erweitert, ohne signifikant Laufzeit einzubüßen.
 
-\section{Aufbau und Ziele dieser Arbeit} % (fold)
-\label{sec:aufbau_und_ziele_dieser_arbeit}
+Obwohl man in der Literatur zur \ac{scft} für Polymere verschiedenste Verfahren für das Lösen der partiellen Differentialgleichung findet, ist ein Finite-Elemente-Ansatz basierend auf einer Raum-Zeit-Variationsformulierung der partiellen Differentialgleichung unseres Wissens nach bisher nicht verfolgt worden.
+Hier wollen wir anknüpfen und zugleich die Tatsache, dass die Differentialgleichung wiederholt für verschiedene Felder gelöst werden muss, in Form eines Reduzierte-Basis-Ansatzes ausnutzen.
 
-Das Ziel dieser Arbeit ist es, das wiederholte Lösen der parabolischen partiellen Differentialgleichung \eqref{eq:einleitung:mde} durch einen alternativen Ansatz, der unseres Wissens nach bisher nicht für die selbstkonsistente Feldtheorie verwendet wurde, effizienter zu gestalten.
-Dazu wollen wir einen Reduzierte-Basis-Ansatz mit einer zugrundeliegenden Raum-Zeit-Variationsformulierung der Differentialgleichung verfolgen.
 
+\subsection*{Aufbau dieser Arbeit}
+
+% Das Ziel dieser Arbeit ist es, das wiederholte Lösen der parabolischen partiellen Differentialgleichung \eqref{eq:einleitung:mde} durch einen alternativen Ansatz, der unseres Wissens nach bisher nicht für die \ac{scft} verwendet wurde, effizienter zu gestalten.
+% Dazu wollen wir einen Reduzierte-Basis-Ansatz mit einer zugrundeliegenden Raum-Zeit-Variationsformulierung der Differentialgleichung verfolgen.
 
 In \autoref{cha:grundlagen} werden zunächst die benötigten funktionalanalytischen und numerischen Grundlagen eingeführt, beziehungsweise wiederholt.
 Einige weitere Aussagen, die sich thematisch nur bedingt in diesem Kapitel unterbringen lassen, werden in \autoref{cha:funktionalanalytische_grundlagen} gesammelt.

@@ -160,8 +160,16 @@
 \addtokomafont{chapterentrypagenumber}{\color{black}\rmfamily}
 \addtokomafont{chapterentry}{\rmfamily\bfseries}
 
-\usepackage[style=base,font+=small,labelfont+=bf]{caption}
+\usepackage[style=base,font+=small,labelfont+=bf,margin=1cm]{caption}
 \usepackage{subcaption}
 
 \usepackage{tikz}
 \usepackage[subpreambles]{standalone}
+
+% Akronymverzeichnis
+\usepackage{acro}
+\acsetup{
+    page-ref=paren,
+    pages=first,
+    page-name={siehe S.\@\,},
+}

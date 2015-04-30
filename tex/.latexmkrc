@@ -1,5 +1,5 @@
 $pdflatex = 'pdflatex -synctex=1 %O %S';
-$clean_ext = 'synctex.gz synctex.gz(busy) run.xml tex.bak bbl bcf fdb_latexmk run tdo %R-blx.bib bcf nlo thm';
+$clean_ext = 'synctex.gz synctex.gz(busy) run.xml tex.bak bbl bcf fdb_latexmk run tdo %R-blx.bib bcf nlo thm sta';
 
 # add_cus_dep( 'glo', 'gls', 0, 'makeglossaries' );
 # sub makeglossaries {
