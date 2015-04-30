@@ -12,7 +12,7 @@ Besteht ein Polymer aus nur einer Monomer-Art, dann spricht man von einem Homopo
 Typischerweise besteht ein Polymer aus einer langen Kette von aneinanderhängenden Monomeren, es existieren aber auch weitere Konfigurationen, zum Beispiel stern- oder ringförmige Anordnungen.
 
 Copolymere lassen sich anhand der Anordnung der Monomere weiter klassifizieren.
-Bilden die verschiedenen Monomer-Gattungen homogene, zusammenhängede Gruppen, welche wiederum durch aneinanderreihen das Copolymer bilden, dann nennen wir dies ein Blockcopolymer, vergleiche \autoref{fig:konfig}.
+Bilden die verschiedenen Monomer-Gattungen homogene, zusammenhängende Gruppen, welche wiederum durch aneinanderreihen das Copolymer bilden, dann nennen wir dies ein Blockcopolymer, vergleiche \autoref{fig:konfig}.
 
 Es existieren unüberschaubar viele solcher Konfigurationen von Polymeren, und insbesondere Blockcopolymeren, weswegen man häufig auf das Studium vergleichsweise simpler Anordnungen zurückgreift.
 Als besonders beliebt hat sich der Fall des kettenförmigen Blockcopolymers mit zwei Monomer-Typen, der Einfachheit halber A und B genannt, herausgestellt.
@@ -76,6 +76,39 @@ Da die experimentelle Bestimmung ohne Vorwissen über die möglichen, stabilen A
 Da Diblockcopolymere einen relativ simplen Fall eines Copolymers darstellen, wurde sowohl in die experimentelle als auch theoretische Untersuchung dieser bereits vergleichsweise viel Arbeit investiert.
 
 Als besonders nützliche und dennoch relativ einfache Theorie hat sich das auf der sogenannten \acp{scft} basierende Modell herausgestellt.
+
+\subsection*{Mathematische Modellierung} % (fold)
+\label{sub:mathematische_modellierung}
+
+% subsection mathematische_modellierung (end)
+
+Als Grundlage für die \acl{scft} dient eine Modellierung der Polymere als frei bewegliche Ketten (\foreign{engl.}{ideal chain}).
+Dabei gibt es einige verschiedene Modelle, die hierfür verwendet werden.
+Als relevante Modelle wollen wir hier ein diskretes, \enquote{grobkörniges} (\foreign{engl.}{coarse-grained}) Modell und das stetige Gaußsche Kettenmodell erwähnen.
+
+\begin{figure}[tb]
+    \centering
+        \includestandalone[width=0.6\textwidth]{tikz/einleitung/chains}
+    \caption[%
+        Polymerkette in diskretem und Gaußschen Kettenmodell
+    ]{%
+        Schematische Darstellung einer Polymerkette im diskreten Kettenmodell (links) und im stetigen Gaußschen Kettenmodell (rechts).
+        Abbildung reproduziert nach \cite[Figure 2.1 und 2.5]{Fredrickson:2006th}.
+    }
+    \label{fig:figure1}
+\end{figure}
+
+Ersteres stellt die Polymerkette als eine diskrete Kette so dar, dass aneinanderhängende Monomere ähnlich einem Scharnier frei beweglich sind.
+Dabei werden Wechselwirkung zwischen benachbarten Monomeren berücksichtigt, zwischen auf der Kette weit auseinanderliegenden aber ignoriert.
+Diese Wechselwirkungen können am Beispiel von \autoref{fig:figure1} beispielsweise als Einschränkung des Winkels $\vartheta_9$ durch die gegenseitige Beeinflussung der Teilchen $8, 9$ und $10$ auftreten.
+Das diskrete Modell hängt stark mit den aus der Stochastik bekannten Random Walks zusammen und lässt sich deswegen auch ausführlich mit stochastischen und statistischen Methoden untersuchen.
+
+Das stetige Gaußsche Kettenmodell, welches man unter anderem auch als stetigen Grenzfall des beschriebenen diskreten Modells erhält, hat sich als besonders nützlich erwiesen, sowohl bei analytischen als auch numerischen Betrachtungen.
+Dabei wird die Polymerkette als stetige, linear elastische Faser aufgefasst und durch eine Kurve $\vec{r}(s)$ parametrisiert, wobei $s \in [0, 1]$ eine entlang der Kontur der Kette laufende Variable ist.
+Ähnlich wie beim diskreten Modell findet man auch hier viele Zusammenhänge zu stochastischen Prozessen, hier vor allem zu Brownschen Bewegungen,
+wodurch auch bei diesem Modell ein umfangreicher \enquote{Werkzeugkasten} zur Verfügung steht.
+
+Da die benötigten stochastischen Ausführungen und Herleitungen für diese Arbeit nebensächlich sind, belassen wir es bei diesen informalen Beschreibungen und widmen uns nun der darauf aufbauenden \ac{scft}.
 
 \subsection*{Selbstkonsistente Feldtheorie} % (fold)
 \label{par:self_consistent_field_theory}
@@ -191,6 +224,7 @@ Erstere wurden von \textcite{Matsen:1994bz} erfolgreich eingesetzt, wobei hier e
 Die verwendeten Pseudospektralverfahren kommen zwar nicht an die Genauigkeit der Spektralverfahren heran, können aber unter Ausnutzung der Struktur der partiellen Differentialgleichung massiv Laufzeit einsparen.
 Dazu wird bei \textcite{Rasmussen:2002kt} der Differentialoperator mittels Operator-Splitting so zerlegt, dass man das Lösen der Differentialgleichung mittels schneller Fourier-Transformation im Wesentlichen auf komponentenweise Vektor-Multiplikationen zurückführt.
 Das daraus resultierende Verfahren zweiter Ordnung wurde von \textcite{GarciaCervera:2006uu,Ranjan:2007kl} auf unterschiedliche Weisen zu Verfahren vierter Ordnung erweitert, ohne signifikant Laufzeit einzubüßen.
+Eine gute Übersicht über die genannten Methoden findet man bei \textcite[Section 3.6]{Fredrickson:2006th}.
 
 Obwohl man in der Literatur zur \ac{scft} für Polymere verschiedenste Verfahren für das Lösen der partiellen Differentialgleichung findet, ist ein Finite-Elemente-Ansatz basierend auf einer Raum-Zeit-Variationsformulierung der partiellen Differentialgleichung unseres Wissens nach bisher nicht verfolgt worden.
 Hier wollen wir anknüpfen und zugleich die Tatsache, dass die Differentialgleichung wiederholt für verschiedene Felder gelöst werden muss, in Form eines Reduzierte-Basis-Ansatzes ausnutzen.
