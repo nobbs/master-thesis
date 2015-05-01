@@ -1,10 +1,6 @@
 \documentclass[tikz, border=10pt]{standalone}
 
-\usepackage{xcolor}
-\definecolor{jgurot}{RGB}{193,0,42}
-\definecolor{jguhgrau}{RGB}{172,172,172}
-\definecolor{jgudgrau}{RGB}{99,99,99}
-
+% \input{../../misc/colors}
 
 \begin{document}
     \begin{tikzpicture}[
@@ -31,19 +27,19 @@
       \draw [->] (0,0,0) -- (0,0,2); % node[above] {};
 
       % Kurve
-      \draw [jgurot] ({fx(-2)}, {fy(-2)}, {fz(-2)})
+      \draw [jgu_rot] ({fx(-2)}, {fy(-2)}, {fz(-2)})
       \foreach \x in {-2,-1.9,...,3}
       { -- ({fx(\x)}, {fy(\x)}, {fz(\x)})
       };
 
       % RB-Punkte
-      \draw ({fx(-1.5)}, {fy(-1.5)}, {fz(-1.5)}) node [label=above left:$u^{\mathcal N}(\mu_{1})$,fill=jguhgrau] {};
-      \draw ({fx(-0.7)}, {fy(-0.7)}, {fz(-0.7)}) node [label=above left:$u^{\mathcal N}(\mu_{2})$,fill=jguhgrau] {};
-      \draw ({fx(0.7)}, {fy(0.7)}, {fz(0.7)}) node [label=above left:$u^{\mathcal N}(\mu_{i})$,fill=jguhgrau] {};
-      \draw ({fx(1.9)}, {fy(1.9)}, {fz(1.9)}) node [label=above right:$u^{\mathcal N}(\mu_{N})$,fill=jguhgrau] {};
+      \draw ({fx(-1.5)}, {fy(-1.5)}, {fz(-1.5)}) node [label=above left:$u^{\mathcal N}(\mu_{1})$,fill=jgu_hellgrau] {};
+      \draw ({fx(-0.7)}, {fy(-0.7)}, {fz(-0.7)}) node [label=above left:$u^{\mathcal N}(\mu_{2})$,fill=jgu_hellgrau] {};
+      \draw ({fx(0.7)}, {fy(0.7)}, {fz(0.7)}) node [label=above left:$u^{\mathcal N}(\mu_{i})$,fill=jgu_hellgrau] {};
+      \draw ({fx(1.9)}, {fy(1.9)}, {fz(1.9)}) node [label=above right:$u^{\mathcal N}(\mu_{N})$,fill=jgu_hellgrau] {};
 
       % FE-Punkt
-      \draw ({fx(0)}, {fy(0)}, {fz(0)}) node [label=below right:$u_{N}(\mu)$,fill=jgudgrau] {};
+      \draw ({fx(0)}, {fy(0)}, {fz(0)}) node [label=below right:$u_{N}(\mu)$,fill=jgu_dunkelgrau] {};
 
       % Dots
       \draw ({fx(-0.5)}, {fy(-0.5)}, {fz(-0.5)}) node [draw=none,fill=none,label=above:$\cdot$,outer sep=7pt] {};

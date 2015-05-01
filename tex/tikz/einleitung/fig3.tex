@@ -1,17 +1,15 @@
-\documentclass[tikz, border=10pt]{standalone}
-\usetikzlibrary{patterns}
-\usepackage[outline]{contour}
-\contourlength{0.09em}
+%!TEX root = ../../main.tex
 
-\tikzset{
-  nodeAll/.style={draw, rounded corners=3pt, text width=1.5em, align=center, thick},
-  nodeA/.style={fill=black, text=white},
-  nodeB/.style={fill=white, text=black, pattern=north east lines}
-}
+\documentclass[tikz, border=10pt]{standalone}
 
 \begin{document}
 
-\begin{tikzpicture}
+\begin{tikzpicture}[
+  nodeAll/.style={draw, rounded corners=3pt, text width=1.5em, align=center, thick},
+  nodeA/.style={fill=black, text=white},
+  nodeB/.style={fill=white, text=black, pattern=north east lines}
+]
+
   \node[nodeAll, nodeA] (SC-5) at (-5,0) {A};
   \node[nodeAll, nodeA] (SC-4) at (-4,0.1) {A};
   \node[nodeAll, nodeB] (SC-3) at (-3,-0.2) {\contour{white}{B}};

@@ -1,9 +1,8 @@
+%!TEX root = ../../main.tex
+
 \documentclass[tikz, border=10pt]{standalone}
 
-\usepackage{xcolor}
-\definecolor{jgurot}{RGB}{193,0,42}
-\definecolor{jguhgrau}{RGB}{172,172,172}
-\definecolor{jgudgrau}{RGB}{99,99,99}
+% \input{../../misc/colors}
 
 \begin{document}
 \begin{tikzpicture}[
@@ -11,6 +10,7 @@
   knoten/.style={
     shape=circle,
     inner sep=0pt,
+    outer sep=2pt,
     minimum size=1.5em,
     very thick
   },
@@ -48,9 +48,9 @@
 % \draw (3, 0.2-0.5) node [dot,label=left:$s$] (s) {};
 
 \path [thick]
-  (O) edge [->] node [outer sep=-2pt,label=above:$\vec r_0$] {}  (n0)
-  (O) edge [->] node [outer sep=-2pt,label=below left:$\vec r_3$] {}  (n3)
-  (O) edge [->] node [outer sep=-2pt,label=left:$\vec r_N$] {}  (nN)
+  (O) edge [->] node [outer sep=-2pt,label=below:$\vec r_0$] {}  (n0)
+  (O) edge [->] node [outer sep=-2pt,label=below left:$\vec r_4$] {}  (n4)
+  (O) edge [->] node [outer sep=-2pt,label=right:$\vec r_N$] {}  (nN)
   ;
 
 \path [very thick]
@@ -73,12 +73,12 @@
       \draw (-0.4, -3.5 - 6) node [dot] (rO) {};
       \draw (0, 0-0.5 - 6) node [outer sep=-2pt,label=left:$0$] (0) {};
       \draw (3.8, -3.7 - 6) node [outer sep=-2pt,label=left:$1$] (1) {};
-      \draw (3, 0.2-0.5 - 6) node [outer sep=-2pt,dot,label=left:$s$] (s) {};
+      \draw (4, -0.6-0.5 - 6) node [outer sep=-2pt,dot,label=above:$s$] (s) {};
 
       \path [thick]
-        (rO) edge [->] node [label=above:$\vec r(0)$] {}  (0)
-        (rO) edge [->] node [label=below left:$\vec r(s)$] {}  (s)
-        (rO) edge [->] node [label=left:$\vec r(1)$] {}  (1)
+        (rO) edge [->] node [outer sep=-2pt,label=below:$\vec r(0)$] {}  (0)
+        (rO) edge [->] node [outer sep=-2pt,label=below left:$\vec r(s)$] {}  (s)
+        (rO) edge [->] node [outer sep=-2pt,label=right:$\vec r(1)$] {}  (1)
         ;
 
       \draw [very thick] plot [smooth, tension=0.75]

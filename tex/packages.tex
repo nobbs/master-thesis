@@ -27,17 +27,15 @@
 
 % Graphiken und Farben
 \usepackage{graphicx, xcolor}
-\definecolor{jgu:rot}{RGB}{193,0,42}
-\definecolor{jgu:hgrau}{RGB}{172,172,172}
-\definecolor{jgu:dgrau}{RGB}{99,99,99}
+\input{misc/colors}
 
 % PDF-Verlinkungen und Metadaten
 \usepackage[
 	colorlinks=true,
-	linkcolor=jgu:rot,          % color of internal links (change box color with linkbordercolor)
-	citecolor=jgu:rot,        % color of links to bibliography
-	filecolor=jgu:rot,      % color of file links
-	urlcolor=jgu:rot
+	linkcolor=jgu_rot,          % color of internal links (change box color with linkbordercolor)
+	citecolor=jgu_rot,        % color of links to bibliography
+	filecolor=jgu_rot,      % color of file links
+	urlcolor=jgu_rot
 ]{hyperref}
 
 \newcommand{\changefont}[3]{
@@ -53,6 +51,7 @@
     backend=biber,
     style=alphabetic,
     backref=true,
+    firstinits=true
 ]{biblatex}
 \addbibresource{literature.bib}
 
@@ -121,7 +120,7 @@
 
 %%% Chapter-Style und mehr
 % Überschriften in Dunkelgrau
-% \addtokomafont{disposition}{\color{jgu:dgrau}}
+% \addtokomafont{disposition}{\color{jgu_dunkelgrau}}
 % Überschriften in TeX Gyre Pagella
 \addtokomafont{disposition}{\normalfont\altfont\selectfont}
 
@@ -130,7 +129,7 @@
 \renewcommand*{\chapterheadendvskip}{\vspace*{2\baselineskip}}
 \renewcommand*{\chapterformat}{%
 				\raggedright
-				\color{jgu:rot}
+				\color{jgu_rot}
                 \altfont\fontsize{60}{30}\selectfont\thechapter
                 \fontsize{20}{30}\scshape\selectfont\enskip\chapappifchapterprefix
                 }
@@ -146,15 +145,15 @@
 % \addtokomafont{paragraph}{\normalfont\altfont\selectfont}
 \addtokomafont{paragraph}{\bfseries}
 
-\addtokomafont{pageheadfoot}{\color{jgu:dgrau}\normalfont\altfont\selectfont}% Fußzeile normale Schrift
+\addtokomafont{pageheadfoot}{\color{jgu_dunkelgrau}\normalfont\altfont\selectfont}% Fußzeile normale Schrift
 
 \renewcommand*\dictumwidth{.95\linewidth}
 \renewcommand*\dictumrule{}
 \renewcommand*\dictumauthorformat[1]{--- #1}
-\addtokomafont{dictumtext}{\color{jgu:dgrau}\normalfont\altsffont\fontsize{9}{12}\selectfont\itshape}
-\addtokomafont{dictumauthor}{\color{jgu:dgrau}\normalfont\altsffont\fontsize{8}{12}\selectfont}
+\addtokomafont{dictumtext}{\color{jgu_dunkelgrau}\normalfont\altsffont\fontsize{9}{12}\selectfont\itshape}
+\addtokomafont{dictumauthor}{\color{jgu_dunkelgrau}\normalfont\altsffont\fontsize{8}{12}\selectfont}
 
-\addtokomafont{pagenumber}{\color{jgu:dgrau}\normalfont\altfont\selectfont}
+\addtokomafont{pagenumber}{\color{jgu_dunkelgrau}\normalfont\altfont\selectfont}
 
 % \addtokomafont{sectionentrypagenumber}{\color{black}}
 \addtokomafont{chapterentrypagenumber}{\color{black}\rmfamily}
@@ -164,7 +163,12 @@
 \usepackage{subcaption}
 
 \usepackage{tikz}
-\usepackage[subpreambles]{standalone}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.12}
+\usetikzlibrary{patterns}
+\usepackage[outline]{contour}
+\contourlength{0.09em}
+\usepackage{standalone}
 
 % Akronymverzeichnis
 \usepackage{acro}
