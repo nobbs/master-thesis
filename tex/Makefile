@@ -8,7 +8,7 @@ view:
 	open main.pdf
 
 main.pdf: main.tex
-	latexmk -silent -pdf -use-make main.tex
+	latexmk -silent -pdf main.tex
 
 clean:
 	latexmk -silent -CA
