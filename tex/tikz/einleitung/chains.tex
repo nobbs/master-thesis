@@ -12,7 +12,7 @@
     shape=circle,
     inner sep=0pt,
     minimum size=1.5em,
-    thick
+    very thick
   },
   dot/.style={
     draw=none, scale=0.2, shape=circle, fill=black, minimum size=1.5em, outer sep=3pt
@@ -36,7 +36,7 @@
 \draw (3.8, -3.7) node [knoten,draw] (nN) {$N$};
 
 % \draw[Darkgreen,thick] (n9) arc (90:180:1cm);
-\draw[thick,dotted] ([shift=(203:0.7cm)]7.5,0.3) arc (203:275:0.7cm);
+\draw[very thick,dotted] ([shift=(203:0.7cm)]7.5,0.3) arc (203:275:0.7cm);
 \draw[] (6.9,-0.6) node {$\vartheta_9$};
 % \draw [red,thick,domain=0:90] plot (7.5, 0.3)+({cos(\x)}, {sin(\x)});
 
@@ -47,13 +47,13 @@
 % \draw (3.8, -3.7) node [label=left:$1$] (1) {};
 % \draw (3, 0.2-0.5) node [dot,label=left:$s$] (s) {};
 
-\path
+\path [thick]
   (O) edge [->] node [outer sep=-2pt,label=above:$\vec r_0$] {}  (n0)
   (O) edge [->] node [outer sep=-2pt,label=below left:$\vec r_3$] {}  (n3)
   (O) edge [->] node [outer sep=-2pt,label=left:$\vec r_N$] {}  (nN)
   ;
 
-\path [thick]
+\path [very thick]
       (n0) edge[->] (n1)
       (n1) edge[->] (n2)
       (n2) edge[->] (n3)
@@ -75,13 +75,13 @@
       \draw (3.8, -3.7 - 6) node [outer sep=-2pt,label=left:$1$] (1) {};
       \draw (3, 0.2-0.5 - 6) node [outer sep=-2pt,dot,label=left:$s$] (s) {};
 
-      \path
+      \path [thick]
         (rO) edge [->] node [label=above:$\vec r(0)$] {}  (0)
         (rO) edge [->] node [label=below left:$\vec r(s)$] {}  (s)
         (rO) edge [->] node [label=left:$\vec r(1)$] {}  (1)
         ;
 
-      \draw [thick] plot [smooth, tension=0.75]
+      \draw [very thick] plot [smooth, tension=0.75]
             coordinates {
               (0, 0-0.5 - 6)
               (1, 0.5-0.5 - 6)
