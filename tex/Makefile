@@ -10,6 +10,9 @@ view:
 main.pdf: main.tex
 	latexmk -silent -pdf main.tex
 
+continuous:
+	latexmk -pvc -pdf main.tex
+
 clean:
 	latexmk -silent -CA
 
