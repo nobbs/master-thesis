@@ -8,53 +8,57 @@ experience".}}
 \chapter{Problemstellung} % (fold)
 \label{cha:parametrische_problem_neuer_versuch}
 
-In diesem Kapitel konkretisieren wir die parabolische partielle Differentialgleichung aus \autoref{cha:einleitung} und reinterpretieren diese als eine parametrische Differentialgleichung.
+In diesem Kapitel greifen wir die in \autoref{cha:einleitung} als Propagatoren bezeichneten parabolischen partiellen Differentialgleichungen \eqref{eq:einleitung:fpropagator} und \eqref{eq:einleitung:bpropagator} auf, konkretisieren die Rahmenbedingungen und reinterpretieren diese Propagatoren anschließend als parametrische Differentialgleichungen.
+
 Zudem leiten wir Variationsformulierungen her und weisen anhand dieser nach, dass die Lösungen der parametrischen partiellen Differentialgleichung eine gewisse Regularität bezüglich der Parameter aufweisen.
-% Hierbei orientieren wir uns an den Arbeiten von !TODO!.
 
-\section{Problemstellung} % (fold)
-\label{sec:problemstellung}
+\todo[inline]{Quellen}
 
-\subsection{Konkretisierung} % (fold)
-\label{sub:konkretisierung}
+\section{Die parabolische partielle Differentialgleichung} % (fold)
+\label{sec:die_parabolische_partielle_differentialgleichung}
 
-% subsection konkretisierung (end)
+Es reicht nur den Vorwärts-Propagator \eqref{eq:einleitung:fpropagator} zu betrachten, da der Rückwärts-Propagator \eqref{eq:einleitung:bpropagator} durch die simple Transformation $s \mapsto 1 - s$ auf die selbe Form, lediglich mit vertauschten Rollen bei den Feldern $\omega_{\mathrm{A}}$ und $\omega_{\mathrm{B}}$, gebracht werden kann.
 
-Wir greifen nun die parabolische partielle Differentialgleichung aus \autoref{cha:einleitung} auf und leiten daraus die für diese Arbeit relevante Problemstellung her.
+Wir wollen nun zunächst das Setting festlegen und dabei die aus der Einleitung bekannte partielle Differentialgleichung etwas allgemeiner auffassen.
 
-Sei also $0 < T < \infty$ eine Konstante und $I = [0, T]$ ein reelles Intervall.
-Weiter sei $\Omega \subset \mathbb{R}^{n}$ eine beschränkte abgeschlossene Menge mit Lipschitz-Rand !TODO!.
+Seien also $0 < T < \infty$ eine Konstante und $I = [0, T]$ ein reelles Intervall.
+Weiter sei $\Omega \subset \mathbb{R}^{n}$ ein Gebiet, das heißt, eine offene, nichtleere, zusammenhängende Teilmenge, mit Lipschitz-Rand.
 Wir betrachten nun die partielle Differentialgleichung
 \begin{equation}
-    u_{t}(t, x) = c \Delta_{x} u(t, x) - \omega(t, x) u(t, x) - \mu u(t, x) \quad \text{auf}~I \times \Omega,
+\label{eq:cha3:pde_erste}
+    u_{t}(t, \vec{x}) = c \Delta_{\vec{x}} u(t, \vec{x}) - \omega(t, \vec{x}) u(t, \vec{x}) - \mu u(t, \vec{x}) \quad \text{auf}~I \times \Omega,
 \end{equation}
 wobei $c \in \mathbb{R}_{+}$ und $\mu \in \mathbb{R}$ Konstanten seien.
 Weiter sei
 \begin{equation}
 \label{eq:pp:def_omega}
-    \omega \colon I \times \Omega \to \mathbb{R}, \quad (t, x) \mapsto
+    \omega \colon I \times \Omega \to \mathbb{R}, \quad (t, \vec{x}) \mapsto
     \begin{cases}
-        \omega_{1}(x), & t \leq f, \\
-        \omega_{2}(x), & t > f,
+        \omega_{1}(\vec{x}), & t \leq f, \\
+        \omega_{2}(\vec{x}), & t > f,
     \end{cases}
 \end{equation}
 mit $L_{\infty}(\Omega)$-Abbildungen $\omega_{1}, \omega_{2}$ und einer Konstante $f \in I$.
-An dieser Stelle beschränken wir uns auf den Fall homogener Randbedingungen in $\Omega$, das heißt es gilt $\restr{u(t, \blank)}{\partial \Omega} = 0$ für alle $t \in I$.
 
-\todo[inline]{Das Mu erklären!}
+Da, wie in \autoref{cha:einleitung} erwähnt, konstante Verschiebungen der Felder $\omega_{i}$ keinen Einfluss auf das Ergebnis des dort beschriebenen Iterationsverfahrens haben führen wir den zusätzlichen Term $\mu u(t, x)$ ein.
+Dies wird sich später noch als hilfreich beim Nachweis einiger Eigenschaften der Differentialgleichung erweisen.
 
-Unter diesen Gegebenheiten können wir die obige partielle Differentialgleichung konkretisieren; es bietet sich an, dazu die Räume $V = H^{1}_{0}(\Omega)$ und $H = L_{2}(\Omega)$ zu verwenden.
-Dabei handelt es sich um separable Hilberträume und es existiert eine dichte stetige Einbettung $H^{1}_{0}(\Omega) \denseinclusion L_{2}(\Omega)$.
-Nach \thref{definition:gl:gelfand_tripel} liefert dies das Gelfand-Tripel
+Weiter beschränken wir uns an dieser Stelle auf den Fall homogener Randbedingungen in $\Omega$, das heißt, es gilt $\restr{u(t, \blank)}{\partial \Omega} = 0$ für alle $t \in I$.
+
+Unter diesen Gegebenheiten können wir die obige partielle Differentialgleichung \eqref{eq:cha3:pde_erste} weiter konkretisieren; es bietet sich an, dazu die Räume $V = H^{1}_{0}(\Omega)$ und $H = L_{2}(\Omega)$ zu verwenden.
+Dabei handelt es sich jeweils um einen separablen Hilbertraum und es existiert eine dichte stetige Einbettung $H^{1}_{0}(\Omega) \denseinclusion L_{2}(\Omega)$.
+Nach \thref{definition:gl:gelfand_tripel} erhalten wir daraus das Gelfand-Tripel
 \begin{equation}
+\label{eq:cha3:gelfand_triple}
     H^{1}_{0}(\Omega) \denseinclusion L_{2}(\Omega) \denseinclusion (H^{1}_{0}(\Omega))' = H^{-1}(\Omega).
 \end{equation}
 
-Mit diesen Vorbemerkungen erhalten wir nun unter Hinzunahme eines Quellterms und einer Anfangsbedingung das folgende Problem.
+Mit diesen Vorbemerkungen können wir unter Hinzunahme eines Quellterms und einer Anfangsbedingung unser Problem wie folgt definieren:
 
+\todo[inline]{Sind die Voraussetzungen so passend?}
 \begin{Definition}[Starke Formulierung]
 \label{definition:pp:starke_formulierung}
-    Seien eine \emph{Anfangsbedingung} $u_{0} \in L_{2}(\Omega)$, ein \emph{Quellterm} $g \in L_{2}(I) \times H^{-1}(\Omega)$ und $\omega$ wie in \eqref{eq:pp:def_omega} gegeben.
+    Seien eine \emph{Anfangsbedingung} $u_{0} \in L_{2}(\Omega)$, ein \emph{Quellterm} $g \in L_{2}(I) \otimes H^{-1}(\Omega)$ und $\omega$ wie in \eqref{eq:pp:def_omega}, sowie Konstanten $c \in \mathbb{R}_{+}$ und $\mu \in \mathbb{R}$ gegeben.
     Als \emph{starke Formulierung} bezeichnen wir die parabolische partielle Differentialgleichung
     \begin{equation}
     \label{eq:pp:starke_formulierung}
@@ -90,41 +94,36 @@ Mit diesen Vorbemerkungen erhalten wir nun unter Hinzunahme eines Quellterms und
 
 % subsection variationsformulierungen (end)
 
-Wir wollen nun eine Raum-Zeit-Variationsformulierung, auch schwache Formulierung genannt, von \eqref{eq:pp:starke_formulierung} herleiten.
+Als nächsten Schritt wollen wir nun eine Raum-Zeit-Variationsformulierung, auch schwache Formulierung genannt, für das Problem  \eqref{eq:pp:starke_formulierung} herleiten.
 Dazu ist es nützlich, den Operator $A(t)$ in Form einer Bilinearform zu schreiben.
-Betrachte dazu die folgende duale Paarung auf $H^{-1}(\Omega) \times H^{1}_{0}(\Omega)$
-\begin{equation}
-    (A(t)\eta)\zeta = \dual{A(t)\eta}{\zeta},
-\end{equation}
-nach dem Rieszschen Darstellungssatz, vergleiche \cite[Theorem \S{}22.1]{Halmos:1957vd}, existiert eine Bilinearform
+Nach dem Rieszschen Darstellungssatz, vergleiche \cite[Theorem \S{}22.1]{Halmos:1957vd}, existiert eine Bilinearform
 \begin{equation}
     a \colon H^{1}_{0}(\Omega) \times H^{1}_{0}(\Omega) \to \mathbb{R},
 \end{equation}
 so dass
 \begin{equation}
-    (A(t)\eta)\zeta = \dual{A(t)\eta}{\zeta} = a(\eta, \zeta; t) \quad \fa \eta, \zeta \in H^{1}(\Omega)
+    (A(t)\eta)\zeta = \skp{A(t)\eta}{\zeta}{H^{-1}(\Omega) \times H^{1}_{0}(\Omega)} = a(\eta, \zeta; t) \quad \fa \eta, \zeta \in H^{1}_{0}(\Omega)
 \end{equation}
 gilt.
 
-\todo[inline]{Was geht hier ab?!}
-Für den gegebenen Fall lässt sich diese Bilinearform explizit angeben, denn es gilt !TODO!
+\todo[inline]{Nochmal genauer anschauen, ob das mit der dualen Paarung und dem Skalarprodukt auch so einfach geht.}
+
+Für den gegebenen Fall können wir diese Bilinearform explizit angeben, denn es gilt für $\eta, \zeta \in H^{1}_{0}(\Omega)$ nach dem Gaußschen Integralsatz die Gleichheit
 \begin{equation}
     \begin{aligned}
         a(\eta, \zeta; t)
-        &=    \dual{A(t)\eta}{\zeta}
+        &=    \skp{A(t)\eta}{\zeta}{H^{-1}(\Omega) \times H^{1}_{0}(\Omega)}
         =  \skp{A(t)\eta}{\zeta}{L_{2}(\Omega)}
         \\&= - c \skp{\Delta \eta}{\zeta}{L_{2}(\Omega)}
                 + \skp{\omega(t, \blank) \eta}{\zeta}{L_{2}(\Omega)}
                 + \mu \skp{\eta}{\zeta}{L_{2}(\Omega)}
         \\&= c \skp{\grad \eta}{\grad \zeta}{L_{2}(\Omega)}
                 + \skp{\omega(t, \blank) \eta}{\zeta}{L_{2}(\Omega)}
-                + \mu \skp{\eta}{\zeta}{L_{2}(\Omega)},
+                + \mu \skp{\eta}{\zeta}{L_{2}(\Omega)}.
     \end{aligned}
 \end{equation}
-wobei bei der letzten Gleichheit der Gaußsche Intregalsatz !TODO! verwendet wurde.
 
-
-Unter diesen Bedingungen erhalten wir für die obige Bilinearform für ein festes $t \in I$ die folgende Aussage.
+Mit Hilfe dieser Darstellung erhalten wir nun für die Bilinearform $a(\blank, \blank; t)$ und damit auch für den Operator $A(t)$ die folgenden Aussagen für ein festes $t \in I$.
 %
 \begin{Satz}
 \label{satz:pp:a_bf_bounded_garding}
@@ -152,6 +151,7 @@ Unter diesen Bedingungen erhalten wir für die obige Bilinearform für ein feste
         mit $\alpha = c \gamma_{\Omega}^{2} > 0$ und $\lambda = \min\Set{\norm{\omega}_{L_{\infty}(\Omega)} - \mu, 0} \geq 0$, wobei $\gamma_{\Omega}$ die Poincaré-Friedrichs-Konstante ist.
     \end{thmenumerate}
 
+    \todo[inline]{Beweis prüfen!}
     \begin{Beweis}
     Wir zeigen zunächst die Stetigkeit.
     Seien dazu $\eta, \zeta \in H^{1}_{0}(\Omega)$ beliebig.
@@ -184,11 +184,11 @@ Unter diesen Bedingungen erhalten wir für die obige Bilinearform für ein feste
 \end{Satz}
 
 \begin{Korollar}
-    Ist $\mu \geq \norm{\omega}_{L_{\infty}(\Omega)}$, dann ist die Bilinearform $a$ aus \thref{satz:pp:a_bf_bounded_garding} koerziv.
+    Ist $\mu \geq \norm{\omega}_{L_{\infty}(\Omega)}$, dann ist die Bilinearform $a$ aus \thref{satz:pp:a_bf_bounded_garding} elliptisch.
 \end{Korollar}
 
-Unter diesen Gegebenheiten erhalten wir nach \autoref{sec:lineare_evolutionsgleichungen} eine sachgemäß gestellte Raum-Zeit-Variationsformulierung.
-Ansatz- und Testfunktionenraum ergeben sich mit den konkret gewählten Hilberträumen zu
+Unter diesen Gegebenheiten können wir nun mit den theoretischen Grundlagen aus \autoref{sec:lineare_evolutionsgleichungen} eine sachgemäß gestellte Raum-Zeit-Variationsformulierung herleiten.
+Als Ansatz- und Testfunktionenraum erhalten wir mit den konkret gewählten Hilberträumen
 \begin{equation}
     \label{eq:var_ansatzraum_testraum}
     \mathcal X = L_{2}(I; H^{1}_{0}(\Omega)) \cap H^{1}(I; H^{-1}(\Omega))
@@ -197,6 +197,7 @@ Ansatz- und Testfunktionenraum ergeben sich mit den konkret gewählten Hilbertr�
 \end{equation}
 Das Raum-Zeit-Variationsproblem lautet damit:
 \begin{Definition}[Schwache Formulierung]
+\label{definition:cha3:schwache_formulierung}
     Als \emph{schwache Formulierung}, oder auch \emph{Raum"=Zeit"=Va"-ri"-a"-ti"-ons"-for"-mu"-lie"-rung}, der parabolischen partiellen Differentialgleichung aus \thref{definition:pp:starke_formulierung} bezeichnen wir das folgende Variationsproblem:
     Gegeben einen Quellterm $g \in L_{2}(I; H^{-1}(\Omega))$ und eine Anfangsbedingung $u_{0} \in L_{2}(\Omega)$.
     Finde ein $u \in \mathcal X$ mit
@@ -217,17 +218,15 @@ Das Raum-Zeit-Variationsproblem lautet damit:
     \end{equation}
 \end{Definition}
 
-Diese Variationsformulierung wird uns in den nachfolgenden Kapiteln als Ausgangspunkt dienen.
+Diese Variationsformulierung wird uns in den nachfolgenden Kapiteln als Ausgangspunkt für die von uns angestrebten Verfahren dienen.
 
 \subsection{Existenz und Eindeutigkeit von Lösungen} % (fold)
 \label{sub:existenz_und_eindeutigkeit_von_l_sungen}
 
-In diesem Abschnitt wollen wir für die gegebene Raum-Zeit-Variationsformulierung die Existenz und Eindeutigkeit von Lösungen nachweisen.
-Dabei werden wir auf die Aussagen aus \thref{sec:lineare_evolutionsgleichungen}, vor allem das Banach-Ne{\v c}as-Babu{\v s}ka-Theorem, zurückgreifen.
+Wir weisen nun, aufbauend auf \autoref{sec:lineare_evolutionsgleichungen}, nach, dass das Raum-Zeit-Variationsproblem aus \ref{definition:cha3:schwache_formulierung} sachgemäß gestellt ist, und bestimmen zudem Abschätzungen für die Norm des Operators und dessen Inverse.
+Die Hauptarbeit dazu wurde bereits durch das \thref{satz:gl:bnb_theorem} und \thref{thm:schwab09:theorem51} geleistet und muss hier nur noch angewandt werden.
 
-\todo[inline]{Anpassen}
-
-Aus \thref{thm:schwab09:theorem51} und \thref{thm:schwab09:theorem51:ungleichungen} erhalten wir nun die Wohldefiniertheit des obigen Variationsproblems und zugleich Schranken für die Operatoren.
+\todo[inline]{Anpassen an das neu vorkommende Mu!}
 
 \begin{Korollar}
 \label{korollar:2.2}
@@ -253,14 +252,14 @@ Aus \thref{thm:schwab09:theorem51} und \thref{thm:schwab09:theorem51:ungleichung
     mit $M_{e}$ und $\rho$ wie in \eqref{eq:var_all_M_e} respektive \eqref{eq:var_all_rho}.
 \end{Korollar}
 
-
 % subsection existenz_und_eindeutigkeit_von_l_sungen (end)
 
-% section problemstellung (end)
+% section die_parabolische_partielle_differentialgleichung (end)
 
 \section{Parametrische Formulierung} % (fold)
 \label{sec:parametrische_formulierung}
 
+\todo[inline]{besser platzieren}
 \begin{Satz}
 \label{satz:pp:lax_auf_elliptisch}
     Seien $\omega \in L_{\infty}(\Omega)$, $\mu \geq \norm{\omega}_{L_{\infty}(\Omega)}$ und weiter $g \in H^{-1}(\Omega)$ und $A(\omega)$ wie in \eqref{eq:pp:op_a}, dann besitzt die Operatorgleichung
