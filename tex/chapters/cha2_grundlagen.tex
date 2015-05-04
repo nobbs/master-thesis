@@ -302,8 +302,27 @@ Dadurch ergibt sich folgende schwache Formulierung der linearen Evolutionsgleich
     gegebene Funktional.
 \end{Definition}
 
-Es bleibt nun zu zeigen, dass obige Raum-Zeit-Variationsformulierung \emph{sachgemäß gestellt} (nach Hadamard [TODO]) ist, das heißt, das eine Lösung existiert, diese eindeutig ist und zudem stetig von den Eingangsdaten, also $f$, abhängt.
-Dazu wird der folgende wichtige Satz, welcher in dieser oder ähnlicher Form bei \textcites[Theorem 2.1]{Babuska:1971fx}[Theorem 5.2.1]{Aziz:2014wf}[Theorem \S{}3.3.6]{Braess:2007wm} zu finden ist, verwendet.
+Es bleibt nun zu zeigen, welche Bedingungen hinreichend sind, damit obige Raum-Zeit-Variationsformulierung \emph{sachgemäß gestellt} ist.
+Dazu definieren wir zunächst, was wir unter dem Begriff \enquote{sachgemäß gestellt} verstehen wollen und greifen dazu auf die Definition nach \textcite{hadamard1902problemes} zurück.
+
+\begin{Definition}
+    Seien $U$ und $V$ normierte Vektorräume.
+    Seien weiter eine stetige Bilinearform $a \in \mathcal L(U \times V, \mathbb{R})$ und ein stetiges Funktional $f \in \mathcal L(V)$ gegeben.
+    Betrachte das folgende Problem: finde ein $u \in U$, so dass
+    \begin{equation}
+    \label{eq:grundlagen:hadamard_varprob}
+        a(u, v) = f(v) \quad \fa v \in V
+    \end{equation}
+    gilt.
+    Wir nennen \eqref{eq:grundlagen:hadamard_varprob} \emph{sachgemäß gestellt}, wenn eine eindeutige Lösung $u \in U$ existiert und diese eine A-priori-Abschätzung der Form
+    \begin{equation}
+    \label{eq:grundlagen:hadamard_abschaetzung}
+        \norm{u}_{U} \leq c \norm{f}_{V'} \quad \fa f \in V'
+    \end{equation}
+    und eine von $f$ unabhängige Konstante $c > 0$ erfüllt.
+\end{Definition}
+
+Um dies für die Raum-Zeit-Variationsformulierung aus \thref{definition:variationsformulierung} nachzuweisen, werden wir den folgenden bekannten und wichtigen Satz, welcher in dieser oder ähnlicher Form bei \textcites[Theorem 2.1]{Babuska:1971fx}[Theorem 5.2.1]{Aziz:2014wf}[Theorem \S{}3.3.6]{Braess:2007wm} zu finden ist, verwenden.
 
 \begin{Satz}[Banach-Ne{\v c}as-Babu{\v s}ka-Theorem]
 \label{satz:gl:bnb_theorem}
@@ -345,6 +364,35 @@ Dazu wird der folgende wichtige Satz, welcher in dieser oder ähnlicher Form bei
     \end{equation}
     dann gilt insbesondere auch \ref{satz:gl:bnb_theorem:bedingung:surjektiv}.
 \end{Bemerkung}
+
+Aus dem Banach-Ne{\v c}as-Babu{\v s}ka-Theorem lässt sich auch das bekannte Lax-Milgram-Lemma ableiten, weswegen wir es hier kurz wiederholen wollen.
+
+\begin{Lemma}[Lax-Milgram]
+\label{lemma:gl:lax_milgram}
+    Sei $V$ ein Hilbertraum, seien weiter $a \in \mathcal L(V \times V, \mathbb{R})$ eine stetige Bilinearform und $f \in \mathcal L (V, \mathbb{R})$ ein stetiges Funktional und betrachte das Problem:
+    finde ein $u \in V$, so dass
+    \begin{equation}
+        a(u, v) = f(v) \quad \fa v \in V
+    \end{equation}
+    gilt.
+    Ist die Bilinearform $a$ elliptisch, das heißt, es existiert ein $\alpha > 0$ mit
+    \begin{equation}
+    \label{eq:lemma:lax_milgram:elliptisch}
+        a(u, u) \geq \alpha \norm{u}_{V}^{2} \quad \fa u \in V,
+    \end{equation}
+    dann ist das Problem sachgemäß gestellt und es gilt
+    \begin{equation}
+        \norm{u}_{V} \leq \frac{1}{\alpha} \norm{f}_{V'}.
+    \end{equation}
+
+    \begin{Beweis}
+        Aus der Elliptizität können wir eine inf-sup-Bedingung folgern, denn es gilt
+        \begin{equation}
+            \sup_{v \in V} \frac{a(u, v)}{\norm{v}_{V}} \geq \frac{a(u, u)}{\norm{u}_{V}} \geq \alpha \norm{u}_{V}.
+        \end{equation}
+        Damit sind neben der Stetigkeit von $a$ auch die die Bedingungen \ref{satz:gl:bnb_theorem:bedingung:inf_sup} und \ref{satz:gl:bnb_theorem:bedingung:surjektiv} aus \thref{satz:gl:bnb_theorem} erfüllt und die Aussage folgt aus dem Banach-Ne{\v c}as-Babu{\v s}ka-Theorem.
+    \end{Beweis}
+\end{Lemma}
 
 Für das Raum-Zeit-Variationsproblem aus \thref{definition:variationsformulierung} lässt sich die Tatsache, dass es sachgemäß gestellt ist, zu folgendem Satz zusammenfassen.
 
