@@ -29,13 +29,25 @@
 \usepackage{graphicx, xcolor}
 \input{misc/colors}
 
+% Standardpackages
+\usepackage{amsmath, amssymb, stmaryrd, mathtools}
+
+% "Bessere" Theorem-Umgebungen
+\usepackage[
+    amsmath,
+    thmmarks,
+    % hyperref,
+    thref
+]{ntheorem}
+
 % PDF-Verlinkungen und Metadaten
 \usepackage[
 	colorlinks=true,
 	linkcolor=jgu_rot,          % color of internal links (change box color with linkbordercolor)
 	citecolor=jgu_rot,        % color of links to bibliography
 	filecolor=jgu_rot,      % color of file links
-	urlcolor=jgu_rot
+	urlcolor=jgu_rot,
+    hypertexnames=false
 ]{hyperref}
 
 \newcommand{\changefont}[3]{
@@ -77,14 +89,14 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Mathematik
 
-% Standardpackages
-\usepackage{amsmath, amssymb, stmaryrd, mathtools}
-
-% "Bessere" Theorem-Umgebungen
-\usepackage[amsmath, thmmarks, hyperref, thref]{ntheorem}
 
 % Setze Label-Nummern nur, wenn diese auch referenziert werden
-\mathtoolsset{showonlyrefs, showmanualtags}
+% \mathtoolsset{showonlyrefs, showmanualtags}
+
+\usepackage[german,noabbrev,nameinlink,capitalise]{cleveref}
+\usepackage{autonum}
+
+\crefname{equation}{}{}
 
 \providecommand\given{} % so it exists
 \newcommand\SetSymbol[1][]{
@@ -180,3 +192,49 @@
 
 % \usepackage{setspace}
 % \setstretch{1.1}
+
+% ntheorem stuff
+\theoremnumbering{arabic}
+\theoremstyle{plain}
+\RequirePackage{latexsym}
+% \theoremsymbol{\ensuremath{_\Box}}
+\theorembodyfont{\itshape}
+\theoremheaderfont{\normalfont\bfseries}
+\theoremseparator{}
+\newtheorem{Theorem}{Theorem}[chapter]
+\newtheorem{Satz}[Theorem]{Satz}
+\newtheorem{Proposition}[Theorem]{Proposition}
+\newtheorem{Lemma}[Theorem]{Lemma}
+\newtheorem{Korollar}[Theorem]{Korollar}
+
+\theorembodyfont{\upshape}
+\newtheorem{Beispiel}[Theorem]{Beispiel}
+\newtheorem{Bemerkung}[Theorem]{Bemerkung}
+\newtheorem{Anmerkung}[Theorem]{Anmerkung}
+\newtheorem{Remark}[Theorem]{Remark}
+\newtheorem{Definition}[Theorem]{Definition}
+\newtheorem{Annahme}[Theorem]{Annahme}
+
+\theoremstyle{nonumberplain}
+\theoremheaderfont{\scshape}
+\theorembodyfont{\normalfont}
+\theoremseparator{.}
+\theoremsymbol{\ensuremath{\square}}
+% \theoremsymbol{\ensuremath{_\square}}
+\RequirePackage{amssymb}
+\newtheorem{Proof}{Proof}
+\newtheorem{proof}{Proof}
+\newtheorem{Beweis}{Beweis}
+\newtheorem{beweis}{Beweis}
+\qedsymbol{\ensuremath{_\square}}
+
+\theoremstyle{nonumberplain}
+\theoremheaderfont{\normalfont\bfseries}
+\theoremseparator{}
+\theorembodyfont{\normalfont}
+\theoremsymbol{}
+\RequirePackage{amssymb}
+\newtheorem{Problem}{Problem}
+\newtheorem{problem}{Problem}
+\qedsymbol{}
+

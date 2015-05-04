@@ -90,7 +90,7 @@ Dabei werden wir oft auf folgendes Konstrukt zurückgreifen.
     \begin{equation}
         W(a, b; V, V') \deq \Set{u \in L_{2}(a, b; V) \given u' \in L_{2}(a, b; V')}
     \end{equation}
-    wobei $u'$ im Sinne von \thref{definition:gl:schwache_zeitableitung} zu verstehen ist.
+    wobei $u'$ im Sinne von \cref{definition:gl:schwache_zeitableitung} zu verstehen ist.
 \end{Definition}
 \nomenclature{$\denseinclusion$}{Dichte stetige Einbettung}
 
@@ -177,7 +177,7 @@ Zunächst definieren wir, was wir unter dem Begriff einer linearen Evolutionsgle
 Anschließend leiten wir eine Raum-Zeit-Variationsformulierung her und geben einen Satz an, der unter geeigneten Voraussetzungen Existenz und Eindeutigkeit einer Lösung dieser Variationsformulierung garantiert.
 
 Wir befinden uns nun im Folgenden Setting:
-wie in \thref{definition:gl:gelfand_tripel} seien $V$ und $H$ zwei separable Hilberträume und $(V, H, V')$ das daraus resultierende Gelfand-Tripel.
+wie in \cref{definition:gl:gelfand_tripel} seien $V$ und $H$ zwei separable Hilberträume und $(V, H, V')$ das daraus resultierende Gelfand-Tripel.
 Wie zuvor verwenden wir $\skprod{\blank}{\blank}$ mit entsprechendem Index sowohl für die Skalarprodukte auf $V$ und $H$, als auch für die duale Paarung auf $V' \times V$.
 
 Es sei $0 < T < \infty$ und damit $[0, T]$ ein endliches Zeitintervall.
@@ -236,18 +236,18 @@ Mit dieser Vorarbeit können wir nun definieren, was wir unter einer linearen Ev
 \begin{Bemerkung}
 \leavevmode
 \begin{thmenumerate}
-    \item Die Anfangswertbedingung $u(0) = u_{0}$ in $H$ ist wegen \thref{korollar:gl:spur_wohldefiniert} wohldefiniert.
+    \item Die Anfangswertbedingung $u(0) = u_{0}$ in $H$ ist wegen \cref{korollar:gl:spur_wohldefiniert} wohldefiniert.
     \item Ist die Bilinearform $a(\blank, \blank; t)$ respektive der zugehörige stetige lineare Operator $A(t)$ unabhängig von $t \in [0, T]$, dann sprechen wir von einer \emph{autonomen} linearen Evolutionsgleichung.
 \end{thmenumerate}
 \end{Bemerkung}
 
-Als nächstes leiten wir eine Raum-Zeit-Variationsformulierung für~\eqref{eq:allgemeine_parabolische_pde} her.
+Als nächstes leiten wir eine Raum-Zeit-Variationsformulierung für~\cref{eq:allgemeine_parabolische_pde} her.
 Dazu werden geeignete Ansatz- und Testfunktionenräume benötigt.
-Hier kommen nun die in \autoref{sec:bochner_r_ume} definierten Bochner-Räume zum Einsatz.
+Hier kommen nun die in \cref{sec:bochner_r_ume} definierten Bochner-Räume zum Einsatz.
 
 \begin{Definition}
 \label{definition:gl:ansatz_und_testraum}
-    Als Ansatzfunktionenraum $\mathcal X$ bezeichnen wir den Raum $W(0, T; V, V')$ aus \thref{definition:gl:bochner_raum_W}.
+    Als Ansatzfunktionenraum $\mathcal X$ bezeichnen wir den Raum $W(0, T; V, V')$ aus \cref{definition:gl:bochner_raum_W}.
     Es ist also
     \begin{equation}
         \label{eq:var_all_ansatzraum_x}
@@ -273,15 +273,15 @@ Hier kommen nun die in \autoref{sec:bochner_r_ume} definierten Bochner-Räume zu
     \end{equation}
 \end{Definition}
 
-Beide Räume sind Hilberträume, $\mathcal X$ nach \thref{lemma:gl:w_a_v_v_ist_hilbertraum} und $\mathcal Y$ als direkte Summe zweier Hilberträume.
+Beide Räume sind Hilberträume, $\mathcal X$ nach \cref{lemma:gl:w_a_v_v_ist_hilbertraum} und $\mathcal Y$ als direkte Summe zweier Hilberträume.
 
-Um aus~\eqref{eq:allgemeine_parabolische_pde} eine Variationsformulierung zu erhalten, multiplizieren wir die lineare Evolutionsgleichung mit $v = (v_{1}, v_{2}) \in \mathcal Y$ und integrieren anschließend über das Zeitintervall $[0, T]$.
-Dadurch ergibt sich folgende schwache Formulierung der linearen Evolutionsgleichung aus \thref{definition:lineare_evolutionsgleichung}:
+Um aus~\cref{eq:allgemeine_parabolische_pde} eine Variationsformulierung zu erhalten, multiplizieren wir die lineare Evolutionsgleichung mit $v = (v_{1}, v_{2}) \in \mathcal Y$ und integrieren anschließend über das Zeitintervall $[0, T]$.
+Dadurch ergibt sich folgende schwache Formulierung der linearen Evolutionsgleichung aus \cref{definition:lineare_evolutionsgleichung}:
 
 \begin{Definition}
 \label{definition:variationsformulierung}
-    Seien $\mathcal X$ und $\mathcal Y$ wie in~\eqref{eq:var_all_ansatzraum_x} respektive~\eqref{eq:var_all_testraum_y}.
-    Als \emph{Raum-Zeit-Variations"-for"-mu"-lie"-rung} der linearen Evolutionsgleichung~\eqref{eq:allgemeine_parabolische_pde} bezeichnen wir das folgende Problem:
+    Seien $\mathcal X$ und $\mathcal Y$ wie in~\cref{eq:var_all_ansatzraum_x} respektive~\cref{eq:var_all_testraum_y}.
+    Als \emph{Raum-Zeit-Variations"-for"-mu"-lie"-rung} der linearen Evolutionsgleichung~\cref{eq:allgemeine_parabolische_pde} bezeichnen wir das folgende Problem:
 
     Gegeben ein Quellterm $g \in L_{2}(0, T; V')$ und ein Anfangswert $u_{0} \in H$.
     Finde ein $u \in \mathcal X$ mit
@@ -314,7 +314,7 @@ Dazu definieren wir zunächst, was wir unter dem Begriff \enquote{sachgemäß ge
         a(u, v) = f(v) \quad \fa v \in V
     \end{equation}
     gilt.
-    Wir nennen \eqref{eq:grundlagen:hadamard_varprob} \emph{sachgemäß gestellt}, wenn eine eindeutige Lösung $u \in U$ existiert und diese eine A-priori-Abschätzung der Form
+    Wir nennen \cref{eq:grundlagen:hadamard_varprob} \emph{sachgemäß gestellt}, wenn eine eindeutige Lösung $u \in U$ existiert und diese eine A-priori-Abschätzung der Form
     \begin{equation}
     \label{eq:grundlagen:hadamard_abschaetzung}
         \norm{u}_{U} \leq c \norm{f}_{V'} \quad \fa f \in V'
@@ -322,7 +322,7 @@ Dazu definieren wir zunächst, was wir unter dem Begriff \enquote{sachgemäß ge
     und eine von $f$ unabhängige Konstante $c > 0$ erfüllt.
 \end{Definition}
 
-Um dies für die Raum-Zeit-Variationsformulierung aus \thref{definition:variationsformulierung} nachzuweisen, werden wir den folgenden bekannten und wichtigen Satz, welcher in dieser oder ähnlicher Form bei \textcites[Theorem 2.1]{Babuska:1971fx}[Theorem 5.2.1]{Aziz:2014wf}[Theorem \S{}3.3.6]{Braess:2007wm} zu finden ist, verwenden.
+Um dies für die Raum-Zeit-Variationsformulierung aus \cref{definition:variationsformulierung} nachzuweisen, werden wir den folgenden bekannten und wichtigen Satz, welcher in dieser oder ähnlicher Form bei \textcites[Theorem 2.1]{Babuska:1971fx}[Theorem 5.2.1]{Aziz:2014wf}[Theorem \S{}3.3.6]{Braess:2007wm} zu finden ist, verwenden.
 
 \begin{Satz}[Banach-Ne{\v c}as-Babu{\v s}ka-Theorem]
 \label{satz:gl:bnb_theorem}
@@ -390,34 +390,34 @@ Aus dem Banach-Ne{\v c}as-Babu{\v s}ka-Theorem lässt sich auch das bekannte Lax
         \begin{equation}
             \sup_{v \in V} \frac{a(u, v)}{\norm{v}_{V}} \geq \frac{a(u, u)}{\norm{u}_{V}} \geq \alpha \norm{u}_{V}.
         \end{equation}
-        Damit sind neben der Stetigkeit von $a$ auch die die Bedingungen \ref{satz:gl:bnb_theorem:bedingung:inf_sup} und \ref{satz:gl:bnb_theorem:bedingung:surjektiv} aus \thref{satz:gl:bnb_theorem} erfüllt und die Aussage folgt aus dem Banach-Ne{\v c}as-Babu{\v s}ka-Theorem.
+        Damit sind neben der Stetigkeit von $a$ auch die die Bedingungen \ref{satz:gl:bnb_theorem:bedingung:inf_sup} und \ref{satz:gl:bnb_theorem:bedingung:surjektiv} aus dem Banach-Ne{\v c}as-Babu{\v s}ka-Theorem, \cref{satz:gl:bnb_theorem}, erfüllt und es folgt die Aussage.
     \end{Beweis}
 \end{Lemma}
 
-Für das Raum-Zeit-Variationsproblem aus \thref{definition:variationsformulierung} lässt sich die Tatsache, dass es sachgemäß gestellt ist, zu folgendem Satz zusammenfassen.
+Für das Raum-Zeit-Variationsproblem aus \cref{definition:variationsformulierung} lässt sich die Tatsache, dass es sachgemäß gestellt ist, zu folgendem Satz zusammenfassen.
 
 \begin{Satz}[{{\cite[Theorem 5.1]{Schwab:2009ec}}}]
 \label{thm:schwab09:theorem51}
-    Seien $\mathcal X$ und $\mathcal Y$ wie in~\eqref{eq:var_all_ansatzraum_x} respektive~\eqref{eq:var_all_testraum_y}.
+    Seien $\mathcal X$ und $\mathcal Y$ wie in~\cref{eq:var_all_ansatzraum_x} respektive~\cref{eq:var_all_testraum_y}.
     Sei weiter $B \colon \mathcal X \to \mathcal Y'$ definiert durch
     \begin{equation}
         \label{eq:var_all_gross_b}
         \skprod{B u}{v}_{\mathcal Y' \times \mathcal Y} = b(u, v), \quad u \in \mathcal X,~v \in \mathcal Y,
     \end{equation}
-    wobei $b$ die Bilinearform aus~\eqref{eq:var_all_bf_b} sei.
+    wobei $b$ die Bilinearform aus~\cref{eq:var_all_bf_b} sei.
     Dann ist $B$ stetig invertierbar.
 
     \begin{Beweis}
-        Ein ausführlicher Beweis in dem die Bedingungen des Banach-Ne\v{c}as-Babu\v{s}ka-Theorems nachgewiesen werden, ist bei \textcite[Appendix A]{Schwab:2009ec} zu finden.
+        Ein ausführlicher Beweis, in dem die Bedingungen des Banach-Ne\v{c}as-Babu\v{s}ka-Theorems nachgewiesen werden, ist bei \textcite[Appendix A]{Schwab:2009ec} zu finden.
         % \begin{Beweis}
-        %     Wir weisen die Bedingungen von \thref{satz:babuska-aziz} nach.
+        %     Wir weisen die Bedingungen von \cref{satz:babuska-aziz} nach.
 
-        %     Zunächst sei anzumerken, dass wir in~\eqref{eq:garding-inequality} ohne Einschränkung $\lambda = 0$ wählen können.
+        %     Zunächst sei anzumerken, dass wir in~\cref{eq:garding-inequality} ohne Einschränkung $\lambda = 0$ wählen können.
         %     Wähle
         %     \begin{equation}
         %         u(t) = \hat u(t) e^{\lambda t}, \quad v_{1}(t) = \hat v_{1}(t) e^{- \lambda t}, \quad g(t) = \hat g(t) e^{\lambda t},
         %     \end{equation}
-        %     dann sieht man, dass $u$ die Gleichung~\eqref{eq:bilinearform} genau dann löst, wenn $\hat u$ die Gleichung
+        %     dann sieht man, dass $u$ die Gleichung~\cref{eq:bilinearform} genau dann löst, wenn $\hat u$ die Gleichung
         %     \begin{equation}
         %         \label{eq:bilinearform_tmp}
         %         \begin{gathered}
@@ -456,7 +456,7 @@ Für das Raum-Zeit-Variationsproblem aus \thref{definition:variationsformulierun
         %         &\qquad
         %         = \sqrt{2 \max\{1, M_{a}^{2}\}} \norm{u}_{\mathcal X} \norm{v_{1}}_{L_{2}(I; V)}
         %     \end{align}
-        %     Zusammen mit~\eqref{eq:stetigkeit_zweiter_term} liefert dies nach einer erneuten Anwendung der Cauchy-Schwarz-Ungleichung
+        %     Zusammen mit~\cref{eq:stetigkeit_zweiter_term} liefert dies nach einer erneuten Anwendung der Cauchy-Schwarz-Ungleichung
         %     \begin{align}
         %     \abs{b(u, v)}
         %     &\leq \sqrt{2 \max\{1, M_{a}\}^{2}} \norm{u}_{\mathcal X} \norm{v_{1}}_{L_{2}(I; V)} + M_{e} \norm{u}_{X} \norm{v_{2}}_{H}
@@ -481,7 +481,7 @@ Aus dem Beweis des vorherigen Satzes ergeben sich zugleich auch Abschätzungen f
 \todo[inline]{Nochmal nachrechnen}
 \begin{Korollar}
 \label{thm:schwab09:theorem51:ungleichungen}
-    Unter den Gegebenheiten aus \thref{thm:schwab09:theorem51} gilt ferner
+    Unter den Gegebenheiten aus \cref{thm:schwab09:theorem51} gilt ferner
     \begin{equation}
         \label{eq:var_all_norm_B}
         \norm{B}_{\mathcal L(\mathcal X, \mathcal Y')} \leq \frac{\sqrt{2\max\Set{1, M_{a}^{2}} + M_{e}^{2}}}{\max\Set{\sqrt{1 + 2 \lambda^{2} \rho^{4}}, \sqrt{2}}}
@@ -491,20 +491,20 @@ Aus dem Beweis des vorherigen Satzes ergeben sich zugleich auch Abschätzungen f
         \label{eq:var_all_norm_B_inv}
         \norm{B^{-1}}_{\mathcal L(\mathcal Y', \mathcal X)} \leq \frac{e^{2 \lambda T} \max\Set{\sqrt{1 + 2 \lambda^{2} \rho^{4}}, \sqrt{2}} \sqrt{2 \max\Set{ \alpha^{-2}, 1} + M_{e}^{2}}}{\min\Set{\alpha M_{a}^{-2}, \alpha}}.
     \end{equation}
-    Die Größen $M_{a}$, $\alpha$ und $\lambda$ stammen aus \thref{annahme:eigenschaften_bf_a},
+    Die Größen $M_{a}$, $\alpha$ und $\lambda$ stammen aus \cref{annahme:eigenschaften_bf_a},
     während die Konstanten $M_{e}$ und $\rho$ als die Einbettungskonstanten
     % TODO: genauer?
     \begin{equation}
         \label{eq:var_all_M_e}
         M_{e} = \sup_{0 \neq u \in \mathcal X} \frac{\norm{u(0)}_{H}}{\norm{u}_{\mathcal X}},
     \end{equation}
-    vergleiche \thref{korollar:gl:einbettungskonstante_M_e}, beziehungsweise
+    vergleiche \cref{korollar:gl:einbettungskonstante_M_e}, beziehungsweise
     \begin{equation}
         \label{eq:var_all_rho}
         \rho = \sup_{0 \neq \eta \in V} \frac{\norm{\eta}_{H}}{\norm{\eta}_{V}}
     \end{equation}
     definiert sind.
-    % Nach \thref{korollar:gl:einbettungskonst_M_e} ist $M_{e}$ gleichmäßig beschränkt in der Wahl von $V \hookrightarrow H$ und nur im Fall $T \to 0$ von $T$ abhängig.
+    % Nach \cref{korollar:gl:einbettungskonst_M_e} ist $M_{e}$ gleichmäßig beschränkt in der Wahl von $V \hookrightarrow H$ und nur im Fall $T \to 0$ von $T$ abhängig.
 \end{Korollar}
 
 \todo[inline]{Beweise ausführlich aufschreiben?}
@@ -549,8 +549,8 @@ Aus dem Beweis des vorherigen Satzes ergeben sich zugleich auch Abschätzungen f
 
 % \begin{Definition}
 % \label{definition:variationsformulierung_homogen}
-%     Seien $\hat{\mathcal X}$ und $\hat{\mathcal Y}$ wie in~\eqref{eq:var_all_ansatzraum_x_homogen} respektive~\eqref{eq:var_all_testraum_y_homogen}.
-%     Als \emph{homogenisierte Raum-Zeit-Variations"-for"-mu"-lie"-rung} der linearen Evolutionsgleichung~\eqref{eq:allgemeine_parabolische_pde} bezeichnen wir das folgende Problem:
+%     Seien $\hat{\mathcal X}$ und $\hat{\mathcal Y}$ wie in~\cref{eq:var_all_ansatzraum_x_homogen} respektive~\cref{eq:var_all_testraum_y_homogen}.
+%     Als \emph{homogenisierte Raum-Zeit-Variations"-for"-mu"-lie"-rung} der linearen Evolutionsgleichung~\cref{eq:allgemeine_parabolische_pde} bezeichnen wir das folgende Problem:
 
 %     Gegeben ein Quellterm $g \in L_{2}(0, T; V')$ und ein Anfangswert $u_{0} \in H$, sodass ein $\hat u_{0} \in \mathcal X$ existiert, welches $\hat{u}_{0}(0) = u_{0}$ erfüllt.
 %     Finde ein $u \in \hat{\mathcal X}$ mit
@@ -580,7 +580,7 @@ Aus dem Beweis des vorherigen Satzes ergeben sich zugleich auch Abschätzungen f
 
 % \begin{Satz}
 %     Sei $H = L_{2}(\Omega)$ für ein beschränktes Gebiet $\Omega \in \mathbb{R}^{n}$.
-%     Dann gilt: $\hat u \in \tilde{\mathcal X}$ ist genau dann eine Lösung des homogenisierten RZVP aus \thref{definition:variationsformulierung_homogen}, wenn $u := \hat u + \hat u_{0} \in \mathcal X$ eine Lösung  des RZVP aus \thref{definition:variationsformulierung} ist.
+%     Dann gilt: $\hat u \in \tilde{\mathcal X}$ ist genau dann eine Lösung des homogenisierten RZVP aus \cref{definition:variationsformulierung_homogen}, wenn $u := \hat u + \hat u_{0} \in \mathcal X$ eine Lösung  des RZVP aus \cref{definition:variationsformulierung} ist.
 
 %     \todo[inline]{Beweis}
 %     % \begin{Beweis}
@@ -646,13 +646,13 @@ Finde ein $u \in U$, so dass
 \end{equation}
 gilt.
 
-Unter gewissen Voraussetzungen, zum Beispiel, wenn die Bilinearform $a$ die Bedingungen des Banach-Ne{\v c}as-Babu{\v s}ka-Theorems (\thref{satz:gl:bnb_theorem}) erfüllt, existiert eine eindeutige Lösung $u \in U$ des obigen Variationsproblems.
+Unter gewissen Voraussetzungen, zum Beispiel, wenn die Bilinearform $a$ die Bedingungen des Banach-Ne{\v c}as-Babu{\v s}ka-Theorems (\cref{satz:gl:bnb_theorem}) erfüllt, existiert eine eindeutige Lösung $u \in U$ des obigen Variationsproblems.
 
 Bei den Räumen $U$ und $V$ handelt es sich im Allgemeinen um unendlichdimensionale Hilberträume, wodurch eine numerische Bestimmung der Lösung $u \in U$ nicht ohne Weiteres möglich ist.
-Um eine approximative Lösung von \eqref{eq:gv:variationsproblem} zu bestimmen, muss zunächst eine Diskretisierung durchgeführt werden.
+Um eine approximative Lösung von \cref{eq:gv:variationsproblem} zu bestimmen, muss zunächst eine Diskretisierung durchgeführt werden.
 Diese wird bei Petrov-Galerkin-Verfahren dadurch erreicht, dass für Ansatz- und Testfunktionenraum endlichdimensionale Unterräume $U_{n} \subset U$ mit $\dim U_{n} = n$ respektive $V_{m} \subset V$ mit $\dim V_{m} = m$ konstruiert werden.
 
-Statt dem obigen Variationsproblem \eqref{eq:gv:variationsproblem} betrachtet man dann:
+Statt dem obigen Variationsproblem \cref{eq:gv:variationsproblem} betrachtet man dann:
 Finde ein $u_{n} \in U_{n}$, so dass
 \begin{equation}
     \label{eq:gv:variationsproblem_diskret}
@@ -660,23 +660,23 @@ Finde ein $u_{n} \in U_{n}$, so dass
 \end{equation}
 gilt, wobei $a_{n, m} \colon U_{n} \times V_{m} \to \mathbb{R}$ die Einschränkung $a_{n,m} = \restr{a}{U_{n} \times V_{m}}$ beziehungsweise $f_{m} \colon V_{m} \to \mathbb{R}$ die Einschränkung $f_{m} = \restr{f}{V_{m}}$ bezeichne.
 
-Zu Beachten ist, dass selbst wenn das eigentliche Variationsproblem \eqref{eq:gv:variationsproblem} eindeutig lösbar ist, dies noch nicht für das diskretisierte Variationsproblem \eqref{eq:gv:variationsproblem_diskret} gelten muss.
-Auch muss im Falle einer existierenden Lösung $u_{n} \in U_{n}$ diese im Allgemeinen für $n \to \infty$ nicht gegen die Lösung $u \in U$ von \eqref{eq:gv:variationsproblem} konvergieren.
+Zu Beachten ist, dass selbst wenn das eigentliche Variationsproblem \cref{eq:gv:variationsproblem} eindeutig lösbar ist, dies noch nicht für das diskretisierte Variationsproblem \cref{eq:gv:variationsproblem_diskret} gelten muss.
+Auch muss im Falle einer existierenden Lösung $u_{n} \in U_{n}$ diese im Allgemeinen für $n \to \infty$ nicht gegen die Lösung $u \in U$ von \cref{eq:gv:variationsproblem} konvergieren.
 
 \todo[inline]{Quellen prüfen}
-Der folgende Satz, welcher in verschiedenen Varianten bei \cites[Theorem 6.2.1]{Aziz:2014wf}[Theorem 5.3.1]{Quarteroni:2009hp}[Lemma III.3.7]{Braess:2007wm} zu finden ist, liefert hinreichende Bedingungen für die eindeutige Lösbarkeit von \eqref{eq:gv:variationsproblem_diskret} und zudem eine A priori-Fehlerabschätzung.
+Der folgende Satz, welcher in verschiedenen Varianten bei \cites[Theorem 6.2.1]{Aziz:2014wf}[Theorem 5.3.1]{Quarteroni:2009hp}[Lemma III.3.7]{Braess:2007wm} zu finden ist, liefert hinreichende Bedingungen für die eindeutige Lösbarkeit von \cref{eq:gv:variationsproblem_diskret} und zudem eine A priori-Fehlerabschätzung.
 
 \begin{Satz}
     Seien $U$ und $V$ zwei Hilberträume und $U_{n} \subset U$, respektive $V_{m} \subset V$ Unterräume.
-    Weiter seien $a \colon U \times V \to \mathbb{R}$ eine Bilinearform und $f \colon V \to \mathbb{R}$ ein lineares Funktional, wobei $a$ die Bedingungen aus \thref{satz:gl:bnb_theorem} erfülle.
+    Weiter seien $a \colon U \times V \to \mathbb{R}$ eine Bilinearform und $f \colon V \to \mathbb{R}$ ein lineares Funktional, wobei $a$ die Bedingungen aus \cref{satz:gl:bnb_theorem} erfülle.
     Bezeichne ferner mit $a_{n, m} = \restr{a}{U_{n} \times V_{m}}$ respektive $f_{m} = \restr{f}{V_{m}}$ die Einschränkungen von $a$ beziehungsweise $f$ auf die Unterräume $U_{n}$ und $V_{m}$.
 
-    Erfüllt $a_{n, m}$ die Bedingungen \ref{satz:gl:bnb_theorem:bedingung:inf_sup} und \ref{satz:gl:bnb_theorem:bedingung:surjektiv} aus \thref{satz:gl:bnb_theorem} mit der inf-sup-Konstante $\alpha_{n, m} > 0$ statt $\alpha$, dann existiert eine eindeutige Lösung $u_{n} \in U_{n}$ des Variationsproblems \eqref{eq:gv:variationsproblem_diskret} und diese erfüllt
+    Erfüllt $a_{n, m}$ die Bedingungen \ref{satz:gl:bnb_theorem:bedingung:inf_sup} und \ref{satz:gl:bnb_theorem:bedingung:surjektiv} aus \cref{satz:gl:bnb_theorem} mit der inf-sup-Konstante $\alpha_{n, m} > 0$ statt $\alpha$, dann existiert eine eindeutige Lösung $u_{n} \in U_{n}$ des Variationsproblems \cref{eq:gv:variationsproblem_diskret} und diese erfüllt
     \begin{equation}
         \norm{u_{n}}_{U} \leq \frac{1}{\alpha_{n, m}} \norm{f_{m}}_{V_m'}.
     \end{equation}
 
-    Ist weiter $u \in U$ eine Lösung des Variationsproblems \eqref{eq:gv:variationsproblem}, dann gilt
+    Ist weiter $u \in U$ eine Lösung des Variationsproblems \cref{eq:gv:variationsproblem}, dann gilt
     \begin{equation}
         \norm{u - u_{n}} \leq \left( 1 + \frac{C}{\alpha_{n, m}} \right)  \inf_{w_{n} \in U_{n}} \norm{u - w_{n}}.
     \end{equation}
@@ -693,7 +693,7 @@ Schreibt man nun die Ansatz- beziehungsweise Testfunktionen als Linearkombinatio
 \begin{equation}
     u_{n} = \sum_{i = 1}^{n} \vec{u}_{i} \varphi_{i}, \quad v_{m} = \sum_{j = 1}^{m} \vec{v}_{j} \psi_{j}, \qquad \vec u \in \mathbb{R}^{n},~\vec v \in \mathbb{R}^{m},
 \end{equation}
-dieser Basisfunktionen und setzt diese in das Variationsproblem \eqref{eq:gv:variationsproblem_diskret} ein, dann führt dies unmittelbar zu dem linearen Gleichungssystem $\mat{A} \vec{u} = \vec{f}$, wobei wir
+dieser Basisfunktionen und setzt diese in das Variationsproblem \cref{eq:gv:variationsproblem_diskret} ein, dann führt dies unmittelbar zu dem linearen Gleichungssystem $\mat{A} \vec{u} = \vec{f}$, wobei wir
 \begin{equation}
     \mat A_{ji} = a_{n, m}(\varphi_{j}, \psi_{i}), \quad i = 1 \dots n,~j = 1 \dots m,
 \end{equation}
@@ -702,7 +702,7 @@ als \emph{Steifigkeitsmatrix} $\mat A \in \mathbb{R}^{m \times n}$, und
     \vec f_{j} = f_{m}(\psi_{j}), \quad j = 1 \dots m,
 \end{equation}
 als \emph{Lastvektor} $\vec f \in \mathbb{R}^{m}$ bezeichnen.
-Besitzt das lineare Gleichungssystems eine Lösung $\vec u \in \mathbb{R}^{n}$, dann erhält man die zugehörige Lösung $u_{n} \in U_{n}$ des obigen Variationsproblems \eqref{eq:gv:variationsproblem_diskret} durch die Linearkombination
+Besitzt das lineare Gleichungssystems eine Lösung $\vec u \in \mathbb{R}^{n}$, dann erhält man die zugehörige Lösung $u_{n} \in U_{n}$ des obigen Variationsproblems \cref{eq:gv:variationsproblem_diskret} durch die Linearkombination
 \begin{equation}
     u_{n} = \sum_{i = 1}^{n} \vec{u}_{i} \varphi_{i}.
 \end{equation}
