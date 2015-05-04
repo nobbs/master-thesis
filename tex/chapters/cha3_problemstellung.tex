@@ -1,8 +1,8 @@
 %!TEX root = ../main.tex
 
 \setchapterpreamble[ul][0.6\textwidth]{%
-    \dictum[Andy Weir, \textit{The Martian}]{\enquote{I guess you could call it a "failure", but I prefer the term "learning
-experience".}}
+    \dictum[Andy Weir, \textit{The Martian}]{\enquote{I guess you could call it a \enquote{failure}, but I prefer the term \enquote{learning
+    experience}.}}
     \vspace*{2\baselineskip}
 }
 \chapter{Problemstellung} % (fold)
@@ -10,14 +10,14 @@ experience".}}
 
 In diesem Kapitel greifen wir die in \autoref{cha:einleitung} als Propagatoren bezeichneten parabolischen partiellen Differentialgleichungen \eqref{eq:einleitung:fpropagator} und \eqref{eq:einleitung:bpropagator} auf, konkretisieren die Rahmenbedingungen und reinterpretieren diese Propagatoren anschließend als parametrische Differentialgleichungen.
 
-Zudem leiten wir Variationsformulierungen her und weisen anhand dieser nach, dass die Lösungen der parametrischen partiellen Differentialgleichung eine gewisse Regularität bezüglich der Parameter aufweisen.
+Zudem leiten wir Variationsformulierungen her und weisen anhand dieser nach, dass diese sachgemäß gestellt sind und dass die Lösungen der parametrischen partiellen Differentialgleichung eine gewisse Regularität bezüglich der Parameter aufweisen.
 
 \todo[inline]{Quellen}
 
 \section{Die parabolische partielle Differentialgleichung} % (fold)
 \label{sec:die_parabolische_partielle_differentialgleichung}
 
-Es reicht nur den Vorwärts-Propagator \eqref{eq:einleitung:fpropagator} zu betrachten, da der Rückwärts-Propagator \eqref{eq:einleitung:bpropagator} durch die simple Transformation $s \mapsto 1 - s$ auf die selbe Form, lediglich mit vertauschten Rollen bei den Feldern $\omega_{\mathrm{A}}$ und $\omega_{\mathrm{B}}$, gebracht werden kann.
+Ohne Einschränkung reicht es, nur den Vorwärts-Propagator \eqref{eq:einleitung:fpropagator} zu betrachten, da der Rückwärts-Propagator \eqref{eq:einleitung:bpropagator} durch die simple Transformation $s \mapsto 1 - s$ auf die selbe Form, lediglich mit vertauschten Rollen bei den Feldern $\omega_{\mathrm{A}}$ und $\omega_{\mathrm{B}}$, gebracht werden kann.
 
 Wir wollen nun zunächst das Setting festlegen und dabei die aus der Einleitung bekannte partielle Differentialgleichung etwas allgemeiner auffassen.
 
@@ -82,7 +82,7 @@ Mit diesen Vorbemerkungen können wir unter Hinzunahme eines Quellterms und eine
     \begin{equation}
         \left\{
         \begin{aligned}
-            u_t(t) + A(t)u(t) &= g(t) \quad &&\text{in}~H^{-1}(\Omega),\\
+            u_t(t) + A(t)u(t) &= g(t) \quad &&\text{in}~H^{-1}(\Omega)~\fa t \in I,\\
             u(0) &= u_{0} \quad &&\text{in}~L_{2}(\Omega).
         \end{aligned}
         \right.
@@ -184,6 +184,7 @@ Mit Hilfe dieser Darstellung erhalten wir nun für die Bilinearform $a(\blank, \
 \end{Satz}
 
 \begin{Korollar}
+\label{korollar:cha3:bf_elliptisch}
     Ist $\mu \geq \norm{\omega}_{L_{\infty}(\Omega)}$, dann ist die Bilinearform $a$ aus \thref{satz:pp:a_bf_bounded_garding} elliptisch.
 \end{Korollar}
 
@@ -203,7 +204,7 @@ Das Raum-Zeit-Variationsproblem lautet damit:
     Finde ein $u \in \mathcal X$ mit
     \begin{equation}
         \label{eq:varprob}
-        b(u, v) = f(v) \quad \text{für alle}~v \in \mathcal Y,
+        b(u, v) = f(v) \quad \text{für alle}~v = (v_{1}, v_{2}) \in \mathcal Y,
     \end{equation}
     wobei $b(\blank, \blank) \colon \mathcal X \times \mathcal Y \to \mathbb{R}$ die durch
     \begin{equation}
@@ -218,7 +219,7 @@ Das Raum-Zeit-Variationsproblem lautet damit:
     \end{equation}
 \end{Definition}
 
-Diese Variationsformulierung wird uns in den nachfolgenden Kapiteln als Ausgangspunkt für die von uns angestrebten Verfahren dienen.
+Diese Variationsformulierung wird uns in den nachfolgenden Kapiteln als Ausgangspunkt für die von uns angestrebten numerischen Verfahren dienen.
 
 \subsection{Existenz und Eindeutigkeit von Lösungen} % (fold)
 \label{sub:existenz_und_eindeutigkeit_von_l_sungen}
@@ -259,58 +260,36 @@ Die Hauptarbeit dazu wurde bereits durch das \thref{satz:gl:bnb_theorem} und \th
 \section{Parametrische Formulierung} % (fold)
 \label{sec:parametrische_formulierung}
 
-\todo[inline]{besser platzieren}
-\begin{Satz}
-\label{satz:pp:lax_auf_elliptisch}
-    Seien $\omega \in L_{\infty}(\Omega)$, $\mu \geq \norm{\omega}_{L_{\infty}(\Omega)}$ und weiter $g \in H^{-1}(\Omega)$ und $A(\omega)$ wie in \eqref{eq:pp:op_a}, dann besitzt die Operatorgleichung
-    \begin{equation}
-        A(\omega) u(\omega) = g
-    \end{equation}
-    eine eindeutige Lösung $u(\omega) \in H^{1}_{0}(\Omega)$ und diese erfüllt
-    \begin{equation}
-        \norm{u(\omega)}_{H^{1}(\Omega)} \leq \frac{\norm{g}_{H^{-1}(\Omega)}}{\alpha}
-    \end{equation}
-    mit $\alpha$ aus \thref{satz:pp:a_bf_bounded_garding}.
+Nachdem wir nun die Rahmenbedingungen geklärt haben, fahren wir fort mit der Einführung einer parametrischen Variante der in diesem Kapitel bisher betrachteten parabolischen partiellen Differentialgleichung.
+Diese ermöglicht es uns in den folgenden Kapiteln erst, eine Reduzierte-Basis-Methode zu entwickeln.
 
-    \begin{Beweis}
-        Folgt aus dem Banach-Ne\v{c}as-Babu\v{s}ka-Theorem, \thref{satz:gl:bnb_theorem}.
-    \end{Beweis}
-\end{Satz}
-
-
-
-Dieser Abschnitt dient der Einführung einer parametrischen Variante der zuvor vorgestellten parabolischen partiellen Differentialgleichung.
-
-Für den weiteren Verlauf der Arbeit wählen wir $V = H^{1}_{0}(\Omega)$, $H = L_{2}(\Omega)$ und $V' = H^{-1}(\Omega)$.
-% Diese separablen Hilberträume bilden ein Gelfand-Tripel $V \denseinclusion H \denseinclusion V'$.
-
-Wir betrachten nun zunächst die folgende parametrische Operatorgleichung: Sei ein $g \in V'$ gegeben, finde für alle $\omega$ ein $u(\omega) \in V$, so dass
-\begin{equation}
-    A(\omega) u(\omega) = g \in V'
-\end{equation}
-gilt.
-Durch die Wahl $V = H^{1}_{0}(\Omega)$ sind die Randbedingungen $\restr{u(\omega)}{\partial \Omega} = 0$ bereits implizit gegeben.
-Dabei sei der Operator $A(\omega)$ gegeben durch
+Dazu greifen wir den aus \thref{bemerkung:pp:definition_operator_A} bekannten Operator $A(t)$ auf und betrachten diesen zunächst zwar für einen festen Zeitpunkt $t \in I$, dafür aber in Abhängigkeit von einem $\omega \in L_{\infty}(\Omega)$.
+Sei also $\omega \in L_{\infty}(\Omega)$, dann definieren wir eine Abbildung
 \begin{equation}
     \label{eq:pp:op_a}
-    A(\omega) \colon V \to V', \quad A(\omega) u = - c \Delta u + \omega u + \mu u.
+    A(\omega) \colon H^{1}_{0}(\Omega) \to H^{-1}(\Omega), \quad A(\omega) \eta = - c \Delta \eta + \omega \eta + \mu \eta
 \end{equation}
-Die zugehörige Bilinearform $a(\blank, \blank; \omega)$ ergibt sich damit zu
+und erhalten wie zuvor die zugehörige Bilinearform $a(\blank, \blank; \omega)$ durch
 \begin{equation}
     \label{eq:pp:bf_a}
-    a(\blank, \blank; \omega) \colon V \times V \to \mathbb{R},
-    \quad (u, v) \mapsto c\skp{\grad u}{\grad v}{H} + \skp{\omega u}{v}{H} + \mu \skp{u}{v}{H}.
+    \begin{aligned}
+        &a(\blank, \blank; \omega) \colon H^{1}_{0}(\Omega) \times H^{1}_{0}(\Omega) \to \mathbb{R}, \\
+        &(\eta, \zeta) \mapsto c\skp{\grad \eta}{\grad \zeta}{L_{2}(\Omega)} + \skp{\omega \eta}{\zeta}{L_{2}(\Omega)} + \mu \skp{\eta}{\zeta}{L_{2}(\Omega)}.
+    \end{aligned}
 \end{equation}
 
-Wir wollen nun die Abhängigkeit des Operators $A(\omega)$ von dem Parameter $\omega$ konkretisieren.
+Als nächstes konkretisieren wir die Abhängigkeit des Operators $A(\omega)$ beziehungsweise der Bilinearform $a(\blank, \blank; \omega)$ von $\omega$.
+Dazu stellen wir die folgende Bedingung an den Parameter $\omega$, welche sich später wiederum bei der Reduzierte-Basis-Methode als nützlich erweisen wird.
 
 \begin{Definition}
 \label{definition:pp:omega_affin}
-    Die Funktion $\omega$ ist affin darstellbar.
-    Genauer sei $\mathcal S \subset \mathbb{R}^{\mathbb{N}}$ ein Parameterraum und $\Set{ \varphi_{j} }_{j \in \mathbb{N}} \in L_{\infty}(\Omega)$ eine Folge von Funktion, so dass $\omega$ sich für $\sigma \in \mathcal S$ schreiben lässt als
+    Die Funktionen $\omega \in L_{\infty}(\Omega)$ seien \emph{affin} darstellbar.
+    Genauer sei $\mathcal S \subset \mathbb{R}^{\mathbb{N}}$ ein Parameterraum und $\Set{ \varphi_{j} }_{j \in \mathbb{N}} \in L_{\infty}(\Omega)$ eine Folge von Funktion, so dass $\omega$ sich für $\sigma \in \mathcal S$ als Reihe der Form
     \begin{equation}
-        w(\blank; \sigma) \colon \Omega \to \mathbb{R}, \quad w(x; \sigma) = \sum_{j = 1}^{\infty} \sigma_{j} \varphi_{j}(x).
+    \label{eq:pp:affine_zerlegung_omega}
+        w(\blank; \sigma) \colon \Omega \to \mathbb{R}, \quad w(x; \sigma) = \sum_{j = 1}^{\infty} \sigma_{j} \varphi_{j}(x)
     \end{equation}
+    schreiben lässt.
 \end{Definition}
 
 \begin{Bemerkung}
@@ -320,19 +299,24 @@ Wir wollen nun die Abhängigkeit des Operators $A(\omega)$ von dem Parameter $\o
 
 Setzen wir diese affine Darstellung nun zunächst in den Operator $A(\omega)$ ein, dann erhalten wir die Darstellung
 \begin{equation}
-    A(\omega(\sigma)) \colon V \to V', \quad A(\omega(\sigma)) u = -c \Delta u + \sum_{j = 1}^{\infty} \sigma_{j} \varphi_{j} u + \mu u,
+\label{eq:pp:op_a_sigma}
+    A(\omega(\sigma)) \colon H^{1}_{0}(\Omega) \to H^{-1}(\Omega), \quad A(\omega(\sigma)) u = -c \Delta u + \sum_{j = 1}^{\infty} \sigma_{j} \varphi_{j} u + \mu u,
 \end{equation}
-und als zugehörige Bilinearform $a(\blank, \blank; \omega(\sigma))$ ergibt sich
+und als zugehörige Bilinearform $a(\blank, \blank; \omega(\sigma))$ ergibt sich wie zuvor
 \begin{equation}
 \label{eq:pp:bf_a_sigma}
-    a(\blank, \blank; \omega(\sigma)) \colon V \times V \to \mathbb{R}, \quad a(u, v) \mapsto c\skp{\grad u}{\grad v}{H} + \sum_{j = 1}^{\infty} \sigma_{j} \skp{\varphi_{j} u}{v}{H} + \mu \skp{u}{v}{H}.
+    \begin{aligned}
+    &a(\blank, \blank; \omega(\sigma)) \colon H^{1}_{0}(\Omega) \times H^{1}_{0}(\Omega) \to \mathbb{R}, \\
+    &(u, v) \mapsto c\skp{\grad u}{\grad v}{L_{2}(\Omega)} + \sum_{j = 1}^{\infty} \sigma_{j} \skp{\varphi_{j} u}{v}{L_{2}(\Omega)} + \mu \skp{u}{v}{L_{2}(\Omega)}.
+    \end{aligned}
 \end{equation}
 
 \begin{Bemerkung}
-    Um die Schreibweisen zu verkürzen, verwenden wir meist $\omega(\sigma)$ statt $w(\blank; \sigma)$, sowie $A(\sigma)$ und $a(\blank, \blank; \sigma)$ statt $A(\omega(\sigma))$ respektive $a(\blank, \blank; \omega(\sigma))$.
+    Um die Schreibweisen kurz zu halten, schreiben wir meist $\omega(\sigma)$ statt $\omega(\blank; \sigma)$.
+    Weiter schreiben wir, vor allem um zwischen dem allgemeinen parametrischen und dem affinen Fall zu unterscheiden, kurz $A(\sigma)$ statt $A(\omega(\sigma))$ für \eqref{eq:pp:op_a_sigma} und $a(\blank, \blank; \sigma)$ statt $a(\blank, \blank; \omega(\sigma))$ für \eqref{eq:pp:bf_a_sigma}.
 \end{Bemerkung}
 
-Damit der Operator $A(\sigma)$ sowie die Bilinearform $a(\blank, \blank; \sigma)$ wohldefiniert sind, müssen wir Wohldefiniertheit, dass heißt gleichmäßige Konvergenz, der obigen affinen Zerlegung von $\omega$ aus \thref{definition:pp:omega_affin} fordern.
+Damit der Operator $A(\sigma)$ sowie die Bilinearform $a(\blank, \blank; \sigma)$ für $\sigma \in \mathcal S$ wohldefiniert sind, müssen wir Wohldefiniertheit, dass heißt gleichmäßige Konvergenz, der obigen affinen Zerlegung \eqref{eq:pp:affine_zerlegung_omega} von $\omega$ aus \thref{definition:pp:omega_affin} fordern.
 Dies wird durch folgende Bedingung sichergestellt.
 %%
 \begin{Annahme}
@@ -341,7 +325,7 @@ Dies wird durch folgende Bedingung sichergestellt.
         \Set{ \norm{\varphi_{j}}_{L_{\infty}(\Omega) } }_{j \in \mathbb{N}} \in \ell_{1}(\mathbb{N}).
     \end{equation}
 \end{Annahme}
-%%
+
 Hieraus folgt wegen $\mathcal S = [-1, 1]^{\mathbb{N}}$ insbesondere
 \begin{equation}
     \sup_{\sigma \in \mathcal S} \norm{\omega(\sigma)}_{L_{\infty}(\Omega)} \leq \sum_{j = 1}^{\infty} \norm{\varphi_{j}}_{L_{\infty}(\Omega)} < \infty.
@@ -1639,5 +1623,25 @@ Zu (ii): Folgt aus nachfolgendem \thref{lemma:norm_B_beschraenkt_durch_norm_A}.
 
 % % \section{Periodische Randbedingungen} % (fold)
 % % \label{sec:periodische_randbedingungen}
+
+
+\todo[inline]{besser platzieren}
+\begin{Satz}
+\label{satz:pp:lax_auf_elliptisch}
+    Seien $\omega \in L_{\infty}(\Omega)$, $\mu \geq \norm{\omega}_{L_{\infty}(\Omega)}$ und weiter $g \in H^{-1}(\Omega)$ und $A(\omega)$ wie in \eqref{eq:pp:op_a}, dann besitzt die Operatorgleichung
+    \begin{equation}
+        A(\omega) u(\omega) = g
+    \end{equation}
+    eine eindeutige Lösung $u(\omega) \in H^{1}_{0}(\Omega)$ und diese erfüllt
+    \begin{equation}
+        \norm{u(\omega)}_{H^{1}(\Omega)} \leq \frac{\norm{g}_{H^{-1}(\Omega)}}{\alpha}
+    \end{equation}
+    mit $\alpha$ aus \thref{satz:pp:a_bf_bounded_garding}.
+
+    \begin{Beweis}
+        Folgt aus dem Banach-Ne\v{c}as-Babu\v{s}ka-Theorem, \thref{satz:gl:bnb_theorem}.
+    \end{Beweis}
+\end{Satz}
+
 
 % % section periodische_randbedingungen (end)
