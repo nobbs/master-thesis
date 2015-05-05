@@ -1,4 +1,5 @@
 %!TEX root = main.tex
+
 \documentclass[
   % draft,
   % final,
@@ -23,7 +24,6 @@
     % Deckblack / Titelseite
     \include{misc/deckblatt}
 
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %%% Frontmatter-Teil
     \frontmatter{}
 
@@ -39,32 +39,44 @@
     % TODO-Liste
     \listoftodos
 
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %%% Hauptteil
     \mainmatter{}
 
     % Kapitel
-    % \input{misc/lorem}
+
     \input{chapters/cha1_einleitung}
     \input{chapters/cha2_grundlagen}
     \input{chapters/cha3_problemstellung}
     % \input{chapters/cha4_eindim}
     % \input{chapters/cha5_reduzierte_basis}
+    \input{chapters/cha0_ausblick}
 
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %%% Anhang
     \appendix{}
+
     % \input{temp/onedim}
+
+    % Alles, was noch unbedingt rein muss
     \input{chapters/app1_funktionalanalytische_grundlagen}
 
-    % Abbildungs-, Tabellen- und Symbolverzeichnis
+    % Weitere Anhänge
+    % ...
+
+    %% Los geht's mit den Verzeichnissen
+
+    % Theoremverzeichnis
     \chapter*{Theoremverzeichnis}
     \addcontentsline{toc}{chapter}{Theoremverzeichnis}
     \theoremlisttype{allname}
     \listtheorems{Satz,Lemma,Definition,Annahme,Bemerkung}
-    %
-    \listoffigures
+
+    % Abbildungsverzeichnis
+    % \listoffigures
+
+    % Tabellenverzeichnis
     % \listoftables
+
+    % Symbolverzeichnis
     % \printnomenclature{}
 
     % Akronymverzeichnis
@@ -72,8 +84,6 @@
 
     % Literaturverzeichnis
     \printbibliography
-
-    % Anhänge
 
     % Eidesstattliche Erklärung
     % \include{misc/eidesstattliche_erklaerung}
