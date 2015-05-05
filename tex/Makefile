@@ -5,7 +5,7 @@
 all: main.pdf
 
 view:
-	open main.pdf
+	latexmk	-silent late-pv -pdf main.pdf
 
 main.pdf: main.tex
 	latexmk -silent -pdf main.tex

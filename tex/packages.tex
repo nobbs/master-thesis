@@ -119,8 +119,13 @@
 % todos
 \usepackage[%
     german,
+    colorinlistoftodos,
     % disable
 ]{todonotes}
+
+\newcommand{\mdo}[1]{\todo[inline,color=yellow!50]{#1}}
+\newcommand{\mfix}[1]{\todo[inline,color=red!50]{#1}}
+\newcommand{\mwarn}[1]{\todo[inline,color=blue!50]{#1}}
 
 % Blindtext
 \usepackage{blindtext}

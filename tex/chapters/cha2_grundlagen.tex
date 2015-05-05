@@ -7,14 +7,12 @@
 \chapter{Grundlagen} % (fold)
 \label{cha:grundlagen}
 
-\todo[inline]{Nochmal korrekturlesen!}
-\todo[inline]{Eventuell auf verschiedene Kapitel aufteilen!}
-\todo[inline]{Bei Bedarf erweitern!}
+\mdo{Bei Bedarf erweitern!}
 
 In diesem ersten Kapitel werden die für diese Arbeit benötigten Grundlagen aus der Funktionalanalysis und der Numerik zusammengefasst und wiederholt.
 Wir orientieren uns in den ersten beiden, funktionalanalytischen Abschnitten maßgeblich an \textcite{Dautray:1992by,Lions:1972tg}, während für die nachfolgenden Abschnitte [Quelle].
 
-\todo[inline]{Quellen checken!}
+\mdo{Quellen ergänzen!}
 
 \section{Bochner-Räume} % (fold)
 \label{sec:bochner_r_ume}
@@ -102,7 +100,7 @@ Dabei werden wir oft auf folgendes Konstrukt zurückgreifen.
     \end{equation}
 \end{Bemerkung}
 
-\todo[inline]{Nochmal nachschauen!}
+\mfix{Nochmal nachschauen!}
 Bochner-Räume lassen sich auch durch folgende Charakterisierung als Tensor-Produkte schreiben, vergleiche \cite[Theorem 12.7.1]{Aubin:2000un}
 \begin{Satz}
     Der Bochner-Sobolev-Raum $H^{m}(\Omega; F)$ ist isomorph zum Hilbert-Tensor-Produkt $H^{m}(\Omega) \otimes F$.
@@ -146,8 +144,7 @@ Bochner-Räume lassen sich auch durch folgende Charakterisierung als Tensor-Prod
     Dann sind $u(a), u(b) \in H$ wohldefiniert.
 \end{Korollar}
 
-% TODO: überprüfen, ob's so stimmt!
-% TODO: Die Norm sieht grauenhaft aus...
+\mfix{Prüfen, ob das so auch stimmt.}
 \begin{Korollar}
 \label{korollar:gl:einbettungskonstante_M_e}
     Seien $a, b \in \mathbb{R}$.
@@ -218,7 +215,7 @@ eine Familie stetiger linearer Operatoren $A(t) \in \mathcal L(V, V')$ induziert
 
 Mit dieser Vorarbeit können wir nun definieren, was wir unter einer linearen Evolutionsgleichung verstehen wollen.
 
-% TODO: Quelle?
+\mfix{Quelle angeben!}
 \begin{Definition}
 \label{definition:lineare_evolutionsgleichung}
     Seien $a(\blank, \blank; t)$ und $A(t)$ wie oben gegeben.
@@ -475,13 +472,22 @@ Für das Raum-Zeit-Variationsproblem aus \cref{definition:variationsformulierung
     \end{Beweis}
 \end{Satz}
 
-Aus dem Beweis des vorherigen Satzes ergeben sich zugleich auch Abschätzungen für die Operatornormen von $B$ und $B^{-1}$.
+Aus dem Beweis des vorherigen Satzes bei \textcite{Schwab:2009ec} ergeben sich zugleich auch Abschätzungen für die Operatornormen von $B$ und $B^{-1}$.
 
-\todo[inline]{Ungleichung der stetigen Abhängigkeit einbauen}
-\todo[inline]{Nochmal nachrechnen}
+\mdo{Ungleichung der stetigen Abhängigkeit einbauen. Wat? Was wollte ich mir damit sagen? ...}
+
 \begin{Korollar}
 \label{thm:schwab09:theorem51:ungleichungen}
-    Unter den Gegebenheiten aus \cref{thm:schwab09:theorem51} gilt ferner
+    Unter der Gegebenheiten aus \cref{thm:schwab09:theorem51} und der Bedingung, dass die Bilinearform $a$ die G\aa{}rding-Ungleichung mit $\lambda = 0$ erfüllt, gilt
+    \begin{equation}
+        \norm{B}_{\mathcal L(\mathcal X, \mathcal Y')} \leq \sqrt{2 \max\Set{1, M_{a}^{2}} + M_{e}^{2}}
+    \end{equation}
+    und
+    \begin{equation}
+        \norm{B^{-1}}_{\mathcal L(\mathcal Y', \mathcal X)} \leq \frac{\sqrt{2 \max \Set{\alpha^{-2}, 1} + M_{e}^{2}}}{\min\Set{\alpha M_{a}^{-2}, \alpha}}.
+    \end{equation}
+
+    Ist $\lambda \neq 0$, dann gilt ferner
     \begin{equation}
         \label{eq:var_all_norm_B}
         \norm{B}_{\mathcal L(\mathcal X, \mathcal Y')} \leq \frac{\sqrt{2\max\Set{1, M_{a}^{2}} + M_{e}^{2}}}{\max\Set{\sqrt{1 + 2 \lambda^{2} \rho^{4}}, \sqrt{2}}}
@@ -489,11 +495,12 @@ Aus dem Beweis des vorherigen Satzes ergeben sich zugleich auch Abschätzungen f
     und
     \begin{equation}
         \label{eq:var_all_norm_B_inv}
-        \norm{B^{-1}}_{\mathcal L(\mathcal Y', \mathcal X)} \leq \frac{e^{2 \lambda T} \max\Set{\sqrt{1 + 2 \lambda^{2} \rho^{4}}, \sqrt{2}} \sqrt{2 \max\Set{ \alpha^{-2}, 1} + M_{e}^{2}}}{\min\Set{\alpha M_{a}^{-2}, \alpha}}.
+        \norm{B^{-1}}_{\mathcal L(\mathcal Y', \mathcal X)} \leq e^{2 \lambda T} \max\Set{\sqrt{1 + 2 \lambda^{2} \rho^{4}}, \sqrt{2}}  \frac{\sqrt{2 \max\Set{ \alpha^{-2}, 1} + M_{e}^{2}}}{\min\Set{\alpha M_{a}^{-2}, \alpha}}.
     \end{equation}
+
     Die Größen $M_{a}$, $\alpha$ und $\lambda$ stammen aus \cref{annahme:eigenschaften_bf_a},
     während die Konstanten $M_{e}$ und $\rho$ als die Einbettungskonstanten
-    % TODO: genauer?
+
     \begin{equation}
         \label{eq:var_all_M_e}
         M_{e} = \sup_{0 \neq u \in \mathcal X} \frac{\norm{u(0)}_{H}}{\norm{u}_{\mathcal X}},
@@ -503,11 +510,12 @@ Aus dem Beweis des vorherigen Satzes ergeben sich zugleich auch Abschätzungen f
         \label{eq:var_all_rho}
         \rho = \sup_{0 \neq \eta \in V} \frac{\norm{\eta}_{H}}{\norm{\eta}_{V}}
     \end{equation}
-    definiert sind.
-    % Nach \cref{korollar:gl:einbettungskonst_M_e} ist $M_{e}$ gleichmäßig beschränkt in der Wahl von $V \hookrightarrow H$ und nur im Fall $T \to 0$ von $T$ abhängig.
-\end{Korollar}
 
-\todo[inline]{Beweise ausführlich aufschreiben?}
+    \begin{Beweis}
+        $\,$\newline
+        \mwarn{Will ich das beweisen?}
+    \end{Beweis}
+\end{Korollar}
 
 % section lineare_evolutionsgleichungen (end)
 
@@ -633,7 +641,7 @@ Aus dem Beweis des vorherigen Satzes ergeben sich zugleich auch Abschätzungen f
 \section{Galerkin-Verfahren} % (fold)
 \label{sec:galerkin_verfahren}
 
-\todo[inline]{Abschnitt sauber aufziehen, d.h. Formulierungen verbessern, eventuell ausführlicher.}
+\mdo{Abschnitt sauber aufziehen, d.h. Formulierungen verbessern, eventuell ausführlicher.}
 
 Wir wiederholen nun in Grundzügen das bekannte Galerkin-Verfahren, konzentrieren uns dabei aber auf das sogenannte \emph{Petrov-Galerkin-Verfahren}, welches eine Verallgemeinerung auf nicht-symmetrische Bilinearformen innerhalb der Variationsformulierung darstellt.
 
@@ -663,7 +671,7 @@ gilt, wobei $a_{n, m} \colon U_{n} \times V_{m} \to \mathbb{R}$ die Einschränku
 Zu Beachten ist, dass selbst wenn das eigentliche Variationsproblem \cref{eq:gv:variationsproblem} eindeutig lösbar ist, dies noch nicht für das diskretisierte Variationsproblem \cref{eq:gv:variationsproblem_diskret} gelten muss.
 Auch muss im Falle einer existierenden Lösung $u_{n} \in U_{n}$ diese im Allgemeinen für $n \to \infty$ nicht gegen die Lösung $u \in U$ von \cref{eq:gv:variationsproblem} konvergieren.
 
-\todo[inline]{Quellen prüfen}
+\mdo{Quellen prüfen}
 Der folgende Satz, welcher in verschiedenen Varianten bei \cites[Theorem 6.2.1]{Aziz:2014wf}[Theorem 5.3.1]{Quarteroni:2009hp}[Lemma III.3.7]{Braess:2007wm} zu finden ist, liefert hinreichende Bedingungen für die eindeutige Lösbarkeit von \cref{eq:gv:variationsproblem_diskret} und zudem eine A priori-Fehlerabschätzung.
 
 \begin{Satz}
@@ -682,7 +690,7 @@ Der folgende Satz, welcher in verschiedenen Varianten bei \cites[Theorem 6.2.1]{
     \end{equation}
 
     \begin{Beweis}$\;$
-        \todo[inline]{Nötig?}
+        \mfix{Nötig?}
     \end{Beweis}
 \end{Satz}
 
