@@ -1,46 +1,93 @@
 %!TEX root = main.tex
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% Allgemeines
+%%% Grundlegendes
 
-% Mehr Speicher für latex
+% Verwende etex als zugrundeliegende Implementierung (-> mehr Speicher für Tex!)
 \usepackage{etex}
-
-% Encoding und Schriftsystem
+% Encoding
 \usepackage[utf8]{inputenc}
+
+
+%%% Schriften, Lokalisierung und Typographie
+
+% T1 Schriftsystem verwenden
 \usepackage[T1]{fontenc}
-
-% Deutsche Silbentrennung
-\usepackage[english,ngerman]{babel}
-
-% Deutsche Anführungszeichen
-\usepackage[babel,german=quotes]{csquotes}
-
-% Bessere Standard-Schriftart
+% LModern als Standard-Schrift
 \usepackage{lmodern}
-
+% Typographische Kleinigkeiten
+\usepackage{microtype}
 % Fraktur-Schriftsatz
 \usepackage{eufrak}
 
-% Typographische Kleinigkeiten
-\usepackage{microtype}
+%% Lokalisierung
+
+% Deutsche Silbentrennung
+\usepackage[english,ngerman]{babel}
+% Deutsche Anführungszeichen
+\usepackage[babel,german=quotes]{csquotes}
+
+%% Weitere Schriften vordefinieren
+
+\newcommand{\altfont}{\fontfamily{qpl}}
+% \newcommand{\altsffont}{\fontfamily{phv}}
+\newcommand{\altsffont}{\fontfamily{pfr}\fontseries{l}}
+
+% Zeilenabstand anpassen
+% \usepackage{setspace}
+% \setstretch{1.1}
+
+
+%%% Graphiken und Farben
 
 % Graphiken und Farben
-\usepackage{graphicx, xcolor}
+\usepackage{xcolor}
+\usepackage{graphicx}
+
+% Vordefinierte Farben laden
 \input{misc/colors}
 
+% Caption anpassen und Subfigures erlauben
+\usepackage[style=base,font+=small,labelfont+=bf,margin=1em]{caption}
+\usepackage{subcaption}
+
+% Tikz ist kein Zeichenprogramm!
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.12}
+\usetikzlibrary{patterns}
+
+% Standalone-Paket, damit die Tikz Bilder extern auch funktionieren
+\usepackage{standalone}
+
+
+%%% Bibliographie
+
+\usepackage[%
+    backend=biber,
+    style=alphabetic,
+    backref=true,
+    firstinits=true
+]{biblatex}
+
+
+%%% Grundlegende Mathematik-Pakete
+
 % Standardpackages
-\usepackage{amsmath, amssymb, stmaryrd, mathtools}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{stmaryrd}
+\usepackage{mathtools}
 
 % "Bessere" Theorem-Umgebungen
 \usepackage[
     amsmath,
     thmmarks,
     hyperref,
-    % thref
 ]{ntheorem}
 
-% PDF-Verlinkungen und Metadaten
+
+%%% Hyperref
+
 \usepackage[
 	colorlinks=true,
 	linkcolor=jgu_rot,          % color of internal links (change box color with linkbordercolor)
@@ -50,21 +97,17 @@
     hypertexnames=false
 ]{hyperref}
 
-\newcommand{\changefont}[3]{
-\fontfamily{#1} \fontseries{#2} \fontshape{#3} \selectfont}
 
-% Andere Titles
-% \usepackage{titlesec}
+%%% Clevere Referenzen
 
-% \usepackage{nameref}
+\usepackage[german,noabbrev,nameinlink,capitalise]{cleveref}
+\crefname{equation}{}{}
 
-% Bibliographie-Stil
-\usepackage[%
-    backend=biber,
-    style=alphabetic,
-    backref=true,
-    firstinits=true
-]{biblatex}
+% Nummern nur für referenzierte Gleichungen
+\usepackage{autonum}
+
+
+%%% Layout und Stil
 
 % Fancyhdr-Ersatz für scrbook
 \usepackage[
@@ -73,45 +116,96 @@
     draft=false
 ]{scrlayer-scrpage}
 
-% enums
-\usepackage{enumitem}
-\newlist{thmenumerate}{enumerate}{1}
-\setlist[thmenumerate]{label={\upshape(\roman*)}, align=left, widest=iii, leftmargin=*}
+% Inhaltsverzeichnis anpassen (Schriften angleichen!)
+\usepackage{tocstyle}
+\usetocstyle{KOMAlike}
 
-% Dashed Linien...
-\usepackage{dashrule}
+%% Chapter-Style und mehr
+
+% Alle Überschriften in TeX Gyre Pagella
+\addtokomafont{disposition}{\normalfont\altfont\selectfont}
+% Alle Überschriften in Dunkelgrau
+% \addtokomafont{disposition}{\color{jgu_dunkelgrau}}
+
+% Einzelne Optionen bei Bedarf
+% \addtokomafont{chapter}{\normalfont\altfont\selectfont}
+% \addtokomafont{chapter}{\color{black}}
+% \addtokomafont{section}{\normalfont\altfont\selectfont}
+% \addtokomafont{subsection}{\normalfont\altfont\selectfont}
+% \addtokomafont{subsubsection}{\normalfont\altfont\selectfont}
+% \addtokomafont{minisec}{\normalfont\altfont\selectfont}
+% \addtokomafont{paragraph}{\normalfont\altfont\selectfont}
+\addtokomafont{paragraph}{\bfseries}
+
+% Kopfzeile anpassen
+\addtokomafont{pageheadfoot}{\color{jgu_dunkelgrau}\normalfont\altfont\selectfont}
+% Seitenzahl anpassen
+\addtokomafont{pagenumber}{\color{jgu_dunkelgrau}\normalfont\altfont\selectfont}
+
+% Zitatblock für Kapitelanfang
+\renewcommand*\dictumwidth{.95\linewidth}
+\renewcommand*\dictumrule{}
+\renewcommand*\dictumauthorformat[1]{--- #1}
+\addtokomafont{dictumtext}{\color{jgu_dunkelgrau}\normalfont\altsffont\fontsize{9}{12}\selectfont\itshape}
+\addtokomafont{dictumauthor}{\color{jgu_dunkelgrau}\normalfont\altsffont\fontsize{8}{12}\selectfont}
+
+% Kapitel-Stil
+\renewcommand*{\chapterheadstartvskip}{\vspace*{5\baselineskip}}
+\renewcommand*{\chapterheadendvskip}{\vspace*{2\baselineskip}}
+\renewcommand*{\chapterformat}{%
+				\raggedright
+				\color{jgu_rot}
+                \altfont\fontsize{60}{30}\selectfont\thechapter
+                \fontsize{20}{30}\scshape\selectfont\enskip\chapappifchapterprefix
+                }
+\renewcommand*{\raggedchapter}{\raggedleft}
+
+% Inhaltsverzeichnis
+% \addtokomafont{sectionentrypagenumber}{\color{black}}
+\addtokomafont{chapterentrypagenumber}{\color{black}\rmfamily}
+\addtokomafont{chapterentry}{\rmfamily\bfseries}
+
+
+%%% Verzeichnisse
+
+% Akronymverzeichnis
+\usepackage{acro}
+\acsetup{
+    page-ref=paren,
+    pages=first,
+    page-name={siehe S.\@\,},
+}
 
 % Symbolverzeichnis
 \usepackage[german,intoc]{nomencl}
 \setlength{\nomitemsep}{-\parsep}
 \makenomenclature
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% Mathematik
+
+% ntheorem-Umgebungen laden
+\input{misc/ntheorem}
 
 
-% Setze Label-Nummern nur, wenn diese auch referenziert werden
-% \mathtoolsset{showonlyrefs, showmanualtags}
-
-\usepackage[german,noabbrev,nameinlink,capitalise]{cleveref}
-\usepackage{autonum}
-
-\crefname{equation}{}{}
-
-\providecommand\given{} % so it exists
-\newcommand\SetSymbol[1][]{
-   \nonscript\,#1\vert\nonscript\,\mathopen{}\allowbreak}
-\DeclarePairedDelimiterX\Set[1]{\lbrace}{\rbrace}{ \renewcommand\given{\SetSymbol[\delimsize]} #1 }
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% Nebensächliches
-
-\newcommand{\altfont}{\fontfamily{qpl}}
-% \newcommand{\altsffont}{\fontfamily{phv}}
-\newcommand{\altsffont}{\fontfamily{pfr}\fontseries{l}}
+%%% Alles andere
 
 % Querformatseiten
 \usepackage{pdflscape}
+
+% Enumerates anpassen
+\usepackage{enumitem}
+% Numerierte Umgebung für Theoreme definieren
+\newlist{thmenumerate}{enumerate}{1}
+\setlist[thmenumerate]{label={\upshape(\roman*)}, align=left, widest=iii, leftmargin=*}
+
+% Konturen um Text zeichnen
+\usepackage[outline]{contour}
+\contourlength{0.09em}
+
+% Gepunktete Linien
+\usepackage{dashrule}
+
+
+%%% "Debugging"
 
 % Labels am Seitenrand anzeigen
 % \usepackage{showlabels}
@@ -123,123 +217,13 @@
     % disable
 ]{todonotes}
 
+% Todos vordefinieren
 \newcommand{\mdo}[1]{\todo[inline,color=yellow!50]{#1}}
 \newcommand{\mfix}[1]{\todo[inline,color=red!50]{#1}}
 \newcommand{\mwarn}[1]{\todo[inline,color=blue!50]{#1}}
 
 % Blindtext
 \usepackage{blindtext}
-% \blindmathtrue{}
+\blindmathtrue{}
 
-
-\usepackage{tocstyle}
-\usetocstyle{KOMAlike}
-
-%%% Chapter-Style und mehr
-% Überschriften in Dunkelgrau
-% \addtokomafont{disposition}{\color{jgu_dunkelgrau}}
-% Überschriften in TeX Gyre Pagella
-\addtokomafont{disposition}{\normalfont\altfont\selectfont}
-
-% Chapterstyle
-\renewcommand*{\chapterheadstartvskip}{\vspace*{5\baselineskip}}
-\renewcommand*{\chapterheadendvskip}{\vspace*{2\baselineskip}}
-\renewcommand*{\chapterformat}{%
-				\raggedright
-				\color{jgu_rot}
-                \altfont\fontsize{60}{30}\selectfont\thechapter
-                \fontsize{20}{30}\scshape\selectfont\enskip\chapappifchapterprefix
-                }
-\renewcommand*{\raggedchapter}{\raggedleft}
-
-% Schriften für Überschriften (einzeln)
-% \addtokomafont{chapter}{\normalfont\altfont\selectfont}
-% \addtokomafont{chapter}{\color{black}}
-% \addtokomafont{section}{\normalfont\altfont\selectfont}
-% \addtokomafont{subsection}{\normalfont\altfont\selectfont}
-% \addtokomafont{subsubsection}{\normalfont\altfont\selectfont}
-% \addtokomafont{minisec}{\normalfont\altfont\selectfont}
-% \addtokomafont{paragraph}{\normalfont\altfont\selectfont}
-\addtokomafont{paragraph}{\bfseries}
-
-\addtokomafont{pageheadfoot}{\color{jgu_dunkelgrau}\normalfont\altfont\selectfont}% Fußzeile normale Schrift
-
-\renewcommand*\dictumwidth{.95\linewidth}
-\renewcommand*\dictumrule{}
-\renewcommand*\dictumauthorformat[1]{--- #1}
-\addtokomafont{dictumtext}{\color{jgu_dunkelgrau}\normalfont\altsffont\fontsize{9}{12}\selectfont\itshape}
-\addtokomafont{dictumauthor}{\color{jgu_dunkelgrau}\normalfont\altsffont\fontsize{8}{12}\selectfont}
-
-\addtokomafont{pagenumber}{\color{jgu_dunkelgrau}\normalfont\altfont\selectfont}
-
-% \addtokomafont{sectionentrypagenumber}{\color{black}}
-\addtokomafont{chapterentrypagenumber}{\color{black}\rmfamily}
-\addtokomafont{chapterentry}{\rmfamily\bfseries}
-
-\usepackage[style=base,font+=small,labelfont+=bf,margin=1em]{caption}
-\usepackage{subcaption}
-
-\usepackage{tikz}
-\usepackage{pgfplots}
-\pgfplotsset{compat=1.12}
-\usetikzlibrary{patterns}
-\usepackage[outline]{contour}
-\contourlength{0.09em}
-\usepackage{standalone}
-
-% Akronymverzeichnis
-\usepackage{acro}
-\acsetup{
-    page-ref=paren,
-    pages=first,
-    page-name={siehe S.\@\,},
-}
-
-% \usepackage{setspace}
-% \setstretch{1.1}
-
-% ntheorem stuff
-\theoremnumbering{arabic}
-\theoremstyle{plain}
-\RequirePackage{latexsym}
-% \theoremsymbol{\ensuremath{_\Box}}
-\theorembodyfont{\itshape}
-\theoremheaderfont{\normalfont\bfseries}
-\theoremseparator{}
-\newtheorem{Theorem}{Theorem}[chapter]
-\newtheorem{Satz}[Theorem]{Satz}
-\newtheorem{Proposition}[Theorem]{Proposition}
-\newtheorem{Lemma}[Theorem]{Lemma}
-\newtheorem{Korollar}[Theorem]{Korollar}
-
-\theorembodyfont{\upshape}
-\newtheorem{Beispiel}[Theorem]{Beispiel}
-\newtheorem{Bemerkung}[Theorem]{Bemerkung}
-\newtheorem{Anmerkung}[Theorem]{Anmerkung}
-\newtheorem{Remark}[Theorem]{Remark}
-\newtheorem{Definition}[Theorem]{Definition}
-\newtheorem{Annahme}[Theorem]{Annahme}
-
-\theoremstyle{nonumberplain}
-\theoremheaderfont{\scshape}
-\theorembodyfont{\normalfont}
-\theoremseparator{.}
-\theoremsymbol{\ensuremath{\square}}
-% \theoremsymbol{\ensuremath{_\square}}
-\RequirePackage{amssymb}
-\newtheorem{Proof}{Proof}
-\newtheorem{proof}{Proof}
-\newtheorem{Beweis}{Beweis}
-\newtheorem{beweis}{Beweis}
-\qedsymbol{\ensuremath{_\square}}
-
-\theoremstyle{nonumberplain}
-\theoremheaderfont{\normalfont\bfseries}
-\theoremseparator{}
-\theorembodyfont{\normalfont}
-\theoremsymbol{}
-\RequirePackage{amssymb}
-\newtheorem{Problem}{Problem}
-\newtheorem{problem}{Problem}
-\qedsymbol{}
 

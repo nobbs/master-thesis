@@ -54,3 +54,11 @@
 \newcommand\mathplus{+}
 
 \newcommand\foreign[2]{#1 \textit{#2}}
+
+\newcommand{\changefont}[3]{
+\fontfamily{#1} \fontseries{#2} \fontshape{#3} \selectfont}
+
+\providecommand\given{} % so it exists
+\newcommand\SetSymbol[1][]{
+   \nonscript\,#1\vert\nonscript\,\mathopen{}\allowbreak}
+\DeclarePairedDelimiterX\Set[1]{\lbrace}{\rbrace}{ \renewcommand\given{\SetSymbol[\delimsize]} #1 }
