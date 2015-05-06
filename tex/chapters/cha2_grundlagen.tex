@@ -100,10 +100,11 @@ Dabei werden wir oft auf folgendes Konstrukt zurückgreifen.
     \end{equation}
 \end{Bemerkung}
 
-\mfix{Nochmal nachschauen!}
-Bochner-Räume lassen sich auch durch folgende Charakterisierung als Tensor-Produkte schreiben, vergleiche \cite[Theorem 12.7.1]{Aubin:2000un}
-\begin{Satz}
-    Der Bochner-Sobolev-Raum $H^{m}(\Omega; F)$ ist isomorph zum Hilbert-Tensor-Produkt $H^{m}(\Omega) \otimes F$.
+Bochner-Räume lassen sich anhand folgender Charakterisierung auch als Tensor-Produkte auffassen.
+\begin{Satz}[{{\cite[Theorem 12.6.1, Theorem 12.7.1]{Aubin:2000un}}}]
+\label{satz:gl:bochner_als_tensorprodukt}
+    Seien $H$ ein Hilbertraum und $I \subset \mathbb{R}$ eine offene Menge.
+    Dann ist der Bochner-Sobolev-Raum $H^{m}(I; H)$, $m \geq 0$, isometrisch zum Hilbert-Tensor-Produkt $H^{m}(I) \otimes H$.
 \end{Satz}
 
 \begin{Lemma}[{{{\cite[Proposition XVIII.2.6]{Dautray:1992by}}}}]
@@ -164,8 +165,6 @@ Bochner-Räume lassen sich auch durch folgende Charakterisierung als Tensor-Prod
 
 \section{Lineare Evolutionsgleichungen} % (fold)
 \label{sec:lineare_evolutionsgleichungen}
-\label{sec:allgemeine_problemstellung}
-\label{sec:raum_zeit_variationsformulierung}
 
 In diesem Abschnitt werden lineare Evolutionsgleichungen, eine bestimmte Unterart parabolischer partieller Differentialgleichungen, eingeführt.
 Diese Einführung orientiert sich an \textcite{Lions:1971wp,Schwab:2009ec,Urban:2014kg}.

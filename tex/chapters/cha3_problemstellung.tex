@@ -8,7 +8,7 @@
 \chapter{Problemstellung} % (fold)
 \label{cha:parametrische_problem_neuer_versuch}
 
-In diesem Kapitel greifen wir die in \cref{cha:einleitung} als Propagatoren bezeichneten parabolischen partiellen Differentialgleichungen \cref{eq:einleitung:fpropagator,eq:einleitung:bpropagator} auf, konkretisieren die Rahmenbedingungen und reinterpretieren diese Propagatoren anschließend als parametrische Differentialgleichungen.
+In diesem Kapitel greifen wir die in \cref{cha:einleitung} als Propagatoren bezeichneten parabolischen partiellen Differentialgleichungen \cref{eq:einleitung:forward_propagator,eq:einleitung:backward_propagator} auf, konkretisieren die Rahmenbedingungen und reinterpretieren diese Propagatoren anschließend als parametrische Differentialgleichungen.
 
 Zudem leiten wir Variationsformulierungen her und weisen anhand dieser nach, dass diese sachgemäß gestellt sind und dass die Lösungen der parametrischen partiellen Differentialgleichung eine gewisse Regularität bezüglich der Parameter aufweisen.
 
@@ -17,7 +17,7 @@ Zudem leiten wir Variationsformulierungen her und weisen anhand dieser nach, das
 \section{Die parabolische partielle Differentialgleichung} % (fold)
 \label{sec:die_parabolische_partielle_differentialgleichung}
 
-Ohne Einschränkung reicht es, nur den Vorwärts-Propagator \cref{eq:einleitung:fpropagator} zu betrachten, da der Rückwärts-Propagator \cref{eq:einleitung:bpropagator} durch die simple Transformation $s \mapsto 1 - s$ auf die selbe Form, lediglich mit vertauschten Rollen bei den Feldern $\omega_{\mathrm{A}}$ und $\omega_{\mathrm{B}}$, gebracht werden kann.
+Ohne Einschränkung reicht es, nur den Vorwärts-Propagator \cref{eq:einleitung:forward_propagator} zu betrachten, da der Rückwärts-Propagator \cref{eq:einleitung:backward_propagator} durch die simple Transformation $s \mapsto 1 - s$ auf die selbe Form, lediglich mit vertauschten Rollen bei den Feldern $\omega_{\mathrm{A}}$ und $\omega_{\mathrm{B}}$, gebracht werden kann.
 
 Wir wollen nun zunächst das Setting festlegen und dabei die aus der Einleitung bekannte partielle Differentialgleichung etwas allgemeiner auffassen.
 
@@ -625,7 +625,7 @@ Seien $b := (b_{j})_{j} \in \mathbb{R}$ und $b_{j} := \frac{\norm{\varphi_{j}}_{
             \left( \sum_{\Set{j \given \nu_{j} \neq 0}} \nu_{j} \right)  \frac{\norm{\varphi_{j}}_{L_{\infty}(\Omega)}}{\alpha} B (\abs{\nu} - 1)! b^{\nu}
             \\&\leq
             \frac{\norm{\varphi_{j}}_{L_{\infty}(\Omega)}}{\alpha} B \abs{\nu}! b^{\nu}
-        \end{align}
+         \end{align}
     \end{Beweis}
 \end{Satz}
 
