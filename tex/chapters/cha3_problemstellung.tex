@@ -6,18 +6,18 @@
     \vspace*{2\baselineskip}
 }
 \chapter{Problemstellung} % (fold)
-\label{cha:parametrische_problem_neuer_versuch}
+\label{cha:ps:problemstellung}
 
-In diesem Kapitel greifen wir die in \cref{cha:einleitung} als Propagatoren bezeichneten parabolischen partiellen Differentialgleichungen \cref{eq:einleitung:forward_propagator,eq:einleitung:backward_propagator} auf, konkretisieren die Rahmenbedingungen und reinterpretieren diese Propagatoren anschließend als parametrische Differentialgleichungen.
+In diesem Kapitel greifen wir die in \cref{cha:el:einleitung} als Propagatoren bezeichneten parabolischen partiellen Differentialgleichungen \cref{eq:el:forward_propagator,eq:el:backward_propagator} auf, konkretisieren die Rahmenbedingungen und reinterpretieren diese Propagatoren anschließend als parametrische Differentialgleichungen.
 
 Zudem leiten wir Variationsformulierungen her und weisen anhand dieser nach, dass diese sachgemäß gestellt sind und dass die Lösungen der parametrischen partiellen Differentialgleichung eine gewisse Regularität bezüglich der Parameter aufweisen.
 
 \mdo{Quellen}
 
 \section{Die parabolische partielle Differentialgleichung} % (fold)
-\label{sec:die_parabolische_partielle_differentialgleichung}
+\label{sec:ps:pde:die_parabolische_partielle_differentialgleichung}
 
-Ohne Einschränkung reicht es, nur den Vorwärts-Propagator \cref{eq:einleitung:forward_propagator} zu betrachten, da der Rückwärts-Propagator \cref{eq:einleitung:backward_propagator} durch die simple Transformation $s \mapsto 1 - s$ auf die selbe Form, lediglich mit vertauschten Rollen bei den Feldern $\omega_{\mathrm{A}}$ und $\omega_{\mathrm{B}}$, gebracht werden kann.
+Ohne Einschränkung reicht es, nur den Vorwärts-Propagator \cref{eq:el:forward_propagator} zu betrachten, da der Rückwärts-Propagator \cref{eq:el:backward_propagator} durch die simple Transformation $s \mapsto 1 - s$ auf die selbe Form, lediglich mit vertauschten Rollen bei den Feldern $\omega_{\mathrm{A}}$ und $\omega_{\mathrm{B}}$, gebracht werden kann.
 
 Wir wollen nun zunächst das Setting festlegen und dabei die aus der Einleitung bekannte partielle Differentialgleichung etwas allgemeiner auffassen.
 
@@ -25,13 +25,13 @@ Seien also $0 < T < \infty$ eine Konstante und $I = [0, T]$ ein reelles Interval
 Weiter sei $\Omega \subset \mathbb{R}^{n}$ ein Gebiet, das heißt, eine offene, nichtleere, zusammenhängende Teilmenge, mit Lipschitz-Rand.
 Wir betrachten nun die partielle Differentialgleichung
 \begin{equation}
-\label{eq:cha3:pde_erste}
+\label{eq:ps:pde:pde_erste_erwaehnung}
     u_{t}(t, \vec{x}) = c \Delta_{\vec{x}} u(t, \vec{x}) - \omega(t, \vec{x}) u(t, \vec{x}) - \mu u(t, \vec{x}) \quad \text{auf}~I \times \Omega,
 \end{equation}
 wobei $c \in \mathbb{R}_{+}$ und $\mu \in \mathbb{R}$ Konstanten seien.
 Weiter sei
 \begin{equation}
-\label{eq:pp:def_omega}
+\label{eq:ps:pde:omega_definition}
     \omega \colon I \times \Omega \to \mathbb{R}, \quad (t, \vec{x}) \mapsto
     \begin{cases}
         \omega_{1}(\vec{x}), & t \leq f, \\
@@ -40,16 +40,16 @@ Weiter sei
 \end{equation}
 mit $L_{\infty}(\Omega)$-Abbildungen $\omega_{1}, \omega_{2}$ und einer Konstante $f \in I$.
 
-Da, wie in \cref{cha:einleitung} erwähnt, konstante Verschiebungen der Felder $\omega_{i}$ keinen Einfluss auf das Ergebnis des dort beschriebenen Iterationsverfahrens haben führen wir den zusätzlichen Term $\mu u(t, x)$ ein.
+Da, wie in \cref{cha:el:einleitung} erwähnt, konstante Verschiebungen der Felder $\omega_{i}$ keinen Einfluss auf das Ergebnis des dort beschriebenen Iterationsverfahrens haben führen wir den zusätzlichen Term $\mu u(t, x)$ ein.
 Dies wird sich später noch als hilfreich beim Nachweis einiger Eigenschaften der Differentialgleichung erweisen.
 
 Weiter beschränken wir uns an dieser Stelle auf den Fall homogener Randbedingungen in $\Omega$, das heißt, es gilt $\restr{u(t, \blank)}{\partial \Omega} = 0$ für alle $t \in I$.
 
-Unter diesen Gegebenheiten können wir die obige partielle Differentialgleichung \cref{eq:cha3:pde_erste} weiter konkretisieren; es bietet sich an, dazu die Räume $V = H^{1}_{0}(\Omega)$ und $H = L_{2}(\Omega)$ zu verwenden.
+Unter diesen Gegebenheiten können wir die obige partielle Differentialgleichung \cref{eq:ps:pde_erste} weiter konkretisieren; es bietet sich an, dazu die Räume $V = H^{1}_{0}(\Omega)$ und $H = L_{2}(\Omega)$ zu verwenden.
 Dabei handelt es sich jeweils um einen separablen Hilbertraum und es existiert eine dichte stetige Einbettung $H^{1}_{0}(\Omega) \denseinclusion L_{2}(\Omega)$.
-Nach \cref{definition:gl:gelfand_tripel} erhalten wir daraus das Gelfand-Tripel
+Nach \cref{def:gl:br:gelfand_tripel} erhalten wir daraus das Gelfand-Tripel
 \begin{equation}
-\label{eq:cha3:gelfand_triple}
+\label{eq:ps:pde:gelfand_triple}
     H^{1}_{0}(\Omega) \denseinclusion L_{2}(\Omega) \denseinclusion (H^{1}_{0}(\Omega))' = H^{-1}(\Omega).
 \end{equation}
 
@@ -57,11 +57,11 @@ Mit diesen Vorbemerkungen können wir unter Hinzunahme eines Quellterms und eine
 
 \mwarn{Sind die Voraussetzungen so passend?}
 \begin{Definition}[Starke Formulierung]
-\label{definition:pp:starke_formulierung}
-    Seien eine \emph{Anfangsbedingung} $u_{0} \in L_{2}(\Omega)$, ein \emph{Quellterm} $g \in L_{2}(I) \otimes H^{-1}(\Omega)$ und $\omega$ wie in \cref{eq:pp:def_omega}, sowie Konstanten $c \in \mathbb{R}_{+}$ und $\mu \in \mathbb{R}$ gegeben.
+\label{def:ps:pde:starke_formulierung}
+    Seien eine \emph{Anfangsbedingung} $u_{0} \in L_{2}(\Omega)$, ein \emph{Quellterm} $g \in L_{2}(I) \otimes H^{-1}(\Omega)$ und $\omega$ wie in \cref{eq:ps:def_omega}, sowie Konstanten $c \in \mathbb{R}_{+}$ und $\mu \in \mathbb{R}$ gegeben.
     Als \emph{starke Formulierung} bezeichnen wir die parabolische partielle Differentialgleichung
     \begin{equation}
-    \label{eq:pp:starke_formulierung}
+    \label{eq:ps:pde:starke_formulierung}
         \left\{
         \begin{aligned}
             u_{t}(t, x) - c \Delta u(t, x) + \omega(t, x) u(t, x) + \mu u(t, x) &= g(t, x) \quad &&\text{auf}~I \times \Omega,\\
@@ -72,13 +72,13 @@ Mit diesen Vorbemerkungen können wir unter Hinzunahme eines Quellterms und eine
 \end{Definition}
 
 \begin{Bemerkung}
-\label{bemerkung:pp:definition_operator_A}
+\label{bem:ps:pde:definition_operator_A}
     Der notationellen Einfachheit halber definieren wir für $t \in I$ den Operator
     \begin{equation}
-    \label{eq:pp:definition_operator_A}
+    \label{eq:ps:pde:definition_operator_A}
         A(t) \colon H^{1}_{0}(\Omega) \to H^{-1}(\Omega), \quad \eta \mapsto A(t) \eta = - c \Delta \eta + \omega(t, \blank) \eta + \mu \eta.
     \end{equation}
-    Damit lässt sich die starke Formulierung \cref{eq:pp:starke_formulierung} auch schreiben als
+    Damit lässt sich die starke Formulierung \cref{eq:ps:pde:starke_formulierung} auch schreiben als
     \begin{equation}
         \left\{
         \begin{aligned}
@@ -90,11 +90,11 @@ Mit diesen Vorbemerkungen können wir unter Hinzunahme eines Quellterms und eine
 \end{Bemerkung}
 
 \subsection{Raum-Zeit-Variationsformulierung} % (fold)
-\label{sub:variationsformulierungen}
+\label{sub:ps:rzvp:raum_zeit_variationsformulierung}
 
 % subsection variationsformulierungen (end)
 
-Als nächsten Schritt wollen wir nun eine Raum-Zeit-Variationsformulierung, auch schwache Formulierung genannt, für das Problem  \cref{eq:pp:starke_formulierung} herleiten.
+Als nächsten Schritt wollen wir nun eine Raum-Zeit-Variationsformulierung, auch schwache Formulierung genannt, für das Problem  \cref{eq:ps:pde:starke_formulierung} herleiten.
 Dazu ist es nützlich, den Operator $A(t)$ in Form einer Bilinearform zu schreiben.
 Nach dem Rieszschen Darstellungssatz, vergleiche \cite[Theorem \S{}22.1]{Halmos:1957vd}, existiert eine Bilinearform
 \begin{equation}
@@ -126,10 +126,10 @@ Für den gegebenen Fall können wir diese Bilinearform explizit angeben, denn es
 Mit Hilfe dieser Darstellung erhalten wir nun für die Bilinearform $a(\blank, \blank; t)$ und damit auch für den Operator $A(t)$ die folgenden Aussagen für ein festes $t \in I$.
 %
 \begin{Satz}
-\label{satz:pp:a_bf_bounded_garding}
+\label{satz:ps:rzvp:bilinearform_a_eigenschaften}
     Seien $c \in \mathbb{R}_{+}$, $\mu \in \mathbb{R}$, $\omega \in L_{\infty}(\Omega)$ und
     \begin{equation}
-    \label{eq:bf_a}
+    \label{eq:ps:rzvp:bilinearform_a}
         \begin{aligned}
             &a(\blank, \blank) \colon H^{1}_{0}(\Omega) \times H^{1}_{0}(\Omega) \to \mathbb{R}, \\
             &(\eta, \zeta) \mapsto c\skp{\grad \eta}{\grad \zeta}{L_{2}(\Omega)} + \skp{\omega \eta}{\zeta}{L_{2}(\Omega)} + \mu \skp{\eta}{\zeta}{L_{2}(\Omega)}.
@@ -137,13 +137,13 @@ Mit Hilfe dieser Darstellung erhalten wir nun für die Bilinearform $a(\blank, \
     \end{equation}
     Dann erfüllt $a$ die folgenden Eigenschaften:
     \begin{thmenumerate}
-        \item\label{satz:pp:a_bf_bounded_garding:1}
+        \item\label{satz:ps:rzvp:bilinearform_a_eigenschaften_stetig}
         \emph{Stetigkeit:} es gilt
         \begin{equation}
             \abs{a(\eta, \zeta)} \leq M_{a} \norm{\eta}_{H^{1}(\Omega)} \norm{\zeta}_{H^{1}(\Omega)} \quad \text{für alle}~\eta, \zeta \in H^{1}_{0}(\Omega)
         \end{equation}
         mit $M_{a} = \max\Set{c, \norm{\omega}_{L_{\infty}(\Omega)} + \abs{\mu}} \geq 0$.
-        \item\label{satz:pp:a_bf_bounded_garding:2}
+        \item\label{satz:ps:rzvp:bilinearform_a_eigenschaften_garding}
         \emph{G\aa{}rding-Ungleichung:} es gilt
         \begin{equation}
                 a(\eta, \eta) + \lambda \norm{\eta}_{L_{2}(\Omega)}^{2} \geq \alpha \norm{\eta}_{H^{1}(\Omega)}^{2} \quad \text{für alle}~\eta \in H^{1}_{0}(\Omega)
@@ -173,7 +173,7 @@ Mit Hilfe dieser Darstellung erhalten wir nun für die Bilinearform $a(\blank, \
     \begin{align}
         a(\eta, \eta) + \lambda \norm{\eta}^{2}_{L_{2}(\Omega)}
         &\geq c \norm{\grad \eta}^{2}_{L_{2}(\Omega)},
-        \intertext{woraus wir durch Anwenden der Poincaré-Friedrichs-Ungleichung (\cref{satz:grundlagen:poincare_friedrichs_ungleichung})}
+        \intertext{woraus wir durch Anwenden der Poincaré-Friedrichs-Ungleichung (\cref{satz:gl:poincare_friedrichs_ungleichung})}
         a(\eta, \eta) + \lambda \norm{\eta}^{2}_{L_{2}(\Omega)}
         &\geq c \gamma_{\Omega}^{2} \norm{\eta}^{2}_{H^{1}(\Omega)}
     \end{align}
@@ -182,37 +182,37 @@ Mit Hilfe dieser Darstellung erhalten wir nun für die Bilinearform $a(\blank, \
 \end{Satz}
 
 \begin{Korollar}
-\label{korollar:cha3:bf_elliptisch}
-    Ist $\mu \geq \norm{\omega}_{L_{\infty}(\Omega)}$, dann ist die Bilinearform $a$ aus \cref{satz:pp:a_bf_bounded_garding} elliptisch.
+\label{kor:ps:rzvp:bilinearform_elliptisch}
+    Ist $\mu \geq \norm{\omega}_{L_{\infty}(\Omega)}$, dann ist die Bilinearform $a$ aus \cref{satz:ps:rzvp:bilinearform_a_eigenschaften} elliptisch.
 \end{Korollar}
 
-Unter diesen Gegebenheiten können wir nun mit den theoretischen Grundlagen aus \cref{sec:lineare_evolutionsgleichungen} eine sachgemäß gestellte Raum-Zeit-Variationsformulierung herleiten.
+Unter diesen Gegebenheiten können wir nun mit den theoretischen Grundlagen aus \cref{sec:gl:le:lineare_evolutionsgleichungen} eine sachgemäß gestellte Raum-Zeit-Variationsformulierung herleiten.
 Als Ansatz- und Testfunktionenraum erhalten wir mit den konkret gewählten Hilberträumen
 \begin{equation}
-    \label{eq:var_ansatzraum_testraum}
+    \label{eq:ps:rzvp:ansatzraum_testraum}
     \mathcal X = L_{2}(I; H^{1}_{0}(\Omega)) \cap H^{1}(I; H^{-1}(\Omega))
     \quad \text{und} \quad
     \mathcal Y = L_{2}(I; H^{1}_{0}(\Omega)) \times L_{2}(\Omega).
 \end{equation}
 Das Raum-Zeit-Variationsproblem lautet damit:
 \begin{Definition}[Schwache Formulierung]
-\label{definition:cha3:schwache_formulierung}
-    Als \emph{schwache Formulierung}, oder auch \emph{Raum"=Zeit"=Va"-ri"-a"-ti"-ons"-for"-mu"-lie"-rung}, der parabolischen partiellen Differentialgleichung aus \cref{definition:pp:starke_formulierung} bezeichnen wir das folgende Variationsproblem:
+\label{def:ps:rzvp:schwache_formulierung}
+    Als \emph{schwache Formulierung}, oder auch \emph{Raum"=Zeit"=Va"-ri"-a"-ti"-ons"-for"-mu"-lie"-rung}, der parabolischen partiellen Differentialgleichung aus \cref{def:ps:pde:starke_formulierung} bezeichnen wir das folgende Variationsproblem:
     Gegeben einen Quellterm $g \in L_{2}(I; H^{-1}(\Omega))$ und eine Anfangsbedingung $u_{0} \in L_{2}(\Omega)$.
     Finde ein $u \in \mathcal X$ mit
     \begin{equation}
-        \label{eq:varprob}
+        \label{eq:ps:rzvp:schwache_formulierung}
         b(u, v) = f(v) \quad \text{für alle}~v = (v_{1}, v_{2}) \in \mathcal Y,
     \end{equation}
     wobei $b(\blank, \blank) \colon \mathcal X \times \mathcal Y \to \mathbb{R}$ die durch
     \begin{equation}
-        \label{eq:buv}
+        \label{eq:ps:rzvp:schwache_formulierung_lhs_b}
         b(u, v)
             = \int_{I} \skprod{u_{t}(t)}{v_{1}(t)}_{L_{2}(\Omega)} + a(u(t), v_{1}(t); t) \diff t + \skprod{u(0)}{v_{2}}_{L_{2}(\Omega)}
     \end{equation}
     gegebene Bilinearform und $f(\blank) \colon \mathcal Y \to \mathbb{R}$ definiert ist durch
     \begin{equation}
-        \label{eq:var_all_f_wiederholung}
+        \label{eq:ps:rzvp:schwache_formulierung_rhs_f}
         f(v) = \int_{I} \skprod{g(t)}{v_{1}(t)}_{L_{2}(\Omega)} \diff t + \skprod{u_{0}}{v_{2}}_{L_{2}(\Omega)}.
     \end{equation}
 \end{Definition}
@@ -220,20 +220,20 @@ Das Raum-Zeit-Variationsproblem lautet damit:
 Diese Variationsformulierung wird uns in den nachfolgenden Kapiteln als Ausgangspunkt für die von uns angestrebten numerischen Verfahren dienen.
 
 \subsection{Existenz und Eindeutigkeit von Lösungen} % (fold)
-\label{sub:existenz_und_eindeutigkeit_von_l_sungen}
+\label{sub:ps:eel:existenz_und_eindeutigkeit_von_loesungen}
 
-Wir weisen nun, aufbauend auf \cref{sec:lineare_evolutionsgleichungen}, nach, dass das Raum-Zeit-Variationsproblem aus \cref{definition:cha3:schwache_formulierung} sachgemäß gestellt ist, und bestimmen zudem Abschätzungen für die Norm des Operators und dessen Inverse.
-Die Hauptarbeit dazu wurde bereits durch das \cref{satz:gl:bnb_theorem} und \cref{thm:schwab09:theorem51} geleistet und muss hier nur noch angewandt werden.
+Wir weisen nun, aufbauend auf \cref{sec:gl:le:lineare_evolutionsgleichungen}, nach, dass das Raum-Zeit-Variationsproblem aus \cref{def:ps:rzvp:schwache_formulierung} sachgemäß gestellt ist, und bestimmen zudem Abschätzungen für die Norm des Operators und dessen Inverse.
+Die Hauptarbeit dazu wurde bereits durch das \cref{satz:gl:le:bnb_theorem} und \cref{satz:gl:le:ss09_theorem51} geleistet und muss hier nur noch angewandt werden.
 
 \mfix{Anpassen an das neu vorkommende Mu!}
 
 \begin{Korollar}
-\label{korollar:2.2}
-    Seien $\mathcal X$ und $\mathcal Y$ gegeben wie in \cref{eq:var_ansatzraum_testraum} und sei $B \colon \mathcal X \to \mathcal Y'$ definiert durch
+\label{kor:ps:eel:schwache_formulierung_sachgemaess_gestellt}
+    Seien $\mathcal X$ und $\mathcal Y$ gegeben wie in \cref{eq:ps:rzvp:ansatzraum_testraum} und sei $B \colon \mathcal X \to \mathcal Y'$ definiert durch
     \begin{equation}
         \skprod{Bu}{v}_{\mathcal Y' \times \mathcal Y}  = b(u, v), \quad u \in \mathcal X,~ v \in \mathcal Y,
     \end{equation}
-    mit $b(\blank, \blank)$ wie in \cref{eq:buv}.
+    mit $b(\blank, \blank)$ wie in \cref{eq:ps:rzvp:schwache_formulierung_lhs_b}.
     Dann ist $B$ stetig invertierbar.
     %  und es gilt
     % \begin{equation}
@@ -249,7 +249,7 @@ Die Hauptarbeit dazu wurde bereits durch das \cref{satz:gl:bnb_theorem} und \cre
     %     % \frac{\max\{\sqrt{ 1 + 2 \norm{\omega}_{L_{\infty}(\Omega)} \rho^{4}}, \sqrt{2} \}}{e^{-2 \norm{\omega}_{L_{\infty}(\Omega)} T}}
     %     % \frac{\sqrt{2 \max\{ 1, \sigma^{-2} \gamma_{\Omega}^{-4} \} + M_{e}^{2}}}{\min\{ \sigma \gamma_{\Omega}^{2} \norm{\omega}_{L_{\infty}(\Omega)}^{-2}, \sigma \gamma_{\Omega}^{2} \}}
     % \end{equation}
-    % mit $M_{e}$ und $\rho$ wie in \cref{eq:var_all_M_e} respektive \cref{eq:var_all_rho}.
+    % mit $M_{e}$ und $\rho$ wie in \cref{kor:gl:br:einbettungskonstante_M_e} respektive \cref{kor:gl:le:einbettungskonstante_rho}.
 \end{Korollar}
 
 % subsection existenz_und_eindeutigkeit_von_l_sungen (end)
@@ -257,20 +257,20 @@ Die Hauptarbeit dazu wurde bereits durch das \cref{satz:gl:bnb_theorem} und \cre
 % section die_parabolische_partielle_differentialgleichung (end)
 
 \section{Parametrische Formulierung} % (fold)
-\label{sec:parametrische_formulierung}
+\label{sec:ps:pf:parametrische_formulierung}
 
 Nachdem wir nun die Rahmenbedingungen geklärt haben, fahren wir fort mit der Einführung einer parametrischen Variante der in diesem Kapitel bisher betrachteten parabolischen partiellen Differentialgleichung.
 Diese ermöglicht es uns in den folgenden Kapiteln erst, eine Reduzierte-Basis-Methode zu entwickeln.
 
-Dazu greifen wir den aus \cref{bemerkung:pp:definition_operator_A} bekannten Operator $A(t)$ auf und betrachten diesen zunächst zwar für einen festen Zeitpunkt $t \in I$, dafür aber in Abhängigkeit von einem $\omega \in L_{\infty}(\Omega)$.
+Dazu greifen wir den aus \cref{bem:ps:pde:definition_operator_A} bekannten Operator $A(t)$ auf und betrachten diesen zunächst zwar für einen festen Zeitpunkt $t \in I$, dafür aber in Abhängigkeit von einem $\omega \in L_{\infty}(\Omega)$.
 Sei also $\omega \in L_{\infty}(\Omega)$, dann definieren wir eine Abbildung
 \begin{equation}
-    \label{eq:pp:op_a}
+    \label{eq:ps:pf:operator_A}
     A(\omega) \colon H^{1}_{0}(\Omega) \to H^{-1}(\Omega), \quad A(\omega) \eta = - c \Delta \eta + \omega \eta + \mu \eta
 \end{equation}
 und erhalten wie zuvor die zugehörige Bilinearform $a(\blank, \blank; \omega)$ durch
 \begin{equation}
-    \label{eq:pp:bf_a}
+    \label{eq:ps:pf:bilinearform_a}
     \begin{aligned}
         &a(\blank, \blank; \omega) \colon H^{1}_{0}(\Omega) \times H^{1}_{0}(\Omega) \to \mathbb{R}, \\
         &(\eta, \zeta) \mapsto c\skp{\grad \eta}{\grad \zeta}{L_{2}(\Omega)} + \skp{\omega \eta}{\zeta}{L_{2}(\Omega)} + \mu \skp{\eta}{\zeta}{L_{2}(\Omega)}.
@@ -281,11 +281,11 @@ Als nächstes konkretisieren wir die Abhängigkeit des Operators $A(\omega)$ bez
 Dazu stellen wir die folgende Bedingung an den Parameter $\omega$, welche sich später wiederum bei der Reduzierte-Basis-Methode als nützlich erweisen wird.
 
 \begin{Definition}
-\label{definition:pp:omega_affin}
+\label{def:ps:pf:omega_affin}
     Die Funktionen $\omega \in L_{\infty}(\Omega)$ seien \emph{affin} darstellbar.
     Genauer sei $\mathcal S \subset \mathbb{R}^{\mathbb{N}}$ ein Parameterraum und $\Set{ \varphi_{j} }_{j \in \mathbb{N}} \in L_{\infty}(\Omega)$ eine Folge von Funktion, so dass $\omega$ sich für $\sigma \in \mathcal S$ als Reihe der Form
     \begin{equation}
-    \label{eq:pp:affine_zerlegung_omega}
+    \label{eq:ps:pf:omega_affine_zerlegung}
         w(\blank; \sigma) \colon \Omega \to \mathbb{R}, \quad w(x; \sigma) = \sum_{j = 1}^{\infty} \sigma_{j} \varphi_{j}(x)
     \end{equation}
     schreiben lässt.
@@ -298,12 +298,12 @@ Dazu stellen wir die folgende Bedingung an den Parameter $\omega$, welche sich s
 
 Setzen wir diese affine Darstellung nun zunächst in den Operator $A(\omega)$ ein, dann erhalten wir die Darstellung
 \begin{equation}
-\label{eq:pp:op_a_sigma}
+\label{eq:ps:pf:operator_A_sigma}
     A(\omega(\sigma)) \colon H^{1}_{0}(\Omega) \to H^{-1}(\Omega), \quad A(\omega(\sigma)) u = -c \Delta u + \sum_{j = 1}^{\infty} \sigma_{j} \varphi_{j} u + \mu u,
 \end{equation}
 und als zugehörige Bilinearform $a(\blank, \blank; \omega(\sigma))$ ergibt sich wie zuvor
 \begin{equation}
-\label{eq:pp:bf_a_sigma}
+\label{eq:ps:pf:bilinearform_a_sigma}
     \begin{aligned}
     &a(\blank, \blank; \omega(\sigma)) \colon H^{1}_{0}(\Omega) \times H^{1}_{0}(\Omega) \to \mathbb{R}, \\
     &(u, v) \mapsto c\skp{\grad u}{\grad v}{L_{2}(\Omega)} + \sum_{j = 1}^{\infty} \sigma_{j} \skp{\varphi_{j} u}{v}{L_{2}(\Omega)} + \mu \skp{u}{v}{L_{2}(\Omega)}.
@@ -312,10 +312,10 @@ und als zugehörige Bilinearform $a(\blank, \blank; \omega(\sigma))$ ergibt sich
 
 \begin{Bemerkung}
     Um die Schreibweisen kurz zu halten, schreiben wir meist $\omega(\sigma)$ statt $\omega(\blank; \sigma)$.
-    Weiter schreiben wir, vor allem um zwischen dem allgemeinen parametrischen und dem affinen Fall zu unterscheiden, kurz $A(\sigma)$ statt $A(\omega(\sigma))$ für \cref{eq:pp:op_a_sigma} und $a(\blank, \blank; \sigma)$ statt $a(\blank, \blank; \omega(\sigma))$ für \cref{eq:pp:bf_a_sigma}.
+    Weiter schreiben wir, vor allem um zwischen dem allgemeinen parametrischen und dem affinen Fall zu unterscheiden, kurz $A(\sigma)$ statt $A(\omega(\sigma))$ für \cref{eq:ps:pf:operator_A_sigma} und $a(\blank, \blank; \sigma)$ statt $a(\blank, \blank; \omega(\sigma))$ für \cref{eq:ps:pf:bilinearform_a_sigma}.
 \end{Bemerkung}
 
-Damit der Operator $A(\sigma)$ sowie die Bilinearform $a(\blank, \blank; \sigma)$ für $\sigma \in \mathcal S$ wohldefiniert sind, müssen wir Wohldefiniertheit, dass heißt gleichmäßige Konvergenz, der obigen affinen Zerlegung \cref{eq:pp:affine_zerlegung_omega} von $\omega$ aus \cref{definition:pp:omega_affin} fordern.
+Damit der Operator $A(\sigma)$ sowie die Bilinearform $a(\blank, \blank; \sigma)$ für $\sigma \in \mathcal S$ wohldefiniert sind, müssen wir Wohldefiniertheit, dass heißt gleichmäßige Konvergenz, der obigen affinen Zerlegung \cref{eq:ps:pf:omega_affine_zerlegung} von $\omega$ aus \cref{def:ps:pf:omega_affin} fordern.
 Dies wird durch folgende Bedingung sichergestellt.
 %%
 \begin{Annahme}
@@ -330,28 +330,28 @@ Hieraus folgt wegen $\mathcal S = [-1, 1]^{\mathbb{N}}$ insbesondere
     \sup_{\sigma \in \mathcal S} \norm{\omega(\sigma)}_{L_{\infty}(\Omega)} \leq \sum_{j = 1}^{\infty} \norm{\varphi_{j}}_{L_{\infty}(\Omega)} < \infty.
 \end{equation}
 
-Mit dieser Vorarbeit können wir die schwache Formulierung aus \cref{definition:cha3:schwache_formulierung} nun zu der folgenden parametrischen schwachen Formulierung ausweiten.
+Mit dieser Vorarbeit können wir die schwache Formulierung aus \cref{def:ps:rzvp:schwache_formulierung} nun zu der folgenden parametrischen schwachen Formulierung ausweiten.
 
 \mfix{Die Zeitabhängigkeit des Operators $A$ und der Bilinearform $a$ muss noch eingebaut werden!}
 
 \begin{Definition}[Parametrische schwache Formulierung]
-\label{definition:cha3:param_schwache_formulierung}
-    Als \emph{parametrisches schwache Formulierung}, oder auch \emph{parametrische Raum"=Zeit"=Va"-ri"-a"-ti"-ons"-for"-mu"-lie"-rung} von \cref{eq:pp:starke_formulierung} bezeichnen wir das folgende Variationsproblem:
+\label{def:ps:pf:schwache_formulierung}
+    Als \emph{parametrisches schwache Formulierung}, oder auch \emph{parametrische Raum"=Zeit"=Va"-ri"-a"-ti"-ons"-for"-mu"-lie"-rung} von \cref{eq:ps:pde:starke_formulierung} bezeichnen wir das folgende Variationsproblem:
     Gegeben einen Quellterm $g \in L_{2}(I; H^{-1}(\Omega))$ und eine Anfangsbedingung $u_{0} \in L_{2}(\Omega)$.
     Finde für alle $\sigma \in \mathcal S$ ein $u(\sigma) \in \mathcal X$ mit
     \begin{equation}
-        \label{eq:varprob}
+        \label{eq:ps:pf:schwache_formulierung}
         b(u(\sigma), v; \sigma) = f(v) \quad \text{für alle}~v = (v_{1}, v_{2}) \in \mathcal Y,
     \end{equation}
     wobei $b(\blank, \blank; \sigma) \colon \mathcal X \times \mathcal Y \to \mathbb{R}$ die durch
     \begin{equation}
-        \label{eq:buv_param}
+        \label{eq:ps:pf:schwache_formulierung_lhs_b}
         b(u, v; \sigma)
             = \int_{I} \skprod{u_{t}(t)}{v_{1}(t)}_{L_{2}(\Omega)} + a(u(t), v_{1}(t); t, \sigma) \diff t + \skprod{u(0)}{v_{2}}_{L_{2}(\Omega)}
     \end{equation}
     gegebene Bilinearform und $f(\blank) \colon \mathcal Y \to \mathbb{R}$ definiert ist durch
     \begin{equation}
-        \label{eq:var_all_f_wiederholung}
+        \label{eq:ps:pf:schwache_formulierung_rhs_f}
         f(v) = \int_{I} \skprod{g(t)}{v_{1}(t)}_{L_{2}(\Omega)} \diff t + \skprod{u_{0}}{v_{2}}_{L_{2}(\Omega)}.
     \end{equation}
 \end{Definition}
@@ -360,12 +360,12 @@ Mit dieser Vorarbeit können wir die schwache Formulierung aus \cref{definition:
 
 
 \section{Regularität bezüglich der Parameter} % (fold)
-\label{sec:regularit_t_bez_glich_der_parameter}
+\label{sec:ps:rg:regularitaet_bezueglich_der_parameter}
 
 In diesem Abschnitt wollen wir nun nachweisen, dass die im vorherigen Abschnitt hergeleitete parametrische schwache Formulierung eine Regularität bezüglich des Parameters aufweist, konkret werden wir nachweisen, dass die Lösung $u(\sigma)$ analytisch im Parameter $\sigma$ ist.
 Dabei orientieren wir uns an den Arbeiten von \textcite{Cohen:2010kz,Kunoth:2013ef} und weisen diese Eigenschaften zunächst für den stationären Fall nach, das heißt, wir verlieren die Zeitabhängigkeit und betrachten stattdessen die parametrische Operatorgleichung
 \begin{equation}
-\label{eq:pp:operatorgleichung_param}
+\label{eq:ps:rg:operatorgleichung_parametrisch}
     A(\omega) \eta(\omega) = f \quad \text{in}~H^{-1}(\Omega).
 \end{equation}
 
@@ -388,12 +388,12 @@ Zunächst einige notationelle Vorbemerkungen.
     Wegen $\norm{\nu}_{\ell_{1}(\mathbb{N})} < \infty$ ist dieses Produkt stets endlich.
 \end{Bemerkung}
 
-Bevor wir uns an die partiellen Ableitungen wagen, beweisen wir eine Stabilitätsaussage für die obige parametrische Operatorgleichung \cref{eq:pp:operatorgleichung_param}, welche sich dabei als nützlich erweisen wird.
+Bevor wir uns an die partiellen Ableitungen wagen, beweisen wir eine Stabilitätsaussage für die obige parametrische Operatorgleichung \cref{eq:ps:rg:operatorgleichung_parametrisch}, welche sich dabei als nützlich erweisen wird.
 Für diese benötigen wir, dass die obige Operatorgleichung sachgemäß gestellt ist.
 
 \begin{Satz}
-\label{satz:pp:lax_auf_elliptisch}
-    Seien $\omega \in L_{\infty}(\Omega)$, $\mu \geq \norm{\omega}_{L_{\infty}(\Omega)}$ und weiter $g \in H^{-1}(\Omega)$ und $A(\omega)$ wie in \cref{eq:pp:op_a}, dann besitzt die Operatorgleichung
+\label{satz:ps:rg:lax_milgram_anwendung}
+    Seien $\omega \in L_{\infty}(\Omega)$, $\mu \geq \norm{\omega}_{L_{\infty}(\Omega)}$ und weiter $g \in H^{-1}(\Omega)$ und $A(\omega)$ wie in \cref{eq:ps:pf:operator_A}, dann besitzt die Operatorgleichung
     \begin{equation}
         A(\omega) u(\omega) = g
     \end{equation}
@@ -401,18 +401,16 @@ Für diese benötigen wir, dass die obige Operatorgleichung sachgemäß gestellt
     \begin{equation}
         \norm{u(\omega)}_{H^{1}(\Omega)} \leq \frac{\norm{g}_{H^{-1}(\Omega)}}{\alpha}
     \end{equation}
-    mit $\alpha$ aus \cref{satz:pp:a_bf_bounded_garding}.
+    mit $\alpha$ aus \cref{satz:ps:rzvp:bilinearform_a_eigenschaften}.
 
     \begin{Beweis}
-        Folgt direkt aus dem Lemma vom Lax-Milgram, \cref{lemma:gl:lax_milgram}.
+        Folgt direkt aus dem Lemma vom Lax-Milgram, \cref{lem:gl:le:lax_milgram}.
     \end{Beweis}
 \end{Satz}
 
-
-
 \begin{Lemma}
-\label{lemma:pp:norm_abschaetzung}
-    Seien $\omega_{1}, \omega_{2} \in L_{\infty}(\Omega)$ und $u_{1}, u_{2}$ die zugehörigen Lösungen von \cref{eq:pp:operatorgleichung_param}, dann gilt
+\label{lem:ps:rg:norm_abschaetzung}
+    Seien $\omega_{1}, \omega_{2} \in L_{\infty}(\Omega)$ und $u_{1}, u_{2}$ die zugehörigen Lösungen von \cref{eq:ps:rg:operatorgleichung_parametrisch}, dann gilt
     \begin{equation}
         \norm{u_{1} - u_{2}}_{H^{1}(\Omega)} \leq \frac{\norm{f}_{H^{-1}(\Omega)}}{\gamma_{0}^{2}} \norm{\omega_{1} - \omega_{2}}_{L_{\infty}}.
     \end{equation}
@@ -437,7 +435,7 @@ Für diese benötigen wir, dass die obige Operatorgleichung sachgemäß gestellt
             g(v) = - \skp{(\omega_{1} - \omega_{2}) u_{2}}{v}{H}.
         \end{equation}
 
-        Nach \cref{satz:pp:lax_auf_elliptisch} ist die Lösung $z = u_{1} - u_{2} \in V$ eindeutig und erfüllt
+        Nach \cref{satz:ps:rg:lax_milgram_anwendung} ist die Lösung $z = u_{1} - u_{2} \in V$ eindeutig und erfüllt
         \begin{equation}
             \norm{z}_{V} \leq \frac{\norm{g}_{V'}}{\gamma_{0}}.
         \end{equation}
@@ -464,7 +462,7 @@ Für diese benötigen wir, dass die obige Operatorgleichung sachgemäß gestellt
 \end{Lemma}
 
 \begin{Satz}
-\label{satz:cha3:existenz_part_ableitung}
+\label{satz:ps:rg:existenz_partieller_ableitungen}
     Die Abbildung $\mathcal S \ni \sigma \mapsto u(\sigma) \in V$ besitzt für alle $\nu \in \mathfrak F$ die partielle Ableitung $\partial^{\nu}_{\sigma} u(\sigma)$.
 
     \mfix{Beweis prüfen!}
@@ -514,7 +512,7 @@ Für diese benötigen wir, dass die obige Operatorgleichung sachgemäß gestellt
             \\&\leq \norm{\varphi_{j}}_{L_{\infty}(\Omega)} \norm{u(\sigma + h e_{j}) - u(\sigma)}_{L_{2}(\Omega)} \norm{v}_{L_{2}(\Omega)}
             \\&\leq \norm{\varphi_{j}}_{L_{\infty}(\Omega)} \norm{u(\sigma + h e_{j}) - u(\sigma)}_{H^{1}(\Omega)} \norm{v}_{H^{1}(\Omega)}.
         \end{align}
-        Weiter liefert \cref{lemma:pp:norm_abschaetzung} die Ungleichung
+        Weiter liefert \cref{lem:ps:rg:norm_abschaetzung} die Ungleichung
         \begin{align}
             \norm{u(\sigma + h e_{j}) - u(\sigma)}_{H^{1}(\Omega)}
             &\leq \frac{\norm{f}_{V'}}{\gamma_{0}^{2}} \norm{\omega(\sigma + h e_{j}) - \omega(\sigma)}_{L_{\infty}(\Omega)}
@@ -561,7 +559,7 @@ Für diese benötigen wir, dass die obige Operatorgleichung sachgemäß gestellt
 Seien $b := (b_{j})_{j} \in \mathbb{R}$ und $b_{j} := \frac{\norm{\varphi_{j}}_{L_{\infty}}}{\gamma_{0}}$.
 
 \begin{Satz}
-\label{satz:cha3:part_ableitung_schranke}
+\label{satz:ps:rg:partielle_ableitungen_schranke}
     Es gilt
     \begin{equation}
         \sup_{\sigma \in \mathcal S} \norm{\partial^{\nu}_{\sigma} u(\sigma)} \leq B \abs{\nu}! b^{\nu}.
@@ -631,14 +629,14 @@ Seien $b := (b_{j})_{j} \in \mathbb{R}$ und $b_{j} := \frac{\norm{\varphi_{j}}_{
 
 \mdo{Daraus folgern, dass es für den parabolischen auch gilt.}
 
-Die in den Beweisen von \cref{satz:cha3:existenz_part_ableitung} und \cref{satz:cha3:part_ableitung_schranke} angewandten Schritte lassen sich, solange die Wohldefiniertheit aller Ausdrücke gegeben ist, analog auch für allgemeinere parametrisch affine Operatoren respektive Bilinearformen nachweisen.
+Die in den Beweisen von \cref{satz:ps:rg:existenz_partieller_ableitungen} und \cref{satz:ps:rg:partielle_ableitungen_schranke} angewandten Schritte lassen sich, solange die Wohldefiniertheit aller Ausdrücke gegeben ist, analog auch für allgemeinere parametrisch affine Operatoren respektive Bilinearformen nachweisen.
 Dies findet man beispielsweise bei \textcite{Kunoth:2013ef}.
 Wir entnehmen daraus die folgende Annahme und den folgenden Satz, welcher uns als Motivation dienen soll.
 
 \mfix{Genauer ausarbeiten!}
 
 \begin{Annahme}[{{\cite[Assumption 1]{Kunoth:2013ef}}}]
-\label{thm:kunoth:assumption1}
+\label{ann:ps:rg:kunoth13_assumption1}
     Seien $X$ und $Y$ zwei reflexive Banachräume.
     Die parametrische Familie von Operatoren
     $\Set{ A(\sigma) \in \mathcal L(X, Y') \given \sigma \in \mathcal S }$ sei eine $\mathfrak p$-reguläre Operatorfamilie für ein $0 < \mathfrak p \leq 1$, das heißt,
@@ -658,35 +656,35 @@ Wir entnehmen daraus die folgende Annahme und den folgenden Satz, welcher uns al
 \end{Annahme}
 
 Als nächstes wollen wir nachweisen, dass obiges Raum-Zeit-Variationsproblem sachgemäß gestellt ist und zudem die Lösungen $u(\sigma)$ analytisch vom Parameter $\sigma \in \mathcal S$ abhängen.
-Ersteres erhalten wir analog zu \cref{thm:schwab09:theorem51} für den nichtparametrischen Fall.
+Ersteres erhalten wir analog zu \cref{satz:gl:le:ss09_theorem51} für den nichtparametrischen Fall.
 Bezüglich der Regularität stellt sich heraus, dass wir lediglich Bedingungen an die Familie von stetigen linearen Operatoren $\Set{ A(\sigma, t) \in \mathcal L(V, V') \given \sigma \in \mathcal S, t \in [0, T] }$ stellen müssen, wie folgender Satz zeigt:
 
 \begin{Satz}[{{\cite[Theorem 21]{Kunoth:2013ef}}}]
-\label{thm:kunoth:theorem21}
-    Seien $\mathcal X$ und $\mathcal Y$ gegeben wie in~\cref{eq:var_all_ansatzraum_x} respektive~\cref{eq:var_all_testraum_y}.
-    Weiter erfülle die Familie von Operatoren $\Set{ A(\sigma, t) \in \mathcal L(V, V') \given \sigma \in \mathcal S, t \in [0, T] }$ \cref{thm:kunoth:assumption1} für ein $0 < \mathfrak p \leq 1$.
+\label{satz:ps:rg:kunoth13_theorem21}
+    Seien $\mathcal X$ und $\mathcal Y$ gegeben wie in~\cref{eq:gl:le:ansatzraum_X} respektive~\cref{eq:gl:le:testraum_Y}.
+    Weiter erfülle die Familie von Operatoren $\Set{ A(\sigma, t) \in \mathcal L(V, V') \given \sigma \in \mathcal S, t \in [0, T] }$ \cref{ann:ps:rg:kunoth13_assumption1} für ein $0 < \mathfrak p \leq 1$.
     Für jedes $\sigma \in \mathcal S$ sei $B(\sigma) \in \mathcal L(\mathcal X, \mathcal Y')$ definiert durch
     \begin{equation}
-        \label{eq:var_all_gross_b_parametrisch}
+        \label{eq:ps:rg:theorem21_variationsproblem_als_operatorgleichung_parametrisch}
         \skprod{B(\sigma) u}{v}_{\mathcal Y' \times \mathcal Y} = b(u, v; \sigma), \quad u \in \mathcal X,~y \in \mathcal Y,
     \end{equation}
-    mit $b(\blank, \blank; \sigma)$ wie in~\cref{eq:pp:var_all_bf_b}.
+    mit $b(\blank, \blank; \sigma)$ wie in~\cref{eq:ps:var_all_bf_b}.
     Dann ist $B(\sigma)$ für jedes $\sigma \in \mathcal S$ stetig invertierbar und es existieren Konstanten $0 < \beta_{1} \leq \beta_{2} < \infty$ mit
     \begin{equation}
-        \label{eq:var_all_norm_B_und_B_inv_parametrisch}
+        \label{eq:ps:rg:theorem21_abschaetzungen_normen_B_und_B_inv_parametrisch}
         \sup_{\sigma \in \mathcal S} \norm{B(\sigma)}_{\mathcal L(\mathcal X, \mathcal Y')} \leq \beta_{2} \quad \text{und} \quad  \sup_{\sigma \in \mathcal S} \norm{B(\sigma)^{-1}}_{\mathcal L(\mathcal Y', \mathcal X)} \leq \frac{1}{\beta_{1}}.
     \end{equation}
 
-    Zudem erfüllt die parametrische Familie von Operatoren $\Set{ B(\sigma) \in \mathcal L(\mathcal X, \mathcal Y') \given \sigma \in \mathcal S }$ \cref{thm:kunoth:assumption1} mit dem gleichen Regularitätsparameter $\mathfrak p$, die parametrische Familie von Lösungen $u(\sigma)$ des parametrischen Raum-Zeit-Variationsproblems \cref{eq:pp:var_all_problem} hängt analytisch von $\sigma$ ab und erfüllt die A-Priori-Abschätzung
+    Zudem erfüllt die parametrische Familie von Operatoren $\Set{ B(\sigma) \in \mathcal L(\mathcal X, \mathcal Y') \given \sigma \in \mathcal S }$ \cref{ann:ps:rg:kunoth13_assumption1} mit dem gleichen Regularitätsparameter $\mathfrak p$, die parametrische Familie von Lösungen $u(\sigma)$ des parametrischen Raum-Zeit-Variationsproblems \cref{eq:ps:var_all_problem} hängt analytisch von $\sigma$ ab und erfüllt die A-Priori-Abschätzung
     \begin{equation}
-        \label{eq:var_all_a_priori_schranke}
+        \label{eq:ps:rg:theorem21_apriori_schranke}
         \sup_{\sigma \in \mathcal S} \norm{(\partial^{\nu}_{\sigma} u)(\sigma)}_{\mathcal X} \leq C_{0} \norm{f}_{\mathcal Y'} \abs{\nu}! \tilde{b}^{\nu}
     \end{equation}
-    für alle $\nu \in \mathfrak F$, wobei $f$ wie in~\cref{eq:pp:var_all_f} gegeben ist.
+    für alle $\nu \in \mathfrak F$, wobei $f$ wie in~\cref{eq:ps:var_all_f} gegeben ist.
 \end{Satz}
 
 \begin{Lemma}
-\label{lemma:norm_B_beschraenkt_durch_norm_A}
+\label{lem:ps:rg:norm_B_beschraenkt_durch_norm_A}
     Sei $\sigma \in \mathcal S$ und $\nu \in \mathfrak F \setminus \Set{ 0 }$, dann gilt
     \begin{equation}
         \norm{\partial^{\nu}_{\sigma} B(\sigma)}_{\mathcal L(\mathcal X, \mathcal Y')}
@@ -699,9 +697,9 @@ Bezüglich der Regularität stellt sich heraus, dass wir lediglich Bedingungen a
     \end{Beweis}
 \end{Lemma}
 
-\begin{Beweis}[\cref{thm:kunoth:theorem21}]
+\begin{Beweis}[\cref{satz:ps:rg:kunoth13_theorem21}]
 \mwarn{Soll der ausgeführt werden?}
-Bedingungen von \cref{thm:kunoth:assumption1} nachrechnen.
-Zu (i): Folgt aus \cref{thm:schwab09:theorem51}, da $M_{a}, \alpha, \lambda$ unabhänging von $\sigma$.
-Zu (ii): Folgt aus nachfolgendem \cref{lemma:norm_B_beschraenkt_durch_norm_A}.
+Bedingungen von \cref{ann:ps:rg:kunoth13_assumption1} nachrechnen.
+Zu (i): Folgt aus \cref{satz:gl:le:ss09_theorem51}, da $M_{a}, \alpha, \lambda$ unabhänging von $\sigma$.
+Zu (ii): Folgt aus nachfolgendem \cref{lem:ps:rg:norm_B_beschraenkt_durch_norm_A}.
 \end{Beweis}

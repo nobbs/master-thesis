@@ -9,7 +9,7 @@
 \label{sec:erste_versuche_mit_galerkin_projektion}
 
 Wir beschränken uns erneut auf den eindimensionalen Fall und wählen $T = 1$, also $I = [0, 1]$ und $\Omega = [0 ,1]$.
-Um eine Approximation für das Variationsproblem \eqref{eq:varprob} mit fest gewähltem $\omega \in L_{\infty}(\Omega)$ zu bestimmen, verwenden wir die Galerkin-Projektion.
+Um eine Approximation für das Variationsproblem \eqref{eq:ps:rzvp:schwache_formulierung} mit fest gewähltem $\omega \in L_{\infty}(\Omega)$ zu bestimmen, verwenden wir die Galerkin-Projektion.
 
 Dazu definieren wir endlichdimensionale Unterräume $\mathcal X_{\mathcal N} \subset \mathcal X$ und $\mathcal Y_{\mathcal M} \subset \mathcal Y$, wobei $\dim(\mathcal X_{\mathcal N}) = \mathcal N$ respektive $\dim(\mathcal Y_{\mathcal M}) = \mathcal M$ sei.
 Der Einfachheit halber fordern wir zunächst $\mathcal N = \mathcal M$.
@@ -18,7 +18,7 @@ Das nun zu lösende Problem lautet damit
 \begin{Problem}
     Gegeben ein $g \in L_{2}(I; V')$ und ein $u_{0} \in H$. Finde ein $u \in \mathcal X_{\mathcal N}$ mit
     \begin{equation}
-        \label{eq:varprob_3}
+        \label{eq:ps:rzvp:schwache_formulierung_3}
         b(u, v) = f(v) \quad \text{für alle}~v \in \mathcal Y_{\mathcal M}.
     \end{equation}
 \end{Problem}
@@ -118,7 +118,7 @@ Sind Steifigkeitsmatrix und Lastvektor bestimmt, dann liefert die Lösung $\vec 
 \begin{equation}
     u_{\mathcal N}(t, x) = \sum_{j = 1}^{M} \sum_{k = 0}^{Q} \vec u_{jk} \sin(\pi j x) L_{k}(t)
 \end{equation}
-die Näherungslösung $u_{\mathcal N} \in \mathcal X_{\mathcal N}$ des Problems \eqref{eq:varprob_3} erhalten.
+die Näherungslösung $u_{\mathcal N} \in \mathcal X_{\mathcal N}$ des Problems \eqref{eq:ps:rzvp:schwache_formulierung_3} erhalten.
 
 % paragraph erster_versuch (end)
 

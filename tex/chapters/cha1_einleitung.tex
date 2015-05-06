@@ -7,14 +7,14 @@
     \vspace*{2\baselineskip}
 }
 \chapter{Einleitung} % (fold)
-\label{cha:einleitung}
+\label{cha:el:einleitung}
 
 Ein Polymer, oder auch Makromolekül, ist ein Molekül, welches sich aus vielen kleineren, sich wiederholenden Molekülen, sogenannten Monomeren, zusammensetzt.
 Besteht ein Polymer aus nur einer Monomer-Art, dann spricht man von einem Homopolymer, sonst von einem Heteropolymer oder auch Copolymer.
 Typischerweise besteht ein Polymer aus einer langen Kette von aneinanderhängenden Monomeren, es existieren aber auch weitere Konfigurationen, zum Beispiel stern- oder ringförmige Anordnungen.
 
 Copolymere lassen sich anhand der Anordnung der Monomere weiter klassifizieren.
-Bilden die verschiedenen Monomer-Gattungen homogene, zusammenhängende Gruppen, welche wiederum durch aneinanderreihen das Copolymer bilden, dann nennen wir dies ein Blockcopolymer, vergleiche \cref{fig:einleitung:polymerketten}.
+Bilden die verschiedenen Monomer-Gattungen homogene, zusammenhängende Gruppen, welche wiederum durch aneinanderreihen das Copolymer bilden, dann nennen wir dies ein Blockcopolymer, vergleiche \cref{fig:el:polymerketten}.
 
 Es existieren unüberschaubar viele solcher Konfigurationen von Polymeren, und insbesondere Blockcopolymeren, weswegen man häufig auf das Studium vergleichsweise simpler Anordnungen zurückgreift.
 Als besonders beliebt hat sich der Fall des kettenförmigen Blockcopolymers mit zwei Monomer-Typen, der Einfachheit halber A und B genannt, herausgestellt.
@@ -40,13 +40,13 @@ Diese Konfiguration wird auch als AB-Diblockcopolymer bezeichnet.
         Skizzenhafte Darstellung verschiedener Polymerarten.
         Von oben nach unten: Homopolymer, ein AB-Diblockcopolymer und ein sogenanntes statistisches AB-Copolymer, bei dem die beiden Monomer-Arten zufällig verteilt sind.
     }
-    \label{fig:einleitung:polymerketten}
+    \label{fig:el:polymerketten}
 \end{figure}
 
 Von großem Interesse ist das Verhalten von Polymerschmelzen (\foreign{engl.}{polymer melt}), das heißt, des flüssigen Aggregatzustands eines Polymers, sowie das Verhalten von Gemischen verschiedener polymerer Stoffe.
 So neigen die Gemische vieler Paare von Homopolymeren zu makroskopischer Phasenseparation, wie man es zum Beispiel von Öl und Essig kennt.
 Eine ähnliche Tendenz findet man auch bei den Polymerschmelzen von Blockcopolymeren, hierbei kann aufgrund der Verbindung der verschiedenen Monomer-Blöcke aber keine makroskopische Phasenseparation auftreten, stattdessen kommt es zu einer periodischen, mikroskopischen Separation.
-\cref{fig:einleitung:phasen} zeigt einige mögliche Anordnungen, die bei Diblockcopolymeren tatsächlich experimentell beobachtet wurden.
+\cref{fig:el:phasen} zeigt einige mögliche Anordnungen, die bei Diblockcopolymeren tatsächlich experimentell beobachtet wurden.
 
 \begin{figure}[tb]
     \centering
@@ -70,7 +70,7 @@ Eine ähnliche Tendenz findet man auch bei den Polymerschmelzen von Blockcopolym
         Diese heißen von links nach rechts: Lamellar, Perforiert-Lamellar, Sphärisch, Zylindrisch, Gyroid.
         Diese Abbildung wurde \cite[Figure 1.18]{Matsen:2006ud} entnommen.
     }
-    \label{fig:einleitung:phasen}
+    \label{fig:el:phasen}
 \end{figure}
 
 Da die experimentelle Bestimmung ohne Vorwissen über die möglichen, stabilen Anordnungen nur wenig erfolgversprechend ist, wird eine fundierte Theorie benötigt, auf Basis derer theoretische Vorhersagen getroffen werden können, die vorzugsweise wiederum experimentell belegbar sein sollten.
@@ -94,12 +94,12 @@ Im Folgenden sei $\vec{r}$ ein Vektor, der eine Position in einem Volumen angibt
         Schematische Darstellung einer Polymerkette im diskreten Kettenmodell (links) und im stetigen Gaußschen Kettenmodell (rechts).
         Abbildung reproduziert nach \cite[Figure 2.1 und 2.5]{Fredrickson:2006th}.
     }
-    \label{fig:einleitung:kettenmodelle}
+    \label{fig:el:kettenmodelle}
 \end{figure}
 
 Das \enquote{grobkörnige} Modell stellt die Polymerkette als eine diskrete Kette von Partikeln so dar, dass aneinanderhängende Monomere ähnlich einem Scharnier frei beweglich sind.
 Dabei werden Wechselwirkung zwischen benachbarten Monomeren berücksichtigt, zwischen auf der Kette weit auseinanderliegenden Partikeln aber ignoriert.
-Diese Wechselwirkungen können am Beispiel von \cref{fig:einleitung:kettenmodelle} beispielsweise als Einschränkung des Winkels $\vartheta_9$ durch die gegenseitige Beeinflussung der Partikel $8, 9$ und $10$ auftreten.
+Diese Wechselwirkungen können am Beispiel von \cref{fig:el:kettenmodelle} beispielsweise als Einschränkung des Winkels $\vartheta_9$ durch die gegenseitige Beeinflussung der Partikel $8, 9$ und $10$ auftreten.
 Das diskrete Modell hängt stark mit den aus der Stochastik bekannten Random Walks zusammen und lässt sich deswegen auch ausführlich mit stochastischen und statistischen Methoden untersuchen.
 
 Das stetige Gaußsche Kettenmodell, welches man unter anderem auch als stetigen Grenzfall des beschriebenen diskreten Modells erhält, hat sich als besonders nützlich erwiesen, sowohl bei analytischen als auch numerischen Betrachtungen.
@@ -140,7 +140,7 @@ Die wichtigsten Größen bei der \ac{scft} sind nun die Konzentrationen $\phi_{\
 Als Ausgangspunkt für die Bestimmungen möglicher stabiler Anordnungen der Polymere in der Schmelze betrachtet man das folgende Funktional, welches eine Approximation für die sogenannte freie Energie des Systems liefert und dessen physikalische Motivation den Rahmen dieser Einführung sprengen würde, siehe zum Beispiel \cite{Matsen:2006ud,Fredrickson:2006th}.
 Die freie Energie $F$ eines einzelnen Polymers lässt sich bestimmen als
 \begin{equation}
-\label{eq:einleitung:freie_energie_funktional}
+\label{eq:el:freie_energie_funktional}
     \frac{F}{nk_{\mathrm{B}}T} = - \ln \frac{Q}{V} + \frac{1}{V} \int \chi N \phi_{\mathrm{A}}(\vec{r}) \phi_{\mathrm{B}}(\vec{r}) - \omega_{\mathrm{A}}(\vec{r}) \phi_{\mathrm{A}}(\vec{r}) - \omega_{\mathrm{B}}(\vec{r}) \phi_{\mathrm{B}}(\vec{r}) \diff \vec{r},
 \end{equation}
 wobei $\chi$ der sogenannte Flory-Huggins-Wechselwirkungsparameter für die Wechselwirkungen zwischen den Monomeren vom Typ A und B und $k_{\mathrm{B}} T$ die thermische Energie ist.
@@ -150,21 +150,21 @@ Betrachtet man die Funktionalableitungen von $F$ bezüglich dieser Größen, dan
 
 Diese Gleichungen bestehen aus der Inkompressibilität der Schmelze, welche durch die Bedingung
 \begin{equation}
-\label{eq:einleitung:inkompressibilitaet}
+\label{eq:el:inkompressibilitaet}
     \phi_{\mathrm{A}}(\vec{r}) + \phi_{\mathrm{B}}(\vec{r}) = 1
 \end{equation}%
 berücksichtigt wird, sowie der Kopplung der Felder und der Konzentrationen durch
 \begin{equation}
-\label{eq:einleitung:felder}
+\label{eq:el:felder}
     \begin{aligned}
         \omega_{\mathrm{A}}(\vec{r}) = \chi N \phi_{\mathrm{B}}(\vec{r}) + \xi(\vec{r}),\\
         \omega_{\mathrm{B}}(\vec{r}) = \chi N \phi_{\mathrm{A}}(\vec{r}) + \xi(\vec{r}),
     \end{aligned}
 \end{equation}%
-wobei mit dem Lagrange-Multiplikator $\xi(\vec{r})$ die Inkompressibilität \cref{eq:einleitung:inkompressibilitaet} erzwungen wird.
+wobei mit dem Lagrange-Multiplikator $\xi(\vec{r})$ die Inkompressibilität \cref{eq:el:inkompressibilitaet} erzwungen wird.
 Weiter erhält man eine Darstellung der Konzentrationen in Form von
 \begin{equation}
-\label{eq:einleitung:konzentrationen}
+\label{eq:el:konzentrationen}
     \begin{aligned}
         \phi_{\mathrm{A}}(\vec{r}) = \frac{V}{Q} \int_{0}^{f} q(\vec{r}, s) q^{\dagger}(\vec{r}, s) \diff s,\\
         \phi_{\mathrm{B}}(\vec{r}) = \frac{V}{Q} \int_{f}^{1} q(\vec{r}, s) q^{\dagger}(\vec{r}, s) \diff s,
@@ -172,14 +172,14 @@ Weiter erhält man eine Darstellung der Konzentrationen in Form von
 \end{equation}%
 wobei $Q = Q(\omega_{\mathrm{A}}, \omega_{\mathrm{B}})$ die Partitionsfunktion (\foreign{engl.}{partition function}) eines einzelnen Polymers ist und durch
 \begin{equation}
-\label{eq:einleitung:partitionsfunktion}
+\label{eq:el:partitionsfunktion}
     Q = \int q(\vec{r}, 1) \diff \vec{r}
 \end{equation}%
 bestimmt wird.
 
-Die in den Gleichungen \cref{eq:einleitung:konzentrationen,eq:einleitung:partitionsfunktion} auftretende Funktion $q(\vec{r}, s)$ wird als Vorwärts-Propagator bezeichnet und erfüllt die parabolische partielle Differentialgleichung
+Die in den Gleichungen \cref{eq:el:konzentrationen,eq:el:partitionsfunktion} auftretende Funktion $q(\vec{r}, s)$ wird als Vorwärts-Propagator bezeichnet und erfüllt die parabolische partielle Differentialgleichung
 \begin{equation}
-\label{eq:einleitung:forward_propagator}
+\label{eq:el:forward_propagator}
     \left\{
     \begin{aligned}
         \frac{\partial q}{\partial s}(\vec{r}, s) &= \frac{a^{2}N}{6} \Delta q(\vec{r}, s) - \omega_{\alpha(s)}(\vec{r}) q(\vec{r}, s),\\
@@ -189,7 +189,7 @@ Die in den Gleichungen \cref{eq:einleitung:konzentrationen,eq:einleitung:partiti
 \end{equation}%
 Analog bezeichnet man $q^{\dagger}(\vec{r}, s)$ als Rückwärts-Propagator, welcher eine ähnliche Differentialgleichung, nämlich
 \begin{equation}
-\label{eq:einleitung:backward_propagator}
+\label{eq:el:backward_propagator}
     \left\{
     \begin{aligned}
         -\frac{\partial q^{\dagger}}{\partial s}(\vec{r}, s) &= \frac{a^{2}N}{6} \Delta q^{\dagger}(\vec{r}, s) - \omega_{\alpha(s)}(\vec{r}) q^{\dagger}(\vec{r}, s),\\
@@ -214,9 +214,9 @@ Die Tatsache, dass sich die Konzentrationen $\phi_{\mathrm{A}}$ und $\phi_{\math
 
 Je nachdem, welches Szenario man betrachtet, das heißt, eine Volumenzelle innerhalb eines größeren Systems, oder eine Zelle, die durch feste Wände begrenzt wird, erhält man verschiedene Randbedingungen an die beiden Differentialgleichungen, so entspricht ersteres beispielsweise periodischen Randbedingungen.
 
-Ein weiterer Punkt, der hier noch erwähnt werden soll, da er sich im Rahmen dieser Arbeit als äußerst nützlich erweisen wird, ist, dass das Funktional $F$ der freien Energie \cref{eq:einleitung:freie_energie_funktional} invariant ist bezüglich konstanter Verschiebungen der Felder $\omega_{\mathrm{A}}$ und $\omega_{\mathrm{B}}$, wie beispielsweise \cite{Ceniceros:2006is} entnommen werden kann.
+Ein weiterer Punkt, der hier noch erwähnt werden soll, da er sich im Rahmen dieser Arbeit als äußerst nützlich erweisen wird, ist, dass das Funktional $F$ der freien Energie \cref{eq:el:freie_energie_funktional} invariant ist bezüglich konstanter Verschiebungen der Felder $\omega_{\mathrm{A}}$ und $\omega_{\mathrm{B}}$, wie beispielsweise \cite{Ceniceros:2006is} entnommen werden kann.
 
-Diese Gleichungen, genauer \cref{eq:einleitung:inkompressibilitaet,eq:einleitung:felder,eq:einleitung:konzentrationen,eq:einleitung:partitionsfunktion,eq:einleitung:forward_propagator,eq:einleitung:backward_propagator}, lassen sich nun numerisch lösen und so stabile Anordnungen über die Sattelpunkte von \cref{eq:einleitung:freie_energie_funktional} bestimmen.
+Diese Gleichungen, genauer \cref{eq:el:inkompressibilitaet,eq:el:felder,eq:el:konzentrationen,eq:el:partitionsfunktion,eq:el:forward_propagator,eq:el:backward_propagator}, lassen sich nun numerisch lösen und so stabile Anordnungen über die Sattelpunkte von \cref{eq:el:freie_energie_funktional} bestimmen.
 
 % subsection selbstkonsistente_feldtheorie (end)
 
@@ -225,15 +225,15 @@ Diese Gleichungen, genauer \cref{eq:einleitung:inkompressibilitaet,eq:einleitung
 Es gibt verschiedene Ansätze, die \ac{scft}-Gleichungen zu einem numerischen Verfahren zu verarbeiten, die meisten führen auf das folgende iterative, Newton-artige Schema:
 \begin{enumerate}[label={\itshape\roman*.},ref={\itshape\roman*}]
     \item Zunächst werden zwei externe Felder $\omega^{(0)}_{\mathrm{A}}$ und $\omega^{(0)}_{\mathrm{B}}$ generiert, typischerweise zufällig, um von vornherein auftretende Verzerrungen zu verhindern.
-    \item\label{eq:einleitung:iterationsverfahren_punkt_2} Die beiden partiellen Differentialgleichungen \cref{eq:einleitung:forward_propagator,eq:einleitung:backward_propagator} werden für die Felder $\omega^{(k)}_{\mathrm{A}}$ und $\omega^{(k)}_{\mathrm{B}}$ gelöst.
-    \item Die Konzentrationen $\phi^{(k)}_{\mathrm{A}}$ und $\phi^{(k)}_{\mathrm{B}}$ werden durch Auswerten der Gleichungen \cref{eq:einleitung:partitionsfunktion,eq:einleitung:konzentrationen} bestimmt.
-    \item Diese werden nun benutzt um aus den Gleichungen \cref{eq:einleitung:felder} die zu diesen Konzentrationen zugehörigen Felder zu bestimmen.
+    \item\label{eq:el:iterationsverfahren_punkt_2} Die beiden partiellen Differentialgleichungen \cref{eq:el:forward_propagator,eq:el:backward_propagator} werden für die Felder $\omega^{(k)}_{\mathrm{A}}$ und $\omega^{(k)}_{\mathrm{B}}$ gelöst.
+    \item Die Konzentrationen $\phi^{(k)}_{\mathrm{A}}$ und $\phi^{(k)}_{\mathrm{B}}$ werden durch Auswerten der Gleichungen \cref{eq:el:partitionsfunktion,eq:el:konzentrationen} bestimmt.
+    \item Diese werden nun benutzt um aus den Gleichungen \cref{eq:el:felder} die zu diesen Konzentrationen zugehörigen Felder zu bestimmen.
     Aus diesen Feldern werden nun mit einem sogenannten Mixing-Verfahren die neuen Felder $\omega^{(k+1)}_{\mathrm{A}}$ und $\omega^{(k+1)}_{\mathrm{B}}$ für die nächste Iteration erzeugt.
-    Das Mixing dient dazu, die Konvergenz des Verfahrens sicherzustellen beziehungsweise zu verbessern, typischerweise gehen hier die Inkompressibilität \cref{eq:einleitung:inkompressibilitaet} und zurückliegende Iterationen ein.
-    \item Sind die neuen Konzentrationen und Felder noch kein Sattelpunkt von \cref{eq:einleitung:freie_energie_funktional}, dann gehe zurück zu \cref{eq:einleitung:iterationsverfahren_punkt_2}.
+    Das Mixing dient dazu, die Konvergenz des Verfahrens sicherzustellen beziehungsweise zu verbessern, typischerweise gehen hier die Inkompressibilität \cref{eq:el:inkompressibilitaet} und zurückliegende Iterationen ein.
+    \item Sind die neuen Konzentrationen und Felder noch kein Sattelpunkt von \cref{eq:el:freie_energie_funktional}, dann gehe zurück zu \cref{eq:el:iterationsverfahren_punkt_2}.
 \end{enumerate}
 
-Ein Beispiel für eine mögliche Anordnung, die durch dieses Iterationsverfahren für den Fall einer Raumdimension bestimmt wurde, ist in \cref{fig:einleitung:felder_nach_iterationsverfahren} zu sehen.
+Ein Beispiel für eine mögliche Anordnung, die durch dieses Iterationsverfahren für den Fall einer Raumdimension bestimmt wurde, ist in \cref{fig:el:felder_nach_iterationsverfahren} zu sehen.
 
 \begin{figure}[tb]
     \centering
@@ -255,12 +255,12 @@ Ein Beispiel für eine mögliche Anordnung, die durch dieses Iterationsverfahren
         Simuliert wurde auf einem Intervall der Länge $L = 10$ mit den relevanten Größen $f = 1/2$, $\chi N = 25$ und $a^{2} N / 6 = 10 / 3$.
         Monomer-Typ A entspricht den blauen und B dementsprechend den orangen Graphen.
     }
-    \label{fig:einleitung:felder_nach_iterationsverfahren}
+    \label{fig:el:felder_nach_iterationsverfahren}
 \end{figure}
 
 Bei dem beschriebenen Verfahren stellen sich die folgenden beiden Probleme als besonders wichtig heraus, da sie massiv die Laufzeit des Iterationsverfahren beeinflussen:
 \begin{enumerate}[label={\itshape\roman*.}]
-    \item das Lösungsverfahren für die parabolischen partiellen Differentialgleichungen \cref{eq:einleitung:forward_propagator} und \cref{eq:einleitung:backward_propagator},
+    \item das Lösungsverfahren für die parabolischen partiellen Differentialgleichungen \cref{eq:el:forward_propagator} und \cref{eq:el:backward_propagator},
     \item das Mixing-Verfahren, mit dem iterativ neue Felder $\omega_{\mathrm{A}}$ und $\omega_{\mathrm{B}}$ bestimmt werden.
 \end{enumerate}
 
@@ -274,12 +274,12 @@ Als besonders nützlicher, da effektiver, Ansatz hat sich das sogenannte Anderso
 Dabei werden neue Felder durch Kombination der Felder vieler zurückliegender Iterationen gewonnen.
 Ein weiteres, einer Picard-Iteration ähnliches, Verfahren findet man bei \textcite{Drolet:1999bs}.
 
-Unser Hauptaugenmerk in dieser Arbeit liegt auf dem ersten Problem, dem wiederholten Lösen der parabolischen partiellen Differentialgleichung \cref{eq:einleitung:forward_propagator}.
+Unser Hauptaugenmerk in dieser Arbeit liegt auf dem ersten Problem, dem wiederholten Lösen der parabolischen partiellen Differentialgleichung \cref{eq:el:forward_propagator}.
 Da es, abhängig vom gewählten Mixing-Verfahren, oftmals eine Iterationsanzahl im dreistelligen Bereich oder höher benötigt, bis eine zufriedenstellende Genauigkeit bei der Sattelpunktgleichung erreicht ist, und damit insbesondere auch die partielle Differentialgleichung so oft gelöst werden muss, ist es wichtig, dass das Lösungsverfahren möglichst effizient ist.
 Weiter darf zu Gunsten der Laufzeit aber auch nicht die Genauigkeit des Lösers vernachlässigt werden, da sich dies im Iterationsverfahren durch Instabilität und zusätzliche Iterationen niederschlagen kann.
 
 Ähnlich wie beim Mixing-Schritt wurden bereits viele verschiedene Ansätze mit mehr oder weniger zufriedenstellenden Ergebnissen verfolgt.
-Da es sich bei \cref{eq:einleitung:forward_propagator} im Grunde um eine Diffusionsgleichung handelt, lassen sich gut bekannte Verfahren, zum Beispiel ein Finite-Differenzen-Verfahren, anwenden.
+Da es sich bei \cref{eq:el:forward_propagator} im Grunde um eine Diffusionsgleichung handelt, lassen sich gut bekannte Verfahren, zum Beispiel ein Finite-Differenzen-Verfahren, anwenden.
 So wird in der Arbeit von \textcite{Drolet:1999bs} ein Crank-Nicolson-Verfahren eingesetzt, wobei hierbei explizit der Laufzeit Vorrang gegenüber der Genauigkeit gegeben wurde.
 
 Als guter Kompromiss zwischen Laufzeit und Genauigkeit haben sich Spektral- und Pseudospektralverfahren herausgestellt.
@@ -297,10 +297,10 @@ Dies ist in aller Kürze das angestrebte Ziel dieser Arbeit.
 
 \subsection*{Aufbau der restlichen Arbeit}
 
-In \cref{cha:grundlagen} werden zunächst die benötigten funktionalanalytischen und numerischen Grundlagen eingeführt, beziehungsweise wiederholt.
+In \cref{cha:gl:grundlagen} werden zunächst die benötigten funktionalanalytischen und numerischen Grundlagen eingeführt, beziehungsweise wiederholt.
 Einige weitere Aussagen, die sich thematisch nur bedingt in diesem Kapitel unterbringen lassen, werden in \cref{cha:funktionalanalytische_grundlagen} gesammelt.
 
-Es folgt \cref{cha:parametrische_problem_neuer_versuch}, in dem die parabolische partielle Differentialgleichung, welche im Rahmen dieser Einleitung bereits vorgestellt wurde, konkretisiert und als parametrische Differentialgleichung formalisiert wird.
+Es folgt \cref{cha:ps:problemstellung}, in dem die parabolische partielle Differentialgleichung, welche im Rahmen dieser Einleitung bereits vorgestellt wurde, konkretisiert und als parametrische Differentialgleichung formalisiert wird.
 Anschließend werden wünschenswerte Aussagen hergeleitet, die eine sinnvolle Bearbeitung durch numerische Methoden erst ermöglichen.
 
 \cref{cha:der_eindimensionale_fall} dient dazu, die bis dahin ausgearbeitete Theorie auf den einfachen, eindimensionalen Fall anzuwenden und numerische Methoden für diesen zu entwickeln.
