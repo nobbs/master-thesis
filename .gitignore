@@ -195,3 +195,4 @@ tex/main.glsdefs
 tex/main.bcf
 tex/main.nls
 tex/main.run.xml
+*.sublime-*
