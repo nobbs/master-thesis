@@ -29,6 +29,8 @@ Wir betrachten nun die partielle Differentialgleichung
     u_{t}(t, \vec{x}) = c \Delta_{\vec{x}} u(t, \vec{x}) - \omega(t, \vec{x}) u(t, \vec{x}) - \mu u(t, \vec{x}) \quad \text{auf}~I \times \Omega,
 \end{equation}
 wobei $c \in \mathbb{R}_{+}$ und $\mu \in \mathbb{R}$ Konstanten seien.
+% TODO: eventuell sollte man das hier anders machen...
+% Weiter sei $\omega \colon \Omega \to \mathbb{R}$ eine $L_{\infty}$-Abbildung, das heißt, wir verzichten an dieser Stelle zunächst auf die zeitliche Abhängigkeit, die in \cref{cha:el:einleitung} noch in Form eines Wechsels zwischen zwei Feldern $\omega_{1}, \omega_{2}$ zu finden war.
 Weiter sei
 \begin{equation}
 \label{eq:ps:pde:omega_definition}
@@ -222,13 +224,13 @@ Diese Variationsformulierung wird uns in den nachfolgenden Kapiteln als Ausgangs
 \subsection{Existenz und Eindeutigkeit von Lösungen} % (fold)
 \label{sub:ps:eel:existenz_und_eindeutigkeit_von_loesungen}
 
-Wir weisen nun, aufbauend auf \cref{sec:gl:le:lineare_evolutionsgleichungen}, nach, dass das Raum-Zeit-Variationsproblem aus \cref{def:ps:rzvp:schwache_formulierung} sachgemäß gestellt ist, und bestimmen zudem Abschätzungen für die Norm des Operators und dessen Inverse.
+Wir weisen nun aufbauend auf \cref{sec:gl:le:lineare_evolutionsgleichungen} nach, dass das Raum-Zeit-Variationsproblem aus \cref{def:ps:rzvp:schwache_formulierung} sachgemäß gestellt ist, und bestimmen zudem Abschätzungen für die Norm des Operators und dessen Inverse.
 Die Hauptarbeit dazu wurde bereits durch das \cref{satz:gl:le:bnb_theorem} und \cref{satz:gl:le:ss09_theorem51} geleistet und muss hier nur noch angewandt werden.
 
 \mfix{Anpassen an das neu vorkommende Mu!}
 
-\begin{Korollar}
-\label{kor:ps:eel:schwache_formulierung_sachgemaess_gestellt}
+\begin{Satz}
+\label{satz:ps:eel:schwache_formulierung_sachgemaess_gestellt}
     Seien $\mathcal X$ und $\mathcal Y$ gegeben wie in \cref{eq:ps:rzvp:ansatzraum_testraum} und sei $B \colon \mathcal X \to \mathcal Y'$ definiert durch
     \begin{equation}
         \skprod{Bu}{v}_{\mathcal Y' \times \mathcal Y}  = b(u, v), \quad u \in \mathcal X,~ v \in \mathcal Y,
@@ -250,7 +252,31 @@ Die Hauptarbeit dazu wurde bereits durch das \cref{satz:gl:le:bnb_theorem} und \
     %     % \frac{\sqrt{2 \max\{ 1, \sigma^{-2} \gamma_{\Omega}^{-4} \} + M_{e}^{2}}}{\min\{ \sigma \gamma_{\Omega}^{2} \norm{\omega}_{L_{\infty}(\Omega)}^{-2}, \sigma \gamma_{\Omega}^{2} \}}
     % \end{equation}
     % mit $M_{e}$ und $\rho$ wie in \cref{kor:gl:br:einbettungskonstante_M_e} respektive \cref{kor:gl:le:einbettungskonstante_rho}.
+\end{Satz}
+
+\mfix{Den Quatsch hier mal ordentlich formulieren und formatieren.}
+\begin{Korollar}
+\label{kor:ps:eel:schwache_formulierung_operator_schranken}
+    Unter den selben Gegebenheiten wie in \cref{satz:ps:eel:schwache_formulierung_sachgemaess_gestellt} gilt konkret
+    \begin{equation}
+        \norm{B}_{\mathcal L(\mathcal X, \mathcal Y')} \leq \sqrt{2 \max\Set{1, c, \norm{\omega}_{L_{\infty}(\Omega)} + \abs{\mu}}^{2} + M_{e}^{2}}
+    \end{equation}
+    und
+    \begin{equation}
+        \norm{B^{-1}}_{\mathcal L(\mathcal Y', \mathcal X)} \leq \frac{\sqrt{2 \max \Set{(c \gamma_{\Omega}^{2})^{-2}, 1} + M_{e}^{2}}}{\gamma_{\Omega}^{2} \min\Set{1, c , c  (\norm{\omega}_{L_{\infty}(\Omega)} + \abs{\mu})^{-1}}}.
+    \end{equation}
+
+    Ist $\lambda \neq 0$, dann gilt
+    \begin{equation}
+        \norm{B}_{\mathcal L(\mathcal X, \mathcal Y')} \leq \frac{\sqrt{2 \max\Set{1, c, \norm{\omega}_{L_{\infty}(\Omega)} + \abs{\mu}}^{2} + M_{e}^{2}}}{\max\Set{\sqrt{1 + 2 \lambda^{2} \rho^{4}}, \sqrt{2}}}
+    \end{equation}
+    und
+    \begin{equation}
+        \norm{B^{-1}}_{\mathcal L(\mathcal Y', \mathcal X)} \leq e^{2 \lambda T} \max\Set{\sqrt{1 + 2 \lambda^{2} \rho^{4}}, \sqrt{2}} \frac{\sqrt{2 \max \Set{(c \gamma_{\Omega}^{2})^{-2}, 1} + M_{e}^{2}}}{\gamma_{\Omega}^{2} \min\Set{1, c , c  (\norm{\omega}_{L_{\infty}(\Omega)} + \abs{\mu})^{-1}}}.
+    \end{equation}
 \end{Korollar}
+
+
 
 % subsection existenz_und_eindeutigkeit_von_l_sungen (end)
 
@@ -366,8 +392,14 @@ In diesem Abschnitt wollen wir nun nachweisen, dass die im vorherigen Abschnitt 
 Dabei orientieren wir uns an den Arbeiten von \textcite{Cohen:2010kz,Kunoth:2013ef} und weisen diese Eigenschaften zunächst für den stationären Fall nach, das heißt, wir verlieren die Zeitabhängigkeit und betrachten stattdessen die parametrische Operatorgleichung
 \begin{equation}
 \label{eq:ps:rg:operatorgleichung_parametrisch}
-    A(\omega) \eta(\omega) = f \quad \text{in}~H^{-1}(\Omega).
+    A(\omega) \eta(\omega) = g \quad \text{in}~H^{-1}(\Omega)
 \end{equation}
+mit dem parametrischen Operator $A(\omega)$ aus Gleichung \cref{eq:ps:pf:operator_A}, beziehungsweise die zugehörige Variationsformulierung
+\begin{equation}
+\label{eq:ps:rg:variationsformulierung_parametrisch}
+    a(\eta, \zeta; \omega) = \skp{g}{\zeta}{H^{-1}(\Omega) \times H^{1}_{0}(\Omega)}
+\end{equation}
+mit der parametrischen Bilinearform $a(\blank, \blank; \omega)$ aus Gleichung \cref{eq:ps:pf:bilinearform_a}.
 
 Wir beginnen damit, die Existenz der partiellen Ableitung $\partial^{\nu}_{\sigma} \eta$ in jedem Punkt $\sigma \in \mathcal S$ nachzuweisen.
 
@@ -388,18 +420,19 @@ Zunächst einige notationelle Vorbemerkungen.
     Wegen $\norm{\nu}_{\ell_{1}(\mathbb{N})} < \infty$ ist dieses Produkt stets endlich.
 \end{Bemerkung}
 
-Bevor wir uns an die partiellen Ableitungen wagen, beweisen wir eine Stabilitätsaussage für die obige parametrische Operatorgleichung \cref{eq:ps:rg:operatorgleichung_parametrisch}, welche sich dabei als nützlich erweisen wird.
-Für diese benötigen wir, dass die obige Operatorgleichung sachgemäß gestellt ist.
+Bevor wir uns an die partiellen Ableitungen wagen, beweisen wir eine Stabilitätsaussage für die obige parametrische Operatorgleichung \cref{eq:ps:rg:operatorgleichung_parametrisch}
+Um diese nachzuweisen, benötigen wir zunächst, dass die obige Operatorgleichung sachgemäß gestellt ist.
 
 \begin{Satz}
 \label{satz:ps:rg:lax_milgram_anwendung}
-    Seien $\omega \in L_{\infty}(\Omega)$, $\mu \geq \norm{\omega}_{L_{\infty}(\Omega)}$ und weiter $g \in H^{-1}(\Omega)$ und $A(\omega)$ wie in \cref{eq:ps:pf:operator_A}, dann besitzt die Operatorgleichung
+    Seien $\omega \in L_{\infty}(\Omega)$, $\mu \geq \norm{\omega}_{L_{\infty}(\Omega)}$, $g \in H^{-1}(\Omega)$ und weiter $A(\omega)$ wie in \cref{eq:ps:pf:operator_A}, dann besitzt die Operatorgleichung
     \begin{equation}
-        A(\omega) u(\omega) = g
+        \tag*{\cref{eq:ps:rg:operatorgleichung_parametrisch}}
+        A(\omega) \eta(\omega) = g \quad \text{in}~H^{-1}(\Omega)
     \end{equation}
-    eine eindeutige Lösung $u(\omega) \in H^{1}_{0}(\Omega)$ und diese erfüllt
+    eine eindeutige Lösung $\eta(\omega) \in H^{1}_{0}(\Omega)$ und diese erfüllt
     \begin{equation}
-        \norm{u(\omega)}_{H^{1}(\Omega)} \leq \frac{\norm{g}_{H^{-1}(\Omega)}}{\alpha}
+        \norm{\eta(\omega)}_{H^{1}(\Omega)} \leq \frac{\norm{g}_{H^{-1}(\Omega)}}{\alpha}
     \end{equation}
     mit $\alpha$ aus \cref{satz:ps:rzvp:bilinearform_a_eigenschaften}.
 
@@ -410,52 +443,46 @@ Für diese benötigen wir, dass die obige Operatorgleichung sachgemäß gestellt
 
 \begin{Lemma}
 \label{lem:ps:rg:norm_abschaetzung}
-    Seien $\omega_{1}, \omega_{2} \in L_{\infty}(\Omega)$ und $u_{1}, u_{2}$ die zugehörigen Lösungen von \cref{eq:ps:rg:operatorgleichung_parametrisch}, dann gilt
+    Seien $\omega_{1}, \omega_{2} \in L_{\infty}(\Omega)$ und $\eta_{1}, \eta_{2}$ die zugehörigen Lösungen von \cref{eq:ps:rg:operatorgleichung_parametrisch}, dann gilt
     \begin{equation}
-        \norm{u_{1} - u_{2}}_{H^{1}(\Omega)} \leq \frac{\norm{f}_{H^{-1}(\Omega)}}{\gamma_{0}^{2}} \norm{\omega_{1} - \omega_{2}}_{L_{\infty}}.
+        \norm{\eta_{1} - \eta_{2}}_{H^{1}(\Omega)} \leq \frac{\norm{g}_{H^{-1}(\Omega)}}{\alpha^{2}} \norm{\omega_{1} - \omega_{2}}_{L_{\infty}(\Omega)}.
     \end{equation}
 
-    \mfix{Beweis prüfen!}
-
     \begin{Beweis}
-        Durch Subtraktion der beiden Variationsformulierungen erhalten wir für $v \in V$ die Gleichung
+        Durch Subtraktion der Variationsformulierungen \cref{eq:ps:rg:variationsformulierung_parametrisch} für $\eta_{1}$ und $\eta_{2}$ erhalten wir für alle $\zeta \in H^{1}_{0}(\Omega)$ die Gleichung
         \begin{align}
-            0 &= a(u_{1}, v; \omega_{1}) - a(u_{2}, v; \omega_{2})
-            \\&= c \skp{\grad u_{1} - \grad u_{2}}{\grad v}{H} + \skp{\omega_{1}u_{1} - \omega_{2} u_{2}}{v}{H} + \mu \skp{u_{1} - u_{2}}{v}{H},
-            \intertext{durch setzen von $z = u_{1} - u_{2}$ erhalten wir weiter}
-            0 &= c \skp{\grad z}{\grad v}{H} + \skp{\omega_{1} z}{v}{H} + \mu \skp{z}{v}{H} + \skp{(\omega_{1} - \omega_{2}) u_{2}}{v}{H}
-            \\&= a(z, v; \omega_{1}) + \skp{(\omega_{1} - \omega_{2}) u_{2}}{v}{H}.
+            0 &= a(\eta_{1}, \zeta; \omega_{1}) - a(\eta_{2}, \zeta; \omega_{2})
+            \\&= c \skp{\grad \eta_{1} - \grad \eta_{2}}{\grad \zeta}{L_{2}(\Omega)} + \skp{\omega_{1}\eta_{1} - \omega_{2} \eta_{2}}{\zeta}{L_{2}(\Omega)} + \mu \skp{\eta_{1} - \eta_{2}}{\zeta}{L_{2}(\Omega)},
+            \intertext{durch setzen von $\theta = \eta_{1} - \eta_{2}$ erhalten wir weiter}
+            0 &= c \skp{\grad \theta}{\grad \zeta}{L_{2}(\Omega)} + \skp{\omega_{1} \theta}{\zeta}{L_{2}(\Omega)} + \mu \skp{\theta}{\zeta}{L_{2}(\Omega)} + \skp{(\omega_{1} - \omega_{2}) \eta_{2}}{\zeta}{L_{2}(\Omega)}
+            \\&= a(\theta, \zeta; \omega_{1}) + \skp{(\omega_{1} - \omega_{2}) \eta_{2}}{\zeta}{L_{2}(\Omega)}.
         \end{align}
-        Dies lässt sich nun wieder in Form des Variationsproblems schreiben, konkret
+        Dies lässt sich nun in der Form
         \begin{equation}
-            a(z, v; \omega_{1}) = g(v) \quad \fa v \in V,
+            a(\theta, \zeta; \omega_{1}) = - \skp{(\omega_{1} - \omega_{2}) \eta_{2}}{\zeta}{L_{2}(\Omega)} =: h(\zeta)
         \end{equation}
-        mit
+        wieder als Variationsproblems \cref{eq:ps:rg:variationsformulierung_parametrisch} interpretieren.
+        Da es sich bei $h$ um ein stetiges lineares Funktional auf $H^{1}_{0}(\Omega)$ handelt, liefert nun \cref{satz:ps:rg:lax_milgram_anwendung}, dass $\theta = \eta_{1} - \eta_{2}$ die eindeutige Lösung dieses Variationsproblems ist und weiterhin die Ungleichung
         \begin{equation}
-            g(v) = - \skp{(\omega_{1} - \omega_{2}) u_{2}}{v}{H}.
+            \norm{\theta}_{H^{1}(\Omega)} \leq \frac{\norm{h}_{H^{-1}(\Omega)}}{\alpha}
         \end{equation}
-
-        Nach \cref{satz:ps:rg:lax_milgram_anwendung} ist die Lösung $z = u_{1} - u_{2} \in V$ eindeutig und erfüllt
-        \begin{equation}
-            \norm{z}_{V} \leq \frac{\norm{g}_{V'}}{\gamma_{0}}.
-        \end{equation}
-
-        Die Operatornorm von $g$ lässt sich mittels der Cauchy-Schwarz-Ungleichung bestimmen zu
+        erfüllt.
+        Die Operatornorm von $h$ lässt sich mittels der Cauchy-Schwarz-Ungleichung und \cref{satz:ps:rg:lax_milgram_anwendung} bestimmen zu
         \begin{equation}
             \begin{aligned}
-                \norm{g}_{V'}
-                  &=    \sup_{\norm{v}_{V} = 1} \abs{g(v)}
-                   =    \sup_{\norm{v}_{V} = 1} \abs{\skp{(\omega_{1} - \omega_{2}) u_{2}}{v}{H}}
-                \\&\leq \sup_{\norm{v}_{V} = 1} \norm{\omega_{1} - \omega_{2}}_{L_{\infty}(\Omega)} \norm{u_{1}}_{H} \norm{v}_{H}
-                   \leq \sup_{\norm{v}_{V} = 1} \norm{\omega_{1} - \omega_{2}}_{L_{\infty}(\Omega)} \norm{u_{1}}_{V} \norm{v}_{V}
-                \\&=    \norm{\omega_{1} - \omega_{2}}_{L_{\infty}(\Omega)} \norm{u_{1}}_{V}
-                   \leq \norm{\omega_{1} - \omega_{2}}_{L_{\infty}(\Omega)} \frac{\norm{f}_{V'}}{\gamma_{0}}.
+                \norm{h}_{H^{-1}(\Omega)}
+                  &=    \sup_{\norm{\zeta}_{H^{1}(\Omega)} = 1} \abs{h(\zeta)}
+                \\&=    \sup_{\norm{\zeta}_{H^{1}(\Omega)} = 1} \abs{\skp{(\omega_{1} - \omega_{2}) \eta_{2}}{\zeta}{L_{2}(\Omega)}}
+                \\&\leq \sup_{\norm{\zeta}_{H^{1}(\Omega)} = 1} \norm{\omega_{1} - \omega_{2}}_{L_{\infty}(\Omega)} \norm{\eta_{1}}_{L_{2}(\Omega)} \norm{\zeta}_{L_{2}(\Omega)}
+                \\&\leq \sup_{\norm{\zeta}_{H^{1}(\Omega)} = 1} \norm{\omega_{1} - \omega_{2}}_{L_{\infty}(\Omega)} \norm{\eta_{1}}_{H^{1}(\Omega)} \norm{\zeta}_{H^{1}(\Omega)}
+                \\&=    \norm{\omega_{1} - \omega_{2}}_{L_{\infty}(\Omega)} \norm{\eta_{1}}_{H^{1}(\Omega)}
+                \\&\leq \norm{\omega_{1} - \omega_{2}}_{L_{\infty}(\Omega)} \frac{\norm{g}_{H^{-1}(\Omega)}}{\alpha}.
             \end{aligned}
         \end{equation}
         Zusammen liefert dies die Ungleichung
         \begin{equation}
-            \norm{u_{1} - u_{2}}_{V}
-            = \norm{z}_{V} \leq \norm{\omega_{1} - \omega_{2}}_{L_{\infty}(\Omega)} \frac{\norm{f}_{V'}}{\gamma_{0}^{2}}
+            \norm{\eta_{1} - \eta_{2}}_{H^{1}(\Omega)}
+            = \norm{\theta}_{H^{1}(\Omega)} \leq \frac{\norm{g}_{H^{-1}(\Omega)}}{\alpha^{2}} \norm{\omega_{1} - \omega_{2}}_{L_{\infty}(\Omega)}
         \end{equation}
         und damit die Behauptung.
     \end{Beweis}
@@ -463,100 +490,101 @@ Für diese benötigen wir, dass die obige Operatorgleichung sachgemäß gestellt
 
 \begin{Satz}
 \label{satz:ps:rg:existenz_partieller_ableitungen}
-    Die Abbildung $\mathcal S \ni \sigma \mapsto u(\sigma) \in V$ besitzt für alle $\nu \in \mathfrak F$ die partielle Ableitung $\partial^{\nu}_{\sigma} u(\sigma)$.
+    Die Abbildung $\mathcal S \ni \sigma \mapsto \eta(\sigma) \in H^{1}_{0}(\Omega)$, welche einem Parameter $\sigma$ die zugehörige Lösung $\eta(\sigma)$ des Variationsproblems \cref{eq:ps:rg:variationsformulierung_parametrisch} zuordnet, besitzt für alle $\nu \in \mathfrak F$ eine partielle Ableitung $\partial^{\nu}_{\sigma} \eta(\sigma)$.
 
     \mfix{Beweis prüfen!}
 
     \begin{Beweis}
-        Wir zeigen die Behauptung exemplarisch für für die partiellen Ableitungen erster Ordnung für ein festes $\sigma \in \mathcal S$.
+        Wir beschränken uns darauf die Behauptung exemplarisch für die partiellen Ableitungen erster Ordnung für ein festes $\sigma \in \mathcal S$ nachzuweisen.
         Seien dazu $\nu = e_{j}$ für ein $j \in \mathbb{N}$ und sei weiter $h \in \mathbb{R} \setminus \Set{ 0 }$.
-        Definiere
+        Definiere $\sigma_{h} = \sigma + h e_{j}$ und folglich $\sigma_{0} = \sigma$.
+        Weiter setzen wir
         \begin{equation}
-            u_{h} := \frac{u(\sigma + h e_{j}) - u(\sigma)}{h}.
+            \theta_{h} = \frac{\eta(\sigma_{h}) - \eta(\sigma)}{h},
+        \end{equation}
+        wobei $\eta(\blank)$ die Lösungen des Variationsproblems zu den entsprechenden Parametern seien.
+        Ist $\abs{h}$ klein genug, so dass $\sigma_{h} = \sigma + h e_{j} \in \mathcal S$ gilt, dann existieren die eindeutigen $\eta(\blank)$ nach \cref{satz:ps:rg:lax_milgram_anwendung}, das heißt, der obige Ausdruck für $\theta_{h}$ ist für diese $h$ wohldefiniert.
+
+        Betrachte unter diesen Gegebenheiten nun die Differenz der zu $\eta(\sigma_{h})$ und $\eta(\sigma)$ zugehörigen Variationsprobleme \cref{eq:ps:rg:variationsformulierung_parametrisch}, dann gilt für alle $\zeta \in H^{1}_{0}(\Omega)$ die Gleichung
+        \begin{align}
+            0 &= a(\eta(\sigma_{h}), \zeta; \sigma_{h}) - a(\eta(\sigma), \zeta; \sigma)
+            %
+            \\ &= c \skp{\grad \eta(\sigma_{h}) - \grad \eta(\sigma)}{\grad \zeta}{L_{2}(\Omega)}
+                    + \skp{\omega(\sigma_{h})\eta(\sigma_{h}) - \omega(\sigma) \eta(\sigma)}{\zeta}{L_{2}(\Omega)}
+                    \\&\qquad+ \mu \skp{\eta(\sigma_{h}) - \eta(\sigma)}{\zeta}{L_{2}(\Omega)}
+            \\ &= h a(\theta_{h}, \zeta; \sigma) + \skp{(\omega(\sigma_{h}) - \omega(\sigma))\eta(\sigma_{h})}{\zeta}{L_{2}(\Omega)}
+        \end{align}
+        Erneut können wir diese Gleichung in die Form des Variationsproblems \cref{eq:ps:rg:variationsformulierung_parametrisch} bringen, konkret also
+        \begin{equation}
+            a(\theta_{h}, \zeta; \sigma) = F_{h}(\zeta) \quad \fa \zeta \in H^{1}_{0}(\Omega).
+        \end{equation}
+        Dabei lässt sich das stetige lineare Funktional $F_{h} \in H^{-1}(\Omega)$ wegen der affinen Darstellung \cref{eq:ps:pf:omega_affine_zerlegung} von $\omega(\blank)$ schreiben als
+        \begin{equation}
+            F_{h} \colon H^{1}_{0}(\Omega) \to \mathbb{R},
+            \quad \zeta \mapsto - h^{-1} \skp{(\omega(\sigma_{h}) - \omega(\sigma))\eta(\sigma_{h})}{\zeta}{L_{2}(\Omega)}
+            = - \skp{\varphi_{j} \eta(\sigma_{h})}{\zeta}{L_{2}(\Omega)}.
+        \end{equation}
+        Weiter ist $F_{h}(\blank)$ stetig in $h = 0$, denn für festes $\zeta \in H^{1}_{0}(\Omega)$ gilt unter Verwendung der Cauchy-Schwarz-Ungleichung die Abschätzung
+        \begin{align}
+            \abs{F_{h}(\zeta) - F_{0}(\zeta)}
+            &= \abs{\skp{\varphi_{j} (\eta(\sigma_{h}) - \eta(\sigma))}{\zeta}{L_{2}(\Omega)}}
+            \\&\leq \norm{\varphi_{j}}_{L_{\infty}(\Omega)} \abs{\skp{\eta(\sigma_{h}) - \eta(\sigma)}{\zeta}{L_{2}(\Omega)}}
+            \\&\leq \norm{\varphi_{j}}_{L_{\infty}(\Omega)} \norm{\eta(\sigma_{h}) - \eta(\sigma)}_{L_{2}(\Omega)} \norm{\zeta}_{L_{2}(\Omega)}
+            \\&\leq \norm{\varphi_{j}}_{L_{\infty}(\Omega)} \norm{\eta(\sigma_{h}) - \eta(\sigma)}_{H^{1}(\Omega)} \norm{\zeta}_{H^{1}(\Omega)}.
+        \end{align}
+        Weiter können wir die Stabilitätsaussage aus \cref{lem:ps:rg:norm_abschaetzung} für die hier auftretenden Parameter vereinfachen zu
+        \begin{equation}
+            \norm{\eta(\sigma_{h}) - \eta(\sigma)}_{H^{1}(\Omega)}
+            \leq \frac{\norm{g}_{H^{-1}(\Omega)}}{\alpha^{2}} \norm{\omega(\sigma_{h}) - \omega(\sigma)}_{L_{\infty}(\Omega)}
+            = \abs{h} \norm{\varphi_{j}}_{L_{\infty}(\Omega)} \frac{\norm{g}_{H^{-1}(\Omega)}}{\alpha^{2}}.
+        \end{equation}
+        Zusammen liefern die beiden obigen Abschätzungen
+        \begin{equation}
+            \abs{F_{h}(\zeta) - F_{0}(\zeta)} \leq \abs{h} \norm{\varphi_{j}}^{2}_{L_{\infty}(\Omega)} \norm{\zeta}_{H^{1}(\Omega)} \frac{\norm{g}_{H^{-1}(\Omega)}}{\gamma_{0}^{2}} \to 0 \quad \text{für}~h \to 0,
+        \end{equation}
+        das heißt, es gilt $F_{h} \to F_{0}$ in $H^{-1}(\Omega)$ für $h \to 0$.
+        \mfix{Genauer ausführen, warum. (vergleiche $\eta(\sigma_{h}) = A(\sigma_{h})^{-1} F_{h}$)}
+        Dies impliziert insbesondere $\theta_{h} \to \theta_{0}$ in $H^{1}_{0}(\Omega)$ für $h \to 0$.
+        Weiter erfüllt $\theta_{0}$ die Gleichung
+        \begin{equation}
+            a(\theta_{0}, \zeta; \sigma) = F_{0}(\zeta) \quad \fa \zeta \in H^{1}_{0}(\Omega).
+        \end{equation}
+        Damit existiert $\partial_{\sigma_{j}} \eta(\sigma) = \theta_{0}$ in $H^{1}_{0}(\Omega)$ und ist die eindeutige Lösung des Variationsproblems
+        \begin{equation}
+        \label{eq:ps:rg:variationsproblem_partielle_ableitung}
+            a(\partial_{\sigma_{j}} \eta(\sigma), \zeta; \sigma) = - \skp{\varphi_{j} \eta(\sigma)}{\zeta}{L_{2}(\Omega)} \quad \fa \zeta \in H^{1}_{0}(\Omega).
         \end{equation}
 
-        \mwarn{wohldfiniertheit?}
-        Ist $\abs{h}$ klein genug, so dass $\sigma + h e_{j} \in \mathcal S$ gilt, dann existieren die eindeutigen Lösungen $u(\sigma + h e_{j})$ und $u(\sigma)$ des Variationsproblems (??) zu den jeweiligen Parametern.
-        Betrachte nun die Differenz der beiden Variationsformulierungen, dann gilt
-        \begin{align}
-            0 &= a(u(\sigma + h e_{j}), v; \sigma + h e_{j}) - a(u(\sigma), v; \sigma)
-            %
-            \\ &= c \skp{u(\sigma + h e_{j})}{v}{L_{2}(\Omega)} + \skp{\omega(\sigma + h e_{j}) u(\sigma + h e_{j})}{v}{L_{2}(\Omega)} + \mu \skp{u(\sigma + h e_{j})}{v}{L_{2}(\Omega)}
-            \\&\qquad - c \skp{u(\sigma)}{v}{L_{2}(\Omega)} - \skp{\omega(\sigma) u(\sigma)}{v}{L_{2}(\Omega)} - \mu \skp{u(\sigma)}{v}{L_{2}(\Omega)}
-            %
-            \\&= c \skp{u(\sigma + h e_{j}) - u(\sigma)}{v}{L_{2}(\Omega)} + \skp{\omega(\sigma + h e_{j}) u(\sigma + h e_{j}) - \omega(\sigma) u(\sigma)}{v}{L_{2}(\Omega)}
-            \\&\qquad  + \mu \skp{u(\sigma + h e_{j}) - u(\sigma)}{v}{L_{2}(\Omega)}
-            %
-            \\&= c \skp{u(\sigma + h e_{j}) - u(\sigma)}{v}{L_{2}(\Omega)} + \skp{\omega(\sigma) (u(\sigma + h e_{j}) - u(\sigma))}{v}{L_{2}(\Omega)}
-            \\&\qquad + \skp{(\omega(\sigma + h e_{j}) - \omega(\sigma)) u(\sigma + h e_{j})}{v}{L_{2}(\Omega)} + \mu \skp{u(\sigma + h e_{j}) - u(\sigma)}{v}{L_{2}(\Omega)}
-            %
-            \\&= h \left(
-                c \skp{u_{h}}{v}{L_{2}(\Omega)} + \skp{\omega(\sigma) u_{h}}{v}{L_{2}(\Omega)} + \mu \skp{u_{h}}{v}{L_{2}(\Omega)}
-             \right) + h \skp{\varphi_{j} u(\sigma + h e_{j})}{v}{L_{2}(\Omega)}
-            \\&= h a(u_{h}, v; \sigma) + h \skp{\varphi_{j} u(\sigma + h e_{j})}{v}{L_{2}(\Omega)}
-        \end{align}
-        Dies lässt sich zu folgendem Variationsproblem
-        \begin{equation}
-            a(u_{h}, v; \sigma) = F_{h}(v) \quad \fa v \in V.
-        \end{equation}
-        Dabei ist
-        \begin{equation}
-            F_{h} \colon V \to \mathbb{R}, \quad v \mapsto - \skp{\varphi_{j} u(\sigma + h e_{j})}{v}{L_{2}(\Omega)}
-        \end{equation}
-        ein lineares stetiges Funktional.
-        Weiter ist $F_{h}(\blank)$ stetig in $h = 0$, denn es gilt für festes $v \in V$ die Abschätzung
-        \begin{align}
-            \abs{F_{h}(v) - F_{0}(v)}
-            &= \abs{\skp{\varphi_{j} (u(\sigma + h e_{j}) - u(\sigma))}{v}{L_{2}(\Omega)}}
-            \\&\leq \norm{\varphi_{j}}_{L_{\infty}(\Omega)} \abs{\skp{u(\sigma + h e_{j}) - u(\sigma)}{v}{L_{2}(\Omega)}}
-            \\&\leq \norm{\varphi_{j}}_{L_{\infty}(\Omega)} \norm{u(\sigma + h e_{j}) - u(\sigma)}_{L_{2}(\Omega)} \norm{v}_{L_{2}(\Omega)}
-            \\&\leq \norm{\varphi_{j}}_{L_{\infty}(\Omega)} \norm{u(\sigma + h e_{j}) - u(\sigma)}_{H^{1}(\Omega)} \norm{v}_{H^{1}(\Omega)}.
-        \end{align}
-        Weiter liefert \cref{lem:ps:rg:norm_abschaetzung} die Ungleichung
-        \begin{align}
-            \norm{u(\sigma + h e_{j}) - u(\sigma)}_{H^{1}(\Omega)}
-            &\leq \frac{\norm{f}_{V'}}{\gamma_{0}^{2}} \norm{\omega(\sigma + h e_{j}) - \omega(\sigma)}_{L_{\infty}(\Omega)}
-            \\&\leq \abs{h} \norm{\varphi_{j}}_{L_{\infty}(\Omega)} \frac{\norm{f}_{V'}}{\gamma_{0}^{2}}.
-        \end{align}
-        Zusammen liefern die beiden Abschätzungen
-        \begin{equation}
-            \abs{F_{h}(v) - F_{0}(v)} \leq \abs{h} \norm{\varphi_{j}}^{2}_{L_{\infty}(\Omega)} \norm{v}_{H^{1}(\Omega)} \frac{\norm{f}_{V'}}{\gamma_{0}^{2}} \to 0 \quad \text{für}~h \to 0,
-        \end{equation}
-        das heißt es gilt $F_{h} \to F_{0}$ in $V'$ für $h \to 0$.
-
-        Dies impliziert insbesondere $u_{h} \to u_{0}$ in $V$ für $h \to 0$.
-        Weiter erfüllt $u_{0}$ die Gleichung
-        \begin{equation}
-            a(u_{0}, v; \sigma) = F_{0}(v) \quad \fa v \in V.
-        \end{equation}
-        Damit existiert $\partial_{\sigma_{j}} u(\sigma) = u_{0}$ in $V$ und ist die eindeutige Lösung des Variationsproblems
-        \begin{equation}
-            a(\partial_{\sigma_{j}} u(\sigma), v; \sigma) = - \skp{\varphi_{j} u(\sigma)}{v}{L_{2}(\Omega)} \quad \fa v \in V.
-        \end{equation}
-
-        Alternativ erhält man dieses Variationsproblem auch durch formales Differenzieren der eigentlichen Variationsformulierung nach $\sigma_{j}$, denn dann gilt
-        \begin{align}
-            \partial_{\sigma_{j}} a(u(\sigma), v; \sigma)
-            &= \partial_{\sigma_{j}} \left( c \skp{\grad u(\sigma)}{\grad v}{L_{2}(\Omega)} + \skp{w(\sigma)u(\sigma)}{v}{L_{2}(\Omega)} + \mu \skp{u(\sigma)}{v}{L_{2}(\Omega)} \right)
-            \\&= c \skp{\grad \partial_{\sigma_{j}} u(\sigma)}{\grad v}{L_{2}(\Omega)} + \skp{ \partial_{\sigma_{j}} w(\sigma)u(\sigma) + w(\sigma) u(\sigma) }{v}{L_{2}(\Omega)} + \mu \skp{\partial_{\sigma_{j}}u(\sigma)}{v}{L_{2}(\Omega)}
-            \\&= a(\partial_{\sigma_{j}} u(\sigma), v; \sigma) + \skp{\partial_{\sigma_{j}}\omega(\sigma)u(\sigma)}{v}{L_{2}(\Omega)}
-            \\&= a(\partial_{\sigma_{j}} u(\sigma), v; \sigma) + \skp{\varphi_{j} u(\sigma)}{v}{L_{2}(\Omega)}
-        \end{align}
-        und
-        \begin{equation}
-            \partial_{\sigma_{j}} \skp{f}{v}{L_{2}(\Omega)} = 0,
-        \end{equation}
-        woraus man ingesamt erneut das Variationsproblem
-        \begin{equation}
-            a(\partial_{\sigma_{j}} u(\sigma), v; \sigma) = - \skp{\varphi u(\sigma)}{v}{L_{2}(\Omega)} \quad \fa v \in V
-        \end{equation}
-        erhält.
-
-        Durch wiederholtes Anwenden des beschriebenen Vorgehens erhält man damit auch die Existenz der höheren partiellen Ableitungen.
+        Analog kann man auch die Existenz der partiellen Ableitungen höherer Ordnung nachweisen, indem man die in diesem Beweis verwendeten Schritte nun auf das neue Variationsproblem \cref{eq:ps:rg:variationsproblem_partielle_ableitung} anwendet.
     \end{Beweis}
 \end{Satz}
 
-Seien $b := (b_{j})_{j} \in \mathbb{R}$ und $b_{j} := \frac{\norm{\varphi_{j}}_{L_{\infty}}}{\gamma_{0}}$.
+\begin{Bemerkung}
+\label{bem:ps:rg:partielle_ableitungen_alternativ_ueber_ableitung_des_operators}
+    Alternativ erhält man das Variationsproblem \cref{eq:ps:rg:variationsproblem_partielle_ableitung} auch durch formales Differenzieren der Variationsformulierung \cref{eq:ps:rg:variationsformulierung_parametrisch} nach $\sigma_{j}$.
+    Denn es gilt
+    \begin{align}
+        \partial_{\sigma_{j}} a(\eta(\sigma), \zeta; \sigma)
+        &= \partial_{\sigma_{j}} \left( c \skp{\grad \eta(\sigma)}{\grad \zeta}{L_{2}(\Omega)} + \skp{\omega(\sigma)\eta(\sigma)}{\zeta}{L_{2}(\Omega)} + \mu \skp{\eta(\sigma)}{\zeta}{L_{2}(\Omega)} \right)
+        \\&= c \skp{\grad \partial_{\sigma_{j}} \eta(\sigma)}{\grad \zeta}{L_{2}(\Omega)}
+                + \skp{\partial_{\sigma_{j}} \omega(\sigma) \eta(\sigma) + \omega(\sigma) \partial_{\sigma_{j}} \eta(\sigma)}{\zeta}{L_{2}(\Omega)}
+            \\&\qquad + \mu \skp{\partial_{\sigma_{j}} \eta(\sigma)}{\zeta}{L_{2}(\Omega)}
+        \\&= a(\partial_{\sigma_{j}} \eta(\sigma), \zeta; \sigma) + \skp{\partial_{\sigma_{j}} \omega(\sigma) \eta(\sigma)}{\zeta}{L_{2}(\Omega)}
+        \\&= a(\partial_{\sigma_{j}} \eta(\sigma), \zeta; \sigma) + \skp{\varphi_{j} \eta(\sigma)}{\zeta}{L_{2}(\Omega)}
+    \end{align}
+    und
+    \begin{equation}
+        \partial_{\sigma_{j}} \skp{g}{\zeta}{H^{-1}(\Omega) \times H^{1}_{0}(\Omega)} = 0,
+    \end{equation}
+    woraus man insgesamt erneut das Variationsproblem \cref{eq:ps:rg:variationsproblem_partielle_ableitung},
+    \begin{equation}
+        a(\partial_{\sigma_{j}} \eta(\sigma), \zeta; \sigma) = - \skp{\varphi_{j} \eta(\sigma)}{\zeta}{L_{2}(\Omega)} \quad \fa \zeta \in H^{1}_{0}(\Omega),
+    \end{equation}
+    erhält.
+\end{Bemerkung}
+
+Nach der Existenz der partiellen Ableitungen beliebiger Ordnung weisen wir nun weiter nach, dass diese jeweils gleichmäßig in $\sigma \in \mathcal S$ beschränkt sind.
+\mdo{Und daraus folgt dann die \enquote{analytisch in $\sigma$}?.}
 
 \begin{Satz}
 \label{satz:ps:rg:partielle_ableitungen_schranke}
