@@ -227,8 +227,6 @@ Diese Variationsformulierung wird uns in den nachfolgenden Kapiteln als Ausgangs
 Wir weisen nun aufbauend auf \cref{sec:gl:le:lineare_evolutionsgleichungen} nach, dass das Raum-Zeit-Variationsproblem aus \cref{def:ps:rzvp:schwache_formulierung} sachgemäß gestellt ist, und bestimmen zudem Abschätzungen für die Norm des Operators und dessen Inverse.
 Die Hauptarbeit dazu wurde bereits durch das \cref{satz:gl:le:bnb_theorem} und \cref{satz:gl:le:ss09_theorem51} geleistet und muss hier nur noch angewandt werden.
 
-\mfix{Anpassen an das neu vorkommende Mu!}
-
 \begin{Satz}
 \label{satz:ps:eel:schwache_formulierung_sachgemaess_gestellt}
     Seien $\mathcal X$ und $\mathcal Y$ gegeben wie in \cref{eq:ps:rzvp:ansatzraum_testraum} und sei $B \colon \mathcal X \to \mathcal Y'$ definiert durch
@@ -254,7 +252,7 @@ Die Hauptarbeit dazu wurde bereits durch das \cref{satz:gl:le:bnb_theorem} und \
     % mit $M_{e}$ und $\rho$ wie in \cref{kor:gl:br:einbettungskonstante_M_e} respektive \cref{kor:gl:le:einbettungskonstante_rho}.
 \end{Satz}
 
-\mfix{Den Quatsch hier mal ordentlich formulieren und formatieren.}
+\mfix{Den Teil hier mal ordentlich formulieren und formatieren.}
 \begin{Korollar}
 \label{kor:ps:eel:schwache_formulierung_operator_schranken}
     Unter den selben Gegebenheiten wie in \cref{satz:ps:eel:schwache_formulierung_sachgemaess_gestellt} gilt konkret
@@ -492,8 +490,6 @@ Um diese nachzuweisen, benötigen wir zunächst, dass die obige Operatorgleichun
 \label{satz:ps:rg:existenz_partieller_ableitungen}
     Die Abbildung $\mathcal S \ni \sigma \mapsto \eta(\sigma) \in H^{1}_{0}(\Omega)$, welche einem Parameter $\sigma$ die zugehörige Lösung $\eta(\sigma)$ des Variationsproblems \cref{eq:ps:rg:variationsformulierung_parametrisch} zuordnet, besitzt für alle $\nu \in \mathfrak F$ eine partielle Ableitung $\partial^{\nu}_{\sigma} \eta(\sigma)$.
 
-    \mfix{Beweis prüfen!}
-
     \begin{Beweis}
         Wir beschränken uns darauf die Behauptung exemplarisch für die partiellen Ableitungen erster Ordnung für ein festes $\sigma \in \mathcal S$ nachzuweisen.
         Seien dazu $\nu = e_{j}$ für ein $j \in \mathbb{N}$ und sei weiter $h \in \mathbb{R} \setminus \Set{ 0 }$.
@@ -584,84 +580,113 @@ Um diese nachzuweisen, benötigen wir zunächst, dass die obige Operatorgleichun
 \end{Bemerkung}
 
 Nach der Existenz der partiellen Ableitungen beliebiger Ordnung weisen wir nun weiter nach, dass diese jeweils gleichmäßig in $\sigma \in \mathcal S$ beschränkt sind.
-\mdo{Und daraus folgt dann die \enquote{analytisch in $\sigma$}?.}
 
 \begin{Satz}
 \label{satz:ps:rg:partielle_ableitungen_schranke}
-    Es gilt
+    Sei $b := (b_{j})_{j \in \mathbb{N}} \in \mathbb{R}^{\mathbb{N}}$ mit $b_{j} := \alpha^{-1} \norm{\varphi_{j}}_{L_{\infty}(\Omega)}$, dann gilt
     \begin{equation}
-        \sup_{\sigma \in \mathcal S} \norm{\partial^{\nu}_{\sigma} u(\sigma)} \leq B \abs{\nu}! b^{\nu}.
+    \label{eq:ps:rg:partielle_ableitungen_schranke}
+        \sup_{\sigma \in \mathcal S} \norm{\partial^{\nu}_{\sigma} \eta(\sigma)} \leq \frac{\norm{g}_{H^{-1}(\Omega)}}{\alpha} \norm{\nu}_{\ell_{1}(\mathbb{N})}! b^{\nu}.
     \end{equation}
 
     \begin{Beweis}
-        Wir betrachten zunächst die Variationsprobleme, welche von den partiellen Ableitungen $\partial^{\nu}_{\sigma} u(\sigma)$ erfüllt werden.
-        Diese Variationsprobleme haben die folgende rekurisve Darstellung
+        Betrachte die Variationsprobleme, welche von den partiellen Ableitungen $\partial^{\nu}_{\sigma} \eta(\sigma)$ erfüllt werden.
+        Wir zeigen zunächst, dass diese durch
         \begin{equation}
-            a(\partial^{\nu}_{\sigma} u(\sigma), v; \sigma)
-            = - \sum_{\Set{j \given \nu_{j} \neq 0}} \nu_{j} \skp{\varphi_{j} \partial^{\nu - e_{j}}_{\sigma} u(\sigma)}{v}{L_{2}(\Omega)}.
+        \label{eq:ps:rg:partielle_ableitungen_rekursive_ableitungen}
+            a(\partial^{\nu}_{\sigma} \eta(\sigma), \zeta; \sigma)
+            = - \sum_{\Set{j \given \nu_{j} \neq 0}} \nu_{j} \skp{\varphi_{j} \partial^{\nu - e_{j}}_{\sigma} \eta(\sigma)}{\zeta}{L_{2}(\Omega)}.
         \end{equation}
-        Die Gültigkeit dieser Formel beweisen wir per Induktion.
-        Der Fall $\abs{\nu} = 1$ ergibt sich aus (??).
-        Betrachte also $abs{\nu} > 1$.
-        Sei $k \in \mathbb{N}$ ein Index mit $\nu_{k} \neq 0$, dann definieren wir $\tilde{\nu} := \nu - e_{k}$ und es gilt offenbar $\abs{\tilde{\nu}} = \abs{\nu} - 1$.
-        Nach Induktionsvoraussetzung gilt weiter
-        \begin{equation}
-            a(\partial^{\tilde{\nu}}_{\sigma} u(\sigma), v; \sigma) + \sum_{\Set{j \given \tilde{\nu}_{j} \neq 0}} \tilde{\nu}_{j} \skp{\varphi_{j} \partial^{\tilde{\nu} - e_{j}}_{\sigma} u(\sigma)}{v}{L_{2}(\Omega)} = 0,
-        \end{equation}
-        wobei $\nu_{j} = \tilde{\nu}_{j}$ für $j \neq k$ und $\tilde{\nu}_{k} = \nu_{k} - 1$ gilt.
+        rekursiv dargestellt werden können.
+        Die Gültigkeit dieser Darstellung zeigen wir induktiv.
 
-        Partielles Differenzieren dieser Gleichung nach $\sigma_{k}$ liefert
+        Den Fall $\norm{\nu}_{\ell_{1}(\mathbb{N})} = 1$ haben wir in \cref{bem:ps:rg:partielle_ableitungen_alternativ_ueber_ableitung_des_operators} bereits gezeigt.
+        Betrachte also $\norm{\nu}_{\ell_{1}(\mathbb{N})} > 1$.
+        Sei $k \in \mathbb{N}$ ein Index mit $\nu_{k} > 0$, dann definieren wir $\tilde{\nu} := \nu - e_{k}$ und es gilt offenbar $\norm{\tilde\nu}_{\ell_{1}(\mathbb{N})} = \norm{\nu}_{\ell_{1}(\mathbb{N})} - 1$.
+        Nach Induktionsvoraussetzung gilt damit
+        \begin{equation}
+            a(\partial^{\tilde{\nu}}_{\sigma} \eta(\sigma), \zeta; \sigma) + \sum_{\Set{j \given \tilde{\nu}_{j} \neq 0}} \tilde{\nu}_{j} \skp{\varphi_{j} \partial^{\tilde{\nu} - e_{j}}_{\sigma} \eta(\sigma)}{\zeta}{L_{2}(\Omega)} = 0,
+        \end{equation}
+        wobei nach Definition $\nu_{j} = \tilde{\nu}_{j}$ für $j \neq k$ und $\tilde{\nu}_{k} = \nu_{k} - 1$ ist.
+        Partielles Differenzieren dieser Gleichung nach $\sigma_{k}$ analog zu \cref{bem:ps:rg:partielle_ableitungen_alternativ_ueber_ableitung_des_operators} liefert dann die Gleichung
         \begin{align}
             0 &=
-                a(\partial^{\nu}_{\sigma} u(\sigma), v; \sigma)
-                + \skp{\varphi_{k} \partial^{\nu - e_{k}}_{\sigma} u(\sigma)}{v}{L_{2}(\Omega)}
-                + \sum_{\Set{j \neq k \given \nu_{j} \neq 0}} \nu_{j} \skp{\varphi_{j} \partial^{\nu - e_{j}}_{\sigma} u(\sigma)}{v}{L_{2}(\Omega)}
-            \\&\qquad     + (\nu_{k} - 1) \skp{\varphi_{k} \partial^{\nu - e_{k}}_{\sigma} u(\sigma) }{v}{L_{2}(\Omega)}
+                a(\partial^{\nu}_{\sigma} \eta(\sigma), \zeta; \sigma)
+                + \skp{\varphi_{k} \partial^{\nu - e_{k}}_{\sigma} \eta(\sigma)}{\zeta}{L_{2}(\Omega)}
+                + (\nu_{k} - 1) \skp{\varphi_{k} \partial^{\nu - e_{k}}_{\sigma} \eta(\sigma) }{\zeta}{L_{2}(\Omega)}
+           \\&\qquad     + \sum_{\Set{j \neq k \given \nu_{j} \neq 0}} \nu_{j} \skp{\varphi_{j} \partial^{\nu - e_{j}}_{\sigma} \eta(\sigma)}{\zeta}{L_{2}(\Omega)},
         \end{align}
+        welche nach Zusammenfassen der Gleichung \cref{eq:ps:rg:partielle_ableitungen_rekursive_ableitungen} entspricht.
 
-        Wählt man nun $v = \partial^{\nu}_{\sigma} u(\sigma)$, dann gilt damit aufgrund der Koerzivität von $a(\blank, \blank; \sigma)$ die Ungleichung
+        Wählt man nun $v = \partial^{\nu}_{\sigma} \eta(\sigma)$, dann gilt einerseits aufgrund der Koerzivität von $a(\blank, \blank; \sigma)$ die Ungleichung
         \begin{equation}
-            a(\partial^{\nu}_{\sigma} u(\sigma), \partial^{\nu}_{\sigma} u(\sigma); \sigma) \geq \alpha \norm{\partial^{\nu}_{\sigma} u(\sigma)}_{H^{1}(\Omega)}^{2}.
+            a(\partial^{\nu}_{\sigma} \eta(\sigma), \partial^{\nu}_{\sigma} \eta(\sigma); \sigma) \geq \alpha \norm{\partial^{\nu}_{\sigma} \eta(\sigma)}_{H^{1}(\Omega)}^{2}.
         \end{equation}
-        Außerdem erhalten wir mit Hilfe er Cauchy-Schwarz-Ungleichung die Abschätzung
+        Andererseits erhalten wir aus der rekursiven Darstellung \cref{eq:ps:rg:partielle_ableitungen_rekursive_ableitungen} mit Hilfe er Cauchy-Schwarz-Ungleichung die Abschätzung
         \begin{align}
-            a(\partial^{\nu}_{\sigma} u(\sigma), \partial^{\nu}_{\sigma} u(\sigma); \sigma)
-            &= - \sum_{\Set{j \given \nu_{j} \neq 0}} \nu_{j} \skp{\varphi_{j} \partial^{\nu - e_{j}}_{\sigma} u(\sigma) }{\partial^{\nu}_{\sigma} u(\sigma)}{L_{2}(\Omega)}
-            \\&\leq \sum_{\Set{j \given \nu_{j} \neq 0}} \nu_{j} \norm{\varphi_{j}}_{L_{\infty}(\Omega)} \norm{\partial^{\nu - e_{j}}_{\sigma} u(\sigma)}_{H^{1}(\Omega)} \norm{\partial^{\nu}_{\sigma} u(\sigma)}_{H^{1}(\Omega)}.
+            a(\partial^{\nu}_{\sigma} \eta(\sigma), \partial^{\nu}_{\sigma} \eta(\sigma); \sigma)
+            &= - \sum_{\Set{j \given \nu_{j} \neq 0}} \nu_{j} \skp{\varphi_{j} \partial^{\nu - e_{j}}_{\sigma} \eta(\sigma) }{\partial^{\nu}_{\sigma} \eta(\sigma)}{L_{2}(\Omega)}
+            \\&\leq \sum_{\Set{j \given \nu_{j} \neq 0}} \nu_{j} \norm{\varphi_{j}}_{L_{\infty}(\Omega)} \norm{\partial^{\nu - e_{j}}_{\sigma} \eta(\sigma)}_{H^{1}(\Omega)} \norm{\partial^{\nu}_{\sigma} \eta(\sigma)}_{H^{1}(\Omega)}.
         \end{align}
         Beide Ungleichungen zusammen ergeben
         \begin{equation}
-            \norm{\partial^{\nu}_{\sigma} u(\sigma)}_{H^{1}(\Omega)} \leq \sum_{\Set{j \given \nu_{j} \neq 0}} \nu_{j} \frac{\norm{\varphi_{j}}_{L_{\infty}(\Omega)}}{\alpha} \norm{\partial^{\nu - e_{j}}_{\sigma} u(\sigma)}_{H^{1}(\Omega)}.
+        \label{eq:ps:rg:partielle_ableitungen_schranke_rekursiv}
+            \norm{\partial^{\nu}_{\sigma} \eta(\sigma)}_{H^{1}(\Omega)} \leq \sum_{\Set{j \given \nu_{j} \neq 0}} \nu_{j} \frac{\norm{\varphi_{j}}_{L_{\infty}(\Omega)}}{\alpha} \norm{\partial^{\nu - e_{j}}_{\sigma} \eta(\sigma)}_{H^{1}(\Omega)}.
         \end{equation}
 
         Um nun die eigentliche Behauptung zu beweisen, verfolgen wir erneut einen Induktionsansatz.
-        Sei zunächst $\abs{\nu} = 0$, dann haben wir die Ungleichung
+        Sei zunächst $\norm{\nu}_{\ell_{1}(\mathbb{N})} = 0$, dann entspricht
         \begin{equation}
-            \norm{u(\sigma)}_{H^{1}(\Omega)} \leq \frac{\norm{\varphi_{j}}_{L_{\infty}(\Omega)}}{\alpha},
+            \norm{\eta(\sigma)}_{H^{1}(\Omega)} \leq \frac{\norm{g}_{H^{-1}(\Omega)}}{\alpha},
         \end{equation}
-        welche nach Satz (??) erfüllt ist.
-        Sei also weiter $\abs{\nu} > 0$, dann gilt mit obiger Ungleichung unter Verwendung der Induktionsvoraussetzung für $\norm{\partial^{\nu - e_{j}}_{\sigma} u(\sigma)}_{H^{1}(\Omega)}$ die Abschätzung
+        der Ungleichung \cref{eq:ps:rg:partielle_ableitungen_schranke} und ist nach \cref{satz:ps:rg:lax_milgram_anwendung} erfüllt.
+        Sei also weiter $\norm{\nu}_{\ell_{1}(\mathbb{N})} > 0$, dann gilt für die rekursive Darstellung \cref{eq:ps:rg:partielle_ableitungen_schranke_rekursiv} unter Verwendung der Induktionsvoraussetzung für $\norm{\partial^{\nu - e_{j}}_{\sigma} \eta(\sigma)}_{H^{1}(\Omega)}$ die Abschätzung
         \begin{align}
-            \norm{\partial^{\nu}_{\sigma} u(\sigma)}_{H^{1}(\Omega)}
+            \norm{\partial^{\nu}_{\sigma} \eta(\sigma)}_{H^{1}(\Omega)}
             &\leq
-            \sum_{\Set{j \given \nu_{j} \neq 0}} \nu_{j} \frac{\norm{\varphi_{j}}_{L_{\infty}(\Omega)}}{\alpha} \norm{\partial^{\nu - e_{j}}_{\sigma} u(\sigma)}_{H^{1}(\Omega)}
+            \sum_{\Set{j \given \nu_{j} \neq 0}} \nu_{j} \frac{\norm{\varphi_{j}}_{L_{\infty}(\Omega)}}{\alpha} \norm{\partial^{\nu - e_{j}}_{\sigma} \eta(\sigma)}_{H^{1}(\Omega)}
             \\&\leq
-            \sum_{\Set{j \given \nu_{j} \neq 0}} \nu_{j} \frac{\norm{\varphi_{j}}_{L_{\infty}(\Omega)}}{\alpha} B \abs{\nu - e_{j}}! b^{\nu - e_{j}}
-            \\&\leq
-            \left( \sum_{\Set{j \given \nu_{j} \neq 0}} \nu_{j} \right)  \frac{\norm{\varphi_{j}}_{L_{\infty}(\Omega)}}{\alpha} B (\abs{\nu} - 1)! b^{\nu}
-            \\&\leq
-            \frac{\norm{\varphi_{j}}_{L_{\infty}(\Omega)}}{\alpha} B \abs{\nu}! b^{\nu}
+            \sum_{\Set{j \given \nu_{j} \neq 0}} \nu_{j} \frac{\norm{\varphi_{j}}_{L_{\infty}(\Omega)}}{\alpha} \frac{\norm{g}_{H^{-1}(\Omega)}}{\alpha} \norm{\nu - e_{j}}_{\ell_{1}(\mathbb{N})}! b^{\nu - e_{j}}
+            \\&=
+            \Bigg( \sum_{\Set{j \given \nu_{j} \neq 0}} \nu_{j} \Bigg) \Bigg( \frac{\norm{g}_{H^{-1}(\Omega)}}{\alpha} (\norm{\nu}_{\ell_{1}(\mathbb{N})} - 1)! b^{\nu} \Bigg)
+            \\&=
+            \frac{\norm{g}_{H^{-1}(\Omega)}}{\alpha} \norm{\nu}_{\ell_{1}(\mathbb{N})}! b^{\nu}
          \end{align}
+         und damit die Behauptung.
     \end{Beweis}
 \end{Satz}
 
-\mdo{Daraus folgern, dass es für den parabolischen auch gilt.}
+Zusammenfassend erhalten wir damit die folgende Aussage.
+\mfix{Sauber formulieren.}
 
-Die in den Beweisen von \cref{satz:ps:rg:existenz_partieller_ableitungen} und \cref{satz:ps:rg:partielle_ableitungen_schranke} angewandten Schritte lassen sich, solange die Wohldefiniertheit aller Ausdrücke gegeben ist, analog auch für allgemeinere parametrisch affine Operatoren respektive Bilinearformen nachweisen.
-Dies findet man beispielsweise bei \textcite{Kunoth:2013ef}.
-Wir entnehmen daraus die folgende Annahme und den folgenden Satz, welcher uns als Motivation dienen soll.
+\begin{Satz}
+\label{satz:ps:rg:operatorgleichung_zusammenfassung}
+    Sei $\mu \geq \sum_{j = 1}^{\infty} \norm{\varphi_{j}}_{L_{\infty}(\Omega)}$ und $A(\sigma)$ wie in \cref{eq:ps:pf:operator_A_sigma}.
+    Dann existiert für jedes $g \in H^{-1}(\Omega)$ und jedes $\sigma \in \mathcal S$ eine eindeutige Lösung $\eta(\sigma)$ der parametrischen Operatorgleichung
+    \begin{equation}
+        A(\sigma) \eta(\sigma) = g \quad \text{in}~H^{-1}(\Omega).
+    \end{equation}
+    Weiter hängt diese Lösung $\eta(\sigma)$ analytisch vom Parameter $\sigma$ ab und es gilt die Abschätzung
+    \begin{equation}
+        \sup_{\sigma \in \mathcal S} \norm{\partial^{\nu}_{\sigma} \eta(\sigma)}_{H^{1}_{0}(\Omega)} \leq \frac{\norm{g}_{H^{-1}(\Omega)}}{\alpha} \norm{\nu}_{\ell_{1}(\mathbb{N})}! b^{\nu},
+    \end{equation}
+    mit $b = (b_{j})_{j \in \mathbb{N}} \in \ell_{1}(\mathbb{N})$ und $b_{j} = \alpha^{-1} \norm{\varphi_{j}}_{L_{\infty}(\Omega)}$.
 
-\mfix{Genauer ausarbeiten!}
+    \begin{Beweis}
+        Existenz und Eindeutigkeit folgen analog zu \cref{satz:ps:rg:lax_milgram_anwendung} aus dem Lemma von Lax-Milgram, \cref{lem:gl:le:lax_milgram}.
+        Die Abschätzung wurde bereits in \cref{satz:ps:rg:partielle_ableitungen_schranke} gezeigt.
+        \mdo{Daraus folgern, dass die Lösung analytisch im Parameter ist.}
+    \end{Beweis}
+\end{Satz}
+
+\mdo{Daraus folgern, dass es für den parabolischen Fall auch gilt.}
+
+\Cref{satz:ps:rg:operatorgleichung_zusammenfassung} wurde bei \textcite[Theorem 4]{Kunoth:2013ef}, unter Verweisung auf die Beweise von \cref{satz:ps:rg:existenz_partieller_ableitungen} und \cref{satz:ps:rg:partielle_ableitungen_schranke} bei \textcite[Theorem 4.2, 4.3]{Cohen:2010kz}, für allgemeinere parametrische Operatoren respektive Bilinearformen nachgewiesen.
+Dafür wurde im Wesentlichen gefordert, dass die partiellen Ableitungen der Operatoren beziehungsweise Bilinearformen wohldefiniert sind.
+Dies ist bei uns beispielsweise der Fall, wie in den Beweisen von \cref{satz:ps:rg:existenz_partieller_ableitungen} und \cref{satz:ps:rg:partielle_ableitungen_schranke} und an \cref{bem:ps:rg:partielle_ableitungen_alternativ_ueber_ableitung_des_operators} zu sehen ist.
+
+Aufbauend auf das Ergebnis in \cref{satz:ps:rg:operatorgleichung_zusammenfassung} können wir nun, analog zu \textcite[Section 4]{Kunoth:2013ef}, ein ähnliches Ergebnis für das parabolische Variationsproblem nachweisen.
+Dies wollen wir anhand der folgenden, aus \cite{Kunoth:2013ef} entnommenen, Punkte motivieren.
 
 \begin{Annahme}[{{\cite[Assumption 1]{Kunoth:2013ef}}}]
 \label{ann:ps:rg:kunoth13_assumption1}
@@ -679,38 +704,68 @@ Wir entnehmen daraus die folgende Annahme und den folgenden Satz, welcher uns al
             \sup_{\sigma \in \mathcal S} \norm{(A{(0)})^{-1}(\partial^{\nu}_{\sigma} A(\sigma))}_{\mathcal L(X, X)} \leq C_{0} b^{\nu}
         \end{equation}
         für alle $\nu \in \mathfrak F \setminus \{ 0 \}$ gilt.
-        Dabei sei $\partial^{\nu}_{\sigma} A(\sigma) \deq \frac{\partial^{\nu_{1}}}{\partial \sigma_{1}} \frac{\partial^{\nu_{2}}}{\partial \sigma_{2}} \cdots A(\sigma)$.
     \end{thmenumerate}
 \end{Annahme}
+%
+Diese Annahme alleine reicht bereits aus, um ein Analogon zu \cref{satz:ps:rg:operatorgleichung_zusammenfassung} zu erhalten, vergleiche \cite[Theorem 4]{Kunoth:2013ef}.
 
-Als nächstes wollen wir nachweisen, dass obiges Raum-Zeit-Variationsproblem sachgemäß gestellt ist und zudem die Lösungen $u(\sigma)$ analytisch vom Parameter $\sigma \in \mathcal S$ abhängen.
-Ersteres erhalten wir analog zu \cref{satz:gl:le:ss09_theorem51} für den nichtparametrischen Fall.
-Bezüglich der Regularität stellt sich heraus, dass wir lediglich Bedingungen an die Familie von stetigen linearen Operatoren $\Set{ A(\sigma, t) \in \mathcal L(V, V') \given \sigma \in \mathcal S, t \in [0, T] }$ stellen müssen, wie folgender Satz zeigt:
+Weiter wird die obige Annahme von unserem Variationsproblem für $\mathfrak p = 1$ erfüllt, denn in unserem Falle ist $C_{0} = \alpha^{-1}$ und $b_{j} = \alpha^{-1} \norm{\varphi_{j}}_{L_{\infty}(\Omega)}$ und nach Konstruktion insbesondere $b \in \ell_{1}(\mathbb{N})$.\mfix{referenzieren.}
 
-\begin{Satz}[{{\cite[Theorem 21]{Kunoth:2013ef}}}]
+% \begin{Satz}[{{\cite[Theorem 4]{Kunoth:2013ef}}}]
+% \label{satz:ps:rg:kunoth13_theorem4}
+%     Die parametrische Familie von Operatoren $\Set{ A(\sigma) \in \mathcal L(X, Y') \given \sigma \in \mathcal S }$ erfülle \cref{ann:ps:rg:kunoth13_assumption1} für ein $0 \leq \mathfrak p \leq 1$.
+%     Dann existiert für jedes $g \in Y'$ und jedes $\sigma \in \mathcal S$ eine eindeutige Lösung $\eta(\sigma)$ der parametrischen Operatorgleichung
+%     \begin{equation}
+%         A(\sigma) \eta(\sigma) = g \quad \text{in}~Y'.
+%     \end{equation}
+%     Weiter hängt die Lösung $\eta(\sigma)$ analytisch vom Parameter $\sigma$ ab und es gilt
+%     \begin{equation}
+%     \label{eq:ps:rg:kunoth13_theorem4_abschaetzung}
+%         \sup_{\sigma \in \mathcal S} \norm{\partial^{\nu}_{\sigma} \eta(\sigma)}_{X} \leq C_{0} \norm{g}_{Y'} \norm{\nu}_{\ell_{1}(\mathbb{N})} ! \tilde{b}^{\nu},
+%     \end{equation}
+%     wobei $\tilde{b} \in \ell_{\mathfrak p}(\mathbb{N})}$ durch
+%     \begin{equation}
+%         \tilde{b}_{j} = \frac{b_{j}}{\ln 2} \quad \fa j \in \mathbb{N}
+%     \end{equation}
+%     definiert ist.
+% \end{Satz}
+
+% Bis auf einen konstanten Faktor bei der Abschätzung \cref{eq:ps:rg:kunoth13_theorem4_abschaetzung} entspricht dies den von uns nachgewiesenen Aussagen.
+
+% Der Grund für die Einführung der obigen Ergebnisse von \textcite{Kunoth:2013ef} ist der folgende:
+% Aus den Eigenschaften der Familie von parametrischen Operatoren $\Set{ A(\sigma, t) \in \mathcal L(V, V') \given \sigma \in \mathcal S, t \in [0, T] }$ können wir Rückschlüsse auf die parametrische Regularität der Lösungen des parabolischen Variationsproblems ziehen.
+
+Der Grund für die Einführung von \cref{ann:ps:rg:kunoth13_assumption1} ist der folgende:
+Erfüllt die Familie von parametrischen Operatoren $\Set{ A(\sigma, t) \in \mathcal L(V, V') \given \sigma \in \mathcal S, t \in [0, T] }$ \cref{ann:ps:rg:kunoth13_assumption1}, dann lässt sich zeigen, dass dies auch für die parametrische Raum-Zeit-Variationsformulierung aus \cref{def:ps:pf:schwache_formulierung} gilt.
+Zusammenfassend ergibt sich damit der folgende Satz, welcher eine auf unser Problem abgewandelte Version von \cite[Theorem 21]{Kunoth:2013ef} darstellt.
+
+\begin{Satz}
 \label{satz:ps:rg:kunoth13_theorem21}
-    Seien $\mathcal X$ und $\mathcal Y$ gegeben wie in~\cref{eq:gl:le:ansatzraum_X} respektive~\cref{eq:gl:le:testraum_Y}.
-    Weiter erfülle die Familie von Operatoren $\Set{ A(\sigma, t) \in \mathcal L(V, V') \given \sigma \in \mathcal S, t \in [0, T] }$ \cref{ann:ps:rg:kunoth13_assumption1} für ein $0 < \mathfrak p \leq 1$.
-    Für jedes $\sigma \in \mathcal S$ sei $B(\sigma) \in \mathcal L(\mathcal X, \mathcal Y')$ definiert durch
+    Seien $\mathcal X$ und $\mathcal Y$ gegeben wie in \cref{eq:ps:rzvp:ansatzraum_testraum}.
+    Sei weiter für jedes $\sigma \in \mathcal S$ der Operator $B(\sigma) \in \mathcal L(\mathcal X, \mathcal Y')$ durch
     \begin{equation}
-        \label{eq:ps:rg:theorem21_variationsproblem_als_operatorgleichung_parametrisch}
-        \skprod{B(\sigma) u}{v}_{\mathcal Y' \times \mathcal Y} = b(u, v; \sigma), \quad u \in \mathcal X,~y \in \mathcal Y,
+        \skp{B(\sigma) u}{v}{\mathcal Y' \times \mathcal Y} = b(u, v; \sigma), \quad u \in \mathcal X,~y \in \mathcal Y
     \end{equation}
-    mit $b(\blank, \blank; \sigma)$ wie in~\cref{eq:ps:var_all_bf_b}.
+    für die Bilinearform $b(\blank, \blank; \sigma)$ aus \cref{eq:ps:pf:schwache_formulierung_lhs_b} gegeben.
     Dann ist $B(\sigma)$ für jedes $\sigma \in \mathcal S$ stetig invertierbar und es existieren Konstanten $0 < \beta_{1} \leq \beta_{2} < \infty$ mit
     \begin{equation}
         \label{eq:ps:rg:theorem21_abschaetzungen_normen_B_und_B_inv_parametrisch}
         \sup_{\sigma \in \mathcal S} \norm{B(\sigma)}_{\mathcal L(\mathcal X, \mathcal Y')} \leq \beta_{2} \quad \text{und} \quad  \sup_{\sigma \in \mathcal S} \norm{B(\sigma)^{-1}}_{\mathcal L(\mathcal Y', \mathcal X)} \leq \frac{1}{\beta_{1}}.
     \end{equation}
 
-    Zudem erfüllt die parametrische Familie von Operatoren $\Set{ B(\sigma) \in \mathcal L(\mathcal X, \mathcal Y') \given \sigma \in \mathcal S }$ \cref{ann:ps:rg:kunoth13_assumption1} mit dem gleichen Regularitätsparameter $\mathfrak p$, die parametrische Familie von Lösungen $u(\sigma)$ des parametrischen Raum-Zeit-Variationsproblems \cref{eq:ps:var_all_problem} hängt analytisch von $\sigma$ ab und erfüllt die A-Priori-Abschätzung
+    Ferner hängen die Lösungen $u(\sigma)$ des parametrischen Raum-Zeit-Variationsproblems \cref{eq:ps:pf:schwache_formulierung} analytisch vom Parameter $\sigma$ ab und es gilt die Abschätzung
     \begin{equation}
         \label{eq:ps:rg:theorem21_apriori_schranke}
-        \sup_{\sigma \in \mathcal S} \norm{(\partial^{\nu}_{\sigma} u)(\sigma)}_{\mathcal X} \leq C_{0} \norm{f}_{\mathcal Y'} \abs{\nu}! \tilde{b}^{\nu}
+        \sup_{\sigma \in \mathcal S} \norm{(\partial^{\nu}_{\sigma} u)(\sigma)}_{\mathcal X} \leq C_{0} \norm{f}_{\mathcal Y'} \norm{\nu}_{\ell_{1}(\mathbb{N})}! \tilde{b}^{\nu}
     \end{equation}
-    für alle $\nu \in \mathfrak F$, wobei $f$ wie in~\cref{eq:ps:var_all_f} gegeben ist.
+    für alle $\nu \in \mathfrak F$, wobei $f$ wie in~\cref{eq:ps:pf:schwache_formulierung_rhs_f} gegeben ist.
+
+    \begin{Beweis}
+
+    \end{Beweis}
 \end{Satz}
 
+\mfix{Wird das noch benötigt?}
 \begin{Lemma}
 \label{lem:ps:rg:norm_B_beschraenkt_durch_norm_A}
     Sei $\sigma \in \mathcal S$ und $\nu \in \mathfrak F \setminus \Set{ 0 }$, dann gilt
@@ -721,13 +776,5 @@ Bezüglich der Regularität stellt sich heraus, dass wir lediglich Bedingungen a
     \end{equation}
 
     \begin{Beweis}
-        \mfix{Beweis}
     \end{Beweis}
 \end{Lemma}
-
-\begin{Beweis}[\cref{satz:ps:rg:kunoth13_theorem21}]
-\mwarn{Soll der ausgeführt werden?}
-Bedingungen von \cref{ann:ps:rg:kunoth13_assumption1} nachrechnen.
-Zu (i): Folgt aus \cref{satz:gl:le:ss09_theorem51}, da $M_{a}, \alpha, \lambda$ unabhänging von $\sigma$.
-Zu (ii): Folgt aus nachfolgendem \cref{lem:ps:rg:norm_B_beschraenkt_durch_norm_A}.
-\end{Beweis}
