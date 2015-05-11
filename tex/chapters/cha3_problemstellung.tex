@@ -756,25 +756,19 @@ Zusammenfassend ergibt sich damit der folgende Satz, welcher eine auf unser Prob
     Ferner hängen die Lösungen $u(\sigma)$ des parametrischen Raum-Zeit-Variationsproblems \cref{eq:ps:pf:schwache_formulierung} analytisch vom Parameter $\sigma$ ab und es gilt die Abschätzung
     \begin{equation}
         \label{eq:ps:rg:theorem21_apriori_schranke}
-        \sup_{\sigma \in \mathcal S} \norm{(\partial^{\nu}_{\sigma} u)(\sigma)}_{\mathcal X} \leq C_{0} \norm{f}_{\mathcal Y'} \norm{\nu}_{\ell_{1}(\mathbb{N})}! \tilde{b}^{\nu}
+        \sup_{\sigma \in \mathcal S} \norm{(\partial^{\nu}_{\sigma} u)(\sigma)}_{\mathcal X} \leq \frac{\norm{f}_{\mathcal Y'}}{\beta_{1}} \norm{\nu}_{\ell_{1}(\mathbb{N})}! b^{\nu}
     \end{equation}
-    für alle $\nu \in \mathfrak F$, wobei $f$ wie in~\cref{eq:ps:pf:schwache_formulierung_rhs_f} gegeben ist.
+    für alle $\nu \in \mathfrak F$, wobei $f$ wie in~\cref{eq:ps:pf:schwache_formulierung_rhs_f} und $b = (b_{j})_{j \in \mathbb{N}} \in \ell_{1}(\mathbb{N})$ durch $b_{j} = \beta_{1}^{-1} \norm{\varphi_{j}}_{L_{\infty}(\Omega)}$ gegeben sind.
 
     \begin{Beweis}
+        Wir beginnen mit der stetigen Invertierbarkeit von $B(\sigma)$.
+        Es bietet sich an, dies durch Anwendung von \cref{satz:gl:le:ss09_theorem51} nachzuweisen, das bedeutet, wir müssen dementsprechend die Voraussetzungen, welche in \cref{ann:gl:le:bilinearform_eigenschaften} zu finden sind, überprüfen.
 
+        Dies wurde in \cref{satz:ps:rzvp:bilinearform_a_eigenschaften} und \cref{kor:ps:rzvp:bilinearform_elliptisch} bereits getan.
+        Da wir weiter vom Fall $\mu \geq \sum_{j = 1}^{\infty} \norm{\varphi_{j}}_{L_{\infty}(\Omega)}$ ausgehen, liefert dies von $\omega$ respektive $\sigma$ unabhängige Konstanten $M_{a} = \max\Set{c, 2 \mu}$ und $\alpha = c \gamma_{\Omega}^{2}$, sowie $\lambda = 0$.
+        \Cref{satz:gl:le:ss09_theorem51} liefert damit die stetige Invertierbarkeit von $B(\sigma)$ für jedes $\sigma \in \mathcal S$.
+        Weiter erhalten wir damit durch \cref{kor:gl:le:ss09_theorem51_ungleichungen} auch die Konstanten $\beta_{1}$ und $\beta_{2}$, welche durch die obigen $M_{a}$ und $\alpha$ wiederum unabhängig von $\omega$ beziehungsweise $\sigma$ sind.
+
+        Die analytische Abhängigkeit und die zugehörige Abschätzung \cref{eq:ps:rg:theorem21_apriori_schranke} lassen sich nun vollkommen analog zu \cref{lem:ps:rg:norm_abschaetzung}, \cref{satz:ps:rg:existenz_partieller_ableitungen} und \cref{satz:ps:rg:partielle_ableitungen_schranke} nachweisen, weswegen wir dies an dieser Stelle auch nicht weiter ausführen wollen.
     \end{Beweis}
 \end{Satz}
-
-\mfix{Wird das noch benötigt?}
-\begin{Lemma}
-\label{lem:ps:rg:norm_B_beschraenkt_durch_norm_A}
-    Sei $\sigma \in \mathcal S$ und $\nu \in \mathfrak F \setminus \Set{ 0 }$, dann gilt
-    \begin{equation}
-        \norm{\partial^{\nu}_{\sigma} B(\sigma)}_{\mathcal L(\mathcal X, \mathcal Y')}
-        \leq
-        \norm{\partial^{\nu}_{\sigma} A(\sigma)}_{\mathcal L(V, V')}
-    \end{equation}
-
-    \begin{Beweis}
-    \end{Beweis}
-\end{Lemma}
