@@ -1,9 +1,11 @@
 %!TEX root = ../main.tex
 
-\setchapterpreamble[ul][0.6\textwidth]{%
-    \dictum[Iain M. Banks, \textit{The Algebraist}]{\enquote{Elegance is an algorithm.}}
-    \vspace*{2\baselineskip}
-}
+\iftoggle{dictum}{
+    \setchapterpreamble[ul][0.6\textwidth]{%
+        \dictum[Iain M. Banks, \textit{The Algebraist}]{\enquote{Elegance is an algorithm.}}
+        \vspace*{2\baselineskip}
+    }
+}{}
 \chapter{Grundlagen} % (fold)
 \label{cha:gl:grundlagen}
 
@@ -638,83 +640,6 @@ Aus dem Beweis des vorherigen Satzes bei \textcite{Schwab:2009ec} ergeben sich z
 % \end{Bemerkung}
 
 % section homogenisierung (end)
-
-\section{Galerkin-Verfahren} % (fold)
-\label{sec:gl:gv:galerkin_verfahren}
-
-\mdo{Abschnitt sauber aufziehen, d.h. Formulierungen verbessern, eventuell ausführlicher.}
-
-Wir wiederholen nun in Grundzügen das bekannte Galerkin-Verfahren, konzentrieren uns dabei aber auf das sogenannte \emph{Petrov-Galerkin-Verfahren}, welches eine Verallgemeinerung auf nicht-symmetrische Bilinearformen innerhalb der Variationsformulierung darstellt.
-
-Seien $U$ und $V$ zwei Hilberträume, $a \colon U \times V \to \mathbb{R}$ eine Bilinearform und $f \colon V \to \mathbb{R}$ ein lineares Funktional.
-Wir betrachten das folgende abstrakte Variationsproblem:
-Finde ein $u \in U$, so dass
-\begin{equation}
-    \label{eq:gl:gv:variationsproblem}
-    a(u, v) = f(v) \quad \fa v \in V
-\end{equation}
-gilt.
-
-Unter gewissen Voraussetzungen, zum Beispiel, wenn die Bilinearform $a$ die Bedingungen des Banach-Ne{\v c}as-Babu{\v s}ka-Theorems (\cref{satz:gl:le:bnb_theorem}) erfüllt, existiert eine eindeutige Lösung $u \in U$ des obigen Variationsproblems.
-
-Bei den Räumen $U$ und $V$ handelt es sich im Allgemeinen um unendlichdimensionale Hilberträume, wodurch eine numerische Bestimmung der Lösung $u \in U$ nicht ohne Weiteres möglich ist.
-Um eine approximative Lösung von \cref{eq:gl:gv:variationsproblem} zu bestimmen, muss zunächst eine Diskretisierung durchgeführt werden.
-Diese wird bei Petrov-Galerkin-Verfahren dadurch erreicht, dass für Ansatz- und Testfunktionenraum endlichdimensionale Unterräume $U_{n} \subset U$ mit $\dim U_{n} = n$ respektive $V_{m} \subset V$ mit $\dim V_{m} = m$ konstruiert werden.
-
-Statt dem obigen Variationsproblem \cref{eq:gl:gv:variationsproblem} betrachtet man dann:
-Finde ein $u_{n} \in U_{n}$, so dass
-\begin{equation}
-    \label{eq:gl:gv:variationsproblem_diskret}
-    a_{n,m}(u_{n}, v_{m}) = f_{m}(v_{m}) \quad \fa v_{m} \in V_{m}
-\end{equation}
-gilt, wobei $a_{n, m} \colon U_{n} \times V_{m} \to \mathbb{R}$ die Einschränkung $a_{n,m} = \restr{a}{U_{n} \times V_{m}}$ beziehungsweise $f_{m} \colon V_{m} \to \mathbb{R}$ die Einschränkung $f_{m} = \restr{f}{V_{m}}$ bezeichne.
-
-Zu Beachten ist, dass selbst wenn das eigentliche Variationsproblem \cref{eq:gl:gv:variationsproblem} eindeutig lösbar ist, dies noch nicht für das diskretisierte Variationsproblem \cref{eq:gl:gv:variationsproblem_diskret} gelten muss.
-Auch muss im Falle einer existierenden Lösung $u_{n} \in U_{n}$ diese im Allgemeinen für $n \to \infty$ nicht gegen die Lösung $u \in U$ von \cref{eq:gl:gv:variationsproblem} konvergieren.
-
-\mdo{Quellen prüfen}
-Der folgende Satz, welcher in verschiedenen Varianten bei \cites[Theorem 6.2.1]{Aziz:2014wf}[Theorem 5.3.1]{Quarteroni:2009hp}[Lemma III.3.7]{Braess:2007wm} zu finden ist, liefert hinreichende Bedingungen für die eindeutige Lösbarkeit von \cref{eq:gl:gv:variationsproblem_diskret} und zudem eine A priori-Fehlerabschätzung.
-
-\begin{Satz}
-    Seien $U$ und $V$ zwei Hilberträume und $U_{n} \subset U$, respektive $V_{m} \subset V$ Unterräume.
-    Weiter seien $a \colon U \times V \to \mathbb{R}$ eine Bilinearform und $f \colon V \to \mathbb{R}$ ein lineares Funktional, wobei $a$ die Bedingungen aus \cref{satz:gl:le:bnb_theorem} erfülle.
-    Bezeichne ferner mit $a_{n, m} = \restr{a}{U_{n} \times V_{m}}$ respektive $f_{m} = \restr{f}{V_{m}}$ die Einschränkungen von $a$ beziehungsweise $f$ auf die Unterräume $U_{n}$ und $V_{m}$.
-
-    Erfüllt $a_{n, m}$ die Bedingungen \ref{satz:gl:le:bnb_theorem_bedingung_inf_sup} und \ref{satz:gl:le:bnb_theorem_bedingung_surjektiv} aus \cref{satz:gl:le:bnb_theorem} mit der inf-sup-Konstante $\alpha_{n, m} > 0$ statt $\alpha$, dann existiert eine eindeutige Lösung $u_{n} \in U_{n}$ des Variationsproblems \cref{eq:gl:gv:variationsproblem_diskret} und diese erfüllt
-    \begin{equation}
-        \norm{u_{n}}_{U} \leq \frac{1}{\alpha_{n, m}} \norm{f_{m}}_{V_m'}.
-    \end{equation}
-
-    Ist weiter $u \in U$ eine Lösung des Variationsproblems \cref{eq:gl:gv:variationsproblem}, dann gilt
-    \begin{equation}
-        \norm{u - u_{n}} \leq \left( 1 + \frac{C}{\alpha_{n, m}} \right)  \inf_{w_{n} \in U_{n}} \norm{u - w_{n}}.
-    \end{equation}
-
-    \begin{Beweis}$\;$
-        \mfix{Nötig?}
-    \end{Beweis}
-\end{Satz}
-
-Um nun tatsächlich eine Lösung $u_{n} \in U_{n}$ zu bestimmen, verfährt man wie folgt:
-Seien $\Set{ \varphi_{i} \in U \given i = 1 \dots n }$ und $\Set{ \psi_{j} \in V \given j = 1 \dots m}$ jeweils eine Basis von $U_{n}$ respektive $V_{m}$.
-
-Schreibt man nun die Ansatz- beziehungsweise Testfunktionen als Linearkombination
-\begin{equation}
-    u_{n} = \sum_{i = 1}^{n} \vec{u}_{i} \varphi_{i}, \quad v_{m} = \sum_{j = 1}^{m} \vec{v}_{j} \psi_{j}, \qquad \vec u \in \mathbb{R}^{n},~\vec v \in \mathbb{R}^{m},
-\end{equation}
-dieser Basisfunktionen und setzt diese in das Variationsproblem \cref{eq:gl:gv:variationsproblem_diskret} ein, dann führt dies unmittelbar zu dem linearen Gleichungssystem $\mat{A} \vec{u} = \vec{f}$, wobei wir
-\begin{equation}
-    \mat A_{ji} = a_{n, m}(\varphi_{j}, \psi_{i}), \quad i = 1 \dots n,~j = 1 \dots m,
-\end{equation}
-als \emph{Steifigkeitsmatrix} $\mat A \in \mathbb{R}^{m \times n}$, und
-\begin{equation}
-    \vec f_{j} = f_{m}(\psi_{j}), \quad j = 1 \dots m,
-\end{equation}
-als \emph{Lastvektor} $\vec f \in \mathbb{R}^{m}$ bezeichnen.
-Besitzt das lineare Gleichungssystems eine Lösung $\vec u \in \mathbb{R}^{n}$, dann erhält man die zugehörige Lösung $u_{n} \in U_{n}$ des obigen Variationsproblems \cref{eq:gl:gv:variationsproblem_diskret} durch die Linearkombination
-\begin{equation}
-    u_{n} = \sum_{i = 1}^{n} \vec{u}_{i} \varphi_{i}.
-\end{equation}
 
 % chapter grundlagen (end)
 

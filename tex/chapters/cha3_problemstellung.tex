@@ -1,10 +1,12 @@
 %!TEX root = ../main.tex
 
-\setchapterpreamble[ul][0.6\textwidth]{%
-    \dictum[Andy Weir, \textit{The Martian}]{\enquote{I guess you could call it a \enquote{failure}, but I prefer the term \enquote{learning
-    experience}.}}
-    \vspace*{2\baselineskip}
-}
+\iftoggle{dictum}{
+    \setchapterpreamble[ul][0.6\textwidth]{%
+        \dictum[Andy Weir, \textit{The Martian}]{\enquote{I guess you could call it a \enquote{failure}, but I prefer the term \enquote{learning
+        experience}.}}
+        \vspace*{2\baselineskip}
+    }
+}{}
 \chapter{Problemstellung} % (fold)
 \label{cha:ps:problemstellung}
 
@@ -351,6 +353,7 @@ Dies wird durch folgende Bedingung sichergestellt.
 
 Hieraus folgt wegen $\mathcal S = [-1, 1]^{\mathbb{N}}$ insbesondere
 \begin{equation}
+\label{eq:ps:pf:omega_norm_abschaetzung}
     \sup_{\sigma \in \mathcal S} \norm{\omega(\sigma)}_{L_{\infty}(\Omega)} \leq \sum_{j = 1}^{\infty} \norm{\varphi_{j}}_{L_{\infty}(\Omega)} < \infty.
 \end{equation}
 
@@ -395,7 +398,7 @@ Dabei orientieren wir uns an den Arbeiten von \textcite{Cohen:2010kz,Kunoth:2013
 mit dem parametrischen Operator $A(\omega)$ aus Gleichung \cref{eq:ps:pf:operator_A}, beziehungsweise die zugehörige Variationsformulierung
 \begin{equation}
 \label{eq:ps:rg:variationsformulierung_parametrisch}
-    a(\eta, \zeta; \omega) = \skp{g}{\zeta}{H^{-1}(\Omega) \times H^{1}_{0}(\Omega)}
+    a(\eta, \zeta; \omega) = \skp{g}{\zeta}{H^{-1} \times H^{1}_{0}}
 \end{equation}
 mit der parametrischen Bilinearform $a(\blank, \blank; \omega)$ aus Gleichung \cref{eq:ps:pf:bilinearform_a}.
 
@@ -423,7 +426,7 @@ Um diese nachzuweisen, benötigen wir zunächst, dass die obige Operatorgleichun
 
 \begin{Satz}
 \label{satz:ps:rg:lax_milgram_anwendung}
-    Seien $\omega \in L_{\infty}(\Omega)$, $\mu \geq \norm{\omega}_{L_{\infty}(\Omega)}$, $g \in H^{-1}(\Omega)$ und weiter $A(\omega)$ wie in \cref{eq:ps:pf:operator_A}, dann besitzt die Operatorgleichung
+    Seien $\omega \in L_{\infty}(\Omega)$, $A(\omega)$ wie in \cref{eq:ps:pf:operator_A} mit $\mu \geq \norm{\omega}_{L_{\infty}(\Omega)}$ und weiter $g \in H^{-1}(\Omega)$, dann besitzt die Operatorgleichung
     \begin{equation}
         \tag*{\cref{eq:ps:rg:operatorgleichung_parametrisch}}
         A(\omega) \eta(\omega) = g \quad \text{in}~H^{-1}(\Omega)
@@ -439,6 +442,10 @@ Um diese nachzuweisen, benötigen wir zunächst, dass die obige Operatorgleichun
     \end{Beweis}
 \end{Satz}
 
+Für den Rest des Abschnitts sei nun stets $\mu \geq \sum_{j = 1}^{\infty} \norm{\varphi_{j}}_{L_{\infty}(\Omega)}$ gegeben.
+Da nach Ungleichung \cref{eq:ps:pf:omega_norm_abschaetzung} damit insbesondere $\norm{\omega(\sigma)}_{L_{\infty}(\Omega)}$ für alle $\sigma \in \mathcal S$ gilt, sind im Folgenden stets die Voraussetzungen für \cref{satz:ps:rg:lax_milgram_anwendung} erfüllt.
+
+\mfix{Umformulieren für $\omega(\sigma)$ statt $\omega$!}
 \begin{Lemma}
 \label{lem:ps:rg:norm_abschaetzung}
     Seien $\omega_{1}, \omega_{2} \in L_{\infty}(\Omega)$ und $\eta_{1}, \eta_{2}$ die zugehörigen Lösungen von \cref{eq:ps:rg:operatorgleichung_parametrisch}, dann gilt

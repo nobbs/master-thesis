@@ -1,9 +1,11 @@
 %!TEX root = ../main.tex
 
-\setchapterpreamble[ul][0.6\textwidth]{%
-    \dictum[Robert Heinlein, \textit{Time Enough For Love}]{\enquote{Progress isn't made by early risers. It's made by lazy men trying to find easier ways to do something.}}
-    \vspace*{2\baselineskip}
-}
+\iftoggle{dictum}{
+    \setchapterpreamble[ul][0.6\textwidth]{%
+        \dictum[Robert Heinlein, \textit{Time Enough For Love}]{\enquote{Progress isn't made by early risers. It's made by lazy men trying to find easier ways to do something.}}
+        \vspace*{2\baselineskip}
+    }
+}{}
 \chapter{Der eindimensionale Fall}
 \label{sec:der_eindimensionale_fall}
 \label{cha:der_eindimensionale_fall}

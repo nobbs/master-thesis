@@ -1,11 +1,13 @@
 %!TEX root = ../main.tex
 
-\setchapterpreamble[ul][0.6\textwidth]{%
-    \dictum[Douglas Adams, \textit{The Hitchhiker’s Guide to the Galaxy}]{%
-        \enquote{\foreignlanguage{english}{He attacked everything in life with a mixture of extraordinary genius and naive incompetence and it was often difficult to tell which was which.}}
+\iftoggle{dictum}{
+    \setchapterpreamble[ul][0.6\textwidth]{%
+        \dictum[Douglas Adams, \textit{The Hitchhiker’s Guide to the Galaxy}]{%
+            \enquote{\foreignlanguage{english}{He attacked everything in life with a mixture of extraordinary genius and naive incompetence and it was often difficult to tell which was which.}}
+        }
+        \vspace*{2\baselineskip}
     }
-    \vspace*{2\baselineskip}
-}
+}{}
 \chapter{Einleitung} % (fold)
 \label{cha:el:einleitung}
 
@@ -305,7 +307,7 @@ Anschließend werden wünschenswerte Aussagen hergeleitet, die eine sinnvolle Be
 
 \cref{cha:der_eindimensionale_fall} dient dazu, die bis dahin ausgearbeitete Theorie auf den einfachen, eindimensionalen Fall anzuwenden und numerische Methoden für diesen zu entwickeln.
 
-Im nachfolgenden \cref{cha:reduzierte_basis_methode} werden diese Methoden als Grundlage für eine Reduzierte-Basis-Methode verwendet und dadurch ein effizientes Verfahren für die Approximation der parametrischen Differentialgleichung entwickelt.
+Im nachfolgenden \cref{cha:galerkin_und_reduzierte_basis} werden diese Methoden als Grundlage für eine Reduzierte-Basis-Methode verwendet und dadurch ein effizientes Verfahren für die Approximation der parametrischen Differentialgleichung entwickelt.
 
 % subsection aufbau_der_restlichen_arbeit (end)
 
