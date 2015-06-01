@@ -276,9 +276,57 @@ Die Hauptarbeit dazu wurde bereits durch das \cref{satz:gl:le:bnb_theorem} und \
     \end{equation}
 \end{Korollar}
 
-
-
 % subsection existenz_und_eindeutigkeit_von_l_sungen (end)
+
+\section{Periodische Randbedingungen} % (fold)
+\label{sec:ps:pr:periodische_randbedingungen}
+
+Da wir bisher mit homogenen Randbedingungen gearbeitet haben und dies auch für den Rest der Arbeit fortführen wollen, gehen wir an dieser Stelle auf den Fall periodischer Randbedingungen ein.
+Dabei wird sich herausstellen, das es nur sehr wenige Unterschiede zum bereits betrachteten homogenen Fall gibt.
+
+Wir beschränken uns der Einfachheit halber auf den Fall, dass $\Omega = \bigtimes_{i = 1}^{n} (0, l_{i}) \subset \mathbb{R}^{n}$ ein beschränkter offener Quader ist, wobei $l_{i} \in \mathbb{R}_{+}$ für $i = 1 \dots n$ sei.
+
+\begin{Definition}
+    Sei $\mathcal C_{\text{per}}^{\infty}(\Omega) \subset \mathcal C^{\infty}(\mathbb{R}^{n})$ die Teilmenge der $\Omega$-periodischen Funktionen.
+    Als Sobolev-Raum $H^{1}_{\text{per}}(\Omega)$ der auf $\Omega$ periodischen Funktionen bezeichnen wir den Abschluss von $\mathcal C_{\text{per}}^{\infty}(\Omega)$ bezüglich der $H^{1}$-Norm.
+
+    Weiter bezeichnen wir mit $H^{1}_{\text{per}, 0}(\Omega)$ den Sobolev-Raum $\Omega$-periodischer Funktionen mit Mittelwert Null und definieren diesen als den Quotientenraum
+    \begin{equation}
+        H^{1}_{\text{per}, 0}(\Omega) = H^{1}_{\text{per}}(\Omega) / \mathbb{R}.
+    \end{equation}
+\end{Definition}
+%
+\mfix{Stimmt das folgende?}
+%
+Wir wählen nun $V = H^{1}_{\text{per}, 0}(\Omega)$ und $H = L_{2}(\Omega) / \mathbb{R}$; diese Räume liefern uns ein Gelfand-Tripel $H^{1}_{\text{per}, 0}(\Omega) \denseinclusion L_{2}(\Omega) / \mathbb{R} \denseinclusion (H^{1}_{\text{per}, 0}(\Omega))'$ und wir betrachten nun die Bilinearform $a$ aus \cref{satz:ps:rzvp:bilinearform_a_eigenschaften} auf diesen Räumen, also
+\begin{equation}
+    \begin{aligned}
+        &a(\blank, \blank) \colon H^{1}_{\text{per}, 0}(\Omega) \times H^{1}_{\text{per}, 0}(\Omega) \to \mathbb{R}, \\
+        &(\eta, \zeta) \mapsto c\skp{\grad \eta}{\grad \zeta}{L_{2}(\Omega)} + \skp{\omega \eta}{\zeta}{L_{2}(\Omega)} + \mu \skp{\eta}{\zeta}{L_{2}(\Omega)}.
+    \end{aligned}
+\end{equation}
+
+Wir wollen \cref{satz:ps:rzvp:bilinearform_a_eigenschaften} respektive \cref{kor:ps:rzvp:bilinearform_elliptisch} analog nachweisen.
+Schaut man sich dazu den Beweis von \cref{satz:ps:rzvp:bilinearform_a_eigenschaften} an, dann sieht man, dass nur die G\aa{}rding-Ungleichung ein Problem darstellt, da hierfür eine Poincaré-Friedrichs-Ungleichung verwendet wurde, welche auf $H^{1}_{\text{per}}(\Omega)$ in dieser Form nicht gilt, jedoch auf $H^{1}_{\text{per}, 0}(\Omega)$.
+
+\begin{Lemma}[Poincaré-Ungleichung]
+    Sei $\Omega \subset \mathbb{R}^{n}$ ein beschränkter offener Quader.
+    Dann existiert eine Konstante $C = C(\Omega) \in \mathbb{R}_{+}$, so dass
+    \begin{equation}
+        \norm{u}_{L_{2}(\Omega)} \leq C \norm{\grad u}_{L_{2}(\Omega)} \quad \fa u \in H^{1}_{\text{per}, 0}(\Omega)
+    \end{equation}
+    gilt.
+\end{Lemma}
+
+% Insbesondere ist $\norm{\grad \blank}_{L_{2}(\Omega)}$ auf $H^{1}_{\text{per}, 0}(\Omega)$ eine zu $\norm{\blank}_{H^{1}(\Omega)}$ äquivalente Norm.
+
+Damit können wir den Beweis vollkommen analog führen, lediglich die dabei auftretende Konstante $\alpha > 0$ wird eine andere sein; der exakte Wert dieser ist aber nicht weiter von Belang.
+Insbesondere erhalten wir damit alle nachfolgenden Aussagen zur Variationsformulierung der parabolischen partiellen Differentialgleichung auch für den Fall periodischer Randbedingungen, da sonst keine weiteren Komplikationen auftreten.
+
+Der Wechsel auf den Quotientenraum $H^{1}_{\text{per}, 0}(\Omega)$ stellt durch die Eigenschaft, dass die betrachteten Funktionen Mittelwert Null haben, sicher, dass wir eine eindeutige Lösung der schwachen Formulierung haben.
+Da wir bei der numerischen Umsetzung im Allgemeinen aber nicht explizit an einer Lösung mit Mittelwert Null interessiert sind, muss darauf geachtet werden, den korrekten Repräsentanten aus der Äquivalenzklasse der Lösung zu wählen.
+
+% section periodische_randbedingungen (end)
 
 % section die_parabolische_partielle_differentialgleichung (end)
 

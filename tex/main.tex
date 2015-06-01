@@ -5,9 +5,11 @@
   % final,
   a4paper,
   % 11pt,
+  % twoside,
+  % BCOR=1cm,
   twoside=semi,
   % oneside,
-  % parskip,
+  halfparskip,
   toc=bibliography,
   toc=listof,
   chapterprefix=true,
@@ -20,7 +22,10 @@
 
 \addbibresource{literature.bib}
 
+
 \newtoggle{dictum}
+% \toggletrue{dictum}
+\togglefalse{dictum}
 
 \begin{document}
     % Deckblack / Titelseite
@@ -50,7 +55,7 @@
     \input{chapters/cha2_grundlagen}
     \input{chapters/cha3_problemstellung}
     \input{chapters/cha4_galerkin_reduzierte_basis}
-    \input{chapters/cha5_eindim}
+    % \input{chapters/cha5_eindim}
     \input{chapters/cha0_ausblick}
 
     %%% Anhang

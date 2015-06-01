@@ -32,10 +32,13 @@
 % \newcommand{\altsffont}{\fontfamily{phv}}
 \newcommand{\altsffont}{\fontfamily{pfr}\fontseries{l}}
 
-% Zeilenabstand anpassen
+% Zeilenabstand anpassen (MUST NOT USE!)
 % \usepackage{setspace}
 % \setstretch{1.1}
 
+% Textsatzbereich nach unten vergrößern
+% TODO: richtig konfigurieren
+% \usepackage[a4paper,twoside,bottom=4cm]{geometry}
 
 %%% Graphiken und Farben
 
@@ -153,7 +156,7 @@
 \addtokomafont{dictumauthor}{\color{jgu_dunkelgrau}\normalfont\altsffont\fontsize{8}{12}\selectfont}
 
 % Kapitel-Stil
-\renewcommand*{\chapterheadstartvskip}{\vspace*{5\baselineskip}}
+\renewcommand*{\chapterheadstartvskip}{\vspace*{3\baselineskip}}
 \renewcommand*{\chapterheadendvskip}{\vspace*{2\baselineskip}}
 \renewcommand*{\chapterformat}{%
 				\raggedright
@@ -211,7 +214,10 @@
 %%% "Debugging"
 
 % Labels am Seitenrand anzeigen
-\usepackage[inline]{showlabels}
+\usepackage[
+    inline,
+    % final
+]{showlabels}
 
 % todos
 \usepackage[%
@@ -231,3 +237,7 @@
 
 % etoolbox?
 \usepackage{etoolbox}
+
+% \usepackage{showframe}
+
+

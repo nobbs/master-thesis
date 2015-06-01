@@ -31,6 +31,15 @@ Dies wird, wie bereits bei den größtenteils funktionalanalytischen Grundlagen 
 
 Als Quellen hierfür dienten die Arbeiten von \textcite{Braess:2007wm,Patera:2007un,Quarteroni:2011jm}.
 
+Wir konzentrieren uns dabei auf das folgende abstrakte Variationsproblem:
+Seien $U$ und $V$ zwei Hilberträume mit entsprechenden Skalarprodukten $\skprod{\blank}{\blank}$ und Normen $\norm{\blank}$, welche wie zuvor durch entsprechende Indizes gekennzeichnet werden.
+Weiter seien $b \in \mathcal L(U \times V)$ eine stetige Bilinearform und $f \in V'$ ein stetiges Funktional.
+Gesucht ist eine Lösung $u \in U$ von
+\begin{equation}
+\label{eq:grb:abstraktes_variationsproblem}
+    b(u, v) = f(v) \quad \fa v \in V.
+\end{equation}
+
 \section{Galerkin-Verfahren} % (fold)
 \label{sec:grb:gv:galerkin_verfahren}
 
@@ -44,7 +53,7 @@ Dabei müssen die endlichdimensionalen Unterräume intelligent gewählt werden, 
 \label{sub:grb:gv:grundlagen}
 
 Wir beginnen nun mit der Beschreibung der Petrov-Galerkin-Verfahren.
-Seien dazu $U$ und $V$ zwei Hilberträume mit entsprechenden Skalarprodukten $\skp{\blank}{\blank}$ und Normen $\norm{\blank}$, welche wie zuvor durch den entsprechenden Index gekennzeichnet werden.
+
 Weiter bezeichnen wir mit $U_{N} \subset U$ und $V_{M} \subset V$, wobei $N, M \in \mathbb{N}$ seien, endlichdimensionale Unterräume dieser Hilberträume, genauer sei $\dim U_{N} = N$ und $\dim V_{M} = M$.
 Unser Ziel ist es nun, mit Hilfe dieser Unterräume ein unendlichdimensionales Variationsproblem auf ein lineares Gleichungssystem in $\mathbb{R}^{N \times M}$ runterzubrechen.
 
