@@ -1,4 +1,4 @@
-function [B, ufun] = start(num_M, num_Q, u0, t_plot)
+function [B, ufun] = start(data, opt, omega, t_plot)
 % Galerkin-Verfahren für eindimensionale Raum-Zeit-Variationsformulierung.
 % Das Variationsproblem $b(u, v) = f(v)$ mit $u \in \mathcal X$ und $v \in \mathcal Y$ wird durch
 % Galerkin-Projektion auf endlichdimensionale Unterräume $\mathcal X_N$ und $\mathcal Y_N$
@@ -9,7 +9,7 @@ if nargin == 3
 end
 
 % Daten und Einstellungen laden
-[data, opt, omega] = setup(num_M, num_Q, u0);
+% [data, opt, omega] = setup(num_M, num_Q);
 
 % Gewichtungsmatrizen zur Normierung der Steifigkeitsmatrix und des Lastvektors bestimmen
 [NX, NY] = normierungsmatrizen(opt);

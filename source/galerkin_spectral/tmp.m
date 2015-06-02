@@ -12,7 +12,8 @@ xgrid = linspace(xspan(1), xspan(2), 100);
 exf = @(k) exfun(u0, T, X, k);
 
 %% Spektral-Galerkin
-[B, uf] = start(30, 30, u0);
+[data, opt, omega] = setup(10, 10, u0);
+[B, uf] = start(data, opt, omega);
 figure();
 
 mesh(T, X, abs(uf(T, X) - exf(20)));
@@ -21,4 +22,12 @@ xlabel('t')
 ylabel('x')
 
 %%
+figure()
 mesh(T, X, uf(T, X));
+
+%%
+figure()
+% mesh(T, X, exf(1));
+Y = exf(10);
+Z = uf(T, X);
+plot(Z(:, 1))

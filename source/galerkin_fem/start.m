@@ -3,8 +3,8 @@ data.xspan = [0 1];
 data.tspan = [0 1];
 
 dim = {};
-dim.K = 1099;
-dim.J = 1098;
+dim.K = 99;
+dim.J = 98;
 dim.M = dim.J;
 dim.N = dim.K * dim.J  + dim.M;
 
@@ -51,4 +51,4 @@ tgrid = linspace(data.tspan(1), data.tspan(2), dim.K + 1);
 xgrid = linspace(data.xspan(1), data.xspan(2), dim.M + 2);
 % 
 [T, X] = meshgrid(tgrid, xgrid);
-% mesh(T, X, upad);
+ mesh(T, X, upad);
