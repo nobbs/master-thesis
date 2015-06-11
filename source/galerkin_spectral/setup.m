@@ -44,6 +44,8 @@ data.c_D = 1;
 % Skalierung des Reaktionsterms
 data.c_R = 1;
 
+data.mu = 0;
+
 % Parameter für die Reihenentwicklung von \omega
 data.eps = 1 / 100;
 data.kappa = 99 / 100;

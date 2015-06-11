@@ -2,8 +2,8 @@ function [B] = steifigkeitsmatrix(data, omega, opt)
 % STEIFIGKEITSMATRIX Berechnet die Steifigkeitsmatrix.
 
 % Listen für die Erstellung der Sparse-Matrix $B$ erstellen.
-idx = zeros(opt.dim.X, 1);
-idy = zeros(opt.dim.X, 1);
+idx = ones(opt.dim.X, 1);
+idy = ones(opt.dim.X, 1);
 val = zeros(opt.dim.X, 1);
 ctr = 1;
 
@@ -91,6 +91,10 @@ for j = 1:opt.num.Xj
                 else
                     assert(false);
                 end;
+                % FIXME: moo
+                % term1 = 0;
+                % term2 = 0;
+                term3 = 0;
 
                 % Der berechnete Wert wird natürlich nur dann abgespeichert,
                 % wenn er ungleich Null ist.
