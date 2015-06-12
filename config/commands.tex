@@ -1,0 +1,71 @@
+% griechisches Alphabet anpassen
+\renewcommand{\epsilon}{\varepsilon}
+\renewcommand{\theta}{\vartheta}
+
+
+%%% Operatoren und anderes mathematisches Geplänkel
+
+% Beträge und Normen
+\DeclarePairedDelimiter{\abs}{\lvert}{\rvert}
+\DeclarePairedDelimiter{\norm}{\lVert}{\rVert}
+
+% Gauß-Klammern
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+\DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
+
+% Skalarprodukte und Duale Paarungen
+\newcommand{\skprod}[2]{\left\langle#1,#2\right\rangle}
+\newcommand{\Skp}[3]{\left\langle#1,#2\right\rangle_{#3}}
+\newcommand{\skp}[3]{\langle#1,#2\rangle_{#3}}
+\newcommand{\Dual}[2]{\left(#1,#2\right)}
+\newcommand{\dual}[2]{(#1,#2)}
+
+% Inneres und Äußeres
+\newcommand{\Int}[1]{#1^\circ}
+\newcommand{\Ext}[1]{\overline{#1}}
+
+% Diverse Operatoren
+\DeclareMathOperator{\spn}{span}
+\DeclareMathOperator{\ee}{e}
+\DeclareMathOperator{\ii}{i}
+\newcommand{\Transp}{^{\mathrm{T}}}
+\newcommand{\Stern}{^{*}}
+\newcommand{\grad}{\nabla}
+\DeclareMathOperator{\divergenz}{div}
+\newcommand{\hesse}{\nabla^2}
+
+% Einschränkung einer Funktion
+\newcommand\restr[2]{\ensuremath{\left.#1\right|_{#2}}}
+
+% Ordentlicher Befehl um Mengen zu setzen
+\providecommand\given{} % so it exists
+\newcommand\SetSymbol[1][]{
+   \nonscript\,#1\vert\nonscript\,\mathopen{}\allowbreak}
+\DeclarePairedDelimiterX\Set[1]{\lbrace}{\rbrace}{ \renewcommand\given{\SetSymbol[\delimsize]} #1 }
+
+% Vektoren und Matrizen anders setzen
+\renewcommand{\vec}[1]{\mathbf{#1}}
+\newcommand{\mat}[1]{\mathbf{#1}}
+
+% Differential-d für Integral ordentlich setzen
+\newcommand*\diff{\mathop{}\!\mathrm{d}}
+\newcommand*\Diff[1]{\mathop{}\!\mathrm{d^#1}}
+
+% wesentliches Supremum
+\DeclareMathOperator*{\esssup}{ess\,sup}
+\newcommand\blank{{\mkern2mu\cdot\mkern2mu}}
+
+% "Definition-Gleich"
+% FIXME: deprecated
+\newcommand\deq{\coloneqq}
+
+% dichte Einbettung
+% FIXME: zu hoch für Fließtext!
+\newcommand\denseinclusion{\hookrightarrow}
+
+%%% Textbausteine
+
+\newcommand{\fa}{\text{für alle}~}
+
+% um fremde Begriffe einheitlich mit Übersetzung zu setzen
+\newcommand\foreign[2]{#1 \textit{#2}}
