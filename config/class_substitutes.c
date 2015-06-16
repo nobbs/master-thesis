@@ -9,6 +9,11 @@
  *
  * This class is an artificially created class in doxygen to allow more precise type declarations
  *
+ * @class vector
+ * @brief A matlab vector.
+ *
+ * This class is an artificially created class in doxygen to allow more precise type declarations
+ *
  * @class integer
  * @brief An integer value
  *
@@ -20,7 +25,7 @@
  *
  * This class is an artificially created class in doxygen to allow more precise type declarations.
  * The MatLab type associated with this class is double.
- * 
+ *
  * @class logical
  * @brief A boolean value
  *
@@ -95,7 +100,7 @@ class handle {
 
 		As doxygen does not know the class "handle" from itself, many classes do not get rendered within the documentation and the correct root class is not even displayed.
 		This workaround guarantees a correct (also graphical) representation of the class hierarchy.
-     *  
+     *
      *  Note here that by having the type handle it could also mean to have a vector or matrix of handles.
      *
 	*/
@@ -154,7 +159,7 @@ matlabtypesubstitute isvalid;
 
 /**
 	@brief Relational functions example. See details for more information.
-	
+
 	@par Other possible relational operators:
 		-ne
 		-lt
@@ -182,7 +187,7 @@ matlabtypesubstitute permute;
 matlabtypesubstitute reshape;
 
 /**
-	@brief ort the handle objects in any array in ascending or descending order. 
+	@brief ort the handle objects in any array in ascending or descending order.
 
 	The order of handles is purely arbitrary, but reproducible in a given MATLAB session. See the MATLAB sort function.
 */

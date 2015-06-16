@@ -1,0 +1,3 @@
+classdef AssemblyFourierLegendre < AssemblyAbstract
+
+end

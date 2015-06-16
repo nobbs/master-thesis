@@ -13,7 +13,7 @@ function Q = trapez(f, grid, is_periodic)
 	%   f: Funktionswerte an den Gitterpunkten @type vector
 	%   grid: Gitter des Intervalls `[a, b]` @type vector
 	%   is_periodic: Schalter, um zwischen periodischer / nicht-periodischer
-	% 		Funktion umzuschalten @default true @type bool
+	% 		Funktion umzuschalten @default true @type logical
 	%
 	% Return values:
 	%   Q: Approximation des Integralwertes @type double
