@@ -80,11 +80,11 @@ classdef AssemblySineLegendre < AssemblyAbstract
 
     function obj = set.xspan(obj, val)
       if size(val, 1) ~= 1 || size(val, 2) ~= 2
-        error('Ortsintervall kaputt!');
+        error('Given value is not a row vector of size 2!');
       elseif val(1) ~= 0
-        error('Start des Ortsintervalls muss 0 sein!');
+        error('The spatial interval must start at 0!');
       elseif val(2) <= val(1)
-        error('Ortsintervall ist leer oder falsch orientiert!');
+        error('The given spatial interval is empty or wrongly oriented!');
       end
 
       obj.xspan = val;
@@ -266,6 +266,10 @@ classdef AssemblySineLegendre < AssemblyAbstract
 
     function F = assembleRHS(obj)
       % Assemble the load vector.
+      %
+      % Return values:
+      %   F: RHS of the linear equation system @type colvector
+      %
       % @todo Not yet implemented!
 
       dimY = obj.dTest;
@@ -294,15 +298,20 @@ classdef AssemblySineLegendre < AssemblyAbstract
     end
 
     function val = solutionFunctionFromCoeffs(obj, solutionCoeffs, t, x)
-      % Construct a function handle of the solution
+      % Construct a function handle of the solution.
+      %
+      % Use it to define a solution function in (t, x) or evaluate the solution
+      % directly for given t and x grids.
       %
       % Parameters:
       %   solutionCoeffs: solution vector of the linear system @type colvec
+      %   t: time variable
+      %   x: spatial variable
       %
       % Return values:
       %   solfun: function handle of the solution function @type function_handle
       %
-      % @todo Not yet implemented.
+      % @todo Not yet fully implemented.
 
       val = zeros(size(t, 1), size(t, 2));
 

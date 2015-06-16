@@ -1,53 +1,52 @@
 function pn = legendrePolynomial(x, n, span)
-	% Wertet ein geshiftetes Legendre-Polynom aus.
-	%
-	% Verwendet wird hierzu die Rekursionsformel von Bonnet, siehe beispielsweise
-	% http://de.wikipedia.org/wiki/Legendre-Polynom#Rekursionsformeln, sowie eine an
-	% \cite Press:2007:NRE:1403886 angelehnter rekursiver Algorithmus. Die
-	% zugrundeliegende Rekursionsformel für die Legendre-Polynome auf dem Intevall
-	% `[-1, 1]` lautet
-	%   ``n P_n(x) = (2n - 1) x P_{n-1}(x) - (n - 1) P_{n-2}(x)``
-	% mit `P_0(x) = 1` und `P_1(x) = x`.
-	%
-	% Parameters:
-	%   x: Gitter, auf dem das Polynom ausgewertet werden soll. @type matrix
-	%   n: Index des auszuwertenden Polynoms. @type int
-	%   span: Intervall, auf den das Polynom geshiftet werden soll. @type vector
-	%
-	% Return values:
-	%   pn: Auswertung des Legendre-Polynoms. @type matrix
-	%
-	% See also:
-	%   legendrePolynomialDerivative
+  % Evaluate a shifted Legendre polynomial.
+  %
+  % This is done by an implementation of the recursion formula of Bonnet, see
+  % https://en.wikipedia.org/wiki/Legendre_polynomials#Recursive_definition,
+  % and based on an algorithm from \cite Press:2007:NRE:1403886
+  %
+  % The used recursion formula for the interval `[-1, 1]` is of the form
+  %   ``n P_n(x) = (2n - 1) x P_{n-1}(x) - (n - 1) P_{n-2}(x),``
+  % where `P_0(x) = 1` und `P_1(x) = x`.
+  %
+  % Parameters:
+  %   x: grid on which the polynomial is evaluated @type matrix
+  %   n: degree of the Legendre polynomial to evaluate @type integer
+  %   span: interval on which the polynomial should be shifted @type vector
+  %     @default [-1 1]
+  %
+  % Return values:
+  %   pn: function values of the Legendre polynomial @type vector
+  %
+  % See also:
+  %   legendrePolynomialDerivative
 
-	if nargin == 2
-		span = [-1, 1];
-	elseif nargin < 2
-		error('Zu wenige Argumente übergeben!');
-	end
+  % set default values
+  if nargin == 2
+    span = [-1, 1];
+  elseif nargin < 2
+    error('Not enough arguments given!');
+  end
 
-	a = span(1);
-	b = span(2);
+  % Shift from the default interval [-1 1] to [a b]
+  xs = 2 / (span(2) - span(1)) * x + (span(1) + span(2)) / (span(1) - span(2));
 
-	% Shift der Polynome auf den Intervall [0, 1] statt [-1, 1].
-	xs = 2 / (b - a) * x + (a + b) / (a - b);
-
-	% Die Grade 0, 1 und 2 werden ohne Rekursion bestimmt.
-	if n == 0
-		pn = ones(size(xs, 1), size(xs, 2));
-	elseif n == 1
-		pn = xs;
-	else
-		pn1 = xs;
-		pn  = (3 * xs.^2 - 1) / 2;
-		if n > 2
-			% Rekursionsformel von Bonnet ausführen
-			for m = 3:n
-				tmp = pn;
-				pn  = ((2 * m - 1) .* xs .* pn - (m - 1) * pn1) / m;
-				pn1 = tmp;
-			end
-		end
-	end
+  % polynomials of degree 0, 1 and 2 are given, higher degrees are evaluated
+  % through the recursion formula
+  if n == 0
+    pn = ones(size(xs, 1), size(xs, 2));
+  elseif n == 1
+    pn = xs;
+  else
+    pn1 = xs;
+    pn  = (3 * xs.^2 - 1) / 2;
+    if n > 2
+      for m = 3:n
+        tmp = pn;
+        pn  = ((2 * m - 1) .* xs .* pn - (m - 1) * pn1) / m;
+        pn1 = tmp;
+      end
+    end
+  end
 
 end

@@ -1,56 +1,45 @@
 classdef GalerkinSolver < handle
-  % Löser basierend auf dem Galerkin-Verfahren.
+  % Galerkin-based Solver.
   %
   % @todo Not yet implemented.
 
   properties
-    % Daten des Gebiets
-
-    % Zeitintervall. @type vector
+    % time interval @type vector
     tspan = [0, 1];
-    % Ortsintervall. @type vector
+    % spatial interval @type vector
     xspan = [0, 1];
-
-
-    % Daten des Variationsproblems
-
-    % Anfangsbedingung.
-    initialData;
-    % Quellterm.
-    sourceData;
-    % Erstes Feld.
-    fieldA;
-    % Zweites Feld.
-    fieldB;
-    % Zeitpunkt, an dem die Felder gewechselt werden. @type double
+    % initial condition
+    initialData = 0;
+    % source term
+    sourceData = 0;
+    % first external field
+    fieldA = 0;
+    % second external field
+    fieldB = 0;
+    % field-switching point in time @type double
     fieldBreakpoint = 0.5;
-    % Koeffizient vor Laplace-Operator. @type double
+    % multiplicative factor for the Laplacian @type double
     coeffLaplace = 1;
-    % Offset-Koeffizient `\mu`. @type double
+    % additive field-offset `\mu`. @type double
     coeffOffset = 0;
   end
 
   properties (Dependent)
-    % Check, ob Offset verwendet wird oder nicht. @type logical
+    % checks if the field-offset is nonzero @type logical
     withOffset;
-    % Check, ob Anfangsbedingung gesetzt wurde. @type logical
-    isInitialDataSet;
-    % Check, ob Quellterm gesetzt wurde. @type logical
-    isSourceDataSet;
-    % Check, ob Felder gesetzt wurden. @type logical
-    areFieldsSet;
   end
 
   methods
 
-    % Konstruktoren
+    % Constructor
 
 %     function obj = GalerkinSolver()
 %       obj;
 %     end
 
 
-    % Getter für Dependent-Properties
+    % getters for dependent properties
+
     function val = get.withOffset(obj)
       % Prüfe, ob ein Offset bei den Feldern aktiviert ist.
       %
@@ -65,70 +54,11 @@ classdef GalerkinSolver < handle
       end
     end
 
-    function val = get.isInitialDataSet(obj)
-      val = true;
-    end
 
-    function val = get.isSourceDataSet(obj)
-      val = true;
-    end
-
-    function val = get.areFieldsSet(obj)
-      val = true;
-    end
-
-
-    % Setup-Methoden
-
-    function val = isSetupDone(obj, listFiles)
-      % Check, ob das Setup abgeschlossen ist.
-      %
-      % Geprüft wird, ob die Anfangsbedingungen, Randbedingungen, ein
-      % Quellterm et cetera übergeben wurden und alle benötigten Daten für
-      % das Lösen der partiellen Differentialgleichung vorliegen.
-      %
-      % Parameters:
-      %   listFiles: Schalter, ob fehlende Daten aufgelistet werden sollen @type logical @default false
-      %
-      % Return values:
-      %   val: Ob Setup abgeschlossen ist oder nicht. @type logical
-
-      if nargin == 1
-        listFiles = false;
-      end
-
-      if ~obj.isInitialDataSet
-        if listFiles
-          warning('Anfangsbedingung nicht gesetzt!');
-        end
-        val = false;
-        return;
-      end
-
-      if ~obj.isSourceDataSet
-        if listFiles
-          warning('Quellterm nicht gesetzt!');
-        end
-        val = false;
-        return;
-      end
-
-      if ~obj.areFieldsSet
-        if listFiles
-          warning('Felder nicht gesetzt!');
-        end
-        val = false;
-        return;
-      end
-
-      val = true;
-    end
-
-
-    % Setup der Anfangsbedingung
+    % setup of the initial conditions
 
     function setInitialDataFromFunction(obj, ufun)
-      % Setze die Anfangbedingung mittels eines Function-Handles.
+      % Set the initial conditions through a function handle.
       %
       % @todo Not yet implemented!
       %
@@ -140,30 +70,52 @@ classdef GalerkinSolver < handle
 
 
     function setInitialDataPointwise(obj)
+      % Set the initial conditions through a vector of function values on an
+      % equidistant grid.
+      %
       % @todo Not yet implemented!
       error('Not yet implemented!');
     end
 
     function setInitialDataFromFourierCoeffs(obj)
+      % Set the initial conditions through a coefficients vector of a Fourier
+      % series.
+      %
       % @todo Not yet implemented!
       error('Not yet implemented!');
     end
 
     function setInitialDataFromSineCoeffs(obj)
+      % Set the initial conditions through a coefficients vector of a Sine
+      % series.
+      %
       % @todo Not yet implemented!
       error('Not yet implemented!');
     end
 
 
-    % Setup des Quellterms
+    % setup of the source term
+
+    function setSourceDataToZero(obj)
+      % Resets the source data to the default value of zero.
+    end
 
     function setSourceDataPointwise(obj)
       % @todo Not yet implemented!
       error('Not yet implemented!');
     end
 
+    function setSourceDataFromFunc(obj)
+      % @todo Not yet implemented!
+      error('Not yet implemented!');
+    end
 
-    % Setup der Felder
+    % setup of the fields
+
+    function setFieldFromFunc(obj)
+      % @todo Not yet implemented!
+      error('Not yet implemented!');
+    end
 
     function setFieldPointwise(obj)
       % @todo Not yet implemented!
@@ -181,15 +133,10 @@ classdef GalerkinSolver < handle
     end
 
 
-    % Löser
+    % Solver
 
     function [ufun] = solve(obj)
       % @todo Not yet implemented!
-
-      %| @todo Check einbauen!
-      % if ~isSetupDone(true)
-      %   error('Setup wurde nicht abgeschlossen!');
-      % end
 
       assembly = AssemblySineLegendre();
       assembly.setNumberOfAnsatzFuncs(10, 10);
@@ -211,26 +158,26 @@ classdef GalerkinSolver < handle
     end
 
 
-
-    % Plotten und Darstellen
+    % Plotting and visualization
 
     function plotSolution(obj, solfun)
-      % Lösung darstellen als 3D-Plot.
+      % Plot the solution.
       %
       % Parameters:
-      %   solfun: Function-Handle der Lösungsfunktion @type function_handle
+      %   solfun: function handle of the solution function @type function_handle
 
-      % Gitter erzeugen
+      % create the grids
       gridt = linspace(obj.tspan(1), obj.tspan(2));
       gridx = linspace(obj.xspan(1), obj.xspan(2));
       [mesht, meshx] = meshgrid(gridt, gridx);
 
+      % evaluate the solution function
       solution = solfun(mesht, meshx);
 
-      % Plot erstellen
+      % visualize
       figure();
       mesh(mesht, meshx, solution);
-      title('Lösung');
+      title('Solution');
       xlabel('t');
       ylabel('x');
       zlabel('u');
