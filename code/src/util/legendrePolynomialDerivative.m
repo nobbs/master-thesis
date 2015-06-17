@@ -5,7 +5,7 @@ function pn = legendrePolynomialDerivative(x, n, span)
   % form
   %   ``(n - 1) P_n(x) = (2n - 1) x P_{n-1}(x) - n P_{n-2}(x)``
   % where `P_0(x) = 0` und `P_1(x) = 1`, for the legendre polynomials on the
-  % interval `[-1 1]`.
+  % interval `[-1, 1]`.
   %
   % Parameters:
   %   x: grid on which the polynomial is evaluated @type matrix

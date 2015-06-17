@@ -27,13 +27,13 @@ classdef AssemblyAbstract < handle
 
   methods(Abstract)
     % Assemble the stiffness matrix without the field-dependent term.
-    assembleStiffnessMatrixWithoutOmega(obj);
+    M = assembleStiffnessMatrixWithoutOmega(obj);
 
     % Assemble only the field-dependent part of the stiffness matrix.
-    assembleStiffnessMatrixOnlyOmega(obj);
+    M = assembleStiffnessMatrixOnlyOmega(obj);
 
     % Assemble the load vector
-    assembleRHS(obj);
+    F = assembleRHS(obj);
 
     % Construct a function handle of the solution
     %

@@ -138,23 +138,30 @@ classdef GalerkinSolver < handle
     function [ufun] = solve(obj)
       % @todo Not yet implemented!
 
-      assembly = AssemblySineLegendre();
-      assembly.setNumberOfAnsatzFuncs(10, 10);
+      % assembly = AssemblySineLegendre();
+      assembly = AssemblyFourierLegendre();
+      assembly.setNumberOfAnsatzFuncs(20, 20);
       assembly.setNumberOfTestFuncsFromAnsatzFuncs();
 
+      obj.tspan = [0 obj.fieldBreakpoint];
       assembly.tspan = obj.tspan;
       assembly.xspan = obj.xspan;
 
       assembly.coeffLaplace = obj.coeffLaplace;
-      assembly.coeffOffset = obj.coeffOffset;
+      assembly.coeffOffset = 0;
 
-      assembly.initialData = @(x) sin(pi * 1 * x / obj.xspan(2));
+      assembly.initialData = @(x) sin(pi * 2 * x / obj.xspan(2));
+
+      % assembly.initialData = @(x) ones(size(x, 1), size(x, 2));
 
       LHS = assembly.assembleStiffnessMatrixWithoutOmega();
       RHS = assembly.assembleRHS();
 
       solfun = @(t, x) assembly.solutionFunctionFromCoeffs(LHS \ RHS, t, x);
       obj.plotSolution(solfun);
+    end
+
+    function solveTwoConstantFields(obj, fieldA, fieldB)
     end
 
 
