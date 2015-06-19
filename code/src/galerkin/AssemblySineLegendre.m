@@ -158,7 +158,274 @@ classdef AssemblySineLegendre < AssemblyGlobalAbstract
       error('Not yet implemented!');
     end
 
-    % function M = assembleOmegaMatrixFrom
+
+    % Assemble the field-dependent parts of the stiffness matrix based on
+    % different series expansions of the field.
+
+    function O = assembleStiffnessMatrixOmegaFromSineSlow(obj, nCoeff)
+      % Assemble only the field-dependent components of the stiffness matrix
+      % based on a sine series expansion of the field. Slow implementation, only
+      % for comparison!
+      %
+      % Uses numerical integration to evaluate the occurring integrals.
+      %
+      % Parameters:
+      %   ncoefF: number of sine basis functions @type integer
+      %
+      % Return values:
+      %   O: struct of the partial stiffness matrices @type struct
+
+      % create the struct that will hold the matrices
+      O = {};
+
+      % iterate over the index of the sine basis function (of the sine series
+      % expansion of the field)
+      for cdx = 1:nCoeff
+        % create needed vectors to assemble the sparse matrix
+        Idx = ones(obj.dAnsatz, 1);
+        Idy = ones(obj.dAnsatz, 1);
+        Val = zeros(obj.dAnsatz, 1);
+        ctr = 1;
+
+        % iterate over the indexes of the spatial basis functions of the ansatz
+        % and test subspaces
+        for jdx = 1:obj.nAnsatzSpatial
+          for ldx = 1:obj.nTestSpatial
+            % evaluate spatial integral through numerical integration
+            intSpatial = obj.xspan(2) * integral(@(x) sin(pi * cdx * x) .* sin(pi * jdx * x) .* sin(pi * ldx * x), obj.xspan(1), obj.xspan(2));
+
+            % only consider values above a given threshold (since a lot of zero
+            % valued integrals won't get exact zero)
+            if abs(intSpatial) > sqrt(eps)
+              % iterate over the index of the temporal basis functions of the
+              % ansatz and test subspaces. since both use Legendre polynomials,
+              % we can simplify the occurring integrals to the following
+              % expression
+              for kdx = 1:obj.nAnsatzTemporal
+                % evaluate temporal integral
+                intTemporal = (obj.tspan(2) - obj.tspan(1)) / (2 * (kdx - 1) + 1);
+
+                % save the evaluated integrals
+                Idx(ctr) = (jdx - 1) * obj.nAnsatzTemporal + kdx;
+                Idy(ctr) = (ldx - 1) * obj.nTestTemporal + kdx;
+                Val(ctr) = intTemporal * intSpatial;;
+                ctr = ctr + 1;
+              end
+            end
+          end
+        end
+
+        % create the sparse matrix
+        O{cdx} = sparse(Idy, Idx, Val, obj.dTest, obj.dAnsatz);;
+      end
+    end
+
+    function O = assembleStiffnessMatrixOmegaFromSine(obj, nCoeff)
+      % Assemble only the field-dependent components of the stiffness matrix
+      % based on a sine series expansion of the field. Optimized version without
+      % numerical integration.
+      %
+      % Integrals over the product of three basis functions of the different
+      % spaces are evaluated through formulas which can mostly be derived
+      % through the use of trigonometric identities, partial integration and
+      % some intuition.
+      %
+      % Parameters:
+      %   nCoeff: number of sine basis functions @type integer
+      %
+      % Return values:
+      %   O: struct of the partial stiffness matrices @type struct
+      %
+      % @todo Write better comments!
+
+      % create the struct that will hold the matrices
+      O = {};
+
+      % iterate over the index of the sine basis function (of the sine series
+      % expansion of the field)
+      for cdx = 1:nCoeff
+        % create needed vectors to assemble the sparse matrix
+        Idx = ones(obj.dAnsatz, 1);
+        Idy = ones(obj.dAnsatz, 1);
+        Val = zeros(obj.dAnsatz, 1);
+        ctr = 1;
+
+        % iterate over the indexes of the spatial basis functions of the ansatz
+        % and test subspaces
+        for jdx = 1:obj.nAnsatzSpatial
+          for ldx = 1:obj.nTestSpatial
+            % derived condition, if it's not satisfied, the value of the
+            % integral is null
+            if mod(cdx + ldx + jdx, 2) == 1
+
+              % evaluate the spatial integral
+              intSpatial = -((4 * cdx * jdx * ldx)/((cdx - jdx - ldx) * (cdx + jdx - ldx) * (cdx - jdx + ldx) * (cdx + jdx + ldx) * pi));
+
+              for kdx = 1:obj.nAnsatzTemporal
+                % evaluate temporal integral
+                intTemporal = (obj.tspan(2) - obj.tspan(1)) / (2 * (kdx - 1) + 1);
+
+                % save the evaluated integrals
+                Idx(ctr) = (jdx - 1) * obj.nAnsatzTemporal + kdx;
+                Idy(ctr) = (ldx - 1) * obj.nTestTemporal + kdx;
+                Val(ctr) = intTemporal * intSpatial;;
+                ctr = ctr + 1;
+              end
+            end
+          end
+        end
+
+        % create the sparse matrix
+        O{cdx} = sparse(Idy, Idx, Val, obj.dTest, obj.dAnsatz);;
+      end
+    end
+
+    function O = assembleStiffnessMatrixOmegaFromFourierSlow(obj, nCoeff)
+      % Assemble only the field-dependent components of the stiffness matrix
+      % based on a fourier series expansion of the field. Slow implementation,
+      % only for comparison!
+      %
+      % Uses numerical integration to evaluate the occurring integrals.
+      %
+      % Parameters:
+      %   nCoeff: number of sine basis functions @type integer
+      %
+      % Return values:
+      %   O: struct of the partial stiffness matrices @type struct
+      %
+      % @todo Check if correct.
+
+      % create the struct that will hold the matrices
+      O = {};
+
+      % iterate over the index of the Fourier basis function (of the Fourier
+      % series expansion of the field).
+      % order of functions:
+      % 1: cos(2pix), 2: sin(2pix), 3: cos(4pix) ...
+      % cdx = i odd: cos((i+1) pi x), cdx = i even: sin(i pi x)
+      for cdx = 1:nCoeff
+        % create needed vectors to assemble the sparse matrix
+        Idx = ones(obj.dAnsatz, 1);
+        Idy = ones(obj.dAnsatz, 1);
+        Val = zeros(obj.dAnsatz, 1);
+        ctr = 1;
+
+        % iterate over the indexes of the spatial basis functions of the ansatz
+        % and test subspaces
+        for jdx = 1:obj.nAnsatzSpatial
+          for ldx = 1:obj.nTestSpatial
+
+            % evaluate the spatial integral. there are several combinations of
+            % sine / cosine products we have to consider
+            intSpatial = 0;
+
+            if mod(cdx, 2) == 0
+              % cdx even: sine function sin(pi * cdx * x)
+              intSpatial = obj.xspan(2) * integral(@(x) sin(pi * cdx * x) .* sin(pi * jdx * x) .* sin(pi * ldx * x), obj.xspan(1), obj.xspan(2));
+            else
+              % cdx odd: cosine function cos(pi * (cdx + 1) * x)
+              intSpatial = obj.xspan(2) * integral(@(x) cos(pi * (cdx + 1) * x) .* sin(pi * jdx * x) .* sin(pi * ldx * x), obj.xspan(1), obj.xspan(2));
+            end
+
+            % only consider values above a given threshold (since a lot of zero
+            % valued integrals won't get exact zero)
+            if abs(intSpatial) > sqrt(eps)
+              % iterate over the index of the temporal basis functions of the
+              % ansatz and test subspaces. since both use Legendre polynomials,
+              % we can simplify the occurring integrals to the following
+              % expression
+              for kdx = 1:obj.nAnsatzTemporal
+                % evaluate temporal integral
+                intTemporal = (obj.tspan(2) - obj.tspan(1)) / (2 * (kdx - 1) + 1);
+
+                % save the evaluated integrals
+                Idx(ctr) = (jdx - 1) * obj.nAnsatzTemporal + kdx;
+                Idy(ctr) = (ldx - 1) * obj.nTestTemporal + kdx;
+                Val(ctr) = intTemporal * intSpatial;;
+                ctr = ctr + 1;
+              end
+            end
+          end
+        end
+
+        % create the sparse matrix
+        O{cdx} = sparse(Idy, Idx, Val, obj.dTest, obj.dAnsatz);
+      end
+
+    end
+
+    function O = assembleStiffnessMatrixOmegaFromFourier(obj, nCoeff)
+      % Assemble only the field-dependent components of the stiffness matrix
+      % based on a sine series expansion of the field. Optimized version without
+      % numerical integration.
+      %
+      % Integrals over the product of three basis functions of the different
+      % spaces are evaluated through formulas which can mostly be derived
+      % through the use of trigonometric identities, partial integration and
+      % some intuition.
+      %
+      % Parameters:
+      %   nCoeff: number of sine basis functions @type integer
+      %
+      % Return values:
+      %   O: struct of the partial stiffness matrices @type struct
+      %
+      % @todo Incorrect. Has to be fixed!
+
+      % create the struct that will hold the matrices
+      O = {};
+
+      % iterate over the index of the Fourier basis function (of the Fourier
+      % series expansion of the field).
+      % order of functions:
+      % 1: cos(2pix), 2: sin(2pix), 3: cos(4pix) ...
+      % cdx = i odd: cos((i+1) pi x), cdx = i even: sin(i pi x)
+      for cdx = 1:nCoeff
+        % create needed vectors to assemble the sparse matrix
+        Idx = ones(obj.dAnsatz, 1);
+        Idy = ones(obj.dAnsatz, 1);
+        Val = zeros(obj.dAnsatz, 1);
+        ctr = 1;
+
+        % iterate over the indexes of the spatial basis functions of the ansatz
+        % and test subspaces
+        for jdx = 1:obj.nAnsatzSpatial
+          for ldx = 1:obj.nTestSpatial
+            % derived condition, if it's not satisfied, the value of the
+            % integral is null
+            if mod(ldx + jdx, 2) == 1
+
+              % evaluate spatial integral
+              if mod(cdx, 2) == 0
+                % cdx even: sine function sin(pi * cdx * x)
+                if cdx == (jdx - ldx) / 2 || cdx == (- jdx + ldx) / 2
+                  intSpatial = 1 / 4;
+                elseif cdx == (jdx + ldx) / 2
+                  intSpatial = - 1 / 4;
+                end
+              else
+                % cdx odd: cosine function cos(pi * (cdx + 1) * x)
+                intSpatial = - obj.xspan(2) * ((4 * 2 * cdx *  jdx * ldx)/((2 * cdx - jdx - ldx) * (2 * cdx + jdx - ldx) * (2 * cdx - jdx + ldx) * (2 * cdx + jdx + ldx) * pi));
+              end
+
+              for kdx = 1:obj.nAnsatzTemporal
+                % evaluate temporal integral
+                intTemporal = (obj.tspan(2) - obj.tspan(1)) / (2 * (kdx - 1) + 1);
+
+                % save the evaluated integrals
+                Idx(ctr) = (jdx - 1) * obj.nAnsatzTemporal + kdx;
+                Idy(ctr) = (ldx - 1) * obj.nTestTemporal + kdx;
+                Val(ctr) = intTemporal * intSpatial;;
+                ctr = ctr + 1;
+              end
+            end
+          end
+        end
+
+        % create the sparse matrix
+        O{cdx} = sparse(Idy, Idx, Val, obj.dTest, obj.dAnsatz);;
+      end
+    end
 
     function F = assembleRHS(obj)
       % Assemble the load vector.
@@ -216,6 +483,10 @@ classdef AssemblySineLegendre < AssemblyGlobalAbstract
       % Evaluates the temporal basis function, shifted Legendre polynomials,
       % with the given index for the given values of x. Can be used to define
       % function handles and numerical integration.
+      %
+      % Warning:
+      %   The enumeration of index starts at 1, that means you'll get the
+      %   Legendre polynomial of degree (index - 1)!
       %
       % Parameters:
       %   index: index of the basis function

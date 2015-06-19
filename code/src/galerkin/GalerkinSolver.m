@@ -140,7 +140,7 @@ classdef GalerkinSolver < handle
 
       % assembly = AssemblySineLegendre();
       assembly = AssemblyFourierLegendre();
-      assembly.setNumberOfAnsatzFuncs(20, 20);
+      assembly.setNumberOfAnsatzFuncs(40, 40);
       assembly.setNumberOfTestFuncsFromAnsatzFuncs();
 
       obj.tspan = [0 obj.fieldBreakpoint];
@@ -150,12 +150,28 @@ classdef GalerkinSolver < handle
       assembly.coeffLaplace = obj.coeffLaplace;
       assembly.coeffOffset = 0;
 
-      assembly.initialData = @(x) sin(pi * 2 * x / obj.xspan(2));
+      % assembly.initialData = @(x) sin(pi * 1 * x / obj.xspan(2));
 
-      % assembly.initialData = @(x) ones(size(x, 1), size(x, 2));
+      assembly.initialData = @(x) ones(size(x, 1), size(x, 2));
 
+      tic
       LHS = assembly.assembleStiffnessMatrixWithoutOmega();
+      toc
+      tic
+      O = assembly.assembleStiffnessMatrixOmegaFromSine(5);
+      % O = assembly.assembleStiffnessMatrixOmegaFromSineSlow(1);
+      toc;
       RHS = assembly.assembleRHS();
+
+      size(LHS)
+
+      LHS = LHS + 10 * O{1} - 5 * O{5};
+
+      % nnz(LHS)
+      % numel(LHS)
+      % nnz(LHS) / numel(LHS)
+
+      % spy(LHS)
 
       solfun = @(t, x) assembly.solutionFunctionFromCoeffs(LHS \ RHS, t, x);
       obj.plotSolution(solfun);
