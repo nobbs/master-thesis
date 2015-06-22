@@ -259,7 +259,7 @@ classdef AssemblySineLegendre < AssemblyGlobalAbstract
             if mod(cdx + ldx + jdx, 2) == 1
 
               % evaluate the spatial integral
-              intSpatial = -((4 * cdx * jdx * ldx)/((cdx - jdx - ldx) * (cdx + jdx - ldx) * (cdx - jdx + ldx) * (cdx + jdx + ldx) * pi));
+              intSpatial = (obj.xspan(2) / 2 ) * ( 1 / (pi * (cdx + jdx - ldx)) + 1 / (pi * (-cdx + jdx + ldx)) + 1 / (pi * (cdx - jdx + ldx)) - 1 / (pi * (cdx + jdx + ldx)));
 
               for kdx = 1:obj.nAnsatzTemporal
                 % evaluate temporal integral
@@ -391,33 +391,40 @@ classdef AssemblySineLegendre < AssemblyGlobalAbstract
         % and test subspaces
         for jdx = 1:obj.nAnsatzSpatial
           for ldx = 1:obj.nTestSpatial
-            % derived condition, if it's not satisfied, the value of the
-            % integral is null
-            if mod(ldx + jdx, 2) == 1
-
-              % evaluate spatial integral
-              if mod(cdx, 2) == 0
-                % cdx even: sine function sin(pi * cdx * x)
-                if cdx == (jdx - ldx) / 2 || cdx == (- jdx + ldx) / 2
-                  intSpatial = 1 / 4;
-                elseif cdx == (jdx + ldx) / 2
-                  intSpatial = - 1 / 4;
-                end
-              else
-                % cdx odd: cosine function cos(pi * (cdx + 1) * x)
-                intSpatial = - obj.xspan(2) * ((4 * 2 * cdx *  jdx * ldx)/((2 * cdx - jdx - ldx) * (2 * cdx + jdx - ldx) * (2 * cdx - jdx + ldx) * (2 * cdx + jdx + ldx) * pi));
+            % evaluate spatial integral
+            intSpatial = 0;
+            if mod(cdx, 2) == 0
+              % cdx even: sine function sin(pi * cdx * x)
+              if (mod(jdx, 2) == 0 && mod(ldx, 2) == 1) || (mod(jdx, 2) == 1 && mod(ldx, 2) == 0)
+                intSpatial = (obj.xspan(2) / 2 ) * ( 1 / (pi * (cdx + jdx - ldx)) + 1 / (pi * (-cdx + jdx + ldx)) + 1 / (pi * (cdx - jdx + ldx)) - 1 / (pi * (cdx + jdx + ldx)));
               end
-
-              for kdx = 1:obj.nAnsatzTemporal
-                % evaluate temporal integral
-                intTemporal = (obj.tspan(2) - obj.tspan(1)) / (2 * (kdx - 1) + 1);
-
-                % save the evaluated integrals
-                Idx(ctr) = (jdx - 1) * obj.nAnsatzTemporal + kdx;
-                Idy(ctr) = (ldx - 1) * obj.nTestTemporal + kdx;
-                Val(ctr) = intTemporal * intSpatial;;
-                ctr = ctr + 1;
+            else
+              % cdx odd: cosine function cos(pi * (cdx + 1) * x)
+              val = 0;
+              if - cdx + jdx + ldx - 1 == 0
+                val = val - 1;
               end
+              if cdx - jdx + ldx + 1 == 0
+                val = val + 1;
+              end
+              if cdx + jdx - ldx + 1 == 0
+                val = val + 1;
+              end
+              if cdx + jdx + ldx + 1 == 0
+                val = val - 1;
+              end
+              intSpatial = (obj.xspan(2) / 4) * val;
+            end
+
+            for kdx = 1:obj.nAnsatzTemporal
+              % evaluate temporal integral
+              intTemporal = (obj.tspan(2) - obj.tspan(1)) / (2 * (kdx - 1) + 1);
+
+              % save the evaluated integrals
+              Idx(ctr) = (jdx - 1) * obj.nAnsatzTemporal + kdx;
+              Idy(ctr) = (ldx - 1) * obj.nTestTemporal + kdx;
+              Val(ctr) = intTemporal * intSpatial;;
+              ctr = ctr + 1;
             end
           end
         end
