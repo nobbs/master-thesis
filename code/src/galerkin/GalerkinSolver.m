@@ -147,7 +147,7 @@ classdef GalerkinSolver < handle
       assembly.tspan = obj.tspan;
       assembly.xspan = obj.xspan;
 
-      assembly.coeffLaplace = obj.coeffLaplace;
+      assembly.coeffLaplace = 0.1;
       assembly.coeffOffset = 0;
 
       % assembly.initialData = @(x) sin(pi * 1 * x / obj.xspan(2));
@@ -158,14 +158,14 @@ classdef GalerkinSolver < handle
       LHS = assembly.assembleStiffnessMatrixWithoutOmega();
       toc
       tic
-      O = assembly.assembleStiffnessMatrixOmegaFromSine(5);
+      O = assembly.assembleStiffnessMatrixOmegaFromFourier(5);
       % O = assembly.assembleStiffnessMatrixOmegaFromSineSlow(1);
       toc;
       RHS = assembly.assembleRHS();
 
       size(LHS)
 
-      LHS = LHS + 10 * O{1} - 5 * O{5};
+      LHS = LHS + 1 * O{1} - 5 * O{5};
 
       % nnz(LHS)
       % numel(LHS)

@@ -342,6 +342,104 @@ classdef AssemblyFourierLegendre < AssemblyGlobalAbstract
       end
     end
 
+    function O = assembleStiffnessMatrixOmegaFromFourierSlow(obj, nCoeff)
+      % Assemble only the field-dependent components of the stiffness matrix
+      % based on a fourier series expansion of the field. Slow implementation,
+      % only for comparison!
+      %
+      % Uses numerical integration to evaluate the occurring integrals.
+      %
+      % Parameters:
+      %   nCoeff: number of sine basis functions @type integer
+      %
+      % Return values:
+      %   O: struct of the partial stiffness matrices @type struct
+      %
+      % @todo Check if correct.
+
+      % create the struct that will hold the matrices
+      O = {};
+
+      % iterate over the index of the Fourier basis function (of the Fourier
+      % series expansion of the field).
+      % order of functions:
+      % 1: cos(2pix), 2: sin(2pix), 3: cos(4pix) ...
+      % cdx = i odd: cos((i+1) pi x), cdx = i even: sin(i pi x)
+      for cdx = 1:nCoeff
+        % create needed vectors to assemble the sparse matrix
+        Idx = ones(obj.dAnsatz, 1);
+        Idy = ones(obj.dAnsatz, 1);
+        Val = zeros(obj.dAnsatz, 1);
+        ctr = 1;
+
+        % iterate over the indexes of the spatial basis functions of the ansatz
+        % and test subspaces
+        for jdx = 1:obj.nAnsatzSpatial
+          for ldx = 1:obj.nTestSpatial
+
+            % evaluate the spatial integral. there are several combinations of
+            % sine / cosine products we have to consider
+            intSpatial = 0;
+
+            if mod(cdx, 2) == 0
+              % cdx even: sine function sin(pi * cdx * x)
+              if mod(jdx, 2) == 1 && mod(ldx, 2) == 1
+                % j odd: cosine, l odd: cosine
+                intSpatial = obj.xspan(2) * integral(@(x) sin(pi * cdx * x) .* cos(pi * (jdx - 1) * x) .* cos(pi * (ldx - 1) * x), obj.xspan(1), obj.xspan(2));
+              elseif mod(jdx, 2) == 0 && mod(ldx, 2) == 0
+                % j even: sine, l even: sine
+                intSpatial = obj.xspan(2) * integral(@(x) sin(pi * cdx * x) .* sin(pi * (jdx) * x) .* sin(pi * (ldx) * x), obj.xspan(1), obj.xspan(2));
+              elseif mod(jdx, 2) == 0 && mod(ldx, 2) == 1
+                % j even: sine, l odd: cosine
+                intSpatial = obj.xspan(2) * integral(@(x) sin(pi * cdx * x) .* sin(pi * (jdx) * x) .* cos(pi * (ldx - 1) * x), obj.xspan(1), obj.xspan(2));
+              elseif mod(jdx, 2) == 1 && mod(ldx, 2) == 0
+                % j odd: cosine, l even: sine
+                intSpatial = obj.xspan(2) * integral(@(x) sin(pi * cdx * x) .* cos(pi * (jdx - 1) * x) .* sin(pi * ldx * x), obj.xspan(1), obj.xspan(2));
+              end
+            else
+              % cdx odd: cosine function cos(pi * (cdx + 1) * x)
+              if mod(jdx, 2) == 1 && mod(ldx, 2) == 1
+                % j odd: cosine, l odd: cosine
+                intSpatial = obj.xspan(2) * integral(@(x) cos(pi * (cdx + 1) * x) .* cos(pi * (jdx - 1) * x) .* cos(pi * (ldx - 1) * x), obj.xspan(1), obj.xspan(2));
+              elseif mod(jdx, 2) == 0 && mod(ldx, 2) == 0
+                % j even: sine, l even: sine
+                intSpatial = obj.xspan(2) * integral(@(x) cos(pi * (cdx + 1) * x) .* sin(pi * (jdx) * x) .* sin(pi * (ldx) * x), obj.xspan(1), obj.xspan(2));
+              elseif mod(jdx, 2) == 0 && mod(ldx, 2) == 1
+                % j even: sine, l odd: cosine
+                intSpatial = obj.xspan(2) * integral(@(x) cos(pi * (cdx + 1) * x) .* sin(pi * (jdx) * x) .* cos(pi * (ldx - 1) * x), obj.xspan(1), obj.xspan(2));
+              elseif mod(jdx, 2) == 1 && mod(ldx, 2) == 0
+                % j odd: cosine, l even: sine
+                intSpatial = obj.xspan(2) * integral(@(x) cos(pi * (cdx + 1) * x) .* cos(pi * (jdx - 1) * x) .* sin(pi * ldx * x), obj.xspan(1), obj.xspan(2));
+              end
+            end
+
+            % only consider values above a given threshold (since a lot of zero
+            % valued integrals won't get exact zero)
+            if abs(intSpatial) > sqrt(eps)
+              % iterate over the index of the temporal basis functions of the
+              % ansatz and test subspaces. since both use Legendre polynomials,
+              % we can simplify the occurring integrals to the following
+              % expression
+              for kdx = 1:obj.nAnsatzTemporal
+                % evaluate temporal integral
+                intTemporal = (obj.tspan(2) - obj.tspan(1)) / (2 * (kdx - 1) + 1);
+
+                % save the evaluated integrals
+                Idx(ctr) = (jdx - 1) * obj.nAnsatzTemporal + kdx;
+                Idy(ctr) = (ldx - 1) * obj.nTestTemporal + kdx;
+                Val(ctr) = intTemporal * intSpatial;;
+                ctr = ctr + 1;
+              end
+            end
+          end
+        end
+
+        % create the sparse matrix
+        O{cdx} = sparse(Idy, Idx, Val, obj.dTest, obj.dAnsatz);
+      end
+
+    end
+
     function O = assembleStiffnessMatrixOmegaFromFourier(obj, nCoeff)
       % Assemble only the field-dependent components of the stiffness matrix
       % based on a sine series expansion of the field.
@@ -354,52 +452,146 @@ classdef AssemblyFourierLegendre < AssemblyGlobalAbstract
       %
       % @todo Not yet fully implemented.
 
-      O = {};
+      % create the struct that will hold the matrices
+            O = {};
 
-      % order of functions:
-      % 1: cos(2pix), 2: sin(2pix), 3: cos(4pix) ...
-      % i odd: cos((i+1) pi x), i even: sin(i pi x)
+            % iterate over the index of the Fourier basis function (of the Fourier
+            % series expansion of the field).
+            % order of functions:
+            % 1: cos(2pix), 2: sin(2pix), 3: cos(4pix) ...
+            % cdx = i odd: cos((i+1) pi x), cdx = i even: sin(i pi x)
+            for cdx = 1:nCoeff
+              % create needed vectors to assemble the sparse matrix
+              Idx = ones(obj.dAnsatz, 1);
+              Idy = ones(obj.dAnsatz, 1);
+              Val = zeros(obj.dAnsatz, 1);
+              ctr = 1;
 
-      % @todo optimize further
-      % @todo comment!
-      for cdx = 1:nCoeff
-        Idx = ones(obj.dAnsatz, 1);
-        Idy = ones(obj.dAnsatz, 1);
-        Val = zeros(obj.dAnsatz, 1);
-        ctr = 1;
+              % iterate over the indexes of the spatial basis functions of the ansatz
+              % and test subspaces
+              for jdx = 1:obj.nAnsatzSpatial
+                for ldx = 1:obj.nTestSpatial
 
-        for jdx = 1:obj.nAnsatzSpatial
-          for ldx = 1:obj.nTestSpatial
-            if mod(ldx + jdx, 2) == 1
+                  % evaluate the spatial integral. there are several combinations of
+                  % sine / cosine products we have to consider
+                  intSpatial = 0;
 
-              % evaluate spatial integral
-              if mod(cdx, 2) == 0
-                % even: cos
-                if cdx == (jdx - ldx) / 2 || cdx == (- jdx + ldx) / 2
-                  intSpatial = 1 / 4;
-                elseif cdx == (jdx + ldx) / 2
-                  intSpatial = - 1 / 4;
+                  if mod(cdx, 2) == 0
+                    % cdx even: sine function sin(pi * cdx * x)
+                    if mod(jdx, 2) == 1 && mod(ldx, 2) == 1
+                      % j odd: cosine, l odd: cosine
+                      % intSpatial = 0;
+                    elseif mod(jdx, 2) == 0 && mod(ldx, 2) == 0
+                      % j even: sine, l even: sine
+                      % intSpatial = 0;
+                    elseif mod(jdx, 2) == 0 && mod(ldx, 2) == 1
+                      % j even: sine, l odd: cosine
+                      val = 0;
+                      if cdx + jdx - ldx + 1 == 0
+                        val = val - 1;
+                      end
+                      if - cdx + jdx + ldx - 1 == 0
+                        val = val + 1;
+                      end
+                      if cdx - jdx + ldx - 1 == 0
+                        val = val + 1;
+                      end
+                      if cdx + jdx + ldx - 1 == 0
+                        val = val - 1;
+                      end
+                      intSpatial = (obj.xspan(2) / 4) * val;
+                    elseif mod(jdx, 2) == 1 && mod(ldx, 2) == 0
+                      % j odd: cosine, l even: sine
+                      val = 0;
+                      if cdx + jdx - ldx - 1 == 0
+                        val = val + 1;
+                      end
+                      if - cdx + jdx + ldx - 1 == 0
+                        val = val + 1;
+                      end
+                      if cdx - jdx + ldx + 1 == 0
+                        val = val - 1;
+                      end
+                      if cdx + jdx + ldx - 1 == 0
+                        val = val - 1;
+                      end
+                      intSpatial = (obj.xspan(2) / 4) * val;
+                    end
+                  else
+                    % cdx odd: cosine function cos(pi * (cdx + 1) * x)
+                    if mod(jdx, 2) == 1 && mod(ldx, 2) == 1
+                      % j odd: cosine, l odd: cosine
+                      if jdx == 1 && ldx == 1
+                        intSpatial = 0;
+                      elseif jdx == 1 && ldx > 1 && cdx + 1 == ldx - 1
+                        intSpatial = obj.xspan(2) / 2;
+                      elseif jdx > 1 && ldx == 1 && cdx + 1 == jdx - 1
+                        intSpatial = obj.xspan(2) / 2;
+                      elseif jdx > 1 && ldx > 1
+                        val = 0;
+                        if cdx + jdx - ldx + 1 == 0
+                          val = val + 1;
+                        end
+                        if - cdx + jdx + ldx - 3 == 0
+                          val = val + 1;
+                        end
+                        if cdx - jdx + ldx + 1 == 0
+                          val = val + 1;
+                        end
+                        if cdx + jdx + ldx - 1 == 0
+                          val = val + 1;
+                        end
+                        intSpatial = (obj.xspan(2) / 4) * val;
+                      end
+                    elseif mod(jdx, 2) == 0 && mod(ldx, 2) == 0
+                      % j even: sine, l even: sine
+                      val = 0;
+                      if - cdx + jdx + ldx - 1 == 0
+                        val = val - 1;
+                      end
+                      if cdx + jdx - ldx + 1 == 0
+                        val = val + 1;
+                      end
+                      if cdx - jdx + ldx + 1 == 0
+                        val = val + 1;
+                      end
+                      if cdx + jdx + ldx + 1 == 0
+                        val = val - 1;
+                      end
+                      intSpatial = (obj.xspan(2) / 4) * val;
+                    elseif mod(jdx, 2) == 0 && mod(ldx, 2) == 1
+                      % j even: sine, l odd: cosine
+                      % intSpatial = 0;
+                    elseif mod(jdx, 2) == 1 && mod(ldx, 2) == 0
+                      % j odd: cosine, l even: sine
+                      % intSpatial = 0;
+                    end
+                  end
+
+                  % only consider values above a given threshold (since a lot of zero
+                  % valued integrals won't get exact zero)
+                  if abs(intSpatial) > sqrt(eps)
+                    % iterate over the index of the temporal basis functions of the
+                    % ansatz and test subspaces. since both use Legendre polynomials,
+                    % we can simplify the occurring integrals to the following
+                    % expression
+                    for kdx = 1:obj.nAnsatzTemporal
+                      % evaluate temporal integral
+                      intTemporal = (obj.tspan(2) - obj.tspan(1)) / (2 * (kdx - 1) + 1);
+
+                      % save the evaluated integrals
+                      Idx(ctr) = (jdx - 1) * obj.nAnsatzTemporal + kdx;
+                      Idy(ctr) = (ldx - 1) * obj.nTestTemporal + kdx;
+                      Val(ctr) = intTemporal * intSpatial;;
+                      ctr = ctr + 1;
+                    end
+                  end
                 end
-              else
-                % odd: sin
-                intSpatial = - obj.xspan(2) * ((4 * 2 * idx *  jdx * ldx)/((2 * idx - jdx - ldx) * (2 * idx + jdx - ldx) * (2 * idx - jdx + ldx) * (2 * idx + jdx + ldx) * pi));
               end
 
-              for kdx = 1:obj.nAnsatzTemporal
-                % evaluate temporal integral
-                intTemporal = (obj.tspan(2) - obj.tspan(1)) / (2 * (kdx - 1) + 1);
-
-                Idx(ctr) = (jdx - 1) * obj.nAnsatzTemporal + kdx;
-                Idy(ctr) = (ldx - 1) * obj.nTestTemporal + kdx;
-                Val(ctr) = intTemporal * intSpatial;;
-                ctr = ctr + 1;
-              end
+              % create the sparse matrix
+              O{cdx} = sparse(Idy, Idx, Val, obj.dTest, obj.dAnsatz);
             end
-          end
-        end
-
-        O{cdx} = sparse(Idy, Idx, Val, obj.dTest, obj.dAnsatz);;
-      end
     end
 
     function F = assembleRHS(obj)
