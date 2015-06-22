@@ -622,6 +622,25 @@ classdef AssemblyFourierLegendre < AssemblyGlobalAbstract
       end
     end
 
+    function F = assembleRHSSec(obj, solCoeffs)
+      dimY = obj.dTest;
+      F = zeros(dimY, 1);
+
+      for ndx = 1:obj.nTestSpatialIC
+        cf = sum(solCoeffs(((ndx - 1) * obj.nAnsatzTemporal + 1): (ndx * obj.nAnsatzTemporal)));
+
+        if ndx == 1
+          val = cf * obj.xspan(2);
+        else
+          val = cf * obj.xspan(2) / 2;
+        end
+
+        pos = obj.nTestSpatial * obj.nTestTemporal + ndx;
+        F(pos) = val;
+      end
+
+    end
+
     function val = spatialBasisFunc(obj, index, x)
       % Spatial basis functions.
       %

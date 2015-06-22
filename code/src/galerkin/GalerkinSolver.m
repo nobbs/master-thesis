@@ -177,9 +177,78 @@ classdef GalerkinSolver < handle
       obj.plotSolution(solfun);
     end
 
-    function solveTwoConstantFields(obj, fieldA, fieldB)
-    end
+    function solveTwoFields(obj)
+      N = 10;
+      M = 10;
+      C = 10;
 
+      assembly = AssemblyFourierLegendre();
+      assembly.setNumberOfAnsatzFuncs(N, M);
+      assembly.setNumberOfTestFuncsFromAnsatzFuncs();
+      assembly.xspan = obj.xspan;
+
+      assembly.coeffLaplace = 0.1;
+      assembly.coeffOffset = 0;
+
+      % solve for first field
+      assembly.tspan = [obj.tspan(1), obj.fieldBreakpoint];
+      assembly.initialData = @(x) ones(size(x, 1), size(x, 2));
+
+      tic;
+      LHS1 = assembly.assembleStiffnessMatrixWithoutOmega();
+      toc;
+      tic;
+      O1 = assembly.assembleStiffnessMatrixOmegaFromFourier(C);
+      toc;
+      tic;
+      RHS1 = assembly.assembleRHS();
+      toc;
+
+      % compose field
+      LHSO1 = LHS1 + O1{1};
+
+      sol1 = LHSO1 \ RHS1;
+
+      gridt1 = linspace(obj.tspan(1), obj.fieldBreakpoint);
+      gridx1 = linspace(obj.xspan(1), obj.xspan(2));
+      [mesht1, meshx1] = meshgrid(gridt1, gridx1);
+      soleval1  = assembly.solutionFunctionFromCoeffs(sol1, mesht1, meshx1);
+
+      % solve for second field
+      assembly.tspan = [obj.fieldBreakpoint, obj.tspan(2)];
+
+      tic;
+      LHS2 = assembly.assembleStiffnessMatrixWithoutOmega();
+      toc;
+      tic;
+      O2 = assembly.assembleStiffnessMatrixOmegaFromFourier(C);
+      toc;
+      tic;
+      RHS2 = assembly.assembleRHSSec(sol1);
+      toc;
+
+      % compose field
+      LHSO2 = LHS2 - O2{1};
+
+      sol2 = LHSO2 \ RHS2;
+
+      %% visualization stuff
+      gridt2 = linspace(obj.fieldBreakpoint, obj.tspan(2));
+      gridx2 = linspace(obj.xspan(1), obj.xspan(2));
+      [mesht2, meshx2] = meshgrid(gridt2, gridx2);
+
+      % evaluate the solution function
+
+      soleval2  = assembly.solutionFunctionFromCoeffs(sol2, mesht2, meshx2);
+
+      % composite plot
+      meshtc = [mesht1, mesht2];
+      meshxc = [meshx1, meshx2];
+      solc = [soleval1, soleval2];
+
+      figure()
+      mesh(meshtc, meshxc, solc)
+    end
 
     % Plotting and visualization
 
