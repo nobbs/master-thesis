@@ -1,1 +1,2 @@
-addpath(genpath('.'));
+addpath('lib/GetFullPath');
+addpath(genpath(GetFullPath('.')));
