@@ -7,7 +7,7 @@ classdef GalerkinSolver < handle
     % time interval @type vector
     tspan = [0, 1];
     % spatial interval @type vector
-    xspan = [0, 1];
+    xspan = [0, 10];
     % initial condition
     initialData = 0;
     % source term
@@ -19,7 +19,7 @@ classdef GalerkinSolver < handle
     % field-switching point in time @type double
     fieldBreakpoint = 0.5;
     % multiplicative factor for the Laplacian @type double
-    coeffLaplace = 1;
+    coeffLaplacian = 1;
     % additive field-offset `\mu`. @type double
     coeffOffset = 0;
   end
@@ -135,7 +135,7 @@ classdef GalerkinSolver < handle
 
     % Solver
 
-    function [ufun] = solve(obj)
+    function [solfun] = solve(obj, lap, cof)
       % @todo Not yet implemented!
 
       % assembly = AssemblySineLegendre();
@@ -143,29 +143,33 @@ classdef GalerkinSolver < handle
       assembly.setNumberOfAnsatzFuncs(40, 40);
       assembly.setNumberOfTestFuncsFromAnsatzFuncs();
 
-      obj.tspan = [0 obj.fieldBreakpoint];
+      obj.tspan = [0 1];
       assembly.tspan = obj.tspan;
       assembly.xspan = obj.xspan;
 
-      assembly.coeffLaplace = 0.1;
-      assembly.coeffOffset = 0;
+      assembly.coeffLaplacian = lap;
+      assembly.coeffOffset = 5;
 
       % assembly.initialData = @(x) sin(pi * 1 * x / obj.xspan(2));
 
-      assembly.initialData = @(x) ones(size(x, 1), size(x, 2));
+      % assembly.initialData = @(x) ones(size(x, 1), size(x, 2));
 
       tic
-      LHS = assembly.assembleStiffnessMatrixWithoutOmega();
+      LHS = assembly.assembleFieldIndependentMatrix();
       toc
       tic
-      O = assembly.assembleStiffnessMatrixOmegaFromFourier(5);
-      % O = assembly.assembleStiffnessMatrixOmegaFromSineSlow(1);
+      % O = assembly.assembleFieldDependentMatrixForFourierSeries(5);
+      % O = assembly.assembleFieldDependentMatrixForSineSeriesSlow(1);
       toc;
-      RHS = assembly.assembleRHS();
+      RHS = assembly.assembleVectorOnes();
 
       size(LHS)
 
-      LHS = LHS + 1 * O{1} - 5 * O{5};
+      % compose field
+      LHSO = LHS;
+      % for idx = 1:length(cof)
+      %   LHSO = LHSO + cof(idx) * O{idx};
+      % end
 
       % nnz(LHS)
       % numel(LHS)
@@ -173,81 +177,80 @@ classdef GalerkinSolver < handle
 
       % spy(LHS)
 
-      solfun = @(t, x) assembly.solutionFunctionFromCoeffs(LHS \ RHS, t, x);
+      solfun = @(t, x) assembly.solutionFuncFromCoeffs(LHSO \ RHS, t, x);
       obj.plotSolution(solfun);
     end
 
-    function solveTwoFields(obj)
-      N = 10;
-      M = 10;
-      C = 10;
+    function solc = solveTwoFields(obj, lap, cof1, cof2, xg, tgl, tgr)
+      N = 50;
+      M = 50;
+      C = 50;
 
       assembly = AssemblyFourierLegendre();
       assembly.setNumberOfAnsatzFuncs(N, M);
       assembly.setNumberOfTestFuncsFromAnsatzFuncs();
       assembly.xspan = obj.xspan;
 
-      assembly.coeffLaplace = 0.1;
+      assembly.coeffLaplacian = lap;
       assembly.coeffOffset = 0;
 
       % solve for first field
       assembly.tspan = [obj.tspan(1), obj.fieldBreakpoint];
       assembly.initialData = @(x) ones(size(x, 1), size(x, 2));
 
-      tic;
-      LHS1 = assembly.assembleStiffnessMatrixWithoutOmega();
-      toc;
-      tic;
-      O1 = assembly.assembleStiffnessMatrixOmegaFromFourier(C);
-      toc;
-      tic;
+      LHS1 = assembly.assembleFieldIndependentMatrix();
+      O1 = assembly.assembleFieldDependentMatrixForFourierSeries(C);
       RHS1 = assembly.assembleRHS();
-      toc;
 
       % compose field
-      LHSO1 = LHS1 + O1{1};
+      LHSO1 = LHS1;
+      for idx = 1:length(cof1)
+        LHSO1 = LHSO1 + cof1(idx) * O1{idx};
+      end
+
+      size(LHS1)
 
       sol1 = LHSO1 \ RHS1;
 
-      gridt1 = linspace(obj.tspan(1), obj.fieldBreakpoint);
-      gridx1 = linspace(obj.xspan(1), obj.xspan(2));
-      [mesht1, meshx1] = meshgrid(gridt1, gridx1);
-      soleval1  = assembly.solutionFunctionFromCoeffs(sol1, mesht1, meshx1);
+      % gridt1 = linspace(obj.tspan(1), obj.fieldBreakpoint);
+      % gridx1 = linspace(obj.xspan(1), obj.xspan(2));
+      [mesht1, meshx1] = meshgrid(tgl(1:end-1), xg);
+      tic
+      soleval1  = assembly.solutionFuncFromCoeffs(sol1, mesht1, meshx1);
+      toc
 
       % solve for second field
       assembly.tspan = [obj.fieldBreakpoint, obj.tspan(2)];
 
-      tic;
-      LHS2 = assembly.assembleStiffnessMatrixWithoutOmega();
-      toc;
-      tic;
-      O2 = assembly.assembleStiffnessMatrixOmegaFromFourier(C);
-      toc;
-      tic;
-      RHS2 = assembly.assembleRHSSec(sol1);
-      toc;
+      LHS2 = assembly.assembleFieldIndependentMatrix();
+      O2 = assembly.assembleFieldDependentMatrixForFourierSeries(C);
+      RHS2 = assembly.assembleVectorFromCoeffs(sol1);
 
       % compose field
-      LHSO2 = LHS2 - O2{1};
+      LHSO2 = LHS2;
+      for idx = 1:length(cof2)
+        LHSO2 = LHSO2 + cof2(idx) * O2{idx};
+      end
 
       sol2 = LHSO2 \ RHS2;
 
       %% visualization stuff
-      gridt2 = linspace(obj.fieldBreakpoint, obj.tspan(2));
-      gridx2 = linspace(obj.xspan(1), obj.xspan(2));
-      [mesht2, meshx2] = meshgrid(gridt2, gridx2);
+      % gridt2 = linspace(obj.fieldBreakpoint, obj.tspan(2));
+      % gridx2 = linspace(obj.xspan(1), obj.xspan(2));
+      [mesht2, meshx2] = meshgrid(tgr, xg);
 
       % evaluate the solution function
-
-      soleval2  = assembly.solutionFunctionFromCoeffs(sol2, mesht2, meshx2);
+      tic
+      soleval2  = assembly.solutionFuncFromCoeffs(sol2, mesht2, meshx2);
+      toc
 
       % composite plot
       meshtc = [mesht1, mesht2];
       meshxc = [meshx1, meshx2];
       solc = [soleval1, soleval2];
 
-      figure()
-      mesh(meshtc, meshxc, solc)
+      % figure()
+      % mesh(meshtc, meshxc, solc)
     end
 
     % Plotting and visualization

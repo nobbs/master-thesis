@@ -35,29 +35,29 @@ classdef AssemblyGlobalAbstract < AssemblyAbstract
     % Spatial basis functions.
     %
     % Evaluates the spatial basis function with the given index for the given
-    % values of x. Can be used to define function handles and numerical
+    % values of x. Can be used to define function handles and for numerical
     % integration.
     %
     % Parameters:
-    %   index: index of the basis function
-    %   x: values in which the function should be evaluated
+    %   index: index of the basis function @type integer
+    %   x: values in which the function should be evaluated @type matrix
     %
     % Return values:
-    %   val: values of the basis function in x
+    %   val: values of the basis function in x @type matrix
     val = spatialBasisFunc(obj, index, x);
 
     % Temporal basis functions.
     %
     % Evaluates the temporal basis function with the given index for the given
-    % values of x. Can be used to define function handles and numerical
+    % values of t. Can be used to define function handles and for numerical
     % integration.
     %
     % Parameters:
-    %   index: index of the basis function
-    %   x: values in which the function should be evaluated
+    %   index: index of the basis function @type integer
+    %   t: values in which the function should be evaluated @type matrix
     %
     % Return values:
-    %   val: values of the basis function in x
+    %   val: values of the basis function in t @type matrix
     val = temporalBasisFunc(obj, index, t);
   end
 
@@ -71,7 +71,7 @@ classdef AssemblyGlobalAbstract < AssemblyAbstract
       dim = obj.nTestSpatial * obj.nTestTemporal + obj.nTestSpatialIC;
     end
 
-    function obj = setNumberOfAnsatzFuncs(obj, nAnsatzSpatial, nAnsatzTemporal)
+    function setNumberOfAnsatzFuncs(obj, nAnsatzSpatial, nAnsatzTemporal)
       % Set the number of basis functions for the ansatz subspace.
       %
       % Parameters:
@@ -107,7 +107,7 @@ classdef AssemblyGlobalAbstract < AssemblyAbstract
       obj.nTestSpatialIC = obj.nAnsatzSpatial;
     end
 
-    function val = solutionFunctionFromCoeffs(obj, solutionCoeffs, t, x)
+    function val = solutionFuncFromCoeffs(obj, solutionCoeffs, t, x)
       % Construct a function handle of the solution.
       %
       % Use it to define a solution function in (t, x) or evaluate the solution
@@ -123,18 +123,28 @@ classdef AssemblyGlobalAbstract < AssemblyAbstract
 
       val = zeros(size(t, 1), size(t, 2));
 
+      % precompute the spatial and temporal basis functions for the given grids
+      spatialValues = cell(obj.nAnsatzSpatial, 1);
       for jdx = 1:obj.nAnsatzSpatial
-          for kdx = 1:obj.nAnsatzTemporal
-            % Get the right coefficient
-            pos = (jdx - 1) * obj.nAnsatzTemporal + kdx;
+        spatialValues{jdx} = obj.spatialBasisFunc(jdx, x);
+      end
+      temporalValues = cell(obj.nAnsatzTemporal, 1);
+      for kdx = 1:obj.nAnsatzTemporal
+        temporalValues{kdx} = obj.temporalBasisFunc(kdx, t);
+      end
 
-            % @todo normalization constant
-            % cnrm = sqrt((1 + (pi * j)^2) / (2 * (2*(k - 1) + 1)) + ...
-                      % legendre_dP(1, k - 1));
+      for jdx = 1:obj.nAnsatzSpatial
+        for kdx = 1:obj.nAnsatzTemporal
+        % Get the right coefficient
+        pos = (jdx - 1) * obj.nAnsatzTemporal + kdx;
 
-            % evaluate the corresponding basis functions
-            val = val + solutionCoeffs(pos) * obj.spatialBasisFunc(jdx, x) .* obj.temporalBasisFunc(kdx, t);
-          end
+        %   % @todo normalization constant
+        %   % cnrm = sqrt((1 + (pi * j)^2) / (2 * (2*(k - 1) + 1)) + ...
+        %             % legendre_dP(1, k - 1));
+
+        % evaluate the corresponding basis functions
+        val = val + solutionCoeffs(pos) * spatialValues{jdx} .* temporalValues{kdx};
+        end
       end
     end
 

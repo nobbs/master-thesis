@@ -22,18 +22,25 @@ classdef AssemblyAbstract < handle
   % the field-independent and the field-dependent parts.
 
   properties
+    % scalar multiplicative coefficient of the laplacian @type double
+    coeffLaplacian;
 
+    % scalar additive field offset @type double
+    coeffOffset = 0;
+
+    % spatial interval @type vector
+    xspan = [0 1];
+
+    % temporal interval @type vector
+    tspan = [0 1];
   end
 
   methods(Abstract)
     % Assemble the stiffness matrix without the field-dependent term.
-    M = assembleStiffnessMatrixWithoutOmega(obj);
-
-    % Assemble only the field-dependent part of the stiffness matrix.
-    M = assembleStiffnessMatrixOnlyOmega(obj);
+    M = assembleFieldIndependentMatrix(obj);
 
     % Assemble the load vector
-    F = assembleRHS(obj);
+    % F = assembleRHS(obj);
 
     % Construct a function handle of the solution
     %
@@ -42,7 +49,33 @@ classdef AssemblyAbstract < handle
     %
     % Return values:
     %   solfun: function handle of the solution function @type function_handle
-    solfun = solutionFunctionFromCoeffs(obj, solutionCoeffs);
+    solfun = solutionFuncFromCoeffs(obj, solutionCoeffs);
+  end
+
+  methods
+
+    % Custom getters and setter
+
+    function obj = set.xspan(obj, val)
+      % Setter for the spatial interval.
+      %
+      % Checks if the given value is a interval whose left end is null. This
+      % condition is important for the chosen spatial basis functions.
+      %
+      % Parameters:
+      %   val: given spatial interval @type rowvec
+
+      if size(val, 1) ~= 1 || size(val, 2) ~= 2
+        error('Given value is not a row vector of size 2!');
+      elseif val(1) ~= 0
+        error('The spatial interval must start at 0!');
+      elseif val(2) <= val(1)
+        error('The given spatial interval is empty or wrongly oriented!');
+      end
+
+      obj.xspan = val;
+    end
+
   end
 
 end
