@@ -23,7 +23,7 @@ classdef AssemblyAbstract < handle
 
   properties
     % scalar multiplicative coefficient of the laplacian @type double
-    coeffLaplacian;
+    coeffLaplacian = 1;
 
     % scalar additive field offset @type double
     coeffOffset = 0;
@@ -37,7 +37,7 @@ classdef AssemblyAbstract < handle
 
   methods(Abstract)
     % Assemble the stiffness matrix without the field-dependent term.
-    M = assembleFieldIndependentMatrix(obj);
+    assembleFieldIndependentMatrix(obj);
 
     % Assemble the load vector
     % F = assembleRHS(obj);
@@ -50,6 +50,12 @@ classdef AssemblyAbstract < handle
     % Return values:
     %   solfun: function handle of the solution function @type function_handle
     solfun = solutionFuncFromCoeffs(obj, solutionCoeffs);
+
+    % Assemble the mass matrix of the discrete norm on the ansatz space.
+    assembleAnsatzNormMatrixMatrix(obj);
+
+    % Assemble the mass matrix of the discrete norm on the test space.
+    assembleTestNormMatrixMatrix(obj);
   end
 
   methods

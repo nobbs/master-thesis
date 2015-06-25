@@ -15,8 +15,8 @@ for idx = 1:length(X)
   assembly.setNumberOfAnsatzFuncs(X(idx), X(idx));
   assembly.setNumberOfTestFuncsFromAnsatzFuncs();
 
-  LRef  = assembly.assembleFieldIndependentMatrixSlow();
-  LTest = assembly.assembleFieldIndependentMatrix();
+  [LRef, ~]  = assembly.assembleFieldIndependentMatrixSlow();
+  [LTest, ~] = assembly.assembleFieldIndependentMatrix();
 
   assert(max(max(abs(LTest - LRef))) < 1e-8);
 end
@@ -37,13 +37,13 @@ assembly.setNumberOfAnsatzFuncs(X, X);
 assembly.setNumberOfTestFuncsFromAnsatzFuncs();
 
 assembly.tspan = span1;
-LRef  = assembly.assembleFieldIndependentMatrixSlow();
-LTest = assembly.assembleFieldIndependentMatrix();
+[LRef, ~]  = assembly.assembleFieldIndependentMatrixSlow();
+[LTest, ~] = assembly.assembleFieldIndependentMatrix();
 assert(max(max(abs(LTest - LRef))) < 1e-8);
 
 assembly.tspan = span2;
-LRef  = assembly.assembleFieldIndependentMatrixSlow();
-LTest = assembly.assembleFieldIndependentMatrix();
+[LRef, ~]  = assembly.assembleFieldIndependentMatrixSlow();
+[LTest, ~] = assembly.assembleFieldIndependentMatrix();
 assert(max(max(abs(LTest - LRef))) < 1e-8);
 
 
@@ -61,8 +61,8 @@ assembly.setNumberOfAnsatzFuncs(X, X);
 assembly.setNumberOfTestFuncsFromAnsatzFuncs();
 
 assembly.xspan = span1;
-LRef  = assembly.assembleFieldIndependentMatrixSlow();
-LTest = assembly.assembleFieldIndependentMatrix();
+[LRef, ~]  = assembly.assembleFieldIndependentMatrixSlow();
+[LTest, ~] = assembly.assembleFieldIndependentMatrix();
 assert(max(max(abs(LTest - LRef))) < 1e-8);
 
 
@@ -88,8 +88,8 @@ for idx = 1:length(XN)
   assembly.setNumberOfAnsatzFuncs(XN(idx), XM(idx));
   assembly.setNumberOfTestFuncs(YN(idx), YM(idx), YO(idx));
 
-  LRef  = assembly.assembleFieldIndependentMatrixSlow();
-  LTest = assembly.assembleFieldIndependentMatrix();
+  [LRef, ~]  = assembly.assembleFieldIndependentMatrixSlow();
+  [LTest, ~] = assembly.assembleFieldIndependentMatrix();
 
   assert(max(max(abs(LTest - LRef))) < 1e-8);
 end
@@ -166,8 +166,8 @@ end
 % intermediate endpoint, set the value of this solution as the initial condition
 % of a second run and compare that with a solution from start to end.
 
-X = 60;
-Y = 60;
+X = 15;
+Y = 15;
 N = 10;
 rcoeffs = randn(N, 1);
 breakpoint = rand(1);
@@ -189,7 +189,7 @@ assembly.setNumberOfTestFuncsFromAnsatzFuncs();
 % compute solution for the whole temporal interval
 assembly.tspan = [0, 1];
 assembly.xspan = [0, 5];
-LhsFI = assembly.assembleFieldIndependentMatrix();
+[LhsFI, ~] = assembly.assembleFieldIndependentMatrix();
 LhsFD = assembly.assembleFieldDependentMatrixForFourierSeries(N);
 
 Lhs = LhsFI;
@@ -203,7 +203,7 @@ solCompleteEval = assembly.solutionFuncFromCoeffs(solComplete, mtw, mxw);
 
 % compute solution for the first part of the temporal interval
 assembly.tspan = [0, breakpoint];
-LhsFIOne = assembly.assembleFieldIndependentMatrix();
+[LhsFIOne, ~] = assembly.assembleFieldIndependentMatrix();
 LhsFDOne = assembly.assembleFieldDependentMatrixForFourierSeries(N);
 LhsOne = LhsFIOne;
 for idx = 1:N
@@ -215,26 +215,20 @@ solPartOneEval = assembly.solutionFuncFromCoeffs(solPartOne, mt1, mx1);
 
 % compute solution for the second part of the temporal interval
 assembly.tspan = [breakpoint, 1];
-LhsFITwo = assembly.assembleFieldIndependentMatrix();
+[LhsFITwo, ~] = assembly.assembleFieldIndependentMatrix();
 LhsFDTwo = assembly.assembleFieldDependentMatrixForFourierSeries(N);
 LhsTwo = LhsFITwo;
 for idx = 1:N
   LhsTwo = LhsTwo + rcoeffs(idx) * LhsFDTwo{idx};
 end
-
-cf = zeros(X, 1);
-for idx = 1:X
-  cf(idx) = sum(solPartOne(((idx - 1) * Y + 1): (idx * Y)));
-end
-
-RhsMid = assembly.assembleVectorFromCoeffs(cf);
+RhsMid = assembly.assembleVectorFromSolutionCoeffs(solPartOne);
 solPartTwo = LhsTwo \ RhsMid;
 solPartTwoEval = assembly.solutionFuncFromCoeffs(solPartTwo, mt2, mx2);
 
-% figure(1)
-% mesh(mtw, mxw, [solPartOneEval, solPartTwoEval]);
-% figure(2)
-% mesh(mtw, mxw, solCompleteEval);
-% max(max(abs([solPartOneEval, solPartTwoEval] - solCompleteEval)))
+figure(1)
+mesh(mtw, mxw, [solPartOneEval, solPartTwoEval]);
+figure(2)
+mesh(mtw, mxw, solCompleteEval);
+max(max(abs([solPartOneEval, solPartTwoEval] - solCompleteEval)))
 
 assert(max(max(abs([solPartOneEval, solPartTwoEval] - solCompleteEval))) < 1e-4);

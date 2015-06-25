@@ -268,7 +268,7 @@ classdef AssemblySineLegendre < AssemblyGlobalAbstract
 
     %% Assembly of the load vector for different kinds of data
 
-    function F = assembleVectorFromCoeffs(obj, coeffs)
+    function F = assembleVectorFromSpatialCoeffs(obj, coeffs)
       % Assemble the load vector for no source and initial data given by
       % coeffients corresponding to the spatial basis functions.
       %

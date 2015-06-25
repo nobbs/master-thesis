@@ -46,6 +46,20 @@ classdef AssemblyGlobalAbstract < AssemblyAbstract
     %   val: values of the basis function in x @type matrix
     val = spatialBasisFunc(obj, index, x);
 
+    % First derivative of spatial basis functions.
+    %
+    % Evaluates the first derivative of the spatial basis function with the
+    % given index for the given values of x. Can be used to define function
+    % handles and for numerical integration.
+    %
+    % Parameters:
+    %   index: index of the basis function @type integer
+    %   x: values in which the function should be evaluated @type matrix
+    %
+    % Return values:
+    %   val: values of the basis function in x @type matrix
+    val = spatialBasisFuncDerivative(obj, index, x)
+
     % Temporal basis functions.
     %
     % Evaluates the temporal basis function with the given index for the given
@@ -55,19 +69,41 @@ classdef AssemblyGlobalAbstract < AssemblyAbstract
     % Parameters:
     %   index: index of the basis function @type integer
     %   t: values in which the function should be evaluated @type matrix
+    %   tspan: custom temporal interval @type vector @default obj.tspan
     %
     % Return values:
     %   val: values of the basis function in t @type matrix
-    val = temporalBasisFunc(obj, index, t);
+    val = temporalBasisFunc(obj, index, t, tspan);
+
+    % First derivative of temporal basis functions.
+    %
+    % Evaluates the first derivative of a temporal basis function with the given
+    % index for the given values of t. Can be used to define function handles
+    % and for numerical integration.
+    %
+    % Parameters:
+    %   index: index of the basis function @type integer
+    %   t: values in which the function should be evaluated @type matrix
+    %   tspan: custom temporal interval @type vector @default obj.tspan
+    %
+    % Return values:
+    %   val: values of the basis function in t @type matrix
+    val = temporalBasisFuncDerivative(obj, index, t, tspan)
   end
 
   methods
 
+    %% Custom getters and setter
+
     function dim = get.dAnsatz(obj)
+      % Calculate the dimension of the ansatz space.
+
       dim = obj.nAnsatzSpatial * obj.nAnsatzTemporal;
     end
 
     function dim = get.dTest(obj)
+      % Calculate the dimension of the test space.
+
       dim = obj.nTestSpatial * obj.nTestTemporal + obj.nTestSpatialIC;
     end
 
@@ -107,7 +143,7 @@ classdef AssemblyGlobalAbstract < AssemblyAbstract
       obj.nTestSpatialIC = obj.nAnsatzSpatial;
     end
 
-    function val = solutionFuncFromCoeffs(obj, solutionCoeffs, t, x)
+    function val = solutionFuncFromCoeffs(obj, solutionCoeffs, t, x, tspan)
       % Construct a function handle of the solution.
       %
       % Use it to define a solution function in (t, x) or evaluate the solution
@@ -115,11 +151,16 @@ classdef AssemblyGlobalAbstract < AssemblyAbstract
       %
       % Parameters:
       %   solutionCoeffs: solution vector of the linear system @type colvec
-      %   t: temporal variable @type vecotr
+      %   t: temporal variable @type vector
       %   x: spatial variable @type vector
+      %   tspan: custom temporal interval @type vector @default obj.tspan
       %
       % Return values:
       %   solfun: function handle of the solution function @type function_handle
+
+      if nargin == 4
+        tspan = obj.tspan;
+      end
 
       val = zeros(size(t, 1), size(t, 2));
 
@@ -130,7 +171,7 @@ classdef AssemblyGlobalAbstract < AssemblyAbstract
       end
       temporalValues = cell(obj.nAnsatzTemporal, 1);
       for kdx = 1:obj.nAnsatzTemporal
-        temporalValues{kdx} = obj.temporalBasisFunc(kdx, t);
+        temporalValues{kdx} = obj.temporalBasisFunc(kdx, t, tspan);
       end
 
       for jdx = 1:obj.nAnsatzSpatial

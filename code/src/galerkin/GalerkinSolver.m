@@ -8,20 +8,16 @@ classdef GalerkinSolver < handle
     tspan = [0, 1];
     % spatial interval @type vector
     xspan = [0, 10];
-    % initial condition
-    initialData = 0;
-    % source term
-    sourceData = 0;
-    % first external field
-    fieldA = 0;
-    % second external field
-    fieldB = 0;
     % field-switching point in time @type double
     fieldBreakpoint = 0.5;
     % multiplicative factor for the Laplacian @type double
     coeffLaplacian = 1;
     % additive field-offset `\mu`. @type double
     coeffOffset = 0;
+
+    N = 10;
+    M = 10;
+    C = 10;
   end
 
   properties (Dependent)
@@ -29,13 +25,28 @@ classdef GalerkinSolver < handle
     withOffset;
   end
 
+  properties(Access = 'private')
+    % Reference to assembly class @type AssemblyFourierLegendre
+    assembly;
+
+    partOne = {};
+    partTwo = {};
+  end
+
   methods
 
     % Constructor
 
-%     function obj = GalerkinSolver()
-%       obj;
-%     end
+    function obj = GalerkinSolver(N, M, C)
+      % Parameters:
+      %   N: number of spatial ansatz basis functions @type integer
+      %   M: number of temporal ansatz basis functions @type integer
+      %   N: number of spatial field basis functions @type integer
+
+      obj.N = N;
+      obj.M = M;
+      obj.C = C;
+    end
 
 
     % getters for dependent properties
@@ -55,135 +66,114 @@ classdef GalerkinSolver < handle
     end
 
 
-    % setup of the initial conditions
+    %% Preparation
 
-    function setInitialDataFromFunction(obj, ufun)
-      % Set the initial conditions through a function handle.
-      %
-      % @todo Not yet implemented!
-      %
-      % Parameters:
-      %   ufun: @type function_handle
+    function preassemble(obj)
+      obj.assembly                = AssemblyFourierLegendre();
 
-      error('Not yet implemented!');
+      obj.assembly.setNumberOfAnsatzFuncs(obj.N, obj.M);
+      obj.assembly.setNumberOfTestFuncsFromAnsatzFuncs();
+
+      obj.assembly.xspan          = obj.xspan;
+      obj.assembly.coeffLaplacian = obj.coeffLaplacian;
+      obj.assembly.coeffOffset    = obj.coeffOffset;
+
+      obj.assembly.tspan  = [obj.tspan(1), obj.fieldBreakpoint];
+      [~, M1, M2, M3, M4F, M4B] = obj.assembly.assembleFieldIndependentMatrix();
+
+      obj.partOne.TimeDerivativeMatrix = M1;
+      obj.partOne.LaplacianMatrix      = M2;
+      obj.partOne.OffsetMatrix         = M3;
+      obj.partOne.ICForwardMatrix      = M4F;
+      obj.partOne.ICBackwardMatrix     = M4B;
+      obj.partOne.OmegaMatrices        = obj.assembly.assembleFieldDependentMatrixForFourierSeries(obj.C);
+
+
+      obj.assembly.tspan  = [obj.fieldBreakpoint, obj.tspan(2)];
+      [~, N1, N2, N3, N4F, N4B] = obj.assembly.assembleFieldIndependentMatrix();
+
+      obj.partTwo.TimeDerivativeMatrix = N1;
+      obj.partTwo.LaplacianMatrix      = N2;
+      obj.partTwo.OffsetMatrix         = N3;
+      obj.partTwo.ICForwardMatrix      = N4F;
+      obj.partTwo.ICBackwardMatrix     = N4B;
+      obj.partTwo.OmegaMatrices        = obj.assembly.assembleFieldDependentMatrixForFourierSeries(obj.C);
     end
-
-
-    function setInitialDataPointwise(obj)
-      % Set the initial conditions through a vector of function values on an
-      % equidistant grid.
-      %
-      % @todo Not yet implemented!
-      error('Not yet implemented!');
-    end
-
-    function setInitialDataFromFourierCoeffs(obj)
-      % Set the initial conditions through a coefficients vector of a Fourier
-      % series.
-      %
-      % @todo Not yet implemented!
-      error('Not yet implemented!');
-    end
-
-    function setInitialDataFromSineCoeffs(obj)
-      % Set the initial conditions through a coefficients vector of a Sine
-      % series.
-      %
-      % @todo Not yet implemented!
-      error('Not yet implemented!');
-    end
-
-
-    % setup of the source term
-
-    function setSourceDataToZero(obj)
-      % Resets the source data to the default value of zero.
-    end
-
-    function setSourceDataPointwise(obj)
-      % @todo Not yet implemented!
-      error('Not yet implemented!');
-    end
-
-    function setSourceDataFromFunc(obj)
-      % @todo Not yet implemented!
-      error('Not yet implemented!');
-    end
-
-    % setup of the fields
-
-    function setFieldFromFunc(obj)
-      % @todo Not yet implemented!
-      error('Not yet implemented!');
-    end
-
-    function setFieldPointwise(obj)
-      % @todo Not yet implemented!
-      error('Not yet implemented!');
-    end
-
-    function setFieldFromFourierCoeffs(obj)
-      % @todo Not yet implemented!
-      error('Not yet implemented!');
-    end
-
-    function setFieldFromSineCoeffs(obj)
-      % @todo Not yet implemented!
-      error('Not yet implemented!');
-    end
-
 
     % Solver
 
-    function [solfun] = solve(obj, lap, cof)
-      % @todo Not yet implemented!
+    function solfun = solveTwoFieldsForward(obj, fieldCoeffsOne, fieldCoeffsTwo)
+      % vorwärts
+      Lhs = obj.partOne.TimeDerivativeMatrix ...
+        + obj.coeffLaplacian * obj.partOne.LaplacianMatrix ...
+        + obj.partOne.ICForwardMatrix;
+      LhsComp = Lhs;
+      for cdx = 1:obj.C
+        LhsComp = LhsComp + fieldCoeffsOne(cdx) * obj.partOne.OmegaMatrices{cdx};
+      end
+      Rhs = obj.assembly.assembleVectorOnes();
+      solCoeffOne = LhsComp \ Rhs;
 
-      % assembly = AssemblySineLegendre();
-      assembly = AssemblyFourierLegendre();
-      assembly.setNumberOfAnsatzFuncs(40, 40);
-      assembly.setNumberOfTestFuncsFromAnsatzFuncs();
+      Lhs = obj.partTwo.TimeDerivativeMatrix ...
+        + obj.coeffLaplacian * obj.partTwo.LaplacianMatrix ...
+        + obj.partTwo.ICForwardMatrix;
+      LhsComp = Lhs;
+      for cdx = 1:obj.C
+        LhsComp = LhsComp + fieldCoeffsTwo(cdx) * obj.partTwo.OmegaMatrices{cdx};
+      end
+      Rhs = obj.assembly.assembleVectorFromSolutionCoeffs(solCoeffOne);
+      solCoeffTwo = LhsComp \ Rhs;
 
-      obj.tspan = [0 1];
-      assembly.tspan = obj.tspan;
-      assembly.xspan = obj.xspan;
-
-      assembly.coeffLaplacian = lap;
-      assembly.coeffOffset = 5;
-
-      % assembly.initialData = @(x) sin(pi * 1 * x / obj.xspan(2));
-
-      % assembly.initialData = @(x) ones(size(x, 1), size(x, 2));
-
-      tic
-      LHS = assembly.assembleFieldIndependentMatrix();
-      toc
-      tic
-      % O = assembly.assembleFieldDependentMatrixForFourierSeries(5);
-      % O = assembly.assembleFieldDependentMatrixForSineSeriesSlow(1);
-      toc;
-      RHS = assembly.assembleVectorOnes();
-
-      size(LHS)
-
-      % compose field
-      LHSO = LHS;
-      % for idx = 1:length(cof)
-      %   LHSO = LHSO + cof(idx) * O{idx};
-      % end
-
-      % nnz(LHS)
-      % numel(LHS)
-      % nnz(LHS) / numel(LHS)
-
-      % spy(LHS)
-
-      solfun = @(t, x) assembly.solutionFuncFromCoeffs(LHSO \ RHS, t, x);
-      obj.plotSolution(solfun);
+      solfun = @(t, x) ...
+        (t < obj.fieldBreakpoint) .* obj.assembly.solutionFuncFromCoeffs(...
+          solCoeffOne, t, x, [obj.tspan(1), obj.fieldBreakpoint]) ...
+        + ~(t < obj.fieldBreakpoint) .* obj.assembly.solutionFuncFromCoeffs(...
+          solCoeffTwo, t, x, [obj.fieldBreakpoint, obj.tspan(2)]);
     end
 
-    function solc = solveTwoFields(obj, lap, cof1, cof2, xg, tgl, tgr)
-      N = 50;
-      M = 50;
+    function solfun = solveTwoFieldsBackward(obj, fieldCoeffsOne, fieldCoeffsTwo)
+      % und das ganze nochmal rückwärts
+      Lhs = - obj.partTwo.TimeDerivativeMatrix ...
+        + obj.coeffLaplacian * obj.partTwo.LaplacianMatrix ...
+        + obj.partTwo.ICBackwardMatrix;
+      LhsComp = Lhs;
+      for cdx = 1:obj.C
+        LhsComp = LhsComp + fieldCoeffsTwo(cdx) * obj.partTwo.OmegaMatrices{cdx};
+      end
+      Rhs = obj.assembly.assembleVectorOnes();
+      solCoeffTwo = LhsComp \ Rhs;
+
+      Lhs = - obj.partOne.TimeDerivativeMatrix ...
+        + obj.coeffLaplacian * obj.partOne.LaplacianMatrix ...
+        + obj.partOne.ICBackwardMatrix;
+      LhsComp = Lhs;
+      for cdx = 1:obj.C
+        LhsComp = LhsComp + fieldCoeffsOne(cdx) * obj.partOne.OmegaMatrices{cdx};
+      end
+      Rhs = obj.assembly.assembleVectorFromSolutionCoeffs(solCoeffTwo, true);
+      solCoeffOne = LhsComp \ Rhs;
+
+      solfun = @(t, x) ...
+        (t < obj.fieldBreakpoint) .* obj.assembly.solutionFuncFromCoeffs(...
+          solCoeffOne, t, x, [obj.tspan(1), obj.fieldBreakpoint]) ...
+        + ~(t < obj.fieldBreakpoint) .* obj.assembly.solutionFuncFromCoeffs(...
+          solCoeffTwo, t, x, [obj.fieldBreakpoint, obj.tspan(2)]);
+    end
+
+    function plotSolution(obj, solfun)
+      gridt = linspace(obj.tspan(1), obj.tspan(2));
+      gridx = linspace(obj.xspan(1), obj.xspan(2));
+      % gridx = linspace(0, 25, 250);
+      [mesht, meshx] = meshgrid(gridt, gridx);
+
+      figure();
+      mesh(mesht, meshx, solfun(mesht, meshx));
+    end
+
+    function solc = solveTwoFieldsDeprecated(obj, lap, cof1, cof2, xg, tgl, tgr)
+      % @deprecated
+      N = 25;
+      M = 25;
       C = 50;
 
       assembly = AssemblyFourierLegendre();
@@ -196,11 +186,11 @@ classdef GalerkinSolver < handle
 
       % solve for first field
       assembly.tspan = [obj.tspan(1), obj.fieldBreakpoint];
-      assembly.initialData = @(x) ones(size(x, 1), size(x, 2));
+      % assembly.initialData = @(x) ones(size(x, 1), size(x, 2));
 
       LHS1 = assembly.assembleFieldIndependentMatrix();
       O1 = assembly.assembleFieldDependentMatrixForFourierSeries(C);
-      RHS1 = assembly.assembleRHS();
+      RHS1 = assembly.assembleVectorOnes();
 
       % compose field
       LHSO1 = LHS1;
@@ -224,7 +214,13 @@ classdef GalerkinSolver < handle
 
       LHS2 = assembly.assembleFieldIndependentMatrix();
       O2 = assembly.assembleFieldDependentMatrixForFourierSeries(C);
-      RHS2 = assembly.assembleVectorFromCoeffs(sol1);
+
+      cf = zeros(N, 1);
+      for idx = 1:N
+        cf(idx) = sum(sol1(((idx - 1) * M + 1): (idx * M)));
+      end
+
+      RHS2 = assembly.assembleVectorFromSpatialCoeffs(cf);
 
       % compose field
       LHSO2 = LHS2;
@@ -255,7 +251,8 @@ classdef GalerkinSolver < handle
 
     % Plotting and visualization
 
-    function plotSolution(obj, solfun)
+    function plotSolutionDeprecated(obj, solfun)
+      % @deprecated
       % Plot the solution.
       %
       % Parameters:
