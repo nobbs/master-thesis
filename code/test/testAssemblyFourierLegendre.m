@@ -161,6 +161,39 @@ for idx = 1:length(XN)
 end
 
 
+%% ansatz and test norm matrix assembly
+% test the assembly of the discrete ansatz and test subspace norms by comparison
+% with the slow numerical quadrature assembly methods
+XN = [3, 6];
+XM = [4, 8];
+
+YN = [5, 10];
+YM = [4, 8];
+YO = [3, 9];
+
+assembly = AssemblyFourierLegendre();
+
+assembly.tspan = [0 1];
+assembly.xspan = [0 1];
+
+assembly.coeffLaplacian = 0.1;
+assembly.coeffOffset  = 2;
+
+for idx = 1:length(XN)
+  assembly.setNumberOfAnsatzFuncs(XN(idx), XM(idx));
+  assembly.setNumberOfTestFuncs(YN(idx), YM(idx), YO(idx));
+
+  MARef  = assembly.assembleAnsatzNormMatrixSlow();
+  MATest = assembly.assembleAnsatzNormMatrix();
+
+  MTRef  = assembly.assembleTestNormMatrixSlow();
+  MTTest = assembly.assembleTestNormMatrix();
+
+  assert(max(max(abs(MATest - MARef))) < 1e-8);
+  assert(max(max(abs(MTTest - MTRef))) < 1e-8);
+end
+
+
 %% Quick test
 % Assemble the whole system of linear equations, solve it in time till an
 % intermediate endpoint, set the value of this solution as the initial condition
@@ -225,10 +258,11 @@ RhsMid = assembly.assembleVectorFromSolutionCoeffs(solPartOne);
 solPartTwo = LhsTwo \ RhsMid;
 solPartTwoEval = assembly.solutionFuncFromCoeffs(solPartTwo, mt2, mx2);
 
-figure(1)
-mesh(mtw, mxw, [solPartOneEval, solPartTwoEval]);
-figure(2)
-mesh(mtw, mxw, solCompleteEval);
-max(max(abs([solPartOneEval, solPartTwoEval] - solCompleteEval)))
+% @todo remove visual debugging stuff
+% figure(1)
+% mesh(mtw, mxw, [solPartOneEval, solPartTwoEval]);
+% figure(2)
+% mesh(mtw, mxw, solCompleteEval);
+% max(max(abs([solPartOneEval, solPartTwoEval] - solCompleteEval)))
 
 assert(max(max(abs([solPartOneEval, solPartTwoEval] - solCompleteEval))) < 1e-4);

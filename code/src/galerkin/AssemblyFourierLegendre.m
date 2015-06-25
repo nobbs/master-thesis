@@ -46,9 +46,9 @@ classdef AssemblyFourierLegendre < AssemblyGlobalAbstract
       %     @type sparsematrix
 
       % Preparation for the sparse matrix
-      Idx = ones(obj.dAnsatz, 1);
-      Idy = ones(obj.dAnsatz, 1);
-      Val = zeros(obj.dAnsatz, 1);
+      Idx = ones(obj.nAnsatzDim, 1);
+      Idy = ones(obj.nAnsatzDim, 1);
+      Val = zeros(obj.nAnsatzDim, 1);
       ctr = 1;
 
       % optimization...
@@ -60,32 +60,32 @@ classdef AssemblyFourierLegendre < AssemblyGlobalAbstract
           for mdx = (kdx - 1):-2:1
             % if mod(kdx + mdx, 2) == 1
             % if kdx > mdx && mod(kdx + mdx, 2) == 1
-              % evaluate spatial integral
-              if jdx == 1
-                intSpatial = xwidth;
-              else
-                intSpatial = xwidth / 2;
-              end
+            % evaluate spatial integral
+            if jdx == 1
+              intSpatial = xwidth;
+            else
+              intSpatial = xwidth / 2;
+            end
 
-              % evaluate temporal integral
-              intTemporal = 2;
+            % evaluate temporal integral
+            intTemporal = 2;
 
-              Idx(ctr) = (jdx - 1) * obj.nAnsatzTemporal + kdx;
-              Idy(ctr) = (jdx - 1) * obj.nTestTemporal + mdx;
-              Val(ctr) = intSpatial * intTemporal;
-              ctr = ctr + 1;
+            Idx(ctr) = (jdx - 1) * obj.nAnsatzTemporal + kdx;
+            Idy(ctr) = (jdx - 1) * obj.nTestTemporal + mdx;
+            Val(ctr) = intSpatial * intTemporal;
+            ctr = ctr + 1;
             % end
           end
         end
       end
 
       % Assemble the stiffness matrix for this part
-      M1 = sparse(Idy, Idx, Val, obj.dTest, obj.dAnsatz);
+      M1 = sparse(Idy, Idx, Val, obj.nTestDim, obj.nAnsatzDim);
 
       % Reset for the next part
-      Idx = ones(obj.dAnsatz, 1);
-      Idy = ones(obj.dAnsatz, 1);
-      Val = zeros(obj.dAnsatz, 1);
+      Idx = ones(obj.nAnsatzDim, 1);
+      Idy = ones(obj.nAnsatzDim, 1);
+      Val = zeros(obj.nAnsatzDim, 1);
       ctr = 1;
 
       % Calculate the second term `\int_{I} \skp{\grad u(t)}{\grad v_1(t)}{L_2(\Omega)} \diff t`.
@@ -111,12 +111,12 @@ classdef AssemblyFourierLegendre < AssemblyGlobalAbstract
       end
 
       % Assemble the stiffness matrix for this part
-      M2 = sparse(Idy, Idx, Val, obj.dTest, obj.dAnsatz);
+      M2 = sparse(Idy, Idx, Val, obj.nTestDim, obj.nAnsatzDim);
 
       % Reset for the next part
-      Idx = ones(obj.dAnsatz, 1);
-      Idy = ones(obj.dAnsatz, 1);
-      Val = zeros(obj.dAnsatz, 1);
+      Idx = ones(obj.nAnsatzDim, 1);
+      Idy = ones(obj.nAnsatzDim, 1);
+      Val = zeros(obj.nAnsatzDim, 1);
       ctr = 1;
 
       % Calculate the third term `\int_{I} \mu \skp{u(t)}{v_1(t)}{L_2(\Omega)} \diff t`.
@@ -140,13 +140,13 @@ classdef AssemblyFourierLegendre < AssemblyGlobalAbstract
       end
 
       % Assemble the stiffness matrix for this part
-      M3 = sparse(Idy, Idx, Val, obj.dTest, obj.dAnsatz);
+      M3 = sparse(Idy, Idx, Val, obj.nTestDim, obj.nAnsatzDim);
 
       % Reset for the next part
-      Idx = ones(obj.dAnsatz, 1);
-      Idy = ones(obj.dAnsatz, 1);
-      ValForward = zeros(obj.dAnsatz, 1);
-      ValBackward = zeros(obj.dAnsatz, 1);
+      Idx = ones(obj.nAnsatzDim, 1);
+      Idy = ones(obj.nAnsatzDim, 1);
+      ValForward = zeros(obj.nAnsatzDim, 1);
+      ValBackward = zeros(obj.nAnsatzDim, 1);
       ctr = 1;
 
       % Calculate the fourth term `\skp{u(0)}{v_2}{L_2(\Omega)}`.
@@ -171,8 +171,8 @@ classdef AssemblyFourierLegendre < AssemblyGlobalAbstract
       end
 
       % Assemble the stiffness matrix for this part
-      M4F = sparse(Idy, Idx, ValForward, obj.dTest, obj.dAnsatz);
-      M4B = sparse(Idy, Idx, ValBackward, obj.dTest, obj.dAnsatz);
+      M4F = sparse(Idy, Idx, ValForward, obj.nTestDim, obj.nAnsatzDim);
+      M4B = sparse(Idy, Idx, ValBackward, obj.nTestDim, obj.nAnsatzDim);
 
       % Sum up the parts for the complete field-independent stiffness matrix
       M = M1 + obj.coeffLaplacian * M2 + obj.coeffOffset * M3 + M4F;
@@ -205,9 +205,9 @@ classdef AssemblyFourierLegendre < AssemblyGlobalAbstract
       % expansion of the field).
       for cdx = 1:nCoeff
         % create needed vectors to assemble the sparse matrix
-        Idx = ones(obj.dAnsatz, 1);
-        Idy = ones(obj.dAnsatz, 1);
-        Val = zeros(obj.dAnsatz, 1);
+        Idx = ones(obj.nAnsatzDim, 1);
+        Idy = ones(obj.nAnsatzDim, 1);
+        Val = zeros(obj.nAnsatzDim, 1);
         ctr = 1;
 
         % iterate over the indexes of the spatial basis functions of the ansatz
@@ -271,7 +271,7 @@ classdef AssemblyFourierLegendre < AssemblyGlobalAbstract
         end
 
         % create the sparse matrix
-        O{cdx} = sparse(Idy, Idx, Val, obj.dTest, obj.dAnsatz);;
+        O{cdx} = sparse(Idy, Idx, Val, obj.nTestDim, obj.nAnsatzDim);;
       end
     end
 
@@ -301,9 +301,9 @@ classdef AssemblyFourierLegendre < AssemblyGlobalAbstract
       % cdx = i odd: cos((i+1) pi x), cdx = i even: sin(i pi x)
       for cdx = 1:nCoeff
         % create needed vectors to assemble the sparse matrix
-        Idx = ones(obj.dAnsatz, 1);
-        Idy = ones(obj.dAnsatz, 1);
-        Val = zeros(obj.dAnsatz, 1);
+        Idx = ones(obj.nAnsatzDim, 1);
+        Idy = ones(obj.nAnsatzDim, 1);
+        Val = zeros(obj.nAnsatzDim, 1);
         ctr = 1;
 
         % iterate over the indexes of the spatial basis functions of the ansatz
@@ -425,7 +425,7 @@ classdef AssemblyFourierLegendre < AssemblyGlobalAbstract
         end
 
         % create the sparse matrix
-        O{cdx} = sparse(Idy, Idx, Val, obj.dTest, obj.dAnsatz);
+        O{cdx} = sparse(Idy, Idx, Val, obj.nTestDim, obj.nAnsatzDim);
       end
     end
 
@@ -443,7 +443,7 @@ classdef AssemblyFourierLegendre < AssemblyGlobalAbstract
       % Return values:
       %   F: load vector @type colvec
 
-      F = zeros(obj.dTest, 1);
+      F = zeros(obj.nTestDim, 1);
 
       % iterate over the spatial basis functions corresponding to the initial
       % condition
@@ -512,7 +512,7 @@ classdef AssemblyFourierLegendre < AssemblyGlobalAbstract
       % Return values:
       %   F: load vector @type colvec
 
-      F = zeros(obj.dTest, 1);
+      F = zeros(obj.nTestDim, 1);
       F(obj.nTestSpatial * obj.nTestTemporal + 1) = obj.xspan(2);
     end
 
@@ -532,9 +532,9 @@ classdef AssemblyFourierLegendre < AssemblyGlobalAbstract
       %     @type sparsematrix
 
       % Preparation for the sparse matrix
-      Idx = ones(obj.dAnsatz, 1);
-      Idy = ones(obj.dAnsatz, 1);
-      Val = zeros(obj.dAnsatz, 1);
+      Idx = ones(obj.nAnsatzDim, 1);
+      Idy = ones(obj.nAnsatzDim, 1);
+      Val = zeros(obj.nAnsatzDim, 1);
       ctr = 1;
 
       % Calculate the first term `\int_{I} \skp{u_t(t)}{v_1(t)}{L_2(\Omega)}
@@ -562,12 +562,12 @@ classdef AssemblyFourierLegendre < AssemblyGlobalAbstract
       end
 
       % Assemble the stiffness matrix for this part
-      M1 = sparse(Idy, Idx, Val, obj.dTest, obj.dAnsatz);
+      M1 = sparse(Idy, Idx, Val, obj.nTestDim, obj.nAnsatzDim);
 
       % Reset for the next part
-      Idx = ones(obj.dAnsatz, 1);
-      Idy = ones(obj.dAnsatz, 1);
-      Val = zeros(obj.dAnsatz, 1);
+      Idx = ones(obj.nAnsatzDim, 1);
+      Idy = ones(obj.nAnsatzDim, 1);
+      Val = zeros(obj.nAnsatzDim, 1);
       ctr = 1;
 
       % Calculate the second term `\int_{I} \skp{\grad u(t)}{\grad
@@ -597,12 +597,12 @@ classdef AssemblyFourierLegendre < AssemblyGlobalAbstract
       end
 
       % Assemble the stiffness matrix for this part
-      M2 = sparse(Idy, Idx, Val, obj.dTest, obj.dAnsatz);
+      M2 = sparse(Idy, Idx, Val, obj.nTestDim, obj.nAnsatzDim);
 
       % Reset for the next part
-      Idx = ones(obj.dAnsatz, 1);
-      Idy = ones(obj.dAnsatz, 1);
-      Val = zeros(obj.dAnsatz, 1);
+      Idx = ones(obj.nAnsatzDim, 1);
+      Idy = ones(obj.nAnsatzDim, 1);
+      Val = zeros(obj.nAnsatzDim, 1);
       ctr = 1;
 
       % Calculate the third term `\int_{I} \mu \skp{u(t)}{v_1(t)}{L_2(\Omega)}
@@ -630,12 +630,12 @@ classdef AssemblyFourierLegendre < AssemblyGlobalAbstract
       end
 
       % Assemble the stiffness matrix for this part
-      M3 = sparse(Idy, Idx, Val, obj.dTest, obj.dAnsatz);
+      M3 = sparse(Idy, Idx, Val, obj.nTestDim, obj.nAnsatzDim);
 
       % Reset for the next part
-      Idx = ones(obj.dAnsatz, 1);
-      Idy = ones(obj.dAnsatz, 1);
-      Val = zeros(obj.dAnsatz, 1);
+      Idx = ones(obj.nAnsatzDim, 1);
+      Idy = ones(obj.nAnsatzDim, 1);
+      Val = zeros(obj.nAnsatzDim, 1);
       ctr = 1;
 
       % Calculate the fourth term `\skp{u(0)}{v_2}{L_2(\Omega)}`.
@@ -659,7 +659,7 @@ classdef AssemblyFourierLegendre < AssemblyGlobalAbstract
       end
 
       % Assemble the stiffness matrix for this part
-      M4 = sparse(Idy, Idx, Val, obj.dTest, obj.dAnsatz);
+      M4 = sparse(Idy, Idx, Val, obj.nTestDim, obj.nAnsatzDim);
 
       % Sum up the parts for the complete field-independent stiffness matrix
       M = M1 + obj.coeffLaplacian * M2 + obj.coeffOffset * M3 + M4;
@@ -687,9 +687,9 @@ classdef AssemblyFourierLegendre < AssemblyGlobalAbstract
       % expansion of the field)
       for cdx = 1:nCoeff
         % create needed vectors to assemble the sparse matrix
-        Idx = ones(obj.dAnsatz, 1);
-        Idy = ones(obj.dAnsatz, 1);
-        Val = zeros(obj.dAnsatz, 1);
+        Idx = ones(obj.nAnsatzDim, 1);
+        Idy = ones(obj.nAnsatzDim, 1);
+        Val = zeros(obj.nAnsatzDim, 1);
         ctr = 1;
 
         % iterate over the indexes of the spatial basis functions of the ansatz
@@ -730,7 +730,7 @@ classdef AssemblyFourierLegendre < AssemblyGlobalAbstract
         end
 
         % create the sparse matrix
-        O{cdx} = sparse(Idy, Idx, Val, obj.dTest, obj.dAnsatz);
+        O{cdx} = sparse(Idy, Idx, Val, obj.nTestDim, obj.nAnsatzDim);
       end
     end
 
@@ -759,9 +759,9 @@ classdef AssemblyFourierLegendre < AssemblyGlobalAbstract
       % cdx = i odd: cos((i+1) pi x), cdx = i even: sin(i pi x)
       for cdx = 1:nCoeff
         % create needed vectors to assemble the sparse matrix
-        Idx = ones(obj.dAnsatz, 1);
-        Idy = ones(obj.dAnsatz, 1);
-        Val = zeros(obj.dAnsatz, 1);
+        Idx = ones(obj.nAnsatzDim, 1);
+        Idy = ones(obj.nAnsatzDim, 1);
+        Val = zeros(obj.nAnsatzDim, 1);
         ctr = 1;
 
         % iterate over the indexes of the spatial basis functions of the ansatz
@@ -812,23 +812,25 @@ classdef AssemblyFourierLegendre < AssemblyGlobalAbstract
         end
 
         % create the sparse matrix
-        O{cdx} = sparse(Idy, Idx, Val, obj.dTest, obj.dAnsatz);
+        O{cdx} = sparse(Idy, Idx, Val, obj.nTestDim, obj.nAnsatzDim);
       end
     end
 
 
-    %% utility methods
+    %% Assembly methods for the discrete subspace norms
 
     function M = assembleAnsatzNormMatrix(obj)
       % Assemble the mass matrix of the discrete norm on the ansatz space.
+      %
+      % Fast implementation that leverages a lot of simplification by hand.
       %
       % Return values:
       %   M: mass matrix @type sparsematrix
 
       % Preparation for the sparse matrix
-      Idx = ones(obj.dAnsatz, 1);
-      Idy = ones(obj.dAnsatz, 1);
-      Val = zeros(obj.dAnsatz, 1);
+      Idx = ones(obj.nAnsatzDim, 1);
+      Idy = ones(obj.nAnsatzDim, 1);
+      Val = zeros(obj.nAnsatzDim, 1);
       ctr = 1;
 
       % first part `\norm{u}_{L_2(I; V)}`: iterate over spatial and temporal
@@ -903,19 +905,21 @@ classdef AssemblyFourierLegendre < AssemblyGlobalAbstract
       end
 
       % Assemble the sparse mass matrix
-      M = sparse(Idy, Idx, Val, obj.dAnsatz, obj.dAnsatz);
+      M = sparse(Idy, Idx, Val, obj.nAnsatzDim, obj.nAnsatzDim);
     end
 
     function M = assembleTestNormMatrix(obj)
       % Assemble the mass matrix of the discrete norm on the test space.
       %
+      % Fast implementation that leverages a lot of simplification by hand.
+      %
       % Return values:
       %   M: mass matrix @type sparsematrix
 
       % Preparation for the sparse matrix
-      Idx = ones(obj.dTest, 1);
-      Idy = ones(obj.dTest, 1);
-      Val = zeros(obj.dTest, 1);
+      Idx = ones(obj.nTestDim, 1);
+      Idy = ones(obj.nTestDim, 1);
+      Val = zeros(obj.nTestDim, 1);
       ctr = 1;
 
       % first part; iterate over the spatial basis for the first component
@@ -960,66 +964,72 @@ classdef AssemblyFourierLegendre < AssemblyGlobalAbstract
       end
 
       % Assemble the sparse mass matrix
-      M = sparse(Idy, Idx, Val, obj.dTest, obj.dTest);
+      M = sparse(Idy, Idx, Val, obj.nTestDim, obj.nTestDim);
     end
 
-        function M = assembleAnsatzNormMatrixSlow(obj)
-          % Assemble the mass matrix of the discrete norm on the ansatz space.
-          %
-          % Return values:
-          %   M: mass matrix @type sparsematrix
-
-          % Preparation for the sparse matrix
-          Idx = ones(obj.dAnsatz, 1);
-          Idy = ones(obj.dAnsatz, 1);
-          Val = zeros(obj.dAnsatz, 1);
-          ctr = 1;
-
-          % iterate over spatial component
-          for jdx1 = 1:obj.nAnsatzSpatial
-            for jdx2 = 1:obj.nAnsatzSpatial
-              % iterate over temporal component
-              for kdx1 = 1:obj.nAnsatzTemporal
-                for kdx2 = 1:obj.nAnsatzTemporal
-                  % first part `\norm{u}_{L_2(I; V)}`
-                  intSpatialF  = integral(@(x) obj.spatialBasisFunc(jdx1, x) .* obj.spatialBasisFunc(jdx2, x) + obj.spatialBasisFuncDerivative(jdx1, x) .* obj.spatialBasisFuncDerivative(jdx2, x), obj.xspan(1), obj.xspan(2));
-                  intTemporalF = integral(@(t) obj.temporalBasisFunc(kdx1, t) .* obj.temporalBasisFunc(kdx2, t), obj.tspan(1), obj.tspan(2));
-                  intFirstPart = intTemporalF * intSpatialF;
-
-                  % second part `norm{u_t}_{L_2(I; V')}`
-                  intSpatialS  = integral(@(x) obj.spatialBasisFunc(jdx1, x) .* obj.spatialBasisFunc(jdx2, x), obj.xspan(1), obj.xspan(2));
-                  intTemporalS = integral(@(t) obj.temporalBasisFuncDerivative(kdx1, t) .* obj.temporalBasisFuncDerivative(kdx2, t), obj.tspan(1), obj.tspan(2));
-                  intSecondPart = intTemporalS * intSpatialS;
-
-                  val = intFirstPart + intSecondPart;
-
-                  % only consider values above a given threshold (since a lot of zero
-                  % valued integrals won't get exact zero)
-                  if abs(val) > sqrt(eps)
-                    Idx(ctr) = (jdx1 - 1) * obj.nAnsatzTemporal + kdx1;
-                    Idy(ctr) = (jdx2 - 1) * obj.nAnsatzTemporal + kdx2;
-                    Val(ctr) = val;
-                    ctr = ctr + 1;
-                  end
-                end
-              end
-            end
-          end
-
-          % Assemble the sparse mass matrix
-          M = sparse(Idy, Idx, Val, obj.dAnsatz, obj.dAnsatz);
-        end
-
-    function M = assembleTestNormMatrixSlow(obj)
-      % Assemble the mass matrix of the discrete norm on the test space.
+    function M = assembleAnsatzNormMatrixSlow(obj)
+      % Assemble the mass matrix of the discrete norm on the ansatz space.
+      %
+      % Slow implementation using numerical quadrature. Only useful for
+      % comparison and testing of faster methods!
       %
       % Return values:
       %   M: mass matrix @type sparsematrix
 
       % Preparation for the sparse matrix
-      Idx = ones(obj.dTest, 1);
-      Idy = ones(obj.dTest, 1);
-      Val = zeros(obj.dTest, 1);
+      Idx = ones(obj.nAnsatzDim, 1);
+      Idy = ones(obj.nAnsatzDim, 1);
+      Val = zeros(obj.nAnsatzDim, 1);
+      ctr = 1;
+
+      % iterate over spatial component
+      for jdx1 = 1:obj.nAnsatzSpatial
+        for jdx2 = 1:obj.nAnsatzSpatial
+          % iterate over temporal component
+          for kdx1 = 1:obj.nAnsatzTemporal
+            for kdx2 = 1:obj.nAnsatzTemporal
+              % first part `\norm{u}_{L_2(I; V)}`
+              intSpatialF  = integral(@(x) obj.spatialBasisFunc(jdx1, x) .* obj.spatialBasisFunc(jdx2, x) + obj.spatialBasisFuncDerivative(jdx1, x) .* obj.spatialBasisFuncDerivative(jdx2, x), obj.xspan(1), obj.xspan(2));
+              intTemporalF = integral(@(t) obj.temporalBasisFunc(kdx1, t) .* obj.temporalBasisFunc(kdx2, t), obj.tspan(1), obj.tspan(2));
+              intFirstPart = intTemporalF * intSpatialF;
+
+              % second part `norm{u_t}_{L_2(I; V')}`
+              intSpatialS  = integral(@(x) obj.spatialBasisFunc(jdx1, x) .* obj.spatialBasisFunc(jdx2, x), obj.xspan(1), obj.xspan(2));
+              intTemporalS = integral(@(t) obj.temporalBasisFuncDerivative(kdx1, t) .* obj.temporalBasisFuncDerivative(kdx2, t), obj.tspan(1), obj.tspan(2));
+              intSecondPart = intTemporalS * intSpatialS;
+
+              val = intFirstPart + intSecondPart;
+
+              % only consider values above a given threshold (since a lot of zero
+              % valued integrals won't get exact zero)
+              if abs(val) > sqrt(eps)
+                Idx(ctr) = (jdx1 - 1) * obj.nAnsatzTemporal + kdx1;
+                Idy(ctr) = (jdx2 - 1) * obj.nAnsatzTemporal + kdx2;
+                Val(ctr) = val;
+                ctr = ctr + 1;
+              end
+            end
+          end
+        end
+      end
+
+      % Assemble the sparse mass matrix
+      M = sparse(Idy, Idx, Val, obj.nAnsatzDim, obj.nAnsatzDim);
+    end
+
+    function M = assembleTestNormMatrixSlow(obj)
+      % Assemble the mass matrix of the discrete norm on the test space.
+      %
+      % Slow implementation using numerical quadrature. Only useful for
+      % comparison and testing of faster methods!
+      %
+      % Return values:
+      %   M: mass matrix @type sparsematrix
+
+      % Preparation for the sparse matrix
+      Idx = ones(obj.nTestDim, 1);
+      Idy = ones(obj.nTestDim, 1);
+      Val = zeros(obj.nTestDim, 1);
       ctr = 1;
 
       % iterate over the spatial basis for the first component
@@ -1062,7 +1072,7 @@ classdef AssemblyFourierLegendre < AssemblyGlobalAbstract
       end
 
       % Assemble the sparse mass matrix
-      M = sparse(Idy, Idx, Val, obj.dTest, obj.dTest);
+      M = sparse(Idy, Idx, Val, obj.nTestDim, obj.nTestDim);
     end
 
     function val = normOfTestFuncSlow(obj, ldx, mdx, ndx)
@@ -1090,23 +1100,23 @@ classdef AssemblyFourierLegendre < AssemblyGlobalAbstract
     end
 
     function val = normOfAnsatzFuncSlow(obj, jdx, kdx)
-          % Calculate the ansatz space norm of a ansatz basis function.
-          %
-          % Parameter:
-          %   jdx: index of spatial basis function @type integer
-          %   kdx: index of temporal basis function @type integer
-          %
-          % Return values:
-          %   val: norm of product of spatial and temporal basis function @type double
+      % Calculate the ansatz space norm of a ansatz basis function.
+      %
+      % Parameter:
+      %   jdx: index of spatial basis function @type integer
+      %   kdx: index of temporal basis function @type integer
+      %
+      % Return values:
+      %   val: norm of product of spatial and temporal basis function @type double
 
-          tmp1 = integral(@(t) obj.temporalBasisFunc(kdx, t).^2, obj.tspan(1), obj.tspan(2)) * ...
-            integral(@(x) obj.spatialBasisFunc(jdx, x).^2 + obj.spatialBasisFuncDerivative(jdx, x).^2, obj.xspan(1), obj.xspan(2));
+      tmp1 = integral(@(t) obj.temporalBasisFunc(kdx, t).^2, obj.tspan(1), obj.tspan(2)) * ...
+        integral(@(x) obj.spatialBasisFunc(jdx, x).^2 + obj.spatialBasisFuncDerivative(jdx, x).^2, obj.xspan(1), obj.xspan(2));
 
-          tmp2 = integral(@(t) obj.temporalBasisFuncDerivative(kdx, t).^2, obj.tspan(1), obj.tspan(2)) * ...
-            integral(@(x) obj.spatialBasisFunc(jdx, x).^2, obj.xspan(1), obj.xspan(2));
+      tmp2 = integral(@(t) obj.temporalBasisFuncDerivative(kdx, t).^2, obj.tspan(1), obj.tspan(2)) * ...
+        integral(@(x) obj.spatialBasisFunc(jdx, x).^2, obj.xspan(1), obj.xspan(2));
 
-          val = sqrt(tmp1 + tmp2);
-        end
+      val = sqrt(tmp1 + tmp2);
+    end
 
 
     %% spatial and temporal basis functions as convenient function handles
@@ -1225,6 +1235,101 @@ classdef AssemblyFourierLegendre < AssemblyGlobalAbstract
       end
 
       val = legendrePolynomialDerivative(t, index - 1, tspan);
+    end
+
+    function precomputeNormalizationConstants(obj, usedAnsatzNorm, usedTestNorm)
+      % Precompute the normalization constants of the ansatz and test functions
+      % for the given norms.
+      %
+      % Possible choices for the used ansatz norm:
+      %   'none': don't use normalization
+      %   'ansatz': normalize the ansatz functions in the ansatz subspace norm.
+      %
+      % Possible choices for the used test norm:
+      %   'none': don't use normalization
+      %   'test': normalize the test function in the test subspace norm.
+      %
+      % Parameters:
+      %   usedAnsatzNorm: which norm to use for the computation of the normalization
+      %     constants for the ansatz functions. @type string
+      %   usedTestNorm: which norm to use for the computation of the normalization
+      %     constants for the test functions. @type string
+
+      % set matrix for the ansatz space
+      switch usedAnsatzNorm
+        case 'none'
+          obj.ansatzNormalizationMatrix = speye(obj.nAnsatzDim);
+        case 'ansatz'
+          obj.ansatzNormalizationMatrix = obj.assembleAnsatzNormMatrix();
+        otherwise
+          error('Invalid argument for "usedAnsatzNorm".');
+      end
+
+      % set matrix for the test space
+      switch usedTestNorm
+        case 'none'
+          obj.testNormalizationMatrix = speye(obj.nTestDim);
+        case 'test'
+          obj.testNormalizationMatrix = obj.assembleTestNormMatrix();
+        otherwise
+          error('Invalid argument for "usedTestNorm".');
+      end
+    end
+
+    function val = normalizationConstForAnsatzFunc(obj, jdx, kdx)
+      % Normalization constant for a given ansatz function.
+      %
+      % Returns the normalization constant for an ansatz basis function given
+      % through the indexes of the spatial and temporal basis functions. As
+      % normalization is sometimes desired for different norms, the constants have
+      % to be precomputed.
+      %
+      % See also:
+      %   precomputeNormalizationConstants
+      %
+      % Parameters:
+      %   jdx: index of spatial basis function @type integer
+      %   kdx: index of temporal basis function @type integer
+      %
+      % Return values:
+      %   val: normalization constant @type double
+
+      pos = (jdx - 1) * obj.nAnsatzTemporal + kdx;
+      val = 1 / sqrt(obj.ansatzNormalizationMatrix(pos, pos));
+    end
+
+    function val = normalizationConstForTestFunc(obj, ldx, mdx, ndx)
+      % Normalization constant for a given test function.
+      %
+      % Returns the normalization constant for an test basis function given
+      % through the indexes of the spatial and temporal basis functions. As
+      % normalization is sometimes desired for different norms, the constants have
+      % to be precomputed.
+      %
+      % See also:
+      %   precomputeNormalizationConstants
+      %
+      % Parameters:
+      %   jdx: index of spatial basis function @type integer
+      %   kdx: index of temporal basis function @type integer
+      %   ndx: index of spatial basis function (initial condition) @type integer
+      %
+      % Return values:
+      %   val: normalization constant @type double
+
+      tmp1 = 0;
+      if ldx > 0 && mdx > 0
+        pos = (ldx - 1) * obj.nTestTemporal + mdx;
+        tmp1 = obj.testNormalizationMatrix(pos, pos);
+      end
+
+      tmp2 = 0;
+      if ndx > 0
+        pos = obj.nTestSpatial * obj.nTestTemporal + ndx;
+        tmp2 = obj.testNormalizationMatrix(pos, pos);
+      end
+
+      val = 1 / sqrt(tmp1 + tmp2);
     end
 
   end

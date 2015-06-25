@@ -42,9 +42,9 @@ classdef AssemblySineLegendre < AssemblyGlobalAbstract
       %     @type sparsematrix
 
       % Preparation for the sparse matrix
-      Idx = ones(obj.dAnsatz, 1);
-      Idy = ones(obj.dAnsatz, 1);
-      Val = zeros(obj.dAnsatz, 1);
+      Idx = ones(obj.nAnsatzDim, 1);
+      Idy = ones(obj.nAnsatzDim, 1);
+      Val = zeros(obj.nAnsatzDim, 1);
       ctr = 1;
 
       % Calculate the first term `\int_{I} \skp{u_t(t)}{v_1(t)}{L_2(\Omega)} \diff t`.
@@ -112,7 +112,7 @@ classdef AssemblySineLegendre < AssemblyGlobalAbstract
       end
 
       % Finally assemble the stiffness matrix
-      M = sparse(Idy, Idx, Val, obj.dTest, obj.dAnsatz);
+      M = sparse(Idy, Idx, Val, obj.nTestDim, obj.nAnsatzDim);
     end
 
 
@@ -142,9 +142,9 @@ classdef AssemblySineLegendre < AssemblyGlobalAbstract
       % expansion of the field).
       for cdx = 1:nCoeff
         % create needed vectors to assemble the sparse matrix
-        Idx = ones(obj.dAnsatz, 1);
-        Idy = ones(obj.dAnsatz, 1);
-        Val = zeros(obj.dAnsatz, 1);
+        Idx = ones(obj.nAnsatzDim, 1);
+        Idy = ones(obj.nAnsatzDim, 1);
+        Val = zeros(obj.nAnsatzDim, 1);
         ctr = 1;
 
         % iterate over the indexes of the spatial basis functions of the ansatz
@@ -176,7 +176,7 @@ classdef AssemblySineLegendre < AssemblyGlobalAbstract
         end
 
         % create the sparse matrix
-        O{cdx} = sparse(Idy, Idx, Val, obj.dTest, obj.dAnsatz);;
+        O{cdx} = sparse(Idy, Idx, Val, obj.nTestDim, obj.nAnsatzDim);;
       end
     end
 
@@ -209,9 +209,9 @@ classdef AssemblySineLegendre < AssemblyGlobalAbstract
       % cdx = i odd: cos((i+1) pi x), cdx = i even: sin(i pi x)
       for cdx = 1:nCoeff
         % create needed vectors to assemble the sparse matrix
-        Idx = ones(obj.dAnsatz, 1);
-        Idy = ones(obj.dAnsatz, 1);
-        Val = zeros(obj.dAnsatz, 1);
+        Idx = ones(obj.nAnsatzDim, 1);
+        Idy = ones(obj.nAnsatzDim, 1);
+        Val = zeros(obj.nAnsatzDim, 1);
         ctr = 1;
 
         % iterate over the indexes of the spatial basis functions of the ansatz
@@ -261,7 +261,7 @@ classdef AssemblySineLegendre < AssemblyGlobalAbstract
         end
 
         % create the sparse matrix
-        O{cdx} = sparse(Idy, Idx, Val, obj.dTest, obj.dAnsatz);
+        O{cdx} = sparse(Idy, Idx, Val, obj.nTestDim, obj.nAnsatzDim);
       end
     end
 
@@ -279,7 +279,7 @@ classdef AssemblySineLegendre < AssemblyGlobalAbstract
       % Return values:
       %   F: load vector @type colvec
 
-      F = zeros(obj.dTest, 1);
+      F = zeros(obj.nTestDim, 1);
 
       % iterate over the spatial basis functions corresponding to the initial
       % condition
@@ -299,7 +299,7 @@ classdef AssemblySineLegendre < AssemblyGlobalAbstract
       % @deprecated not that useful in the homogenic case...
       error('deprecated');
 
-      F = zeros(obj.dTest, 1);
+      F = zeros(obj.nTestDim, 1);
       F(obj.nTestSpatial * obj.nTestTemporal + 1) = obj.xspan(2);
     end
 
@@ -319,9 +319,9 @@ classdef AssemblySineLegendre < AssemblyGlobalAbstract
       %     @type sparsematrix
 
       % Preparation for the sparse matrix
-      Idx = ones(obj.dAnsatz, 1);
-      Idy = ones(obj.dAnsatz, 1);
-      Val = zeros(obj.dAnsatz, 1);
+      Idx = ones(obj.nAnsatzDim, 1);
+      Idy = ones(obj.nAnsatzDim, 1);
+      Val = zeros(obj.nAnsatzDim, 1);
       ctr = 1;
 
       % Calculate the first term `\int_{I} \skp{u_t(t)}{v_1(t)}{L_2(\Omega)}
@@ -419,7 +419,7 @@ classdef AssemblySineLegendre < AssemblyGlobalAbstract
       end
 
       % Finally assemble the stiffness matrix
-      M = sparse(Idy, Idx, Val, obj.dTest, obj.dAnsatz);
+      M = sparse(Idy, Idx, Val, obj.nTestDim, obj.nAnsatzDim);
     end
 
     function O = assembleFieldDependentMatrixForSineSeriesSlow(obj, nCoeff)
@@ -444,9 +444,9 @@ classdef AssemblySineLegendre < AssemblyGlobalAbstract
       % expansion of the field)
       for cdx = 1:nCoeff
         % create needed vectors to assemble the sparse matrix
-        Idx = ones(obj.dAnsatz, 1);
-        Idy = ones(obj.dAnsatz, 1);
-        Val = zeros(obj.dAnsatz, 1);
+        Idx = ones(obj.nAnsatzDim, 1);
+        Idy = ones(obj.nAnsatzDim, 1);
+        Val = zeros(obj.nAnsatzDim, 1);
         ctr = 1;
 
         % iterate over the indexes of the spatial basis functions of the ansatz
@@ -487,7 +487,7 @@ classdef AssemblySineLegendre < AssemblyGlobalAbstract
         end
 
         % create the sparse matrix
-        O{cdx} = sparse(Idy, Idx, Val, obj.dTest, obj.dAnsatz);
+        O{cdx} = sparse(Idy, Idx, Val, obj.nTestDim, obj.nAnsatzDim);
       end
     end
 
@@ -518,9 +518,9 @@ classdef AssemblySineLegendre < AssemblyGlobalAbstract
       % cdx = i odd: cos((i+1) pi x), cdx = i even: sin(i pi x)
       for cdx = 1:nCoeff
         % create needed vectors to assemble the sparse matrix
-        Idx = ones(obj.dAnsatz, 1);
-        Idy = ones(obj.dAnsatz, 1);
-        Val = zeros(obj.dAnsatz, 1);
+        Idx = ones(obj.nAnsatzDim, 1);
+        Idy = ones(obj.nAnsatzDim, 1);
+        Val = zeros(obj.nAnsatzDim, 1);
         ctr = 1;
 
         % iterate over the indexes of the spatial basis functions of the ansatz
@@ -571,7 +571,7 @@ classdef AssemblySineLegendre < AssemblyGlobalAbstract
         end
 
         % create the sparse matrix
-        O{cdx} = sparse(Idy, Idx, Val, obj.dTest, obj.dAnsatz);
+        O{cdx} = sparse(Idy, Idx, Val, obj.nTestDim, obj.nAnsatzDim);
       end
     end
 

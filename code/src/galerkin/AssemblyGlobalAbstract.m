@@ -23,12 +23,22 @@ classdef AssemblyGlobalAbstract < AssemblyAbstract
     nTestSpatialIC;
   end
 
+  properties(Access = 'public')
+    % holds the normalization of the ansatz functions in matrix form
+    % @type sparsematrix
+    ansatzNormalizationMatrix;
+
+    % holds the normalization of the test functions in matrix form
+    % @type sparsematrix
+    testNormalizationMatrix;
+  end
+
   properties(Dependent)
     % Dimension of the ansatz subspace @type integer
-    dAnsatz;
+    nAnsatzDim;
 
     % Dimension of the test subspace @type integer
-    dTest;
+    nTestDim;
   end
 
   methods(Abstract)
@@ -89,19 +99,66 @@ classdef AssemblyGlobalAbstract < AssemblyAbstract
     % Return values:
     %   val: values of the basis function in t @type matrix
     val = temporalBasisFuncDerivative(obj, index, t, tspan)
+
+    % Precompute the normalization constants of the ansatz and test functions
+    % for the given norms.
+    %
+    % Parameters:
+    %   usedAnsatzNorm: which norm to use for the computation of the normalization
+    %     constants for the ansatz functions. @type string
+    %   usedTestNorm: which norm to use for the computation of the normalization
+    %     constants for the test functions. @type string
+    precomputeNormalizationConstants(obj, usedAnsatzNorm, usedTestNorm);
+
+    % Normalization constant for a given ansatz function.
+    %
+    % Returns the normalization constant for an ansatz basis function given
+    % through the indexes of the spatial and temporal basis functions. As
+    % normalization is sometimes desired for different norms, the constants have
+    % to be precomputed.
+    %
+    % See also:
+    %   precomputeNormalizationConstants
+    %
+    % Parameters:
+    %   jdx: index of spatial basis function @type integer
+    %   kdx: index of temporal basis function @type integer
+    %
+    % Return values:
+    %   val: normalization constant @type double
+    val = normalizationConstForAnsatzFunc(obj, jdx, kdx);
+
+    % Normalization constant for a given test function.
+    %
+    % Returns the normalization constant for an test basis function given
+    % through the indexes of the spatial and temporal basis functions. As
+    % normalization is sometimes desired for different norms, the constants have
+    % to be precomputed.
+    %
+    % See also:
+    %   precomputeNormalizationConstants
+    %
+    % Parameters:
+    %   jdx: index of spatial basis function @type integer
+    %   kdx: index of temporal basis function @type integer
+    %   ndx: index of spatial basis function (initial condition) @type integer
+    %
+    % Return values:
+    %   val: normalization constant @type double
+    val = normalizationConstForTestFunc(obj, ldx, mdx, ndx);
   end
 
   methods
 
     %% Custom getters and setter
 
-    function dim = get.dAnsatz(obj)
+    function dim = get.nAnsatzDim(obj)
       % Calculate the dimension of the ansatz space.
 
       dim = obj.nAnsatzSpatial * obj.nAnsatzTemporal;
     end
 
-    function dim = get.dTest(obj)
+    function dim = get.nTestDim(obj)
       % Calculate the dimension of the test space.
 
       dim = obj.nTestSpatial * obj.nTestTemporal + obj.nTestSpatialIC;

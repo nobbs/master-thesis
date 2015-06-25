@@ -52,10 +52,10 @@ classdef AssemblyAbstract < handle
     solfun = solutionFuncFromCoeffs(obj, solutionCoeffs);
 
     % Assemble the mass matrix of the discrete norm on the ansatz space.
-    assembleAnsatzNormMatrixMatrix(obj);
+    assembleAnsatzNormMatrix(obj);
 
     % Assemble the mass matrix of the discrete norm on the test space.
-    assembleTestNormMatrixMatrix(obj);
+    assembleTestNormMatrix(obj);
   end
 
   methods
