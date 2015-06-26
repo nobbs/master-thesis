@@ -108,7 +108,7 @@ classdef AssemblyGlobalAbstract < AssemblyAbstract
     %     constants for the ansatz functions. @type string
     %   usedTestNorm: which norm to use for the computation of the normalization
     %     constants for the test functions. @type string
-    precomputeNormalizationConstants(obj, usedAnsatzNorm, usedTestNorm);
+    % precomputeNormalizationConstants(obj, usedAnsatzNorm, usedTestNorm);
 
     % Normalization constant for a given ansatz function.
     %
@@ -126,7 +126,8 @@ classdef AssemblyGlobalAbstract < AssemblyAbstract
     %
     % Return values:
     %   val: normalization constant @type double
-    val = normalizationConstForAnsatzFunc(obj, jdx, kdx);
+    % val = normalizationConstForAnsatzFunc(obj, jdx, kdx);
+    val = normOfAnsatzFunc(obj, jdx, kdx);
 
     % Normalization constant for a given test function.
     %
@@ -145,7 +146,7 @@ classdef AssemblyGlobalAbstract < AssemblyAbstract
     %
     % Return values:
     %   val: normalization constant @type double
-    val = normalizationConstForTestFunc(obj, ldx, mdx, ndx);
+    % val = normalizationConstForTestFunc(obj, ldx, mdx, ndx);
   end
 
   methods
@@ -236,12 +237,11 @@ classdef AssemblyGlobalAbstract < AssemblyAbstract
         % Get the right coefficient
         pos = (jdx - 1) * obj.nAnsatzTemporal + kdx;
 
-        %   % @todo normalization constant
-        %   % cnrm = sqrt((1 + (pi * j)^2) / (2 * (2*(k - 1) + 1)) + ...
-        %             % legendre_dP(1, k - 1));
+        % @todo normalization constant
+        normAnsatz = obj.normOfAnsatzFunc(jdx, kdx);
 
         % evaluate the corresponding basis functions
-        val = val + solutionCoeffs(pos) * spatialValues{jdx} .* temporalValues{kdx};
+        val = val + solutionCoeffs(pos) * spatialValues{jdx} .* temporalValues{kdx} / normAnsatz;
         end
       end
     end
