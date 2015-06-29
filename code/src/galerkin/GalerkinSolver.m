@@ -88,7 +88,7 @@ classdef GalerkinSolver < handle
       obj.partOne.AnsatzDiag         = obj.assembly.AnsatzNormDiag;
       obj.partOne.TestDiag           = obj.assembly.TestNormDiag;
 
-      [~, M1, M2, M3, M4F, M4B] = obj.assembly.assembleFieldIndependentMatrix();
+      [M1, M2, M3, M4F, M4B] = obj.assembly.assembleFieldIndependentMatrix();
 
       obj.partOne.TimeDerivativeMatrix = M1;
       obj.partOne.LaplacianMatrix      = M2;
@@ -101,7 +101,7 @@ classdef GalerkinSolver < handle
       obj.partOne.AnsatzDiag         = obj.assembly.AnsatzNormDiag;
       obj.partOne.TestDiag           = obj.assembly.TestNormDiag;
 
-      [~, N1, N2, N3, N4F, N4B] = obj.assembly.assembleFieldIndependentMatrix();
+      [N1, N2, N3, N4F, N4B] = obj.assembly.assembleFieldIndependentMatrix();
 
       obj.partTwo.TimeDerivativeMatrix = N1;
       obj.partTwo.LaplacianMatrix      = N2;
@@ -135,11 +135,10 @@ classdef GalerkinSolver < handle
 
       % if normalization is used then we've to "renormalize" the solution coeffient vector
       if obj.useNormalization
-        Rhs = obj.assembly.assembleVectorFromSolutionCoeffs(solCoeffOne ./ sqrt(diag(obj.partOne.AnsatzDiag)));
+        Rhs = obj.assembly.assembleVectorFromSolutionCoeffs(obj.partOne.AnsatzDiag \ solCoeffOne);
       else
         Rhs = obj.assembly.assembleVectorFromSolutionCoeffs(solCoeffOne);
       end
-% .* sqrt(diag(obj.partOne.AnsatzMatrix)) ./ sqrt(diag(obj.partTwo.AnsatzMatrix)));
       solCoeffTwo = LhsComp \ Rhs;
 
       solfun = @(t, x) ...

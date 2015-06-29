@@ -43,12 +43,12 @@ classdef AssemblyFourierLegendre < AssemblyGlobalAbstract
 
       if obj.useNormalization
         % we want to use normalization
-        obj.AnsatzNormDiag = spdiags(...
+        obj.AnsatzNormDiag = sqrt(spdiags(...
           spdiags(obj.assembleAnsatzNormMatrix(false), 0), 0, ...
-          obj.nAnsatzDim, obj.nAnsatzDim);
-        obj.TestNormDiag   = spdiags(...
+          obj.nAnsatzDim, obj.nAnsatzDim));
+        obj.TestNormDiag   = sqrt(spdiags(...
           spdiags(obj.assembleTestNormMatrix(false), 0), 0, ...
-          obj.nTestDim, obj.nTestDim);
+          obj.nTestDim, obj.nTestDim));
       else
         % we don't want to use normalization
         obj.AnsatzNormDiag = speye(obj.nAnsatzDim);
@@ -59,7 +59,7 @@ classdef AssemblyFourierLegendre < AssemblyGlobalAbstract
 
     %% Fast implementation of the assembly methods
 
-    function [M, M1, M2, M3, M4F, M4B] = assembleFieldIndependentMatrix(obj)
+    function [M1, M2, M3, M4F, M4B] = assembleFieldIndependentMatrix(obj)
       % Assemble the field-independent part of the stiffness matrix.
       %
       % This is done by evaluating the individual summands of the left hand side
@@ -79,7 +79,8 @@ classdef AssemblyFourierLegendre < AssemblyGlobalAbstract
       % optimization...
       xwidth = obj.xspan(2);
 
-      % Calculate the first term `\int_{I} \skp{u_t(t)}{v_1(t)}{L_2(\Omega)} \diff t`.
+      % Calculate the first term `\int_{I} \skp{u_t(t)}{v_1(t)}{L_2(\Omega)}
+      % \diff t`.
       for jdx = 1:min(obj.nAnsatzSpatial, obj.nTestSpatial)
         for kdx = 1:obj.nAnsatzTemporal
           for mdx = (kdx - 1):-2:1
@@ -111,7 +112,8 @@ classdef AssemblyFourierLegendre < AssemblyGlobalAbstract
       Val = zeros(obj.nAnsatzDim, 1);
       ctr = 1;
 
-      % Calculate the second term `\int_{I} \skp{\grad u(t)}{\grad v_1(t)}{L_2(\Omega)} \diff t`.
+      % Calculate the second term `\int_{I} \skp{\grad u(t)}{\grad
+      % v_1(t)}{L_2(\Omega)} \diff t`.
       for jdx = 1:min(obj.nAnsatzSpatial, obj.nTestSpatial)
         for kdx = 1:min(obj.nAnsatzTemporal, obj.nTestTemporal)
           % evaluate spatial integral
@@ -143,7 +145,8 @@ classdef AssemblyFourierLegendre < AssemblyGlobalAbstract
       Val = zeros(obj.nAnsatzDim, 1);
       ctr = 1;
 
-      % Calculate the third term `\int_{I} \mu \skp{u(t)}{v_1(t)}{L_2(\Omega)} \diff t`.
+      % Calculate the third term `\int_{I} \mu \skp{u(t)}{v_1(t)}{L_2(\Omega)}
+      % \diff t`.
       for jdx = 1:min(obj.nAnsatzSpatial, obj.nTestSpatial)
         for kdx = 1:min(obj.nAnsatzTemporal, obj.nTestTemporal)
           % evaluate spatial integral
@@ -168,11 +171,11 @@ classdef AssemblyFourierLegendre < AssemblyGlobalAbstract
       M3 = sparse(Idy, Idx, Val, obj.nTestDim, obj.nAnsatzDim);
 
       % Reset for the next part
-      Idx = ones(obj.nAnsatzDim, 1);
-      Idy = ones(obj.nAnsatzDim, 1);
-      ValForward = zeros(obj.nAnsatzDim, 1);
-      ValBackward = zeros(obj.nAnsatzDim, 1);
-      ctr = 1;
+      Idx  = ones(obj.nAnsatzDim, 1);
+      Idy  = ones(obj.nAnsatzDim, 1);
+      ValF = zeros(obj.nAnsatzDim, 1);
+      ValB = zeros(obj.nAnsatzDim, 1);
+      ctr  = 1;
 
       % Calculate the fourth term `\skp{u(0)}{v_2}{L_2(\Omega)}`.
       for jdx = 1:min(obj.nAnsatzSpatial, obj.nTestSpatialIC)
@@ -185,35 +188,32 @@ classdef AssemblyFourierLegendre < AssemblyGlobalAbstract
           end
 
           % evaluate temporal integral
-          intTemporalForward  = (-1)^(kdx - 1);
-          intTemporalBackward = 1;
+          intTemporalF  = (-1)^(kdx - 1);
+          intTemporalB = 1;
 
           % save the evaluated integrals
-          Idx(ctr) = (jdx - 1) * obj.nAnsatzTemporal + kdx;
-          Idy(ctr) = obj.nTestSpatial * obj.nTestTemporal + jdx;
-          ValForward(ctr)  = intTemporalForward * intSpatial;
-          ValBackward(ctr) = intTemporalBackward * intSpatial;
+          Idx(ctr)  = (jdx - 1) * obj.nAnsatzTemporal + kdx;
+          Idy(ctr)  = obj.nTestSpatial * obj.nTestTemporal + jdx;
+          ValF(ctr) = intTemporalF * intSpatial;
+          ValB(ctr) = intTemporalB * intSpatial;
           ctr = ctr + 1;
         end
       end
 
       % Assemble the stiffness matrix for this part
-      M4F = sparse(Idy, Idx, ValForward, obj.nTestDim, obj.nAnsatzDim);
-      M4B = sparse(Idy, Idx, ValBackward, obj.nTestDim, obj.nAnsatzDim);
-
-      % Sum up the parts for the complete field-independent stiffness matrix
-      M = M1 + obj.coeffLaplacian * M2 + obj.coeffOffset * M3 + M4F;
+      M4F = sparse(Idy, Idx, ValF, obj.nTestDim, obj.nAnsatzDim);
+      M4B = sparse(Idy, Idx, ValB, obj.nTestDim, obj.nAnsatzDim);
 
       % normalize if needed
       if obj.useNormalization
-        M1  = inv(sqrt(obj.TestNormDiag)) * M1 * inv(sqrt(obj.AnsatzNormDiag));
-        M2  = inv(sqrt(obj.TestNormDiag)) * M2 * inv(sqrt(obj.AnsatzNormDiag));
-        M3  = inv(sqrt(obj.TestNormDiag)) * M3 * inv(sqrt(obj.AnsatzNormDiag));
-        M4F = inv(sqrt(obj.TestNormDiag)) * M4F * inv(sqrt(obj.AnsatzNormDiag));
-        M4B = inv(sqrt(obj.TestNormDiag)) * M4B * inv(sqrt(obj.AnsatzNormDiag));
-        M   = inv(sqrt(obj.TestNormDiag)) * M * inv(sqrt(obj.AnsatzNormDiag));
+        M1  = (obj.TestNormDiag \ M1) / obj.AnsatzNormDiag;
+        M2  = (obj.TestNormDiag \ M2) / obj.AnsatzNormDiag;
+        M3  = (obj.TestNormDiag \ M3) / obj.AnsatzNormDiag;
+        M4F = (obj.TestNormDiag \ M4F) / obj.AnsatzNormDiag;
+        M4B = (obj.TestNormDiag \ M4B) / obj.AnsatzNormDiag;
       end
     end
+
 
     %% Assemble the field-dependent parts of the stiffness matrix based on
     %  different series expansions of the field.
@@ -311,7 +311,7 @@ classdef AssemblyFourierLegendre < AssemblyGlobalAbstract
 
         % normalize if needed
         if obj.useNormalization
-          O{cdx} = inv(sqrt(obj.TestNormDiag)) * O{cdx} * inv(sqrt(obj.AnsatzNormDiag));
+          O{cdx} = (obj.TestNormDiag \ O{cdx}) / obj.AnsatzNormDiag;
         end
       end
     end
@@ -470,7 +470,7 @@ classdef AssemblyFourierLegendre < AssemblyGlobalAbstract
 
         % normalize if needed
         if obj.useNormalization
-          O{cdx} = inv(sqrt(obj.TestNormDiag)) * O{cdx}  * inv(sqrt(obj.AnsatzNormDiag));
+          O{cdx} = (obj.TestNormDiag \ O{cdx}) / obj.AnsatzNormDiag;
         end
       end
     end
@@ -508,7 +508,7 @@ classdef AssemblyFourierLegendre < AssemblyGlobalAbstract
 
       % normalize if needed
       if obj.useNormalization
-        F = inv(sqrt(obj.TestNormDiag)) * F;
+        F = obj.TestNormDiag \ F;
       end
     end
 
@@ -567,7 +567,7 @@ classdef AssemblyFourierLegendre < AssemblyGlobalAbstract
 
       % normalize if needed
       if obj.useNormalization
-        F = inv(sqrt(obj.TestNormDiag)) * F;
+        F = obj.TestNormDiag \ F;
       end
     end
 
@@ -590,7 +590,7 @@ classdef AssemblyFourierLegendre < AssemblyGlobalAbstract
 
       % set default values
       if nargin == 1
-        useNormalization = true;
+        useNormalization = obj.useNormalization;
       end
 
       % Preparation for the sparse matrix
@@ -612,7 +612,8 @@ classdef AssemblyFourierLegendre < AssemblyGlobalAbstract
             intSpatial = obj.xspan(2);
           elseif mod(jdx, 2) == 1
             % cosine
-            intSpatial = obj.xspan(2) / 2 + (pi * (jdx - 1))^2 / (2 * obj.xspan(2));
+            intSpatial = obj.xspan(2) / 2 + (pi * (jdx - 1))^2 / ...
+              (2 * obj.xspan(2));
           else
             % sine
             intSpatial = obj.xspan(2) / 2 + (pi * jdx)^2 / (2 * obj.xspan(2));
@@ -657,11 +658,11 @@ classdef AssemblyFourierLegendre < AssemblyGlobalAbstract
             % evaluate the temporal integral;
             intTemporal = 0;
             if kdx1 >= kdx2
-              intTemporal = 2 * kdx2 * (kdx2 - 1) / (obj.tspan(2) - obj.tspan(1));
-              % intTemporal = obj.temporalBasisFuncDerivative(kdx2, obj.tspan(2)) * 2;
+              intTemporal = 2 * kdx2 * (kdx2 - 1) / ...
+                (obj.tspan(2) - obj.tspan(1));
             else
-              intTemporal = 2 * kdx1 * (kdx1 - 1) / (obj.tspan(2) - obj.tspan(1));
-              % intTemporal = obj.temporalBasisFuncDerivative(kdx1, obj.tspan(2)) * 2;
+              intTemporal = 2 * kdx1 * (kdx1 - 1) / ...
+                (obj.tspan(2) - obj.tspan(1));
             end
 
             % save the evaluated integrals
@@ -677,7 +678,9 @@ classdef AssemblyFourierLegendre < AssemblyGlobalAbstract
       if ~useNormalization || ~obj.useNormalization
         M = sparse(Idy, Idx, Val, obj.nAnsatzDim, obj.nAnsatzDim);
       else
-        M = inv(obj.AnsatzNormDiag) * sparse(Idy, Idx, Val, obj.nAnsatzDim, obj.nAnsatzDim);
+        M = (obj.AnsatzNormDiag \ ...
+          sparse(Idy, Idx, Val, obj.nAnsatzDim, obj.nAnsatzDim)) / ...
+          obj.AnsatzNormDiag;
       end
     end
 
@@ -697,7 +700,7 @@ classdef AssemblyFourierLegendre < AssemblyGlobalAbstract
 
       % set default values
       if nargin == 1
-        useNormalization = true;
+        useNormalization = obj.useNormalization;
       end
 
       % Preparation for the sparse matrix
@@ -716,7 +719,8 @@ classdef AssemblyFourierLegendre < AssemblyGlobalAbstract
             intSpatial = obj.xspan(2);
           elseif mod(ldx, 2) == 1
             % cosine
-            intSpatial = obj.xspan(2) / 2 + (pi * (ldx - 1))^2 / (2 * obj.xspan(2));
+            intSpatial = obj.xspan(2) / 2 + (pi * (ldx - 1))^2 / ...
+              (2 * obj.xspan(2));
           else
             % sine
             intSpatial = obj.xspan(2) / 2 + (pi * ldx)^2 / (2 * obj.xspan(2));
@@ -756,14 +760,15 @@ classdef AssemblyFourierLegendre < AssemblyGlobalAbstract
       if ~useNormalization || ~obj.useNormalization
         M = sparse(Idy, Idx, Val, obj.nTestDim, obj.nTestDim);
       else
-        M = inv(obj.TestNormDiag) * sparse(Idy, Idx, Val, obj.nTestDim, obj.nTestDim);
+        M = (obj.TestNormDiag \ ...
+          sparse(Idy, Idx, Val, obj.nTestDim, obj.nTestDim)) / obj.TestNormDiag;
       end
     end
 
 
     %% Slow implementations of the assembly methods
 
-    function [M, M1, M2, M3, M4] = assembleFieldIndependentMatrixSlow(obj)
+    function [M1, M2, M3, M4] = assembleFieldIndependentMatrixSlow(obj)
       % Assemble the field-independent part of the stiffness matrix. Slow
       % implementation, only for comparison!
       %
@@ -793,7 +798,8 @@ classdef AssemblyFourierLegendre < AssemblyGlobalAbstract
                 obj.temporalBasisFunc(mdx, t), obj.tspan(1), obj.tspan(2));
 
               if obj.useNormalization
-                val = val / (obj.normOfAnsatzFuncSlow(jdx, kdx) * obj.normOfTestFuncSlow(ldx, mdx, 0));
+                val = val / (obj.normOfAnsatzFuncSlow(jdx, kdx) * ...
+                             obj.normOfTestFuncSlow(ldx, mdx, 0));
               end
 
               % only consider values above a given threshold (since a lot of
@@ -834,12 +840,13 @@ classdef AssemblyFourierLegendre < AssemblyGlobalAbstract
               val = intSpatial * intTemporal;
 
               if obj.useNormalization
-                val = val / (obj.normOfAnsatzFuncSlow(jdx, kdx) * obj.normOfTestFuncSlow(ldx, mdx, 0));
+                val = val / (obj.normOfAnsatzFuncSlow(jdx, kdx) * ...
+                             obj.normOfTestFuncSlow(ldx, mdx, 0));
               end
 
               % only consider values above a given threshold (since a lot of
               % zero valued integrals won't get exact zero)
-              if abs(intSpatial * intTemporal) > sqrt(eps)
+              if abs(val) > sqrt(eps)
                 Idx(ctr) = (jdx - 1) * obj.nAnsatzTemporal + kdx;
                 Idy(ctr) = (ldx - 1) * obj.nTestTemporal + mdx;
                 Val(ctr) = val;
@@ -871,7 +878,8 @@ classdef AssemblyFourierLegendre < AssemblyGlobalAbstract
                 obj.temporalBasisFunc(mdx, t), obj.tspan(1), obj.tspan(2));
 
               if obj.useNormalization
-                val = val / (obj.normOfAnsatzFuncSlow(jdx, kdx) * obj.normOfTestFuncSlow(ldx, mdx, 0));
+                val = val / (obj.normOfAnsatzFuncSlow(jdx, kdx) * ...
+                             obj.normOfTestFuncSlow(ldx, mdx, 0));
               end
 
               % only consider values above a given threshold (since a lot of
@@ -905,7 +913,8 @@ classdef AssemblyFourierLegendre < AssemblyGlobalAbstract
               obj.spatialBasisFunc(ndx, x), obj.xspan(1), obj.xspan(2));
 
             if obj.useNormalization
-              val = val / (obj.normOfAnsatzFuncSlow(jdx, kdx) * obj.normOfTestFuncSlow(0, 0, ndx));
+              val = val / (obj.normOfAnsatzFuncSlow(jdx, kdx) * ...
+                           obj.normOfTestFuncSlow(0, 0, ndx));
             end
 
             % only consider values above a given threshold (since a lot of zero
@@ -922,9 +931,6 @@ classdef AssemblyFourierLegendre < AssemblyGlobalAbstract
 
       % Assemble the stiffness matrix for this part
       M4 = sparse(Idy, Idx, Val, obj.nTestDim, obj.nAnsatzDim);
-
-      % Sum up the parts for the complete field-independent stiffness matrix
-      M = M1 + obj.coeffLaplacian * M2 + obj.coeffOffset * M3 + M4;
     end
 
     function O = assembleFieldDependentMatrixForSineSeriesSlow(obj, nCoeff)
@@ -978,12 +984,13 @@ classdef AssemblyFourierLegendre < AssemblyGlobalAbstract
                   intTemporal = integral(@(t) obj.temporalBasisFunc(kdx, t) .* ...
                     obj.temporalBasisFunc(mdx, t), obj.tspan(1), obj.tspan(2));
 
-                  val = intTemporal * intSpatial;
+                  val = intSpatial * intTemporal;
                   if obj.useNormalization
-                    val = val / (obj.normOfAnsatzFuncSlow(jdx, kdx) * obj.normOfTestFuncSlow(ldx, mdx, 0));
+                    val = val / (obj.normOfAnsatzFuncSlow(jdx, kdx) * ...
+                                 obj.normOfTestFuncSlow(ldx, mdx, 0));
                   end
 
-                  if abs(intTemporal) > sqrt(eps)
+                  if abs(val) > sqrt(eps)
                     % save the evaluated integrals
                     Idx(ctr) = (jdx - 1) * obj.nAnsatzTemporal + kdx;
                     Idy(ctr) = (ldx - 1) * obj.nTestTemporal + mdx;
@@ -1065,12 +1072,14 @@ classdef AssemblyFourierLegendre < AssemblyGlobalAbstract
                     obj.temporalBasisFunc(kdx, t) .* ...
                     obj.temporalBasisFunc(mdx, t), obj.tspan(1), obj.tspan(2));
 
-                  val = intTemporal * intSpatial;
+                  val = intSpatial * intTemporal;
+
                   if obj.useNormalization
-                    val = val / (obj.normOfAnsatzFuncSlow(jdx, kdx) * obj.normOfTestFuncSlow(ldx, mdx, 0));
+                    val = val / (obj.normOfAnsatzFuncSlow(jdx, kdx) * ...
+                                 obj.normOfTestFuncSlow(ldx, mdx, 0));
                   end
 
-                  if abs(intTemporal) > sqrt(eps)
+                  if abs(val) > sqrt(eps)
                     % save the evaluated integrals
                     Idx(ctr) = (jdx - 1) * obj.nAnsatzTemporal + kdx;
                     Idy(ctr) = (ldx - 1) * obj.nTestTemporal + mdx;
@@ -1122,7 +1131,8 @@ classdef AssemblyFourierLegendre < AssemblyGlobalAbstract
               val = intFirstPart + intSecondPart;
 
               if obj.useNormalization
-                val = val / (obj.normOfAnsatzFuncSlow(jdx1, kdx1) * obj.normOfAnsatzFuncSlow(jdx2, kdx2));
+                val = val / (obj.normOfAnsatzFuncSlow(jdx1, kdx1) * ...
+                             obj.normOfAnsatzFuncSlow(jdx2, kdx2));
               end
 
               % only consider values above a given threshold (since a lot of zero
@@ -1168,7 +1178,8 @@ classdef AssemblyFourierLegendre < AssemblyGlobalAbstract
               val = intTemporal * intSpatial;
 
               if obj.useNormalization
-                val = val / (obj.normOfTestFuncSlow(ldx1, mdx1, 0) * obj.normOfTestFuncSlow(ldx2, mdx2, 0));
+                val = val / (obj.normOfTestFuncSlow(ldx1, mdx1, 0) * ...
+                             obj.normOfTestFuncSlow(ldx2, mdx2, 0));
               end
 
               % only consider values above a given threshold (since a lot of zero
@@ -1217,8 +1228,6 @@ classdef AssemblyFourierLegendre < AssemblyGlobalAbstract
       %
       % Return values:
       %   val: norm of product of spatial and temporal basis function @type double
-      %
-      % @todo Test schreiben!
 
       tmp1 = 0;
       if ldx > 0 && mdx > 0
@@ -1285,8 +1294,6 @@ classdef AssemblyFourierLegendre < AssemblyGlobalAbstract
       %
       % Return values:
       %   val: norm of product of spatial and temporal basis function @type double
-      %
-      % @todo Test schreiben!
 
       % evaluate the spatial integrals
       intSpatialF = 0;

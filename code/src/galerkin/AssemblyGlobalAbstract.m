@@ -22,7 +22,8 @@ classdef AssemblyGlobalAbstract < AssemblyAbstract
     % test subspace @type integer
     nTestSpatialIC;
 
-    % Normalize ansatz and test basis functions in the respective norms @type logical
+    % Normalize ansatz and test basis functions in the respective norms @type
+    % logical
     useNormalization = true;
 
     % Store the norms of the non-normalized ansatz basis functions in the
@@ -115,8 +116,8 @@ classdef AssemblyGlobalAbstract < AssemblyAbstract
     % for the given norms.
     %
     % Parameters:
-    %   usedAnsatzNorm: which norm to use for the computation of the normalization
-    %     constants for the ansatz functions. @type string
+    %   usedAnsatzNorm: which norm to use for the computation of the
+    %     normalization constants for the ansatz functions. @type string
     %   usedTestNorm: which norm to use for the computation of the normalization
     %     constants for the test functions. @type string
     % precomputeNormalizationConstants(obj, usedAnsatzNorm, usedTestNorm);
@@ -199,8 +200,8 @@ classdef AssemblyGlobalAbstract < AssemblyAbstract
       % Parameters:
       %   nTestSpatial: Number of sine basis functions  @type integer
       %   nTestTemporal: Number of Legendre basis polynomials @type integer
-      %   nTestSpatialIC: Number of sine basis functions for the initial condition
-      %     @type integer
+      %   nTestSpatialIC: Number of sine basis functions for the initial
+      %     condition @type integer
 
       obj.nTestSpatial   = nTestSpatial;
       obj.nTestTemporal  = nTestTemporal;
@@ -256,13 +257,14 @@ classdef AssemblyGlobalAbstract < AssemblyAbstract
 
         % @todo normalization constant
         if obj.useNormalization
-          normAnsatz = sqrt(obj.AnsatzNormDiag(pos, pos));
+          normAnsatz = obj.AnsatzNormDiag(pos, pos);
         else
           normAnsatz = 1;
         end
 
         % evaluate the corresponding basis functions
-        val = val + solutionCoeffs(pos) * spatialValues{jdx} .* temporalValues{kdx} / normAnsatz;
+        val = val + solutionCoeffs(pos) * spatialValues{jdx} .* ...
+          temporalValues{kdx} / normAnsatz;
         end
       end
     end
