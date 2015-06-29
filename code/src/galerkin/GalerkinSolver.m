@@ -18,6 +18,9 @@ classdef GalerkinSolver < handle
     N = 10;
     M = 10;
     C = 10;
+
+    % Toggle if the antaz and test functions should be normalized @type logical
+    useNormalization = true;
   end
 
   properties (Dependent)
@@ -74,11 +77,17 @@ classdef GalerkinSolver < handle
       obj.assembly.setNumberOfAnsatzFuncs(obj.N, obj.M);
       obj.assembly.setNumberOfTestFuncsFromAnsatzFuncs();
 
-      obj.assembly.xspan          = obj.xspan;
-      obj.assembly.coeffLaplacian = obj.coeffLaplacian;
-      obj.assembly.coeffOffset    = obj.coeffOffset;
+      obj.assembly.xspan            = obj.xspan;
+      obj.assembly.coeffLaplacian   = obj.coeffLaplacian;
+      obj.assembly.coeffOffset      = obj.coeffOffset;
+      obj.assembly.useNormalization = obj.useNormalization;
+
+      obj.assembly.precomputeNormalization();
 
       obj.assembly.tspan  = [obj.tspan(1), obj.fieldBreakpoint];
+      obj.partOne.AnsatzDiag         = obj.assembly.AnsatzNormDiag;
+      obj.partOne.TestDiag           = obj.assembly.TestNormDiag;
+
       [~, M1, M2, M3, M4F, M4B] = obj.assembly.assembleFieldIndependentMatrix();
 
       obj.partOne.TimeDerivativeMatrix = M1;
@@ -88,8 +97,10 @@ classdef GalerkinSolver < handle
       obj.partOne.ICBackwardMatrix     = M4B;
       obj.partOne.OmegaMatrices        = obj.assembly.assembleFieldDependentMatrixForFourierSeries(obj.C);
 
-
       obj.assembly.tspan  = [obj.fieldBreakpoint, obj.tspan(2)];
+      obj.partOne.AnsatzDiag         = obj.assembly.AnsatzNormDiag;
+      obj.partOne.TestDiag           = obj.assembly.TestNormDiag;
+
       [~, N1, N2, N3, N4F, N4B] = obj.assembly.assembleFieldIndependentMatrix();
 
       obj.partTwo.TimeDerivativeMatrix = N1;
@@ -121,7 +132,14 @@ classdef GalerkinSolver < handle
       for cdx = 1:obj.C
         LhsComp = LhsComp + fieldCoeffsTwo(cdx) * obj.partTwo.OmegaMatrices{cdx};
       end
-      Rhs = obj.assembly.assembleVectorFromSolutionCoeffs(solCoeffOne);
+
+      % if normalization is used then we've to "renormalize" the solution coeffient vector
+      if obj.useNormalization
+        Rhs = obj.assembly.assembleVectorFromSolutionCoeffs(solCoeffOne ./ sqrt(diag(obj.partOne.AnsatzDiag)));
+      else
+        Rhs = obj.assembly.assembleVectorFromSolutionCoeffs(solCoeffOne);
+      end
+% .* sqrt(diag(obj.partOne.AnsatzMatrix)) ./ sqrt(diag(obj.partTwo.AnsatzMatrix)));
       solCoeffTwo = LhsComp \ Rhs;
 
       solfun = @(t, x) ...

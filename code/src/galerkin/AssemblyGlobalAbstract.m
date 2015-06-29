@@ -21,6 +21,17 @@ classdef AssemblyGlobalAbstract < AssemblyAbstract
     % Number of spatial basis functions for the initial condition part of the
     % test subspace @type integer
     nTestSpatialIC;
+
+    % Normalize ansatz and test basis functions in the respective norms @type logical
+    useNormalization = true;
+
+    % Store the norms of the non-normalized ansatz basis functions in the
+    % respective norm @type vector
+    AnsatzNormDiag;
+
+    % Store the norms of the non-normalized test basis functions in the
+    % respective norm @type vector
+    TestNormDiag;
   end
 
   properties(Access = 'public')
@@ -127,7 +138,13 @@ classdef AssemblyGlobalAbstract < AssemblyAbstract
     % Return values:
     %   val: normalization constant @type double
     % val = normalizationConstForAnsatzFunc(obj, jdx, kdx);
+
     val = normOfAnsatzFunc(obj, jdx, kdx);
+
+    val = normOfTestFunc(obj, ldx, mdx, ndx);
+
+    % Computes the normalization coefficients if normalization is used.
+    precomputeNormalization();
 
     % Normalization constant for a given test function.
     %
@@ -238,7 +255,11 @@ classdef AssemblyGlobalAbstract < AssemblyAbstract
         pos = (jdx - 1) * obj.nAnsatzTemporal + kdx;
 
         % @todo normalization constant
-        normAnsatz = obj.normOfAnsatzFunc(jdx, kdx);
+        if obj.useNormalization
+          normAnsatz = sqrt(obj.AnsatzNormDiag(pos, pos));
+        else
+          normAnsatz = 1;
+        end
 
         % evaluate the corresponding basis functions
         val = val + solutionCoeffs(pos) * spatialValues{jdx} .* temporalValues{kdx} / normAnsatz;
