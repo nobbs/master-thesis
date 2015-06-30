@@ -62,7 +62,7 @@ classdef AssemblyAbstract < handle
 
     % Custom getters and setter
 
-    function obj = set.xspan(obj, val)
+    function set.xspan(obj, val)
       % Setter for the spatial interval.
       %
       % Checks if the given value is a interval whose left end is null. This

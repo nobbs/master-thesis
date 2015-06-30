@@ -3,7 +3,7 @@
 % temporal basis functions resulting in a quadratic system of linear equations
 X = [2, 5];
 
-assembly = AssemblyFourierLegendre();
+assembly = AssemblyFourierLegendreSlow();
 assembly.tspan = [0 1];
 assembly.xspan = [0 1];
 
@@ -49,7 +49,7 @@ X = 5;
 span1 = [0 1/3];
 span2 = [1/3 2];
 
-assembly = AssemblyFourierLegendre();
+assembly = AssemblyFourierLegendreSlow();
 assembly.xspan = [0 1];
 assembly.coeffLaplacian = 0.1;
 assembly.coeffOffset  = 2;
@@ -98,7 +98,7 @@ assert(max(max(abs(LTest - LRef))) < 1e-8);
 X = 5;
 span1 = [0 10];
 
-assembly = AssemblyFourierLegendre();
+assembly = AssemblyFourierLegendreSlow();
 assembly.tspan = [0 1];
 assembly.coeffLaplacian = 0.1;
 assembly.coeffOffset  = 2;
@@ -135,7 +135,7 @@ YN = [3, 5];
 YM = [4, 7];
 YO = [2, 6];
 
-assembly = AssemblyFourierLegendre();
+assembly = AssemblyFourierLegendreSlow();
 
 assembly.tspan = [0 1];
 assembly.xspan = [0 1];
@@ -185,7 +185,7 @@ YO = [2, 6];
 
 N = 15;
 
-assembly = AssemblyFourierLegendre();
+assembly = AssemblyFourierLegendreSlow();
 
 assembly.tspan = [1/2 5/2];
 assembly.xspan = [0 10];
@@ -235,7 +235,7 @@ YO = [2, 6];
 
 N = 15;
 
-assembly = AssemblyFourierLegendre();
+assembly = AssemblyFourierLegendreSlow();
 
 assembly.tspan = [1/2 5/2];
 assembly.xspan = [0 10];
@@ -285,7 +285,7 @@ YN = [3, 5];
 YM = [4, 7];
 YO = [2, 6];
 
-assembly = AssemblyFourierLegendre();
+assembly = AssemblyFourierLegendreSlow();
 
 assembly.tspan = [0 1];
 assembly.xspan = [0 1];
@@ -330,7 +330,7 @@ gtw = [gt1, gt2];
 mtw = [mt1, mt2];
 mxw = [mx1, mx2];
 
-assembly = AssemblyFourierLegendre();
+assembly = AssemblyFourierLegendreSlow();
 assembly.coeffLaplacian = 0.1;
 assembly.coeffOffset = 0;
 assembly.setNumberOfAnsatzFuncs(X, Y);
@@ -412,7 +412,7 @@ gtw = [gt1, gt2];
 mtw = [mt1, mt2];
 mxw = [mx1, mx2];
 
-assembly = AssemblyFourierLegendre();
+assembly = AssemblyFourierLegendreSlow();
 assembly.coeffLaplacian = 0.1;
 assembly.coeffOffset = 0;
 assembly.setNumberOfAnsatzFuncs(X, Y);
@@ -480,7 +480,7 @@ assert(max(max(abs([solPartOneEval, solPartTwoEval] - solCompleteEval))) < 1e-4)
 N = 5;
 M = 5;
 
-assembly = AssemblyFourierLegendre();
+assembly = AssemblyFourierLegendreSlow();
 assembly.setNumberOfAnsatzFuncs(N, M);
 assembly.setNumberOfTestFuncsFromAnsatzFuncs();
 assembly.useNormalization = false;

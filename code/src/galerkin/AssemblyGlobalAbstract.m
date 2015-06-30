@@ -145,7 +145,7 @@ classdef AssemblyGlobalAbstract < AssemblyAbstract
     val = normOfTestFunc(obj, ldx, mdx, ndx);
 
     % Computes the normalization coefficients if normalization is used.
-    precomputeNormalization();
+    precomputeNormalization(obj);
 
     % Normalization constant for a given test function.
     %
