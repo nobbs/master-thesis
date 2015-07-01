@@ -58,7 +58,7 @@ classdef AssemblyFourierLegendre < AssemblyGlobalAbstract
 
     %% Fast implementation of the assembly methods
 
-    function [M1, M2, M3, M4F, M4B] = assembleFieldIndependentMatrix(obj)
+    function matrices = assembleFieldIndependentMatrix(obj)
       % Assemble the field-independent part of the stiffness matrix.
       %
       % This is done by evaluating the individual summands of the left hand side
@@ -74,6 +74,9 @@ classdef AssemblyFourierLegendre < AssemblyGlobalAbstract
       %     @type sparsematrix
       %   M4: Initial condition part `\skp{u(0)}{v_2}{L_2(\Omega)}` @type
       %     sparsematrix
+
+      % create the needed cell array
+      matrices = {};
 
       % Preparation for the sparse matrix
       Idx = ones(obj.nAnsatzDim, 1);
@@ -109,7 +112,7 @@ classdef AssemblyFourierLegendre < AssemblyGlobalAbstract
       end
 
       % Assemble the stiffness matrix for this part
-      M1 = sparse(Idy, Idx, Val, obj.nTestDim, obj.nAnsatzDim);
+      matrices.TiD = sparse(Idy, Idx, Val, obj.nTestDim, obj.nAnsatzDim);
 
       % Reset for the next part
       Idx = ones(obj.nAnsatzDim, 1);
@@ -142,7 +145,7 @@ classdef AssemblyFourierLegendre < AssemblyGlobalAbstract
       end
 
       % Assemble the stiffness matrix for this part
-      M2 = sparse(Idy, Idx, Val, obj.nTestDim, obj.nAnsatzDim);
+      matrices.Lap = sparse(Idy, Idx, Val, obj.nTestDim, obj.nAnsatzDim);
 
       % Reset for the next part
       Idx = ones(obj.nAnsatzDim, 1);
@@ -173,7 +176,7 @@ classdef AssemblyFourierLegendre < AssemblyGlobalAbstract
       end
 
       % Assemble the stiffness matrix for this part
-      M3 = sparse(Idy, Idx, Val, obj.nTestDim, obj.nAnsatzDim);
+      matrices.Off = sparse(Idy, Idx, Val, obj.nTestDim, obj.nAnsatzDim);
 
       % Reset for the next part
       Idx  = ones(obj.nAnsatzDim, 1);
@@ -206,16 +209,16 @@ classdef AssemblyFourierLegendre < AssemblyGlobalAbstract
       end
 
       % Assemble the stiffness matrix for this part
-      M4F = sparse(Idy, Idx, ValF, obj.nTestDim, obj.nAnsatzDim);
-      M4B = sparse(Idy, Idx, ValB, obj.nTestDim, obj.nAnsatzDim);
+      matrices.ICF = sparse(Idy, Idx, ValF, obj.nTestDim, obj.nAnsatzDim);
+      matrices.ICB = sparse(Idy, Idx, ValB, obj.nTestDim, obj.nAnsatzDim);
 
       % normalize if needed
       if obj.useNormalization
-        M1  = (obj.TestNormDiag \ M1) / obj.AnsatzNormDiag;
-        M2  = (obj.TestNormDiag \ M2) / obj.AnsatzNormDiag;
-        M3  = (obj.TestNormDiag \ M3) / obj.AnsatzNormDiag;
-        M4F = (obj.TestNormDiag \ M4F) / obj.AnsatzNormDiag;
-        M4B = (obj.TestNormDiag \ M4B) / obj.AnsatzNormDiag;
+        matrices.TiD = (obj.TestNormDiag \ matrices.TiD) / obj.AnsatzNormDiag;
+        matrices.Lap = (obj.TestNormDiag \ matrices.Lap) / obj.AnsatzNormDiag;
+        matrices.Off = (obj.TestNormDiag \ matrices.Off) / obj.AnsatzNormDiag;
+        matrices.ICF = (obj.TestNormDiag \ matrices.ICF) / obj.AnsatzNormDiag;
+        matrices.ICB = (obj.TestNormDiag \ matrices.ICB) / obj.AnsatzNormDiag;
       end
     end % assembleFieldIndependentMatrix
 
@@ -485,7 +488,7 @@ classdef AssemblyFourierLegendre < AssemblyGlobalAbstract
 
     function F = assembleVectorFromSpatialCoeffs(obj, coeffs)
       % Assemble the load vector for no source and initial data given by
-      % coeffients corresponding to the spatial basis functions.
+      % coefficients corresponding to the spatial basis functions.
       %
       % Parameters:
       %   coeffs: coefficients corresponding to spatial basis functions
@@ -519,7 +522,7 @@ classdef AssemblyFourierLegendre < AssemblyGlobalAbstract
 
     function F = assembleVectorFromSolutionCoeffs(obj, solCoeffs, backward)
       % Assemble the load vector for no source and initial data given by
-      % coeffients corresponding to the spatial basis and temporal basis
+      % coefficients corresponding to the spatial basis and temporal basis
       % functions at the time endpoint.
       %
       % Parameters:

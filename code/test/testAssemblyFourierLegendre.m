@@ -7,8 +7,8 @@ assembly = AssemblyFourierLegendreSlow();
 assembly.tspan = [0 1];
 assembly.xspan = [0 1];
 
-assembly.coeffLaplacian = 0.1;
-assembly.coeffOffset  = 2;
+coeffLaplacian = 0.1;
+coeffOffset  = 2;
 
 % without normalization
 for idx = 1:length(X)
@@ -17,10 +17,10 @@ for idx = 1:length(X)
 
   assembly.precomputeNormalization();
   [S1, S2, S3, S4]  = assembly.assembleFieldIndependentMatrixSlow();
-  [M1, M2, M3, M4F, M4B] = assembly.assembleFieldIndependentMatrix();
+  M = assembly.assembleFieldIndependentMatrix();
 
-  LRef  = S1 + assembly.coeffLaplacian * S2 + assembly.coeffOffset * S3 + S4;
-  LTest = M1 + assembly.coeffLaplacian * M2 + assembly.coeffOffset * M3 + M4F;
+  LRef  = S1 + coeffLaplacian * S2 + coeffOffset * S3 + S4;
+  LTest = M.TiD + coeffLaplacian * M.Lap + coeffOffset * M.Off + M.ICF;
 
   assert(max(max(abs(LTest - LRef))) < 1e-8);
 end
@@ -33,10 +33,10 @@ for idx = 1:length(X)
 
   assembly.precomputeNormalization();
   [S1, S2, S3, S4]  = assembly.assembleFieldIndependentMatrixSlow();
-  [M1, M2, M3, M4F, M4B] = assembly.assembleFieldIndependentMatrix();
+  M = assembly.assembleFieldIndependentMatrix();
 
-  LRef  = S1 + assembly.coeffLaplacian * S2 + assembly.coeffOffset * S3 + S4;
-  LTest = M1 + assembly.coeffLaplacian * M2 + assembly.coeffOffset * M3 + M4F;
+  LRef  = S1 + coeffLaplacian * S2 + coeffOffset * S3 + S4;
+  LTest = M.TiD + coeffLaplacian * M.Lap + coeffOffset * M.Off + M.ICF;
 
   assert(max(max(abs(LTest - LRef))) < 1e-8);
 end
@@ -51,8 +51,8 @@ span2 = [1/3 2];
 
 assembly = AssemblyFourierLegendreSlow();
 assembly.xspan = [0 1];
-assembly.coeffLaplacian = 0.1;
-assembly.coeffOffset  = 2;
+coeffLaplacian = 0.1;
+coeffOffset  = 2;
 assembly.setNumberOfAnsatzFuncs(X, X);
 assembly.setNumberOfTestFuncsFromAnsatzFuncs();
 
@@ -60,17 +60,17 @@ assembly.setNumberOfTestFuncsFromAnsatzFuncs();
 assembly.tspan = span1;
 assembly.precomputeNormalization();
 [S1, S2, S3, S4]  = assembly.assembleFieldIndependentMatrixSlow();
-[M1, M2, M3, M4F, M4B] = assembly.assembleFieldIndependentMatrix();
-LRef  = S1 + assembly.coeffLaplacian * S2 + assembly.coeffOffset * S3 + S4;
-LTest = M1 + assembly.coeffLaplacian * M2 + assembly.coeffOffset * M3 + M4F;
+M = assembly.assembleFieldIndependentMatrix();
+LRef  = S1 + coeffLaplacian * S2 + coeffOffset * S3 + S4;
+LTest = M.TiD + coeffLaplacian * M.Lap + coeffOffset * M.Off + M.ICF;
 assert(max(max(abs(LTest - LRef))) < 1e-8);
 
 assembly.tspan = span2;
 assembly.precomputeNormalization();
 [S1, S2, S3, S4]  = assembly.assembleFieldIndependentMatrixSlow();
-[M1, M2, M3, M4F, M4B] = assembly.assembleFieldIndependentMatrix();
-LRef  = S1 + assembly.coeffLaplacian * S2 + assembly.coeffOffset * S3 + S4;
-LTest = M1 + assembly.coeffLaplacian * M2 + assembly.coeffOffset * M3 + M4F;
+M = assembly.assembleFieldIndependentMatrix();
+LRef  = S1 + coeffLaplacian * S2 + coeffOffset * S3 + S4;
+LTest = M.TiD + coeffLaplacian * M.Lap + coeffOffset * M.Off + M.ICF;
 assert(max(max(abs(LTest - LRef))) < 1e-8);
 
 % with normalization
@@ -78,17 +78,17 @@ assembly.useNormalization = true;
 assembly.tspan = span1;
 assembly.precomputeNormalization();
 [S1, S2, S3, S4]  = assembly.assembleFieldIndependentMatrixSlow();
-[M1, M2, M3, M4F, M4B] = assembly.assembleFieldIndependentMatrix();
-LRef  = S1 + assembly.coeffLaplacian * S2 + assembly.coeffOffset * S3 + S4;
-LTest = M1 + assembly.coeffLaplacian * M2 + assembly.coeffOffset * M3 + M4F;
+M = assembly.assembleFieldIndependentMatrix();
+LRef  = S1 + coeffLaplacian * S2 + coeffOffset * S3 + S4;
+LTest = M.TiD + coeffLaplacian * M.Lap + coeffOffset * M.Off + M.ICF;
 assert(max(max(abs(LTest - LRef))) < 1e-8);
 
 assembly.tspan = span2;
 assembly.precomputeNormalization();
 [S1, S2, S3, S4]  = assembly.assembleFieldIndependentMatrixSlow();
-[M1, M2, M3, M4F, M4B] = assembly.assembleFieldIndependentMatrix();
-LRef  = S1 + assembly.coeffLaplacian * S2 + assembly.coeffOffset * S3 + S4;
-LTest = M1 + assembly.coeffLaplacian * M2 + assembly.coeffOffset * M3 + M4F;
+M = assembly.assembleFieldIndependentMatrix();
+LRef  = S1 + coeffLaplacian * S2 + coeffOffset * S3 + S4;
+LTest = M.TiD + coeffLaplacian * M.Lap + coeffOffset * M.Off + M.ICF;
 assert(max(max(abs(LTest - LRef))) < 1e-8);
 
 
@@ -100,8 +100,8 @@ span1 = [0 10];
 
 assembly = AssemblyFourierLegendreSlow();
 assembly.tspan = [0 1];
-assembly.coeffLaplacian = 0.1;
-assembly.coeffOffset  = 2;
+coeffLaplacian = 0.1;
+coeffOffset  = 2;
 assembly.setNumberOfAnsatzFuncs(X, X);
 assembly.setNumberOfTestFuncsFromAnsatzFuncs();
 
@@ -109,9 +109,9 @@ assembly.setNumberOfTestFuncsFromAnsatzFuncs();
 assembly.xspan = span1;
 assembly.precomputeNormalization();
 [S1, S2, S3, S4]  = assembly.assembleFieldIndependentMatrixSlow();
-[M1, M2, M3, M4F, M4B] = assembly.assembleFieldIndependentMatrix();
-LRef  = S1 + assembly.coeffLaplacian * S2 + assembly.coeffOffset * S3 + S4;
-LTest = M1 + assembly.coeffLaplacian * M2 + assembly.coeffOffset * M3 + M4F;
+M = assembly.assembleFieldIndependentMatrix();
+LRef  = S1 + coeffLaplacian * S2 + coeffOffset * S3 + S4;
+LTest = M.TiD + coeffLaplacian * M.Lap + coeffOffset * M.Off + M.ICF;
 assert(max(max(abs(LTest - LRef))) < 1e-8);
 
 % with normalization
@@ -119,9 +119,9 @@ assembly.useNormalization = true;
 assembly.xspan = span1;
 assembly.precomputeNormalization();
 [S1, S2, S3, S4]  = assembly.assembleFieldIndependentMatrixSlow();
-[M1, M2, M3, M4F, M4B] = assembly.assembleFieldIndependentMatrix();
-LRef  = S1 + assembly.coeffLaplacian * S2 + assembly.coeffOffset * S3 + S4;
-LTest = M1 + assembly.coeffLaplacian * M2 + assembly.coeffOffset * M3 + M4F;
+M = assembly.assembleFieldIndependentMatrix();
+LRef  = S1 + coeffLaplacian * S2 + coeffOffset * S3 + S4;
+LTest = M.TiD + coeffLaplacian * M.Lap + coeffOffset * M.Off + M.ICF;
 assert(max(max(abs(LTest - LRef))) < 1e-8);
 
 
@@ -140,8 +140,8 @@ assembly = AssemblyFourierLegendreSlow();
 assembly.tspan = [0 1];
 assembly.xspan = [0 1];
 
-assembly.coeffLaplacian = 0.1;
-assembly.coeffOffset  = 2;
+coeffLaplacian = 0.1;
+coeffOffset  = 2;
 
 % without normalization
 for idx = 1:length(XN)
@@ -150,9 +150,9 @@ for idx = 1:length(XN)
 
   assembly.precomputeNormalization();
   [S1, S2, S3, S4]  = assembly.assembleFieldIndependentMatrixSlow();
-  [M1, M2, M3, M4F, M4B] = assembly.assembleFieldIndependentMatrix();
-  LRef  = S1 + assembly.coeffLaplacian * S2 + assembly.coeffOffset * S3 + S4;
-  LTest = M1 + assembly.coeffLaplacian * M2 + assembly.coeffOffset * M3 + M4F;
+  M = assembly.assembleFieldIndependentMatrix();
+  LRef  = S1 + coeffLaplacian * S2 + coeffOffset * S3 + S4;
+  LTest = M.TiD + coeffLaplacian * M.Lap + coeffOffset * M.Off + M.ICF;
 
   assert(max(max(abs(LTest - LRef))) < 1e-8);
 end
@@ -165,9 +165,9 @@ for idx = 1:length(XN)
 
   assembly.precomputeNormalization();
   [S1, S2, S3, S4]  = assembly.assembleFieldIndependentMatrixSlow();
-  [M1, M2, M3, M4F, M4B] = assembly.assembleFieldIndependentMatrix();
-  LRef  = S1 + assembly.coeffLaplacian * S2 + assembly.coeffOffset * S3 + S4;
-  LTest = M1 + assembly.coeffLaplacian * M2 + assembly.coeffOffset * M3 + M4F;
+  M = assembly.assembleFieldIndependentMatrix();
+  LRef  = S1 + coeffLaplacian * S2 + coeffOffset * S3 + S4;
+  LTest = M.TiD + coeffLaplacian * M.Lap + coeffOffset * M.Off + M.ICF;
 
   assert(max(max(abs(LTest - LRef))) < 1e-8);
 end
@@ -189,9 +189,6 @@ assembly = AssemblyFourierLegendreSlow();
 
 assembly.tspan = [1/2 5/2];
 assembly.xspan = [0 10];
-
-assembly.coeffLaplacian = 0.1;
-assembly.coeffOffset  = 2;
 
 % without normalization
 for idx = 1:length(XN)
@@ -240,10 +237,6 @@ assembly = AssemblyFourierLegendreSlow();
 assembly.tspan = [1/2 5/2];
 assembly.xspan = [0 10];
 
-assembly.coeffLaplacian = 0.1;
-assembly.coeffOffset  = 2;
-
-
 % without normalization
 for idx = 1:length(XN)
   assembly.setNumberOfAnsatzFuncs(XN(idx), XM(idx));
@@ -289,9 +282,6 @@ assembly = AssemblyFourierLegendreSlow();
 
 assembly.tspan = [0 1];
 assembly.xspan = [0 1];
-
-assembly.coeffLaplacian = 0.1;
-assembly.coeffOffset  = 2;
 assembly.useNormalization = 0;
 
 for idx = 1:length(XN)
@@ -324,15 +314,14 @@ breakpoint = rand(1);
 gt1 = linspace(0, breakpoint);
 gt1 = gt1(1:end-1);
 gt2 = linspace(breakpoint, 1);
-gtw = [gt1, gt2];
 [mt1, mx1] = meshgrid(gt1, linspace(0, 5));
 [mt2, mx2] = meshgrid(gt2, linspace(0, 5));
 mtw = [mt1, mt2];
 mxw = [mx1, mx2];
 
 assembly = AssemblyFourierLegendreSlow();
-assembly.coeffLaplacian = 0.1;
-assembly.coeffOffset = 0;
+coeffLaplacian = 0.1;
+coeffOffset = 0;
 assembly.setNumberOfAnsatzFuncs(X, Y);
 assembly.setNumberOfTestFuncsFromAnsatzFuncs();
 assembly.useNormalization = false;
@@ -341,11 +330,9 @@ assembly.useNormalization = false;
 assembly.tspan = [0, 1];
 assembly.xspan = [0, 5];
 assembly.precomputeNormalization();
-[M1, M2, M3, M4F, M4B] = assembly.assembleFieldIndependentMatrix();
-LhsFI = M1 + assembly.coeffLaplacian * M2 + assembly.coeffOffset * M3 + M4F;
-
+M = assembly.assembleFieldIndependentMatrix();
+LhsFI = M.TiD + coeffLaplacian * M.Lap + coeffOffset * M.Off + M.ICF;
 LhsFD = assembly.assembleFieldDependentMatrixForFourierSeries(N);
-
 Lhs = LhsFI;
 for idx = 1:N
   Lhs = Lhs + rcoeffs(idx) * LhsFD{idx};
@@ -358,8 +345,8 @@ solCompleteEval = assembly.solutionFuncFromCoeffs(solComplete, mtw, mxw);
 % compute solution for the first part of the temporal interval
 assembly.tspan = [0, breakpoint];
 assembly.precomputeNormalization();
-[M1, M2, M3, M4F, M4B] = assembly.assembleFieldIndependentMatrix();
-LhsFIOne = M1 + assembly.coeffLaplacian * M2 + assembly.coeffOffset * M3 + M4F;
+M = assembly.assembleFieldIndependentMatrix();
+LhsFIOne = M.TiD + coeffLaplacian * M.Lap + coeffOffset * M.Off + M.ICF;
 LhsFDOne = assembly.assembleFieldDependentMatrixForFourierSeries(N);
 LhsOne = LhsFIOne;
 for idx = 1:N
@@ -372,8 +359,8 @@ solPartOneEval = assembly.solutionFuncFromCoeffs(solPartOne, mt1, mx1);
 % compute solution for the second part of the temporal interval
 assembly.tspan = [breakpoint, 1];
 assembly.precomputeNormalization();
-[M1, M2, M3, M4F, M4B] = assembly.assembleFieldIndependentMatrix();
-LhsFITwo = M1 + assembly.coeffLaplacian * M2 + assembly.coeffOffset * M3 + M4F;
+M = assembly.assembleFieldIndependentMatrix();
+LhsFITwo = M.TiD + coeffLaplacian * M.Lap + coeffOffset * M.Off + M.ICF;
 LhsFDTwo = assembly.assembleFieldDependentMatrixForFourierSeries(N);
 LhsTwo = LhsFITwo;
 for idx = 1:N
@@ -413,8 +400,8 @@ mtw = [mt1, mt2];
 mxw = [mx1, mx2];
 
 assembly = AssemblyFourierLegendreSlow();
-assembly.coeffLaplacian = 0.1;
-assembly.coeffOffset = 0;
+coeffLaplacian = 0.1;
+coeffOffset = 0;
 assembly.setNumberOfAnsatzFuncs(X, Y);
 assembly.setNumberOfTestFuncsFromAnsatzFuncs();
 assembly.useNormalization = true;
@@ -423,8 +410,8 @@ assembly.useNormalization = true;
 assembly.tspan = [0, 1];
 assembly.xspan = [0, 5];
 assembly.precomputeNormalization();
-[M1, M2, M3, M4F, M4B] = assembly.assembleFieldIndependentMatrix();
-LhsFI = M1 + assembly.coeffLaplacian * M2 + assembly.coeffOffset * M3 + M4F;
+M = assembly.assembleFieldIndependentMatrix();
+LhsFI = M.TiD + coeffLaplacian * M.Lap + coeffOffset * M.Off + M.ICF;
 LhsFD = assembly.assembleFieldDependentMatrixForFourierSeries(N);
 
 Lhs = LhsFI;
@@ -439,8 +426,8 @@ solCompleteEval = assembly.solutionFuncFromCoeffs(solComplete, mtw, mxw);
 % compute solution for the first part of the temporal interval
 assembly.tspan = [0, breakpoint];
 assembly.precomputeNormalization();
-[M1, M2, M3, M4F, M4B] = assembly.assembleFieldIndependentMatrix();
-LhsFIOne = M1 + assembly.coeffLaplacian * M2 + assembly.coeffOffset * M3 + M4F;
+M = assembly.assembleFieldIndependentMatrix();
+LhsFIOne = M.TiD + coeffLaplacian * M.Lap + coeffOffset * M.Off + M.ICF;
 LhsFDOne = assembly.assembleFieldDependentMatrixForFourierSeries(N);
 LhsOne = LhsFIOne;
 for idx = 1:N
@@ -455,8 +442,8 @@ TmpMatrix = assembly.AnsatzNormDiag;
 % compute solution for the second part of the temporal interval
 assembly.tspan = [breakpoint, 1];
 assembly.precomputeNormalization();
-[M1, M2, M3, M4F, M4B] = assembly.assembleFieldIndependentMatrix();
-LhsFITwo = M1 + assembly.coeffLaplacian * M2 + assembly.coeffOffset * M3 + M4F;
+M = assembly.assembleFieldIndependentMatrix();
+LhsFITwo = M.TiD + coeffLaplacian * M.Lap + coeffOffset * M.Off + M.ICF;
 LhsFDTwo = assembly.assembleFieldDependentMatrixForFourierSeries(N);
 LhsTwo = LhsFITwo;
 for idx = 1:N

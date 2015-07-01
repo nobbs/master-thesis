@@ -1,301 +1,318 @@
 classdef GalerkinSolver < handle
-  % Galerkin-based Solver.
+  % Galerkin based solver for the propagators.
   %
-  % @todo Not yet implemented.
+  % Theoretically this class should be able to handle different kinds of
+  % underlying systems of basis functions for the ansatz and test subspace.
+  % Theoretically. Right now it's only able to use the combination of Fourier
+  % type spatial basis functions and Legendre polynomial temporal basis
+  % functions.
+  %
+  % @todo Not fully implemented.
 
   properties
-    % time interval @type vector
-    tspan = [0, 1];
-    % spatial interval @type vector
-    xspan = [0, 10];
-    % field-switching point in time @type double
-    fieldBreakpoint = 0.5;
+    % span of the spatial interval @type vector
+    xspan            = [0, 1];
+    % span of the temporal interval @type vector
+    tspan            = [0, 1];
+    % points in the time interval at which a switch of the field takes place @type vector
+    breakpoints      = [];
     % multiplicative factor for the Laplacian @type double
-    coeffLaplacian = 1;
+    coeffLaplacian   = 1;
     % additive field-offset `\mu`. @type double
-    coeffOffset = 0;
-
-    N = 10;
-    M = 10;
-    C = 10;
-
-    % Toggle if the antaz and test functions should be normalized @type logical
+    coeffOffset      = 0;
+    % Toggle if the ansatz and test functions should be normalized @type logical
     useNormalization = true;
-  end
+    % number of coefficients of the field series expansions @type integer
+    nFieldCoeffs     = 0;
+  end % properties
 
-  properties (Dependent)
-    % checks if the field-offset is nonzero @type logical
-    withOffset;
-  end
+  properties%(Access = 'private')
+    % Cell array that holds the assembly objects and already assembled
+    % structures. Each entry corresponds to a continuous part of the time
+    % interval and an external field. @type cellarray
+    parts;
 
-  properties(Access = 'private')
-    % Reference to assembly class @type AssemblyFourierLegendre
-    assembly;
+    % number of basis functions for the underlying assembly classes
+    nAnsatzSpatial;
+    nAnsatzTemporal;
+    useQuadraticSystem;
+    nTestSpatial;
+    nTestTemporal;
+    nTestSpatialIC;
+  end % properties private
 
-    partOne = {};
-    partTwo = {};
-  end
+  properties(Dependent)
+    % total number of fields (or number of switches plus one)
+    nFields;
+  end % properties dependent
 
   methods
 
     % Constructor
 
-    function obj = GalerkinSolver(N, M, C)
-      % Parameters:
-      %   N: number of spatial ansatz basis functions @type integer
-      %   M: number of temporal ansatz basis functions @type integer
-      %   N: number of spatial field basis functions @type integer
-
-      obj.N = N;
-      obj.M = M;
-      obj.C = C;
-    end
-
-
-    % getters for dependent properties
-
-    function val = get.withOffset(obj)
-      % Prüfe, ob ein Offset bei den Feldern aktiviert ist.
+    function obj = GalerkinSolver(varargin)
+      % Constructor for the GalerkinSolver class.
       %
-      % Return values:
-      %   val: true genau dann wenn, die Felder um eine additive Konstante
-      %     verschoben werden @type logical
+      % Create an object of the Galerkin Solver class with sensible default
+      % values for not-so-important parameters. If you really want to use this,
+      % then you obviously should set them to the values you have / need / want.
+      %
+      % Warning:
+      %   If you want to set the number of the test subspace, then you've to set
+      %   the three values nTestSpatial, nTestTemporal, nTestSpatialIC. If you
+      %   don't set all three, then the set values are ignored and automatically
+      %   chosen so that the resulting linear system is quadratic.
+      %
+      % Parameters:
+      %   varargin: variable number of input parameters. These are in detail:
+      %   breakpoints: the points in time at which the fields change @type
+      %     vector
+      %   Laplacian: scalar coefficient that is multiplied with the laplacian
+      %     @type double
+      %   nAnsatzSpatial: number of spatial basis functions for the ansatz
+      %     subspace @type integer
+      %   nAnsatzTemporal: number of temporal basis functions for the ansatz
+      %     subspace @type integer
+      %   nFieldCoeffs: number of spatial basis functions for the field series
+      %     expansion @type integer
+      %   nTestSpatial: number of spatial basis functions for the test subspace
+      %     @type integer
+      %   nTestTemporal: number of temporal basis functions for the test
+      %     subspace @type integer
+      %   nTestSpatialIC: number of spatial initial condition basis functions
+      %     for the test subspace @type integer
 
-      if obj.coeffOffset == 0
-        val = false;
+      % set up the inputparser
+      p = inputParser;
+
+      % set up required parameters
+      addRequired(p, 'breakpoints', @(x) isempty(x) || (isvector(x) & isnumeric(x)));
+      addRequired(p, 'Laplacian', @(x) isnumeric(x) && isscalar(x));
+      addRequired(p, 'nAnsatzSpatial', @(x) isnumeric(x) && isscalar(x));
+      addRequired(p, 'nAnsatzTemporal', @(x) isnumeric(x) && isscalar(x));
+
+      % set up optional parameters
+      addOptional(p, 'nFieldCoeffs', 0, @(x) isnumeric(x) && isscalar(x));
+      addOptional(p, 'nTestSpatial', 1, @(x) isnumeric(x) && isscalar(x));
+      addOptional(p, 'nTestTemporal', 1, @(x) isnumeric(x) && isscalar(x));
+      addOptional(p, 'nTestSpatialIC', 1, @(x) isnumeric(x) && isscalar(x));
+
+      % set up optional optional parameters
+      addParameter(p, 'useNormalization', obj.useNormalization, @islogical);
+      addParameter(p, 'Offset', obj.coeffOffset, @(x) isnumeric(x) && isscalar(x));
+      addParameter(p, 'tspan', obj.tspan, @(x) isnumeric(x) && isvector(x));
+      addParameter(p, 'xspan', obj.xspan, @(x) isnumeric(x) && isvector(x));
+
+      % parse input
+      parse(p, varargin{:});
+
+      % and now handle the input. first we forward the required inputs.
+      obj.breakpoints     = p.Results.breakpoints;
+      obj.coeffLaplacian  = p.Results.Laplacian;
+      obj.nAnsatzSpatial  = p.Results.nAnsatzSpatial;
+      obj.nAnsatzTemporal = p.Results.nAnsatzTemporal;
+
+      % now we handle the optional test subspace size input.
+      obj.nFieldCoeffs = p.Results.nFieldCoeffs;
+
+      % if not all three optional arguments are set, we fall back to the default
+      if any(strcmp('nTestSpatial', p.UsingDefaults) + ...
+          strcmp('nTestTemporal', p.UsingDefaults) + ...
+          strcmp('nTestSpatialIC', p.UsingDefaults)),
+        obj.useQuadraticSystem = true;
       else
-        val = true;
+        obj.useQuadraticSystem = false;
+        obj.nTestSpatial       = p.Results.nTestSpatial;
+        obj.nTestTemporal      = p.Results.nTestTemporal;
+        obj.nTestSpatialIC     = p.Results.nTestSpatialIC;
       end
-    end
+
+      % and finally we'll handle the optional optional inputs
+      obj.useNormalization = p.Results.useNormalization;
+      obj.coeffOffset      = p.Results.Offset;
+      obj.tspan            = p.Results.tspan;
+      obj.xspan            = p.Results.xspan;
+    end % GalerkinSolver
+
+    function val = get.nFields(obj)
+      val = length(obj.breakpoints) + 1;
+    end % get.nFields
 
 
     %% Preparation
 
-    function preassemble(obj)
-      obj.assembly                = AssemblyFourierLegendre();
+    function assemble(obj)
+      % Creates all the structures needed to do anything.
 
-      obj.assembly.setNumberOfAnsatzFuncs(obj.N, obj.M);
-      obj.assembly.setNumberOfTestFuncsFromAnsatzFuncs();
+      % as we want to solve the given pde for two fields, we will create two
+      % assembly objects, one for each part of the temporal decomposition.
+      parts = cell(obj.nFields, 1);
 
-      obj.assembly.xspan            = obj.xspan;
-      obj.assembly.coeffLaplacian   = obj.coeffLaplacian;
-      obj.assembly.coeffOffset      = obj.coeffOffset;
-      obj.assembly.useNormalization = obj.useNormalization;
+      % get the endpoints of the temporal decomposition
+      tpoints = [obj.tspan(1), obj.breakpoints, obj.tspan(2)];
 
-      obj.assembly.precomputeNormalization();
+      % and now iterate over the parts of the decomposition and create the
+      % needed assembly object and structures
+      for fdx = 1:obj.nFields
+        % create an object of the underlying assembly class
+        parts{fdx}.assembly = AssemblyFourierLegendre();
 
-      obj.assembly.tspan  = [obj.tspan(1), obj.fieldBreakpoint];
-      obj.partOne.AnsatzDiag         = obj.assembly.AnsatzNormDiag;
-      obj.partOne.TestDiag           = obj.assembly.TestNormDiag;
+        % set the number of used basis functions
+        parts{fdx}.assembly.setNumberOfAnsatzFuncs(obj.nAnsatzSpatial, ...
+          obj.nAnsatzTemporal);
+        % if obj.useQuadraticSystem
+          parts{fdx}.assembly.setNumberOfTestFuncsFromAnsatzFuncs();
+        % else
+        %   parts{fdx}.assembly.setNumberOfTestFuncs(obj.nTestSpatial, ...
+        %     obj.nTestTemporal, obj.nTestSpatialIC);
+        % end
 
-      [M1, M2, M3, M4F, M4B] = obj.assembly.assembleFieldIndependentMatrix();
+        % set the spatial and temporal intervals
+        parts{fdx}.assembly.xspan = obj.xspan;
+        parts{fdx}.assembly.tspan = [tpoints(fdx), tpoints(fdx + 1)];
 
-      obj.partOne.TimeDerivativeMatrix = M1;
-      obj.partOne.LaplacianMatrix      = M2;
-      obj.partOne.OffsetMatrix         = M3;
-      obj.partOne.ICForwardMatrix      = M4F;
-      obj.partOne.ICBackwardMatrix     = M4B;
-      obj.partOne.OmegaMatrices        = obj.assembly.assembleFieldDependentMatrixForFourierSeries(obj.C);
+        % set whether we want to normalize the used ansatz and test basis
+        % functions and precompute the needed norms for the normalization (has to
+        % be called even if we don't want to normalize!)
+        parts{fdx}.assembly.useNormalization = obj.useNormalization;
+        parts{fdx}.assembly.precomputeNormalization();
 
-      obj.assembly.tspan  = [obj.fieldBreakpoint, obj.tspan(2)];
-      obj.partOne.AnsatzDiag         = obj.assembly.AnsatzNormDiag;
-      obj.partOne.TestDiag           = obj.assembly.TestNormDiag;
+        % assemble the field independent parts of the stiffness matrix
+        parts{fdx}.matFI = parts{fdx}.assembly.assembleFieldIndependentMatrix();
 
-      [N1, N2, N3, N4F, N4B] = obj.assembly.assembleFieldIndependentMatrix();
-
-      obj.partTwo.TimeDerivativeMatrix = N1;
-      obj.partTwo.LaplacianMatrix      = N2;
-      obj.partTwo.OffsetMatrix         = N3;
-      obj.partTwo.ICForwardMatrix      = N4F;
-      obj.partTwo.ICBackwardMatrix     = N4B;
-      obj.partTwo.OmegaMatrices        = obj.assembly.assembleFieldDependentMatrixForFourierSeries(obj.C);
-    end
-
-    % Solver
-
-    function solfun = solveTwoFieldsForward(obj, fieldCoeffsOne, fieldCoeffsTwo)
-      % vorwärts
-      Lhs = obj.partOne.TimeDerivativeMatrix ...
-        + obj.coeffLaplacian * obj.partOne.LaplacianMatrix ...
-        + obj.partOne.ICForwardMatrix;
-      LhsComp = Lhs;
-      for cdx = 1:obj.C
-        LhsComp = LhsComp + fieldCoeffsOne(cdx) * obj.partOne.OmegaMatrices{cdx};
-      end
-      Rhs = obj.assembly.assembleVectorOnes();
-      solCoeffOne = LhsComp \ Rhs;
-
-      Lhs = obj.partTwo.TimeDerivativeMatrix ...
-        + obj.coeffLaplacian * obj.partTwo.LaplacianMatrix ...
-        + obj.partTwo.ICForwardMatrix;
-      LhsComp = Lhs;
-      for cdx = 1:obj.C
-        LhsComp = LhsComp + fieldCoeffsTwo(cdx) * obj.partTwo.OmegaMatrices{cdx};
+        % and now assemble the field dependent part
+        parts{fdx}.matFD = parts{fdx}.assembly.assembleFieldDependentMatrixForFourierSeries(obj.nFieldCoeffs);
       end
 
-      % if normalization is used then we've to "renormalize" the solution coeffient vector
-      if obj.useNormalization
-        Rhs = obj.assembly.assembleVectorFromSolutionCoeffs(obj.partOne.AnsatzDiag \ solCoeffOne);
-      else
-        Rhs = obj.assembly.assembleVectorFromSolutionCoeffs(solCoeffOne);
-      end
-      solCoeffTwo = LhsComp \ Rhs;
+      % save the created stuff
+      obj.parts = parts;
+    end % assemble
 
-      solfun = @(t, x) ...
-        (t < obj.fieldBreakpoint) .* obj.assembly.solutionFuncFromCoeffs(...
-          solCoeffOne, t, x, [obj.tspan(1), obj.fieldBreakpoint]) ...
-        + ~(t < obj.fieldBreakpoint) .* obj.assembly.solutionFuncFromCoeffs(...
-          solCoeffTwo, t, x, [obj.fieldBreakpoint, obj.tspan(2)]);
-    end
-
-    function solfun = solveTwoFieldsBackward(obj, fieldCoeffsOne, fieldCoeffsTwo)
-      % und das ganze nochmal rückwärts
-      Lhs = - obj.partTwo.TimeDerivativeMatrix ...
-        + obj.coeffLaplacian * obj.partTwo.LaplacianMatrix ...
-        + obj.partTwo.ICBackwardMatrix;
-      LhsComp = Lhs;
-      for cdx = 1:obj.C
-        LhsComp = LhsComp + fieldCoeffsTwo(cdx) * obj.partTwo.OmegaMatrices{cdx};
-      end
-      Rhs = obj.assembly.assembleVectorOnes();
-      solCoeffTwo = LhsComp \ Rhs;
-
-      Lhs = - obj.partOne.TimeDerivativeMatrix ...
-        + obj.coeffLaplacian * obj.partOne.LaplacianMatrix ...
-        + obj.partOne.ICBackwardMatrix;
-      LhsComp = Lhs;
-      for cdx = 1:obj.C
-        LhsComp = LhsComp + fieldCoeffsOne(cdx) * obj.partOne.OmegaMatrices{cdx};
-      end
-      Rhs = obj.assembly.assembleVectorFromSolutionCoeffs(solCoeffTwo, true);
-      solCoeffOne = LhsComp \ Rhs;
-
-      solfun = @(t, x) ...
-        (t < obj.fieldBreakpoint) .* obj.assembly.solutionFuncFromCoeffs(...
-          solCoeffOne, t, x, [obj.tspan(1), obj.fieldBreakpoint]) ...
-        + ~(t < obj.fieldBreakpoint) .* obj.assembly.solutionFuncFromCoeffs(...
-          solCoeffTwo, t, x, [obj.fieldBreakpoint, obj.tspan(2)]);
-    end
-
-    function plotSolution(obj, solfun)
-      gridt = linspace(obj.tspan(1), obj.tspan(2));
-      gridx = linspace(obj.xspan(1), obj.xspan(2));
-      % gridx = linspace(0, 25, 250);
-      [mesht, meshx] = meshgrid(gridt, gridx);
-
-      figure();
-      mesh(mesht, meshx, solfun(mesht, meshx));
-    end
-
-    function solc = solveTwoFieldsDeprecated(obj, lap, cof1, cof2, xg, tgl, tgr)
-      % @deprecated
-      N = 25;
-      M = 25;
-      C = 50;
-
-      assembly = AssemblyFourierLegendre();
-      assembly.setNumberOfAnsatzFuncs(N, M);
-      assembly.setNumberOfTestFuncsFromAnsatzFuncs();
-      assembly.xspan = obj.xspan;
-
-      assembly.coeffLaplacian = lap;
-      assembly.coeffOffset = 0;
-
-      % solve for first field
-      assembly.tspan = [obj.tspan(1), obj.fieldBreakpoint];
-      % assembly.initialData = @(x) ones(size(x, 1), size(x, 2));
-
-      LHS1 = assembly.assembleFieldIndependentMatrix();
-      O1 = assembly.assembleFieldDependentMatrixForFourierSeries(C);
-      RHS1 = assembly.assembleVectorOnes();
-
-      % compose field
-      LHSO1 = LHS1;
-      for idx = 1:length(cof1)
-        LHSO1 = LHSO1 + cof1(idx) * O1{idx};
-      end
-
-      size(LHS1)
-
-      sol1 = LHSO1 \ RHS1;
-
-      % gridt1 = linspace(obj.tspan(1), obj.fieldBreakpoint);
-      % gridx1 = linspace(obj.xspan(1), obj.xspan(2));
-      [mesht1, meshx1] = meshgrid(tgl(1:end-1), xg);
-      tic
-      soleval1  = assembly.solutionFuncFromCoeffs(sol1, mesht1, meshx1);
-      toc
-
-      % solve for second field
-      assembly.tspan = [obj.fieldBreakpoint, obj.tspan(2)];
-
-      LHS2 = assembly.assembleFieldIndependentMatrix();
-      O2 = assembly.assembleFieldDependentMatrixForFourierSeries(C);
-
-      cf = zeros(N, 1);
-      for idx = 1:N
-        cf(idx) = sum(sol1(((idx - 1) * M + 1): (idx * M)));
-      end
-
-      RHS2 = assembly.assembleVectorFromSpatialCoeffs(cf);
-
-      % compose field
-      LHSO2 = LHS2;
-      for idx = 1:length(cof2)
-        LHSO2 = LHSO2 + cof2(idx) * O2{idx};
-      end
-
-      sol2 = LHSO2 \ RHS2;
-
-      %% visualization stuff
-      % gridt2 = linspace(obj.fieldBreakpoint, obj.tspan(2));
-      % gridx2 = linspace(obj.xspan(1), obj.xspan(2));
-      [mesht2, meshx2] = meshgrid(tgr, xg);
-
-      % evaluate the solution function
-      tic
-      soleval2  = assembly.solutionFuncFromCoeffs(sol2, mesht2, meshx2);
-      toc
-
-      % composite plot
-      meshtc = [mesht1, mesht2];
-      meshxc = [meshx1, meshx2];
-      solc = [soleval1, soleval2];
-
-      % figure()
-      % mesh(meshtc, meshxc, solc)
-    end
-
-    % Plotting and visualization
-
-    function plotSolutionDeprecated(obj, solfun)
-      % @deprecated
-      % Plot the solution.
+    function solutionCoeffs = solveForward(obj, coefficients)
+      % Solve the forward propagator for the given coefficients of series
+      % expansions of the used external fields.
       %
       % Parameters:
+      %   coefficients: cellarray of vectors with coefficients of the fields
+      %
+      % Return values:
+      %   solutionCoeffs: coefficients of the solution expanded in the ansatz
+      %     subspace basis functions @type vector
+
+      solutionCoeffs = cell(obj.nFields, 1);
+
+      % iterate over all the external fields
+      for fdx = 1:obj.nFields
+        matricesFI = obj.parts{fdx}.matFI;
+        matricesFD = obj.parts{fdx}.matFD;
+
+        % add up the field independent part of the stiffness Matrix
+        LhsFI = matricesFI.TiD + obj.coeffLaplacian * matricesFI.Lap + ...
+          obj.coeffOffset * matricesFI.Off + matricesFI.ICF;
+
+        % add up the field dependent part of the stiffness matrix
+        LhsFD = sparse(size(LhsFI, 1), size(LhsFI, 2));
+        for cdx = 1:obj.nFieldCoeffs
+          LhsFD = LhsFD + coefficients{fdx}(cdx) * matricesFD{cdx};
+        end
+
+        % construct the right hand side of the equation system. if this is the
+        % first field, we start with the constant value of one as initial
+        % conditions and the solution of the last interval part else.
+        if fdx == 1
+          Rhs = obj.parts{fdx}.assembly.assembleVectorOnes();
+        else
+          if obj.useNormalization
+            initialCoeffs = obj.parts{fdx - 1}.assembly.AnsatzNormDiag \ ...
+              solutionCoeffs{fdx - 1};
+          else
+            initialCoeffs = solutionCoeffs{fdx - 1};
+          end
+          Rhs = obj.parts{fdx}.assembly.assembleVectorFromSolutionCoeffs(initialCoeffs);
+        end
+
+        % solve the linear system
+        solutionCoeffs{fdx} = (LhsFI + LhsFD) \ Rhs;
+      end
+    end % solveForward
+
+    function solutionCoeffs = solveBackward(obj, coefficients)
+      % Solve the backward propagator for the given coefficients of series
+      % expansions of the used external fields.
+      %
+      % Parameters:
+      %   coefficients: cellarray of vectors with coefficients of the fields
+      %
+      % Return values:
+      %   solutionCoeffs: coefficients of the solution expanded in the ansatz
+      %     subspace basis functions @type vector
+
+      solutionCoeffs = cell(obj.nFields, 1);
+
+      % iterate over all the external fields
+      for fdx = obj.nFields:-1:1
+        matricesFI = obj.parts{fdx}.matFI;
+        matricesFD = obj.parts{fdx}.matFD;
+
+        % add up the field independent part of the stiffness Matrix
+        LhsFI = - matricesFI.TiD + obj.coeffLaplacian * matricesFI.Lap + ...
+          obj.coeffOffset * matricesFI.Off + matricesFI.ICB;
+
+        % add up the field dependent part of the stiffness matrix
+        LhsFD = sparse(size(LhsFI, 1), size(LhsFI, 2));
+        for cdx = 1:obj.nFieldCoeffs
+          LhsFD = LhsFD + coefficients{fdx}(cdx) * matricesFD{cdx};
+        end
+
+        % construct the right hand side of the equation system. if this is the
+        % first field, we start with the constant value of one as initial
+        % conditions and the solution of the last interval part else.
+        if fdx == obj.nFields
+          Rhs = obj.parts{fdx}.assembly.assembleVectorOnes();
+        else
+          if obj.useNormalization
+            initialCoeffs = obj.parts{fdx + 1}.assembly.AnsatzNormDiag \ ...
+              solutionCoeffs{fdx + 1};
+          else
+            initialCoeffs = solutionCoeffs{fdx + 1};
+          end
+          Rhs = obj.parts{fdx}.assembly.assembleVectorFromSolutionCoeffs(initialCoeffs, true);
+        end
+
+        % solve the linear system
+        solutionCoeffs{fdx} = (LhsFI + LhsFD) \ Rhs;
+      end
+    end % solveBackward
+
+    function soleval = solCoeffsToSolFunc(obj, solutionCoeffs, t, x)
+      % Evaluate the solution function for the given solution coefficients and
+      % the given temporal and spatial values.
+      %
+      % Parameters:
+      %   solutionCoeffs: cellarray of coefficients of the solution
+      %   t: points in the time interval @type vector
+      %   x: points in the space interval @type vector
+      %
+      % Return values:
       %   solfun: function handle of the solution function @type function_handle
+      %
+      % @todo make it harder, better, faster, stronger!
 
-      % create the grids
-      gridt = linspace(obj.tspan(1), obj.tspan(2));
-      gridx = linspace(obj.xspan(1), obj.xspan(2));
-      [mesht, meshx] = meshgrid(gridt, gridx);
+      soleval = zeros(size(t, 1), size(t, 2));
+      tpoints = [obj.tspan(1), obj.breakpoints, obj.tspan(2)];
 
-      % evaluate the solution function
-      solution = solfun(mesht, meshx);
+      % add the first field manually to get the initial conditions right
+      soleval = (tpoints(1) <= t & t <= tpoints(2)) .* ...
+        obj.parts{1}.assembly.solutionFuncFromCoeffs(solutionCoeffs{1}, t, x);
 
-      % visualize
-      figure();
-      mesh(mesht, meshx, solution);
-      title('Solution');
-      xlabel('t');
-      ylabel('x');
-      zlabel('u');
-    end
+      % iterate over all the external fields
+      for fdx = 2:obj.nFields
+        soleval = soleval + (tpoints(fdx) < t & t <= tpoints(fdx + 1)) .* ...
+          obj.parts{fdx}.assembly.solutionFuncFromCoeffs(...
+            solutionCoeffs{fdx}, t, x);
+      end
+    end % solCoeffsToSolFunc
 
-  end
-
-  methods(Access = Private)
-
-  end
+  end % methods
 
 end

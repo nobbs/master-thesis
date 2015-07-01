@@ -22,12 +22,6 @@ classdef AssemblyAbstract < handle
   % the field-independent and the field-dependent parts.
 
   properties
-    % scalar multiplicative coefficient of the laplacian @type double
-    coeffLaplacian = 1;
-
-    % scalar additive field offset @type double
-    coeffOffset = 0;
-
     % spatial interval @type vector
     xspan = [0 1];
 
