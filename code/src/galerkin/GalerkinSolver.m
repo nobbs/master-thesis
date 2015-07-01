@@ -296,20 +296,28 @@ classdef GalerkinSolver < handle
       % Return values:
       %   solfun: function handle of the solution function @type function_handle
       %
-      % @todo make it harder, better, faster, stronger!
+      % @todo somehow we have to assure that the grid has always the same
+      %     structure / orientation
 
       soleval = zeros(size(t, 1), size(t, 2));
       tpoints = [obj.tspan(1), obj.breakpoints, obj.tspan(2)];
 
+      % get the corresponding part of the grids
+      Idx = tpoints(1) <= t(1, :) & t(1, :) <= tpoints(2);
+      tp = t(:, Idx);
+      xp = x(:, Idx);
       % add the first field manually to get the initial conditions right
-      soleval = (tpoints(1) <= t & t <= tpoints(2)) .* ...
-        obj.parts{1}.assembly.solutionFuncFromCoeffs(solutionCoeffs{1}, t, x);
+      soleval(:, Idx) = obj.parts{1}.assembly.solutionFuncFromCoeffs(solutionCoeffs{1}, tp, xp);
 
-      % iterate over all the external fields
+      % iterate over the parts of the temporal decomposition and add up the
+      % corresponding solution evaluated at the given points
       for fdx = 2:obj.nFields
-        soleval = soleval + (tpoints(fdx) < t & t <= tpoints(fdx + 1)) .* ...
-          obj.parts{fdx}.assembly.solutionFuncFromCoeffs(...
-            solutionCoeffs{fdx}, t, x);
+        % get the corresponding part of the grids
+        Idx = tpoints(fdx) < t(1, :) & t(1, :) <= tpoints(fdx + 1);
+        tp = t(:, Idx);
+        xp = x(:, Idx);
+        soleval(:, Idx) = obj.parts{fdx}.assembly.solutionFuncFromCoeffs(...
+            solutionCoeffs{fdx}, tp, xp);
       end
     end % solCoeffsToSolFunc
 

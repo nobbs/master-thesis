@@ -250,22 +250,26 @@ classdef AssemblyGlobalAbstract < AssemblyAbstract
         temporalValues{kdx} = obj.temporalBasisFunc(kdx, t, tspan);
       end
 
+      % we evaluate the solution in two steps. the inner loop adds up all the
+      % temporal evaluations that share the same spatial basis function as a
+      % factor. the outer loop then multiplies this with the spatial component.
       for jdx = 1:obj.nAnsatzSpatial
+        temporalVal = zeros(size(t, 1), size(t, 2));
         for kdx = 1:obj.nAnsatzTemporal
-        % Get the right coefficient
-        pos = (jdx - 1) * obj.nAnsatzTemporal + kdx;
+          % Get the right coefficient
+          pos = (jdx - 1) * obj.nAnsatzTemporal + kdx;
 
-        % @todo normalization constant
-        if obj.useNormalization
-          normAnsatz = obj.AnsatzNormDiag(pos, pos);
-        else
-          normAnsatz = 1;
-        end
+          % @todo normalization constant
+          if obj.useNormalization
+            normAnsatz = obj.AnsatzNormDiag(pos, pos);
+          else
+            normAnsatz = 1;
+          end
 
-        % evaluate the corresponding basis functions
-        val = val + solutionCoeffs(pos) * spatialValues{jdx} .* ...
-          temporalValues{kdx} / normAnsatz;
+          % evaluate the corresponding basis functions
+          temporalVal = temporalVal + solutionCoeffs(pos) * temporalValues{kdx} / normAnsatz;
         end
+        val = val + temporalVal .* spatialValues{jdx};
       end
     end
 
