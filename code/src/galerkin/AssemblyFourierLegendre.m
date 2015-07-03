@@ -31,30 +31,6 @@ classdef AssemblyFourierLegendre < AssemblyGlobalAbstract
   end % properties
 
   methods
-    %% Normalization and norm related stuff
-
-    function precomputeNormalization(obj)
-      % Computes the normalization coefficients if normalization is used.
-      %
-      % This is done by assembly of the discrete norm matrices for the ansatz
-      % and test subspaces. The diagonals of these matrices are the squares of
-      % the wanted normalization coefficients.
-
-      if obj.useNormalization
-        % we want to use normalization
-        obj.AnsatzNormDiag = sqrt(spdiags(...
-          spdiags(obj.assembleAnsatzNormMatrix(false), 0), 0, ...
-          obj.nAnsatzDim, obj.nAnsatzDim));
-        obj.TestNormDiag   = sqrt(spdiags(...
-          spdiags(obj.assembleTestNormMatrix(false), 0), 0, ...
-          obj.nTestDim, obj.nTestDim));
-      else
-        % we don't want to use normalization
-        obj.AnsatzNormDiag = speye(obj.nAnsatzDim);
-        obj.TestNormDiag   = speye(obj.nTestDim);
-      end
-    end % precomputeNormalization
-
 
     %% Fast implementation of the assembly methods
 
@@ -78,139 +54,44 @@ classdef AssemblyFourierLegendre < AssemblyGlobalAbstract
       % create the needed cell array
       matrices = {};
 
-      % Preparation for the sparse matrix
-      Idx = ones(obj.nAnsatzDim, 1);
-      Idy = ones(obj.nAnsatzDim, 1);
-      Val = zeros(obj.nAnsatzDim, 1);
-      ctr = 1;
+      % precompute the needed block matrices
+      MtF  = obj.assembleTemporalMassMatrix(obj.nAnsatzTemporal, obj.nTestTemporal);
+      CtF  = obj.assembleTemporalHalfStiffnessMatrix(obj.nAnsatzTemporal, obj.nTestTemporal);
+      eFtF = obj.assembleTemporalInitForwardVector(obj.nAnsatzTemporal);
+      eBtF = obj.assembleTemporalInitBackwardVector(obj.nAnsatzTemporal);
 
-      % optimization...
-      xwidth = obj.xspan(2);
+      % spatial matrices
+      MxF = obj.assembleSpatialMassMatrix(obj.nAnsatzSpatial, obj.nTestSpatial);
+      AxF = obj.assembleSpatialStiffnessMatrix(obj.nAnsatzSpatial, obj.nTestSpatial);
 
       % Calculate the first term `\int_{I} \skp{u_t(t)}{v_1(t)}{L_2(\Omega)}
       % \diff t`.
-      for jdx = 1:min(obj.nAnsatzSpatial, obj.nTestSpatial)
-        for kdx = 1:obj.nAnsatzTemporal
-          for mdx = (kdx - 1):-2:1
-            % evaluate spatial integral
-            if jdx == 1
-              intSpatial = xwidth;
-            else
-              intSpatial = xwidth / 2;
-            end
-
-            % evaluate temporal integral
-            intTemporal = 2;
-
-            % save the evaluated integrals
-            Idx(ctr) = (kdx - 1) * obj.nAnsatzSpatial + jdx;
-            Idy(ctr) = (mdx - 1) * obj.nTestSpatial   + jdx;
-            Val(ctr) = intSpatial * intTemporal;
-            ctr = ctr + 1;
-          end
-        end
-      end
-
-      % Assemble the stiffness matrix for this part
-      matrices.TiD = sparse(Idy, Idx, Val, obj.nTestDim, obj.nAnsatzDim);
-
-      % Reset for the next part
-      Idx = ones(obj.nAnsatzDim, 1);
-      Idy = ones(obj.nAnsatzDim, 1);
-      Val = zeros(obj.nAnsatzDim, 1);
-      ctr = 1;
+      matrices.TiD = kron(CtF, MxF);
+      % resize it to the right dimension
+      matrices.TiD(obj.nTestDim, obj.nAnsatzDim) = 0;
 
       % Calculate the second term `\int_{I} \skp{\grad u(t)}{\grad
       % v_1(t)}{L_2(\Omega)} \diff t`.
-      for jdx = 1:min(obj.nAnsatzSpatial, obj.nTestSpatial)
-        for kdx = 1:min(obj.nAnsatzTemporal, obj.nTestTemporal)
-          % evaluate spatial integral
-          if jdx == 1
-            intSpatial = 0;
-          elseif mod(jdx, 2) == 0
-            intSpatial = (pi * jdx)^2 / ( 2 * xwidth);
-          else
-            intSpatial = (pi * (jdx - 1))^2 / ( 2 * xwidth);
-          end
-
-          % evaluate temporal integral
-          intTemporal = (obj.tspan(2) - obj.tspan(1)) / (2 * (kdx - 1) + 1);
-
-          % save the evaluated integrals
-          Idx(ctr) = (kdx - 1) * obj.nAnsatzSpatial + jdx;
-          Idy(ctr) = (kdx - 1) * obj.nTestSpatial + jdx;
-          Val(ctr) = intTemporal * intSpatial;
-          ctr = ctr + 1;
-        end
-      end
-
-      % Assemble the stiffness matrix for this part
-      matrices.Lap = sparse(Idy, Idx, Val, obj.nTestDim, obj.nAnsatzDim);
-
-      % Reset for the next part
-      Idx = ones(obj.nAnsatzDim, 1);
-      Idy = ones(obj.nAnsatzDim, 1);
-      Val = zeros(obj.nAnsatzDim, 1);
-      ctr = 1;
+      matrices.Lap = kron(MtF, AxF);
+      % resize it to the right dimension
+      matrices.Lap(obj.nTestDim, obj.nAnsatzDim) = 0;
 
       % Calculate the third term `\int_{I} \mu \skp{u(t)}{v_1(t)}{L_2(\Omega)}
       % \diff t`.
-      for jdx = 1:min(obj.nAnsatzSpatial, obj.nTestSpatial)
-        for kdx = 1:min(obj.nAnsatzTemporal, obj.nTestTemporal)
-          % evaluate spatial integral
-          if jdx == 1
-            intSpatial = xwidth;
-          else
-            intSpatial = xwidth / 2;
-          end
-
-          % evaluate temporal integral
-          intTemporal = (obj.tspan(2) - obj.tspan(1)) / (2 * (kdx - 1) + 1);
-
-          % save the evaluated integrals
-          Idx(ctr) = (kdx - 1) * obj.nAnsatzSpatial + jdx;
-          Idy(ctr) = (kdx - 1) * obj.nTestSpatial + jdx;
-          Val(ctr) = intTemporal * intSpatial;
-          ctr = ctr + 1;
-        end
-      end
-
-      % Assemble the stiffness matrix for this part
-      matrices.Off = sparse(Idy, Idx, Val, obj.nTestDim, obj.nAnsatzDim);
-
-      % Reset for the next part
-      Idx  = ones(obj.nAnsatzDim, 1);
-      Idy  = ones(obj.nAnsatzDim, 1);
-      ValF = zeros(obj.nAnsatzDim, 1);
-      ValB = zeros(obj.nAnsatzDim, 1);
-      ctr  = 1;
+      matrices.Off = kron(MtF, MxF);
+      % resize it to the right dimension
+      matrices.Off(obj.nTestDim, obj.nAnsatzDim) = 0;
 
       % Calculate the fourth term `\skp{u(0)}{v_2}{L_2(\Omega)}`.
-      for jdx = 1:min(obj.nAnsatzSpatial, obj.nTestSpatialIC)
-        for kdx = 1:obj.nAnsatzTemporal
-          % evaluate spatial integral
-          if jdx == 1
-            intSpatial = xwidth;
-          else
-            intSpatial = xwidth / 2;
-          end
-
-          % evaluate temporal integral
-          intTemporalF  = (-1)^(kdx - 1);
-          intTemporalB = 1;
-
-          % save the evaluated integrals
-          Idx(ctr)  = (kdx - 1) * obj.nAnsatzSpatial + jdx;
-          Idy(ctr)  = obj.nTestSpatial * obj.nTestTemporal + jdx;
-          ValF(ctr) = intTemporalF * intSpatial;
-          ValB(ctr) = intTemporalB * intSpatial;
-          ctr = ctr + 1;
-        end
-      end
-
-      % Assemble the stiffness matrix for this part
-      matrices.ICF = sparse(Idy, Idx, ValF, obj.nTestDim, obj.nAnsatzDim);
-      matrices.ICB = sparse(Idy, Idx, ValB, obj.nTestDim, obj.nAnsatzDim);
+      MxF2 = obj.assembleSpatialMassMatrix(obj.nAnsatzSpatial, obj.nTestSpatialIC);
+      matrixForward = kron(eFtF, MxF2);
+      matrixBackward = kron(eBtF, MxF2);
+      % create the needed "big" sparse matrices
+      matrices.ICF = sparse(obj.nTestDim, obj.nAnsatzDim);
+      matrices.ICB = sparse(obj.nTestDim, obj.nAnsatzDim);
+      % place it in the right place
+      matrices.ICF((obj.nTestTemporal * obj.nTestSpatial + 1):end, :) = matrixForward;
+      matrices.ICB((obj.nTestTemporal * obj.nTestSpatial + 1):end, :) = matrixBackward;
 
       % normalize if needed
       if obj.useNormalization
@@ -244,6 +125,8 @@ classdef AssemblyFourierLegendre < AssemblyGlobalAbstract
 
       % create the cellarray that will hold the matrices
       O = cell(nCoeff, 1);
+
+      MtF = obj.assembleTemporalMassMatrix(obj.nAnsatzTemporal, obj.nTestTemporal);
 
       % iterate over the index of the sine basis functions (of the sine series
       % expansion of the field).
@@ -297,25 +180,16 @@ classdef AssemblyFourierLegendre < AssemblyGlobalAbstract
               intSpatial = (obj.xspan(2) / 4) * val;
             end
 
-            % iterate over the index of the temporal basis functions of the
-            % ansatz and test subspaces. since both use Legendre polynomials,
-            % we can simplify the occurring integrals to the following
-            % expression
-            for kdx = 1:min(obj.nAnsatzTemporal, obj.nTestTemporal)
-              % evaluate temporal integral
-              intTemporal = (obj.tspan(2) - obj.tspan(1)) / (2 * (kdx - 1) + 1);
-
-              % save the evaluated integrals
-              Idx(ctr) = (kdx - 1) * obj.nAnsatzSpatial + jdx;
-              Idy(ctr) = (kdx - 1) * obj.nTestSpatial + ldx;
-              Val(ctr) = intTemporal * intSpatial;
-              ctr = ctr + 1;
-            end
+            Idx(ctr) = jdx;
+            Idy(ctr) = ldx;
+            Val(ctr) = intSpatial;
+            ctr = ctr + 1;
           end
         end
 
         % create the sparse matrix
-        O{cdx} = sparse(Idy, Idx, Val, obj.nTestDim, obj.nAnsatzDim);
+        O{cdx} = kron(MtF, sparse(Idy, Idx, Val, obj.nTestSpatial, obj.nAnsatzSpatial));
+        O{cdx}(obj.nTestDim, obj.nAnsatzDim) = 0;
 
         % normalize if needed
         if obj.useNormalization
@@ -342,6 +216,8 @@ classdef AssemblyFourierLegendre < AssemblyGlobalAbstract
 
       % create the cellarray that will hold the matrices
       O = cell(nCoeff, 1);
+
+      MtF = obj.assembleTemporalMassMatrix(obj.nAnsatzTemporal, obj.nTestTemporal);
 
       % iterate over the index of the Fourier basis function (of the Fourier
       % series expansion of the field).
@@ -456,25 +332,16 @@ classdef AssemblyFourierLegendre < AssemblyGlobalAbstract
               end
             end
 
-            % iterate over the index of the temporal basis functions of the
-            % ansatz and test subspaces. since both use Legendre polynomials,
-            % we can simplify the occurring integrals to the following
-            % expression
-            for kdx = 1:min(obj.nAnsatzTemporal, obj.nTestTemporal)
-              % evaluate temporal integral
-              intTemporal = (obj.tspan(2) - obj.tspan(1)) / (2 * (kdx - 1) + 1);
-
-              % save the evaluated integrals
-              Idx(ctr) = (kdx - 1) * obj.nAnsatzSpatial + jdx;
-              Idy(ctr) = (kdx - 1) * obj.nTestSpatial + ldx;
-              Val(ctr) = intTemporal * intSpatial;
-              ctr = ctr + 1;
-            end
+            Idx(ctr) = jdx;
+            Idy(ctr) = ldx;
+            Val(ctr) = intSpatial;
+            ctr = ctr + 1;
           end
         end
 
         % create the sparse matrix
-        O{cdx} = sparse(Idy, Idx, Val, obj.nTestDim, obj.nAnsatzDim);
+        O{cdx} = kron(MtF, sparse(Idy, Idx, Val, obj.nTestSpatial, obj.nAnsatzSpatial));
+        O{cdx}(obj.nTestDim, obj.nAnsatzDim) = 0;
 
         % normalize if needed
         if obj.useNormalization
@@ -533,8 +400,6 @@ classdef AssemblyFourierLegendre < AssemblyGlobalAbstract
       %
       % Return values:
       %   F: load vector @type colvec
-      %
-      % @todo fixme!
 
       % set default values for optional arguments
       if nargin == 2
@@ -605,91 +470,30 @@ classdef AssemblyFourierLegendre < AssemblyGlobalAbstract
         useNormalization = obj.useNormalization;
       end
 
-      % Preparation for the sparse matrix
-      Idx = ones(obj.nAnsatzDim, 1);
-      Idy = ones(obj.nAnsatzDim, 1);
-      Val = zeros(obj.nAnsatzDim, 1);
-      ctr = 1;
+      % precompute the needed block matrices
+      MtF = obj.assembleTemporalMassMatrix(obj.nAnsatzTemporal, obj.nAnsatzTemporal);
+      AtF = obj.assembleTemporalStiffnessMatrix(obj.nAnsatzTemporal);
+
+      % spatial matrices
+      MxF = obj.assembleSpatialMassMatrix(obj.nAnsatzSpatial, obj.nAnsatzSpatial);
+      AxF = obj.assembleSpatialStiffnessMatrix(obj.nAnsatzSpatial, obj.nAnsatzSpatial);
 
       % first part `\norm{u}_{L_2(I; V)}`: iterate over spatial and temporal
       % basis functions; respectively only in one dimension because boths sets
       % of basis functions are orthogonal in itself.
-      for jdx = 1:obj.nAnsatzSpatial
-        for kdx = 1:obj.nAnsatzTemporal
-          % handle the different cases of the spatial basis function and its
-          % first derivative
-          if jdx == 1
-            % constant function
-            intSpatial = obj.xspan(2);
-          elseif mod(jdx, 2) == 1
-            % cosine
-            intSpatial = obj.xspan(2) / 2 + (pi * (jdx - 1))^2 / ...
-              (2 * obj.xspan(2));
-          else
-            % sine
-            intSpatial = obj.xspan(2) / 2 + (pi * jdx)^2 / (2 * obj.xspan(2));
-          end
-
-          % evaluate temporal integral
-          intTemporal = (obj.tspan(2) - obj.tspan(1)) / (2 * (kdx - 1) + 1);
-
-          % save the evaluated integrals
-          Idx(ctr) = (kdx - 1) * obj.nAnsatzSpatial + jdx;
-          Idy(ctr) = (kdx - 1) * obj.nAnsatzSpatial + jdx;
-          Val(ctr) = intTemporal * intSpatial;
-          ctr = ctr + 1;
-        end
-      end
+      mat1 = kron(MtF, MxF + AxF);
 
       % second part `norm{u_t}_{L_2(I; V')}`: again iterate over spatial and
       % temporal basis functions; this time with two indexes for the temporal
       % component, as the first derivatives of the temporal basis functions are
       % no longer orthogonal
-      for jdx = 1:obj.nAnsatzSpatial
-        for kdx1 = 1:obj.nAnsatzTemporal
-          % temporal intregal is zero if kdx1 + kdx2 is odd, so we only iterate
-          % over the relevant indexes
-          if mod(kdx1, 2) == 0
-            startKdx2 = 2;
-          else
-            startKdx2 = 1;
-          end
-          for kdx2 = startKdx2:2:obj.nAnsatzTemporal
-            % evaluate the spatial integral; handle the different cases of the
-            % spatial basis function
-            if jdx == 1
-              % constant function
-              intSpatial = obj.xspan(2);
-            else
-              % sine and cosine
-              intSpatial = obj.xspan(2) / 2;
-            end
-
-            % evaluate the temporal integral;
-            if kdx1 >= kdx2
-              intTemporal = 2 * kdx2 * (kdx2 - 1) / ...
-                (obj.tspan(2) - obj.tspan(1));
-            else
-              intTemporal = 2 * kdx1 * (kdx1 - 1) / ...
-                (obj.tspan(2) - obj.tspan(1));
-            end
-
-            % save the evaluated integrals
-            Idx(ctr) = (kdx1 - 1) * obj.nAnsatzSpatial + jdx;
-            Idy(ctr) = (kdx2 - 1) * obj.nAnsatzSpatial + jdx;
-            Val(ctr) = intTemporal * intSpatial;
-            ctr = ctr + 1;
-          end
-        end
-      end
+      mat2 = kron(AtF, MxF);
 
       % Assemble the sparse mass matrix (with normalization, if needed)
       if ~useNormalization || ~obj.useNormalization
-        M = sparse(Idy, Idx, Val, obj.nAnsatzDim, obj.nAnsatzDim);
+        M = mat1 + mat2;
       else
-        M = (obj.AnsatzNormDiag \ ...
-          sparse(Idy, Idx, Val, obj.nAnsatzDim, obj.nAnsatzDim)) / ...
-          obj.AnsatzNormDiag;
+        M = (obj.AnsatzNormDiag \ (mat1 + mat2)) / obj.AnsatzNormDiag;
       end
     end % assembleAnsatzNormMatrix
 
@@ -718,138 +522,195 @@ classdef AssemblyFourierLegendre < AssemblyGlobalAbstract
       Val = zeros(obj.nTestDim, 1);
       ctr = 1;
 
-      % first part; iterate over the spatial basis for the first component
-      for ldx = 1:obj.nTestSpatial
-        % iterate over temporal basis for the first component
-        for mdx = 1:obj.nTestTemporal
-          % handle the different cases of the spatial basis function
-          if ldx == 1
-            % constant
-            intSpatial = obj.xspan(2);
-          elseif mod(ldx, 2) == 1
-            % cosine
-            intSpatial = obj.xspan(2) / 2 + (pi * (ldx - 1))^2 / ...
-              (2 * obj.xspan(2));
-          else
-            % sine
-            intSpatial = obj.xspan(2) / 2 + (pi * ldx)^2 / (2 * obj.xspan(2));
-          end
+      % precompute the needed block matrices
+      MtF = obj.assembleTemporalMassMatrix(obj.nTestTemporal, obj.nTestTemporal);
+      AtF = obj.assembleTemporalStiffnessMatrix(obj.nTestTemporal);
 
-          % evaluate the temporal integral
-          intTemporal = (obj.tspan(2) - obj.tspan(1)) / (2 * (mdx - 1) + 1);
+      % spatial matrices
+      MxF = obj.assembleSpatialMassMatrix(obj.nTestSpatial, obj.nTestSpatial);
+      AxF = obj.assembleSpatialStiffnessMatrix(obj.nTestSpatial, obj.nTestSpatial);
 
-          % save the evaluated integrals
-          Idx(ctr) = (mdx - 1) * obj.nTestSpatial + ldx;
-          Idy(ctr) = (mdx - 1) * obj.nTestSpatial + ldx;
-          Val(ctr) = intTemporal * intSpatial;
-          ctr = ctr + 1;
-        end
-      end
+      % first part; just like the ansatz norm
+      mat1 = kron(MtF, MxF + AxF);
 
-      % second part (initial condition); iterate over the spatial basis for the
-      % second component
-      for ndx = 1:obj.nTestSpatialIC
-        % handle the different cases of the spatial basis function
-        if ndx == 1
-          % constant function
-          val = obj.xspan(2);
-        else
-          % cosine and sine
-          val = obj.xspan(2) / 2;
-        end
-
-        % save the evaluated integrals
-        Idx(ctr) = obj.nTestSpatial * obj.nTestTemporal + ndx;
-        Idy(ctr) = obj.nTestSpatial * obj.nTestTemporal + ndx;
-        Val(ctr) = val;
-        ctr = ctr + 1;
-      end
+      % second part (initial condition)
+      mat2 = obj.assembleSpatialMassMatrix(obj.nTestSpatialIC, obj.nTestSpatialIC);
 
       % Assemble the sparse mass matrix (with normalization, if needed)
       if ~useNormalization || ~obj.useNormalization
-        M = sparse(Idy, Idx, Val, obj.nTestDim, obj.nTestDim);
+        M = sparse(obj.nTestDim, obj.nTestDim);
+        M(1:(obj.nTestSpatial * obj.nTestTemporal), 1:(obj.nTestSpatial * obj.nTestTemporal)) = mat1;
+        M((obj.nTestSpatial * obj.nTestTemporal + 1):end, (obj.nTestSpatial * obj.nTestTemporal + 1):end) = mat2;
       else
-        M = (obj.TestNormDiag \ ...
-          sparse(Idy, Idx, Val, obj.nTestDim, obj.nTestDim)) / obj.TestNormDiag;
+        M = sparse(obj.nTestDim, obj.nTestDim);
+        M(1:(obj.nTestSpatial * obj.nTestTemporal), 1:(obj.nTestSpatial * obj.nTestTemporal)) = mat1;
+        M((obj.nTestSpatial * obj.nTestTemporal + 1):end, (obj.nTestSpatial * obj.nTestTemporal + 1):end) = mat2;
+        M = (obj.TestNormDiag \ M) / obj.TestNormDiag;
       end
     end
 
-    function val = normOfAnsatzFunc(obj, jdx, kdx)
-      % Calculate the ansatz space norm of a ansatz basis function.
+  end % methods
+
+  methods % implementing AssemblyTensorAbstract
+
+    function MtF = assembleTemporalMassMatrix(obj, nX, nY)
+      % Assemble the temporal mass Matrix, that means we evaluate the integral
+      % `\int_{I} \theta_k(t) \xi_m(t) \diff t` for `k = 1 \dots K` and
+      % `m = 1 \dots K'`, where the temporal basis functions `\theta_k` and
+      % `\xi_m` are defined as shifted Legendre polynomials.
       %
-      % Parameter:
-      %   jdx: index of spatial basis function @type integer
-      %   kdx: index of temporal basis function @type integer
+      % The parameters nX and nY correspond to `K` respectively `K'` and are
+      % mainly here, because ansatz and test space can have a different number
+      % of these basis functions.
       %
-      % Return values:
-      %   val: norm of product of spatial and temporal basis function @type double
-
-      % evaluate the spatial integrals
-      if jdx == 1
-        % constant
-        intSpatialF = obj.xspan(2);
-        intSpatialS = obj.xspan(2);
-      elseif mod(jdx, 2) == 1
-        % cosine
-        intSpatialF = obj.xspan(2) / 2 + (pi * (jdx - 1))^2 / (2 * obj.xspan(2));
-        intSpatialS = obj.xspan(2) / 2;
-      else
-        % sine
-        intSpatialF = obj.xspan(2) / 2 + (pi * jdx)^2 / (2 * obj.xspan(2));
-        intSpatialS = obj.xspan(2) / 2;
-      end
-
-      % evaluate the temporal integrals;
-      intTemporalF = (obj.tspan(2) - obj.tspan(1)) / (2 * (kdx - 1) + 1);
-      intTemporalS = 2 * kdx * (kdx - 1) / (obj.tspan(2) - obj.tspan(1));
-
-      val = sqrt(intTemporalF * intSpatialF + intTemporalS * intSpatialS);
-    end % normOfAnsatzFunc
-
-
-    function val = normOfTestFunc(obj, ldx, mdx, ndx)
-      % Calculate the test space norm of a test basis function.
-      %
-      % Parameter:
-      %   jdx: index of spatial basis function @type integer
-      %   kdx: index of temporal basis function @type integer
+      % Parameters:
+      %   nX: number of temporal basis functions `K` @type integer
+      %   nY: number of temporal basis functions `K'` @type integer
       %
       % Return values:
-      %   val: norm of product of spatial and temporal basis function @type double
+      %   MtF: temporal mass matrix @type matrix
 
-      tmp1 = 0;
-      if ldx > 0 && mdx > 0
-        % evaluate the spatial integrals
-        if ldx == 1
-          % constant
-          intSpatial = obj.xspan(2);
-        elseif mod(ldx, 2) == 1
-          % cosine
-          intSpatial = obj.xspan(2) / 2 + (pi * (ldx - 1))^2 / (2 * obj.xspan(2));
+      tmp = (obj.tspan(2) - obj.tspan(1)) ./ (2 * ((1:min(nX, nY)) - 1) + 1);
+      MtF = spdiags(tmp.', 0, nY, nX);
+    end
+
+    function CtF = assembleTemporalHalfStiffnessMatrix(obj, nX, nY)
+      % Assemble the temporal "half stiffness" matrix, that means we evaluate the
+      % integral `\int_{I} \theta'_k(t) \xi_m(t) \diff t` for `k = 1 \dots K` and
+      % `m = 1 \dots K'`, where the temporal basis functions `\theta_k` and
+      % `\xi_m` are defined as shifted Legendre polynomials.
+      %
+      % The parameters nX and nY correspond to `K` respectively `K'` and are
+      % mainly here, because ansatz and test space can have a different number
+      % of these basis functions.
+      %
+      % Parameters:
+      %   nX: number of temporal basis functions `K` @type integer
+      %   nY: number of temporal basis functions `K'` @type integer
+      %
+      % Return values:
+      %   CtF: temporal "half stiffness" matrix @type matrix
+
+      CtF = spdiags(2 * ones(nY, ceil(nX / 2)), 1:2:nX, nY, nX);
+    end
+
+    function AtF = assembleTemporalStiffnessMatrix(obj, nX)
+      % Assemble the temporal stiffness matrix, that means we evaluate the
+      % integral `\int_{I} \theta'_{k_1}(t) \theta'_{k_2}(t) \diff t` for
+      % `k_1, k_2 = 1 \dots K`, where the temporal basis functions `\theta_k`
+      % are defined as shifted Legendre polynomials.
+      %
+      % As this method is only useful for the assembly of the norm matrices,
+      % there's only one parameter nX which corresponds to `K`.
+      %
+      % Parameters:
+      %   nX: number of temporal basis functions `K` @type integer
+      %
+      % Return values:
+      %   AtF: temporal stiffness matrix @type matrix
+      %
+      % @todo optimize!
+
+      AtF = sparse(nX);
+      for kdx1 = 1:nX
+        % temporal intregal is zero if kdx1 + kdx2 is odd, so we only iterate
+        % over the relevant indexes
+        if mod(kdx1, 2) == 0
+          startKdx2 = 2;
         else
-          % sine
-          intSpatial = obj.xspan(2) / 2 + (pi * ldx)^2 / (2 * obj.xspan(2));
+          startKdx2 = 1;
         end
+        for kdx2 = startKdx2:2:nX
+          % evaluate the temporal integral;
+          if kdx1 >= kdx2
+            intTemporal = 2 * kdx2 * (kdx2 - 1) / ...
+              (obj.tspan(2) - obj.tspan(1));
+          else
+            intTemporal = 2 * kdx1 * (kdx1 - 1) / ...
+              (obj.tspan(2) - obj.tspan(1));
+          end
 
-        % evaluate the temporal integral
-        intTemporal = (obj.tspan(2) - obj.tspan(1)) / (2 * (mdx - 1) + 1);
-        tmp1 = intSpatial * intTemporal;
+          % save the evaluated integral
+          AtF(kdx1, kdx2) = intTemporal;
+        end
       end
+    end
 
-      tmp2 = 0;
-      if ndx > 0
-        if ndx == 1
-          tmp2 = obj.xspan(2);
+    function etF = assembleTemporalInitForwardVector(obj, nX)
+      % Assemble the temporal row vector responsible for the propagation of the
+      % initial condition in the case of the forward propagator, that means we
+      % evaluate `\theta_k(0)` for `k = 1 \dots K` with Legendre polynomials
+      % `\theta_k`.
+      %
+      % Parameters:
+      %   nX: corresponds to `K` @type integer
+      %
+      % Return values:
+      %   eFtF: forward propagation vector @type vector
+
+      etF = (-1).^((1:nX) - 1);
+    end
+
+    function etF = assembleTemporalInitBackwardVector(obj, nX)
+      % Assemble the temporal row vector responsible for the propagation of the
+      % initial condition in the case of the forward propagator, that means we
+      % evaluate `\theta_k(L)` for `k = 1 \dots K` with Legendre polynomials
+      % `\theta_k`.
+      %
+      % Parameters:
+      %   nX: corresponds to `K` @type integer
+      %
+      % Return values:
+      %   eBtF: backward propagation vector @type vector
+
+      etF = ones(1, nX);
+    end
+
+    function MxF = assembleSpatialMassMatrix(obj, nX, nY)
+      % Assemble the spatial mass matrix, that means we evaluate the integral
+      % `\int_{\Omega} \sigma_j(x) \sigma_l(x) \diff x` for some `j` and `l`,
+      % which are Fourier basis functions in this case.
+      %
+      % Parameters:
+      %   nX: the limit of iteration for the `j` index @type integer
+      %   nY: the limit of iteration for the `l` index @type integer
+      %
+      % Return values:
+      %   MxF: spatial mass matrix @type matrix
+
+      tmp    = (obj.xspan(2) - obj.xspan(1)) * ones(min(nX, nY), 1) / 2;
+      tmp(1) = tmp(1) * 2;
+      MxF    = spdiags(tmp, 0, nY, nX);
+    end
+
+    function AxF = assembleSpatialStiffnessMatrix(obj, nX, nY)
+      % Assemble the spatial stiffness matrix, that means we evaluate the
+      % integral `\int_{\Omega} \sigma'_j(x) \sigma'_l(x) \diff x` for some `j`
+      % and `l`.
+      %
+      % Parameters:
+      %   nX: the limit of iteration for the `j` index @type integer
+      %   nY: the limit of iteration for the `l` index @type integer
+      %
+      % Return values:
+      %   AxF: spatial stiffness matrix @type matrix
+      %
+      % @todo optimize
+
+      tmp = zeros(min(nX, nY), 1);
+      for jdx = 2:min(nX, nY)
+        if mod(jdx, 2) == 0
+          tmp(jdx) = (pi * jdx)^2 / ( 2 * (obj.xspan(2) - obj.xspan(1)));
         else
-          tmp2 = obj.xspan(2) / 2;
+          tmp(jdx) = (pi * (jdx - 1))^2 / ( 2 * (obj.xspan(2) - obj.xspan(1)));
         end
       end
+      AxF = spdiags(tmp, 0, nY, nX);
+    end
 
-      val = sqrt(tmp1 + tmp2);
-    end % normOfTestFunc
+  end % implementing AssemblyTensorAbstract
 
-
-    %% spatial and temporal basis functions as convenient function handles
+  methods % implementing AssemblyGlobalAbstract
 
     function val = spatialBasisFunc(obj, index, x)
       % Spatial basis functions.
@@ -913,7 +774,7 @@ classdef AssemblyFourierLegendre < AssemblyGlobalAbstract
         val = - (pi * (index - 1) / obj.xspan(2)) * ...
           sin(pi * (index - 1) * x / obj.xspan(2));
       end
-    end
+    end % spatialBasisFuncDerivative
 
     function val = temporalBasisFunc(obj, index, t, tspan)
       % Temporal basis functions.
@@ -967,6 +828,101 @@ classdef AssemblyFourierLegendre < AssemblyGlobalAbstract
       val = legendrePolynomialDerivative(t, index - 1, tspan);
     end % temporalBasisFuncDerivative
 
-  end % methods
+    function val = normOfAnsatzFunc(obj, jdx, kdx)
+      % Calculate the ansatz space norm of a ansatz basis function.
+      %
+      % Parameter:
+      %   jdx: index of spatial basis function @type integer
+      %   kdx: index of temporal basis function @type integer
+      %
+      % Return values:
+      %   val: norm of product of spatial and temporal basis function @type double
+
+      % evaluate the spatial integrals
+      if jdx == 1
+        % constant
+        intSpatialF = obj.xspan(2);
+        intSpatialS = obj.xspan(2);
+      elseif mod(jdx, 2) == 1
+        % cosine
+        intSpatialF = obj.xspan(2) / 2 + (pi * (jdx - 1))^2 / (2 * obj.xspan(2));
+        intSpatialS = obj.xspan(2) / 2;
+      else
+        % sine
+        intSpatialF = obj.xspan(2) / 2 + (pi * jdx)^2 / (2 * obj.xspan(2));
+        intSpatialS = obj.xspan(2) / 2;
+      end
+
+      % evaluate the temporal integrals;
+      intTemporalF = (obj.tspan(2) - obj.tspan(1)) / (2 * (kdx - 1) + 1);
+      intTemporalS = 2 * kdx * (kdx - 1) / (obj.tspan(2) - obj.tspan(1));
+
+      val = sqrt(intTemporalF * intSpatialF + intTemporalS * intSpatialS);
+    end % normOfAnsatzFunc
+
+    function val = normOfTestFunc(obj, ldx, mdx, ndx)
+      % Calculate the test space norm of a test basis function.
+      %
+      % Parameter:
+      %   jdx: index of spatial basis function @type integer
+      %   kdx: index of temporal basis function @type integer
+      %
+      % Return values:
+      %   val: norm of product of spatial and temporal basis function @type double
+
+      tmp1 = 0;
+      if ldx > 0 && mdx > 0
+        % evaluate the spatial integrals
+        if ldx == 1
+          % constant
+          intSpatial = obj.xspan(2);
+        elseif mod(ldx, 2) == 1
+          % cosine
+          intSpatial = obj.xspan(2) / 2 + (pi * (ldx - 1))^2 / (2 * obj.xspan(2));
+        else
+          % sine
+          intSpatial = obj.xspan(2) / 2 + (pi * ldx)^2 / (2 * obj.xspan(2));
+        end
+
+        % evaluate the temporal integral
+        intTemporal = (obj.tspan(2) - obj.tspan(1)) / (2 * (mdx - 1) + 1);
+        tmp1 = intSpatial * intTemporal;
+      end
+
+      tmp2 = 0;
+      if ndx > 0
+        if ndx == 1
+          tmp2 = obj.xspan(2);
+        else
+          tmp2 = obj.xspan(2) / 2;
+        end
+      end
+
+      val = sqrt(tmp1 + tmp2);
+    end % normOfTestFunc
+
+    function precomputeNormalization(obj)
+      % Computes the normalization coefficients if normalization is used.
+      %
+      % This is done by assembly of the discrete norm matrices for the ansatz
+      % and test subspaces. The diagonals of these matrices are the squares of
+      % the wanted normalization coefficients.
+
+      if obj.useNormalization
+        % we want to use normalization
+        obj.AnsatzNormDiag = sqrt(spdiags(...
+          spdiags(obj.assembleAnsatzNormMatrix(false), 0), 0, ...
+          obj.nAnsatzDim, obj.nAnsatzDim));
+        obj.TestNormDiag   = sqrt(spdiags(...
+          spdiags(obj.assembleTestNormMatrix(false), 0), 0, ...
+          obj.nTestDim, obj.nTestDim));
+      else
+        % we don't want to use normalization
+        obj.AnsatzNormDiag = speye(obj.nAnsatzDim);
+        obj.TestNormDiag   = speye(obj.nTestDim);
+      end
+    end % precomputeNormalization
+
+  end % implementing AssemblyGlobalAbstract
 
 end % classdef
