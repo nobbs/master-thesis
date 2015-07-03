@@ -103,8 +103,8 @@ classdef AssemblyFourierLegendre < AssemblyGlobalAbstract
             intTemporal = 2;
 
             % save the evaluated integrals
-            Idx(ctr) = (jdx - 1) * obj.nAnsatzTemporal + kdx;
-            Idy(ctr) = (jdx - 1) * obj.nTestTemporal + mdx;
+            Idx(ctr) = (kdx - 1) * obj.nAnsatzSpatial + jdx;
+            Idy(ctr) = (mdx - 1) * obj.nTestSpatial   + jdx;
             Val(ctr) = intSpatial * intTemporal;
             ctr = ctr + 1;
           end
@@ -137,8 +137,8 @@ classdef AssemblyFourierLegendre < AssemblyGlobalAbstract
           intTemporal = (obj.tspan(2) - obj.tspan(1)) / (2 * (kdx - 1) + 1);
 
           % save the evaluated integrals
-          Idx(ctr) = (jdx - 1) * obj.nAnsatzTemporal + kdx;
-          Idy(ctr) = (jdx - 1) * obj.nTestTemporal + kdx;
+          Idx(ctr) = (kdx - 1) * obj.nAnsatzSpatial + jdx;
+          Idy(ctr) = (kdx - 1) * obj.nTestSpatial + jdx;
           Val(ctr) = intTemporal * intSpatial;
           ctr = ctr + 1;
         end
@@ -168,8 +168,8 @@ classdef AssemblyFourierLegendre < AssemblyGlobalAbstract
           intTemporal = (obj.tspan(2) - obj.tspan(1)) / (2 * (kdx - 1) + 1);
 
           % save the evaluated integrals
-          Idx(ctr) = (jdx - 1) * obj.nAnsatzTemporal + kdx;
-          Idy(ctr) = (jdx - 1) * obj.nTestTemporal + kdx;
+          Idx(ctr) = (kdx - 1) * obj.nAnsatzSpatial + jdx;
+          Idy(ctr) = (kdx - 1) * obj.nTestSpatial + jdx;
           Val(ctr) = intTemporal * intSpatial;
           ctr = ctr + 1;
         end
@@ -200,7 +200,7 @@ classdef AssemblyFourierLegendre < AssemblyGlobalAbstract
           intTemporalB = 1;
 
           % save the evaluated integrals
-          Idx(ctr)  = (jdx - 1) * obj.nAnsatzTemporal + kdx;
+          Idx(ctr)  = (kdx - 1) * obj.nAnsatzSpatial + jdx;
           Idy(ctr)  = obj.nTestSpatial * obj.nTestTemporal + jdx;
           ValF(ctr) = intTemporalF * intSpatial;
           ValB(ctr) = intTemporalB * intSpatial;
@@ -306,8 +306,8 @@ classdef AssemblyFourierLegendre < AssemblyGlobalAbstract
               intTemporal = (obj.tspan(2) - obj.tspan(1)) / (2 * (kdx - 1) + 1);
 
               % save the evaluated integrals
-              Idx(ctr) = (jdx - 1) * obj.nAnsatzTemporal + kdx;
-              Idy(ctr) = (ldx - 1) * obj.nTestTemporal + kdx;
+              Idx(ctr) = (kdx - 1) * obj.nAnsatzSpatial + jdx;
+              Idy(ctr) = (kdx - 1) * obj.nTestSpatial + ldx;
               Val(ctr) = intTemporal * intSpatial;
               ctr = ctr + 1;
             end
@@ -465,8 +465,8 @@ classdef AssemblyFourierLegendre < AssemblyGlobalAbstract
               intTemporal = (obj.tspan(2) - obj.tspan(1)) / (2 * (kdx - 1) + 1);
 
               % save the evaluated integrals
-              Idx(ctr) = (jdx - 1) * obj.nAnsatzTemporal + kdx;
-              Idy(ctr) = (ldx - 1) * obj.nTestTemporal + kdx;
+              Idx(ctr) = (kdx - 1) * obj.nAnsatzSpatial + jdx;
+              Idy(ctr) = (kdx - 1) * obj.nTestSpatial + ldx;
               Val(ctr) = intTemporal * intSpatial;
               ctr = ctr + 1;
             end
@@ -533,6 +533,8 @@ classdef AssemblyFourierLegendre < AssemblyGlobalAbstract
       %
       % Return values:
       %   F: load vector @type colvec
+      %
+      % @todo fixme!
 
       % set default values for optional arguments
       if nargin == 2
@@ -547,15 +549,17 @@ classdef AssemblyFourierLegendre < AssemblyGlobalAbstract
         % just plain sum up the coefficients for the different temporal indices,
         % because the temporal basis function are alwas one at the endpoint.
         for idx = 1:obj.nAnsatzSpatial
-          sumcoeffs(idx) = sum(solCoeffs(((idx - 1) * ...
-            obj.nAnsatzTemporal) + Kdx));
+          % sumcoeffs(idx) = sum(solCoeffs(((idx - 1) * ...
+          %   obj.nAnsatzTemporal) + Kdx));
+          sumcoeffs(idx) = sum(solCoeffs(((Kdx - 1) * ...
+            obj.nAnsatzSpatial) + idx));
         end
       else
         % sum with alternating sign, because the temporal basis function with
         % index i has the value (-1)^i at the start point.
         for idx = 1:obj.nAnsatzSpatial
-          sumcoeffs(idx) = sum((-1).^(Kdx - 1) * ...
-            solCoeffs(((idx - 1) * obj.nAnsatzTemporal) + Kdx));
+          sumcoeffs(idx) = sum((-1).^(idx - 1) * ...
+            solCoeffs(((Kdx - 1) * obj.nAnsatzSpatial) + idx));
         end
       end
 
@@ -630,8 +634,8 @@ classdef AssemblyFourierLegendre < AssemblyGlobalAbstract
           intTemporal = (obj.tspan(2) - obj.tspan(1)) / (2 * (kdx - 1) + 1);
 
           % save the evaluated integrals
-          Idx(ctr) = (jdx - 1) * obj.nAnsatzTemporal + kdx;
-          Idy(ctr) = (jdx - 1) * obj.nAnsatzTemporal + kdx;
+          Idx(ctr) = (kdx - 1) * obj.nAnsatzSpatial + jdx;
+          Idy(ctr) = (kdx - 1) * obj.nAnsatzSpatial + jdx;
           Val(ctr) = intTemporal * intSpatial;
           ctr = ctr + 1;
         end
@@ -671,8 +675,8 @@ classdef AssemblyFourierLegendre < AssemblyGlobalAbstract
             end
 
             % save the evaluated integrals
-            Idx(ctr) = (jdx - 1) * obj.nAnsatzTemporal + kdx1;
-            Idy(ctr) = (jdx - 1) * obj.nAnsatzTemporal + kdx2;
+            Idx(ctr) = (kdx1 - 1) * obj.nAnsatzSpatial + jdx;
+            Idy(ctr) = (kdx2 - 1) * obj.nAnsatzSpatial + jdx;
             Val(ctr) = intTemporal * intSpatial;
             ctr = ctr + 1;
           end
@@ -735,8 +739,8 @@ classdef AssemblyFourierLegendre < AssemblyGlobalAbstract
           intTemporal = (obj.tspan(2) - obj.tspan(1)) / (2 * (mdx - 1) + 1);
 
           % save the evaluated integrals
-          Idx(ctr) = (ldx - 1) * obj.nTestTemporal + mdx;
-          Idy(ctr) = (ldx - 1) * obj.nTestTemporal + mdx;
+          Idx(ctr) = (mdx - 1) * obj.nTestSpatial + ldx;
+          Idy(ctr) = (mdx - 1) * obj.nTestSpatial + ldx;
           Val(ctr) = intTemporal * intSpatial;
           ctr = ctr + 1;
         end

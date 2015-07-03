@@ -479,7 +479,7 @@ TestMatrix = assembly.assembleTestNormMatrix();
 
 for jdx = 1:assembly.nAnsatzSpatial
     for kdx = 1:assembly.nAnsatzTemporal
-      pos = (jdx - 1) * assembly.nAnsatzTemporal + kdx;
+      pos = (kdx - 1) * assembly.nAnsatzSpatial + jdx;
         assert(abs(assembly.normOfAnsatzFunc(jdx, kdx) - assembly.normOfAnsatzFuncSlow(jdx, kdx)) < 1e-8);
         assert(abs(assembly.normOfAnsatzFunc(jdx, kdx) - sqrt(AnsatzMatrix(pos, pos))) < 1e-8);
     end
@@ -487,7 +487,7 @@ end
 
 for ldx = 0:assembly.nTestSpatial
     for mdx = 0:assembly.nTestTemporal
-        pos = (ldx - 1) * assembly.nTestTemporal + mdx;
+        pos = (mdx - 1) * assembly.nTestSpatial + ldx;
         if ldx > 0 && mdx > 0
           assert(abs(assembly.normOfTestFunc(ldx, mdx, 0) - sqrt(TestMatrix(pos, pos))) < 1e-8);
         end

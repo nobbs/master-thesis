@@ -257,7 +257,7 @@ classdef AssemblyGlobalAbstract < AssemblyAbstract
         temporalVal = zeros(size(t, 1), size(t, 2));
         for kdx = 1:obj.nAnsatzTemporal
           % Get the right coefficient
-          pos = (jdx - 1) * obj.nAnsatzTemporal + kdx;
+          pos = (kdx - 1) * obj.nAnsatzTemporal + jdx;
 
           % @todo normalization constant
           if obj.useNormalization

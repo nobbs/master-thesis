@@ -54,8 +54,8 @@ classdef AssemblyFourierLegendreSlow < AssemblyFourierLegendre
               % only consider values above a given threshold (since a lot of
               % zero valued integrals won't get exact zero)
               if abs(val) > sqrt(eps)
-                Idx(ctr) = (jdx - 1) * obj.nAnsatzTemporal + kdx;
-                Idy(ctr) = (ldx - 1) * obj.nTestTemporal + mdx;
+                Idx(ctr) = (kdx - 1) * obj.nAnsatzSpatial + jdx;
+                Idy(ctr) = (mdx - 1) * obj.nTestSpatial + ldx;
                 Val(ctr) = val;
                 ctr = ctr + 1;
               end
@@ -96,8 +96,8 @@ classdef AssemblyFourierLegendreSlow < AssemblyFourierLegendre
               % only consider values above a given threshold (since a lot of
               % zero valued integrals won't get exact zero)
               if abs(val) > sqrt(eps)
-                Idx(ctr) = (jdx - 1) * obj.nAnsatzTemporal + kdx;
-                Idy(ctr) = (ldx - 1) * obj.nTestTemporal + mdx;
+                Idx(ctr) = (kdx - 1) * obj.nAnsatzSpatial + jdx;
+                Idy(ctr) = (mdx - 1) * obj.nTestSpatial + ldx;
                 Val(ctr) = val;
                 ctr = ctr + 1;
               end
@@ -134,8 +134,8 @@ classdef AssemblyFourierLegendreSlow < AssemblyFourierLegendre
               % only consider values above a given threshold (since a lot of
               % zero valued integrals won't get exact zero)
               if abs(val) > sqrt(eps)
-                Idx(ctr) = (jdx - 1) * obj.nAnsatzTemporal + kdx;
-                Idy(ctr) = (ldx - 1) * obj.nTestTemporal + mdx;
+                Idx(ctr) = (kdx - 1) * obj.nAnsatzSpatial + jdx;
+                Idy(ctr) = (mdx - 1) * obj.nTestSpatial + ldx;
                 Val(ctr) = val;
                 ctr = ctr + 1;
               end
@@ -169,8 +169,8 @@ classdef AssemblyFourierLegendreSlow < AssemblyFourierLegendre
             % only consider values above a given threshold (since a lot of zero
             % valued integrals won't get exact zero)
             if abs(val) > sqrt(eps)
-              Idx(ctr) = (jdx - 1) * obj.nAnsatzTemporal + kdx;
-              Idy(ctr) = obj.nTestSpatial * obj.nTestTemporal + jdx;
+              Idx(ctr) = (kdx - 1) * obj.nAnsatzSpatial + jdx;
+              Idy(ctr) = obj.nTestTemporal * obj.nTestSpatial + ndx;
               Val(ctr) = val;
               ctr = ctr + 1;
             end
@@ -254,8 +254,8 @@ classdef AssemblyFourierLegendreSlow < AssemblyFourierLegendre
 
                   if abs(val) > sqrt(eps)
                     % save the evaluated integrals
-                    Idx(ctr) = (jdx - 1) * obj.nAnsatzTemporal + kdx;
-                    Idy(ctr) = (ldx - 1) * obj.nTestTemporal + mdx;
+                    Idx(ctr) = (kdx - 1) * obj.nAnsatzSpatial + jdx;
+                    Idy(ctr) = (mdx - 1) * obj.nTestSpatial + ldx;
                     Val(ctr) = val;
                     ctr = ctr + 1;
                   end
@@ -329,8 +329,8 @@ classdef AssemblyFourierLegendreSlow < AssemblyFourierLegendre
 
                   if abs(val) > sqrt(eps)
                     % save the evaluated integrals
-                    Idx(ctr) = (jdx - 1) * obj.nAnsatzTemporal + kdx;
-                    Idy(ctr) = (ldx - 1) * obj.nTestTemporal + mdx;
+                    Idx(ctr) = (kdx - 1) * obj.nAnsatzSpatial + jdx;
+                    Idy(ctr) = (mdx - 1) * obj.nTestSpatial + ldx;
                     Val(ctr) = val;
                     ctr = ctr + 1;
                   end
@@ -421,8 +421,8 @@ classdef AssemblyFourierLegendreSlow < AssemblyFourierLegendre
               % only consider values above a given threshold (since a lot of zero
               % valued integrals won't get exact zero)
               if abs(val) > sqrt(eps)
-                Idx(ctr) = (ldx1 - 1) * obj.nTestTemporal + mdx1;
-                Idy(ctr) = (ldx2 - 1) * obj.nTestTemporal + mdx2;
+                Idx(ctr) = (mdx1 - 1) * obj.nTestSpatial + ldx1;
+                Idy(ctr) = (mdx2 - 1) * obj.nTestSpatial + ldx2;
                 Val(ctr) = val;
                 ctr = ctr + 1;
               end
@@ -496,8 +496,8 @@ classdef AssemblyFourierLegendreSlow < AssemblyFourierLegendre
               % only consider values above a given threshold (since a lot of zero
               % valued integrals won't get exact zero)
               if abs(val) > sqrt(eps)
-                Idx(ctr) = (jdx1 - 1) * obj.nAnsatzTemporal + kdx1;
-                Idy(ctr) = (jdx2 - 1) * obj.nAnsatzTemporal + kdx2;
+                Idx(ctr) = (kdx1 - 1) * obj.nAnsatzSpatial + jdx1;
+                Idy(ctr) = (kdx2 - 1) * obj.nAnsatzSpatial + jdx2;
                 Val(ctr) = val;
                 ctr = ctr + 1;
               end
