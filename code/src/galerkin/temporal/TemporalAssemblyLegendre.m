@@ -39,7 +39,7 @@ classdef TemporalAssemblyLegendre < TemporalAssemblyAbstract
       Mt = spdiags(tmp.', 0, nY, nX);
     end
 
-    function Ct = halfStiffnessMatrix(obj, nX, nY)
+    function Ct = halfStiffnessMatrix(~, nX, nY)
       % Assemble the temporal "half stiffness" matrix, that means we evaluate the
       % integral `\int_{I} \theta'_k(t) \xi_m(t) \diff t` for `k = 1 \dots K` and
       % `m = 1 \dots K'` where the temporal basis functions `\theta_k` and
@@ -99,7 +99,7 @@ classdef TemporalAssemblyLegendre < TemporalAssemblyAbstract
       end
     end
 
-    function et = forwardInitVector(obj, nX)
+    function et = forwardInitVector(~, nX)
       % Assemble the temporal row vector responsible for the propagation of the
       % initial condition in the case of the forward propagator, that means we
       % evaluate `\theta_k(0)` for `k = 1 \dots K` with shifted Legendre
@@ -114,7 +114,7 @@ classdef TemporalAssemblyLegendre < TemporalAssemblyAbstract
       et = (-1).^((1:nX) - 1);
     end
 
-    function et = backwardInitVector(obj, nX)
+    function et = backwardInitVector(~, nX)
       % Assemble the temporal row vector responsible for the propagation of the
       % initial condition in the case of the forward propagator, that means we
       % evaluate `\theta_k(L)` for `k = 1 \dots K` with shifted Legendre

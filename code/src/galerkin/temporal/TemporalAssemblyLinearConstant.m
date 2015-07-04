@@ -39,7 +39,7 @@ classdef TemporalAssemblyLinearConstant < TemporalAssemblyAbstract
       Mt = spdiags(D.' * [1/2 1/2], [0 1], nK - 1, nK);
     end
 
-    function Ct = halfStiffnessMatrix(obj, nK)
+    function Ct = halfStiffnessMatrix(~, nK)
       % Assemble the temporal "half stiffness" matrix, that means we evaluate
       % the integral `\int_{I} \theta'_k(t) \xi_m(t) \diff t` for `k = 1 \dots
       % K` and `m = 1 \dots K'` where the temporal basis functions `\theta_k`
@@ -78,7 +78,7 @@ classdef TemporalAssemblyLinearConstant < TemporalAssemblyAbstract
       At = spdiags([iD 0; 0 iD]' * [-1 1 0; 0 1 -1], [-1 0 1], nK, nK);
     end
 
-    function et = forwardInitVector(obj, nK)
+    function et = forwardInitVector(~, nK)
       % Assemble the temporal row vector responsible for the propagation of the
       % initial condition in the case of the forward propagator that means we
       % evaluate `\theta_k(0)` for `k = 1 \dots K` with piecewise linear nodal
@@ -94,7 +94,7 @@ classdef TemporalAssemblyLinearConstant < TemporalAssemblyAbstract
       et(1) = 1;
     end
 
-    function et = backwardInitVector(obj, nK)
+    function et = backwardInitVector(~, nK)
       % Assemble the temporal row vector responsible for the propagation of the
       % initial condition in the case of the forward propagator, that means we
       % evaluate `\theta_k(L)` for `k = 1 \dots K` with piecewise linear nodal
