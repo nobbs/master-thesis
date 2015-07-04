@@ -55,14 +55,14 @@ classdef AssemblyFourierLegendre < AssemblyGlobalAbstract
       matrices = {};
 
       % precompute the needed block matrices
-      MtF  = obj.assembleTemporalMassMatrix(obj.nAnsatzTemporal, obj.nTestTemporal);
-      CtF  = obj.assembleTemporalHalfStiffnessMatrix(obj.nAnsatzTemporal, obj.nTestTemporal);
-      eFtF = obj.assembleTemporalInitForwardVector(obj.nAnsatzTemporal);
-      eBtF = obj.assembleTemporalInitBackwardVector(obj.nAnsatzTemporal);
+      MtF  = TemporalAssemblyLegendre.massMatrix(obj.nAnsatzTemporal, obj.nTestTemporal, obj.tspan(2) - obj.tspan(1));
+      CtF  = TemporalAssemblyLegendre.halfStiffnessMatrix(obj.nAnsatzTemporal, obj.nTestTemporal);
+      eFtF = TemporalAssemblyLegendre.forwardInitVector(obj.nAnsatzTemporal);
+      eBtF = TemporalAssemblyLegendre.backwardInitVector(obj.nAnsatzTemporal);
 
       % spatial matrices
-      MxF = obj.assembleSpatialMassMatrix(obj.nAnsatzSpatial, obj.nTestSpatial);
-      AxF = obj.assembleSpatialStiffnessMatrix(obj.nAnsatzSpatial, obj.nTestSpatial);
+      MxF = SpatialAssemblyFourier.massMatrix(obj.nAnsatzSpatial, obj.nTestSpatial, obj.xspan(2) - obj.xspan(1));
+      AxF = SpatialAssemblyFourier.stiffnessMatrix(obj.nAnsatzSpatial, obj.nTestSpatial, obj.xspan(2) - obj.xspan(1));
 
       % Calculate the first term `\int_{I} \skp{u_t(t)}{v_1(t)}{L_2(\Omega)}
       % \diff t`.
@@ -83,7 +83,7 @@ classdef AssemblyFourierLegendre < AssemblyGlobalAbstract
       matrices.Off(obj.nTestDim, obj.nAnsatzDim) = 0;
 
       % Calculate the fourth term `\skp{u(0)}{v_2}{L_2(\Omega)}`.
-      MxF2 = obj.assembleSpatialMassMatrix(obj.nAnsatzSpatial, obj.nTestSpatialIC);
+      MxF2 = SpatialAssemblyFourier.massMatrix(obj.nAnsatzSpatial, obj.nTestSpatialIC, obj.xspan(2) - obj.xspan(1));
       matrixForward = kron(eFtF, MxF2);
       matrixBackward = kron(eBtF, MxF2);
       % create the needed "big" sparse matrices
@@ -126,7 +126,7 @@ classdef AssemblyFourierLegendre < AssemblyGlobalAbstract
       % create the cellarray that will hold the matrices
       O = cell(nCoeff, 1);
 
-      MtF = obj.assembleTemporalMassMatrix(obj.nAnsatzTemporal, obj.nTestTemporal);
+      MtF = TemporalAssemblyLegendre.massMatrix(obj.nAnsatzTemporal, obj.nTestTemporal, obj.tspan(2) - obj.tspan(1));
 
       % iterate over the index of the sine basis functions (of the sine series
       % expansion of the field).
@@ -217,7 +217,7 @@ classdef AssemblyFourierLegendre < AssemblyGlobalAbstract
       % create the cellarray that will hold the matrices
       O = cell(nCoeff, 1);
 
-      MtF = obj.assembleTemporalMassMatrix(obj.nAnsatzTemporal, obj.nTestTemporal);
+      MtF = TemporalAssemblyLegendre.massMatrix(obj.nAnsatzTemporal, obj.nTestTemporal, obj.tspan(2) - obj.tspan(1));
 
       % iterate over the index of the Fourier basis function (of the Fourier
       % series expansion of the field).
@@ -471,12 +471,12 @@ classdef AssemblyFourierLegendre < AssemblyGlobalAbstract
       end
 
       % precompute the needed block matrices
-      MtF = obj.assembleTemporalMassMatrix(obj.nAnsatzTemporal, obj.nAnsatzTemporal);
-      AtF = obj.assembleTemporalStiffnessMatrix(obj.nAnsatzTemporal);
+      MtF = TemporalAssemblyLegendre.massMatrix(obj.nAnsatzTemporal, obj.nAnsatzTemporal, obj.tspan(2) - obj.tspan(1));
+      AtF = TemporalAssemblyLegendre.stiffnessMatrix(obj.nAnsatzTemporal, obj.tspan(2) - obj.tspan(1));
 
       % spatial matrices
-      MxF = obj.assembleSpatialMassMatrix(obj.nAnsatzSpatial, obj.nAnsatzSpatial);
-      AxF = obj.assembleSpatialStiffnessMatrix(obj.nAnsatzSpatial, obj.nAnsatzSpatial);
+      MxF = SpatialAssemblyFourier.massMatrix(obj.nAnsatzSpatial, obj.nAnsatzSpatial, obj.xspan(2) - obj.xspan(1));
+      AxF = SpatialAssemblyFourier.stiffnessMatrix(obj.nAnsatzSpatial, obj.nAnsatzSpatial, obj.xspan(2) - obj.xspan(1));
 
       % first part `\norm{u}_{L_2(I; V)}`: iterate over spatial and temporal
       % basis functions; respectively only in one dimension because boths sets
@@ -523,18 +523,18 @@ classdef AssemblyFourierLegendre < AssemblyGlobalAbstract
       ctr = 1;
 
       % precompute the needed block matrices
-      MtF = obj.assembleTemporalMassMatrix(obj.nTestTemporal, obj.nTestTemporal);
-      AtF = obj.assembleTemporalStiffnessMatrix(obj.nTestTemporal);
+      MtF = TemporalAssemblyLegendre.massMatrix(obj.nTestTemporal, obj.nTestTemporal, obj.tspan(2) - obj.tspan(1));
+      AtF = TemporalAssemblyLegendre.stiffnessMatrix(obj.nTestTemporal, obj.tspan(2) - obj.tspan(1));
 
       % spatial matrices
-      MxF = obj.assembleSpatialMassMatrix(obj.nTestSpatial, obj.nTestSpatial);
-      AxF = obj.assembleSpatialStiffnessMatrix(obj.nTestSpatial, obj.nTestSpatial);
+      MxF = SpatialAssemblyFourier.massMatrix(obj.nTestSpatial, obj.nTestSpatial, obj.xspan(2) - obj.xspan(1));
+      AxF = SpatialAssemblyFourier.stiffnessMatrix(obj.nTestSpatial, obj.nTestSpatial, obj.xspan(2) - obj.xspan(1));
 
       % first part; just like the ansatz norm
       mat1 = kron(MtF, MxF + AxF);
 
       % second part (initial condition)
-      mat2 = obj.assembleSpatialMassMatrix(obj.nTestSpatialIC, obj.nTestSpatialIC);
+      mat2 = SpatialAssemblyFourier.massMatrix(obj.nTestSpatialIC, obj.nTestSpatialIC, obj.xspan(2) - obj.xspan(1));
 
       % Assemble the sparse mass matrix (with normalization, if needed)
       if ~useNormalization || ~obj.useNormalization
@@ -550,165 +550,6 @@ classdef AssemblyFourierLegendre < AssemblyGlobalAbstract
     end
 
   end % methods
-
-  methods % implementing AssemblyTensorAbstract
-
-    function MtF = assembleTemporalMassMatrix(obj, nX, nY)
-      % Assemble the temporal mass Matrix, that means we evaluate the integral
-      % `\int_{I} \theta_k(t) \xi_m(t) \diff t` for `k = 1 \dots K` and
-      % `m = 1 \dots K'`, where the temporal basis functions `\theta_k` and
-      % `\xi_m` are defined as shifted Legendre polynomials.
-      %
-      % The parameters nX and nY correspond to `K` respectively `K'` and are
-      % mainly here, because ansatz and test space can have a different number
-      % of these basis functions.
-      %
-      % Parameters:
-      %   nX: number of temporal basis functions `K` @type integer
-      %   nY: number of temporal basis functions `K'` @type integer
-      %
-      % Return values:
-      %   MtF: temporal mass matrix @type matrix
-
-      tmp = (obj.tspan(2) - obj.tspan(1)) ./ (2 * ((1:min(nX, nY)) - 1) + 1);
-      MtF = spdiags(tmp.', 0, nY, nX);
-    end
-
-    function CtF = assembleTemporalHalfStiffnessMatrix(obj, nX, nY)
-      % Assemble the temporal "half stiffness" matrix, that means we evaluate the
-      % integral `\int_{I} \theta'_k(t) \xi_m(t) \diff t` for `k = 1 \dots K` and
-      % `m = 1 \dots K'`, where the temporal basis functions `\theta_k` and
-      % `\xi_m` are defined as shifted Legendre polynomials.
-      %
-      % The parameters nX and nY correspond to `K` respectively `K'` and are
-      % mainly here, because ansatz and test space can have a different number
-      % of these basis functions.
-      %
-      % Parameters:
-      %   nX: number of temporal basis functions `K` @type integer
-      %   nY: number of temporal basis functions `K'` @type integer
-      %
-      % Return values:
-      %   CtF: temporal "half stiffness" matrix @type matrix
-
-      CtF = spdiags(2 * ones(nY, ceil(nX / 2)), 1:2:nX, nY, nX);
-    end
-
-    function AtF = assembleTemporalStiffnessMatrix(obj, nX)
-      % Assemble the temporal stiffness matrix, that means we evaluate the
-      % integral `\int_{I} \theta'_{k_1}(t) \theta'_{k_2}(t) \diff t` for
-      % `k_1, k_2 = 1 \dots K`, where the temporal basis functions `\theta_k`
-      % are defined as shifted Legendre polynomials.
-      %
-      % As this method is only useful for the assembly of the norm matrices,
-      % there's only one parameter nX which corresponds to `K`.
-      %
-      % Parameters:
-      %   nX: number of temporal basis functions `K` @type integer
-      %
-      % Return values:
-      %   AtF: temporal stiffness matrix @type matrix
-      %
-      % @todo optimize!
-
-      AtF = sparse(nX);
-      for kdx1 = 1:nX
-        % temporal intregal is zero if kdx1 + kdx2 is odd, so we only iterate
-        % over the relevant indexes
-        if mod(kdx1, 2) == 0
-          startKdx2 = 2;
-        else
-          startKdx2 = 1;
-        end
-        for kdx2 = startKdx2:2:nX
-          % evaluate the temporal integral;
-          if kdx1 >= kdx2
-            intTemporal = 2 * kdx2 * (kdx2 - 1) / ...
-              (obj.tspan(2) - obj.tspan(1));
-          else
-            intTemporal = 2 * kdx1 * (kdx1 - 1) / ...
-              (obj.tspan(2) - obj.tspan(1));
-          end
-
-          % save the evaluated integral
-          AtF(kdx1, kdx2) = intTemporal;
-        end
-      end
-    end
-
-    function etF = assembleTemporalInitForwardVector(obj, nX)
-      % Assemble the temporal row vector responsible for the propagation of the
-      % initial condition in the case of the forward propagator, that means we
-      % evaluate `\theta_k(0)` for `k = 1 \dots K` with Legendre polynomials
-      % `\theta_k`.
-      %
-      % Parameters:
-      %   nX: corresponds to `K` @type integer
-      %
-      % Return values:
-      %   eFtF: forward propagation vector @type vector
-
-      etF = (-1).^((1:nX) - 1);
-    end
-
-    function etF = assembleTemporalInitBackwardVector(obj, nX)
-      % Assemble the temporal row vector responsible for the propagation of the
-      % initial condition in the case of the forward propagator, that means we
-      % evaluate `\theta_k(L)` for `k = 1 \dots K` with Legendre polynomials
-      % `\theta_k`.
-      %
-      % Parameters:
-      %   nX: corresponds to `K` @type integer
-      %
-      % Return values:
-      %   eBtF: backward propagation vector @type vector
-
-      etF = ones(1, nX);
-    end
-
-    function MxF = assembleSpatialMassMatrix(obj, nX, nY)
-      % Assemble the spatial mass matrix, that means we evaluate the integral
-      % `\int_{\Omega} \sigma_j(x) \sigma_l(x) \diff x` for some `j` and `l`,
-      % which are Fourier basis functions in this case.
-      %
-      % Parameters:
-      %   nX: the limit of iteration for the `j` index @type integer
-      %   nY: the limit of iteration for the `l` index @type integer
-      %
-      % Return values:
-      %   MxF: spatial mass matrix @type matrix
-
-      tmp    = (obj.xspan(2) - obj.xspan(1)) * ones(min(nX, nY), 1) / 2;
-      tmp(1) = tmp(1) * 2;
-      MxF    = spdiags(tmp, 0, nY, nX);
-    end
-
-    function AxF = assembleSpatialStiffnessMatrix(obj, nX, nY)
-      % Assemble the spatial stiffness matrix, that means we evaluate the
-      % integral `\int_{\Omega} \sigma'_j(x) \sigma'_l(x) \diff x` for some `j`
-      % and `l`.
-      %
-      % Parameters:
-      %   nX: the limit of iteration for the `j` index @type integer
-      %   nY: the limit of iteration for the `l` index @type integer
-      %
-      % Return values:
-      %   AxF: spatial stiffness matrix @type matrix
-      %
-      % @todo optimize
-
-      tmp = zeros(min(nX, nY), 1);
-      for jdx = 2:min(nX, nY)
-        if mod(jdx, 2) == 0
-          tmp(jdx) = (pi * jdx)^2 / ( 2 * (obj.xspan(2) - obj.xspan(1)));
-        else
-          tmp(jdx) = (pi * (jdx - 1))^2 / ( 2 * (obj.xspan(2) - obj.xspan(1)));
-        end
-      end
-      AxF = spdiags(tmp, 0, nY, nX);
-    end
-
-  end % implementing AssemblyTensorAbstract
 
   methods % implementing AssemblyGlobalAbstract
 

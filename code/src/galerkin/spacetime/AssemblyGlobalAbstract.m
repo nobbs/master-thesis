@@ -1,4 +1,4 @@
-classdef AssemblyGlobalAbstract < AssemblyAbstract & AssemblyTensorAbstract
+classdef AssemblyGlobalAbstract < SpaceTimeAssemblyAbstract
   % Common superclass for the assembly classes of global galerkin methods.
   %
   % The main purpose  of this class is to provide common shared methods which
