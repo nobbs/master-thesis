@@ -2,7 +2,7 @@ classdef SpatialAssemblyAbstract < handle
   % Interface for the assembly of spatial structures.
   %
   % Needed for the construction of the space-time-structures, as these are
-  % computed through kronecker-products of temporal and spatial matrices and
+  % computed through Kronecker-products of temporal and spatial matrices and
   % vectors.
   %
   % See also:

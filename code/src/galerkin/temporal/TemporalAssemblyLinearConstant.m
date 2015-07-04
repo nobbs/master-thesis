@@ -1,11 +1,24 @@
 classdef TemporalAssemblyLinearConstant < TemporalAssemblyAbstract
   % Assemble the temporal mass and stiffness matrices for a basis given through
-  % piecewise linear nodal basis functions in the ansatz temporal part and
+  % piecewise linear nodal basis functions in the trial temporal part and
   % indicator functions in the test temporal part.
 
-  methods(Static)
+  properties
+    tgrid;
+  end
 
-    function Mt = massMatrix(nK, tgrid)
+  methods
+
+    function obj = TemporalAssemblyLinearConstant(tgrid)
+      % Constructor for this assembly class.
+      %
+      % Parameters:
+      %   tgrid: grid for the temporal interval @type vector
+
+      obj.tgrid = tgrid;
+    end
+
+    function Mt = massMatrix(obj, nK)
       % Assemble the temporal mass Matrix, that means we evaluate the integral
       % `\int_{I} \theta_k(t) \xi_m(t) \diff t` for `k = 1 \dots K` and `m = 1
       % \dots K'` where the temporal basis functions `\theta_k` are piecewise
@@ -22,11 +35,11 @@ classdef TemporalAssemblyLinearConstant < TemporalAssemblyAbstract
       %
       % @todo add refinement
 
-      D = diff(tgrid);
+      D = diff(obj.tgrid);
       Mt = spdiags(D.' * [1/2 1/2], [0 1], nK - 1, nK);
     end
 
-    function Ct = halfStiffnessMatrix(nK)
+    function Ct = halfStiffnessMatrix(obj, nK)
       % Assemble the temporal "half stiffness" matrix, that means we evaluate
       % the integral `\int_{I} \theta'_k(t) \xi_m(t) \diff t` for `k = 1 \dots
       % K` and `m = 1 \dots K'` where the temporal basis functions `\theta_k`
@@ -46,7 +59,7 @@ classdef TemporalAssemblyLinearConstant < TemporalAssemblyAbstract
       Ct = diff(speye(nK));
     end
 
-    function At = stiffnessMatrix(nK, tgrid)
+    function At = stiffnessMatrix(obj, nK)
       % Assemble the temporal stiffness matrix, that means we evaluate the
       % integral `\int_{I} \theta'_{k_1}(t) \theta'_{k_2}(t) \diff t` for `k_1,
       % k_2 = 1 \dots K`, where the temporal basis functions `\theta_k` are
@@ -61,11 +74,11 @@ classdef TemporalAssemblyLinearConstant < TemporalAssemblyAbstract
       % Return values:
       %   At: temporal stiffness matrix @type matrix
 
-      iD  = 1 ./ diff(tgrid);
+      iD  = 1 ./ diff(obj.tgrid);
       At = spdiags([iD 0; 0 iD]' * [-1 1 0; 0 1 -1], [-1 0 1], nK, nK);
     end
 
-    function et = forwardInitVector(nK)
+    function et = forwardInitVector(obj, nK)
       % Assemble the temporal row vector responsible for the propagation of the
       % initial condition in the case of the forward propagator that means we
       % evaluate `\theta_k(0)` for `k = 1 \dots K` with piecewise linear nodal
@@ -77,11 +90,11 @@ classdef TemporalAssemblyLinearConstant < TemporalAssemblyAbstract
       % Return values:
       %   et: forward propagation vector @type vector
 
-      et = zeros(1, nK);
+      et = sparse(1, nK);
       et(1) = 1;
     end
 
-    function et = backwardInitVector(nK)
+    function et = backwardInitVector(obj, nK)
       % Assemble the temporal row vector responsible for the propagation of the
       % initial condition in the case of the forward propagator, that means we
       % evaluate `\theta_k(L)` for `k = 1 \dots K` with piecewise linear nodal
@@ -93,7 +106,7 @@ classdef TemporalAssemblyLinearConstant < TemporalAssemblyAbstract
       % Return values:
       %   et: backward propagation vector @type vector
 
-      et = zeros(1, nK);
+      et = sparse(1, nK);
       et(end) = 1;
     end
 

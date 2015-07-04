@@ -4,33 +4,45 @@ classdef SpatialAssemblySine < SpatialAssemblyAbstract
   %
   % @todo test me
 
-  methods(Static)
+  properties
+    % witdh of the spatial interval @type double @type double
+    xwidth;
+  end
 
-    function Mx = massMatrix(nX, nY, xwidth)
+  methods
+
+    function obj = SpatialAssemblySine(xwidth)
+      % Constructor for this assembly class.
+      %
+      % Parameters:
+      %   xwidth: width of the spatial interval @type double
+
+      obj.xwidth = xwidth;
+    end
+
+    function Mx = massMatrix(obj, nX, nY)
       % Assemble the spatial mass matrix, that means we evaluate the integral
-      % `\int_{\Omega} \sigma_j(x) \sigma_l(x) \diff x` for some `j` and `l`,
-      % which are sine basis functions in this case.
+      % `\int_{\Omega} \sigma_j(x) \sigma_l(x) \diff x` for some `j` and `l`
+      % where `\sigma` are sine basis functions.
       %
       % Parameters:
       %   nX: the limit of iteration for the `j` index @type integer
       %   nY: the limit of iteration for the `l` index @type integer
-      %   xwidth: width of the spatial interval @type double
       %
       % Return values:
       %   Mx: spatial mass matrix @type matrix
 
-      Mx    = spdiags(xwidth * ones(min(nX, nY), 1) / 2, 0, nY, nX);
+      Mx    = spdiags(obj.xwidth * ones(min(nX, nY), 1) / 2, 0, nY, nX);
     end
 
-    function Ax = stiffnessMatrix(nX, nY, xwidth)
+    function Ax = stiffnessMatrix(obj, nX, nY)
       % Assemble the spatial stiffness matrix, that means we evaluate the
       % integral `\int_{\Omega} \sigma'_j(x) \sigma'_l(x) \diff x` for some `j`
-      % and `l`.
+      % and `l` where `\sigma` are sine basis functions.
       %
       % Parameters:
       %   nX: the limit of iteration for the `j` index @type integer
       %   nY: the limit of iteration for the `l` index @type integer
-      %   xwidth: width of the spatial interval @type double
       %
       % Return values:
       %   Ax: spatial stiffness matrix @type matrix
