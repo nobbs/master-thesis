@@ -15,10 +15,12 @@ classdef TemporalAssemblyLinearConstant < TemporalAssemblyAbstract
       % Parameters:
       %   tgrid: grid for the temporal interval @type vector
 
-      obj.tgrid = tgrid;
+      if nargin > 0
+        obj.tgrid = tgrid;
+      end
     end
 
-    function Mt = massMatrix(obj, nK)
+    function Mt = massMatrix(obj, nK, kind)
       % Assemble the temporal mass Matrix, that means we evaluate the integral
       % `\int_{I} \theta_k(t) \xi_m(t) \diff t` for `k = 1 \dots K` and `m = 1
       % \dots K'` where the temporal basis functions `\theta_k` are piecewise
@@ -28,15 +30,24 @@ classdef TemporalAssemblyLinearConstant < TemporalAssemblyAbstract
       %
       % Parameters:
       %   nK: number of temporal basis functions `K`, `K'` @type integer
-      %   tgrid: temporal grid @type vector
+      %   kind: which kind of functions to use @type string
       %
       % Return values:
       %   Mt: temporal mass matrix @type matrix
       %
       % @todo add refinement
 
-      D = diff(obj.tgrid);
-      Mt = spdiags(D.' * [1/2 1/2], [0 1], nK - 1, nK);
+      switch kind
+        case 'both'
+          D = diff(obj.tgrid);
+          Mt = spdiags(D.' * [1/2 1/2], [0 1], nK - 1, nK);
+        case 'linear'
+          Mt = speye(nK);
+        case 'constant'
+          Mt = spdiags(abs(diff(obj.tgrid)).', 0, nK, nK);
+        otherwise
+          error();
+      end
     end
 
     function Ct = halfStiffnessMatrix(~, nK)

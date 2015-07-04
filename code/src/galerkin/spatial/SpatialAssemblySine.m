@@ -17,7 +17,9 @@ classdef SpatialAssemblySine < SpatialAssemblyAbstract
       % Parameters:
       %   xwidth: width of the spatial interval @type double
 
-      obj.xwidth = xwidth;
+      if nargin > 0
+        obj.xwidth = xwidth;
+      end
     end
 
     function Mx = massMatrix(obj, nX, nY)

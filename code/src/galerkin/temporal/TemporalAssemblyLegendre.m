@@ -15,7 +15,9 @@ classdef TemporalAssemblyLegendre < TemporalAssemblyAbstract
       % Parameters:
       %   twidth: width of the temporal interval @type double
 
-      obj.twidth = twidth;
+      if nargin > 0
+        obj.twidth = twidth;
+      end
     end
 
     function Mt = massMatrix(obj, nX, nY)
