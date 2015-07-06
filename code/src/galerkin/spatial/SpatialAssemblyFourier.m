@@ -1,6 +1,8 @@
 classdef SpatialAssemblyFourier < SpatialAssemblyAbstract
   % Assemble the spatial mass and stiffness matrices for a fourier basis. The
   % resulting spatial discretization has periodic boundary conditions.
+  %
+  % @todo Describe basis functions
 
   properties
     % witdh of the spatial interval @type double @type double
@@ -276,6 +278,25 @@ classdef SpatialAssemblyFourier < SpatialAssemblyAbstract
 
         % create the sparse matrix
         FDx{cdx} = sparse(Idy, Idx, Val, nY, nX);
+      end
+    end
+
+    function val = basisFunc(obj, index, x)
+      % Evaluate the basis function for a given index and x values.
+      %
+      % Parameters:
+      %   index: index of the basis function @type integer
+      %   x: values in which the function should be evaluated @type matrix
+      %
+      % Return values:
+      %   val: values of the basis function in x @type matrix
+
+      if index == 1
+        val = ones(size(x, 1), size(x, 2));
+      elseif mod(index, 2) == 0
+        val = sin(pi * index * x / obj.xwidth);
+      else
+        val = cos(pi * (index - 1) * x / obj.xwidth);
       end
     end
 

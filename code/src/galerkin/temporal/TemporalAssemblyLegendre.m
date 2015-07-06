@@ -133,6 +133,23 @@ classdef TemporalAssemblyLegendre < TemporalAssemblyAbstract
       et = ones(1, nX);
     end
 
+    function val = basisFunc(obj, index, t)
+      % Evaluate the basis function for a given index and t value.
+      %
+      % Warning:
+      %   The enumeration of index starts at 1, that means you'll get the
+      %   Legendre polynomial of degree (index - 1)!
+      %
+      % Parameters:
+      %   index: index of the basis function @type integer
+      %   t: values in which the function should be evaluated @type matrix
+      %
+      % Return values:
+      %   val: values of the basis function in t @type matrix
+
+      val = legendrePolynomial(t, index - 1, obj.tspan);
+    end
+
   end
 
 end

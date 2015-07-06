@@ -1,9 +1,12 @@
 classdef SolverFourierLegendre < SolverAbstract
-  % @deprecated not fully supported!
-
-  properties(Access = 'private')
-    % nothing to see here
-  end
+  % Solver for the propagators based on a Fourier base in space and Legendre
+  % polynomials in time.
+  %
+  % @deprecated Not fully supported, because Legendre polynomials really aren't
+  %     that suitable for the given task if there's more than one field.
+  %
+  % See also:
+  %   SpatialAssemblyFourier TemporalAssemblyLegendre
 
   methods
 
@@ -45,7 +48,9 @@ classdef SolverFourierLegendre < SolverAbstract
       %   fieldCoefficients: cellarray of vectors that hold the coefficients for
       %     the field series expansions. @type cell
       %
-      % @todo generalize!
+      % Return values:
+      %   solvec: coefficient vector of the solution in the trial space
+      %     @type vector
 
       % first we set up the preconditioners.
       % attention: the inverse of these matrices will be multiplied with the
@@ -94,7 +99,9 @@ classdef SolverFourierLegendre < SolverAbstract
       %   fieldCoefficients: cellarray of vectors that hold the coefficients for
       %     the field series expansions. @type cell
       %
-      % @todo generalize!
+      % Return values:
+      %   solvec: coefficient vector of the solution in the trial space
+      %     @type vector
 
       % first we set up the preconditioners.
       % attention: the inverse of these matrices will be multiplied with the
@@ -144,6 +151,9 @@ classdef SolverFourierLegendre < SolverAbstract
       %     @type vector.
       %   tgrid: temporal grid @type vector
       %   xgrid: spatial grid @type vector
+      %
+      % Return values:
+      %   solval: values of the solution on the given grids @type matrix
 
       % first generate the meshgrid
       [tmesh, xmesh] = meshgrid(tgrid, xgrid);
@@ -153,11 +163,11 @@ classdef SolverFourierLegendre < SolverAbstract
       % precompute the spatial and temporal basis functions for the given grids
       spatialValues = cell(obj.nTrialS, 1);
       for jdx = 1:obj.nTrialS
-        spatialValues{jdx} = obj.spatialBasisFunc(jdx, xmesh);
+        spatialValues{jdx} = obj.spatial.basisFunc(jdx, xmesh);
       end
       temporalValues = cell(obj.nTrialT, 1);
       for kdx = 1:obj.nTrialT
-        temporalValues{kdx} = obj.temporalBasisFunc(kdx, tmesh);
+        temporalValues{kdx} = obj.temporal.basisFunc(kdx, tmesh);
       end
 
       % we evaluate the solution in two steps. the inner loop adds up all the
@@ -179,7 +189,7 @@ classdef SolverFourierLegendre < SolverAbstract
 
   end
 
-  methods(Access = 'private')
+  methods(Access = 'protected')
 
     function M = spacetimeStiffnessMatrix(obj)
       % Assemble the field independent part of the space time stiffness matrix.
@@ -227,7 +237,19 @@ classdef SolverFourierLegendre < SolverAbstract
     end
 
     function FD = spacetimeFieldDependentFourier(obj)
-      % @todo find out, how far the temporal matrix has to go...
+      % Assemble the field independent part of the space time system matrix.
+      %
+      % Warning:
+      %   Only works for one field!
+      %
+      % Return values:
+      %   FD: 2d cell array containing the part of the space time system matrix
+      %     which corresponds to the (basis function, field) index pair
+      %     @type cellarray
+      %
+      % @deprecated
+
+      assert(obj.nFields == 1);
 
       % temporal mass matrices
       MtAT = obj.temporal.massMatrix(obj.nTrialT, obj.nTestT);
@@ -295,59 +317,6 @@ classdef SolverFourierLegendre < SolverAbstract
       M(iB, iB) = B;
     end
 
-    function val = spatialBasisFunc(obj, index, x)
-      % Spatial basis functions.
-      %
-      % Evaluates the spatial basis function, Fourier functions, with the given
-      % index for the given values of x. Can be used to define function handles
-      % and numerical integration.
-      %
-      % In this case the spatial basis functions are of the type
-      % ``\begin{cases}
-      %   1, & i = 1\\
-      %   \sin(\pi i x / L), & i~\text{even}\\
-      %   \cos(\pi i x / L), & i~\text{odd and}~i > 1
-      % \end{cases},`` where `i` corresponds to index and `L` is the width of
-      % the spatial interval.
-      %
-      % Parameters:
-      %   index: index of the basis function @type integer
-      %   x: values in which the function should be evaluated @type matrix
-      %
-      % Return values:
-      %   val: values of the basis function in x @type matrix
-
-      if index == 1
-        val = ones(size(x, 1), size(x, 2));
-      elseif mod(index, 2) == 0
-        val = sin(pi * index * x / obj.xspan(2));
-      else
-        val = cos(pi * (index - 1) * x / obj.xspan(2));
-      end
-    end
-
-    function val = temporalBasisFunc(obj, index, t)
-      % Temporal basis functions.
-      %
-      % Evaluates the temporal basis function, shifted Legendre polynomials,
-      % with the given index for the given values of t. Can be used to define
-      % function handles and numerical integration.
-      %
-      % Warning:
-      %   The enumeration of index starts at 1, that means you'll get the
-      %   Legendre polynomial of degree (index - 1)!
-      %
-      % Parameters:
-      %   index: index of the basis function @type integer
-      %   t: values in which the function should be evaluated @type matrix
-      %   tspan: custom temporal interval @type vector @default obj.tspan
-      %
-      % Return values:
-      %   val: values of the basis function in t @type matrix
-
-      val = legendrePolynomial(t, index - 1, obj.tspan);
-    end % spatialBasisFuncDerivative
-
-  end % private methods
+  end % protected methods
 
 end % classdef

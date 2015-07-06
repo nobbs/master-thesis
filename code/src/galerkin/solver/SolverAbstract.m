@@ -92,6 +92,20 @@ classdef SolverAbstract < handle
     evaluateSolution(obj, solvec);
   end % abstract methods
 
+  methods(Abstract, Access = 'protected')
+    % Assemble the field independent part of the space time stiffness matrix.
+    spacetimeStiffnessMatrix(obj);
+
+    % Assemble the field independent part of the space time system matrix.
+    spacetimeFieldDependentFourier(obj);
+
+    % Assemble the matrix for the discrete norm on the trial space.
+    spacetimeTrialNorm(obj);
+
+    % Assemble the matrix for the discrete norm on the test space.
+    spacetimeTestNorm(obj);
+  end % abstract protected methods
+
   methods % for dependent properties
     function val = get.nFields(obj)
       % Total number of fields.

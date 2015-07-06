@@ -4,6 +4,7 @@ classdef SpatialAssemblySine < SpatialAssemblyAbstract
   %
   % @todo test me
   % @deprecated not fully supported!
+  % @todo Describe basis functions
 
   properties
     % witdh of the spatial interval @type double @type double
@@ -35,7 +36,7 @@ classdef SpatialAssemblySine < SpatialAssemblyAbstract
       % Return values:
       %   Mx: spatial mass matrix @type matrix
 
-      Mx    = spdiags(obj.xwidth * ones(min(nX, nY), 1) / 2, 0, nY, nX);
+      Mx = spdiags(obj.xwidth * ones(min(nX, nY), 1) / 2, 0, nY, nX);
     end
 
     function Ax = stiffnessMatrix(obj, nX, nY)
@@ -175,6 +176,18 @@ classdef SpatialAssemblySine < SpatialAssemblyAbstract
       end
     end
 
+    function val = basisFunc(obj, index, x)
+      % Evaluate the basis function for a given index and x values.
+      %
+      % Parameters:
+      %   index: index of the basis function @type integer
+      %   x: values in which the function should be evaluated @type matrix
+      %
+      % Return values:
+      %   val: values of the basis function in x @type matrix
+
+      val = sin(pi * index * x / obj.xwidth);
+    end
 
   end % methods
 

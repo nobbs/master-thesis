@@ -12,10 +12,10 @@ classdef SolverFourierNodal < SolverAbstract
     tref;
   end % public properties
 
-  properties(Access = 'private')
+  properties(Access = 'protected')
     % Number of grid points in time. @type integer
     nK;
-  end % private properties
+  end % protected properties
 
   methods
 
@@ -57,7 +57,9 @@ classdef SolverFourierNodal < SolverAbstract
       %   fieldCoefficients: cellarray of vectors that hold the coefficients for
       %     the field series expansions. @type cell
       %
-      % @todo generalize!
+      % Return values:
+      %   solvec: coefficient vector of the solution in the trial space
+      %     @type vector
 
       % first we set up the preconditioners.
       % attention: the inverse of these matrices will be multiplied with the
@@ -106,7 +108,9 @@ classdef SolverFourierNodal < SolverAbstract
       %   fieldCoefficients: cellarray of vectors that hold the coefficients for
       %     the field series expansions. @type cell
       %
-      % @todo generalize!
+      % Return values:
+      %   solvec: coefficient vector of the solution in the trial space
+      %     @type vector
 
       % first we set up the preconditioners.
       % attention: the inverse of these matrices will be multiplied with the
@@ -155,6 +159,9 @@ classdef SolverFourierNodal < SolverAbstract
       %   solvec: coefficient vector of the solution in the trial space.
       %     @type vector.
       %   xgrid: spatial grid @type vector
+      %
+      % Return values:
+      %   solval: values of the solution on the given grids @type matrix
 
       % first generate the meshgrid
       [tmesh, xmesh] = meshgrid(obj.tgrid, xgrid);
@@ -164,7 +171,7 @@ classdef SolverFourierNodal < SolverAbstract
       % precompute the spatial and temporal basis functions for the given grids
       spatialValues = zeros(length(xgrid), obj.nTrialS);
       for jdx = 1:obj.nTrialS
-        spatialValues(:, jdx) = obj.spatialBasisFunc(jdx, xgrid).';
+        spatialValues(:, jdx) = obj.spatial.basisFunc(jdx, xgrid).';
       end
 
       % we evaluate the solution in two steps. the inner loop adds up all the
@@ -180,7 +187,7 @@ classdef SolverFourierNodal < SolverAbstract
 
   end
 
-  methods(Access = 'private')
+  methods(Access = 'protected')
 
     function M = spacetimeStiffnessMatrix(obj)
       % Assemble the field independent part of the space time stiffness matrix.
@@ -228,7 +235,14 @@ classdef SolverFourierNodal < SolverAbstract
     end
 
     function FD = spacetimeFieldDependentFourier(obj)
-      % @todo find out, how far the temporal matrix has to go...
+      % Assemble the field independent part of the space time system matrix.
+      %
+      % Return values:
+      %   FD: 2d cell array containing the part of the space time system matrix
+      %     which corresponds to the (basis function, field) index pair
+      %     @type cellarray
+      %
+      % @todo improve that stuff!
 
       % spatial field dependent stuff
       FDx  = obj.spatial.fieldDependentFourier(obj.nTrialS, obj.nTestS, obj.nFieldCoeffs);
@@ -302,57 +316,6 @@ classdef SolverFourierNodal < SolverAbstract
       M(iB, iB) = B;
     end
 
-    function val = spatialBasisFunc(obj, index, x)
-      % Spatial basis functions.
-      %
-      % Evaluates the spatial basis function, Fourier functions, with the given
-      % index for the given values of x. Can be used to define function handles
-      % and numerical integration.
-      %
-      % In this case the spatial basis functions are of the type
-      % ``\begin{cases}
-      %   1, & i = 1\\
-      %   \sin(\pi i x / L), & i~\text{even}\\
-      %   \cos(\pi i x / L), & i~\text{odd and}~i > 1
-      % \end{cases},`` where `i` corresponds to index and `L` is the width of
-      % the spatial interval.
-      %
-      % Parameters:
-      %   index: index of the basis function @type integer
-      %   x: values in which the function should be evaluated @type matrix
-      %
-      % Return values:
-      %   val: values of the basis function in x @type matrix
-
-      if index == 1
-        val = ones(size(x, 1), size(x, 2));
-      elseif mod(index, 2) == 0
-        val = sin(pi * index * x / obj.xspan(2));
-      else
-        val = cos(pi * (index - 1) * x / obj.xspan(2));
-      end
-    end
-
-    function val = temporalBasisFunc(obj, index, t)
-      % Temporal basis functions.
-      %
-      % Parameters:
-      %   index: index of the basis function @type integer
-      %   t: values in which the function should be evaluated @type matrix
-      %
-      % Return values:
-      %   val: values of the basis function in t @type matrix
-
-      if index == 1
-        val = (obj.tspan(1) <= t & t < obj.tgrid(2)) .* (obj.tgrid(2) - t) / (obj.tgrid(2) - obj.tgrid(1));
-      elseif index == obj.nK
-        val = (obj.tgrid(end - 1) <= t & t <= obj.tgrid(end)) .* (t - obj.tgrid(end - 1)) / (obj.tgrid(end) - obj.tgrid(end - 1));
-      else
-        val = (obj.tgrid(index - 1) <= t & t < obj.tgrid(index)) .* (t - obj.tgrid(index - 1)) / (obj.tgrid(index) - obj.tgrid(index - 1)) + ...
-          (obj.tgrid(index) <= t & t < obj.tgrid(index + 1)) .* (obj.tgrid(index + 1) - t) / (obj.tgrid(index + 1) - obj.tgrid(index));
-      end
-    end % temporalBasisFunc
-
-  end % private methods
+  end % protected methods
 
 end % classdef
