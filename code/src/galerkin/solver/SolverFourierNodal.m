@@ -262,7 +262,6 @@ classdef SolverFourierNodal < SolverAbstract
         for cdx = 1:obj.nFieldCoeffs
           % assemble
           FD{cdx, fdx} = kron(MtAT, FDx{cdx});
-          spy(FD{cdx, fdx})
           % resize
           FD{cdx, fdx}(obj.nTestDim, obj.nTrialDim) = 0;
         end
