@@ -1,83 +1,8 @@
-classdef SolverFourierLegendre < handle
+classdef SolverFourierLegendre < SolverAbstract
   % @deprecated not fully supported!
 
-  properties
-    % number of spatial basis functions for the trial space @type integer
-    nTrialS;
-    % number of temporal basis functions for the trial space @type integer
-    nTrialT;
-    % number of spatial basis functions for the test space @type integer
-    nTestS;
-    % number of temporal basis functions for the test space @type integer
-    nTestT;
-    % number of spatial basis functions for the initial condition in the test
-    % space @type integer
-    nTestSic;
-
-    % span of the spatial interval @type vector
-    xspan;
-    % span of the temporal interval @type vector
-    tspan;
-
-    % multiplicative factor for the Laplacian @type double
-    cLaplacian;
-    % additive field-offset `\mu`. @type double
-    cOffset;
-
-    % points in time at which the the field switch occurs @type vector
-    breakpoints;
-    % number of coefficients of the field series expansions @type integer
-    nFieldCoeffs;
-
-    % field dependent matrices in a cell array @type struct
-    FDx;
-  end
-
-  properties(Dependent)
-    % total number of fields (or number of switches plus one) @type integer
-    nFields;
-
-    % dimension of the trial space @type integer
-    nTrialDim;
-    % dimension of the test space @type integer
-    nTestDim;
-  end % dependent properties
-
-  methods
-    function val = get.nFields(obj)
-      % Return the value of fields.
-      val = length(obj.breakpoints) + 1;
-    end
-
-    function val = get.nTrialDim(obj)
-      % Return the dimension of the trial space.
-      val = obj.nTrialT * obj.nTrialS;
-    end
-
-    function val = get.nTestDim(obj)
-      % Return the dimension of the test space.
-      val = obj.nTestT * obj.nTestS + obj.nTestSic;
-    end
-  end
-
   properties(Access = 'private')
-    % spatial assembly object @type SpatialAssemblyFourier
-    spatial;
-
-    % temporal assembly object @type TemporalAssemblyLegendre
-    temporal;
-
-    % struct that holds the field independent parts of the space time stiffness
-    % matrix for the forward and backward propagator
-    LhsFI;
-
-    LhsFD;
-
-    % trial norm matrix @type matrix
-    TrNorm;
-
-    % test norm matrix @type matrix
-    TeNorm;
+    % nothing to see here
   end
 
   methods
@@ -85,12 +10,13 @@ classdef SolverFourierLegendre < handle
     function obj = SolverFourierLegendre()
       % Constructor for this class
 
+      % first things first: calls the superclass constructor, even if it doesn't
+      % exist
+      obj@SolverAbstract();
+
       % create the spatial and temporal assembly objects
       obj.spatial  = SpatialAssemblyFourier();
       obj.temporal = TemporalAssemblyLegendre();
-
-      % create the needed structures
-      obj.FDx    = struct();
     end
 
     function prepare(obj)
@@ -113,73 +39,115 @@ classdef SolverFourierLegendre < handle
     end
 
     function solvec = solveForward(obj, fieldCoefficients)
-      % @todo add field support
+      % Solve the forward propagator.
+      %
+      % Parameters:
+      %   fieldCoefficients: cellarray of vectors that hold the coefficients for
+      %     the field series expansions. @type cell
+      %
+      % @todo generalize!
 
+      % first we set up the preconditioners.
+      % attention: the inverse of these matrices will be multiplied with the
+      % system matrix, not the matrices itself!
+      % left side:
+      % Pl = obj.TeNorm;
+      Pl = speye(obj.nTestDim);
+      % right side:
+      % Pr = obj.TrNorm;
+      Pr = speye(obj.nTrialDim);
 
-      % left side preconditioner (the inverse will be used)
-      PL = sqrt(obj.TeNorm);
-      % right side preconditioner (the inverse will be used)
-      PR = sqrt(obj.TrNorm);
-      % PR = speye(obj.nTrialDim);
-
-      % sum the field dependent part
-
+      % sum the field dependent parts for the given series expansion
+      % coefficients
       LhsFD = sparse(obj.nTestDim, obj.nTrialDim);
-      size(obj.LhsFD)
+      % iterate over the fields
       for fdx = 1:obj.nFields
+        % and now over the coefficients
         for cdx = 1:obj.nFieldCoeffs
           LhsFD = LhsFD + fieldCoefficients{fdx}(cdx) * obj.LhsFD{cdx, fdx};
         end
       end
 
-      % precondition the left hand side
-      LhsPre = (PL \ (obj.LhsFI.F + LhsFD)) / PR;
+      % apply the preconditioners to the system matrix
+      LhsPre = (Pl \ (obj.LhsFI.F + LhsFD)) / Pr;
 
       % compute the right hand side load vector
-      Rhs = sparse(obj.nTestDim, 1);
-      Rhs(obj.nTestS * obj.nTestT + 1) = obj.xspan(2)
-
-      % cond(full(LhsPre))
-      % return;
-
-      % and consequently also precondition it
-      RhsPre = PL \ Rhs;
-
-      % solve the system
-      solvecPre = LhsPre \ RhsPre;
-
-      % and now revert the preconditioning
-      solvec = PR \ solvecPre;
-    end
-
-    function solvec = solveBackward(obj, fieldCoefficients)
-      % @todo add field support
-
-      % left side preconditioner (the inverse will be used)
-      PL = sqrt(obj.TeNorm);
-      % right side preconditioner (the inverse will be used)
-      % PR = obj.TrNorm;
-      PR = speye(obj.nTrialDim);
-
-      % precondition the left hand side
-      LhsPre = (PL \ obj.LhsFI.B) / PR;
-
-      % compute the right hand side load vector
+      %| @todo implement a generalized case, this only allows uniform one initial
+      %| condition and no source function.
       Rhs = sparse(obj.nTestDim, 1);
       Rhs(obj.nTestS * obj.nTestT + 1) = obj.xspan(2);
 
-      % and consequently also precondition it
-      RhsPre = PL \ Rhs;
+      % apply the left preconditioner
+      RhsPre = Pl \ Rhs;
 
-      % solve the system
+      % now solve the linear system
       solvecPre = LhsPre \ RhsPre;
 
-      % and now revert the preconditioning
-      solvec = PR \ solvecPre;
+      % and revert the preconditioning
+      solvec = Pr \ solvecPre;
     end
 
-    function solval = evaluateSolution(obj, solvec, tmesh, xmesh)
+    function solvec = solveBackward(obj, fieldCoefficients)
+      % Solve the backward propagator.
+      %
+      % Parameters:
+      %   fieldCoefficients: cellarray of vectors that hold the coefficients for
+      %     the field series expansions. @type cell
+      %
+      % @todo generalize!
 
+      % first we set up the preconditioners.
+      % attention: the inverse of these matrices will be multiplied with the
+      % system matrix, not the matrices itself!
+      % left side:
+      % Pl = obj.TeNorm;
+      Pl = speye(obj.nTestDim);
+      % right side:
+      % Pr = obj.TrNorm;
+      Pr = speye(obj.nTrialDim);
+
+      % sum the field dependent parts for the given series expansion
+      % coefficients
+      LhsFD = sparse(obj.nTestDim, obj.nTrialDim);
+      % iterate over the fields
+      for fdx = 1:obj.nFields
+        % and now over the coefficients
+        for cdx = 1:obj.nFieldCoeffs
+          LhsFD = LhsFD + fieldCoefficients{fdx}(cdx) * obj.LhsFD{cdx, fdx};
+        end
+      end
+
+      % apply the preconditioners to the system matrix
+      LhsPre = (Pl \ (obj.LhsFI.B + LhsFD)) / Pr;
+
+      % compute the right hand side load vector
+      %| @todo implement a generalized case, this only allows uniform one initial
+      %| condition and no source function.
+      Rhs = sparse(obj.nTestDim, 1);
+      Rhs(obj.nTestS * obj.nTestT + 1) = obj.xspan(2);
+
+      % apply the left preconditioner
+      RhsPre = Pl \ Rhs;
+
+      % now solve the linear system
+      solvecPre = LhsPre \ RhsPre;
+
+      % and revert the preconditioning
+      solvec = Pr \ solvecPre;
+    end
+
+    function solval = evaluateSolution(obj, solvec, tgrid, xgrid)
+      % Evaluate the solution.
+      %
+      % Parameters:
+      %   solvec: coefficient vector of the solution in the trial space.
+      %     @type vector.
+      %   tgrid: temporal grid @type vector
+      %   xgrid: spatial grid @type vector
+
+      % first generate the meshgrid
+      [tmesh, xmesh] = meshgrid(tgrid, xgrid);
+      % and the matrix that will hold the solution values
       solval = zeros(size(tmesh, 1), size(tmesh, 2));
 
       % precompute the spatial and temporal basis functions for the given grids
