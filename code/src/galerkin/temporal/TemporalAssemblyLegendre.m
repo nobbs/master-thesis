@@ -1,6 +1,8 @@
 classdef TemporalAssemblyLegendre < TemporalAssemblyAbstract
   % Assemble the temporal mass and stiffness matrices for a basis given through
   % shifted legendre polynomials.
+  %
+  % @deprecated not fully supported!
 
   properties
     % width of the temporal interval @type double

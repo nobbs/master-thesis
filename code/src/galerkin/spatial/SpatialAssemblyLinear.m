@@ -4,6 +4,7 @@ classdef SpatialAssemblyLinear < SpatialAssemblyAbstract
   % conditions.
   %
   % @todo fixme
+  % @deprecated not fully supported!
 
   properties
     % type of boundary condition. @type string
