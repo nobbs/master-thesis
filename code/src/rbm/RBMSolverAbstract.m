@@ -66,6 +66,16 @@ classdef RBMSolverAbstract < handle
     evaluateSolution(obj);
   end % abstract methods
 
+  methods(Abstract, Access = 'protected')
+    % Calculate the discrete inf-sup-constant of the rb system for the given
+    % parameter.
+    [beta, gamma] = calcDiscreteInfSupAndContinuityRB(obj, param);
+
+    % Calculate the discrete inf-sup-constant of the truth system for the
+    % given parameter.
+    [beta, gamma] = calcDiscreteInfSupAndContinuityTruth(obj, param);
+  end % private abstract methods
+
   methods % for dependent properties
     function val = get.nFields(obj)
       % Total number of fields.
