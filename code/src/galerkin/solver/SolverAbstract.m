@@ -22,6 +22,9 @@ classdef SolverAbstract < handle
     % Span of the temporal interval. @type vector
     tspan;
 
+    % Direction of the propagator. @type logical
+    isForward = true;
+
     % Multiplicative constant of the Laplace-Operator. @type double
     cLaplacian;
     % Added field offset `\mu`. @type double
@@ -32,6 +35,16 @@ classdef SolverAbstract < handle
     % Number of basis functions to use for the field series expansion.
     % @type integer
     nFieldCoeffs;
+
+    % Field independent parts of the space time system matrix. @type matrix
+    LhsFI;
+    % Field dependent parts of the space time system matrix. @type cellarray
+    LhsFD;
+
+    % Norm of the trial space. @type matrix
+    TrNorm;
+    % Norm of the test space. @type matrix
+    TeNorm;
   end % properties
 
   properties(Access = 'protected')
@@ -41,16 +54,6 @@ classdef SolverAbstract < handle
     % Object responsible for the assembly of temporal structures.
     % @type TemporalAssemblyAbstract
     temporal;
-
-    % Field independent parts of the space time system matrix. @type struct
-    LhsFI;
-    % Field dependent parts of the space time system matrix. @type cellarray
-    LhsFD;
-
-    % Norm of the trial space. @type matrix
-    TrNorm;
-    % Norm of the test space. @type matrix
-    TeNorm;
   end % protected properties
 
   properties(Dependent)
@@ -70,19 +73,12 @@ classdef SolverAbstract < handle
     % matrices of the norms for the trial and test space.
     prepare(obj);
 
-    % Solve the forward propagator.
+    % Solve the propagator.
     %
     % Parameters:
     %   fieldCoefficients: cellarray of vectors that hold the coefficients for
     %     the field series expansions. @type cell
-    solveForward(obj, fieldCoefficients);
-
-    % Solve the backward propagator.
-    %
-    % Parameters:
-    %   fieldCoefficients: cellarray of vectors that hold the coefficients for
-    %     the field series expansions. @type cell
-    solveBackward(obj, fieldCoefficients);
+    solve(obj, fieldCoefficients);
 
     % Evaluate the solution.
     %
@@ -92,7 +88,7 @@ classdef SolverAbstract < handle
     evaluateSolution(obj, solvec);
   end % abstract methods
 
-  methods(Abstract, Access = 'protected')
+  methods(Abstract)%, Access = 'protected')
     % Assemble the field independent part of the space time stiffness matrix.
     spacetimeStiffnessMatrix(obj);
 
@@ -134,4 +130,9 @@ classdef SolverAbstract < handle
       val = obj.nTestT * obj.nTestS + obj.nTestSic;
     end
   end % methods for dependent properties
+
+  % methods(Access = 'protected')
+
+  % end % protected methods
+
 end % classdef

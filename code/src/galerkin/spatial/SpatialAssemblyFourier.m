@@ -169,8 +169,8 @@ classdef SpatialAssemblyFourier < SpatialAssemblyAbstract
 
         % iterate over the indexes of the spatial basis functions of the trial
         % and test subspaces
-        for jdx = 1:nY
-          for ldx = 1:nX
+        for jdx = 1:nX
+          for ldx = 1:nY
 
             % evaluate the spatial integral. there are several combinations of
             % sine / cosine products we have to consider

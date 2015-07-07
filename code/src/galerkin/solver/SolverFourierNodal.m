@@ -31,6 +31,18 @@ classdef SolverFourierNodal < SolverAbstract
       obj.temporal = TemporalAssemblyLinearConstant();
     end
 
+    function rhs = rhs(obj)
+      % Calculate the load vector.
+      % @todo generalize and move it!
+
+      Rhs = sparse(obj.nTestDim, 1);
+      Rhs(obj.nTestS * obj.nTestT + 1) = obj.xspan(2);
+
+      % apply the left preconditioner
+      % RhsPre = Pl \ Rhs;
+      rhs = Rhs;
+    end
+
     function prepare(obj)
       % Prepare the solver.
       %
@@ -50,8 +62,8 @@ classdef SolverFourierNodal < SolverAbstract
       obj.TeNorm = obj.spacetimeTestNorm();
     end
 
-    function solvec = solveForward(obj, fieldCoefficients)
-      % Solve the forward propagator.
+    function [solvec, LhsPre, RhsPre] = solve(obj, fieldCoefficients)
+      % Solve the propagator.
       %
       % Parameters:
       %   fieldCoefficients: cellarray of vectors that hold the coefficients for
@@ -71,76 +83,14 @@ classdef SolverFourierNodal < SolverAbstract
       % Pr = obj.TrNorm;
       Pr = speye(obj.nTrialDim);
 
-      % sum the field dependent parts for the given series expansion
-      % coefficients
-      LhsFD = sparse(obj.nTestDim, obj.nTrialDim);
-      % iterate over the fields
-      for fdx = 1:obj.nFields
-        % and now over the coefficients
-        for cdx = 1:obj.nFieldCoeffs
-          LhsFD = LhsFD + fieldCoefficients{fdx}(cdx) * obj.LhsFD{cdx, fdx};
-        end
-      end
+      % assemble the system matrix for the given field
+      Lhs = obj.spacetimeSystemMatrix(fieldCoefficients);
 
       % apply the preconditioners to the system matrix
-      LhsPre = (Pl \ (obj.LhsFI.F + LhsFD)) / Pr;
+      LhsPre = (Pl \ Lhs) / Pr;
 
       % compute the right hand side load vector
-      %| @todo implement a generalized case, this only allows uniform one initial
-      %| condition and no source function.
-      Rhs = sparse(obj.nTestDim, 1);
-      Rhs(obj.nTestS * obj.nTestT + 1) = obj.xspan(2);
-
-      % apply the left preconditioner
-      RhsPre = Pl \ Rhs;
-
-      % now solve the linear system
-      solvecPre = LhsPre \ RhsPre;
-
-      % and revert the preconditioning
-      solvec = Pr \ solvecPre;
-    end
-
-    function solvec = solveBackward(obj, fieldCoefficients)
-      % Solve the backward propagator.
-      %
-      % Parameters:
-      %   fieldCoefficients: cellarray of vectors that hold the coefficients for
-      %     the field series expansions. @type cell
-      %
-      % Return values:
-      %   solvec: coefficient vector of the solution in the trial space
-      %     @type vector
-
-      % first we set up the preconditioners.
-      % attention: the inverse of these matrices will be multiplied with the
-      % system matrix, not the matrices itself!
-      % left side:
-      % Pl = obj.TeNorm;
-      Pl = speye(obj.nTestDim);
-      % right side:
-      % Pr = obj.TrNorm;
-      Pr = speye(obj.nTrialDim);
-
-      % sum the field dependent parts for the given series expansion
-      % coefficients
-      LhsFD = sparse(obj.nTestDim, obj.nTrialDim);
-      % iterate over the fields
-      for fdx = 1:obj.nFields
-        % and now over the coefficients
-        for cdx = 1:obj.nFieldCoeffs
-          LhsFD = LhsFD + fieldCoefficients{fdx}(cdx) * obj.LhsFD{cdx, fdx};
-        end
-      end
-
-      % apply the preconditioners to the system matrix
-      LhsPre = (Pl \ (obj.LhsFI.B + LhsFD)) / Pr;
-
-      % compute the right hand side load vector
-      %| @todo implement a generalized case, this only allows uniform one initial
-      %| condition and no source function.
-      Rhs = sparse(obj.nTestDim, 1);
-      Rhs(obj.nTestS * obj.nTestT + 1) = obj.xspan(2);
+      Rhs = obj.spacetimeLoadVector();
 
       % apply the left preconditioner
       RhsPre = Pl \ Rhs;
@@ -187,7 +137,7 @@ classdef SolverFourierNodal < SolverAbstract
 
   end
 
-  methods(Access = 'protected')
+  methods%(Access = 'protected')
 
     function M = spacetimeStiffnessMatrix(obj)
       % Assemble the field independent part of the space time stiffness matrix.
@@ -201,9 +151,18 @@ classdef SolverFourierNodal < SolverAbstract
       MtAT   = obj.temporal.massMatrix(obj.nTrialT, 'both');
       % temporal "half stiffness" matrix
       CtAT   = obj.temporal.halfStiffnessMatrix(obj.nTrialT);
-      % temporal propagation vectors
-      etF    = obj.temporal.forwardInitVector(obj.nTrialT);
-      etB    = obj.temporal.backwardInitVector(obj.nTrialT);
+
+      % temporal propagation vectors. this and the sign in front of the time
+      % derivative "half stiffness" matrix is the only difference between the
+      % forward and the backward propagator!
+      if obj.isForward
+        et = obj.temporal.forwardInitVector(obj.nTrialT);
+        tdsign = 1;
+      else
+        et = obj.temporal.backwardInitVector(obj.nTrialT);
+        tdsign = -1;
+      end
+
       % spatial mass matrices
       MxAT   = obj.spatial.massMatrix(obj.nTrialS, obj.nTestS);
       MxATIc = obj.spatial.massMatrix(obj.nTrialS, obj.nTestSic);
@@ -214,24 +173,17 @@ classdef SolverFourierNodal < SolverAbstract
       timeDerivate = kron(CtAT, MxAT);
       laplacian    = kron(MtAT, AxAT);
       offset       = kron(MtAT, MxAT);
-      initialF     = kron(etF, MxATIc);
-      initialB     = kron(etB, MxATIc);
+      initialCond  = kron(et, MxATIc);
 
-      M = struct();
+      % set the upper block of the system matrix
+      M = tdsign * timeDerivate + obj.cLaplacian * laplacian + obj.cOffset * offset;
 
-      % set the upper block of the forward and backward propagator stiffness
-      % matrices
-      M.F =  timeDerivate + obj.cLaplacian * laplacian + obj.cOffset * offset;
-      M.B = -timeDerivate + obj.cLaplacian * laplacian + obj.cOffset * offset;
-
-      % resize both, so that we can add the lower block
-      M.F(obj.nTestDim, obj.nTrialDim) = 0;
-      M.B(obj.nTestDim, obj.nTrialDim) = 0;
+      % resize it, so that we can add the lower block
+      M(obj.nTestDim, obj.nTrialDim) = 0;
 
       % add the lower block which is responsible for the propagation of the
       % initial condition
-      M.F((obj.nTestT * obj.nTestS + 1):end, :) = initialF;
-      M.B((obj.nTestT * obj.nTestS + 1):end, :) = initialB;
+      M((obj.nTestT * obj.nTestS + 1):end, :) = initialCond;
     end
 
     function FD = spacetimeFieldDependentFourier(obj)
@@ -266,6 +218,33 @@ classdef SolverFourierNodal < SolverAbstract
           FD{cdx, fdx}(obj.nTestDim, obj.nTrialDim) = 0;
         end
       end
+    end
+
+    function F = spacetimeLoadVector(obj, param)
+      % Assemble the load vector for the space time system.
+      %
+      % @todo generalize!
+
+      F = sparse(obj.nTestDim, 1);
+      F(obj.nTestS * obj.nTestT + 1) = obj.xspan(2);
+    end
+
+    function M = spacetimeSystemMatrix(obj, param)
+      % Assemble the system matrix for the given field coefficients.
+
+      % sum the field dependent parts for the given series expansion
+      % coefficients
+      LhsFD = sparse(obj.nTestDim, obj.nTrialDim);
+      % iterate over the fields
+      for fdx = 1:obj.nFields
+        % and now over the coefficients
+        for cdx = 1:obj.nFieldCoeffs
+          LhsFD = LhsFD + param{fdx}(cdx) * obj.LhsFD{cdx, fdx};
+        end
+      end
+
+      % add the correct propagator direction matrix
+      M = obj.LhsFI + LhsFD;
     end
 
     function M = spacetimeTrialNorm(obj)

@@ -317,6 +317,16 @@ classdef SolverFourierLegendre < SolverAbstract
       M(iB, iB) = B;
     end
 
+    function setBasisFuncNumber(obj, nTrialS, nTrialT, nTestS, nTestT, nTestSic)
+      % Set all the numbers of the trial and test space in one go.
+
+      obj.nTrialS = nTrialS;
+      obj.nTrialT = nTrialT;
+      obj.nTestS = nTestS;
+      obj.nTestT = nTestT;
+      obj.nTestSic = nTestSic;
+    end
+
   end % protected methods
 
 end % classdef
