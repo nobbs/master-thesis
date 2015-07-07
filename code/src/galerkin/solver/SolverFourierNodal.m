@@ -62,12 +62,12 @@ classdef SolverFourierNodal < SolverAbstract
       obj.TeNorm = obj.spacetimeTestNorm();
     end
 
-    function [solvec, LhsPre, RhsPre] = solve(obj, fieldCoefficients)
+    function [solvec, LhsPre, RhsPre] = solve(obj, param)
       % Solve the propagator.
       %
       % Parameters:
-      %   fieldCoefficients: cellarray of vectors that hold the coefficients for
-      %     the field series expansions. @type cell
+      %   param: matrix of the field series expansion coefficients. each column
+      %     represents a field. @type matrix
       %
       % Return values:
       %   solvec: coefficient vector of the solution in the trial space
@@ -84,7 +84,7 @@ classdef SolverFourierNodal < SolverAbstract
       Pr = speye(obj.nTrialDim);
 
       % assemble the system matrix for the given field
-      Lhs = obj.spacetimeSystemMatrix(fieldCoefficients);
+      Lhs = obj.spacetimeSystemMatrix(param);
 
       % apply the preconditioners to the system matrix
       LhsPre = (Pl \ Lhs) / Pr;
@@ -220,9 +220,8 @@ classdef SolverFourierNodal < SolverAbstract
       end
     end
 
-    function F = spacetimeLoadVector(obj, param)
+    function F = spacetimeLoadVector(obj)
       % Assemble the load vector for the space time system.
-      %
       % @todo generalize!
 
       F = sparse(obj.nTestDim, 1);
@@ -231,6 +230,13 @@ classdef SolverFourierNodal < SolverAbstract
 
     function M = spacetimeSystemMatrix(obj, param)
       % Assemble the system matrix for the given field coefficients.
+      %
+      % Parameters:
+      %   param: matrix of the field series expansion coefficients. each column
+      %     represents a field. @type matrix
+      %
+      % Return values:
+      %   M: space time system matrix. @type matrix
 
       % sum the field dependent parts for the given series expansion
       % coefficients
@@ -239,7 +245,7 @@ classdef SolverFourierNodal < SolverAbstract
       for fdx = 1:obj.nFields
         % and now over the coefficients
         for cdx = 1:obj.nFieldCoeffs
-          LhsFD = LhsFD + param{fdx}(cdx) * obj.LhsFD{cdx, fdx};
+          LhsFD = LhsFD + param(cdx, fdx) * obj.LhsFD{cdx, fdx};
         end
       end
 

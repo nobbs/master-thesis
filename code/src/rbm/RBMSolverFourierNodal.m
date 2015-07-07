@@ -117,7 +117,7 @@ classdef RBMSolverFourierNodal < RBMSolverAbstract
         for fdx = 1:obj.nFields
           for cdx = 1:obj.nC
             kdx = 1 + (fdx - 1) * obj.nC + cdx;
-            tmp = tmp + param{fdx}(cdx) * obj.affineTestshotBase{ndx}(:, kdx);
+            tmp = tmp + param(cdx, fdx) * obj.affineTestshotBase{ndx}(:, kdx);
           end
         end
         testshots(:, ndx) = tmp;
@@ -164,14 +164,14 @@ classdef RBMSolverFourierNodal < RBMSolverAbstract
       % solve the system for some parameters
       % [gsolvec, LhsPre, RhsPre] = obj.solver.solve({[0 0 0]});
 
-      obj.solveAndAdd({[0 0 0]}, true)
-      obj.solveAndAdd({[1 0 0]});
-      obj.solveAndAdd({[0 2 0]});
-      obj.solveAndAdd({[3 0 0]});
-      obj.solveAndAdd({[0 4 0]});
-      obj.solveAndAdd({[5 0 0]});
-      obj.solveAndAdd({[1 0 3]});
-      obj.solveAndAdd({[7 0 0]});
+      obj.solveAndAdd([0; 0; 0], true)
+      obj.solveAndAdd([1; 0; 0]);
+      obj.solveAndAdd([0; 2; 0]);
+      obj.solveAndAdd([3; 0; 0]);
+      obj.solveAndAdd([0; 4; 0]);
+      obj.solveAndAdd([5; 0; 0]);
+      obj.solveAndAdd([1; 0; 3]);
+      obj.solveAndAdd([7; 0; 0]);
       % obj.solveAndAdd({[8 0 0]});
       % obj.solveAndAdd({[9 0 0]});
       % obj.solveAndAdd({[10 0 0]});
@@ -179,7 +179,7 @@ classdef RBMSolverFourierNodal < RBMSolverAbstract
       % obj.solveAndAdd({[0 0 10]});
       % obj.solveAndAdd({[0 0 0]});
 
-      testparam = {[1 1 0]};
+      testparam = [1; 1; 0];
       obj.testshots = obj.constructRBTestSpace(testparam);
       obj.calcDiscreteInfSupAndContinuityRB(testparam)
 
@@ -249,7 +249,7 @@ classdef RBMSolverFourierNodal < RBMSolverAbstract
       for fdx = 1:obj.nFields
         for cdx = 1:obj.nC
           kdx = 1 + (fdx - 1) * obj.nC + cdx;
-          Eps((1+kdx):obj.nQb:end) = param2{fdx}(cdx) * u_rb;
+          Eps((1+kdx):obj.nQb:end) = param2(cdx, fdx) * u_rb;
         end
       end
 
@@ -307,7 +307,7 @@ classdef RBMSolverFourierNodal < RBMSolverAbstract
       snd = rhs.' * (ynorm \ (obj.solver.LhsFI.F * gsolvec));
       for fdx = 1:obj.nFields
         for cdx = 1:obj.nC
-          snd = snd + param{fdx}(cdx) * rhs.' * (ynorm \ (obj.solver.LhsFD{cdx, fdx} * gsolvec));
+          snd = snd + param(cdx, fdx) * rhs.' * (ynorm \ (obj.solver.LhsFD{cdx, fdx} * gsolvec));
         end
       end
 
@@ -315,14 +315,14 @@ classdef RBMSolverFourierNodal < RBMSolverAbstract
       trd = (obj.solver.LhsFI.F * gsolvec).' * (ynorm \ (obj.solver.LhsFI.F * gsolvec));
       for fdx = 1:obj.nFields
         for cdx = 1:obj.nC
-          trd = trd + 2 * param{fdx}(cdx) * (obj.solver.LhsFI.F * gsolvec).' * (ynorm \ (obj.solver.LhsFD{cdx, fdx} * gsolvec));
+          trd = trd + 2 * param(cdx, fdx) * (obj.solver.LhsFI.F * gsolvec).' * (ynorm \ (obj.solver.LhsFD{cdx, fdx} * gsolvec));
         end
       end
       for fdx1 = 1:obj.nFields
         for fdx2 = 1:obj.nFields
           for cdx1 = 1:obj.nC
             for cdx2 = 1:obj.nC
-              trd = trd + param{fdx1}(cdx1) * param{fdx2}(cdx2) * (obj.solver.LhsFD{cdx1, fdx1} * gsolvec).' * (ynorm \ (obj.solver.LhsFD{cdx2, fdx2} * gsolvec));
+              trd = trd + param(cdx1, fdx1) * param(cdx2, fdx2) * (obj.solver.LhsFD{cdx1, fdx1} * gsolvec).' * (ynorm \ (obj.solver.LhsFD{cdx2, fdx2} * gsolvec));
             end
           end
         end

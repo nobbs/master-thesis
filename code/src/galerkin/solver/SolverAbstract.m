@@ -76,9 +76,9 @@ classdef SolverAbstract < handle
     % Solve the propagator.
     %
     % Parameters:
-    %   fieldCoefficients: cellarray of vectors that hold the coefficients for
-    %     the field series expansions. @type cell
-    solve(obj, fieldCoefficients);
+    %   param: matrix of the field series expansion coefficients. each column
+    %     represents a field. @type matrix
+    solve(obj, param);
 
     % Evaluate the solution.
     %
