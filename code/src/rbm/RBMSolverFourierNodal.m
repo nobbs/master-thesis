@@ -10,7 +10,6 @@ classdef RBMSolverFourierNodal < RBMSolverAbstract
 
   properties %(Access = 'protected')
     G;
-    tmp = 0;
   end
 
   properties(Dependent)
@@ -85,7 +84,7 @@ classdef RBMSolverFourierNodal < RBMSolverAbstract
       obj.solver.cLaplacian = 3.3333;
       obj.solver.cOffset    = 0;
       obj.solver.breakpoints = obj.breakpoints;
-      obj.solver.nFieldCoeffs = obj.nC;
+      obj.solver.nC = obj.nC;
 
       obj.solver.prepare;
 
@@ -107,17 +106,17 @@ classdef RBMSolverFourierNodal < RBMSolverAbstract
       %   B: rb system matrix for the given parameter @type matrix
       %   F: rb load vector @type vector
 
-      testshots = obj.constructRBTestSpace(param);
+      testshots = obj.constructTestSpace(param);
       B = testshots.' * obj.solver.spacetimeSystemMatrix(param) * obj.trialshots;
       F = obj.testshots.' * obj.solver.spacetimeLoadVector;
     end
 
-    function rbsolvec = solveRB(obj, param)
+    function rbsolvec = rbSolve(obj, param)
       [Lhs, Rhs] = obj.rbSystemMatrixAndLoadVector(param);
       rbsolvec   = Lhs \ Rhs;
     end
 
-    function testshots = constructRBTestSpace(obj, param)
+    function testshots = constructTestSpace(obj, param)
       testshots = sparse(obj.solver.nTestDim, size(obj.trialshots, 2));
       for ndx = 1:size(obj.trialshots, 2)
         tmp = obj.affineTestshotBase{ndx}(:, 1);
@@ -148,22 +147,16 @@ classdef RBMSolverFourierNodal < RBMSolverAbstract
       % gram-schmidt-verfahren laufen lassen
       z = gsolvec;
       if ~isFirst
-        % for j = 1:size(obj.trialshots, 2)
-        %     z = z - (gsolvec.' * obj.solver.TrNorm * obj.trialshots(:, j)) * obj.trialshots(:, j);
-        % end
         z = gsolvec - obj.trialshots * (gsolvec.' * obj.solver.TrNorm * obj.trialshots).';
       end
       z = z / (sqrt(z' * obj.solver.TrNorm * z));
       obj.trialshots(:, pos) = z;
-      % obj.tmp = obj.tmp + toc;
 
       % zqn update
-      Zqn = obj.solver.TeNorm \ (obj.solver.LhsFI * gsolvec);
-      for fdx = 1:obj.nFields
-        for cdx = 1:obj.nC
-          kdx = 1 + (fdx - 1) * obj.nC + cdx;
-          Zqn(:, kdx) = obj.solver.TeNorm \ (obj.solver.LhsFD{cdx, fdx} * gsolvec);
-        end
+      % iterate over the space time matrix parts
+      Zqn = zeros(obj.nTestTruth, obj.nQb);
+      for pdx = 1:obj.nQb
+        Zqn(:, pdx) = obj.solver.TeNorm \ (obj.solver.Lhs{pdx} * gsolvec);
       end
       obj.affineTestshotBase{pos} = Zqn;
     end
@@ -195,42 +188,41 @@ classdef RBMSolverFourierNodal < RBMSolverAbstract
       % solve the system for some parameters
       % [gsolvec, LhsPre, RhsPre] = obj.solver.solve({[0 0 0]});
 
-      obj.solveAndAdd([0; 0; 0], true)
+      obj.solveAndAdd([1; 0; 0], true)
       % obj.gramSchmidtOrtho
-      for idx = 1:10:100
+      for idx = 10:10:50
         obj.solveAndAdd([idx; 0; 0]);
       end
-      obj.tmp
 
-      return
+      % return
 
       obj.prepareResidual;
 
-      testparam = [0; 0; 0];
-      obj.testshots = obj.constructRBTestSpace(testparam);
+      testparam = [33; 0; 0];
+      obj.testshots = obj.constructTestSpace(testparam);
       [bta, gma] = obj.calcDiscreteInfSupAndContinuityRB(testparam)
 
-      testparam = [0; 0; 0];
-      rbsolvec = obj.solveRB(testparam);
+      testparam = [33; 0; 0];
+      rbsolvec = obj.rbSolve(testparam);
       res = obj.residual(rbsolvec, testparam)
 
-      testparam = [1; 0; 0];
-      rbsolvec = obj.solveRB(testparam);
+      testparam = [33; 0; 0];
+      rbsolvec = obj.rbSolve(testparam);
       res = obj.residual(rbsolvec, testparam)
 
-      testparam = [2; 0; 0];
-      rbsolvec = obj.solveRB(testparam);
-      res = obj.residual(rbsolvec, testparam)
+      % testparam = [2; 0; 0];
+      % rbsolvec = obj.rbSolve(testparam);
+      % res = obj.residual(rbsolvec, testparam)
 
       xg = linspace(obj.solver.xspan(1), obj.solver.xspan(2), 50);
       [gsolvec2, ~, ~] = obj.solver.solve(testparam);
 
       figure(1);
-      mesh(obj.evaluateSolution(gsolvec2, xg));
+      mesh(obj.evaluateSolutionTruth(gsolvec2, xg));
       figure(2)
-      mesh(obj.evaluateRBMSolution(rbsolvec, xg));
+      mesh(obj.evaluateSolutionRb(rbsolvec, xg));
       figure(3)
-      mesh(abs(obj.evaluateRBMSolution(rbsolvec, xg) - obj.evaluateSolution(gsolvec2, xg)));
+      mesh(abs(obj.evaluateSolutionRb(rbsolvec, xg) - obj.evaluateSolutionTruth(gsolvec2, xg)));
 
     end
 
@@ -278,12 +270,8 @@ classdef RBMSolverFourierNodal < RBMSolverAbstract
 
       % the remaining columns are the products of the affine composition of the
       % truth system matrix and the chosen trial truth space snapshots
-      H(:, 2:obj.nQb:end) = - obj.solver.LhsFI * obj.trialshots;
-      for fdx = 1:obj.nFields
-        for cdx = 1:obj.nC
-          kdx = 1 + (fdx - 1) * obj.nC + cdx;
-          H(:, (1+kdx):obj.nQb:end) = - obj.solver.LhsFD{cdx, fdx} * obj.trialshots;
-        end
+      for pdx = 1:obj.nQb
+        H(:, (pdx + 1):obj.nQb:end) = - obj.solver.Lhs{pdx} * obj.trialshots;
       end
 
       % and now we multiply that all together and the preparation is done
@@ -441,25 +429,32 @@ classdef RBMSolverFourierNodal < RBMSolverAbstract
       val = fst - 2 * snd + trd
     end
 
-    function solval = evaluateRBMSolution(obj, rbsolvec, xgrid)
-      % @todo Not yet fully implemented!
-
-      solval = obj.evaluateSolution(obj.trialshots * rbsolvec, xgrid);
-    end
-
-    function solval = evaluateSolution(obj, gsolvec, xgrid)
-      % Evaluate a solution of the truth galerkin solver.
+    function solval = evaluateSolutionRb(obj, rbsolvec, xgrid)
+      % Evaluate a solution of the reduced basis system.
       %
       % Parameters:
-      %   gsolvec: solution vector of the truth galerkin trial space.
-      %     @type vector
-      %   xgrid: grid of x values in which the solution should be evaluated.
-      %     @type vector
+      %   rbsolvec: solution vector of the rb system @type vector
+      %   xgrid: spatial grid @type vector
       %
       % Return values:
-      %   solval: evaluated solution @type matrix
+      %   solval: values of the solution on the grid points @type matrix
 
-      % Just forward it to the solver.
+      % forward the resulting vector of the truth trial space to the
+      % corresponding evaluation method
+      solval = obj.evaluateSolutionTruth(obj.trialshots * rbsolvec, xgrid);
+    end
+
+    function solval = evaluateSolutionTruth(obj, gsolvec, xgrid)
+      % Evaluate a solution of the truth solver.
+      %
+      % Parameters:
+      %   gsolvec: solution vector of the truth trial space @type vector
+      %   xgrid: spatial grid @type vector
+      %
+      % Return values:
+      %   solval: values of the solution on the grid points @type matrix
+
+      % Just forward it to the truth solver method
       solval = obj.solver.evaluateSolution(gsolvec, xgrid);
     end
 
@@ -489,9 +484,9 @@ classdef RBMSolverFourierNodal < RBMSolverAbstract
       % constants are then the square roots of the smallest respectively largest
       % generalized eigenvalue
       supNorm = Lhs.' * (Ynorm \ Lhs);
-      ev = eig(supNorm, Xnorm);
-      beta = sqrt(min(ev));
-      gamma = sqrt(max(ev));
+      ev      = eig(supNorm, Xnorm);
+      beta    = sqrt(min(ev));
+      gamma   = sqrt(max(ev));
     end
 
     function [beta, gamma] = calcDiscreteInfSupAndContinuityTruth(obj, param)
@@ -506,7 +501,7 @@ classdef RBMSolverFourierNodal < RBMSolverAbstract
       %   gamma: discrete continuity constant @type double
 
       % get all the needed matrices from the truth solver
-      Lhs = obj.solver.spacetimeSystemMatrix(param);
+      Lhs   = obj.solver.spacetimeSystemMatrix(param);
       Ynorm = obj.solver.TeNorm;
       Xnorm = obj.solver.TrNorm;
 

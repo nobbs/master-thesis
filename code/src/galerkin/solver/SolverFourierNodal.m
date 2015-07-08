@@ -56,10 +56,11 @@ classdef SolverFourierNodal < SolverAbstract
       obj.nK             = length(obj.tgrid);
 
       % and now compute all the needed space time structures
-      obj.LhsFI  = obj.spacetimeStiffnessMatrix();
-      obj.LhsFD  = obj.spacetimeFieldDependentFourier();
-      obj.TrNorm = obj.spacetimeTrialNorm();
-      obj.TeNorm = obj.spacetimeTestNorm();
+      obj.Lhs = cell(obj.nQb, 1);
+      obj.Lhs{1}     = obj.spacetimeStiffnessMatrix();
+      obj.Lhs(2:end) = obj.spacetimeFieldDependentFourier();
+      obj.TrNorm     = obj.spacetimeTrialNorm();
+      obj.TeNorm     = obj.spacetimeTestNorm();
     end
 
     function [solvec, LhsPre, RhsPre] = solve(obj, param)
@@ -190,32 +191,34 @@ classdef SolverFourierNodal < SolverAbstract
       % Assemble the field independent part of the space time system matrix.
       %
       % Return values:
-      %   FD: 2d cell array containing the part of the space time system matrix
-      %     which corresponds to the (basis function, field) index pair
-      %     @type cellarray
-      %
-      % @todo improve that stuff!
+      %   FD: cell array containing the part of the space time system matrix
+      %     which corresponds to the (basis func + field * num of basis func)
+      %     index @type cellarray
 
       % spatial field dependent stuff
-      FDx  = obj.spatial.fieldDependentFourier(obj.nTrialS, obj.nTestS, obj.nFieldCoeffs);
+      FDx  = obj.spatial.fieldDependentFourier(obj.nTrialS, obj.nTestS, obj.nC);
 
       % set up the needed cell array
-      FD = cell(obj.nFieldCoeffs, obj.nFields);
+      FD = cell(obj.nC * obj.nFields, 1);
 
+      % get start and end points of the time interval parts
       tpoints = [obj.tspan(1), obj.breakpoints, obj.tspan(2)];
 
+      % iterate over the fields
       for fdx = 1:obj.nFields
         % get the time grid point indexes which are relevant for this field
         span = find(tpoints(fdx) <= obj.tgrid & obj.tgrid < tpoints(fdx + 1));
-        spanidx = [span(1), span(end)];
 
-        % temporal mass matrices
-        MtAT = obj.temporal.massMatrix(obj.nTrialT, 'both', spanidx);
-        for cdx = 1:obj.nFieldCoeffs
+        % temporal mass matrices for the given interval part
+        MtAT = obj.temporal.massMatrix(obj.nTrialT, 'both', [span(1), span(end)]);
+
+        % and iterate over the coefficients
+        for cdx = 1:obj.nC
+          pos = (fdx - 1) * obj.nC + cdx;
           % assemble
-          FD{cdx, fdx} = kron(MtAT, FDx{cdx});
-          % resize
-          FD{cdx, fdx}(obj.nTestDim, obj.nTrialDim) = 0;
+          FD{pos} = kron(MtAT, FDx{cdx});
+          % and resize
+          FD{pos}(obj.nTestDim, obj.nTrialDim) = 0;
         end
       end
     end
@@ -232,25 +235,22 @@ classdef SolverFourierNodal < SolverAbstract
       % Assemble the system matrix for the given field coefficients.
       %
       % Parameters:
-      %   param: matrix of the field series expansion coefficients. each column
-      %     represents a field. @type matrix
+      %   param: vector of the field series expansion coefficients @type vector
       %
       % Return values:
       %   M: space time system matrix. @type matrix
 
       % sum the field dependent parts for the given series expansion
       % coefficients
-      LhsFD = sparse(obj.nTestDim, obj.nTrialDim);
-      % iterate over the fields
-      for fdx = 1:obj.nFields
-        % and now over the coefficients
-        for cdx = 1:obj.nFieldCoeffs
-          LhsFD = LhsFD + param(cdx, fdx) * obj.LhsFD{cdx, fdx};
-        end
-      end
+      M = sparse(obj.nTestDim, obj.nTrialDim);
 
-      % add the correct propagator direction matrix
-      M = obj.LhsFI + LhsFD;
+      % pad with one for the field independent part
+      param = [1; shiftdim(param)];
+
+      % add up the parts of the system matrix
+      for pdx = 1:obj.nQb
+        M = M + param(pdx) * obj.Lhs{pdx};
+      end
     end
 
     function M = spacetimeTrialNorm(obj)

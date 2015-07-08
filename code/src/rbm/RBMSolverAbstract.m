@@ -60,10 +60,10 @@ classdef RBMSolverAbstract < handle
     % continuityUpperBound(obj);
 
     % Evaluate a solution of the reduced basis method.
-    evaluateRBMSolution(obj);
+    evaluateSolutionRb(obj, solvec);
 
     % Evaluate a solution of the underlying galerkin solver.
-    evaluateSolution(obj);
+    evaluateSolutionTruth(obj, solvec);
   end % abstract methods
 
   methods(Abstract, Access = 'protected')

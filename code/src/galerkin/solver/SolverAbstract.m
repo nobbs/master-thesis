@@ -34,12 +34,19 @@ classdef SolverAbstract < handle
     breakpoints;
     % Number of basis functions to use for the field series expansion.
     % @type integer
-    nFieldCoeffs;
+    nC;
 
-    % Field independent parts of the space time system matrix. @type matrix
-    LhsFI;
-    % Field dependent parts of the space time system matrix. @type cellarray
-    LhsFD;
+    % Total number of parameters @type integer
+    nP;
+
+    % Parts of the space time system matrix. The first entry is the field
+    % independent part followed by the field dependent parts. @type cellarray
+    Lhs;
+
+    % As the right hand side of our system is the same every time, let's save
+    % it. @type vector
+    % @deprecated
+    Rhs;
 
     % Norm of the trial space. @type matrix
     TrNorm;
@@ -64,6 +71,8 @@ classdef SolverAbstract < handle
 
     % Total number of fields. @type integer
     nFields;
+    % Total number of bilinear forms @type integer
+    nQb;
   end % dependent properties
 
   methods(Abstract)
@@ -128,6 +137,10 @@ classdef SolverAbstract < handle
       %   val: dimension of the test space @type integer
 
       val = obj.nTestT * obj.nTestS + obj.nTestSic;
+    end
+
+    function val = get.nQb(obj)
+      val = 1 + obj.nFields * obj.nC;
     end
   end % methods for dependent properties
 
