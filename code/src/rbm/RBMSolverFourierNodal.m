@@ -82,7 +82,7 @@ classdef RBMSolverFourierNodal < RBMSolverAbstract
       obj.solver.tspan      = [0 1];
       obj.solver.xspan      = [0 10];
       obj.solver.cLaplacian = 3.3333;
-      obj.solver.cOffset    = 0;
+      obj.solver.cOffset    = 7;
       obj.solver.breakpoints = obj.breakpoints;
       obj.solver.nC = obj.nC;
 
@@ -108,7 +108,7 @@ classdef RBMSolverFourierNodal < RBMSolverAbstract
 
       testshots = obj.constructTestSpace(param);
       B = testshots.' * obj.solver.spacetimeSystemMatrix(param) * obj.trialshots;
-      F = obj.testshots.' * obj.solver.spacetimeLoadVector;
+      F = testshots.' * obj.solver.spacetimeLoadVector;
     end
 
     function rbsolvec = rbSolve(obj, param)
@@ -117,16 +117,15 @@ classdef RBMSolverFourierNodal < RBMSolverAbstract
     end
 
     function testshots = constructTestSpace(obj, param)
-      testshots = sparse(obj.solver.nTestDim, size(obj.trialshots, 2));
-      for ndx = 1:size(obj.trialshots, 2)
-        tmp = obj.affineTestshotBase{ndx}(:, 1);
-        for fdx = 1:obj.nFields
-          for cdx = 1:obj.nC
-            kdx = 1 + (fdx - 1) * obj.nC + cdx;
-            tmp = tmp + param(cdx, fdx) * obj.affineTestshotBase{ndx}(:, kdx);
-          end
-        end
-        testshots(:, ndx) = tmp;
+      % @todo describe it
+
+      testshots = sparse(obj.nTestTruth, obj.nTrialRB);
+
+      % pad with 1 for the field independent part
+      param = [1; shiftdim(param)];
+
+      for ndx = 1:obj.nTrialRB
+        testshots(:, ndx) = obj.affineTestshotBase{ndx} * param;
       end
     end
 
@@ -188,27 +187,51 @@ classdef RBMSolverFourierNodal < RBMSolverAbstract
       % solve the system for some parameters
       % [gsolvec, LhsPre, RhsPre] = obj.solver.solve({[0 0 0]});
 
-      obj.solveAndAdd([1; 0; 0], true)
+      obj.solveAndAdd([0], true)
       % obj.gramSchmidtOrtho
-      for idx = 10:10:50
-        obj.solveAndAdd([idx; 0; 0]);
+      for idx = 1:2:10
+        obj.solveAndAdd([idx]);
       end
+      obj.solveAndAdd([8]);
+      obj.solveAndAdd([8.5]);
+      obj.solveAndAdd([9.5]);
+      obj.solveAndAdd([10]);
 
       % return
 
       obj.prepareResidual;
 
-      testparam = [33; 0; 0];
+      realerr = [];
+      bounderr = [];
+
+      for cof = 0:0.1:10
+        rbsolvec = obj.rbSolve([cof]);
+        res = obj.residual(rbsolvec, [cof]);
+        [gsolvec2, ~, ~] = obj.solver.solve([cof]);
+
+        bounderr(end + 1) = res / obj.calcDiscreteInfSupAndContinuityTruth([cof]);
+        realerr(end + 1) = sqrt((obj.trialshots * rbsolvec - gsolvec2).' * obj.solver.TrNorm * (obj.trialshots * rbsolvec - gsolvec2));
+        [b,g] = obj.calcDiscreteInfSupAndContinuityRB([cof])
+      end
+
+      figure(10)
+      semilogy(0:0.1:10, realerr, 0:0.1:10, bounderr)
+      legend('real', 'bound')
+
+      return;
+
+      testparam = [2; 0; 0];
       obj.testshots = obj.constructTestSpace(testparam);
       [bta, gma] = obj.calcDiscreteInfSupAndContinuityRB(testparam)
 
-      testparam = [33; 0; 0];
+      testparam = [2; 0; 0];
       rbsolvec = obj.rbSolve(testparam);
       res = obj.residual(rbsolvec, testparam)
 
-      testparam = [33; 0; 0];
+      testparam = [2; 0; 0];
       rbsolvec = obj.rbSolve(testparam);
       res = obj.residual(rbsolvec, testparam)
+
 
       % testparam = [2; 0; 0];
       % rbsolvec = obj.rbSolve(testparam);
@@ -216,6 +239,10 @@ classdef RBMSolverFourierNodal < RBMSolverAbstract
 
       xg = linspace(obj.solver.xspan(1), obj.solver.xspan(2), 50);
       [gsolvec2, ~, ~] = obj.solver.solve(testparam);
+
+      % estimate error
+      errbound = res / obj.calcDiscreteInfSupAndContinuityTruth(testparam)
+      errreal = sqrt((obj.trialshots * rbsolvec - gsolvec2).' * obj.solver.TrNorm * (obj.trialshots * rbsolvec - gsolvec2))
 
       figure(1);
       mesh(obj.evaluateSolutionTruth(gsolvec2, xg));
@@ -301,132 +328,17 @@ classdef RBMSolverFourierNodal < RBMSolverAbstract
       % field independent part of the system matrix
       Eps(2:obj.nQb:end) = 1 * uN;
 
+      % pad the parameter with 1 for field independent part
+      param = [1; shiftdim(param)];
+
       % and the remaining parts are the field dependent parts, also spaced over
       % the whole vector
-      for fdx = 1:obj.nFields
-        for cdx = 1:obj.nC
-          kdx = 1 + (fdx - 1) * obj.nC + cdx;
-          Eps((1+kdx):obj.nQb:end) = param(cdx, fdx) * uN;
-        end
+      for pdx = 1:obj.nQb
+        Eps((pdx + 1):obj.nQb:end) = param(pdx) * uN;
       end
 
       % and now calculate the y-norm of the riesz representation
       val  = sqrt(abs(Eps.' * obj.G * Eps));
-    end
-
-    function val = residual2(obj, uN, param)
-      % Compute the Y-Norm of the residual.
-      %
-      % @deprecated somethings really wrong here...
-      %
-      % Parameters:
-      %   param: Parameter for which the residual should be computed.
-      %
-      % Return values:
-      %   val: Y-Norm of the Residual @type double
-
-
-      % got everything right here
-      Y = obj.solver.TeNorm;
-      iY = inv(Y);
-      F = obj.solver.spacetimeLoadVector;
-      B0 = obj.solver.LhsFI;
-      Bq = obj.solver.LhsFD;
-
-      % vorberechnen...
-      BqF = cell(obj.nQb, obj.nTrialRB);
-      for m = 1:obj.nTrialRB
-        BqF{1, m} = F.' * iY * B0 * obj.trialshots(:, m);
-        for q = 2:obj.nQb
-          BqF{q, m} = F.' * iY * Bq{q - 1, 1} * obj.trialshots(:, m);
-        end
-      end
-
-      BqBq = cell(obj.nQb, obj.nQb, obj.nTrialRB, obj.nTrialRB);
-      for m1 = 1:obj.nTrialRB
-        for m2 = 1:obj.nTrialRB
-
-          BqBq{1, 1, m1, m2} = (B0 * obj.trialshots(:, m1)).' * iY * (B0 * obj.trialshots(:, m2));
-
-          for q = 2:obj.nQb
-            BqBq{q, 1, m1, m2} = (B0 * obj.trialshots(:, m1)).' * iY * (Bq{q - 1, 1} * obj.trialshots(:, m2));
-            BqBq{1, q, m1, m2} = (Bq{q - 1, 1} * obj.trialshots(:, m1)).' * iY * (B0 * obj.trialshots(:, m2));
-          end
-
-          for q1 = 2:obj.nQb
-            for q2 = 2:obj.nQb
-              BqBq{q1, q2, m1, m2} = (Bq{q1 - 1, 1} * obj.trialshots(:, m1)).' * iY * (Bq{q2 - 1, 1} * obj.trialshots(:, m2));
-            end
-          end
-        end
-      end
-
-
-      % first part of the residual
-      fst = F.' * iY * F;
-      % fst = full(F.' * (Y \ F));
-
-      % second part of the residual
-      % field independent part first
-      sndvec = zeros(1, 1);
-      for ndx = 1:obj.nTrialRB
-        sndvec(end+1) = uN(ndx) * BqF{1, ndx};
-        % sndvec(end+1) = uN(ndx) * F.' * iY * B0 * obj.trialshots(:, ndx);
-        % sndvec(end+1) = uN(ndx) * F.' * (Y \ (B0 * obj.trialshots(:, ndx)));
-        for fdx = 1:obj.nFields
-          for cdx = 1:obj.nC
-            pos = 1 + (fdx - 1) * obj.nC + cdx;
-            sndvec(end+1) = param(cdx, fdx) * uN(ndx) * BqF{pos, ndx};
-          end
-        end
-      end
-
-      snd = sum(sndvec)
-
-      % third part of the residual
-      trdvec = zeros(1, 1);
-      for ndx1 = 1:obj.nTrialRB
-        for ndx2 = 1:obj.nTrialRB
-
-          trdvec(end+1) = uN(ndx1) * uN(ndx2) * BqBq{1, 1, ndx1, ndx2};
-          % trdvec(end+1) = uN(ndx1) * uN(ndx2) * (B0 * obj.trialshots(:, ndx1)).' * iY * B0 * obj.trialshots(:, ndx2);
-
-          for fdx = 1:obj.nFields
-            for cdx = 1:obj.nC
-              pos = 1 + (fdx - 1) * obj.nC + cdx;
-              trdvec(end+1) = param(cdx, fdx) * uN(ndx1) * uN(ndx2) * BqBq{pos, 1, ndx1, ndx2};
-              trdvec(end+1) = param(cdx, fdx) * uN(ndx1) * uN(ndx2) * BqBq{1, pos, ndx1, ndx2};
-              % trdvec(end+1) = param(cdx, fdx) * uN(ndx1) * uN(ndx2) * (B0 * obj.trialshots(:, ndx1)).' * iY * Bq{cdx, fdx} * obj.trialshots(:, ndx2);
-            end
-          end
-
-          % for fdx = 1:obj.nFields
-          %   for cdx = 1:obj.nC
-          %     trdvec(end+1) = param(cdx, fdx) * uN(ndx1) * uN(ndx2) * (Bq{cdx, fdx} * obj.trialshots(:, ndx1)).' * iY * B0 * obj.trialshots(:, ndx2);
-          %   end
-          % end
-
-          for fdx1 = obj.nFields
-            for fdx2 = obj.nFields
-              for cdx1 = obj.nC
-                for cdx2 = obj.nC
-                  pos1 = 1 + (fdx1 - 1) * obj.nC + cdx1;
-                  pos2 = 1 + (fdx2 - 1) * obj.nC + cdx2;
-                  trdvec(end+1) = param(cdx1, fdx1) * param(cdx2, fdx2) * uN(ndx1) * uN(ndx2) * BqBq{pos1, pos2, ndx1, ndx2};
-                end
-              end
-            end
-          end
-        end
-      end
-
-      trd = sum(trdvec)
-
-      % all together now
-      fst
-      snd
-      trd
-      val = fst - 2 * snd + trd
     end
 
     function solval = evaluateSolutionRb(obj, rbsolvec, xgrid)
@@ -474,10 +386,12 @@ classdef RBMSolverFourierNodal < RBMSolverAbstract
       %   beta: discrete inf-sup-constant @type double
       %   gamma: discrete continuity constant @type double
 
+      testshots = obj.constructTestSpace(param);
+
       % first we have to construct the rb system matrix for this parameter and
       % the y- and x-norm matrices.
-      Lhs   = full(obj.testshots.' * obj.solver.spacetimeSystemMatrix(param) * obj.trialshots);
-      Ynorm = full(obj.testshots.' * obj.solver.TeNorm * obj.testshots);
+      Lhs   = full(testshots.' * obj.solver.spacetimeSystemMatrix(param) * obj.trialshots);
+      Ynorm = full(testshots.' * obj.solver.TeNorm * testshots);
       Xnorm = full(obj.trialshots.' * obj.solver.TrNorm * obj.trialshots);
 
       % now we solve the generalized eigenvalue problem, the inf-sup and continuity
@@ -487,6 +401,7 @@ classdef RBMSolverFourierNodal < RBMSolverAbstract
       ev      = eig(supNorm, Xnorm);
       beta    = sqrt(min(ev));
       gamma   = sqrt(max(ev));
+      cond_ = gamma / beta
     end
 
     function [beta, gamma] = calcDiscreteInfSupAndContinuityTruth(obj, param)
@@ -511,6 +426,7 @@ classdef RBMSolverFourierNodal < RBMSolverAbstract
       supNorm = Lhs.' * (Ynorm \ Lhs);
       beta    = sqrt(eigs(supNorm, Xnorm, 1, 'sm'));
       gamma   = sqrt(eigs(supNorm, Xnorm, 1, 'lm'));
+      cond_ = gamma / beta
     end
   end
 
