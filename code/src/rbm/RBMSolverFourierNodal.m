@@ -10,6 +10,7 @@ classdef RBMSolverFourierNodal < RBMSolverAbstract
 
   properties %(Access = 'protected')
     G;
+    tmp = 0;
   end
 
   properties(Dependent)
@@ -143,15 +144,18 @@ classdef RBMSolverFourierNodal < RBMSolverAbstract
 
       [gsolvec, ~, ~] = obj.solver.solve(param);
 
+      %| @todo aufräumen
       % gram-schmidt-verfahren laufen lassen
       z = gsolvec;
       if ~isFirst
-        for j = 1:size(obj.trialshots, 2)
-            z = z - (gsolvec.' * obj.solver.TrNorm * obj.trialshots(:, j)) * obj.trialshots(:, j);
-        end
+        % for j = 1:size(obj.trialshots, 2)
+        %     z = z - (gsolvec.' * obj.solver.TrNorm * obj.trialshots(:, j)) * obj.trialshots(:, j);
+        % end
+        z = gsolvec - obj.trialshots * (gsolvec.' * obj.solver.TrNorm * obj.trialshots).';
       end
       z = z / (sqrt(z' * obj.solver.TrNorm * z));
       obj.trialshots(:, pos) = z;
+      % obj.tmp = obj.tmp + toc;
 
       % zqn update
       Zqn = obj.solver.TeNorm \ (obj.solver.LhsFI * gsolvec);
@@ -164,26 +168,41 @@ classdef RBMSolverFourierNodal < RBMSolverAbstract
       obj.affineTestshotBase{pos} = Zqn;
     end
 
+    function gramSchmidtOrtho(obj)
+      % Execute the gram schmidt orthonormalization.
+      %
+      % @deprecated Not working correctly for more that a handful trial
+      %     snapshots
+
+      % compute a cholesky decomposition of the X-norm on the ansatz space. the
+      % coefficients for the gram schmidt orthonormalization are found in the
+      % inverse-transpose of the lower left triangle.
+      K = obj.trialshots.' * obj.solver.TrNorm * obj.trialshots;
+      L = chol(K, 'lower');
+      C = inv(L.');
+      % C = L.' \ eye(size(L));
+
+      % full(C)
+
+      % orthonormalize the trial rb basis
+      trialshots = obj.trialshots * C;
+
+      obj.trialshots = trialshots;
+    end
+
 
     function offlinePhase(obj)
       % solve the system for some parameters
       % [gsolvec, LhsPre, RhsPre] = obj.solver.solve({[0 0 0]});
 
       obj.solveAndAdd([0; 0; 0], true)
-      obj.solveAndAdd([2; 0; 0]);
-      obj.solveAndAdd([0; 2; 0]);
-      obj.solveAndAdd([3; 0; 0]);
-      % return
-      % obj.solveAndAdd([0; 4; 0]);
-      % obj.solveAndAdd([5; 0; 0]);
-      % obj.solveAndAdd([1; 0; 3]);
-      % obj.solveAndAdd([7; 0; 0]);
-      % obj.solveAndAdd({[8 0 0]});
-      % obj.solveAndAdd({[9 0 0]});
-      % obj.solveAndAdd({[10 0 0]});
-      % obj.solveAndAdd({[0 0 0]});
-      % obj.solveAndAdd({[0 0 10]});
-      % obj.solveAndAdd({[0 0 0]});
+      % obj.gramSchmidtOrtho
+      for idx = 1:10:100
+        obj.solveAndAdd([idx; 0; 0]);
+      end
+      obj.tmp
+
+      return
 
       obj.prepareResidual;
 
@@ -205,8 +224,6 @@ classdef RBMSolverFourierNodal < RBMSolverAbstract
 
       xg = linspace(obj.solver.xspan(1), obj.solver.xspan(2), 50);
       [gsolvec2, ~, ~] = obj.solver.solve(testparam);
-
-      % obj.residual(rbsolvec, testparam)
 
       figure(1);
       mesh(obj.evaluateSolution(gsolvec2, xg));
