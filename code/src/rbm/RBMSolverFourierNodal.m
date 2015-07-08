@@ -73,17 +73,19 @@ classdef RBMSolverFourierNodal < RBMSolverAbstract
       % @todo refactor this pile of junk...
 
 
-      obj.solver.nTrialS    = 20;
+      obj.solver.nTrialS    = 50;
       obj.solver.nTrialT    = 100;
       obj.solver.nTestS     = obj.solver.nTrialS;
       obj.solver.nTestT     = obj.solver.nTrialT - 1;
       obj.solver.nTestSic   = obj.solver.nTrialS;
       obj.solver.tgrid      = linspace(0, 1, obj.solver.nTrialT);
       obj.solver.tspan      = [0 1];
-      obj.solver.xspan      = [0 10];
+      obj.solver.xspan      = [0 1];
       obj.solver.cLaplacian = 3.3333;
-      obj.solver.cOffset    = 7;
+      obj.solver.cOffset    = 0;
+      obj.solver.useRefinement = true;
       obj.solver.breakpoints = obj.breakpoints;
+      % obj.nC = 1;
       obj.solver.nC = obj.nC;
 
       obj.solver.prepare;
@@ -187,6 +189,22 @@ classdef RBMSolverFourierNodal < RBMSolverAbstract
       % solve the system for some parameters
       % [gsolvec, LhsPre, RhsPre] = obj.solver.solve({[0 0 0]});
 
+      % obj.solveAndAdd([0], true)
+      % obj.solveAndAdd([2])
+      % obj.solveAndAdd([4])
+      [b, g] = obj.calcDiscreteInfSupAndContinuityTruth([-3]);
+      b = b^2
+
+      scm = SCM(obj);
+
+      % [b, g] = obj.calcDiscreteInfSupAndContinuityTruth([3/2]);
+      % b = b^2
+      % g = g^2
+      scm.offlinePhase
+
+
+      return;
+      obj.solveAndAdd([0], true)
       obj.solveAndAdd([0], true)
       % obj.gramSchmidtOrtho
       for idx = 1:2:10
@@ -209,9 +227,10 @@ classdef RBMSolverFourierNodal < RBMSolverAbstract
         res = obj.residual(rbsolvec, [cof]);
         [gsolvec2, ~, ~] = obj.solver.solve([cof]);
 
-        bounderr(end + 1) = res / obj.calcDiscreteInfSupAndContinuityTruth([cof]);
+        [b, g] = obj.calcDiscreteInfSupAndContinuityTruth([cof])
+        bounderr(end + 1) = res / b;
         realerr(end + 1) = sqrt((obj.trialshots * rbsolvec - gsolvec2).' * obj.solver.TrNorm * (obj.trialshots * rbsolvec - gsolvec2));
-        [b,g] = obj.calcDiscreteInfSupAndContinuityRB([cof])
+        [b, g] = obj.calcDiscreteInfSupAndContinuityRB([cof])
       end
 
       figure(10)
@@ -374,7 +393,7 @@ classdef RBMSolverFourierNodal < RBMSolverAbstract
 
   % collection of maybe necessary stuff
 
-  methods(Access = 'protected')
+  methods%(Access = 'protected')
     function [beta, gamma] = calcDiscreteInfSupAndContinuityRB(obj, param)
       % Calculate the discrete inf-sup-constant of the rb system for the given
       % parameter.
@@ -385,6 +404,8 @@ classdef RBMSolverFourierNodal < RBMSolverAbstract
       % Return values:
       %   beta: discrete inf-sup-constant @type double
       %   gamma: discrete continuity constant @type double
+      %
+      % @todo eventuell affine zerlegbarkeit ausnutzen!
 
       testshots = obj.constructTestSpace(param);
 
@@ -414,6 +435,8 @@ classdef RBMSolverFourierNodal < RBMSolverAbstract
       % Return values:
       %   beta: discrete inf-sup-constant @type double
       %   gamma: discrete continuity constant @type double
+      %
+      % @todo eventuell affine zerlegbarkeit ausnutzen!
 
       % get all the needed matrices from the truth solver
       Lhs   = obj.solver.spacetimeSystemMatrix(param);

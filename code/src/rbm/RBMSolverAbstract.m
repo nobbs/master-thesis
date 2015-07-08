@@ -20,7 +20,7 @@ classdef RBMSolverAbstract < handle
     nFields;
   end % dependent properties
 
-  properties(Access = 'protected')
+  properties%(Access = 'protected')
     % Underlying galerkin solver object @type SolverAbstract
     solver;
   end % protected properties
@@ -66,7 +66,7 @@ classdef RBMSolverAbstract < handle
     evaluateSolutionTruth(obj, solvec);
   end % abstract methods
 
-  methods(Abstract, Access = 'protected')
+  methods(Abstract)%, Access = 'protected')
     % Calculate the discrete inf-sup-constant of the rb system for the given
     % parameter.
     [beta, gamma] = calcDiscreteInfSupAndContinuityRB(obj, param);

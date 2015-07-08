@@ -10,11 +10,14 @@ classdef SolverFourierNodal < SolverAbstract
     tgrid;
     % Level of refinement for the temporal part of the test space. @type integer
     tref;
+
+    useRefinement = false;
   end % public properties
 
   properties(Access = 'protected')
     % Number of grid points in time. @type integer
     nK;
+
   end % protected properties
 
   methods
@@ -55,6 +58,13 @@ classdef SolverFourierNodal < SolverAbstract
       obj.temporal.tgrid = obj.tgrid;
       obj.nK             = length(obj.tgrid);
 
+      if obj.useRefinement
+        obj.nTestT = 2 * (obj.nTrialT - 1);
+        obj.tref = 1;
+      else
+        obj.tref = 0;
+      end
+
       % and now compute all the needed space time structures
       obj.Lhs = cell(obj.nQb, 1);
       obj.Lhs{1}     = obj.spacetimeStiffnessMatrix();
@@ -74,33 +84,70 @@ classdef SolverFourierNodal < SolverAbstract
       %   solvec: coefficient vector of the solution in the trial space
       %     @type vector
 
-      % first we set up the preconditioners.
-      % attention: the inverse of these matrices will be multiplied with the
-      % system matrix, not the matrices itself!
-      % left side:
-      % Pl = obj.TeNorm;
-      Pl = speye(obj.nTestDim);
-      % right side:
-      % Pr = obj.TrNorm;
-      Pr = speye(obj.nTrialDim);
+      if ~obj.useRefinement
+        % first we set up the preconditioners.
+        % attention: the inverse of these matrices will be multiplied with the
+        % system matrix, not the matrices itself!
+        % left side:
+        % Pl = obj.TeNorm;
+        Pl = speye(obj.nTestDim);
+        % right side:
+        % Pr = obj.TrNorm;
+        Pr = speye(obj.nTrialDim);
 
-      % assemble the system matrix for the given field
-      Lhs = obj.spacetimeSystemMatrix(param);
+        % assemble the system matrix for the given field
+        Lhs = obj.spacetimeSystemMatrix(param);
 
-      % apply the preconditioners to the system matrix
-      LhsPre = (Pl \ Lhs) / Pr;
+        % apply the preconditioners to the system matrix
+        LhsPre = (Pl \ Lhs) / Pr;
 
-      % compute the right hand side load vector
-      Rhs = obj.spacetimeLoadVector();
+        % compute the right hand side load vector
+        Rhs = obj.spacetimeLoadVector();
 
-      % apply the left preconditioner
-      RhsPre = Pl \ Rhs;
+        % apply the left preconditioner
+        RhsPre = Pl \ Rhs;
 
-      % now solve the linear system
-      solvecPre = LhsPre \ RhsPre;
+        % now solve the linear system
+        solvecPre = LhsPre \ RhsPre;
 
-      % and revert the preconditioning
-      solvec = Pr \ solvecPre;
+        % and revert the preconditioning
+        solvec = Pr \ solvecPre;
+      else
+        % BTN−1Bu = BTN−1b
+
+        % first we set up the preconditioners.
+        % attention: the inverse of these matrices will be multiplied with the
+        % system matrix, not the matrices itself!
+        % left side:
+        % Pl = obj.TeNorm;
+        % Pl = speye(obj.nTestDim);
+        % right side:
+        % Pr = obj.TrNorm;
+        % Pr = speye(obj.nTrialDim);
+
+        % assemble the system matrix for the given field
+        B = obj.spacetimeSystemMatrix(param);
+
+        Lhs = B.' * (obj.TeNorm \ B);
+
+        % apply the preconditioners to the system matrix
+        LhsPre = Lhs;
+        % LhsPre = obj.TrNorm \ Lhs;
+
+        % compute the right hand side load vector
+        Rhs = obj.spacetimeLoadVector();
+        Rhs = (B.' * (obj.TeNorm \ Rhs));
+        % apply the left preconditioner
+        RhsPre = Rhs;
+        % RhsPre = obj.TrNorm \ Rhs;
+
+        % now solve the linear system
+        solvecPre = LhsPre \ RhsPre;
+
+        % and revert the preconditioning
+        solvec = solvecPre;
+        % solvec = Pr \ solvecPre;
+      end
     end
 
     function solval = evaluateSolution(obj, solvec, xgrid)
@@ -149,18 +196,18 @@ classdef SolverFourierNodal < SolverAbstract
       %      B: backward propagator field independent stiffness matrix
 
       % temporal mass matrices
-      MtAT   = obj.temporal.massMatrix(obj.nTrialT, 'both');
+      MtAT   = obj.temporal.massMatrixBoth(obj.tgrid, obj.tref);
       % temporal "half stiffness" matrix
-      CtAT   = obj.temporal.halfStiffnessMatrix(obj.nTrialT);
+      CtAT   = obj.temporal.halfStiffnessMatrix(obj.tgrid, obj.tref);
 
       % temporal propagation vectors. this and the sign in front of the time
       % derivative "half stiffness" matrix is the only difference between the
       % forward and the backward propagator!
       if obj.isForward
-        et = obj.temporal.forwardInitVector(obj.nTrialT);
+        et = obj.temporal.forwardInitVector();
         tdsign = 1;
       else
-        et = obj.temporal.backwardInitVector(obj.nTrialT);
+        et = obj.temporal.backwardInitVector();
         tdsign = -1;
       end
 
@@ -210,7 +257,8 @@ classdef SolverFourierNodal < SolverAbstract
         span = find(tpoints(fdx) <= obj.tgrid & obj.tgrid < tpoints(fdx + 1));
 
         % temporal mass matrices for the given interval part
-        MtAT = obj.temporal.massMatrix(obj.nTrialT, 'both', [span(1), span(end)]);
+        % MtAT = obj.temporal.massMatrix('both', obj.useRefinement, [span(1), span(end)]);
+        MtAT = obj.temporal.massMatrixBoth(obj.tgrid, obj.tref);
 
         % and iterate over the coefficients
         for cdx = 1:obj.nC
@@ -260,9 +308,9 @@ classdef SolverFourierNodal < SolverAbstract
       %   M: gramian of the trial space norm @type matrix
 
       % temporal mass matrices
-      MtAA = obj.temporal.massMatrix(obj.nTrialT, 'trial');
+      MtAA = obj.temporal.massMatrixTrial();
       % temporal stiffness matrix
-      AtAA = obj.temporal.stiffnessMatrix(obj.nTrialT);
+      AtAA = obj.temporal.stiffnessMatrix();
       % spatial mass matrices
       MxAA = obj.spatial.massMatrix(obj.nTrialS, obj.nTrialS);
       % spatial stiffness matrices
@@ -279,7 +327,7 @@ classdef SolverFourierNodal < SolverAbstract
       %   M: gramian of the test space norm @type matrix
 
       % temporal mass matrices
-      MtTT     = obj.temporal.massMatrix(obj.nTestT, 'test');
+      MtTT     = obj.temporal.massMatrixTest(obj.tgrid, obj.tref);
       % spatial mass matrices
       MxTT     = obj.spatial.massMatrix(obj.nTestS, obj.nTestS);
       MxTicTic = obj.spatial.massMatrix(obj.nTestSic, obj.nTestSic);

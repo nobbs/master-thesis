@@ -54,7 +54,7 @@ classdef SolverAbstract < handle
     TeNorm;
   end % properties
 
-  properties(Access = 'protected')
+  properties%(Access = 'protected')
     % Object responsible for the assembly of spatial structures.
     % @type SpatialAssemblyAbstract
     spatial;
