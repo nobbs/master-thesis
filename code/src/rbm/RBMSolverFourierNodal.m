@@ -73,8 +73,8 @@ classdef RBMSolverFourierNodal < RBMSolverAbstract
       % @todo refactor this pile of junk...
 
 
-      obj.solver.nTrialS    = 50;
-      obj.solver.nTrialT    = 100;
+      obj.solver.nTrialS    = 20;
+      obj.solver.nTrialT    = 50;
       obj.solver.nTestS     = obj.solver.nTrialS;
       obj.solver.nTestT     = obj.solver.nTrialT - 1;
       obj.solver.nTestSic   = obj.solver.nTrialS;
@@ -192,18 +192,25 @@ classdef RBMSolverFourierNodal < RBMSolverAbstract
       % obj.solveAndAdd([0], true)
       % obj.solveAndAdd([2])
       % obj.solveAndAdd([4])
-      [b, g] = obj.calcDiscreteInfSupAndContinuityTruth([-3]);
-      b = b^2
+      % [b, g] = obj.calcDiscreteInfSupAndContinuityTruth([-3]);
+      % b = b^2
 
+      disp('starting scm')
       scm = SCM(obj);
 
       % [b, g] = obj.calcDiscreteInfSupAndContinuityTruth([3/2]);
       % b = b^2
       % g = g^2
+
+      keyboard
       scm.offlinePhase
 
+      disp('scm done')
+      %
+      keyboard
 
-      return;
+
+      % return;
       obj.solveAndAdd([0], true)
       obj.solveAndAdd([0], true)
       % obj.gramSchmidtOrtho
@@ -309,7 +316,7 @@ classdef RBMSolverFourierNodal < RBMSolverAbstract
       % @todo describe it more!
 
       % create the matrix
-      H = zeros(obj.nTrialTruth, obj.nQr);
+      H = zeros(obj.nTestTruth, obj.nQr);
 
       % the first column is the rhs of the truth system
       H(:, 1) = obj.solver.spacetimeLoadVector;;
