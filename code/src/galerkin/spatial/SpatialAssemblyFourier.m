@@ -1,105 +1,85 @@
 classdef SpatialAssemblyFourier < SpatialAssemblyAbstract
   % Assemble the spatial mass and stiffness matrices for a fourier basis. The
   % resulting spatial discretization has periodic boundary conditions.
-  %
-  % @todo Describe basis functions
-
-  properties
-    % witdh of the spatial interval @type double @type double
-    xwidth;
-  end
 
   methods
-
-    function obj = SpatialAssemblyFourier(xwidth)
+    function obj = SpatialAssemblyFourier(pd, nbasis)
       % Constructor for this assembly class.
       %
       % Parameters:
-      %   xwidth: width of the spatial interval @type double
+      %   pd: Reference to the problem data object @type ProblemData
+      %   nbasis: Number of basis functions to use @type integer
 
-      if nargin > 0
-        obj.xwidth = xwidth;
-      end
+      % call the superclass constructor
+      obj@SpatialAssemblyAbstract(pd, nbasis, nbasis, nbasis);
     end
 
-    function Mx = massMatrix(obj, nX, nY)
+    function Mx = massMatrix(obj)
       % Assemble the spatial mass matrix, that means we evaluate the integral
-      % `\int_{\Omega} \sigma_j(x) \sigma_l(x) \diff x` for some `j` and `l`
-      % where `\sigma` are Fourier basis functions.
-      %
-      % Parameters:
-      %   nX: the limit of iteration for the `j` index @type integer
-      %   nY: the limit of iteration for the `l` index @type integer
+      % `\int_{\Omega} \sigma_j(x) \sigma_l(x) \diff x` for some `j` and `l`.
       %
       % Return values:
       %   Mx: spatial mass matrix @type matrix
 
-      tmp    = obj.xwidth * ones(min(nX, nY), 1) / 2;
+      tmp    = (obj.pd.xspan(2) - obj.pd.xspan(1)) * ones(min(obj.nTrial, obj.nTest), 1) / 2;
       tmp(1) = tmp(1) * 2;
-      Mx     = spdiags(tmp, 0, nY, nX);
+      Mx     = spdiags(tmp, 0, obj.nTest, obj.nTrial);
     end
 
-    function Ax = stiffnessMatrix(obj, nX, nY)
+    function Ax = stiffnessMatrix(obj)
       % Assemble the spatial stiffness matrix, that means we evaluate the
       % integral `\int_{\Omega} \sigma'_j(x) \sigma'_l(x) \diff x` for some `j`
-      % and `l` where `\sigma` are Fourier basis functions.
-      %
-      % Parameters:
-      %   nX: the limit of iteration for the `j` index @type integer
-      %   nY: the limit of iteration for the `l` index @type integer
+      % and `l`.
       %
       % Return values:
       %   Ax: spatial stiffness matrix @type matrix
       %
       % @todo optimize
 
-      tmp = zeros(min(nX, nY), 1);
-      for jdx = 2:min(nX, nY)
+      tmp = zeros(min(obj.nTrial, obj.nTest), 1);
+      for jdx = 2:min(obj.nTrial, obj.nTest)
         if mod(jdx, 2) == 0
-          tmp(jdx) = (pi * jdx)^2 / ( 2 * obj.xwidth);
+          tmp(jdx) = (pi * jdx)^2 / ( 2 * (obj.pd.xspan(2) - obj.pd.xspan(1)));
         else
-          tmp(jdx) = (pi * (jdx - 1))^2 / ( 2 * obj.xwidth);
+          tmp(jdx) = (pi * (jdx - 1))^2 / ( 2 * (obj.pd.xspan(2) - obj.pd.xspan(1)));
         end
       end
-      Ax = spdiags(tmp, 0, nY, nX);
+      Ax = spdiags(tmp, 0, obj.nTest, obj.nTrial);
     end
 
-    function FDx = fieldDependentSine(obj, nX, nY, nC)
+    function FDx = fieldDependentSine(obj)
       % Assemble only the field-dependet part of the stiffness matrix based on a
       % sine series expansion of the field.
       %
-      % Parameters:
-      %   nX: the limit of iteration for the `j` index @type integer
-      %   nY: the limit of iteration for the `l` index @type integer
-      %   nC: number of sine basis functions to use @type integer
-      %
       % Return values:
-      %   FDx: cellarray of the spatial matrices @type cellarray
-      %
-      % @todo fixme
+      %   FDx: cellarray of the spatial matrices @type cell
 
       % create the cellarray
-      FDx = cell(nC, 1);
+      FDx = cell(obj.pd.nC, 1);
 
       % iterate over the index of the sine series expansion functions
-      for cdx = 1:nC
+      for cdx = 1:obj.pd.nC
         % create needed vectors to assemble the sparse matrix
-        Idx = ones(nX, 1);
-        Idy = ones(nX, 1);
-        Val = zeros(nX, 1);
+        Idx = ones(obj.nTrial, 1);
+        Idy = ones(obj.nTrial, 1);
+        Val = zeros(obj.nTrial, 1);
         ctr = 1;
 
         % iterate over the indexes of the spatial basis functions of the trial
         % and test subspaces
-        for jdx = 1:nX
-          for ldx = 1:nY
+        for jdx = 1:obj.nTrial
+          for ldx = 1:obj.nTest
             % evaluate spatial integral
             % @todo explain optimization and cases
             intval = 0;
             if mod(jdx, 2) == 1 && mod(ldx, 2) == 1 && mod(cdx, 2) == 1
-              intval = obj.xwidth * (cdx / (pi * (cdx^2 - (jdx - ldx)^2)) + cdx / (pi * (cdx^2 - (jdx + ldx - 2)^2)));
+              intval = (obj.pd.xspan(2) - obj.pd.xspan(1)) * ...
+                (cdx / (pi * (cdx^2 - (jdx - ldx)^2)) ...
+                 + cdx / (pi * (cdx^2 - (jdx + ldx - 2)^2)));
             elseif mod(jdx, 2) == 0 && mod(ldx, 2) == 0 && mod(cdx, 2) == 1
-              intval = obj.xwidth * (cdx / (pi * (cdx^2 - (jdx - ldx)^2)) - cdx / (pi * (cdx^2 - (jdx + ldx)^2)));
+              intval = (obj.pd.xspan(2) - obj.pd.xspan(1)) * ...
+                (cdx / (pi * (cdx^2 - (jdx - ldx)^2)) ...
+                 - cdx / (pi * (cdx^2 - (jdx + ldx)^2)));
             elseif mod(jdx, 2) == 0 && mod(ldx, 2) == 1 && mod(cdx, 2) == 0
               val = 0;
               if cdx + jdx - ldx + 1 == 0
@@ -114,7 +94,7 @@ classdef SpatialAssemblyFourier < SpatialAssemblyAbstract
               if cdx + jdx + ldx - 1 == 0
                 val = val - 1;
               end
-              intval = (obj.xwidth / 4) * val;
+              intval = ((obj.pd.xspan(2) - obj.pd.xspan(1)) / 4) * val;
             elseif mod(jdx, 2) == 1 && mod(ldx, 2) == 0 && mod(cdx, 2) == 0
               val = 0;
               if cdx - jdx + ldx + 1 == 0
@@ -129,7 +109,7 @@ classdef SpatialAssemblyFourier < SpatialAssemblyAbstract
               if cdx + jdx + ldx - 1 == 0
                 val = val - 1;
               end
-              intval = (obj.xwidth / 4) * val;
+              intval = ((obj.pd.xspan(2) - obj.pd.xspan(1)) / 4) * val;
             end
 
             % save the value
@@ -141,36 +121,31 @@ classdef SpatialAssemblyFourier < SpatialAssemblyAbstract
         end
 
         % create the sparse matrix
-        FDx{cdx} = sparse(Idy, Idx, Val, nY, nX);
+        FDx{cdx} = sparse(Idy, Idx, Val, obj.nTest, obj.nTrial);
       end
     end
 
-    function FDx = fieldDependentFourier(obj, nX, nY, nC)
+    function FDx = fieldDependentFourier(obj)
       % Assemble only the field-dependet part of the stiffness matrix based on a
       % fourier series expansion of the field (without the constant term).
       %
-      % Parameters:
-      %   nX: the limit of iteration for the `j` index @type integer
-      %   nY: the limit of iteration for the `l` index @type integer
-      %   nC: number of sine basis functions to use @type integer
-      %
       % Return values:
-      %   FDx: cellarray of the spatial matrices @type cellarray
+      %   FDx: cellarray of the spatial matrices @type cell
 
       % create the cellarray
-      FDx = cell(nC, 1);
+      FDx = cell(obj.pd.nC, 1);
 
-      for cdx = 1:nC
+      for cdx = 1:obj.pd.nC
         % create needed vectors to assemble the sparse matrix
-        Idx = ones(nX, 1);
-        Idy = ones(nX, 1);
-        Val = zeros(nX, 1);
+        Idx = ones(obj.nTrial, 1);
+        Idy = ones(obj.nTrial, 1);
+        Val = zeros(obj.nTrial, 1);
         ctr = 1;
 
         % iterate over the indexes of the spatial basis functions of the trial
         % and test subspaces
-        for jdx = 1:nX
-          for ldx = 1:nY
+        for jdx = 1:obj.nTrial
+          for ldx = 1:obj.nTest
 
             % evaluate the spatial integral. there are several combinations of
             % sine / cosine products we have to consider
@@ -199,7 +174,7 @@ classdef SpatialAssemblyFourier < SpatialAssemblyAbstract
                 if cdx + jdx + ldx - 1 == 0
                   val = val - 1;
                 end
-                intval = (obj.xwidth / 4) * val;
+                intval = ((obj.pd.xspan(2) - obj.pd.xspan(1)) / 4) * val;
               elseif mod(jdx, 2) == 1 && mod(ldx, 2) == 0
                 % j odd: cosine, l even: sine
                 val = 0;
@@ -215,7 +190,7 @@ classdef SpatialAssemblyFourier < SpatialAssemblyAbstract
                 if cdx + jdx + ldx - 1 == 0
                   val = val - 1;
                 end
-                intval = (obj.xwidth / 4) * val;
+                intval = ((obj.pd.xspan(2) - obj.pd.xspan(1)) / 4) * val;
               end
             else
               % cdx odd: cosine function cos(pi * (cdx + 1) * x)
@@ -224,9 +199,9 @@ classdef SpatialAssemblyFourier < SpatialAssemblyAbstract
                 if jdx == 1 && ldx == 1
                   intval = 0;
                 elseif jdx == 1 && ldx > 1 && cdx + 1 == ldx - 1
-                  intval = obj.xwidth / 2;
+                  intval = (obj.pd.xspan(2) - obj.pd.xspan(1)) / 2;
                 elseif jdx > 1 && ldx == 1 && cdx + 1 == jdx - 1
-                  intval = obj.xwidth / 2;
+                  intval = (obj.pd.xspan(2) - obj.pd.xspan(1)) / 2;
                 elseif jdx > 1 && ldx > 1
                   val = 0;
                   if cdx + jdx - ldx + 1 == 0
@@ -241,7 +216,7 @@ classdef SpatialAssemblyFourier < SpatialAssemblyAbstract
                   if cdx + jdx + ldx - 1 == 0
                     val = val + 1;
                   end
-                  intval = (obj.xwidth / 4) * val;
+                  intval = ((obj.pd.xspan(2) - obj.pd.xspan(1)) / 4) * val;
                 end
               elseif mod(jdx, 2) == 0 && mod(ldx, 2) == 0
                 % j even: sine, l even: sine
@@ -258,7 +233,7 @@ classdef SpatialAssemblyFourier < SpatialAssemblyAbstract
                 if cdx + jdx + ldx + 1 == 0
                   val = val - 1;
                 end
-                intval = (obj.xwidth / 4) * val;
+                intval = ((obj.pd.xspan(2) - obj.pd.xspan(1)) / 4) * val;
               elseif mod(jdx, 2) == 0 && mod(ldx, 2) == 1
                 % j even: sine, l odd: cosine
                 % intval = 0;
@@ -277,7 +252,7 @@ classdef SpatialAssemblyFourier < SpatialAssemblyAbstract
         end
 
         % create the sparse matrix
-        FDx{cdx} = sparse(Idy, Idx, Val, nY, nX);
+        FDx{cdx} = sparse(Idy, Idx, Val, obj.nTest, obj.nTrial);
       end
     end
 
@@ -294,12 +269,10 @@ classdef SpatialAssemblyFourier < SpatialAssemblyAbstract
       if index == 1
         val = ones(size(x, 1), size(x, 2));
       elseif mod(index, 2) == 0
-        val = sin(pi * index * x / obj.xwidth);
+        val = sin(pi * index * x / (obj.pd.xspan(2) - obj.pd.xspan(1)));
       else
-        val = cos(pi * (index - 1) * x / obj.xwidth);
+        val = cos(pi * (index - 1) * x / (obj.pd.xspan(2) - obj.pd.xspan(1)));
       end
     end
-
   end % methods
-
 end % classdef

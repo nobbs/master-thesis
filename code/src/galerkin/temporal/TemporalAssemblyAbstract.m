@@ -2,21 +2,46 @@ classdef TemporalAssemblyAbstract < handle
   % Interface for the assembly of temporal structures.
   %
   % Needed for the construction of the space-time-structures, as these are
-  % computed through kronecker-products of temporal and spatial matrices and
+  % computed through Kronecker-products of temporal and spatial matrices and
   % vectors.
   %
   % See also:
   %   SpatialAssemblyAbstract
 
-  methods(Abstract)
+  properties
+    % Reference to the problem data object @type ProblemData
+    pd;
+    % Number of basis functions in the trial space @type integer
+    nTrial;
+    % Number of basis functions in the test space @type integer
+    nTest;
+  end
 
+  methods
+    function obj = TemporalAssemblyAbstract(pd)
+      % Default constructor
+      %
+      % Parameters:
+      %   pd: Reference to the problem data object @type ProblemData
+
+      obj.pd = pd;
+    end
+  end
+
+  methods(Abstract)
     % Assemble the temporal mass Matrix, that means we evaluate the integral
     % `\int_{I} \theta_k(t) \xi_m(t) \diff t` for `k = 1 \dots K` and
     % `m = 1 \dots K'`.
     %
+    % Parameters:
+    %   space: switch for which space the matrix should be assembled. possible
+    %     values are 'trial', 'test' and 'both'. @type string
+    %   spanidx: span of the time subinterval to use given in indexes of
+    %     pd.tgrid @type vector
+    %
     % Return values:
     %   Mt: temporal mass matrix @type matrix
-    Mt = massMatrix(obj);
+    Mt = massMatrix(obj, space, spanidx);
 
     % Assemble the temporal "half stiffness" matrix, that means we evaluate the
     % integral `\int_{I} \theta'_k(t) \xi_m(t) \diff t` for `k = 1 \dots K` and
@@ -49,7 +74,6 @@ classdef TemporalAssemblyAbstract < handle
     % Return values:
     %   et: backward propagation vector @type vector
     et = backwardInitVector(obj);
-
   end % abstract methods
 
 end % classdef

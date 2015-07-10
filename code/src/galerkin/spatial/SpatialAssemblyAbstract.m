@@ -8,8 +8,38 @@ classdef SpatialAssemblyAbstract < handle
   % See also:
   %   TemporalAssemblyAbstract
 
-  methods(Abstract)
+  properties
+    % Reference to the problem data object @type ProblemData
+    pd;
+    % Number of basis functions in the trial space @type integer
+    nTrial;
+    % Number of basis functions in the test space @type integer
+    nTest;
+    % Number of basis functions in the test space for the initial condition
+    % @type integer
+    nTestIC;
+  end
 
+  methods
+    function obj = SpatialAssemblyAbstract(pd, nTrial, nTest, nTestIC)
+      % Default constructor
+      %
+      % Parameters:
+      %   pd: Reference to the problem data object @type ProblemData
+      %   nTrial: Number of basis functions in the trial space @type integer
+      %   nTest: Number of basis functions in the test space @type integer
+      %   nTestIC: Number of basis functions in the test space for the initial
+      %     condition @type integer
+
+      % save the given values
+      obj.pd      = pd;
+      obj.nTrial  = nTrial;
+      obj.nTest   = nTest;
+      obj.nTestIC = nTestIC;
+    end
+  end
+
+  methods(Abstract)
     % Assemble the spatial mass matrix, that means we evaluate the integral
     % `\int_{\Omega} \sigma_j(x) \sigma_l(x) \diff x` for some `j` and `l`.
     %
@@ -23,7 +53,5 @@ classdef SpatialAssemblyAbstract < handle
     % Return values:
     %   Ax: spatial stiffness matrix @type matrix
     Ax = stiffnessMatrix(obj);
-
   end % abstract methods
-
 end % classdef

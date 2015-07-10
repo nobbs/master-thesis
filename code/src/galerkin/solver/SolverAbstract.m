@@ -7,18 +7,12 @@ classdef SolverAbstract < handle
   properties
     % Object that holds all the needed problem specific stuff. @type ProblemData
     pd;
-
-    % Number of trial space spatial basis functions. @type integer
-    nTrialS;
-    % Number of trial space temporal basis functions. @type integer
-    nTrialT;
-    % Number of test space spatial basis functions. @type integer
-    nTestS;
-    % Number of test space temporal basis functions. @type integer
-    nTestT;
-    % Number of test space initial condition spatial basis functions.
-    % @type integer
-    nTestSic;
+    % Object responsible for the assembly of spatial structures.
+    % @type SpatialAssemblyAbstract
+    spatial;
+    % Object responsible for the assembly of temporal structures.
+    % @type TemporalAssemblyAbstract
+    temporal;
 
     % Direction of the propagator. @type logical
     isForward = true;
@@ -26,26 +20,15 @@ classdef SolverAbstract < handle
     % Parts of the space time system matrix. The first entry is the field
     % independent part followed by the field dependent parts. @type cellarray
     Lhs;
-
     % As the right hand side of our system is the same every time, let's save
     % it. @type vector
     % @deprecated
     Rhs;
-
-    % Norm of the trial space. @type matrix
+    % Norm of the trial space X. @type matrix
     TrNorm;
-    % Norm of the test space. @type matrix
+    % Norm of the test space Y. @type matrix
     TeNorm;
   end % properties
-
-  properties%(Access = 'protected')
-    % Object responsible for the assembly of spatial structures.
-    % @type SpatialAssemblyAbstract
-    spatial;
-    % Object responsible for the assembly of temporal structures.
-    % @type TemporalAssemblyAbstract
-    temporal;
-  end % protected properties
 
   properties(Dependent)
     % Dimension of the trial space. @type integer
@@ -79,9 +62,7 @@ classdef SolverAbstract < handle
     %   solvec: coefficient vector of the solution in the trial space.
     %     @type vector.
     evaluateSolution(obj, solvec);
-  end % abstract methods
 
-  methods(Abstract)%, Access = 'protected')
     % Assemble the field independent part of the space time stiffness matrix.
     spacetimeStiffnessMatrix(obj);
 
@@ -93,16 +74,29 @@ classdef SolverAbstract < handle
 
     % Assemble the matrix for the discrete norm on the test space.
     spacetimeTestNorm(obj);
-  end % abstract protected methods
+  end % abstract  methods
 
-  methods % for dependent properties
+  methods % for dependent properties and more
+    function obj = SolverAbstract(pd, spatial, temporal)
+      % Default constructor
+      %
+      % Parameters:
+      %   pd: reference to the problem data object @type ProblemData
+      %   spatial: spatial assembly object @type SpatialAssemblyAbstract
+      %   temporal: temporal assembly object @type TemporalAssemblyAbstract
+
+      obj.pd       = pd;
+      obj.spatial  = spatial;
+      obj.temporal = temporal;
+    end
+
     function val = get.nTrialDim(obj)
       % Dimension of the trial space.
       %
       % Return values:
       %   val: dimension of the trial space @type integer
 
-      val = obj.nTrialT * obj.nTrialS;
+      val = obj.temporal.nTrial * obj.spatial.nTrial;
     end
 
     function val = get.nTestDim(obj)
@@ -111,7 +105,7 @@ classdef SolverAbstract < handle
       % Return values:
       %   val: dimension of the test space @type integer
 
-      val = obj.nTestT * obj.nTestS + obj.nTestSic;
+      val = obj.temporal.nTest * obj.spatial.nTest + obj.spatial.nTestIC;
     end
 
     function val = get.nQb(obj)

@@ -2,84 +2,95 @@ classdef TemporalAssemblyLegendre < TemporalAssemblyAbstract
   % Assemble the temporal mass and stiffness matrices for a basis given through
   % shifted legendre polynomials.
   %
-  % @deprecated not fully supported!
-
-  properties
-    % width of the temporal interval @type double
-    twidth;
-  end
+  % Warning:
+  %   This class is a leftover from very early stages and only supports the
+  %   problem setting with one field, as the switch at the breakpoints isn't
+  %   really compatible with global polynomials.
 
   methods
-
-    function obj = TemporalAssemblyLegendre(twidth)
+    function obj = TemporalAssemblyLegendre(pd, nTrial, nTest)
       % Constructor for this assembly class.
       %
       % Parameters:
-      %   twidth: width of the temporal interval @type double
+      %   pd: reference to the problem data object @type ProblemData
+      %   nTrial: number of basis functions to use in the trial space
+      %     @type integer
+      %   nTest: number of basis functions to use in the test space
+      %     @type integer
 
-      if nargin > 0
-        obj.twidth = twidth;
-      end
+      % call the superclass constructor
+      obj@TemporalAssemblyAbstract(pd);
+      obj.nTrial = nTrial;
+      obj.nTest  = nTest;
     end
 
-    function Mt = massMatrix(obj, nX, nY)
+    function Mt = massMatrix(obj, space, spanidx)
       % Assemble the temporal mass Matrix, that means we evaluate the integral
       % `\int_{I} \theta_k(t) \xi_m(t) \diff t` for `k = 1 \dots K` and
-      % `m = 1 \dots K'` where the temporal basis functions `\theta_k` and
-      % `\xi_m` are given as shifted Legendre polynomials.
-      %
-      % The parameters nX and nY correspond to `K` respectively `K'` and are
-      % mainly here, because trial and test space can have a different number
-      % of these basis functions.
+      % `m = 1 \dots K'`.
       %
       % Parameters:
-      %   nX: number of temporal basis functions `K` @type integer
-      %   nY: number of temporal basis functions `K'` @type integer
+      %   space: switch for which space the matrix should be assembled. possible
+      %     values are 'trial', 'test' and 'both'. @type string
+      %   spanidx: span of the time subinterval to use given in indexes of
+      %     pd.tgrid. Not supported! @type vector
       %
       % Return values:
       %   Mt: temporal mass matrix @type matrix
 
-      tmp = obj.twidth ./ (2 * ((1:min(nX, nY)) - 1) + 1);
-      Mt = spdiags(tmp.', 0, nY, nX);
+      if nargin == 3
+        if spanidx(1) ~= 1 || spanidx(end) ~= length(obj.pd.tgrid) - 1
+          error('TemporalAssemblyLegendre does not support more than one field!');
+        end
+      end
+
+      % set the right sizes
+      switch space
+        case 'trial'
+          nY = obj.nTrial;
+          nX = obj.nTrial;
+        case 'test'
+          nY = obj.nTest;
+          nX = obj.nTest;
+        case 'both'
+          nY = obj.nTest;
+          nX = obj.nTrial;
+        otherwise
+          error('You specified a non-existing option!');
+      end
+
+      % and compute the matrix
+      tmp = (obj.pd.tspan(2) - obj.pd.tspan(1)) ./ (2 * ((1:min(nX, nY)) - 1) + 1);
+      Mt  = spdiags(tmp.', 0, nY, nX);
     end
 
-    function Ct = halfStiffnessMatrix(~, nX, nY)
-      % Assemble the temporal "half stiffness" matrix, that means we evaluate the
-      % integral `\int_{I} \theta'_k(t) \xi_m(t) \diff t` for `k = 1 \dots K` and
-      % `m = 1 \dots K'` where the temporal basis functions `\theta_k` and
-      % `\xi_m` are defined as shifted Legendre polynomials.
-      %
-      % The parameters nX and nY correspond to `K` respectively `K'` and are
-      % mainly here, because trial and test space can have a different number
-      % of these basis functions.
-      %
-      % Parameters:
-      %   nX: number of temporal basis functions `K` @type integer
-      %   nY: number of temporal basis functions `K'` @type integer
+    function Ct = halfStiffnessMatrix(obj)
+      % Assemble the temporal "half stiffness" matrix, that means we evaluate
+      % the integral `\int_{I} \theta'_k(t) \xi_m(t) \diff t` for `k = 1 \dots
+      % K` and `m = 1 \dots K'`.
       %
       % Return values:
       %   Ct: temporal "half stiffness" matrix @type matrix
 
+      % set the sizes and compute the matrix
+      nX = obj.nTrial;
+      nY = obj.nTest;
       Ct = spdiags(2 * ones(nY, ceil(nX / 2)), 1:2:nX, nY, nX);
     end
 
-    function At = stiffnessMatrix(obj, nX)
+    function At = stiffnessMatrix(obj)
       % Assemble the temporal stiffness matrix, that means we evaluate the
       % integral `\int_{I} \theta'_{k_1}(t) \theta'_{k_2}(t) \diff t` for
-      % `k_1, k_2 = 1 \dots K`, where the temporal basis functions `\theta_k`
-      % are defined as shifted Legendre polynomials.
-      %
-      % As this method is only useful for the assembly of the norm matrices,
-      % there's only one parameter nX which corresponds to `K`.
-      %
-      % Parameters:
-      %   nX: number of temporal basis functions `K` @type integer
+      % `k_1, k_2 = 1 \dots K`.
       %
       % Return values:
       %   At: temporal stiffness matrix @type matrix
-      %
-      % @todo optimize!
 
+      % set the size
+      nX = obj.nTrial;
+
+      % and now assemble the matrix. maybe this loop could be optimized but
+      % since this class is deprecated...
       At = sparse(nX);
       for kdx1 = 1:nX
         % temporal intregal is zero if kdx1 + kdx2 is odd, so we only iterate
@@ -92,44 +103,39 @@ classdef TemporalAssemblyLegendre < TemporalAssemblyAbstract
         for kdx2 = startKdx2:2:nX
           % evaluate the temporal integral;
           if kdx1 >= kdx2
-            intTemporal = 2 * kdx2 * (kdx2 - 1) / obj.twidth;
+            intTemporal = 2 * kdx2 * (kdx2 - 1) / (obj.pd.tspan(2) - obj.pd.tspan(1));
           else
-            intTemporal = 2 * kdx1 * (kdx1 - 1) / obj.twidth;
+            intTemporal = 2 * kdx1 * (kdx1 - 1) / (obj.pd.tspan(2) - obj.pd.tspan(1));
           end
-
           % save the evaluated integral
           At(kdx1, kdx2) = intTemporal;
         end
       end
     end
 
-    function et = forwardInitVector(~, nX)
+    function et = forwardInitVector(obj)
       % Assemble the temporal row vector responsible for the propagation of the
       % initial condition in the case of the forward propagator, that means we
-      % evaluate `\theta_k(0)` for `k = 1 \dots K` with shifted Legendre
-      % polynomials `\theta_k`.
-      %
-      % Parameters:
-      %   nX: corresponds to `K` @type integer
+      % evaluate `\theta_k(0)` for `k = 1 \dots K`.
       %
       % Return values:
       %   et: forward propagation vector @type vector
 
+      % same: size and compute
+      nX = obj.nTrial;
       et = (-1).^((1:nX) - 1);
     end
 
-    function et = backwardInitVector(~, nX)
+    function et = backwardInitVector(obj)
       % Assemble the temporal row vector responsible for the propagation of the
       % initial condition in the case of the forward propagator, that means we
-      % evaluate `\theta_k(L)` for `k = 1 \dots K` with shifted Legendre
-      % polynomials `\theta_k`.
-      %
-      % Parameters:
-      %   nX: corresponds to `K` @type integer
+      % evaluate `\theta_k(L)` for `k = 1 \dots K`.
       %
       % Return values:
       %   et: backward propagation vector @type vector
 
+      % same: size and compute
+      nX = obj.nTrial;
       et = ones(1, nX);
     end
 
@@ -149,7 +155,5 @@ classdef TemporalAssemblyLegendre < TemporalAssemblyAbstract
 
       val = legendrePolynomial(t, index - 1, obj.tspan);
     end
-
   end
-
 end
