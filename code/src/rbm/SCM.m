@@ -18,7 +18,7 @@ classdef SCM < handle
     errors;
   end
 
-  properties(Access = 'protected')
+  properties%(Access = 'protected')
     % Reference to the reduced basis solver object from which this object was
     % created @type RBMSolverAbstract
     rbm;
@@ -51,7 +51,7 @@ classdef SCM < handle
 
     % Main methods of the successive constraint method algorithm
 
-    function exflag = offlinePhase(obj, paramTest, paramTrain, tol, maxIter)
+    function exflag = offlineStage(obj, paramTrain, paramTest, tol, maxIter)
       % Perform the offline greedy training stage.
       %
       % This method is the main offline stage of the successive constraint
@@ -71,11 +71,11 @@ classdef SCM < handle
       %   3: the training set is empty
       %
       % Parameters:
+      %   paramTrain: training parameter set for the greedy algorithm. @type
+      %     matrix
       %   paramTest: test parameter set which is used for the positivity
       %     constraints. this set should be really fine, like factor 10-100
       %     larger than paramTest. @type matrix
-      %   paramTrain: training parameter set for the greedy algorithm. @type
-      %     matrix
       %   tol: tolerance for the largest gap between certified upper and lower
       %     bound over all parameters in the training set @type double
       %     @default 1e-10
@@ -98,7 +98,7 @@ classdef SCM < handle
         maxIter = 1000;
       end
 
-      % defaults for the online phase
+      % defaults for the online stage
       Malpha = 15;
       Mplus  = 150;
 
@@ -136,12 +136,16 @@ classdef SCM < handle
       if obj.verbose
         fprintf('# Starting greedy loop ');
       end
+      
+      maxgap = 0
 
       % start the greedy loop
       while ~isDone
         if obj.verbose
           % progress indicator, every dot represents one pass of this loop
           fprintf('.');
+          maxgap
+          curTrain
         end
 
         % assemble the system for the chosen parameter and calculate the
@@ -173,7 +177,7 @@ classdef SCM < handle
         % next loop cycle
         relgap = zeros(size(paramTrain, 2), 1);
         for idx = 1:size(paramTrain, 2)
-          [lb, ub] = obj.onlineSolve(paramTrain(:, idx), Malpha, Mplus, true);
+          [lb, ub] = obj.onlineQuery(paramTrain(:, idx), Malpha, Mplus, true);
           relgap(idx) = abs((ub - lb) / ub);
         end
 
@@ -213,7 +217,7 @@ classdef SCM < handle
       end
     end
 
-    function [lb, ub] = onlineSolve(obj, param, Malpha, Mplus, internal)
+    function [lb, ub] = onlineQuery(obj, param, Malpha, Mplus, internal)
       % Online computation of the upper and lower bound.
       %
       % Calculates bounds for the coercivity constant of the modified
@@ -496,8 +500,7 @@ classdef SCM < handle
       catch err
         % if the the default settings won't work, we have to try again with some
         % modifications
-        if strcmp(err, 'MATLAB:eigs:NoEigsConverged') || ...
-            strcmp(err.identifier, 'MATLAB:eigs:ARPACKroutineErrorMinus14')
+        if strcmp(err.identifier, 'MATLAB:eigs:NoEigsConverged') || strcmp(err.identifier, 'MATLAB:eigs:ARPACKroutineErrorMinus14')
           % flag to check whether we found a eigenvalue
           hasEV = false;
           % decrease the accuracy
@@ -512,8 +515,7 @@ classdef SCM < handle
               hasEV = true;
             catch err2
               hasEV = false;
-              if strcmp(err, 'MATLAB:eigs:NoEigsConverged') || ...
-                  strcmp(err2.identifier, 'MATLAB:eigs:ARPACKroutineErrorMinus14')
+              if strcmp(err2.identifier, 'MATLAB:eigs:NoEigsConverged') || strcmp(err2.identifier, 'MATLAB:eigs:ARPACKroutineErrorMinus14')
                 % decrease the accuracy
                 opts.tol = opts.tol * 100;
                 % set the number of used Lanczos vectors
@@ -541,7 +543,7 @@ classdef SCM < handle
     end
 
     function prepare(obj)
-      % Prepare the SCM object for the offline phase.
+      % Prepare the SCM object for the offline stage.
       %
       % This mainly consists of the creation of the addends for the affine
       % representation of the Y-norm of the supremizers.

@@ -5,6 +5,9 @@ classdef SolverAbstract < handle
   % every possible solver.
 
   properties
+    % Object that holds all the needed problem specific stuff. @type ProblemData
+    pd;
+
     % Number of trial space spatial basis functions. @type integer
     nTrialS;
     % Number of trial space temporal basis functions. @type integer
@@ -17,27 +20,8 @@ classdef SolverAbstract < handle
     % @type integer
     nTestSic;
 
-    % Span of the spatial interval. @type vector
-    xspan;
-    % Span of the temporal interval. @type vector
-    tspan;
-
     % Direction of the propagator. @type logical
     isForward = true;
-
-    % Multiplicative constant of the Laplace-Operator. @type double
-    cLaplacian;
-    % Added field offset `\mu`. @type double
-    cOffset;
-
-    % Points in time at which the field switches occur. @type vector
-    breakpoints;
-    % Number of basis functions to use for the field series expansion.
-    % @type integer
-    nC;
-
-    % Total number of parameters @type integer
-    nP;
 
     % Parts of the space time system matrix. The first entry is the field
     % independent part followed by the field dependent parts. @type cellarray
@@ -112,15 +96,6 @@ classdef SolverAbstract < handle
   end % abstract protected methods
 
   methods % for dependent properties
-    function val = get.nFields(obj)
-      % Total number of fields.
-      %
-      % Return values:
-      %   val: total number of fields @type integer
-
-      val = length(obj.breakpoints) + 1;
-    end
-
     function val = get.nTrialDim(obj)
       % Dimension of the trial space.
       %
@@ -140,7 +115,7 @@ classdef SolverAbstract < handle
     end
 
     function val = get.nQb(obj)
-      val = 1 + obj.nFields * obj.nC;
+      val = 1 + obj.pd.nP;
     end
   end % methods for dependent properties
 

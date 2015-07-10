@@ -6,32 +6,52 @@ classdef SolverFourierNodal < SolverAbstract
   %   SpatialAssemblyFourier TemporalAssemblyLinearConstant
 
   properties
-    % Temporal grid. @type vector
-    tgrid;
     % Level of refinement for the temporal part of the test space. @type integer
     tref;
 
-    useRefinement = false;
+    % Toggles whether temporal grid refinement should be used for the test
+    % space. Setting this to true guarantees stability! @type logical
+    useRefinement;
   end % public properties
-
-  properties(Access = 'protected')
-    % Number of grid points in time. @type integer
-    nK;
-
-  end % protected properties
 
   methods
 
-    function obj = SolverFourierNodal()
+    function obj = SolverFourierNodal(pd, nspatial, useRefinement)
       % Constructor for this class
+      %
+      % Parameters:
+      %   pd: problem data object @type ProblemData
+      %   nspatial: number of spatial functions to use for trial and test space
+      %     @type integer
+      %   useRefinement: toggle whether refinement for the test space should be
+      %     used. @type logical @default true
+
+      % set default options
+      if nargin == 2
+        useRefinement = true;
+      end
 
       % first things first: calls the superclass constructor, even if it doesn't
       % exist
       obj@SolverAbstract();
 
+      % save the problem data object
+      obj.pd = pd;
+
+      % refinement settings
+      obj.useRefinement = useRefinement;
+
+      % forward the number of spatial functions
+      obj.nTrialS  = nspatial;
+      obj.nTestS   = nspatial;
+      obj.nTestSic = nspatial;
+
       % create the spatial and temporal assembly objects
       obj.spatial  = SpatialAssemblyFourier();
       obj.temporal = TemporalAssemblyLinearConstant();
+
+      % call the prepare method to conclude the setup
+      obj.prepare();
     end
 
     function rhs = rhs(obj)
@@ -39,7 +59,7 @@ classdef SolverFourierNodal < SolverAbstract
       % @todo generalize and move it!
 
       Rhs = sparse(obj.nTestDim, 1);
-      Rhs(obj.nTestS * obj.nTestT + 1) = obj.xspan(2);
+      Rhs(obj.nTestS * obj.nTestT + 1) = obj.pd.xspan(2);
 
       % apply the left preconditioner
       % RhsPre = Pl \ Rhs;
@@ -53,10 +73,13 @@ classdef SolverFourierNodal < SolverAbstract
       % and the following combination via kronecker products to the space-time
       % structures.
 
+      % copy stuff from the problem data object
+      obj.nTrialT = length(obj.pd.tgrid);
+      obj.nTestT = (1 + (obj.useRefinement)) *(length(obj.pd.tgrid) - 1);
+
       % forward the must-have values to the assembly objects
-      obj.spatial.xwidth = obj.xspan(2) - obj.xspan(1);
-      obj.temporal.tgrid = obj.tgrid;
-      obj.nK             = length(obj.tgrid);
+      obj.spatial.xwidth = obj.pd.xspan(2) - obj.pd.xspan(1);
+      obj.temporal.tgrid = obj.pd.tgrid;
 
       if obj.useRefinement
         obj.nTestT = 2 * (obj.nTrialT - 1);
@@ -73,7 +96,7 @@ classdef SolverFourierNodal < SolverAbstract
       obj.TeNorm     = obj.spacetimeTestNorm();
     end
 
-    function [solvec, LhsPre, RhsPre] = solve(obj, param)
+    function solvec = solve(obj, param)
       % Solve the propagator.
       %
       % Parameters:
@@ -150,26 +173,23 @@ classdef SolverFourierNodal < SolverAbstract
       end
     end
 
-    function solval = evaluateSolution(obj, solvec, xgrid)
+    function solval = evaluateSolution(obj, solvec)
       % Evaluate the solution.
       %
       % Parameters:
       %   solvec: coefficient vector of the solution in the trial space.
       %     @type vector.
-      %   xgrid: spatial grid @type vector
       %
       % Return values:
       %   solval: values of the solution on the given grids @type matrix
 
-      % first generate the meshgrid
-      [tmesh, xmesh] = meshgrid(obj.tgrid, xgrid);
-      % and the matrix that will hold the solution values
-      solval = zeros(size(tmesh, 1), size(tmesh, 2));
+      % create the matrix that will hold the solution values
+      solval = zeros(length(obj.pd.tgrid), length(obj.pd.xgrid));
 
       % precompute the spatial and temporal basis functions for the given grids
-      spatialValues = zeros(length(xgrid), obj.nTrialS);
+      spatialValues = zeros(length(obj.pd.xgrid), obj.nTrialS);
       for jdx = 1:obj.nTrialS
-        spatialValues(:, jdx) = obj.spatial.basisFunc(jdx, xgrid).';
+        spatialValues(:, jdx) = obj.spatial.basisFunc(jdx, obj.pd.xgrid).';
       end
 
       % we evaluate the solution in two steps. the inner loop adds up all the
@@ -191,14 +211,12 @@ classdef SolverFourierNodal < SolverAbstract
       % Assemble the field independent part of the space time stiffness matrix.
       %
       % Return values:
-      %   M: @type struct. In Detail:
-      %      F: forward propagator field independent stiffness matrix
-      %      B: backward propagator field independent stiffness matrix
+      %   M: propagator field independent stiffness matrix @type matrix
 
       % temporal mass matrices
-      MtAT   = obj.temporal.massMatrixBoth(obj.tgrid, obj.tref);
+      MtAT   = obj.temporal.massMatrixBoth(obj.pd.tgrid, obj.tref);
       % temporal "half stiffness" matrix
-      CtAT   = obj.temporal.halfStiffnessMatrix(obj.tgrid, obj.tref);
+      CtAT   = obj.temporal.halfStiffnessMatrix(obj.pd.tgrid, obj.tref);
 
       % temporal propagation vectors. this and the sign in front of the time
       % derivative "half stiffness" matrix is the only difference between the
@@ -224,7 +242,7 @@ classdef SolverFourierNodal < SolverAbstract
       initialCond  = kron(et, MxATIc);
 
       % set the upper block of the system matrix
-      M = tdsign * timeDerivate + obj.cLaplacian * laplacian + obj.cOffset * offset;
+      M = tdsign * timeDerivate + obj.pd.laplacian * laplacian + obj.pd.offset * offset;
 
       % resize it, so that we can add the lower block
       M(obj.nTestDim, obj.nTrialDim) = 0;
@@ -243,26 +261,27 @@ classdef SolverFourierNodal < SolverAbstract
       %     index @type cellarray
 
       % spatial field dependent stuff
-      FDx  = obj.spatial.fieldDependentFourier(obj.nTrialS, obj.nTestS, obj.nC);
+      FDx  = obj.spatial.fieldDependentFourier(obj.nTrialS, obj.nTestS, obj.pd.nC);
 
       % set up the needed cell array
-      FD = cell(obj.nC * obj.nFields, 1);
+      FD = cell(obj.pd.nP, 1);
 
       % get start and end points of the time interval parts
-      tpoints = [obj.tspan(1), obj.breakpoints, obj.tspan(2)];
+      tpoints = [obj.pd.tspan(1), obj.pd.f, obj.pd.tspan(2)];
 
       % iterate over the fields
-      for fdx = 1:obj.nFields
+      for fdx = 1:obj.pd.nF
         % get the time grid point indexes which are relevant for this field
-        span = find(tpoints(fdx) <= obj.tgrid & obj.tgrid < tpoints(fdx + 1));
+        span = find(tpoints(fdx) <= obj.pd.tgrid & obj.pd.tgrid < tpoints(fdx + 1));
 
         % temporal mass matrices for the given interval part
+        %| @todo add back the field support!
         % MtAT = obj.temporal.massMatrix('both', obj.useRefinement, [span(1), span(end)]);
-        MtAT = obj.temporal.massMatrixBoth(obj.tgrid, obj.tref);
+        MtAT = obj.temporal.massMatrixBoth(obj.pd.tgrid, obj.tref);
 
         % and iterate over the coefficients
-        for cdx = 1:obj.nC
-          pos = (fdx - 1) * obj.nC + cdx;
+        for cdx = 1:obj.pd.nC
+          pos = (fdx - 1) * obj.pd.nC + cdx;
           % assemble
           FD{pos} = kron(MtAT, FDx{cdx});
           % and resize
@@ -276,7 +295,7 @@ classdef SolverFourierNodal < SolverAbstract
       % @todo generalize!
 
       F = sparse(obj.nTestDim, 1);
-      F(obj.nTestS * obj.nTestT + 1) = obj.xspan(2);
+      F(obj.nTestS * obj.nTestT + 1) = obj.pd.xspan(2);
     end
 
     function M = spacetimeSystemMatrix(obj, param)
@@ -327,7 +346,7 @@ classdef SolverFourierNodal < SolverAbstract
       %   M: gramian of the test space norm @type matrix
 
       % temporal mass matrices
-      MtTT     = obj.temporal.massMatrixTest(obj.tgrid, obj.tref);
+      MtTT     = obj.temporal.massMatrixTest(obj.pd.tgrid, obj.tref);
       % spatial mass matrices
       MxTT     = obj.spatial.massMatrix(obj.nTestS, obj.nTestS);
       MxTicTic = obj.spatial.massMatrix(obj.nTestSic, obj.nTestSic);
