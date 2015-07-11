@@ -19,9 +19,8 @@ classdef SCM < handle
   end
 
   properties%(Access = 'protected')
-    % Reference to the reduced basis solver object from which this object was
-    % created @type RBMSolverAbstract
-    rbm;
+    % Reference to the "truth" solver object @type SolverAbstract
+    solver;
     % Holds the affine representation of the Y-norm of the supremizers @type
     % cell
     affineT;
@@ -35,21 +34,100 @@ classdef SCM < handle
   end
 
   methods
-    function obj = SCM(rbm)
+    function obj = SCM(solver)
       % Constructor for this class.
       %
       % Parameters:
-      %   rbm: Reference to the reduced basis solver that created this scm
-      %     object. @type RBMSolverAbstract
+      %   solver: Reference to the "truth" solver object @type SolverAbstract
 
       % first set the reference
-      obj.rbm = rbm;
+      obj.solver = solver;
 
       % and now prepare the scm offline stage
       obj.prepare();
     end
 
     % Main methods of the successive constraint method algorithm
+
+    function [lb, ub] = onlineQuery(obj, param, Malpha, Mplus, internal)
+      % Online computation of the upper and lower bound.
+      %
+      % Calculates bounds for the coercivity constant of the modified
+      % supremizers for a given parameter, which corresponds to the square of
+      % the inf-sup-constant of the underlying variational problem.
+      %
+      % Attention:
+      %   The parameters Malpha and Mplus control how many constraints are used
+      %   for the linear program. It's likely that higher values ensure better
+      %   bounds, so you may have to experiment to get a good tradeoff between
+      %   accuracy and efficiency.
+      %
+      % Parameters:
+      %   param: parameter for which we want the inf-sup-constant @type colvec
+      %   Malpha: number of stability constraints to use @type integer
+      %   Mplus: number of positivity constraints to use @type integer
+      %   internal: flag, if the method is called internally from the offline
+      %     stage @type logical @default false
+      %
+      % Return values:
+      %   lb: lower bound for the coercivity or inf-sup-constant @type double
+      %   ub: upper bound for the coercivity or inf-sup-constant @type double
+
+      if nargin == 4
+        internal = false;
+      end
+
+      % get the nearest parameters for stability and positivity constraints
+      [~, Idxalpha] = obj.getNeighbors(Malpha, param, obj.offlineData.paramCk);
+      [~, Idxplus]  = obj.getNeighbors(Mplus, param, obj.offlineData.paramTest);
+
+      %| @todo as we are starting with the upper bounds as our initial value
+      %|   it's maybe a good idea to perform a feasibility check
+
+      % set up the linear problem:
+      % start value are the upper bounds
+      x0 = obj.offlineData.upperBounds;
+      % objective vector
+      f = obj.mapParam(param);
+      % rhs and lhs of the inequalities
+      b = [obj.offlineData.upperBounds;
+        -obj.offlineData.lowerBounds;
+        -obj.offlineData.alphaCk(Idxalpha).';
+        zeros(size(Idxplus, 2), 1)];
+      A = [eye(size(obj.offlineData.upperBounds, 1));
+        -eye(size(obj.offlineData.lowerBounds, 1));
+        -obj.offlineData.paramCkT(:, Idxalpha).';
+        -obj.offlineData.paramTestT(:, Idxplus).'];
+
+      % set some options for linprog
+      opts = struct('LargeScale','off', ...
+        'Algorithm', 'active-set', ...
+        'Display', 'off');
+
+      % disable the warning that active-set will be removed. may suppress
+      % some other options-bad warnings...
+      warning('off', 'optim:linprog:AlgOptsWillError');
+
+      % now solve the linear problem
+      [~, fval, flag, ~] = linprog(f, A, b, [],  [],  [],  [], x0, opts);
+
+      % check the exit flag of linprog and break if it looks fishy
+      if flag <= 0
+        warning(['The exit flag of linprog is ', num2str(flag), '. ', ...
+          'Looks like somethings wrong!', sprintf('\n'), ...
+          'Falling back to console. Type return to continue.']);
+        keyboard;
+      end
+
+      % the upper bound is simply the minimum over all objective values of y*
+      if internal
+        ub = min(obj.offlineData.ystarCk.' * f);
+        lb = fval;
+      else
+        ub = sqrt(min(obj.offlineData.ystarCk.' * f));
+        lb = sqrt(fval);
+      end
+    end
 
     function exflag = offlineStage(obj, paramTrain, paramTest, tol, maxIter)
       % Perform the offline greedy training stage.
@@ -136,7 +214,7 @@ classdef SCM < handle
       if obj.verbose
         fprintf('# Starting greedy loop ');
       end
-      
+
       maxgap = 0
 
       % start the greedy loop
@@ -214,86 +292,6 @@ classdef SCM < handle
       if obj.verbose
         t = toc;
         fprintf('done\n# SCM offline stage is done with exit flag %d after %f seconds.', exflag, t);
-      end
-    end
-
-    function [lb, ub] = onlineQuery(obj, param, Malpha, Mplus, internal)
-      % Online computation of the upper and lower bound.
-      %
-      % Calculates bounds for the coercivity constant of the modified
-      % supremizers for a given parameter, which corresponds to the square of
-      % the inf-sup-constant of the underlying variational problem.
-      %
-      % Attention:
-      %   The parameters Malpha and Mplus control how many constraints are used
-      %   for the linear program. It's likely that higher values ensure better
-      %   bounds, so you may have to experiment to get a good tradeoff between
-      %   accuracy and efficiency.
-      %
-      % Parameters:
-      %   param: parameter for which we want the inf-sup-constant @type colvec
-      %   Malpha: number of stability constraints to use @type integer
-      %   Mplus: number of positivity constraints to use @type integer
-      %   internal: flag, if the method is called internally from the offline
-      %     stage @type logical @default false
-      %
-      % Return values:
-      %   lb: lower bound for the coercivity or inf-sup-constant @type double
-      %   ub: upper bound for the coercivity or inf-sup-constant @type double
-
-      if nargin == 4
-        internal = false;
-      end
-
-      % get the nearest parameters for stability and positivity constraints
-      [~, Idxalpha] = obj.getNeighbors(Malpha, param, obj.offlineData.paramCk);
-      [~, Idxplus]  = obj.getNeighbors(Mplus, param, obj.offlineData.paramTest);
-
-      %| @todo as we are starting with the upper bounds as our initial value
-      %|   it's maybe a good idea to perform a feasibility check
-
-      % set up the linear problem:
-      % start value are the upper bounds
-      x0 = obj.offlineData.upperBounds;
-      % objective vector
-      f = obj.mapParam(param);
-      % rhs and lhs of the inequalities
-      b = [obj.offlineData.upperBounds;
-        -obj.offlineData.lowerBounds;
-        -obj.offlineData.alphaCk(Idxalpha).';
-        zeros(size(Idxplus, 2), 1)];
-      A = [eye(size(obj.offlineData.upperBounds, 1));
-        -eye(size(obj.offlineData.lowerBounds, 1));
-        -obj.offlineData.paramCkT(:, Idxalpha).';
-        -obj.offlineData.paramTestT(:, Idxplus).'];
-
-      % set some options for linprog
-      opts = struct('LargeScale','off', ...
-        'Algorithm', 'active-set', ...
-        'Display', 'off');
-
-      % disable the warning that active-set will be removed. may suppress
-      % some other options-bad warnings...
-      warning('off', 'optim:linprog:AlgOptsWillError');
-
-      % now solve the linear problem
-      [~, fval, flag, ~] = linprog(f, A, b, [],  [],  [],  [], x0, opts);
-
-      % check the exit flag of linprog and break if it looks fishy
-      if flag <= 0
-        warning(['The exit flag of linprog is ', num2str(flag), '. ', ...
-          'Looks like somethings wrong!', sprintf('\n'), ...
-          'Falling back to console. Type return to continue.']);
-        keyboard;
-      end
-
-      % the upper bound is simply the minimum over all objective values of y*
-      if internal
-        ub = min(obj.offlineData.ystarCk.' * f);
-        lb = fval;
-      else
-        ub = sqrt(min(obj.offlineData.ystarCk.' * f));
-        lb = sqrt(fval);
       end
     end
 
@@ -398,14 +396,14 @@ classdef SCM < handle
 
       idx = 1;
       % first kind is handled first
-      for qdx = 1:obj.rbm.nQb
+      for qdx = 1:obj.solver.nQb
         newparam(idx) = param(qdx) * (param(qdx) - sum(param(1:end ~= qdx)));
         idx = idx + 1;
       end
 
       % and now the simpler second kind
-      for qdx = 1:obj.rbm.nQb
-        for pdx = (qdx + 1):obj.rbm.nQb
+      for qdx = 1:obj.solver.nQb
+        for pdx = (qdx + 1):obj.solver.nQb
           newparam(idx) = param(qdx) * param(pdx);
           idx = idx + 1;
         end
@@ -425,7 +423,7 @@ classdef SCM < handle
       param = obj.mapParam(param);
 
       % and sum up the addends of the affine representation
-      T = sparse(obj.rbm.nTrialTruth, obj.rbm.nTrialTruth);
+      T = sparse(obj.solver.nTrialDim, obj.solver.nTrialDim);
       for idx = 1:obj.nQt
         T = T + param(idx) * obj.affineT{idx};
       end
@@ -549,13 +547,13 @@ classdef SCM < handle
       % representation of the Y-norm of the supremizers.
 
       % Create local copies of the truth solver structures.
-      obj.normX   = obj.rbm.solver.TrNorm;
+      obj.normX   = obj.solver.TrNorm;
       % more truth solver structures, this time only needed for the preparation
-      normY   = obj.rbm.solver.TeNorm;
-      affineB = obj.rbm.solver.Lhs;
+      normY   = obj.solver.TeNorm;
+      affineB = obj.solver.Lhs;
 
       % set the total number of needed addends for the affine representation
-      obj.nQt = obj.rbm.nQb * (obj.rbm.nQb + 1) / 2;
+      obj.nQt = obj.solver.nQb * (obj.solver.nQb + 1) / 2;
 
       % create the needed structure
       obj.affineT = cell(obj.nQt, 1);
@@ -572,14 +570,14 @@ classdef SCM < handle
       idx = 1;
 
       % assemble the affine addends of the first kind
-      for qdx = 1:obj.rbm.nQb
+      for qdx = 1:obj.solver.nQb
         obj.affineT{idx} = affineB{qdx}.' * (normY \ affineB{qdx});
         idx = idx + 1;
       end
 
       % and now assemble the affine addends of the second kind
-      for qdx = 1:obj.rbm.nQb
-        for pdx = (qdx + 1):obj.rbm.nQb
+      for qdx = 1:obj.solver.nQb
+        for pdx = (qdx + 1):obj.solver.nQb
           obj.affineT{idx} = (affineB{qdx} + affineB{pdx}).' * ...
             (normY \ (affineB{qdx} + affineB{pdx}));
           idx = idx + 1;

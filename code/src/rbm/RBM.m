@@ -1,29 +1,48 @@
-classdef RBMSolverFourierNodal < RBMSolverAbstract
-  % Solver based on the reduced basis method.
+classdef RBM < handle
+  % Reduced basis method.
+  %
+  % This class implements the reduced basis method solver. It theoretically
+  % supports different galerkin-based truth solvers as long as these implement
+  % all the needed properties and methods defined in SolverAbstract.
 
   properties
+    % Toggle verbosity of the solver. @type logical
     verbose = true;
 
-    % @todo Holds the affine decompositon of somethign @type cell
-    affineTestshotBase;
+    % Reference to the given problem data object. @type ProblemData
+    pd;
+    % Reference to the galerkin truth solver @type SolverAbstract
+    solver;
+    % Reference to the scm object @type SCM
+    scm;
+
+    % Holds the largest error estimate obtained by the greedy procedure @type vector
+    errors = [];
+    % Holds the selected parameters @type matrix
+    params= [];
+
+    % Number of reduced basis trial basis vectors @type integer
+    nTrialRB = 0;
+    % Number of reduced basis test basis vectors @type integer
+    nTestRB = 0;
   end
 
-  properties %(Access = 'protected')
+  properties%(Access = 'protected')
+    % Holds the truth solution vectors which form the basis of the reduced basis
+    % trial space. @type matrix
+    trialSnapshots;
+    % @todo Holds the affine decompositon of somethign @type cell
+    affineTestshotBase;
+    % Needed for the computation of the residual @type matrix
     G;
-    scm;
-    isFreshStart;
-    errors;
-    params;
+    % Toggle, whether the offline data was reset recently @type logical
+    % isFreshStart = true;
   end
 
   properties(Dependent)
     nQf;
     nQb;
     nQr;
-    nTrialTruth;
-    nTestTruth;
-    nTrialRB;
-    nTestRB;
   end
 
   methods
@@ -38,41 +57,29 @@ classdef RBMSolverFourierNodal < RBMSolverAbstract
     function val = get.nQr(obj)
       val = obj.nQf + obj.nTrialRB * obj.nQb;
     end
-
-    function val = get.nTrialTruth(obj)
-      val = obj.solver.nTrialDim;
-    end
-
-    function val = get.nTestTruth(obj)
-      val = obj.solver.nTestDim;
-    end
-
-    function val = get.nTrialRB(obj)
-      val = size(obj.trialSnapshots, 2);
-    end
-
-    function val = get.nTestRB(obj)
-      val = obj.nTrialRB;
-    end
   end
 
   methods
-
-    function obj = RBMSolverFourierNodal(problem)
-      % Constructor for this class.
+    function obj = RBM(problem, truthsolver, scm)
+      % Default constructor.
       %
       % Parameters:
       %   problem: reference to a problem data object. @type ProblemData
+      %   truthsolver: reference to the truth solver @type SolverAbstract
+      %   scm: reference to the precomputed scm object @type SCM
 
-      % first call the constructor of the superclass
-      obj@RBMSolverAbstract(problem);
+      % save the references, nothing more
+      obj.pd     = problem;
+      obj.solver = truthsolver;
+      obj.scm    = scm;
 
-      % save the problem data object reference
-      % obj.pd = problem;
+      % reset all variables to default values
+      obj.resetTraining;
     end
 
-    function [rbsolvec, errest] = onlineSolve(obj, param)
-      % Solve online for a given Parameter with the reduced basis solver.
+    function [rbsolvec, errest] = onlineQuery(obj, param)
+      % Use the reduced basis offline generated data to solve the problem for
+      % the given parameter.
       %
       % Parameters:
       %   param: parameter to use. @type colvec
@@ -82,71 +89,14 @@ classdef RBMSolverFourierNodal < RBMSolverAbstract
       %   errest: reduced basis error estimate @type double
 
       % construct the reduced basis system
-      testspace = obj.constructTestSpace(param);
-      Lhs       = testspace.' * obj.solver.spacetimeSystemMatrix(param) * ...
-                    obj.trialSnapshots;
-      Rhs       = testspace.' * obj.solver.spacetimeLoadVector;
+      testSnapshots = obj.assembleTestSnapshots(param);
+      Lhs = testSnapshots.' * obj.solver.spacetimeSystemMatrix(param) * ...
+              obj.trialSnapshots;
+      Rhs = testSnapshots.' * obj.solver.spacetimeLoadVector;
       % now solve it
-      rbsolvec   = Lhs \ Rhs;
+      rbsolvec = Lhs \ Rhs;
       % compute the error estimate
-      errest     = obj.estimateError(param, rbsolvec);
-    end
-
-    function errest = estimateError(obj, param, rbsolvec)
-      % Estimate the error of a reduced basis solution.
-      %
-      % Parameters:
-      %   param: parameter to use. @type colvec
-      %   rbsolvec: solution vector of the reduced system. @type colvec
-      %
-      % Return values:
-      %   errest: estimated error @type double
-
-      % @todo move this somewhere else
-      Malpha = 10;
-      Mplus = 100;
-
-      % calculate the residual norm
-      res = obj.residual(rbsolvec, param);
-      % calculate the bounds of the inf-sup-constant
-      [lb, ~] = obj.scm.onlineQuery(param, Malpha, Mplus);
-
-      % finally compute the error estimate
-      errest = res / lb;
-    end
-
-    function resetTraining(~)
-    end
-
-    function prepare(obj)
-      % Prepare the reduced basis method solver.
-      %
-      % This mainly consists of forwarding needed values to underlying classes
-      % and setting up the galerkin solver.
-      %
-      % @todo refactor this pile of junk...
-
-
-      obj.solver = SolverFourierNodal(obj.pd, 10, 0);
-
-      obj.trialSnapshots = sparse(obj.solver.nTrialDim, 1);
-      obj.isFreshStart = true;
-      obj.affineTestshotBase = cell(0);
-      obj.errors = [];
-      obj.params = [];
-    end
-
-    function testshots = constructTestSpace(obj, param)
-      % @todo describe it
-
-      testshots = sparse(obj.nTestTruth, obj.nTrialRB);
-
-      % pad with 1 for the field independent part
-      param = [1; shiftdim(param)];
-
-      for ndx = 1:obj.nTrialRB
-        testshots(:, ndx) = obj.affineTestshotBase{ndx} * param;
-      end
+      errest = obj.estimateError(param, rbsolvec);
     end
 
     function offlineStage(obj, paramTrain)
@@ -169,21 +119,11 @@ classdef RBMSolverFourierNodal < RBMSolverAbstract
         fprintf('# RBM: starting offline stage.\n');
       end
 
-      % @todo move it
-      ptest = rand(1, 10000) * 6 - 3;
-
-      % first we have to set up the successive constraint method and start it's
-      % offline stage, as we are going to need a fast way to calculate the inf-
-      % sup-constant for lots of parameters
-      obj.scm = SCM(obj);
-      % let's start the offline stage of the scm. this could take a while...
-      obj.scm.offlineStage(paramTrain, ptest);
-
-      % now we are ready to start the greedy loop! first some more preparation
+      % we are ready to start the greedy loop! first some more preparation
       isDone = false;
       exflag = 0;
       tol = 1e-6;
-      
+
       maxerr = 0;
 
       if obj.verbose
@@ -211,25 +151,28 @@ classdef RBMSolverFourierNodal < RBMSolverAbstract
 
         % now we use a gram-schmidt-orthonormalization
         z = solvec;
-        if ~obj.isFreshStart
+        if obj.nTrialRB > 0
           z = solvec - obj.trialSnapshots * (solvec.' * obj.solver.TrNorm * obj.trialSnapshots).';
           z = z / (sqrt(z' * obj.solver.TrNorm * z));
           obj.trialSnapshots(:, end + 1) = z;
         else
           z = z / (sqrt(z' * obj.solver.TrNorm * z));
           obj.trialSnapshots(:, 1) = z;
-          obj.isFreshStart = false;
         end
-        
+
+        obj.nTrialRB = obj.nTrialRB + 1;
+
         % and compute the needed affine decomposition for the on-demand assembly
         % of the reduced basis test space
 
         % iterate over the space time matrix parts
-        Zqn = zeros(obj.nTestTruth, obj.nQb);
+        Zqn = zeros(obj.solver.nTestDim, obj.nQb);
         for pdx = 1:obj.nQb
           Zqn(:, pdx) = obj.solver.TeNorm \ (obj.solver.Lhs{pdx} * solvec);
         end
         obj.affineTestshotBase{end + 1} = Zqn;
+
+        obj.nTestRB = obj.nTestRB + 1;
 
         % next step: compute all the error estimates, so let's prepare the
         % computation of the residual
@@ -237,7 +180,7 @@ classdef RBMSolverFourierNodal < RBMSolverAbstract
         % and now lets iterate
         errests = zeros(size(paramTrain, 2), 1);
         for idx = 1:size(paramTrain, 2)
-          [rbsolvec, errest] = obj.onlineSolve(paramTrain(:, idx));
+          [rbsolvec, errest] = obj.onlineQuery(paramTrain(:, idx));
           errests(idx) = errest;
         end
 
@@ -265,29 +208,27 @@ classdef RBMSolverFourierNodal < RBMSolverAbstract
       end
     end
 
-    function prepareResidual(obj)
-      % Set up the needed matrix for the computation of the residual.
+    function errest = estimateError(obj, param, rbsolvec)
+      % Estimate the error of a reduced basis solution.
       %
-      % This assembles the solution and field independent part of the
-      % computation of the Y'-norm of the residual through it's riesz
-      % representation.
+      % Parameters:
+      %   param: parameter to use. @type colvec
+      %   rbsolvec: solution vector of the reduced system. @type colvec
       %
-      % @todo describe it more!
+      % Return values:
+      %   errest: estimated error @type double
 
-      % create the matrix
-      H = zeros(obj.nTestTruth, obj.nQr);
+      % @todo move this somewhere else
+      Malpha = 10;
+      Mplus = 100;
 
-      % the first column is the rhs of the truth system
-      H(:, 1) = obj.solver.spacetimeLoadVector;;
+      % calculate the residual norm
+      res = obj.residual(rbsolvec, param);
+      % calculate the bounds of the inf-sup-constant
+      [lb, ~] = obj.scm.onlineQuery(param, Malpha, Mplus);
 
-      % the remaining columns are the products of the affine composition of the
-      % truth system matrix and the chosen trial truth space snapshots
-      for pdx = 1:obj.nQb
-        H(:, (pdx + 1):obj.nQb:end) = - obj.solver.Lhs{pdx} * obj.trialSnapshots;
-      end
-
-      % and now we multiply that all together and the preparation is done
-      obj.G = H.' * (obj.solver.TeNorm.' \ H);
+      % finally compute the error estimate
+      errest = res / lb;
     end
 
     function val = residual(obj, uN, param)
@@ -326,6 +267,27 @@ classdef RBMSolverFourierNodal < RBMSolverAbstract
       val  = sqrt(abs(Eps.' * obj.G * Eps));
     end
 
+    function snapshots = assembleTestSnapshots(obj, param)
+      % Assemble the reduced basis test space for the given parameter.
+      %
+      % Parameters:
+      %   param: parameter for the problem @type colvec
+      %
+      % Return values:
+      %   snapshots: reduced basis test space @type matrix
+      %
+      % @todo describe it
+
+      % prepad with 1 for the field independent part
+      param = [1; shiftdim(param)];
+
+      % evaluate the affine decomposition
+      snapshots = sparse(obj.solver.nTestDim, obj.nTrialRB);
+      for ndx = 1:obj.nTrialRB
+        snapshots(:, ndx) = obj.affineTestshotBase{ndx} * param;
+      end
+    end
+
     function solval = evaluateSolutionRb(obj, rbsolvec)
       % Evaluate a solution of the reduced basis system.
       %
@@ -353,9 +315,49 @@ classdef RBMSolverFourierNodal < RBMSolverAbstract
       solval = obj.solver.evaluateSolution(gsolvec);
     end
 
+    function resetTraining(obj)
+      % Reset (or prepare) the object for the execution of the offline stage.
+      %
+      % Warning:
+      %   This deletes all offline data!
+
+      obj.trialSnapshots = sparse(obj.solver.nTrialDim, 1);
+      obj.affineTestshotBase = cell(0);
+      obj.errors = [];
+      obj.params = [];
+      obj.nTrialRB = 0;
+      obj.nTestRB = 0;
+    end
   end
 
   % collection of maybe necessary stuff
+
+  methods(Access = 'protected')
+    function prepareResidual(obj)
+      % Set up the needed matrix for the computation of the residual.
+      %
+      % This assembles the solution and field independent part of the
+      % computation of the Y'-norm of the residual through it's riesz
+      % representation.
+      %
+      % @todo describe it more!
+
+      % create the matrix
+      H = zeros(obj.solver.nTestDim, obj.nQr);
+
+      % the first column is the rhs of the truth system
+      H(:, 1) = obj.solver.spacetimeLoadVector;;
+
+      % the remaining columns are the products of the affine composition of the
+      % truth system matrix and the chosen trial truth space snapshots
+      for pdx = 1:obj.nQb
+        H(:, (pdx + 1):obj.nQb:end) = - obj.solver.Lhs{pdx} * obj.trialSnapshots;
+      end
+
+      % and now we multiply that all together and the preparation is done
+      obj.G = H.' * (obj.solver.TeNorm.' \ H);
+    end
+  end
 
   methods%(Access = 'protected')
     function [beta, gamma] = calcDiscreteInfSupAndContinuityRB(obj, param)
@@ -371,7 +373,7 @@ classdef RBMSolverFourierNodal < RBMSolverAbstract
       %
       % @todo eventuell affine zerlegbarkeit ausnutzen!
 
-      testshots = obj.constructTestSpace(param);
+      testshots = obj.assembleTestSnapshots(param);
 
       % first we have to construct the rb system matrix for this parameter and
       % the y- and x-norm matrices.
@@ -417,4 +419,4 @@ classdef RBMSolverFourierNodal < RBMSolverAbstract
     end
   end
 
-end
+end % classdef
