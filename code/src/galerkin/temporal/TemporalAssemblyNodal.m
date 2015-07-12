@@ -3,12 +3,15 @@ classdef TemporalAssemblyNodal < TemporalAssemblyAbstract
   % piecewise linear nodal basis functions in the trial temporal part and
   % indicator functions in the test temporal part.
   %
-  % Refinement of the temporal grid for the test space is also supported and
-  % activated by default.
+  % Refinement of the temporal grid for the test space is also supported but
+  % deactivated by default, because it requires a reformulation of the
+  % variational problem as a minimal residual problem. This doesn't really
+  % comply with the needs of the reduced basis method, so we have to ensure
+  % stability by different means.
 
   properties
     % toggle, whether refinement for the test space should be used @type logical
-    useRefinement = true;
+    useRefinement = false;
   end
 
   methods
@@ -22,7 +25,7 @@ classdef TemporalAssemblyNodal < TemporalAssemblyAbstract
 
       % default values
       if nargin == 1
-        useRefinement = true;
+        useRefinement = false;
       end
 
       % call the superclass constructor
@@ -30,7 +33,7 @@ classdef TemporalAssemblyNodal < TemporalAssemblyAbstract
       obj.useRefinement = useRefinement;
     end
 
-    function Mt = massMatrix(obj, space, spanidx)
+    function Mt = massMatrix(obj, space, span)
       % Assemble the temporal mass Matrix, that means we evaluate the integral
       % `\int_{I} \theta_k(t) \xi_m(t) \diff t` for `k = 1 \dots K` and
       % `m = 1 \dots K'`.
@@ -38,13 +41,10 @@ classdef TemporalAssemblyNodal < TemporalAssemblyAbstract
       % Parameters:
       %   space: switch for which space the matrix should be assembled. possible
       %     values are 'trial', 'test' and 'both'. @type string
-      %   spanidx: span of the time subinterval to use given in indexes of
-      %     pd.tgrid @type vector
+      %   span: span of the time subinterval of pd.tgrid to use @type vector
       %
       % Return values:
       %   Mt: temporal mass matrix @type matrix
-      %
-      % @todo add partial handling!
 
       % first thing every time
       obj.resetSizes;
@@ -62,7 +62,7 @@ classdef TemporalAssemblyNodal < TemporalAssemblyAbstract
         case 'test'
           Mt = obj.massMatrixTest(obj.pd.tgrid, reflevel);
         case 'both'
-          Mt = obj.massMatrixBoth(obj.pd.tgrid, reflevel);
+          Mt = obj.massMatrixBoth(obj.pd.tgrid, reflevel, span);
         otherwise
           error('You specified a non-existing option!');
       end
@@ -156,20 +156,32 @@ classdef TemporalAssemblyNodal < TemporalAssemblyAbstract
                    obj.nTrial);
     end
 
-    function Mt = massMatrixBoth(obj, tgrid, reflevel)
+    function Mt = massMatrixBoth(obj, tgrid, reflevel, span)
       % Assemble the temporal mass matrix for the combination of trial and test
       % space.
       %
       % Parameters:
       %   tgrid: temporal grid @type vector
       %   reflevel: refinement level @type integer
+      %   span: temporal subinterval for which the mass matrix should be
+      %     assebled @type vector.
       %
       % Return values:
       %   Mt: mass matrix @type matrix
 
       nK = length(tgrid);
+
+      % get the indices for the subinterval
+      idxf = find(span(1) <= tgrid, 1, 'first');
+      idxt = find(tgrid   < span(2), 1, 'last');
+
+      % cut the grid
+      D = diff(tgrid);
+      D(1:(idxf - 1)) = 0;
+      D((idxt + 1):end) = 0;
+
       if reflevel == 0
-        Mt = spdiags(diff(tgrid)' * [1/2 1/2], 0:1, nK-1, nK);
+        Mt = spdiags(D' * [1/2 1/2], 0:1, nK-1, nK);
         return;
       end
 

@@ -134,7 +134,7 @@ classdef SolverNodal < SolverAbstract
       %   solval: values of the solution on the given grids @type matrix
 
       % create the matrix that will hold the solution values
-      solval = zeros(length(obj.pd.tgrid), length(obj.pd.xgrid));
+      solval = zeros(length(obj.pd.xgrid), length(obj.pd.tgrid));
 
       % precompute the spatial and temporal basis functions for the given grids
       spatialValues = zeros(length(obj.pd.xgrid), obj.spatial.nTrial);
@@ -163,7 +163,7 @@ classdef SolverNodal < SolverAbstract
       %   M: propagator field independent stiffness matrix @type matrix
 
       % temporal mass matrices
-      MtAT   = obj.temporal.massMatrix('both');
+      MtAT   = obj.temporal.massMatrix('both', obj.pd.tspan);
       % temporal "half stiffness" matrix
       CtAT   = obj.temporal.halfStiffnessMatrix;
 
@@ -220,13 +220,9 @@ classdef SolverNodal < SolverAbstract
 
       % iterate over the fields
       for fdx = 1:obj.pd.nF
-        % get the time grid point indexes which are relevant for this field
-        span = find(tpoints(fdx) <= obj.pd.tgrid & obj.pd.tgrid < tpoints(fdx + 1));
-
         % temporal mass matrices for the given interval part
         %| @todo add back the field support!
-        MtAT = obj.temporal.massMatrix('both', [span(1), span(end)]);
-        % MtAT = obj.temporal.massMatrix('both');
+        MtAT = obj.temporal.massMatrix('both', [tpoints(fdx), tpoints(fdx + 1)]);
 
         % and iterate over the coefficients
         for cdx = 1:obj.pd.nC
@@ -245,6 +241,7 @@ classdef SolverNodal < SolverAbstract
 
       F = sparse(obj.nTestDim, 1);
       F(obj.spatial.nTest * obj.temporal.nTest + 1) = obj.pd.xspan(2);
+      obj.Rhs = F;
     end
 
     function M = spacetimeSystemMatrix(obj, param)
@@ -276,7 +273,7 @@ classdef SolverNodal < SolverAbstract
       %   M: gramian of the trial space norm @type matrix
 
       % temporal mass matrices
-      MtAA = obj.temporal.massMatrix('trial');
+      MtAA = obj.temporal.massMatrix('trial', obj.pd.tspan);
       % temporal stiffness matrix
       AtAA = obj.temporal.stiffnessMatrix;
       % spatial mass matrices
@@ -295,7 +292,7 @@ classdef SolverNodal < SolverAbstract
       %   M: gramian of the test space norm @type matrix
 
       % temporal mass matrices
-      MtTT     = obj.temporal.massMatrix('test');
+      MtTT     = obj.temporal.massMatrix('test', obj.pd.tspan);
       % spatial mass matrices
       MxTT     = obj.spatial.massMatrix;
       % spatial stiffness matrices
