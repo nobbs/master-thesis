@@ -1,0 +1,120 @@
+%!TEX root = ../main.tex
+
+\chapter{Notizen} % (fold)
+\label{cha:notizen}
+
+% section zum_petrov_galerkin_verfahren (end)
+
+\section{Reduzierte-Basis-Methode} % (fold)
+\label{sec:reduzierte_basis_methode}
+
+Bei der Reduzierte-Basis-Methode für die Raum-Zeit-Variationsformulierung parabolischer partieller Differentialgleichungen haben sich folgende Punkte ergeben, welche eine Anmerkung verdienen.
+
+Seien dazu $\mathcal X^{\mathcal N} = \spn\Set{\phi_{n}}_{n=1}^{\mathcal N}$ und $\mathcal Y^{\mathcal M} = \spn\Set{\psi_{m}}_{m = 1}^{\mathcal M}$ endlichdimensionale Hilberträume, beispielsweise aus dem Petrov-Galerkin-Verfahren.
+Im Allgeimeinen muss hier nicht $\mathcal N = \mathcal M$ gelten.
+Weiter bezeichnen wir mit $\mathcal X_{N} \subset \mathcal X^{\mathcal N}$ und $\mathcal Y_{\mathcal M} \subset \mathcal Y_{M}$ die Reduzierte-Basis-Räume.
+
+Wir betrachten das abstrakte Variationsproblem
+\begin{equation}
+    b(u, v; \mu) = f(v; \mu) \qquad \text{mit}~u \in \mathcal X,~v \in \mathcal Y,
+\end{equation}
+wobei $b \colon \mathcal X \times \mathcal Y \times \mathcal P \to \mathbb{R}$ eine affin parametrische Bilinearform und $f \colon \mathcal Y \times \mathcal P \to \mathbb{R}$ ein affin parametrisches lineares stetiges Funktional sei,
+das heißt, es gelte
+\begin{equation}
+    b(u, v; \mu) = \sum_{q = 1}^{Q_b} \theta^{b}_{q}(\mu) b_{q}(u, v)
+    \qquad \text{und} \qquad
+    f(v; \mu) = \sum_{q = 1}^{Q_f} \theta^{f}_{q}(\mu) f_{q}(v).
+\end{equation}
+
+\paragraph{A posteriori Fehlerschätzer} % (fold)
+\label{par:a_posteriori_fehlersch_tzer}
+
+Der A-posteriori-Fehlerschätzer ergibt sich wie bei Reduzierte-Basis-Methoden üblich folgendermaßen:
+
+Sei $\mu \in \mathcal P$ ein Parameter, $u^{\mathcal N}(\mu) \in \mathcal X^{\mathcal N}$ die Truth-Lösung des Variationsproblem für $\mu$ und $u_{N}(\mu) \in \mathcal X_{N}$ die entsprechende Reduzierte-Basis-Lösung.
+Definiere den Fehler
+\begin{equation}
+    e_{N}(\mu) := u^{\mathcal N}(\mu) - u_{N}(\mu) \in \mathcal X^{\mathcal N}.
+\end{equation}
+Weiter wird das Residuum für alle $v \in \mathcal Y^{\mathcal M}$ definiert als
+\begin{equation}
+    r_{N}(v; \mu) = b(e_{N}(\mu), v; \mu) = f(v; \mu) - b(u_{N}(\mu), v; \mu).
+\end{equation}
+Fasst man das Residuum als rechte Seite des obigen Variationsproblems auf, dann ist $e_{N}(\mu)$ die zugehörige Lösung.
+Weiter können wir die übliche Abschätzung (Lemma von Cea bzw. ähnliche Aussage) verwenden und erhalten die Ungleichung
+\begin{equation}
+    \norm{e_{N}(\mu)}_{\mathcal X} \leq \frac{1}{\beta^{\mathcal N}(\mu)} \norm{r_{N}(\blank; \mu)}_{\mathcal Y^{\mathcal M}'}.
+\end{equation}
+Dabei ist $\beta^{\mathcal N}(\mu)$ die inf-sup-Konstante des Truth-Probelms für den Parameter $\mu$.
+
+\paragraph{Berechnung der inf-sup-Konstante} % (fold)
+\label{par:berechnung_der_inf_sup_konstante}
+
+Die obige inf-sup-Konstante $\beta^{\mathcal N}(\mu)$ wird in der Offline-Phase der Reduzierte-Basis-Methode für jeden Parameter $\mu$ des verwendeten Trainingsraums benötigt, muss also effizient auswertbar sein.
+
+Zunächst eine Erklärung, wie man $\beta^{\mathcal N}(\mu)$ grundsätzlich berechnen kann.
+Dazu greift man auf den sogenannten \emph{Supremizing Operator} zurück.
+Dieser ist eine Abbildung $T_{\mu} \colon \mathcal X^{\mathcal N} \to \mathcal Y^{\mathcal M}$ definiert durch
+\begin{equation}
+    \skp{T_{\mu} u}{v}{\mathcal Y^{\mathcal M}} = b(u, v; \mu) \quad \fa v \in \mathcal Y^{\mathcal M}.
+\end{equation}
+Weiter gilt
+\begin{equation}
+    T_{\mu}u = \arg \sup_{v \in \mathcal{Y}^{\mathcal M}}  \frac{b(u, v; \mu)}{\norm{v}_{\mathcal Y^{\mathcal M}}}
+\end{equation}
+und damit
+\begin{equation}
+    \beta^{\mathcal N}(\mu) = \inf_{u \in \mathcal X^{\mathcal N}} \frac{\norm{T_{\mu}u}_{\mathcal Y^{\mathcal M}}}{\norm{u}_{\mathcal X^{\mathcal N}}}.
+\end{equation}
+Mittels des Rieszschen Darstellungssatzes lässt sich der Operator $T_{\mu}$ berechnen.
+
+Sei dazu $\mat{Y} = [\skp{\psi_{m}}{\psi_{m'}}{\mathcal Y^{\mathcal M}}]_{m, m'}$, $\mat{X} = [\skp{\phi_{n}}{\phi_{n'}}{\mathcal X^{\mathcal N}}]_{n, n'}$ und $\mat{B}_{\mu} = [b(\phi_{n}, \psi_{m}; \mu)]_{m, n}$.
+Dann gilt
+\begin{equation}
+    \mat{Y} \vec{T}_{\mu} = \mat{B}_{\mu}.
+\end{equation}
+Eingesetzt ergibt sich dann das Quadrat der inf-sup-Konstante dann als
+\begin{equation}
+    (\beta^{\mathcal N}(\mu))^{2} = \inf_{\vec{u} \in \mathbb{R}^{\mathcal N}} \frac{\vec{u}\Transp \mat{B}_{\mu}\tranps \mat{Y}^{-1} \mat{B}_{\mu} \vec{u}}{\vec{u}\Transp \mat{X} \vec{u}}
+\end{equation}
+und lässt sich als kleinster Eigenwert $\lambda$ des verallgemeinerten Eigenwertproblems
+\begin{equation}
+    \mat{B}_{\mu}\tranps \mat{Y}^{-1} \mat{B}_{\mu} \vec{x} = \lambda \mat{X} \vec{x}
+\end{equation}
+bestimmen.
+
+Für die Successive Constraint Method, siehe \textcite{Huynh2007}.
+
+
+% paragraph berechnung_der_inf_sup_konstante (end)
+
+\paragraph{Stabiler Reduzierte-Basis-Testraum} % (fold)
+\label{par:stabiler_reduzierte_basis_testraum}
+
+Bei der Reduzierte-Basis-Methode für parabolische Probleme ergibt sich das Problem, dass die Lösungen nur den Reduzierte-Basis-Ansatzraum aufspannen. Der Testraum muss dagegen anderweitig konstruiert werden.
+Hier scheint es verschiedene, hauptsächlich heuristisch motivierte Ansätze zu geben, die wiederum den obigen Supremizing Operator verwenden.
+Beispiele sind \textcite[Abschnitt 4.2]{Mayerhofer:2014vx} beziehungsweise \textcite{Dahmen:2014cl}.
+
+Momentan implementiert ist \textcite[Abschnitt 4.2]{Mayerhofer:2014vx}.
+% paragraph stabiler_reduzierte_basis_testraum (end)
+
+
+\section{Petrov-Galerkin} % (fold)
+\label{sec:petrov_galerkin}
+
+Die Zeitdiskretisierung wurde ausgetauscht. Statt Legendre-Polynomen werden nun, da es weit verbreitet zu sein scheint und laut \textcite{Andreev:2012uh,Andreev:2012ep,Andreev:2013gk} mit guten Stabilitätsergebnissen, nodale Hutfunktionen für den Ansatzraum und Indikatorfunktionen für den Testraum verwendet. Dabei wird im Allgeimeinen die Zeitdiskretisierung des Testraumes um den Faktor 2 verfeinert, wodurch sich die inf-sup-Stabilität ohne Beachtung einer CFL-Bedingung ergibt. (Die räumliche Diskretisierung muss ein, zwei Bedingungen erfüllen, mal checken).
+
+Durch den größeren Testraum ergibt sich ein überbestimmtes System, welches im Sinne einer Residuum-Minimierung gelöst werden muss. Es lässt sich zeigen, dass dieses \emph{Minimales Residuum Petrov-Galerkin-Verfahren} ähnliche Aussagen wie das übliche Petrov-Galerkin-Verfahren erfüllt.
+
+% section petrov_galerkin (end)
+
+\section{Weiteres} % (fold)
+\label{sec:weiteres}
+
+\begin{itemize}
+    \item Im Moment ist die periodische Randbedingung am laufen. Wird durch Fourier-Disrektisierung mit Konstanter Basisfunktion geregelt. Die Theorie wird aber für $H^{1}_{0, per}(\Omega) := H^{1}_{per}(\Omega) / \mathbb{R}$ angeregt. Schlimm? Wie anders lösbar?
+    \item Wie könnte man die Anzahl der verwendeten Feld-Entwicklungsfunktionen einschränken?
+    \item
+\end{itemize}
+
+% section weiteres (end)
