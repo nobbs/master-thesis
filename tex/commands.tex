@@ -76,3 +76,18 @@
 
 % um fremde Begriffe einheitlich mit Übersetzung zu setzen
 \newcommand\foreign[2]{#1 \textit{#2}}
+
+% disjunkte vereinigung
+\makeatletter
+\providecommand*{\cupdot}{%
+  \mathbin{%
+    \mathpalette\@cupdot{}%
+  }%
+}
+\newcommand*{\@cupdot}[2]{%
+  \ooalign{%
+    $\m@th#1\cup$\cr
+    \hidewidth$\m@th#1\cdot$\hidewidth
+  }%
+}
+\makeatother

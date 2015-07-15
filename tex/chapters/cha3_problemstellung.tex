@@ -7,272 +7,299 @@
         \vspace*{2\baselineskip}
     }
 }{}
-\chapter{Problemstellung} % (fold)
+\chapter{Propagator-Differentialgleichung} % (fold)
 \label{cha:ps:problemstellung}
 
-In diesem Kapitel greifen wir die in \cref{cha:el:einleitung} als Propagatoren bezeichneten parabolischen partiellen Differentialgleichungen \cref{eq:el:forward_propagator,eq:el:backward_propagator} auf, konkretisieren die Rahmenbedingungen und reinterpretieren diese Propagatoren anschließend als parametrische Differentialgleichungen.
+Wir greifen nun die aus \cref{cha:el:einleitung} bekannten parabolischen Differentialgleichungen \cref{eq:el:forward_propagator,eq:el:backward_propagator}, welche von den beiden Propagatoren $q$ und $q^{\dagger}$ erfüllt werden, auf.
+Der Einfachheit halber verwenden wir im Nachfolgenden den Begriff \emph{Propagator-Differentialglei"-chung"-en}, wenn wir uns auf die genannten partiellen Differentialgleichungen beziehen.
 
-Zudem leiten wir Variationsformulierungen her und weisen anhand dieser nach, dass diese sachgemäß gestellt sind und dass die Lösungen der parametrischen partiellen Differentialgleichung eine gewisse Regularität bezüglich der Parameter aufweisen.
+In diesem Kapitel konkretisieren wir diese Propagator-Differentialgleichungen, schaffen geeignete Rahmenbedingungen und leiten eine schwache Formulierung her.
+Anschließend werden die in den Propagator-Differentialglei"-chung"-en auftretenden Felder $\omega_{\bullet}$ parametrisiert und als Grundlage für eine parametrische schwache Raum-Zeit-Formulierung verwendet.
+Für diese weisen wir abschließend nach, dass sie sachgemäß gestellt ist und eine gewisse Regularität bezüglich der Parameter aufweist.
 
-\mdo{Quellen}
+\section{Raum-Zeit-Variationsformulierung} % (fold)
+\label{sub:ps:rzvp:raum_zeit_variationsformulierung}
 
-\section{Die parabolische partielle Differentialgleichung} % (fold)
-\label{sec:ps:pde:die_parabolische_partielle_differentialgleichung}
+% \section{Die parabolische partielle Propagator-Differentialgleichung} % (fold)
+% \label{sec:ps:pde:die_parabolische_partielle_differentialgleichung}
 
-Ohne Einschränkung reicht es, nur den Vorwärts-Propagator \cref{eq:el:forward_propagator} zu betrachten, da der Rückwärts-Propagator \cref{eq:el:backward_propagator} durch die simple Transformation $s \mapsto 1 - s$ auf die selbe Form, lediglich mit vertauschten Rollen bei den Feldern $\omega_{\mathrm{A}}$ und $\omega_{\mathrm{B}}$, gebracht werden kann.
+Wir wollen nun zunächst das Setting festlegen und die aus der Einführung bekannten Propagator-Gleichungen in einem allgemeineren Rahmen auffassen.
+Dabei halten wir an dem Fall zweier Felder fest, wobei diese Einschränkung nicht notwendig ist, da die nachfolgenden Ergebnisse in gleicher Weise auch für jede andere endliche Felderanzahl nachgewiesen werden können.
+Weiter sei an dieser Stelle angemerkt, dass es ausreicht sich auf die Betrachtung des Vorwärts-Propagators \cref{eq:el:forward_propagator} zu beschränken, da der Rückwärts-Propagator \cref{eq:el:backward_propagator} durch die einfache Transformation $s \mapsto 1 - s$ auf die selbe Form, lediglich mit vertauschen Rollen bei den Feldern, gebracht werden kann.
 
-Wir wollen nun zunächst das Setting festlegen und dabei die aus der Einleitung bekannte partielle Differentialgleichung etwas allgemeiner auffassen.
+Seien nun $0 < T_{f} < T < \infty$ reelle Konstanten und $I = [0, T]$ ein reelles Intervall, welches wir in die beiden Teilintervalle $I_{1} = [0, T_{f})$ und $I_{2} = [T_{f}, T]$ zerlegen.
+Weiter sei $\Omega \subset \mathbb{R}^{n}$, $n \in \mathbb{N}$, ein beschränktes Gebiet, das heißt offen, nichtleer, zusammenhängend und beschränkt, welches einen Lipschitz-Rand besitzt.
 
-Seien also $0 < T < \infty$ eine Konstante und $I = [0, T]$ ein reelles Intervall.
-Weiter sei $\Omega \subset \mathbb{R}^{n}$ ein Gebiet, das heißt, eine offene, nichtleere, zusammenhängende Teilmenge, mit Lipschitz-Rand.
-Wir betrachten nun die partielle Differentialgleichung
-\begin{equation}
-\label{eq:ps:pde:pde_erste_erwaehnung}
-    u_{t}(t, \vec{x}) = c \Delta_{\vec{x}} u(t, \vec{x}) - \omega(t, \vec{x}) u(t, \vec{x}) - \mu u(t, \vec{x}) \quad \text{auf}~I \times \Omega,
-\end{equation}
-wobei $c \in \mathbb{R}_{+}$ und $\mu \in \mathbb{R}$ Konstanten seien.
-% TODO: eventuell sollte man das hier anders machen...
-% Weiter sei $\omega \colon \Omega \to \mathbb{R}$ eine $L_{\infty}$-Abbildung, das heißt, wir verzichten an dieser Stelle zunächst auf die zeitliche Abhängigkeit, die in \cref{cha:el:einleitung} noch in Form eines Wechsels zwischen zwei Feldern $\omega_{1}, \omega_{2}$ zu finden war.
-Weiter sei
+Da wir den Feldern an dieser Stelle noch keine allzu einschränkenden Bedingungen auferlegen wollen, schreiben wir diese in Form der Abbildung
 \begin{equation}
 \label{eq:ps:pde:omega_definition}
     \omega \colon I \times \Omega \to \mathbb{R}, \quad (t, \vec{x}) \mapsto
+    w_{1}(\vec{x}) \chi_{I_{1}}(t) + w_{2}(\vec{x}) \chi_{I_{2}}(t)
+    =
     \begin{cases}
-        \omega_{1}(\vec{x}), & t \leq f, \\
-        \omega_{2}(\vec{x}), & t > f,
+        w_{1}(\vec{x}), & t < T_{f}, \\
+        w_{2}(\vec{x}), & t \geq T_{f},
     \end{cases}
 \end{equation}
-mit $L_{\infty}(\Omega)$-Abbildungen $\omega_{1}, \omega_{2}$ und einer Konstante $f \in I$.
+mit den $L_{\infty}(\Omega)$-Abbildungen $w_{1}, w_{2}$ und den charakteristischen Funktionen $\chi_{I_{i}}$ für die entsprechenden Intervalle.
 
-Da, wie in \cref{cha:el:einleitung} erwähnt, konstante Verschiebungen der Felder $\omega_{i}$ keinen Einfluss auf das Ergebnis des dort beschriebenen Iterationsverfahrens haben führen wir den zusätzlichen Term $\mu u(t, x)$ ein.
-Dies wird sich später noch als hilfreich beim Nachweis einiger Eigenschaften der Differentialgleichung erweisen.
+Unter dem Begriff \emph{Propagator-Differentialgleichung} wollen wir im Weiteren nun die folgende parabolische Differentialgleichung verstehen.
 
-Weiter beschränken wir uns an dieser Stelle auf den Fall homogener Randbedingungen in $\Omega$, das heißt, es gilt $\restr{u(t, \blank)}{\partial \Omega} = 0$ für alle $t \in I$.
-
-Unter diesen Gegebenheiten können wir die obige partielle Differentialgleichung \cref{eq:ps:pde:pde_erste_erwaehnung} weiter konkretisieren; es bietet sich an, dazu die Räume $V = H^{1}_{0}(\Omega)$ und $H = L_{2}(\Omega)$ zu verwenden.
-Dabei handelt es sich jeweils um einen separablen Hilbertraum und es existiert eine dichte stetige Einbettung $H^{1}_{0}(\Omega) \denseinclusion L_{2}(\Omega)$.
-Nach \cref{def:gl:br:gelfand_tripel} erhalten wir daraus das Gelfand-Tripel
-\begin{equation}
-\label{eq:ps:pde:gelfand_triple}
-    H^{1}_{0}(\Omega) \denseinclusion L_{2}(\Omega) \denseinclusion (H^{1}_{0}(\Omega))' = H^{-1}(\Omega).
-\end{equation}
-
-Mit diesen Vorbemerkungen können wir unter Hinzunahme eines Quellterms und einer Anfangsbedingung unser Problem wie folgt definieren:
-
-\mwarn{Sind die Voraussetzungen so passend?}
-\begin{Definition}[Starke Formulierung]
-\label{def:ps:pde:starke_formulierung}
-    Seien eine \emph{Anfangsbedingung} $u_{0} \in L_{2}(\Omega)$, ein \emph{Quellterm} $g \in L_{2}(I) \otimes H^{-1}(\Omega)$ und $\omega$ wie in \cref{eq:ps:pde:omega_definition}, sowie Konstanten $c \in \mathbb{R}_{+}$ und $\mu \in \mathbb{R}$ gegeben.
-    Als \emph{starke Formulierung} bezeichnen wir die parabolische partielle Differentialgleichung
+\begin{Definition}
+\label{def:ps:pde:propagator_dgl}
+    Es seien Felder $\omega$ wie in \cref{eq:ps:pde:omega_definition}, eine Anfangsbedingung $u_{0} \colon \Omega \to \mathbb{R}$, ein Quellterm $g \colon I \times \Omega \to \mathbb{R}$, eine Randbedingung, sowie Konstanten $c \in \mathbb{R}_{+}$ und $\mu \in \mathbb{R}$ gegeben.
+    Als \emph{Propagator-Differentialgleichung} bezeichnen wir die parabolische partielle Differentialgleichung
     \begin{equation}
-    \label{eq:ps:pde:starke_formulierung}
+    \label{eq:ps:pde:propagator_dgl}
         \left\{
         \begin{aligned}
             u_{t}(t, x) - c \Delta u(t, x) + \omega(t, x) u(t, x) + \mu u(t, x) &= g(t, x) \quad &&\text{auf}~I \times \Omega,\\
-            u(0, x) &= u_{0}(x) \quad &&\text{auf}~\Omega.
+            u(0, x) &= u_{0}(x) \quad &&\text{auf}~\Omega, \\
+            u(t, x) \text{ erfüllt Randbedingung} &\quad &&\text{auf}~I \times \partial \Omega.
         \end{aligned}
         \right.
+    \end{equation}
+\end{Definition}
+
+Da, wie in \cref{cha:el:einleitung} erwähnt, der Mittelwert der Felder keinen Einfluss auf das Ergebnis des dort beschriebenen Iterationsverfahrens hat, führen wir den zusätzlichen Term $\mu u(t, x)$ ein.
+Dieser wird sich bei der späteren numerischen Umsetzung als nützlich erweisen.
+
+% \section{Raum-Zeit-Variationsformulierung} % (fold)
+% \label{sub:ps:rzvp:raum_zeit_variationsformulierung}
+
+Unser Ziel ist es nun, eine Raum-Zeit-Variationsformulierung der Propagator-Differen"-ti"-al"-gleichung
+aus \cref{def:ps:pde:propagator_dgl} herzuleiten.
+Diese wird uns als Ausgangspunkt für die angedachten numerischen Verfahren dienen, weswegen wir uns auch bei der theoretischen Arbeit auf diese konzentrieren werden.
+
+Zunächst führen wir aber eine Einschränkung der möglichen Randbedingungen durch.
+Von größtem Interesse sind für uns, bedingt durch die Motivation der parabolischen Differentialgleichung in \cref{cha:el:einleitung}, der Fall homogener Dirichlet-Randbedingungen, also $u(t, x) = 0$ auf $I \times \partial \Omega$, und der Fall periodischer Randbedingungen.
+Letztere werden am Ende dieses Kapitels nochmals aufgegriffen, während wir uns im Rest der Ausführungen auf den Fall homogener Dirichlet-Randbedingungen beschränken.
+
+Bei der Herleitung der Raum-Zeit-Variationsformulierung der Propagator-Differential"-glei"-chung werden wir Schrittweise vorgehen und zunächst den stationären Fall betrachten, bevor wir darauf aufbauend die schwache Raum-Zeit-Variationsformulierung erhalten.
+Als Grundlage für die schwache Formulierung im stationären Fall verwenden wir die wohlbekannten Sobolev-Räume.
+Die folgende Bemerkung führt die notwendigen Notationen in diesem Zusammenhang ein.
+
+\begin{Bemerkung}
+\label{bemerkung:prop:gelfand}
+    Wir schreiben kurz $V = H^{1}_{0}(\Omega)$ und $H = L_{2}(\Omega)$ für den bekannten Sobolev- respektive Lebesgue-Raum auf $\Omega$.
+    Da es sich hierbei jeweils um einen Hilbertraum handelt, kennzeichnen wir die entsprechenden Skalarprodukte $\skp{\blank}{\blank}{}$ und Normen $\norm{\blank}$ durch den jeweiligen Index.
+    Da weiter $V$ ein dichter Unterraum von $H$ ist, können wir nach \cref{def:gl:br:gelfand_tripel} ein Gelfand-Tripel der Form
+    \begin{equation}
+        V \denseinclusion H \denseinclusion V' = (H^{1}_{0}(\Omega))' = H^{-1}(\Omega)
+    \end{equation}
+    definieren.
+    Motiviert durch \cref{lemma:stetige_fortstetung_der_dualen_paarung} verwenden wir die Schreibweise $\skp{\blank}{\blank}{V' \times V}$ auch für die duale Paarung auf $V' \times V$.
+\end{Bemerkung}
+
+Damit können wir nun den folgenden Operator und eine zugehörige Bilinearform definieren.
+
+\begin{Definition}
+\label{definition:prop:operator_und_bilinearform}
+    Es seien Felder $\omega$ wie in \cref{eq:ps:pde:omega_definition} und Konstanten $c \in \mathbb{R}_{+}$ sowie $\mu \in \mathbb{R}$ gegeben.
+    Wir definieren für $t \in I$ eine Familie von Operatoren
+    \begin{equation}
+        A(t) \colon V \to V', \quad \eta \mapsto A(t) \eta = - c \Delta \eta + \omega(t, \blank) \eta + \mu \eta
+    \end{equation}
+    und eine Familie von Bilinearformen
+    \begin{equation}
+        a(\blank, \blank; t) \colon V \times V \to \mathbb{R}, \quad (\eta, \zeta) \mapsto a(\eta, \zeta; t) = \skp{A(t)\eta}{\zeta}{V' \times V}.
     \end{equation}
 \end{Definition}
 
 \begin{Bemerkung}
-\label{bem:ps:pde:definition_operator_A}
-    Der notationellen Einfachheit halber definieren wir für $t \in I$ den Operator
-    \begin{equation}
-    \label{eq:ps:pde:definition_operator_A}
-        A(t) \colon H^{1}_{0}(\Omega) \to H^{-1}(\Omega), \quad \eta \mapsto A(t) \eta = - c \Delta \eta + \omega(t, \blank) \eta + \mu \eta.
-    \end{equation}
-    Damit lässt sich die starke Formulierung \cref{eq:ps:pde:starke_formulierung} auch schreiben als
-    \begin{equation}
-        \left\{
-        \begin{aligned}
-            u_t(t) + A(t)u(t) &= g(t) \quad &&\text{in}~H^{-1}(\Omega)~\fa t \in I,\\
-            u(0) &= u_{0} \quad &&\text{in}~L_{2}(\Omega).
-        \end{aligned}
-        \right.
-    \end{equation}
+\label{bemerkung:prop:biliniearform_riesz}
+    Die Existenz der Bilinearform $a(\blank, \blank; t)$ zu dem Operator $A(t)$ lässt sich durch den Rieszschen Darstellungssatz begründen, siehe beispielsweise \cite[Theorem \S{}22.1]{Halmos:1957vd}.
 \end{Bemerkung}
 
-\subsection{Raum-Zeit-Variationsformulierung} % (fold)
-\label{sub:ps:rzvp:raum_zeit_variationsformulierung}
-
-% subsection variationsformulierungen (end)
-
-Als nächsten Schritt wollen wir nun eine Raum-Zeit-Variationsformulierung, auch schwache Formulierung genannt, für das Problem  \cref{eq:ps:pde:starke_formulierung} herleiten.
-Dazu ist es nützlich, den Operator $A(t)$ in Form einer Bilinearform zu schreiben.
-Nach dem Rieszschen Darstellungssatz, vergleiche \cite[Theorem \S{}22.1]{Halmos:1957vd}, existiert eine Bilinearform
+Aufgrund der gewählten Rahmenbedingungen können wir die Bilinearform $a(\blank, \blank; t)$ aus der vorhergehenden Definition explizit angeben.
+Dazu greifen wir unter anderem auf die wohlbekannte schwache Formulierung des Laplace-Operators $- \Delta \colon V \to V'$ zurück.
+Dieser lässt sich aufgrund der Wahl von $V$ auch als eine Bilinearform auf $V \times V$ der Form
 \begin{equation}
-    a \colon H^{1}_{0}(\Omega) \times H^{1}_{0}(\Omega) \to \mathbb{R},
+    (\eta, \zeta) \mapsto \skp{- \Delta \eta}{\zeta}{V' \times V} = \skp{\grad \eta}{\grad \zeta}{H}
 \end{equation}
-so dass
+schreiben.
+Damit ergibt sich zusammen mit der Linearität der dualen Paarung
 \begin{equation}
-    (A(t)\eta)\zeta = \skp{A(t)\eta}{\zeta}{H^{-1}(\Omega) \times H^{1}_{0}(\Omega)} = a(\eta, \zeta; t) \quad \fa \eta, \zeta \in H^{1}_{0}(\Omega)
-\end{equation}
-gilt.
-
-\mfix{Nochmal genauer anschauen, ob das mit der dualen Paarung und dem Skalarprodukt auch so einfach geht.}
-
-Für den gegebenen Fall können wir diese Bilinearform explizit angeben, denn es gilt für $\eta, \zeta \in H^{1}_{0}(\Omega)$ nach dem Gaußschen Integralsatz die Gleichheit
-\begin{equation}
+\label{eq:prop:bilinearform_darstellung}
     \begin{aligned}
         a(\eta, \zeta; t)
-        &=    \skp{A(t)\eta}{\zeta}{H^{-1}(\Omega) \times H^{1}_{0}(\Omega)}
-        =  \skp{A(t)\eta}{\zeta}{L_{2}(\Omega)}
-        \\&= - c \skp{\Delta \eta}{\zeta}{L_{2}(\Omega)}
-                + \skp{\omega(t, \blank) \eta}{\zeta}{L_{2}(\Omega)}
-                + \mu \skp{\eta}{\zeta}{L_{2}(\Omega)}
-        \\&= c \skp{\grad \eta}{\grad \zeta}{L_{2}(\Omega)}
-                + \skp{\omega(t, \blank) \eta}{\zeta}{L_{2}(\Omega)}
-                + \mu \skp{\eta}{\zeta}{L_{2}(\Omega)}.
+            &= \skp{A(t) \eta}{\zeta}{V' \times V}
+          \\&= \skp{-c\Delta \eta + \omega(t, \blank) \eta + \mu \eta}{\zeta}{V' \times V}
+          \\&= - c\skp{\Delta \eta}{\zeta}{V' \times V} + \skp{\omega(t, \blank) \eta}{\zeta}{V' \times V} + \mu \skp{\eta}{\zeta}{V' \times V}
+          \\&= c\skp{\grad \eta}{\grad \zeta}{H} + \skp{\omega(t, \blank) \eta}{\zeta}{H} + \mu \skp{\eta}{\zeta}{H},
     \end{aligned}
 \end{equation}
+wobei bei der Wechsel von dualer Paarung auf $V' \times V$ zum $H$-Skalarprodukt beim zweiten und dritten Summanden durch \cref{lemma:stetige_fortstetung_der_dualen_paarung} und die Tatsache, dass mit $\eta \in V \subset H$ und der Definition von $\omega$ auch $\omega(t, \blank) \eta \in H$ gilt, gerechtfertigt ist.
 
-Mit Hilfe dieser Darstellung erhalten wir nun für die Bilinearform $a(\blank, \blank; t)$ und damit auch für den Operator $A(t)$ die folgenden Aussagen für ein festes $t \in I$.
-%
+Wir weisen nun zwei Eigenschaften für diesen Operator respektive die zugehörige Bilinearform nach, welche eine wichtige Rolle für die spätere Raum-Zeit-Variationsformu"-lie"-rung spielen werden.
+
 \begin{Satz}
 \label{satz:ps:rzvp:bilinearform_a_eigenschaften}
-    Seien $c \in \mathbb{R}_{+}$, $\mu \in \mathbb{R}$, $\omega \in L_{\infty}(\Omega)$ und
-    \begin{equation}
-    \label{eq:ps:rzvp:bilinearform_a}
-        \begin{aligned}
-            &a(\blank, \blank) \colon H^{1}_{0}(\Omega) \times H^{1}_{0}(\Omega) \to \mathbb{R}, \\
-            &(\eta, \zeta) \mapsto c\skp{\grad \eta}{\grad \zeta}{L_{2}(\Omega)} + \skp{\omega \eta}{\zeta}{L_{2}(\Omega)} + \mu \skp{\eta}{\zeta}{L_{2}(\Omega)}.
-        \end{aligned}
-    \end{equation}
-    Dann erfüllt $a$ die folgenden Eigenschaften:
+    Sei $a(\blank, \blank; t)$, $t \in I$, die Familie von Bilinearformen aus \cref{definition:prop:operator_und_bilinearform} respektive \cref{eq:prop:bilinearform_darstellung}.
+    Für festes $t \in I$ erfüllt $a(\blank, \blank; t)$ die folgenden Eigenschaften:
     \begin{thmenumerate}
         \item\label{satz:ps:rzvp:bilinearform_a_eigenschaften_stetig}
         \emph{Stetigkeit:} es gilt
         \begin{equation}
-            \abs{a(\eta, \zeta)} \leq M_{a} \norm{\eta}_{H^{1}(\Omega)} \norm{\zeta}_{H^{1}(\Omega)} \quad \text{für alle}~\eta, \zeta \in H^{1}_{0}(\Omega)
+            \label{eq:ps:rzvp:bilinearform_a_eigenschaften_stetig}
+            \abs{a(\eta, \zeta; t)} \leq \gamma_{a} \norm{\eta}_{V} \norm{\zeta}_{V} \quad \text{für alle}~\eta, \zeta \in V
         \end{equation}
-        mit $M_{a} = \max\Set{c, \norm{\omega}_{L_{\infty}(\Omega)} + \abs{\mu}} \geq 0$.
+        mit Stetigkeitskonstante $\gamma_{a} = \max\Set{c, \norm{\omega(t, \blank)}_{L_{\infty}(\Omega)} + \abs{\mu}} < \infty$.
         \item\label{satz:ps:rzvp:bilinearform_a_eigenschaften_garding}
         \emph{G\aa{}rding-Ungleichung:} es gilt
         \begin{equation}
-                a(\eta, \eta) + \lambda \norm{\eta}_{L_{2}(\Omega)}^{2} \geq \alpha \norm{\eta}_{H^{1}(\Omega)}^{2} \quad \text{für alle}~\eta \in H^{1}_{0}(\Omega)
+            \label{eq:ps:rzvp:bilinearform_a_eigenschaften_garding}
+            a(\eta, \eta; t) + \lambda \norm{\eta}_{H}^{2} \geq \alpha \norm{\eta}_{V}^{2} \quad \text{für alle}~\eta \in V
         \end{equation}
-        mit $\alpha = c \gamma_{\Omega}^{2} > 0$ und $\lambda = \min\Set{\norm{\omega}_{L_{\infty}(\Omega)} - \mu, 0} \geq 0$, wobei $\gamma_{\Omega}$ die Poincaré-Friedrichs-Konstante ist.
+        mit $\alpha = c \gamma_{\Omega}^{2} > 0$ und $\lambda = \max\Set{\norm{\omega(t, \blank)}_{L_{\infty}(\Omega)} - \mu, 0} \geq 0$, wobei $\gamma_{\Omega}$ die Poincaré-Friedrichs-Konstante ist.
     \end{thmenumerate}
 
     \begin{Beweis}
-    Zunächst zeigen wir die Stetigkeit.
-    Seien dazu $\eta, \zeta \in H^{1}_{0}(\Omega)$ beliebig.
-    Unter Verwendung der Dreiecks- und der Cauchy-Schwarz-Ungleichung erhalten wir
-    \begin{align}
-        \abs{a(\eta, \zeta)}
-        &= \abs{c \skprod{\grad \eta}{\grad \zeta}_{L_{2}(\Omega)} + \skprod{\omega \eta}{\zeta}_{L_{2}(\Omega)} + \mu \skp{\eta}{\zeta}{L_{2}(\Omega)} }
-        \\&\leq c \abs{\skprod{\grad \eta}{\grad \zeta}_{L_{2}(\Omega)}} + \abs{\skprod{\omega \eta}{\zeta}_{L_{2}(\Omega)}} + \abs{\mu} \abs{\skp{\eta}{\zeta}{L_{2}(\Omega)}}
-        \\&\leq c \norm{\grad \eta}_{L_{2}(\Omega)} \norm{\grad \zeta}_{L_{2}(\Omega)} + (\norm{\omega}_{L_{\infty}(\Omega)} + \abs{\mu}) \norm{\eta}_{L_{2}(\Omega)} \norm{\zeta}_{L_{2}(\Omega)}
-        \\&\leq \max \Set{ c, \norm{\omega}_{L_{\infty}(\Omega)} + \abs{\mu}} \norm{\eta}_{H^{1}(\Omega)} \norm{\zeta}_{H^{1}(\Omega)}.
-    \end{align}
-    Für die G\aa{}rding-Ungleichung seien $\eta \in H^{1}_{0}(\Omega)$ und $\lambda \in \mathbb{R}$.
-    Betrachte
-    \begin{align}
-        a(\eta, \eta) + \lambda \norm{\eta}^{2}_{L_{2}(\Omega)}
-        &= c \norm{\grad \eta}^{2}_{L_{2}(\Omega)} + \skprod{\omega \eta}{\eta}_{L_{2}(\Omega)} + \mu \skprod{\eta}{\eta}_{L_{2}(\Omega)} + \lambda \skprod{\eta}{\eta}_{L_{2}(\Omega)}
-        \\&= c \norm{\grad \eta}^{2}_{L_{2}(\Omega)} + \skprod{(\omega + \mu + \lambda) \eta}{\eta}_{L_{2}(\Omega)}.
-    \end{align}
-    Wählen wir nun $\lambda = \min\Set{\norm{\omega}_{L_{\infty}(\Omega)} - \mu, 0} \geq 0$, dann gilt $\omega + \mu + \lambda \geq 0$ fast überall in $\Omega$ und wir erhalten die Abschätzung
-    \begin{align}
-        a(\eta, \eta) + \lambda \norm{\eta}^{2}_{L_{2}(\Omega)}
-        &\geq c \norm{\grad \eta}^{2}_{L_{2}(\Omega)},
-        \intertext{woraus wir durch Anwenden der Poincaré-Friedrichs-Ungleichung (\cref{satz:gl:poincare_friedrichs_ungleichung})}
-        a(\eta, \eta) + \lambda \norm{\eta}^{2}_{L_{2}(\Omega)}
-        &\geq c \gamma_{\Omega}^{2} \norm{\eta}^{2}_{H^{1}(\Omega)}
-    \end{align}
-    folgern.
+        Für den Nachweis der beiden Eigenschaften nehmen wir ohne Einschränkung $t \in I_{1}$ an, das heißt, es gilt $\omega(t, \blank) = w_{1}$.
+
+        Zunächst zeigen wir die Stetigkeit.
+        Seien dazu $\eta, \zeta \in V$ beliebig, dann erhalten wir unter Verwendung der Dreiecks- und der Cauchy-Schwarz-Ungleichung
+        \begin{align}
+            \abs{a(\eta, \zeta)}
+            &= \abs{c \skp{\grad \eta}{\grad \zeta}{H} + \skp{w_{1} \eta}{\zeta}{H} + \mu \skp{\eta}{\zeta}{H} }
+            \\&\leq c \abs{\skp{\grad \eta}{\grad \zeta}{H}} + \abs{\skp{w_{1} \eta}{\zeta}{H}} + \abs{\mu} \abs{\skp{\eta}{\zeta}{H}}
+            \\&\leq c \norm{\grad \eta}_{H} \norm{\grad \zeta}_{H} + \left( \norm{w_{1}}_{L_{\infty}(\Omega)} + \abs{\mu} \right) \norm{\eta}_{H} \norm{\zeta}_{H}
+            \\&\leq \max \Set{ c, \norm{w_{1}}_{L_{\infty}(\Omega)} + \abs{\mu}} \norm{\eta}_{V} \norm{\zeta}_{V}.
+            \\&= \max \Set{ c, \norm{\omega(t, \blank)}_{L_{\infty}(\Omega)} + \abs{\mu}} \norm{\eta}_{V} \norm{\zeta}_{V}.
+        \end{align}
+        Für die G\aa{}rding-Ungleichung seien nun $\eta \in V$ und $\lambda \in \mathbb{R}$.
+        Es gilt
+        \begin{align}
+            a(\eta, \eta; t) + \lambda \norm{\eta}^{2}_{H}
+            &= c \norm{\grad \eta}^{2}_{H} + \skprod{w_{1} \eta}{\eta}_{H} + \mu \skprod{\eta}{\eta}_{H} + \lambda \skprod{\eta}{\eta}_{H}
+            \\&= c \norm{\grad \eta}^{2}_{H} + \skprod{(w_{1} + \mu + \lambda) \eta}{\eta}_{H}.
+        \end{align}
+        Wählen wir nun $\lambda = \max\Set{\norm{w_{1}}_{L_{\infty}(\Omega)} - \mu, 0} = \max\Set{\norm{\omega(t, \blank)}_{L_{\infty}(\Omega)} - \mu, 0} \geq 0$, dann gilt $w_{1} + \mu + \lambda \geq 0$ fast überall in $\Omega$ und wir erhalten die Abschätzung
+        \begin{align}
+            a(\eta, \eta; t) + \lambda \norm{\eta}^{2}_{H}
+            &\geq c \norm{\grad \eta}^{2}_{H},
+            \intertext{woraus wir durch Anwenden der Poincaré-Friedrichs-Ungleichung (\cref{satz:gl:poincare_friedrichs_ungleichung})}
+            a(\eta, \eta;t ) + \lambda \norm{\eta}^{2}_{H}
+            &\geq c \gamma_{\Omega}^{2} \norm{\eta}^{2}_{V}
+        \end{align}
+        folgern können.
     \end{Beweis}
 \end{Satz}
 
+\begin{Bemerkung}
+\label{bemerkung:rzvp:bilinearform_zeitunabhaengig}
+    Nach Definition von $\omega$ in \cref{eq:ps:pde:omega_definition} gilt offenbar
+    \begin{equation}
+        \norm{\omega(t, \blank)}_{L_{\infty}(\Omega)} = \norm{w_{1}}_{L_{\infty}(\Omega)} \chi_{I_{1}}(t) + \norm{w_{2}}_{L_{\infty}(\Omega)} \chi_{I_{2}}(t),
+    \end{equation}
+    damit insbesondere also für alle $t \in I = I_{1} \cupdot I_{2}$ die Ungleichung
+    \begin{equation}
+        \min\Set{ \norm{w_{1}}_{L_{\infty}(\Omega)}, \norm{w_{2}}_{L_{\infty}(\Omega)} } \leq \norm{\omega(t, \blank)}_{L_{\infty}(\Omega)} \leq \max\Set{ \norm{w_{1}}_{L_{\infty}(\Omega)}, \norm{w_{2}}_{L_{\infty}(\Omega)} }.
+    \end{equation}
+    Dies erlaubt uns, die Konstanten $\gamma_{a}, \lambda$ und $\alpha$ im vorherigen \cref{satz:ps:rzvp:bilinearform_a_eigenschaften} unabhängig von $t \in I$ zu wählen.
+\end{Bemerkung}
+
 \begin{Korollar}
 \label{kor:ps:rzvp:bilinearform_elliptisch}
-    Ist $\mu \geq \norm{\omega}_{L_{\infty}(\Omega)}$, dann ist die Bilinearform $a$ aus \cref{satz:ps:rzvp:bilinearform_a_eigenschaften} elliptisch.
+    Ist $\mu \geq \norm{\omega(t, \blank)}_{L_{\infty}(\Omega)}$, dann ist die Bilinearform $a(\blank, \blank; t)$ aus \cref{satz:ps:rzvp:bilinearform_a_eigenschaften} elliptisch.
 \end{Korollar}
 
-Unter diesen Gegebenheiten können wir nun mit den theoretischen Grundlagen aus \cref{sec:gl:le:lineare_evolutionsgleichungen} eine sachgemäß gestellte Raum-Zeit-Variationsformulierung herleiten.
-Als Ansatz- und Testfunktionenraum erhalten wir mit den konkret gewählten Hilberträumen
+
+Mit dieser Vorarbeit können wir uns nun der schwachen Formulierung der Propagator-Differentialgleichung widmen.
+Diese können wir informell durch Multiplikation der parabolischen Differentialgleichung aus \cref{def:ps:pde:propagator_dgl} mit einer Raum-Zeit-Testfunktion $v_{1}$ und Integration über $\Omega$ und $I$ sowie Addition der Anfangsbedingung, welche mit einer Raum-Testfunktion $v_{2}$ multipliziert und anschließend über $\Omega$ integriert wird, herleiten.
+
+Um das Ganze auf eine rigorose Ebene zu bringen, benötigen wir zunächst zwei Hilberträume, welche als sogenannter Ansatz- respektive Testraum dienen werden.
+Dabei handelt es sich um die Räume
 \begin{equation}
     \label{eq:ps:rzvp:ansatzraum_testraum}
-    \mathcal X = L_{2}(I; H^{1}_{0}(\Omega)) \cap H^{1}(I; H^{-1}(\Omega))
+    \mathcal X = L_{2}(I; V) \cap H^{1}(I; V')
     \quad \text{und} \quad
-    \mathcal Y = L_{2}(I; H^{1}_{0}(\Omega)) \times L_{2}(\Omega).
+    \mathcal Y = L_{2}(I; V) \times H,
 \end{equation}
-Das Raum-Zeit-Variationsproblem lautet damit:
+welche uns bereits aus \cref{def:gl:le:ansatz_und_testraum} bekannt sind.
+Damit können wir diesen Abschnitt mit der folgenden Definition der schwachen Formulierung abschließen:
+
 \begin{Definition}[Schwache Formulierung]
-\label{def:ps:rzvp:schwache_formulierung}
-    Als \emph{schwache Formulierung}, oder auch \emph{Raum"=Zeit"=Va"-ri"-a"-ti"-ons"-for"-mu"-lie"-rung}, der parabolischen partiellen Differentialgleichung aus \cref{def:ps:pde:starke_formulierung} bezeichnen wir das folgende Variationsproblem:
-    Gegeben einen Quellterm $g \in L_{2}(I; H^{-1}(\Omega))$ und eine Anfangsbedingung $u_{0} \in L_{2}(\Omega)$.
-    Finde ein $u \in \mathcal X$ mit
+\label{definition:schwache_formulierung}
+    Es sei ein Quellterm $g \in L_{2}(I; V')$ und eine Anfangsbedingung $u_{0} \in H$ gegeben.
+    Als \emph{schwache Formulierung} oder \emph{Raum-Zeit-Variationsformulierung} der Propagator-Differentialgleichung bezeichnen wir das folgende Variationsproblem:
     \begin{equation}
-        \label{eq:ps:rzvp:schwache_formulierung}
-        b(u, v) = f(v) \quad \text{für alle}~v = (v_{1}, v_{2}) \in \mathcal Y,
+    \label{eq:ps:rzvp:schwache_formulierung}
+        \text{Finde}~u \in \mathcal X \colon \quad  b(u, v) = f(v) \quad \fa v = (v_{1}, v_{2}) \in \mathcal Y.
     \end{equation}
-    wobei $b(\blank, \blank) \colon \mathcal X \times \mathcal Y \to \mathbb{R}$ die durch
+    Dabei sei die Bilinearform $b(\blank, \blank) \colon \mathcal X \times \mathcal Y \to \mathbb{R}$ durch
     \begin{equation}
         \label{eq:ps:rzvp:schwache_formulierung_lhs_b}
         b(u, v)
-            = \int_{I} \skprod{u_{t}(t)}{v_{1}(t)}_{L_{2}(\Omega)} + a(u(t), v_{1}(t); t) \diff t + \skprod{u(0)}{v_{2}}_{L_{2}(\Omega)}
+            = \int_{I} \skprod{u_{t}(t)}{v_{1}(t)}_{V' \times V} + a(u(t), v_{1}(t); t) \diff t + \skprod{u(0)}{v_{2}}_{H}
     \end{equation}
-    gegebene Bilinearform und $f(\blank) \colon \mathcal Y \to \mathbb{R}$ definiert ist durch
+    und das stetige lineare Funktional $f \colon \mathcal Y \to \mathbb{R}$ auf der rechten Seite durch
     \begin{equation}
         \label{eq:ps:rzvp:schwache_formulierung_rhs_f}
-        f(v) = \int_{I} \skprod{g(t)}{v_{1}(t)}_{L_{2}(\Omega)} \diff t + \skprod{u_{0}}{v_{2}}_{L_{2}(\Omega)}.
+        f(v) = \int_{I} \skprod{g(t)}{v_{1}(t)}_{V' \times V} \diff t + \skprod{u_{0}}{v_{2}}_{H}
     \end{equation}
+    gegeben.
 \end{Definition}
 
-Diese Variationsformulierung wird uns in den nachfolgenden Kapiteln als Ausgangspunkt für die von uns angestrebten numerischen Verfahren dienen.
+\begin{Bemerkung}
+    Die Linearität von $f$ ist direkt ersichtlich; die Stetigkeit aber wollen wir an dieser Stelle nachweisen.
+    Durch Anwendung der Cauchy-Schwarz- und der Hölder-Ungleichung erhalten wir
+    \begin{equation}
+        \begin{aligned}
+            f(v)
+            % &= \int_{I} \skprod{g(t)}{v_{1}(t)}_{V' \times V} \diff t + \skprod{u_{0}}{v_{2}}_{H}
+            &\leq \int_{I} \norm{g(t)}_{V'} \norm{v_{1}(t)}_{V} \diff t + \norm{u_{0}}_{H} \norm{v_{2}}_{H}
+            \\&\leq \left( \int_{I} \norm{g(t)}^{2}_{V'} \diff t \right)^{1/2} \left( \int_{I} \norm{v_{1}(t)}^{2}_{V} \diff t \right)^{1/2} + \norm{u_{0}}_{H} \norm{v_{2}}_{H}
+            \\&= \norm{g}_{L_{2}(I; V')} \norm{v_{1}}_{L_{2}(I; V)} + \norm{u_{0}}_{H} \norm{v_{2}}_{H}
+            \\&\leq \max\Set*{\norm{g}_{L_{2}(I; V')}, \norm{u_{0}}_{H}} \left( \norm{v_{1}}_{L_{2}(I; V)} + \norm{v_{2}}_{H} \right)
+            \\&\leq \sqrt{2} \max\Set*{\norm{g}_{L_{2}(I; V')}, \norm{u_{0}}_{H}} \left( \norm{v_{1}}_{L_{2}(I; V)}^{2} + \norm{v_{2}}_{H}^{2} \right)^{1/2}
+            \\&= \sqrt{2} \max\Set*{\norm{g}_{L_{2}(I; V')}, \norm{u_{0}}_{H}} \norm{v}_{\mathcal Y}
+        \end{aligned}
+    \end{equation}
+    und damit die Stetigkeit, wobei die Ungleichung $x + y \leq \sqrt{2} \sqrt{x^2 + y^2}$, welche für alle $x, y \in \mathbb{R}$ gilt, für die letzte Abschätzung verwendet wurde.
+\end{Bemerkung}
 
-\subsection{Existenz und Eindeutigkeit von Lösungen} % (fold)
+
+\section{Existenz und Eindeutigkeit von Lösungen} % (fold)
 \label{sub:ps:eel:existenz_und_eindeutigkeit_von_loesungen}
 
-Wir weisen nun aufbauend auf \cref{sec:gl:le:lineare_evolutionsgleichungen} nach, dass das Raum-Zeit-Variationsproblem aus \cref{def:ps:rzvp:schwache_formulierung} sachgemäß gestellt ist, und bestimmen zudem Abschätzungen für die Norm des Operators und dessen Inverse.
-Die Hauptarbeit dazu wurde bereits durch das \cref{satz:gl:le:bnb_theorem} und \cref{satz:gl:le:ss09_theorem51} geleistet und muss hier nur noch angewandt werden.
+An dieser Stelle wollen wir nun nachweisen, dass die schwache Formulierung aus \cref{definition:schwache_formulierung} im Sinne von \cref{def:gl:le:hadamard_sachgemaess_gestellt} sachgemäß gestellt ist.
+Hier können wir mit \cref{satz:gl:le:ss09_theorem51} ansetzen, welcher unter den gegebenen Rahmenbedingungen die zu prüfenden Bedingungen auf die in \cref{satz:ps:rzvp:bilinearform_a_eigenschaften,bemerkung:rzvp:bilinearform_zeitunabhaengig} bereits nachgewiesenen reduziert.
+Wir fassen dies zu folgendem Satz zusammen:
 
-\begin{Satz}
+\begin{Korollar}
 \label{satz:ps:eel:schwache_formulierung_sachgemaess_gestellt}
-    Seien $\mathcal X$ und $\mathcal Y$ gegeben wie in \cref{eq:ps:rzvp:ansatzraum_testraum} und sei $B \colon \mathcal X \to \mathcal Y'$ definiert durch
+    Seien Ansatz- und Testraum $\mathcal X$ und $\mathcal Y$ wie in \cref{eq:ps:rzvp:ansatzraum_testraum} gegeben.
+    Sei weiter ein Operator $B \colon \mathcal X \to \mathcal Y'$ definiert durch
     \begin{equation}
         \skprod{Bu}{v}_{\mathcal Y' \times \mathcal Y}  = b(u, v), \quad u \in \mathcal X,~ v \in \mathcal Y,
     \end{equation}
-    mit $b(\blank, \blank)$ wie in \cref{eq:ps:rzvp:schwache_formulierung_lhs_b}.
-    Dann ist $B$ stetig invertierbar.
-    %  und es gilt
-    % \begin{equation}
-    %     \norm{B}_{\mathcal L(\mathcal X, \mathcal Y')}
-    %     \leq
-    %     \frac{\sqrt{2 \max\Set{1, c^{2}, \norm{\omega}_{L_{\infty}(\Omega)}^{2}} + M_{e}^{2}}}{\max\Set{\sqrt{1 + 2 \norm{\omega}_{L_{\infty}(\Omega)}^{2} \rho^{4}}, \sqrt{2} }}
-    % \end{equation}
-    % und
-    % \begin{equation}
-    %     \norm{B^{-1}}_{\mathcal L( \mathcal Y', \mathcal X)}
-    %     \leq \frac{e^{2 T \norm{\omega}_{L_{\infty}(\Omega)}} \max\Set{\sqrt{1 + 2 \norm{\omega}_{L_{\infty}(\Omega)}^{2} \rho^{4}}, \sqrt{2}} \sqrt{2 \max\Set{c^{-2} \gamma_{\Omega}^{-4}, 1} + M_{e}^{2}}}{\min\Set{c^{-1} \gamma_{\Omega}^{2}, c \gamma_{\Omega}^{2} \norm{\omega}_{L_{\infty}(\Omega)}^{-2}, c \gamma_{\Omega}^{2} }}.
-    %     % \leq
-    %     % \frac{\max\{\sqrt{ 1 + 2 \norm{\omega}_{L_{\infty}(\Omega)} \rho^{4}}, \sqrt{2} \}}{e^{-2 \norm{\omega}_{L_{\infty}(\Omega)} T}}
-    %     % \frac{\sqrt{2 \max\{ 1, \sigma^{-2} \gamma_{\Omega}^{-4} \} + M_{e}^{2}}}{\min\{ \sigma \gamma_{\Omega}^{2} \norm{\omega}_{L_{\infty}(\Omega)}^{-2}, \sigma \gamma_{\Omega}^{2} \}}
-    % \end{equation}
-    % mit $M_{e}$ und $\rho$ wie in \cref{kor:gl:br:einbettungskonstante_M_e} respektive \cref{kor:gl:le:einbettungskonstante_rho}.
-\end{Satz}
+    wobei $b(\blank, \blank)$ die Bilinearform aus \cref{eq:ps:rzvp:schwache_formulierung_lhs_b} sei,
+    dann ist $B$ stetig invertierbar.
+    Insbesondere ist damit die Raum-Zeit-Variationsformulierung sachgemäß gestellt.
+\end{Korollar}
 
-\mfix{Den Teil hier mal ordentlich formulieren und formatieren.}
+Weiter erhalten wir als Nebenprodukt aus \cref{kor:gl:le:ss09_theorem51_ungleichungen} auch Schranken für die Stetigkeitskonstante $\gamma_{b}$ sowie die inf-sup-Konstante $\beta$.
+
+\mdo{Die Unglehcungen mal richtig bestimmen!}
 \begin{Korollar}
 \label{kor:ps:eel:schwache_formulierung_operator_schranken}
-    Unter den selben Gegebenheiten wie in \cref{satz:ps:eel:schwache_formulierung_sachgemaess_gestellt} gilt konkret
+    Unter den selben Gegebenheiten wie in \cref{satz:ps:eel:schwache_formulierung_sachgemaess_gestellt} gelten, falls die Bilinearform $a(\blank, \blank;t)$ die G\aa{}rding-Ungleichung \cref{eq:ps:rzvp:bilinearform_a_eigenschaften_garding} mit $\lambda = 0$ erfüllt, die Abschätzungen
     \begin{equation}
-        \norm{B}_{\mathcal L(\mathcal X, \mathcal Y')} \leq \sqrt{2 \max\Set{1, c, \norm{\omega}_{L_{\infty}(\Omega)} + \abs{\mu}}^{2} + M_{e}^{2}}
+        \gamma_{b} = \norm{B}_{\mathcal L(\mathcal X, \mathcal Y')} \leq \sqrt{2 \max\Set{1, c, \norm{\omega}_{L_{\infty}(\Omega)} + \abs{\mu}}^{2} + M_{e}^{2}}
     \end{equation}
     und
     \begin{equation}
-        \norm{B^{-1}}_{\mathcal L(\mathcal Y', \mathcal X)} \leq \frac{\sqrt{2 \max \Set{(c \gamma_{\Omega}^{2})^{-2}, 1} + M_{e}^{2}}}{\gamma_{\Omega}^{2} \min\Set{1, c , c  (\norm{\omega}_{L_{\infty}(\Omega)} + \abs{\mu})^{-1}}}.
+        \beta^{-1} = \norm{B^{-1}}_{\mathcal L(\mathcal Y', \mathcal X)} \leq \frac{\sqrt{2 \max \Set{(c \gamma_{\Omega}^{2})^{-2}, 1} + M_{e}^{2}}}{\gamma_{\Omega}^{2} \min\Set{1, c , c  (\norm{\omega}_{L_{\infty}(\Omega)} + \abs{\mu})^{-1}}}.
     \end{equation}
 
-    Ist $\lambda \neq 0$, dann gilt
+    Ist dagegen $\lambda \neq 0$, dann lauten die Abschätzungen
     \begin{equation}
-        \norm{B}_{\mathcal L(\mathcal X, \mathcal Y')} \leq \frac{\sqrt{2 \max\Set{1, c, \norm{\omega}_{L_{\infty}(\Omega)} + \abs{\mu}}^{2} + M_{e}^{2}}}{\max\Set{\sqrt{1 + 2 \lambda^{2} \rho^{4}}, \sqrt{2}}}
+        \gamma_{b} = \norm{B}_{\mathcal L(\mathcal X, \mathcal Y')} \leq \frac{\sqrt{2 \max\Set{1, c, \norm{\omega}_{L_{\infty}(\Omega)} + \abs{\mu}}^{2} + M_{e}^{2}}}{\max\Set{\sqrt{1 + 2 \lambda^{2} \rho^{4}}, \sqrt{2}}}
     \end{equation}
     und
     \begin{equation}
-        \norm{B^{-1}}_{\mathcal L(\mathcal Y', \mathcal X)} \leq e^{2 \lambda T} \max\Set{\sqrt{1 + 2 \lambda^{2} \rho^{4}}, \sqrt{2}} \frac{\sqrt{2 \max \Set{(c \gamma_{\Omega}^{2})^{-2}, 1} + M_{e}^{2}}}{\gamma_{\Omega}^{2} \min\Set{1, c , c  (\norm{\omega}_{L_{\infty}(\Omega)} + \abs{\mu})^{-1}}}.
+        \beta^{-1} = \norm{B^{-1}}_{\mathcal L(\mathcal Y', \mathcal X)} \leq e^{2 \lambda T} \max\Set{\sqrt{1 + 2 \lambda^{2} \rho^{4}}, \sqrt{2}} \frac{\sqrt{2 \max \Set{(c \gamma_{\Omega}^{2})^{-2}, 1} + M_{e}^{2}}}{\gamma_{\Omega}^{2} \min\Set{1, c , c  (\norm{\omega}_{L_{\infty}(\Omega)} + \abs{\mu})^{-1}}}.
     \end{equation}
 \end{Korollar}
 
@@ -361,7 +388,7 @@ Mit dieser Vorarbeit können wir die schwache Formulierung aus \cref{def:ps:rzvp
 
 \begin{Definition}[Parametrische schwache Formulierung]
 \label{def:ps:pf:schwache_formulierung}
-    Als \emph{parametrisches schwache Formulierung}, oder auch \emph{parametrische Raum"=Zeit"=Va"-ri"-a"-ti"-ons"-for"-mu"-lie"-rung} von \cref{eq:ps:pde:starke_formulierung} bezeichnen wir das folgende Variationsproblem:
+    Als \emph{parametrisches schwache Formulierung}, oder auch \emph{parametrische Raum"=Zeit"=Va"-ri"-a"-ti"-ons"-for"-mu"-lie"-rung} von \cref{eq:ps:pde:propagator_dgl} bezeichnen wir das folgende Variationsproblem:
     Gegeben einen Quellterm $g \in L_{2}(I; H^{-1}(\Omega))$ und eine Anfangsbedingung $u_{0} \in L_{2}(\Omega)$.
     Finde für alle $\sigma \in \mathcal S$ ein $u(\sigma) \in \mathcal X$ mit
     \begin{equation}
