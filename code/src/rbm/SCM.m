@@ -369,7 +369,7 @@ classdef SCM < handle
 
         % logging
         obj.L.info('SCM', ...
-          sprintf(' solved eigenvalue problem %3d of %3d (after %2d retries)', idx, obj.nQt, retries));
+          sprintf(' solved eigenvalue problem %3d of %3d (after %2d retries): [%f, %f]', idx, obj.nQt, retries, mi, ma));
       end
     end
 
