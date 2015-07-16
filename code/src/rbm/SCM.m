@@ -7,13 +7,9 @@ classdef SCM < handle
   % This class is an implementation of the successive constraint method
   % described in @cite Huynh2007 for the computation of lower and upper bounds
   % of the inf-sup-constant for a given parameter in an efficient offline /
-  % online decomposition with some improvements in @cite Chen2009.
+  % online decomposition with some improvements from @cite Chen2009.
 
   properties
-    % Verbosity toggle. Set it to true to get some messages about what scm is
-    % currently doing. @type logical
-    verbose = true;
-
     % Max error in each iteration @type vector
     errors;
   end
@@ -38,6 +34,24 @@ classdef SCM < handle
 
     % Helper vector @type vector
     MuIndexes;
+    % Logger handle @type log4m
+    L;
+  end
+
+  properties(Access = 'protected') % stop and go support
+    % Holds the current upper bounds for every parameter in the training set.
+    % @type vector
+    muTrainUB;
+    % Holds the current lower bounds for every parameter in the training set.
+    % @type vector
+    muTrainLB;
+    % Index of the parameter chosen in the previous to last greedy loop. @type
+    % integer
+    muPrevIdx;
+    % Index of the parameter chosen in the last greedy loop. @type integer
+    muCurIdx;
+    % Total number of cycles done by the greedy loop. @type integer
+    totalLoopCtr;
   end
 
   properties(Access = 'protected') % Offline Data
@@ -69,21 +83,39 @@ classdef SCM < handle
   end
 
   methods
-    function obj = SCM(solver)
+    function obj = SCM(solver, muTrain, Malpha, Mplus)
       % Constructor for this class.
       %
       % Parameters:
       %   solver: Reference to the "truth" solver object @type SolverAbstract
+      %   muTrain: training parameter set for the greedy algorithm. @type
+      %     matrix
+      %   Malpha: number of stability constraints to use in the linear program
+      %     @type integer @default 30
+      %   Mplus: number of positivity constraints to use in the linear program
+      %     @type integer @default 10
 
-      if nargin == 0
+      % get a logger reference
+      obj.L = log4m.getLogger('scftrbm.log');
+
+      % default values
+      if nargin < 2
         error('');
+      else
+        if ~exist('Malpha', 'var'),  Malpha  = 30; end;
+        if ~exist('Mplus', 'var'),   Mplus   = 10; end;
       end
+      obj.Malpha = Malpha;
+      obj.Mplus  = Mplus;
 
       % first set the reference
       obj.solver = solver;
 
       % and now prepare the scm offline stage
       obj.prepare();
+
+      % save the training set
+      obj.offMuTrain = muTrain;
     end
 
     % Main methods of the successive constraint method algorithm
@@ -122,7 +154,7 @@ classdef SCM < handle
       paramsNotInCk                   = true(obj.nMuTrain, 1);
       paramsNotInCk(obj.offMuCkIndex) = false;
       paramsNotInCkIndexes = obj.MuIndexes(paramsNotInCk);
-      [~, IdxplusXi]       = obj.getNeighbors(obj.Mplus, param, obj.offMuTrain(paramsNotInCk));
+      [~, IdxplusXi]       = obj.getNeighbors(obj.Mplus, param, obj.offMuTrain(:, paramsNotInCk));
       Idxplus              = paramsNotInCkIndexes(IdxplusXi);
 
       %| @todo as we are starting with the upper bounds as our initial value
@@ -144,6 +176,7 @@ classdef SCM < handle
         -obj.offMuTrainMapped(:, Idxplus).'];
 
       % set some options for linprog
+      % @todo clean them up; matlab doesn't like the active-set algorithm
       opts = struct('LargeScale','off', ...
         'Algorithm', 'active-set', ...
         'Display', 'off');
@@ -163,7 +196,9 @@ classdef SCM < handle
         keyboard;
       end
 
-      % the upper bound is simply the minimum over all objective values of y*
+      % we compute the square of the wanted inf-sup-constant, but don't take the
+      % square root if we are in the offline stage. the upper bound is simply
+      % the minimum over all objective values of y*
       if internal
         ub = min(obj.offYstarCk.' * f);
         lb = fval;
@@ -173,18 +208,12 @@ classdef SCM < handle
       end
     end
 
-    function exflag = offlineStage(obj, muTrain, Malpha, Mplus, tol, maxIter)
+    function exflag = startOfflineStage(obj, tol, maxIter)
       % Perform the offline greedy training stage.
       %
-      % This method is the main offline stage of the successive constraint
-      % method. The main part is a greedy style algorithm that looks for
-      % the parameter with the largest gap between lower and upper bound
-      % returned from the online solver with the current data set, then
-      % solving the generalized eigenvalue problem for this parameter to
-      % obtain the respective inf-sup-constant. The generated data of this
-      % greedy algorithm can then be used in the online stage to compute
-      % lower and upper bounds for any parameter with a certified error
-      % bound.
+      % This method sets up the greedy loop by performing the calculations for
+      % the first randomly selected parameter and consequent creation of all the
+      % needed structures. It then calls the greedyLoop method.
       %
       % Possible values of exflag are:
       %   1: the largest remaining error is smaller than the given
@@ -193,12 +222,6 @@ classdef SCM < handle
       %   3: the training set is empty
       %
       % Parameters:
-      %   muTrain: training parameter set for the greedy algorithm. @type
-      %     matrix
-      %   Malpha: number of stability constraints to use in the linear program
-      %     @type integer
-      %   Mplus: number of positivity constraints to use in the linear program
-      %     @type integer
       %   tol: tolerance for the largest gap between certified upper and lower
       %     bound over all parameters in the training set @type double
       %     @default 1e-10
@@ -209,32 +232,26 @@ classdef SCM < handle
       %     why the algorithm stopped. @type integer
 
       % default values
-      if nargin < 2
+      if nargin < 1
         error('');
       else
-        if ~exist('Malpha', 'var'),  Malpha  = 30; end;
-        if ~exist('Mplus', 'var'),   Mplus   = 10; end;
         if ~exist('tol', 'var'),     tol     = 1e-3; end;
         if ~exist('maxIter', 'var'), maxIter = 1e6; end;
       end
-      obj.Malpha = Malpha;
-      obj.Mplus  = Mplus;
 
-      if obj.verbose
-        fprintf('# Starting SCM offline stage\n');
-        tic
-      end
+      % logging
+      obj.L.info('SCM', ...
+        sprintf(' Starting offline stage with %d max iterations and tolerance %.2e', ...
+          maxIter, tol));
 
       % get some needed data from the training set
-      obj.nMuTrain  = size(muTrain, 2);
+      obj.nMuTrain  = size(obj.offMuTrain, 2);
       obj.MuIndexes = 1:obj.nMuTrain;
 
-      % and now save it for the online stage
-      obj.offMuTrain = muTrain;
       % convert and store the training parameters
       obj.offMuTrainMapped = zeros(obj.nQt, obj.nMuTrain);
       for idx = 1:obj.nMuTrain
-        obj.offMuTrainMapped(:, idx) = obj.mapParam(muTrain(:, idx));
+        obj.offMuTrainMapped(:, idx) = obj.mapParam(obj.offMuTrain(:, idx));
       end
 
       % calculate bounds for the variables in the linear program
@@ -254,21 +271,17 @@ classdef SCM < handle
 
       % these two vectors will hold the current upper and lower bounds for
       % every parameter in the training set
-      muTrainUB = zeros(obj.nMuTrain, 1);
-      muTrainLB = zeros(obj.nMuTrain, 1);
-
-      if obj.verbose
-        fprintf('# Starting greedy loop\n.');
-      end
+      obj.muTrainUB = zeros(obj.nMuTrain, 1);
+      obj.muTrainLB = zeros(obj.nMuTrain, 1);
 
       % the first parameter is randomly selected from the training set
-      muPrevIdx = -1;
-      muCurIdx  = randi(obj.nMuTrain, 1, 1);
+      obj.muPrevIdx = -1;
+      obj.muCurIdx  = randi(obj.nMuTrain, 1, 1);
 
       % calculate stuff for the first parameter. assemble the system for the
       % chosen parameter and calculate the smallest eigenvalue and the
       % corresponding eigenvector
-      M = obj.assembleAffineT(obj.offMuTrainMapped(:, muCurIdx));
+      M = obj.assembleAffineT(obj.offMuTrainMapped(:, obj.muCurIdx));
       [mi, mivec] = obj.computeEV(M, obj.normX, 0);
       % if the eigenvalue mi is positive, then we got the largest eigenvalue
       % and have to do it again with a shift
@@ -277,8 +290,8 @@ classdef SCM < handle
       end
 
       % the eigenvalue is lower and upper bound for this parameter mu
-      muTrainLB(muCurIdx) = mi;
-      muTrainUB(muCurIdx) = mi;
+      obj.muTrainLB(obj.muCurIdx) = mi;
+      obj.muTrainUB(obj.muCurIdx) = mi;
 
       % calculate the values of ystar for the current parameter. this is done
       % by iterating over all the addends of the affine decomposition and
@@ -289,138 +302,45 @@ classdef SCM < handle
       end
 
       % save the newly generated data
-      obj.offMuCk(:, 1)         = muTrain(:, muCurIdx);
-      obj.offMuCkMapped(:, 1)   = obj.offMuTrainMapped(:, muCurIdx);
-      obj.offMuCkIndex(1)       = muCurIdx;
+      obj.offMuCk(:, 1)         = obj.offMuTrain(:, obj.muCurIdx);
+      obj.offMuCkMapped(:, 1)   = obj.offMuTrainMapped(:, obj.muCurIdx);
+      obj.offMuCkIndex(1)       = obj.muCurIdx;
       obj.offYstarCk(:, 1)      = ystar;
       obj.offAlphaCk(1)         = mi;
-      obj.offMuChosen(muCurIdx) = true;
+      obj.offMuChosen(obj.muCurIdx) = true;
 
-      % final setup for the greedy algorithm
-      isDone  = false;
-      exflag  = 0;
-      loopCtr = 2;
+      % start the greedy loop
+      exflag = obj.greedyLoop(tol, maxIter);
+    end
 
-      % Now we can finally start the greedy loop
-      while ~isDone
-        if obj.verbose
-          % progress indicator, every dot represents one pass of this loop,
-          % ten dots per line
-          fprintf('.');
-          if mod(loopCtr, 10) == 0
-            fprintf('\t max gap %f\n', maxGap);
-          end
-        end
+    function exflag = continueOfflineStage(obj, tol, maxIter)
+      % Continue with the offline stage.
+      %
+      % This method allows to "restart" the greedy loop without deletion of the
+      % already obtained data.
+      %
+      % Possible values of exflag are:
+      %   1: the largest remaining error is smaller than the given
+      %      tolerance
+      %   2: maximal number of iterations exceeded
+      %   3: the training set is empty
+      %
+      % Parameters:
+      %   tol: tolerance for the largest gap between certified upper and lower
+      %     bound over all parameters in the training set @type double
+      %     @default 1e-10
+      %   maxIter: max number of greedy iterations @type integer @default 1000
+      %
+      % Return values:
+      %   exflag: exit flag of the greedy algorithm. can be used to determine
+      %     why the algorithm stopped. @type integer
 
-        % now we compute the relative gaps of upper and lower bound for all the
-        % parameters given in the training set to find the best choice for the
-        % next loop cycle
-        reLBStability  = zeros(obj.nMuTrain, 1);
-        reLBPositivity = zeros(obj.nMuTrain, 1);
-        for idx = 1:obj.nMuTrain
-          if ~obj.offMuChosen(idx)
-            param = muTrain(:, idx);
+      % logging
+      obj.L.info('SCM', ...
+        sprintf(' Continuation of offline stage with %d max iterations and tolerance %.2e (already %d cycles done)', ...
+          maxIter, tol, obj.totalLoopCtr));
 
-            % set up the needed sets for the positivity constraint calculation
-            paramsNotInCkPrev = true(obj.nMuTrain, 1);
-            paramsNotInCkPrev(obj.offMuCkIndex(1:(end-1))) = false;
-            paramsNotInCkPrevIndexes = obj.MuIndexes(paramsNotInCkPrev);
-
-            % get the nearest parameters for stability and positivity constraints
-            [~, Idxalpha]  = obj.getNeighbors(obj.Malpha, param, obj.offMuCk);
-            [~, IdxplusXi] = obj.getNeighbors(obj.Mplus, param, obj.offMuTrain(paramsNotInCkPrev));
-            Idxplus        = paramsNotInCkPrevIndexes(IdxplusXi);
-
-            % check whether the lower bound could change
-            reLBStability(idx)  = any(obj.offMuCkIndex(Idxalpha) == muCurIdx);
-            reLBPositivity(idx) = any(Idxplus == muCurIdx);
-
-            % if one of the above conditions holds, then we compute new
-            % (hopefully better) lower bounds, if not, there is no improvement
-            % and we take the value from the last loop
-            if reLBStability(idx) || reLBPositivity(idx)
-              [lb, ub] = obj.onlineQuery(param, true);
-              muTrainLB(idx) = lb;
-              muTrainUB(idx) = ub;
-            else
-              muTrainLB(idx) = obj.offMuLB(idx);
-              muTrainUB(idx) = min(obj.offYstarCk.' * obj.mapParam(param));
-            end
-          end
-        end
-
-        % save the newly calculated lower bounds for online use
-        obj.offMuLB = muTrainLB;
-
-        % Look for the parameter with the greatest gap / error
-        muPrevIdx          = muCurIdx;
-        [maxGap, muCurIdx] = max((muTrainUB - muTrainLB) ./ muTrainUB);
-        if ~isempty(maxGap)
-          obj.errors(end + 1) = maxGap;
-        end
-
-        % first check whether we are done here, check if the given tolerance
-        % is obtained
-        if maxGap < tol
-          exflag = 1;
-          isDone = true;
-          break;
-        end
-
-        % looks like we're not done yet, so let's solve the eigenvalue
-        % problem. assemble the system for the chosen parameter and calculate
-        % the smallest eigenvalue and the corresponding eigenvector
-        M = obj.assembleAffineT(obj.offMuTrainMapped(:, muCurIdx));
-        [mi, mivec] = obj.computeEV(M, obj.normX, 0);
-        % if the eigenvalue mi is positive, then we got the largest eigenvalue
-        % and have to do it again with a shift
-        if mi >= 0
-          [mi, mivec] = obj.computeEV(M, obj.normX, mi);
-        end
-
-        % the new eigenvalue is lower and upper bound for this parameter mu
-        muTrainLB(muCurIdx) = mi;
-        muTrainUB(muCurIdx) = mi;
-
-        % calculate the values of ystar for the current parameter. this is done
-        % by iterating over all the addends of the affine decomposition and
-        % multiplication with the eigenvector from above from both sides
-        ystar = zeros(obj.nQt, 1);
-        for idx = 1:obj.nQt
-          ystar(idx) = mivec.' * obj.affineT{idx} * mivec;
-        end
-
-        % save the newly generated data for the online stage
-        obj.offMuCk(:, end + 1)       = muTrain(:, muCurIdx);
-        obj.offMuCkMapped(:, end + 1) = obj.offMuTrainMapped(:, muCurIdx);
-        obj.offMuCkIndex(end + 1)     = muCurIdx;
-        obj.offYstarCk(:, end + 1)    = ystar;
-        obj.offAlphaCk(end + 1)       = mi;
-        obj.offMuChosen(muCurIdx)     = true;
-
-        % and now we check some more breaking conditions
-        if size(obj.offMuCk, 2) > maxIter
-          % we stop because we performed the maxIter number of greedy cycles.
-          % it's now maybe a good idea to check maxGap and decide whether the
-          % offline stage should be restarted with a larger maxIter
-          exflag = 2;
-          isDone = true;
-          break;
-        elseif size(obj.offMuCk, 2) == obj.nMuTrain
-          % we stop because the training set is empty. this really shouldn't
-          % happen if we want good bounds...
-          exflag = 3;
-          isDone = true;
-          break;
-        end
-
-        loopCtr = loopCtr + 1;
-      end
-
-      if obj.verbose
-        t = toc;
-        fprintf('\ndone\n# SCM offline stage is done with exit flag %d after %f seconds.\n', exflag, t);
-      end
+      exflag = obj.greedyLoop(tol, maxIter);
     end
 
     function [lb, ub] = getBounds(obj)
@@ -433,9 +353,9 @@ classdef SCM < handle
       %   lb: lower bounds @type colvec
       %   ub: upper bounds @type colvec
 
-      if obj.verbose
-        fprintf('# Computing bounds \n');
-      end
+      % logging
+      obj.L.info('SCM', ...
+        sprintf(' Computing %d pairs of upper / lower bounds', obj.nQt));
 
       lb = zeros(obj.nQt, 1);
       ub = zeros(obj.nQt, 1);
@@ -447,13 +367,9 @@ classdef SCM < handle
         ub(idx) = ma;
         lb(idx) = mi;
 
-        if obj.verbose
-          fprintf('. \t\t\tafter %d retries\n', retries);
-        end
-      end
-
-      if obj.verbose
-        fprintf('done!\n');
+        % logging
+        obj.L.info('SCM', ...
+          sprintf(' solved eigenvalue problem %3d of %3d (after %2d retries)', idx, obj.nQt, retries));
       end
     end
 
@@ -496,6 +412,162 @@ classdef SCM < handle
   end
 
   methods(Access = 'private')
+
+    function exflag = greedyLoop(obj, tol, maxIter)
+      % Start the greedy loop.
+      %
+      % This method is the main offline stage of the successive constraint
+      % method. The main part is a greedy style algorithm that looks for
+      % the parameter with the largest gap between lower and upper bound
+      % returned from the online solver with the current data set, then
+      % solving the generalized eigenvalue problem for this parameter to
+      % obtain the respective inf-sup-constant. The generated data of this
+      % greedy algorithm can then be used in the online stage to compute
+      % lower and upper bounds for any parameter with a certified error
+      % bound.
+      %
+      % Possible values of exflag are:
+      %   1: the largest remaining error is smaller than the given
+      %      tolerance
+      %   2: maximal number of iterations exceeded
+      %   3: the training set is empty
+      %
+      % Parameters:
+      %   tol: tolerance for the largest gap between certified upper and lower
+      %     bound over all parameters in the training set @type double
+      %     @default 1e-10
+      %   maxIter: max number of greedy iterations @type integer @default 1000
+      %
+      % Return values:
+      %   exflag: exit flag of the greedy algorithm. can be used to determine
+      %     why the algorithm stopped. @type integer
+
+      % final setup for the greedy algorithm
+      isDone  = false;
+      exflag  = 0;
+      curLoopCtr = 1;
+
+      obj.L.info('SCM', ...
+        sprintf(' Starting greedy loop with %d max iterations and tolerance %.2e', ...
+          maxIter, tol));
+
+      % Now we can finally start the greedy loop
+      while ~isDone
+        % now we compute the relative gaps of upper and lower bound for all the
+        % parameters given in the training set to find the best choice for the
+        % next loop cycle
+        reLBStability  = zeros(obj.nMuTrain, 1);
+        reLBPositivity = zeros(obj.nMuTrain, 1);
+        for idx = 1:obj.nMuTrain
+          if ~obj.offMuChosen(idx)
+            param = obj.offMuTrain(:, idx);
+
+            % set up the needed sets for the positivity constraint calculation
+            paramsNotInCkPrev = true(obj.nMuTrain, 1);
+            paramsNotInCkPrev(obj.offMuCkIndex(1:(end-1))) = false;
+            paramsNotInCkPrevIndexes = obj.MuIndexes(paramsNotInCkPrev);
+
+            % get the nearest parameters for stability and positivity constraints
+            [~, Idxalpha]  = obj.getNeighbors(obj.Malpha, param, obj.offMuCk);
+            [~, IdxplusXi] = obj.getNeighbors(obj.Mplus, param, obj.offMuTrain(:, paramsNotInCkPrev));
+            Idxplus        = paramsNotInCkPrevIndexes(IdxplusXi);
+
+            % check whether the lower bound could change
+            reLBStability(idx)  = any(obj.offMuCkIndex(Idxalpha) == obj.muCurIdx);
+            reLBPositivity(idx) = any(Idxplus == obj.muCurIdx);
+
+            % if one of the above conditions holds, then we compute new
+            % (hopefully better) lower bounds, if not, there is no improvement
+            % and we take the value from the last loop
+            if reLBStability(idx) || reLBPositivity(idx)
+              [lb, ub] = obj.onlineQuery(param, true);
+              obj.muTrainLB(idx) = lb;
+              obj.muTrainUB(idx) = ub;
+            else
+              obj.muTrainLB(idx) = obj.offMuLB(idx);
+              obj.muTrainUB(idx) = min(obj.offYstarCk.' * obj.offMuTrainMapped(:, idx));
+            end
+          end
+        end
+
+        % save the newly calculated lower bounds for online use
+        obj.offMuLB = obj.muTrainLB;
+
+        % Look for the parameter with the greatest gap / error
+        obj.muPrevIdx          = obj.muCurIdx;
+        [maxGap, obj.muCurIdx] = max((obj.muTrainUB - obj.muTrainLB) ./ obj.muTrainUB);
+        if ~isempty(maxGap)
+          obj.errors(end + 1) = maxGap;
+        end
+
+        % first check whether we are done here, check if the given tolerance
+        % is obtained
+        if maxGap < tol
+          exflag = 1;
+          isDone = true;
+          obj.L.info('SCM', sprintf(' stopped greedy loop, max gap %f is smaller than tolerance %f!', maxGap, tol));
+          break;
+        end
+
+        % looks like we're not done yet, so let's solve the eigenvalue
+        % problem. assemble the system for the chosen parameter and calculate
+        % the smallest eigenvalue and the corresponding eigenvector
+        M = obj.assembleAffineT(obj.offMuTrainMapped(:, obj.muCurIdx));
+        [mi, mivec] = obj.computeEV(M, obj.normX, 0);
+        % if the eigenvalue mi is positive, then we got the largest eigenvalue
+        % and have to do it again with a shift
+        if mi >= 0
+          [mi, mivec] = obj.computeEV(M, obj.normX, mi);
+        end
+
+        % the new eigenvalue is lower and upper bound for this parameter mu
+        obj.muTrainLB(obj.muCurIdx) = mi;
+        obj.muTrainUB(obj.muCurIdx) = mi;
+
+        % calculate the values of ystar for the current parameter. this is done
+        % by iterating over all the addends of the affine decomposition and
+        % multiplication with the eigenvector from above from both sides
+        ystar = zeros(obj.nQt, 1);
+        for idx = 1:obj.nQt
+          ystar(idx) = mivec.' * obj.affineT{idx} * mivec;
+        end
+
+        % save the newly generated data for the online stage
+        obj.offMuCk(:, end + 1)       = obj.offMuTrain(:, obj.muCurIdx);
+        obj.offMuCkMapped(:, end + 1) = obj.offMuTrainMapped(:, obj.muCurIdx);
+        obj.offMuCkIndex(end + 1)     = obj.muCurIdx;
+        obj.offYstarCk(:, end + 1)    = ystar;
+        obj.offAlphaCk(end + 1)       = mi;
+        obj.offMuChosen(obj.muCurIdx) = true;
+
+        % logging
+        obj.L.info('SCM', sprintf(' cycle %7.d of max %7.d done. max gap %g', ...
+                   curLoopCtr, maxIter, maxGap));
+
+        % update the current loop count
+        curLoopCtr = curLoopCtr + 1;
+
+        % and now we check some more breaking conditions
+        if curLoopCtr > maxIter
+          % we stop because we performed the maxIter number of greedy cycles.
+          % it's now maybe a good idea to check maxGap and decide whether the
+          % offline stage should be restarted with a larger maxIter
+          exflag = 2;
+          isDone = true;
+          obj.totalLoopCtr = obj.totalLoopCtr + curLoopCtr;
+          obj.L.info('SCM', sprintf(' stopped greedy loop, number of max iterations %d reached!', maxIter));
+          break;
+        elseif size(obj.offMuCk, 2) == obj.nMuTrain
+          % we stop because the training set is empty. this really shouldn't
+          % happen if we want good bounds...
+          exflag = 3;
+          isDone = true;
+          obj.totalLoopCtr = obj.totalLoopCtr + curLoopCtr;
+          obj.L.info('SCM', ' stopped greedy loop, training set is already empty!');
+          break;
+        end
+      end
+    end
 
     % Helper methods
 
@@ -547,10 +619,7 @@ classdef SCM < handle
       % Return values:
       %   T: supremizer for the given parameter @type matrix
 
-      % remap the parameter
-      % param = obj.mapParam(param);
-
-      % and sum up the addends of the affine representation
+      % sum the addends of the affine representation
       T = sparse(obj.solver.nTrialDim, obj.solver.nTrialDim);
       for idx = 1:obj.nQt
         T = T + param(idx) * obj.affineT{idx};
@@ -716,6 +785,9 @@ classdef SCM < handle
           idx = idx + 1;
         end
       end
+
+      % reset the greedy loop counter
+      obj.totalLoopCtr = 0;
     end
   end
 end
