@@ -293,11 +293,12 @@ Weiter erhalten wir als Nebenprodukt aus \cref{kor:gl:le:ss09_theorem51_ungleich
         \beta^{-1} = \norm{B^{-1}}_{\mathcal L(\mathcal Y', \mathcal X)} &\leq \frac{\sqrt{2 \max\Set{c^{-2}\gamma_{\Omega}^{-4}, 1} + M_{e}^{2}}}{\gamma_{\Omega}^{2} \min\Set{c, c^{-1}, c (\norm{\omega}_{L_{\infty}(I; L_{\infty}(\Omega))} + \abs{\mu})^{-2}}}.
     \end{align}
 
-    Ist dagegen $\lambda \neq 0$, dann werden die obigen Abschätzungen zu
+    Ist dagegen $\lambda \neq 0$, dann erhält man zusätzliche Faktoren, wodurch die Abschätzungen zu
     \begin{align}
         \gamma'_{b} = \norm{B}_{\mathcal L(\mathcal X, \mathcal Y')} &\leq \frac{\gamma_{b}}{\max\Set{\sqrt{1 + 2 (\norm{\omega}_{L_{\infty}(I; L_{\infty}(\Omega))} - \mu)^{2} \rho^{4} }, \sqrt{2}}}, \\
-        \beta'^{-1} = \norm{B^{-1}}_{\mathcal L(\mathcal Y', \mathcal X)} &\leq \frac{\max\Set{\sqrt{1 + 2 (\norm{\omega}_{L_{\infty}(I; L_{\infty}(\Omega))} - \mu)^{2} \rho^{4} }, \sqrt{2}}}{e^{-2(\norm{\omega}_{L_{\infty}(I; L_{\infty}(\Omega))} - \mu) T}} \beta^{-1}.
+        \beta'^{-1} = \norm{B^{-1}}_{\mathcal L(\mathcal Y', \mathcal X)} &\leq \frac{\max\Set{\sqrt{1 + 2 (\norm{\omega}_{L_{\infty}(I; L_{\infty}(\Omega))} - \mu)^{2} \rho^{4} }, \sqrt{2}}}{e^{-2(\norm{\omega}_{L_{\infty}(I; L_{\infty}(\Omega))} - \mu) T}} \beta^{-1}
     \end{align}
+    werden.
 
     Die Größen $M_{e}$ und $\rho$ entsprechen dabei denen aus \cref{kor:gl:le:ss09_theorem51_ungleichungen}.
 \end{Korollar}
@@ -309,102 +310,131 @@ Weiter erhalten wir als Nebenprodukt aus \cref{kor:gl:le:ss09_theorem51_ungleich
 \section{Parametrische Formulierung} % (fold)
 \label{sec:ps:pf:parametrische_formulierung}
 
-Nachdem wir nun die Rahmenbedingungen geklärt haben, fahren wir fort mit der Einführung einer parametrischen Variante der in diesem Kapitel bisher betrachteten parabolischen partiellen Differentialgleichung.
-Diese ermöglicht es uns in den folgenden Kapiteln erst, eine Reduzierte-Basis-Methode zu entwickeln.
+Nachdem nun eine erste schwache Formulierung der Propagator-Differentialgleichung eingeführt wurde, welche in dieser Form bereits als Grundlage für eine numerische Umsetzung verwendet werden kann, wollen wir nun als nächsten Schritt eine Parametrisierung dieser vornehmen.
+Motiviert durch das Iterationsverfahren aus \cref{cha:el:einleitung}, in dem die Propagator-Differentialgleichung immer wieder für leicht variierte Felder $\omega$ berechnet wird, werden wir diese als Ausgangspunkt der Parametrisierung verwenden.
 
-Dazu greifen wir den aus \cref{bem:ps:pde:definition_operator_A} bekannten Operator $A(t)$ auf und betrachten diesen zunächst zwar für einen festen Zeitpunkt $t \in I$, dafür aber in Abhängigkeit von einem $\omega \in L_{\infty}(\Omega)$.
-Sei also $\omega \in L_{\infty}(\Omega)$, dann definieren wir eine Abbildung
+Dazu kehren wir nun zunächst zum Operator $A(t)$ aus \cref{definition:prop:operator_und_bilinearform} zurück und betrachten diesen zunächst unabhängig von der Zeit $t \in I$, aber in Abhängigkeit von einem Feld $w \in L_{\infty}(\Omega)$.
+Wir definieren für $w \in L_{\infty}(\Omega)$ eine Familie von Operatoren $A(w)$ als
 \begin{equation}
     \label{eq:ps:pf:operator_A}
-    A(\omega) \colon H^{1}_{0}(\Omega) \to H^{-1}(\Omega), \quad A(\omega) \eta = - c \Delta \eta + \omega \eta + \mu \eta
+    A(w) \colon V \to V', \quad A(w) \eta = - c \Delta \eta + w \eta + \mu \eta
 \end{equation}
-und erhalten wie zuvor die zugehörige Bilinearform $a(\blank, \blank; \omega)$ durch
+und wie zuvor auch eine Familie von zugehörigen Bilinearformen $a(\blank, \blank; w)$ durch
 \begin{equation}
     \label{eq:ps:pf:bilinearform_a}
     \begin{aligned}
-        &a(\blank, \blank; \omega) \colon H^{1}_{0}(\Omega) \times H^{1}_{0}(\Omega) \to \mathbb{R}, \\
-        &(\eta, \zeta) \mapsto c\skp{\grad \eta}{\grad \zeta}{L_{2}(\Omega)} + \skp{\omega \eta}{\zeta}{L_{2}(\Omega)} + \mu \skp{\eta}{\zeta}{L_{2}(\Omega)}.
+        a(\blank, \blank; w) \colon V \times V \to \mathbb{R}, \quad
+        (\eta, \zeta) \mapsto c\skp{\grad \eta}{\grad \zeta}{H} + \skp{w \eta}{\zeta}{H} + \mu \skp{\eta}{\zeta}{H}.
     \end{aligned}
 \end{equation}
 
-Als nächstes konkretisieren wir die Abhängigkeit des Operators $A(\omega)$ beziehungsweise der Bilinearform $a(\blank, \blank; \omega)$ von $\omega$.
-Dazu stellen wir die folgende Bedingung an den Parameter $\omega$, welche sich später wiederum bei der Reduzierte-Basis-Methode als nützlich erweisen wird.
+Um die obige Abhängigkeit des Operators $A$ respektive der Bilinearformen vom Feld $w \in L_{\infty}(\Omega)$ auch für die nachfolgende numerische Umsetzung verwendbar zu machen, müssen wir die Abhängigkeit von einer Abbildung $w \in L_{\infty}(\Omega)$ durch eine Abhängigkeit von einer diskreten Größe, beispielsweise einer Koeffizientenfolge aus dem $\ell_{1}(\mathbb{N})$ oder ähnlichen Folgenräumen, ersetzen.
+Dies erreichen wir durch folgende Einschränkung der verwendeten Felder $w \in L_{\infty}(\Omega)$ auf Abbildungen, die wir als Reihenentwicklung von, hier noch nicht näher spezifizierten,  Abbildungen $\varphi_{j}$ darstellen können.
 
 \begin{Definition}
 \label{def:ps:pf:omega_affin}
-    Die Funktionen $\omega \in L_{\infty}(\Omega)$ seien \emph{affin} darstellbar.
-    Genauer sei $\mathcal S \subset \mathbb{R}^{\mathbb{N}}$ ein Parameterraum und $\Set{ \varphi_{j} }_{j \in \mathbb{N}} \in L_{\infty}(\Omega)$ eine Folge von Funktion, so dass $\omega$ sich für $\sigma \in \mathcal S$ als Reihe der Form
+    Sei $\Set{\varphi_{j}}_{j \in \mathbb{N}} \subset L_{\infty}(\Omega)$ eine Folge von Funktionen und sei weiter ein Parameterraum $\mathcal P \subset \mathbb{R}^{\mathbb{N}}$ gegeben.
+    Wir nennen $w \in L_{\infty}(\Omega)$ \emph{affin} durch $\Set{\varphi_{j}}_{j \in \mathbb{N}}$ darstellbar, wenn ein $\sigma \in \mathcal P$ existiert, so dass $w$ mit
     \begin{equation}
-    \label{eq:ps:pf:omega_affine_zerlegung}
-        w(\blank; \sigma) \colon \Omega \to \mathbb{R}, \quad w(x; \sigma) = \sum_{j = 1}^{\infty} \sigma_{j} \varphi_{j}(x)
+        w(\blank; \sigma) = \sum_{j = 1}^{\infty} \sigma_{j} \varphi_{j}
     \end{equation}
-    schreiben lässt.
+    übereinstimmt.
 \end{Definition}
 
 \begin{Bemerkung}
-    Wir wählen für den Rest der Arbeit $\mathcal S = [-1, 1]^{\mathbb{N}}$.
-    Dies stellt keine Einschränkung dar, da die Funktionen $\Set{ \varphi_{j} }_{j \in \mathbb{N}}$ beliebig umskaliert werden können.
+    Für den Rest dieses Kapitels beschränken wir uns bei der Wahl des Parameterraums auf $\mathcal P = [-1, 1]^{\mathbb{N}}$.
+    Dies stellt keine Einschränkung dar, da die Funktionen $\Set{ \varphi_{j} }_{j \in \mathbb{N}}$ entsprechend umskaliert werden können.
 \end{Bemerkung}
 
-Setzen wir diese affine Darstellung nun zunächst in den Operator $A(\omega)$ ein, dann erhalten wir die Darstellung
-\begin{equation}
-\label{eq:ps:pf:operator_A_sigma}
-    A(\omega(\sigma)) \colon H^{1}_{0}(\Omega) \to H^{-1}(\Omega), \quad A(\omega(\sigma)) u = -c \Delta u + \sum_{j = 1}^{\infty} \sigma_{j} \varphi_{j} u + \mu u,
-\end{equation}
-und als zugehörige Bilinearform $a(\blank, \blank; \omega(\sigma))$ ergibt sich wie zuvor
-\begin{equation}
-\label{eq:ps:pf:bilinearform_a_sigma}
-    \begin{aligned}
-    &a(\blank, \blank; \omega(\sigma)) \colon H^{1}_{0}(\Omega) \times H^{1}_{0}(\Omega) \to \mathbb{R}, \\
-    &(u, v) \mapsto c\skp{\grad u}{\grad v}{L_{2}(\Omega)} + \sum_{j = 1}^{\infty} \sigma_{j} \skp{\varphi_{j} u}{v}{L_{2}(\Omega)} + \mu \skp{u}{v}{L_{2}(\Omega)}.
-    \end{aligned}
-\end{equation}
+Um sicherzustellen, dass derartige Felder $w(\sigma)$ wohldefinierte Operatoren $A(w(\sigma))$ liefern, fordern wir die folgende Eigenschaften von der Funktionenfolge $\Set{\varphi_{j}}_{j \in \mathbb{N}}$.
 
-\begin{Bemerkung}
-    Um die Schreibweisen kurz zu halten, schreiben wir meist $\omega(\sigma)$ statt $\omega(\blank; \sigma)$.
-    Weiter schreiben wir, vor allem um zwischen dem allgemeinen parametrischen und dem affinen Fall zu unterscheiden, kurz $A(\sigma)$ statt $A(\omega(\sigma))$ für \cref{eq:ps:pf:operator_A_sigma} und $a(\blank, \blank; \sigma)$ statt $a(\blank, \blank; \omega(\sigma))$ für \cref{eq:ps:pf:bilinearform_a_sigma}.
-\end{Bemerkung}
-
-Damit der Operator $A(\sigma)$ sowie die Bilinearform $a(\blank, \blank; \sigma)$ für $\sigma \in \mathcal S$ wohldefiniert sind, müssen wir Wohldefiniertheit, dass heißt gleichmäßige Konvergenz, der obigen affinen Zerlegung \cref{eq:ps:pf:omega_affine_zerlegung} von $\omega$ aus \cref{def:ps:pf:omega_affin} fordern.
-Dies wird durch folgende Bedingung sichergestellt.
-%%
 \begin{Annahme}
-    Das Funktionensystem $\Set{ \varphi_{j} }_{j \in \mathbb{N}} \in L_{\infty}(\Omega)$ sei einfach summierbar in der $L_{\infty}$-Norm, das heißt es gelte
+    \label{annahme:l1_summierbar}
+    Das Funktionensystem $\Set{ \varphi_{j} }_{j \in \mathbb{N}} \subset L_{\infty}(\Omega)$ sei einfach summierbar in der $L_{\infty}$-Norm, das heißt es gelte
     \begin{equation}
         \Set{ \norm{\varphi_{j}}_{L_{\infty}(\Omega) } }_{j \in \mathbb{N}} \in \ell_{1}(\mathbb{N}).
     \end{equation}
 \end{Annahme}
 
-Hieraus folgt wegen $\mathcal S = [-1, 1]^{\mathbb{N}}$ insbesondere
+Diese Annahme stellt insbesondere die gleichmäßige Konvergenz von $w(\sigma)$ für alle $\sigma \in \mathcal P$ sicher, denn es gilt
 \begin{equation}
 \label{eq:ps:pf:omega_norm_abschaetzung}
-    \sup_{\sigma \in \mathcal S} \norm{\omega(\sigma)}_{L_{\infty}(\Omega)} \leq \sum_{j = 1}^{\infty} \norm{\varphi_{j}}_{L_{\infty}(\Omega)} < \infty.
+    \sup_{\sigma \in \mathcal P} \norm{w(\sigma)}_{L_{\infty}(\Omega)} \leq \sum_{j = 1}^{\infty} \norm{\varphi_{j}}_{L_{\infty}(\Omega)} < \infty.
+\end{equation}
+
+Legen wir uns auf ein konkretes Funktionensystem $\Set{\varphi_{j}}_{j \in \mathbb{N}}$, welches die \cref{annahme:l1_summierbar} erfüllt, fest, dann können wir die Operatoren $A(\omega)$ nun auch als Familie von Operatoren $A(\sigma)$ betrachten, denn durch Einsetzen von $w(\sigma)$ in \cref{eq:ps:pf:operator_A} erhalten wir
+\begin{equation}
+\label{eq:ps:pf:operator_A_sigma}
+    A(\sigma) = A(w(\sigma)) \colon V \to V', \quad A(\sigma) \eta = -c \Delta \eta + \sum_{j = 1}^{\infty} \sigma_{j} \varphi_{j} \eta + \mu \eta
+\end{equation}
+Weiter können wir auch die zugehörige Bilinearform $a(\blank, \blank; \sigma)$ angeben als
+\begin{equation}
+\label{eq:ps:pf:bilinearform_a_sigma}
+    \begin{aligned}
+    &a(\blank, \blank; \sigma) = a(\blank, \blank; w(\sigma)) \colon V \times V \to \mathbb{R}, \\
+    &(\eta, \zeta) \mapsto c\skp{\grad \eta}{\grad \zeta}{H} + \sum_{j = 1}^{\infty} \sigma_{j} \skp{\varphi_{j} \eta}{\zeta}{H} + \mu \skp{\eta}{\zeta}{H}.
+    \end{aligned}
+\end{equation}
+
+Das es sich hierbei tatsächlich um wohldefinierte Operatoren respektive Bilinearformen handelt, welche die für uns wichtigen Eigenschaften wie Stetigkeit respektive die Gültigkeit einer G\aa{}rding-Ungleichung besitzt, werden wir im nächsten Abschnitt nachweisen, zunächst wollen wir an dieser Stelle noch ein parametrisches Äquivalent der Raum-Zeit-Variationsformulierung aus \cref{definition:schwache_formulierung} formulieren.
+
+Dies Bedarf, wie zuvor, einen zeitlichen Wechsel zwischen mehreren Feldern $w_{i}$.
+Wir beschränken uns auf den bereits bekannten Fall zweier Felder und erweitern die obige Operator-Definition um die zeitliche Abhängigkeit.
+Zunächst definieren wir analog zu \cref{eq:ps:pde:omega_definition} ein zeitabhängiges Feld.
+Dies geschieht auf Basis der affinen Darstellung von $w_{i}$ aus \cref{def:ps:pf:omega_affin}.
+Sei dazu $\sigma = (\sigma^{1}, \sigma^{2}) \in \mathcal P^{2} =  \mathcal P \times \mathcal P$, dann definieren wir die parametrische Feld-Abbildung als
+\begin{equation}
+\label{eq:ps:pde:omega_definition_affin}
+    \omega(\blank, \blank; \sigma) \colon I \times \Omega \to \mathbb{R}, \quad (t, \vec{x}) \mapsto
+    w(\vec{x}; \sigma^{1}) \chi_{I_{1}}(t) + w(\vec{x}; \sigma^{2}) \chi_{I_{2}}(t).
+\end{equation}
+Offenbar lässt sich durch Einsetzen der entsprechenden affinen Darstellung von $w$ direkt die Darstellung
+\begin{equation}
+    \omega(t, \vec{x}; \sigma) = \sum_{j = 1}^{\infty} (\sigma^{1}_{j} \chi_{I_{1}}(t) + \sigma^{2}_{j} \chi_{I_{2}}(t)) \phi_{j}(\vec x)
+\end{equation}
+ableiten.
+Anhand dieser und der Zerlegung $I = I_{1} \cupdot I_{2}$ ist direkt ersichtlich, dass analog zu \cref{eq:ps:pf:omega_norm_abschaetzung} die Abschätzung
+\begin{equation}
+    \sup_{\sigma \in \mathcal P^{2}} \norm{\omega(\sigma)}_{L_{\infty}(I; L_{\infty}(\Omega))} \leq \sup_{\sigma \in \mathcal P} \norm{w(\sigma)} \leq \sum_{j = 1}^{\infty} \norm{\varphi_{j}}_{L_{\infty}(\Omega)}
+\end{equation}
+gilt.
+
+Erweitern wir nun die Operator-Definition \cref{eq:ps:pf:operator_A_sigma} um die Zeitabhängigkeit; setzen wir also für $\sigma \in \mathcal P^{2}$
+\begin{equation}
+    \label{eq:ps:pf:operator_A_sigma_zeit}
+    A(t; \sigma) \colon V \to V', \quad A(t, \sigma) \eta = -c \Delta \eta + \omega(t, \blank; \sigma) \eta + \mu \eta,
+\end{equation}
+dann hat die zugehörige Familie von Bilinearformen die Form
+\begin{equation}
+    \label{eq:ps:pf:bilineaform_a_sigma_zeit}
+    \begin{aligned}
+        &a(\blank, \blank; t; \sigma) \colon V \times V \to \mathbb{R}, \\
+        &(\eta, \zeta) \mapsto c\skp{\grad \eta}{\grad \zeta}{H} + \sum_{j = 1}^{\infty} \sigma^{1}_{j} \chi_{I_{1}}(t) \skp{\varphi_{j} \eta}{\zeta}{H} + \sum_{j = 1}^{\infty} \sigma^{2}_{j} \chi_{I_{2}}(t) \skp{\varphi_{j} \eta}{\zeta}{H} + \mu \skp{\eta}{\zeta}{H}.
+    \end{aligned}
 \end{equation}
 
 Mit dieser Vorarbeit können wir die schwache Formulierung aus \cref{def:ps:rzvp:schwache_formulierung} nun zu der folgenden parametrischen schwachen Formulierung ausweiten.
 
-\mfix{Die Zeitabhängigkeit des Operators $A$ und der Bilinearform $a$ muss noch eingebaut werden!}
-
 \begin{Definition}[Parametrische schwache Formulierung]
 \label{def:ps:pf:schwache_formulierung}
-    Als \emph{parametrisches schwache Formulierung}, oder auch \emph{parametrische Raum"=Zeit"=Va"-ri"-a"-ti"-ons"-for"-mu"-lie"-rung} von \cref{eq:ps:pde:propagator_dgl} bezeichnen wir das folgende Variationsproblem:
-    Gegeben einen Quellterm $g \in L_{2}(I; H^{-1}(\Omega))$ und eine Anfangsbedingung $u_{0} \in L_{2}(\Omega)$.
-    Finde für alle $\sigma \in \mathcal S$ ein $u(\sigma) \in \mathcal X$ mit
+    Seien ein Quellterm $g \in L_{2}(I; V')$ und eine Anfangsbedingung $u_{0} \in H$ gegeben.
+    Als \emph{parametrische schwache Formulierung} von \cref{definition:schwache_formulierung} bezeichnen wir das folgende Variationsproblem:
     \begin{equation}
-        \label{eq:ps:pf:schwache_formulierung}
-        b(u(\sigma), v; \sigma) = f(v) \quad \text{für alle}~v = (v_{1}, v_{2}) \in \mathcal Y,
+        \text{Sei}~\sigma \in \mathcal P^{2},~\text{finde ein}~u(\sigma) \in \mathcal X : b(u(\sigma), v; \sigma) = f(v) \quad \fa v \in \mathcal Y.
     \end{equation}
-    wobei $b(\blank, \blank; \sigma) \colon \mathcal X \times \mathcal Y \to \mathbb{R}$ die durch
-    \begin{equation}
-        \label{eq:ps:pf:schwache_formulierung_lhs_b}
-        b(u, v; \sigma)
-            = \int_{I} \skprod{u_{t}(t)}{v_{1}(t)}_{L_{2}(\Omega)} + a(u(t), v_{1}(t); t, \sigma) \diff t + \skprod{u(0)}{v_{2}}_{L_{2}(\Omega)}
-    \end{equation}
-    gegebene Bilinearform und $f(\blank) \colon \mathcal Y \to \mathbb{R}$ definiert ist durch
-    \begin{equation}
-        \label{eq:ps:pf:schwache_formulierung_rhs_f}
-        f(v) = \int_{I} \skprod{g(t)}{v_{1}(t)}_{L_{2}(\Omega)} \diff t + \skprod{u_{0}}{v_{2}}_{L_{2}(\Omega)}.
-    \end{equation}
+    Dabei sei die Bilinearform $b(\blank, \blank; \sigma) \colon \mathcal X \times \mathcal Y \to \mathbb{R}$ gegeben durch
+     \begin{equation}
+         \label{eq:ps:rzvp:schwache_formulierung_lhs_b_sigma}
+         b(u, v; \sigma)
+             = \int_{I} \skprod{u_{t}(t)}{v_{1}(t)}_{V' \times V} + a(u(t), v_{1}(t); t; \sigma) \diff t + \skprod{u(0)}{v_{2}}_{H},
+     \end{equation}
+     wobei $a(\blank, \blank; t; \sigma)$ wie in \cref{eq:ps:pf:bilineaform_a_sigma_zeit} definiert sei.
+     Das stetige lineare Funktional $f \colon \mathcal Y \to \mathbb{R}$ sei wie zuvor durch
+     \begin{equation}
+         \label{eq:ps:rzvp:schwache_formulierung_rhs_f_sigma}
+         f(v) = \int_{I} \skprod{g(t)}{v_{1}(t)}_{V' \times V} \diff t + \skprod{u_{0}}{v_{2}}_{H}
+     \end{equation}
+     gegeben.
 \end{Definition}
 
 % section parametrische_formulierung (end)
@@ -412,6 +442,7 @@ Mit dieser Vorarbeit können wir die schwache Formulierung aus \cref{def:ps:rzvp
 
 \section{Regularität bezüglich der Parameter} % (fold)
 \label{sec:ps:rg:regularitaet_bezueglich_der_parameter}
+
 
 In diesem Abschnitt wollen wir nun nachweisen, dass die im vorherigen Abschnitt hergeleitete parametrische schwache Formulierung eine Regularität bezüglich des Parameters aufweist, konkret werden wir nachweisen, dass die Lösung $u(\sigma)$ analytisch im Parameter $\sigma$ ist.
 Dabei orientieren wir uns an den Arbeiten von \textcite{Cohen:2010kz,Kunoth:2013ef} und weisen diese Eigenschaften zunächst für den stationären Fall nach, das heißt, wir verlieren die Zeitabhängigkeit und betrachten stattdessen die parametrische Operatorgleichung
