@@ -356,16 +356,22 @@ Um sicherzustellen, dass derartige Felder $w(\sigma)$ wohldefinierte Operatoren 
     \end{equation}
 \end{Annahme}
 
+Im Folgenden bezeichnen wir die obige $\ell_{1}(\mathbb{N})$-Norm der Kürze wegen als
+\begin{equation}
+    \label{eq:varphi_l1_norm_konst}
+    c_{\varphi} = \sum_{j = 1}^{\infty} \norm{\varphi_{j}}_{L_{\infty}(\Omega)}.
+\end{equation}
+
 Diese Annahme stellt insbesondere die gleichmäßige Konvergenz von $w(\sigma)$ für alle $\sigma \in \mathcal P$ sicher, denn es gilt
 \begin{equation}
 \label{eq:ps:pf:omega_norm_abschaetzung}
-    \sup_{\sigma \in \mathcal P} \norm{w(\sigma)}_{L_{\infty}(\Omega)} \leq \sum_{j = 1}^{\infty} \norm{\varphi_{j}}_{L_{\infty}(\Omega)} < \infty.
+    \sup_{\sigma \in \mathcal P} \norm{w(\sigma)}_{L_{\infty}(\Omega)} \leq \sum_{j = 1}^{\infty} \norm{\varphi_{j}}_{L_{\infty}(\Omega)} = c_{\varphi} < \infty.
 \end{equation}
 
 Legen wir uns auf ein konkretes Funktionensystem $\Set{\varphi_{j}}_{j \in \mathbb{N}}$, welches die \cref{annahme:l1_summierbar} erfüllt, fest, dann können wir die Operatoren $A(\omega)$ nun auch als Familie von Operatoren $A(\sigma)$ betrachten, denn durch Einsetzen von $w(\sigma)$ in \cref{eq:ps:pf:operator_A} erhalten wir
 \begin{equation}
 \label{eq:ps:pf:operator_A_sigma}
-    A(\sigma) = A(w(\sigma)) \colon V \to V', \quad A(\sigma) \eta = -c \Delta \eta + \sum_{j = 1}^{\infty} \sigma_{j} \varphi_{j} \eta + \mu \eta
+    A(\sigma) = A(w(\sigma)) \colon V \to V', \quad A(\sigma) \eta = -c \Delta \eta + \sum_{j = 1}^{\infty} \sigma_{j} \varphi_{j} \eta + \mu \eta.
 \end{equation}
 Weiter können wir auch die zugehörige Bilinearform $a(\blank, \blank; \sigma)$ angeben als
 \begin{equation}
@@ -376,7 +382,9 @@ Weiter können wir auch die zugehörige Bilinearform $a(\blank, \blank; \sigma)$
     \end{aligned}
 \end{equation}
 
-Das es sich hierbei tatsächlich um wohldefinierte Operatoren respektive Bilinearformen handelt, welche die für uns wichtigen Eigenschaften wie Stetigkeit respektive die Gültigkeit einer G\aa{}rding-Ungleichung besitzt, werden wir im nächsten Abschnitt nachweisen, zunächst wollen wir an dieser Stelle noch ein parametrisches Äquivalent der Raum-Zeit-Variationsformulierung aus \cref{definition:schwache_formulierung} formulieren.
+Die bei der Bilinearform vorgenommene Vertauschung von Summe und $H$-Skalarprodukt ist durch \cref{annahme:l1_summierbar} respektive Ungleichung \cref{eq:ps:pf:omega_norm_abschaetzung} und den Satz von Lebesgue gerechtfertigt.
+Wie auch für den nicht-parametrischen Fall werden wir nachweisen, dass es sich hierbei um Operatoren beziehungsweise Bilinearformen handelt, welche die für uns wichtigen Eigenschaften der Stetigkeit und die Gültigkeit einer G\aa{}rding-Ungleichung besitzen.
+Zunächst wollen wir an dieser Stelle noch ein parametrisches Äquivalent der Raum-Zeit-Variationsformulierung aus \cref{definition:schwache_formulierung} formulieren.
 
 Dies Bedarf, wie zuvor, einen zeitlichen Wechsel zwischen mehreren Feldern $w_{i}$.
 Wir beschränken uns auf den bereits bekannten Fall zweier Felder und erweitern die obige Operator-Definition um die zeitliche Abhängigkeit.
@@ -395,7 +403,8 @@ Offenbar lässt sich durch Einsetzen der entsprechenden affinen Darstellung von 
 ableiten.
 Anhand dieser und der Zerlegung $I = I_{1} \cupdot I_{2}$ ist direkt ersichtlich, dass analog zu \cref{eq:ps:pf:omega_norm_abschaetzung} die Abschätzung
 \begin{equation}
-    \sup_{\sigma \in \mathcal P^{2}} \norm{\omega(\sigma)}_{L_{\infty}(I; L_{\infty}(\Omega))} \leq \sup_{\sigma \in \mathcal P} \norm{w(\sigma)} \leq \sum_{j = 1}^{\infty} \norm{\varphi_{j}}_{L_{\infty}(\Omega)}
+\label{eq:abschaetzung_feld_sigma_zeit}
+    \sup_{\sigma \in \mathcal P^{2}} \norm{\omega(\sigma)}_{L_{\infty}(I; L_{\infty}(\Omega))} \leq \sup_{\sigma \in \mathcal P} \norm{w(\sigma)}_{L_{\infty}(\Omega)} \leq \sum_{j = 1}^{\infty} \norm{\varphi_{j}}_{L_{\infty}(\Omega)} = c_{\varphi}
 \end{equation}
 gilt.
 
@@ -413,14 +422,14 @@ dann hat die zugehörige Familie von Bilinearformen die Form
     \end{aligned}
 \end{equation}
 
-Mit dieser Vorarbeit können wir die schwache Formulierung aus \cref{def:ps:rzvp:schwache_formulierung} nun zu der folgenden parametrischen schwachen Formulierung ausweiten.
+Mit dieser Vorarbeit können wir die schwache Formulierung aus \cref{definition:schwache_formulierung} nun zu der folgenden parametrischen schwachen Formulierung ausweiten.
 
 \begin{Definition}[Parametrische schwache Formulierung]
-\label{def:ps:pf:schwache_formulierung}
-    Seien ein Quellterm $g \in L_{2}(I; V')$ und eine Anfangsbedingung $u_{0} \in H$ gegeben.
-    Als \emph{parametrische schwache Formulierung} von \cref{definition:schwache_formulierung} bezeichnen wir das folgende Variationsproblem:
+\label{def:ps:pf:schwache_formulierung_par}
+    Sei $g \in L_{2}(I; V')$ ein Quellterm und $u_{0} \in H$ eine Anfangsbedingung.
+    Als \emph{parametrische schwache Formulierung} der Propagator-Differentialgleichung bezeichnen wir das folgende Variationsproblem:
     \begin{equation}
-        \text{Sei}~\sigma \in \mathcal P^{2},~\text{finde ein}~u(\sigma) \in \mathcal X : b(u(\sigma), v; \sigma) = f(v) \quad \fa v \in \mathcal Y.
+        \text{Sei}~\sigma \in \mathcal P^{2},~\text{finde}~u(\sigma) \in \mathcal X : b(u(\sigma), v; \sigma) = f(v) \quad \fa v \in \mathcal Y.
     \end{equation}
     Dabei sei die Bilinearform $b(\blank, \blank; \sigma) \colon \mathcal X \times \mathcal Y \to \mathbb{R}$ gegeben durch
      \begin{equation}
@@ -438,6 +447,116 @@ Mit dieser Vorarbeit können wir die schwache Formulierung aus \cref{def:ps:rzvp
 \end{Definition}
 
 % section parametrische_formulierung (end)
+
+\section{Regularität bezüglich der Parameter} % (fold)
+\label{sec:regularit_t_bez_glich_der_parameter}
+
+Wir wollen nun nachweisen, dass die im vorherigen Abschnitt hergeleitete parametrische schwache Formulierung, \cref{ps:pf:definition:schwache_formulierung_par}, eine Regularität bezüglich des Parameters aufweist.
+Konkret werden wir nachweisen, dass die Lösung $u(\sigma)$ analytisch vom Parameter $\sigma$ abhängt.
+Dabei orientieren wir uns an den Arbeiten von \textcite{Cohen:2010kz,Kunoth:2013ef}, weisen diese Eigenschaften aber direkt für die Raum-Zeit-Variationsformulierung nach, statt wie in den beiden genannten Arbeiten den Umweg über den stationären Fall zu gehen.
+
+Bevor wir uns an die Regularität wagen können, müssen wir zunächst nachweisen, dass die parametrische schwache Formulierung für alle Parameter $\sigma \in \mathcal P^{2}$ sachgemäß gestellt ist.
+Hierzu weisen wir analog zu \cref{satz:ps:rzvp:bilinearform_a_eigenschaften} nach, dass die darin vorkommende Bilinearform $a(\blank, \blank; t; \sigma)$ stetig ist und eine G\aa{}rding-Ungleichung erfüllt.
+
+\begin{Satz}
+\label{satz:bf_a_param_stetig_garding}
+    Sei $a(\blank, \blank; t; \sigma)$, $t \in I$ und $\sigma \in \mathcal P^{2}$, die Familie von Bilinearformen aus \cref{eq:ps:pf:bilineaform_a_sigma_zeit}.
+    Dann gelten für alle $t \in I$ und $\sigma \in \mathcal P^{2}$ die folgenden Eigenschaften:
+    \begin{thmenumerate}
+        \item\label{satz:ps:rzvp:bilinearform_a_eigenschaften_stetig}
+        \emph{Stetigkeit:} es gilt
+        \begin{equation}
+            \label{eq:ps:rzvp:bilinearform_a_eigenschaften_stetig}
+            \abs{a(\eta, \zeta; t; \sigma)} \leq \gamma_{a} \norm{\eta}_{V} \norm{\zeta}_{V} \quad \text{für alle}~\eta, \zeta \in V
+        \end{equation}
+        mit Stetigkeitskonstante $\gamma_{a} = \max\Set{c, c_{\varphi} + \abs{\mu}} < \infty$.
+        \item\label{satz:ps:rzvp:bilinearform_a_eigenschaften_garding}
+        \emph{G\aa{}rding-Ungleichung:} es gilt
+        \begin{equation}
+            \label{eq:ps:rzvp:bilinearform_a_eigenschaften_garding}
+            a(\eta, \eta; t; \sigma) + \lambda \norm{\eta}_{H}^{2} \geq \alpha \norm{\eta}_{V}^{2} \quad \text{für alle}~\eta \in V
+        \end{equation}
+        mit $\alpha = c \gamma_{\Omega}^{2} > 0$ und $\lambda = \max\Set{c_{\varphi} - \mu, 0} \geq 0$, wobei $\gamma_{\Omega}$ die Poincaré-Friedrichs-Konstante ist.
+    \end{thmenumerate}
+    Dabei ist $c_{\varphi}$ die Konstante aus \cref{eq:varphi_l1_norm_konst} und die Konstanten $\gamma_{a}$, $\lambda$ und $\alpha$ sind sowohl unabhängig von $t \in I$ als auch von $\sigma \in \mathcal P^{2}$.
+
+    \begin{Beweis}
+        Der Nachweis läuft komplett analog zum nicht-parametrischen Fall in \cref{satz:ps:rzvp:bilinearform_a_eigenschaften}.
+        Wir müssen zusätzlich lediglich die $L_{\infty}(\Omega)$-Norm des Feldes $\omega(t, \blank; \sigma)$ mit Hilfe von \cref{eq:abschaetzung_feld_sigma_zeit} nach oben durch $c_{\varphi}$ abschätzen.
+    \end{Beweis}
+\end{Satz}
+
+Anwenden der Aussagen aus \cref{satz:gl:le:ss09_theorem51} und \cref{kor:gl:le:ss09_theorem51_ungleichungen} liefert uns nun:
+\begin{Korollar}
+\label{satz:ps:eel:schwache_formulierung_sachgemaess_gestellt}
+    Das parametrische schwache Formulierung aus \cref{def:ps:pf:schwache_formulierung_par} ist für alle $\sigma \in \mathcal P^{2}$ sachgemäß gestellt.
+    Ferner erhalten wir von $\sigma$ unabhängige Schranken für die Stetigkeitskonstante $\gamma_{b}$ und die inf-sup-Konstante $\beta$.
+
+    \begin{Beweis}
+        Die nötige Vorarbeit wurde in \cref{satz:bf_a_param_stetig_garding} geleistet, der Rest folgt direkt durch die Anwendung der beiden genannten Aussagen.
+    \end{Beweis}
+\end{Korollar}
+
+Zunächst einige notationelle Vorbemerkungen.
+\begin{Bemerkung}
+    Bezeichne mit $\mathfrak F = \Set{ \nu \in \mathbb{N}^{\mathbb{N}}_{0} \given \norm{\nu}_{\ell_{1}(\mathbb{N})} < \infty }$ die Menge aller Folgen nichtnegativer ganzer Zahlen, wobei
+    \begin{equation}
+        \norm{\nu}_{\ell_{1}(\mathbb{N})} = \sum_{k = 1}^{\infty} \abs{\nu_{k}}
+    \end{equation}
+    die $\ell_{1}(\mathbb{N})$-Norm sei.
+    Damit ergibt sich, dass $\mathfrak F$ gerade diejenigen Folgen enthält, die nur endlich viele Einträge ungleich Null enthalten.
+
+    Sei $\nu \in \mathfrak F$ und $b \in \ell_{p}(\mathbb{N})$, $p > 0$, dann schreiben wir
+    \begin{equation}
+        b^{\nu} = \prod_{j = 1}^{\infty} b_{j}^{\nu_{j}}
+    \end{equation}
+    mit der Konvention $0^{0} = 1$.
+    Wegen $\norm{\nu}_{\ell_{1}(\mathbb{N})} < \infty$ ist dieses Produkt stets endlich.
+
+    Dies verallgemeinern wir etwas; sei dazu $\nu = (\nu^{1}, \nu^{2}) \in \mathfrak F^{2}$ und $b = (b^{1}, b^{2}) \in (\ell_{p}(\mathbb{N}))^{2}$, dann schreiben wir analog
+    \begin{equation}
+        b^{\nu} = (b^{1})^{\nu^{1}} (b^{2})^{\nu^{2}} = \prod_{j = 1}^{\infty} (b^{1})^{\nu^{1}_{j}} (b^{2})^{\nu^{2}_{j}}.
+    \end{equation}
+\end{Bemerkung}
+
+TODO: das nachfolgende irgendwie verwursten:
+
+\begin{Satz}
+    Sei $\omega$ die parametrische Feld-Abbildung aus \cref{eq:ps:pde:omega_definition_affin}
+    Das parametrische Variationsproblem aus \cref{def:ps:pf:schwache_formulierung_par} besitzt für jeden Parameter $\sigma \in \mathcal P^{2}$ eine eindeutige Lösung.
+    Ferner existieren von $\sigma$ unabhängige Schranken für die Stetigkeitskonstante $\gamma_{b}$ und die inf-sup-Konstante $\beta$ der Bilinearform $b(\blank, \blank; \sigma)$.
+
+    \begin{Beweis}
+
+    \end{Beweis}
+\end{Satz}
+
+\begin{Lemma}
+    Seien $\omega, \tilde{\omega}$ zwei Feld-Abbildungen wie in \cref{eq:ps:pde:omega_definition} mit entsprechenden Feldern $w_{1}, w_{2}, \tilde{w}_{1}, \tilde{w}_{2}$.
+    Weiter seien $u, \tilde{u}$ die zugehörigen Lösungen der schwachen Formulierung \cref{eq:gl:le:schwache_formulierung}.
+    Dann gilt
+    \begin{equation}
+        \norm{u - \tilde{u}}_{\mathcal X} \leq \frac{\norm{f}_{\mathcal Y'}}{\beta^{2}} \norm{\omega - \tilde{\omega}}_{L_{\infty}(I; L_{\infty}(\Omega))}.
+    \end{equation}
+\end{Lemma}
+
+\begin{Satz}
+    Die Abbildung $\mathcal P^{2} \ni \sigma \mapsto u(\sigma) \in \mathcal X$, welche einem Parameter $\sigma$ die eindeutige Lösung $u(\sigma)$ der parametrischen schwachen Formulierung \cref{def:ps:pf:schwache_formulierung_par} zuordnet, besitzt für alle $\nu = (\nu^{1}, \nu^{2}) \in \mathfrak F^{2}$ eine partielle Ableitung $\partial^{\nu}_{\sigma} u(\sigma)$.
+\end{Satz}
+
+\begin{Bemerkung}
+    Alternativ über Differenzieren der Variationsformulierung
+\end{Bemerkung}
+
+\begin{Satz}
+    Sei $b = (b^{1}, b^{2}) \in \mathbb{R}^{\mathbb{N}} \times \mathbb{R}^{\mathbb{N}}$...
+\end{Satz}
+
+\begin{Satz}
+    Alles fertig hier!
+\end{Satz}
+
+% section regularit_t_bez_glich_der_parameter (end)
 
 
 \section{Regularität bezüglich der Parameter} % (fold)
@@ -838,49 +957,69 @@ Zusammenfassend ergibt sich damit der folgende Satz, welcher eine auf unser Prob
 \section{Exkurs: Periodische Randbedingungen} % (fold)
 \label{sec:ps:pr:periodische_randbedingungen}
 
-Da wir bisher mit homogenen Randbedingungen gearbeitet haben und dies auch für den Rest der Arbeit fortführen wollen, gehen wir an dieser Stelle auf den Fall periodischer Randbedingungen ein.
-Dabei wird sich herausstellen, das es nur sehr wenige Unterschiede zum bereits betrachteten homogenen Fall gibt.
+Da wir in diesem Kapitel bisher ausschließlich mit homogenen Dirichlet-Randbedingungen gearbeitet haben, wollen wir an dieser Stelle auf den Fall periodischer Randbedingungen eingehen.
+Dabei werden wir feststellen, dass Aufgrund der Struktur der Propagator-Differentialgleichung nur sehr geringe Unterschiede zum betrachteten homogenen Fall bestehen.
 
-Wir beschränken uns der Einfachheit halber auf den Fall, dass $\Omega = \bigtimes_{i = 1}^{n} (0, l_{i}) \subset \mathbb{R}^{n}$ ein beschränkter offener Quader ist, wobei $l_{i} \in \mathbb{R}_{+}$ für $i = 1 \dots n$ sei.
+Zunächst müssen wir die Rahmenbedingungen für die Betrachtung periodischer Randbedingungen festlegen.
+Dazu beschränken wir uns der Einfachheit halber auf den Fall, dass $\Omega = \bigtimes_{i = 1}^{n} (0, l_{i}) \subset \mathbb{R}^{n}$ ein beschränkter offener Quader ist, wobei $l_{i} \in \mathbb{R}_{+}$ für $i = 1 \dots n$ sei.
+Weiter führen wir nun die Äquivalente des Lebesgue-Raums $L_{2}(\Omega)$ und des Sobolev-Raums $H^{1}(\Omega)$ für periodische Funktionen ein.
+Dies wird an dieser Stelle sehr einfach gehalten; ausführlich kann dies bespielsweise bei \cite{??} gefunden werden.
 
 \begin{Definition}
-    Sei $\mathcal C_{\text{per}}^{\infty}(\Omega) \subset \mathcal C^{\infty}(\mathbb{R}^{n})$ die Teilmenge der $\Omega$-periodischen Funktionen.
-    Als Sobolev-Raum $H^{1}_{\text{per}}(\Omega)$ der auf $\Omega$ periodischen Funktionen bezeichnen wir den Abschluss von $\mathcal C_{\text{per}}^{\infty}(\Omega)$ bezüglich der $H^{1}$-Norm.
-
-    Weiter bezeichnen wir mit $H^{1}_{\text{per}, 0}(\Omega)$ den Sobolev-Raum $\Omega$-periodischer Funktionen mit Mittelwert Null und definieren diesen als den Quotientenraum
-    \begin{equation}
-        H^{1}_{\text{per}, 0}(\Omega) = H^{1}_{\text{per}}(\Omega) / \mathbb{R}.
-    \end{equation}
+    Sei $\mathcal C_{\text{p}}^{\infty}(\Omega) \subset \mathcal C^{\infty}(\mathbb{R}^{n})$ die Teilmenge der glatten $\Omega$-periodischen Funktionen.
+    Als den Lebesgue-Raum $\Omega$-periodischer Funktionen $L_{2,\text{p}}(\Omega)$  definieren wir den Abschluss von $C_{\text{p}}^{\infty}(\Omega)$ bezüglich der $L_{2}$-Norm.
+    Weiter definieren wir den Sobolev-Raum $\Omega$-periodischer Funktionen $H^{1}_{\text{p}}(\Omega)$ als den Abschluss $C_{\text{p}}^{\infty}(\Omega)$ bezüglich der $H^{1}$-Norm.
 \end{Definition}
-%
-\mfix{Stimmt das folgende?}
-%
-Wir wählen nun $V = H^{1}_{\text{per}, 0}(\Omega)$ und $H = L_{2}(\Omega) / \mathbb{R}$; diese Räume liefern uns ein Gelfand-Tripel $H^{1}_{\text{per}, 0}(\Omega) \denseinclusion L_{2}(\Omega) / \mathbb{R} \denseinclusion (H^{1}_{\text{per}, 0}(\Omega))'$ und wir betrachten nun die Bilinearform $a$ aus \cref{satz:ps:rzvp:bilinearform_a_eigenschaften} auf diesen Räumen, also
+
+Diese Räume verwenden wir nun um die Räume $V$ und $H$, vergleiche \cref{bemerkung:prop:gelfand}, zu definieren.
+Nach Konstruktion handelt es sich bei $H^{1}_{\text{p}}(\Omega)$ und $L_{2,\text{p}}(\Omega)$ um Hilberträume und weiter ist $H^{1}_{\text{p}}(\Omega)$ ein dichter Unterraum von $L_{2,\text{p}}(\Omega)$.
+Wählen wir also $V = H^{1}_{\text{p}}(\Omega)$ und $H = L_{2,\text{p}}(\Omega)$, dann erhalten wir nach \cref{def:gl:br:gelfand_tripel} wie zuvor ein Gelfand-Tripel der Form
 \begin{equation}
-    \begin{aligned}
-        &a(\blank, \blank) \colon H^{1}_{\text{per}, 0}(\Omega) \times H^{1}_{\text{per}, 0}(\Omega) \to \mathbb{R}, \\
-        &(\eta, \zeta) \mapsto c\skp{\grad \eta}{\grad \zeta}{L_{2}(\Omega)} + \skp{\omega \eta}{\zeta}{L_{2}(\Omega)} + \mu \skp{\eta}{\zeta}{L_{2}(\Omega)}.
-    \end{aligned}
+    V \denseinclusion H \denseinclusion V' = (H^{1}_{\text{p}}(\Omega))'.
 \end{equation}
 
-Wir wollen \cref{satz:ps:rzvp:bilinearform_a_eigenschaften} respektive \cref{kor:ps:rzvp:bilinearform_elliptisch} analog nachweisen.
-Schaut man sich dazu den Beweis von \cref{satz:ps:rzvp:bilinearform_a_eigenschaften} an, dann sieht man, dass nur die G\aa{}rding-Ungleichung ein Problem darstellt, da hierfür eine Poincaré-Friedrichs-Ungleichung verwendet wurde, welche auf $H^{1}_{\text{per}}(\Omega)$ in dieser Form nicht gilt, jedoch auf $H^{1}_{\text{per}, 0}(\Omega)$.
+Inspiziert man die Ausführungen dieses Kapitels für den Fall homogener Dirichlet-Randbedingungen, dann stellt man fest, dass lediglich die Bedingungen aus \cref{ann:gl:le:bilinearform_eigenschaften} an die Bilinearform $a(\blank, \blank)$, deren Darstellung durch den Wechsel zu periodischen Randbedingungen unverändert bleibt, nachgewiesen werden müssen.
 
-\begin{Lemma}[Poincaré-Ungleichung]
-    Sei $\Omega \subset \mathbb{R}^{n}$ ein beschränkter offener Quader.
-    Dann existiert eine Konstante $C = C(\Omega) \in \mathbb{R}_{+}$, so dass
-    \begin{equation}
-        \norm{u}_{L_{2}(\Omega)} \leq C \norm{\grad u}_{L_{2}(\Omega)} \quad \fa u \in H^{1}_{\text{per}, 0}(\Omega)
-    \end{equation}
-    gilt.
+\begin{Lemma}
+    Sei $a(\blank, \blank; t)$, $t \in I$, die Familie von Bilinearformen aus \cref{definition:prop:operator_und_bilinearform} respektive \cref{eq:prop:bilinearform_darstellung}, wobei die Hilberträume als $V = H^{1}_{\text{p}}(\Omega)$ und $H = L_{2,\text{p}}(\Omega)$ gegeben seien.
+    Für festes $t \in I$ erfüllt $a(\blank, \blank; t)$ die folgenden Eigenschaften:
+    \begin{thmenumerate}
+        \item\label{satz:ps:rzvp:bilinearform_a_eigenschaften_stetig}
+        \emph{Stetigkeit:} es gilt
+        \begin{equation}
+            \label{eq:ps:rzvp:bilinearform_a_eigenschaften_stetig}
+            \abs{a(\eta, \zeta; t)} \leq \gamma_{a} \norm{\eta}_{V} \norm{\zeta}_{V} \quad \text{für alle}~\eta, \zeta \in V
+        \end{equation}
+        mit Stetigkeitskonstante $\gamma_{a} = \max\Set{c, \norm{\omega(t, \blank)}_{L_{\infty}(\Omega)} + \abs{\mu}} < \infty$.
+        \item\label{satz:ps:rzvp:bilinearform_a_eigenschaften_garding}
+        \emph{G\aa{}rding-Ungleichung:} es gilt
+        \begin{equation}
+            \label{eq:ps:rzvp:bilinearform_a_eigenschaften_garding}
+            a(\eta, \eta; t) + \lambda \norm{\eta}_{H}^{2} \geq \alpha \norm{\eta}_{V}^{2} \quad \text{für alle}~\eta \in V
+        \end{equation}
+        mit $\alpha = c > 0$ und $\lambda = \max\Set{\norm{\omega(t, \blank)}_{L_{\infty}(\Omega)} - \mu + c, c} \geq c > 0$.
+    \end{thmenumerate}
+
+    \begin{Beweis}
+        Wie zuvor sei ohne Einschränkung $t \in I_{1}$, also $\omega(t, \blank) = w_{1}$.
+        Der Nachweis der Stetigkeit bleibt unverändert und wird hier nicht wiederholt.
+        Für die G\aa{}rding-Ungleichung sei zunächst $\eta \in V$ beliebig und $\lambda \in \mathbb{R}$, dann gilt
+        \begin{align}
+            a(\eta, \eta; t) + \lambda \norm{\eta}^{2}_{H}
+            &= c \norm{\grad \eta}^{2}_{H} + \skprod{w_{1} \eta}{\eta}_{H} + \mu \skprod{\eta}{\eta}_{H} + \lambda \skprod{\eta}{\eta}_{H}
+            \\&= c \norm{\grad \eta}^{2}_{H} + \skprod{(w_{1} + \mu + \lambda) \eta}{\eta}_{H}.
+        \end{align}
+
+        Wählen wir $\lambda = \max\Set{\norm{w_{1}}_{L_{\infty}(\Omega)} - \mu + c, c} = \max\Set{\norm{\omega(t, \blank)}_{L_{\infty}(\Omega)} - \mu + c, c} \geq c > 0$, dann gilt $w_{1} + \mu + \lambda - c \geq 0$ fast überall in $\Omega$ und wir erhalten die Abschätzung
+        \begin{align}
+            a(\eta, \eta; t) + \lambda \norm{\eta}^{2}_{H}
+            &= c \norm{\grad \eta}^{2}_{H} + \skprod{(w_{1} + \mu + \lambda - c) \eta}{\eta}_{H} + c \norm{\eta}^{2}_{H} \\
+            &\geq c \norm{\grad \eta}^{2}_{H} + c \norm{\eta}^{2}_{H}
+            \\&= c \norm{\eta}^{2}_{V}.
+        \end{align}
+    \end{Beweis}
 \end{Lemma}
 
-% Insbesondere ist $\norm{\grad \blank}_{L_{2}(\Omega)}$ auf $H^{1}_{\text{per}, 0}(\Omega)$ eine zu $\norm{\blank}_{H^{1}(\Omega)}$ äquivalente Norm.
-
-Damit können wir den Beweis vollkommen analog führen, lediglich die dabei auftretende Konstante $\alpha > 0$ wird eine andere sein; der exakte Wert dieser ist aber nicht weiter von Belang.
-Insbesondere erhalten wir damit alle nachfolgenden Aussagen zur Variationsformulierung der parabolischen partiellen Differentialgleichung auch für den Fall periodischer Randbedingungen, da sonst keine weiteren Komplikationen auftreten.
-
-Der Wechsel auf den Quotientenraum $H^{1}_{\text{per}, 0}(\Omega)$ stellt durch die Eigenschaft, dass die betrachteten Funktionen Mittelwert Null haben, sicher, dass wir eine eindeutige Lösung der schwachen Formulierung haben.
-Da wir bei der numerischen Umsetzung im Allgemeinen aber nicht explizit an einer Lösung mit Mittelwert Null interessiert sind, muss darauf geachtet werden, den korrekten Repräsentanten aus der Äquivalenzklasse der Lösung zu wählen.
+Auf dieses Lemma aufbauend können die restlichen Ergebnisse des Kapitels analog auch auf den periodischen Fall übertragen werden.
 
 % section periodische_randbedingungen (end)
