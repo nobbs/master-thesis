@@ -186,7 +186,7 @@ classdef TemporalAssemblyNodal < TemporalAssemblyAbstract
       end
 
       P = sparse(interp1(1:nK, eye(nK), 1:(1/2):nK));
-      Mts = obj.massMatrixBoth((P * tgrid.').', reflevel - 1);
+      Mts = obj.massMatrixBoth((P * tgrid.').', reflevel - 1, span);
       Mt = Mts * P;
     end
 

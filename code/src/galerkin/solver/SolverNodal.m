@@ -61,6 +61,7 @@ classdef SolverNodal < SolverAbstract
         % first we set up the preconditioners.
         % attention: the inverse of these matrices will be multiplied with the
         % system matrix, not the matrices itself!
+        %| @todo use preconditioners?
         % left side:
         % Pl = obj.TeNorm;
         Pl = speye(obj.nTestDim);
@@ -85,41 +86,25 @@ classdef SolverNodal < SolverAbstract
 
         % and revert the preconditioning
         solvec = Pr \ solvecPre;
-      else
-        % BTN−1Bu = BTN−1b
+      elseif obj.temporal.useRefinement
+        % if we are using refinement, then we need to solve the system in a
+        % least-squares way. this is done by the standard matlab \ operator or
+        % the following LSQR implementation, which can be found in:
+        % 1. Andreev, R. Space-time discretization of the heat equation. A
+        %    concise Matlab implementation. arXiv 2012.
 
-        % first we set up the preconditioners.
-        % attention: the inverse of these matrices will be multiplied with the
-        % system matrix, not the matrices itself!
-        % left side:
-        % Pl = obj.TeNorm;
-        % Pl = speye(obj.nTestDim);
-        % right side:
-        % Pr = obj.TrNorm;
-        % Pr = speye(obj.nTrialDim);
+        if true
+          Lhs = obj.spacetimeSystemMatrix(param);
+          Rhs = obj.spacetimeLoadVector();
+          solvec = Lhs \ Rhs;
+        else
+          % works, but it's really sensitive and often won't even fulfil the
+          % initial conditions
+          Lhs = obj.spacetimeSystemMatrix(param);
+          Rhs = obj.spacetimeLoadVector();
 
-        % assemble the system matrix for the given field
-        B = obj.spacetimeSystemMatrix(param);
-
-        Lhs = B.' * (obj.TeNorm \ B);
-
-        % apply the preconditioners to the system matrix
-        LhsPre = Lhs;
-        % LhsPre = obj.TrNorm \ Lhs;
-
-        % compute the right hand side load vector
-        Rhs = obj.spacetimeLoadVector();
-        Rhs = (B.' * (obj.TeNorm \ Rhs));
-        % apply the left preconditioner
-        RhsPre = Rhs;
-        % RhsPre = obj.TrNorm \ Rhs;
-
-        % now solve the linear system
-        solvecPre = LhsPre \ RhsPre;
-
-        % and revert the preconditioning
-        solvec = solvecPre;
-        % solvec = Pr \ solvecPre;
+          solvec = obj.lsqr(Lhs, Rhs);
+        end
       end
     end
 
@@ -310,6 +295,63 @@ classdef SolverNodal < SolverAbstract
       M = sparse(obj.nTestDim, obj.nTestDim);
       M(iA, iA) = A;
       M(iB, iB) = B;
+    end
+
+    function x = lsqr(A, b)
+      % LSQR implementation.
+      %
+      % Taken from
+      % 1. Andreev, R. Space-time discretization of the heat equation. A
+      %    concise Matlab implementation. arXiv 2012.
+      %
+      % Parameters:
+      %   A: Left hand side of the system. @type matrix
+      %   b: Right hand side of the system. @type colvec
+      %
+      % Return values:
+      %   x: least-squares solution of the system. @type colvec
+
+      % the algorithm is taken as-is from the above mentioned paper
+      d               = 0;
+      [vh, v, beta_]  = obj.lsqrNormalize(b, obj.TeNorm);
+      [wh, w, alpha_] = obj.lsqrNormalize(A.' * vh, obj.TrNorm);
+      rho_            = sqrt(beta_^2 + alpha_^2);
+      u               = 0;
+      delta_          = alpha_;
+      gamma_          = beta_;
+
+      % start iterative procedure
+      for iter = 1:550
+        d               = wh - (alpha_ * beta_ / rho_^2) * d;
+        [vh, v, beta_]  = obj.lsqrNormalize(A*wh - alpha_ * v, obj.TeNorm);
+        [wh, w, alpha_] = obj.lsqrNormalize(A.' * vh - beta_ * w, obj.TrNorm);
+        rho_            = sqrt(beta_^2 + delta_^2);
+        u               = u + (delta_ * gamma_ / rho_^2) * d;
+        delta_          = - delta_ * alpha_ / rho_;
+        gamma_          = gamma_ * beta_ / rho_;
+
+        % tolerance check
+        if abs(delta_) * gamma_ < 1e-16
+          break;
+        end
+      end
+
+      x = u;
+    end
+
+    function [zvh, zv, zs] = lsqrNormalize(obj, s, S)
+      % Helper for the LSQR implementation
+      %
+      % Computes the normalization of s respective to S.
+      %
+      % Parameters:
+      %   s: vector to normalize @type colvec
+      %   S: norm inducing matrix @type matrix
+
+      svh = S \ s;
+      zs  = sqrt(s.' * svh);
+      zvh = svh/zs;
+      zv  = s/zs;
     end
 
   end % protected methods
