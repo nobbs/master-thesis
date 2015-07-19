@@ -50,11 +50,15 @@ classdef SpatialAssemblySine < SpatialAssemblyAbstract
       % Return values:
       %   FDx: cellarray of the spatial matrices @type cell
 
+      % first check if the given data is consistent
+      assert(obj.pd.nC == length(obj.pd.seriesIdx));
+
       % create the cellarray
       FDx = cell(obj.pd.nC, 1);
 
       % iterate over the index of the sine series expansion functions
       for cdx = 1:obj.pd.nC
+        bdx = obj.pd.seriesIdx(cdx);
         % create needed vectors to assemble the sparse matrix
         Idx = ones(obj.nTrial, 1);
         Idy = ones(obj.nTrial, 1);
@@ -70,13 +74,13 @@ classdef SpatialAssemblySine < SpatialAssemblyAbstract
             intval = 0;
             % derived condition, if it's not satisfied, the value of the
             % integral is null
-            if mod(cdx + ldx + jdx, 2) == 1
+            if mod(bdx + ldx + jdx, 2) == 1
               % evaluate the spatial integral
               intval = ((obj.pd.xspan(2) - obj.pd.xspan(1)) / 2 ) * ...
-                ( 1 / (pi * (cdx + jdx - ldx)) ...
-                + 1 / (pi * (-cdx + jdx + ldx)) ...
-                + 1 / (pi * (cdx - jdx + ldx)) ...
-                - 1 / (pi * (cdx + jdx + ldx)));
+                ( 1 / (pi * (bdx + jdx - ldx)) ...
+                + 1 / (pi * (-bdx + jdx + ldx)) ...
+                + 1 / (pi * (bdx - jdx + ldx)) ...
+                - 1 / (pi * (bdx + jdx + ldx)));
             end
 
             % save the value
@@ -99,10 +103,14 @@ classdef SpatialAssemblySine < SpatialAssemblyAbstract
       % Return values:
       %   FDx: cellarray of the spatial matrices @type cell
 
+      % first check if the given data is consistent
+      assert(obj.pd.nC == length(obj.pd.seriesIdx));
+
       % create the cellarray
       FDx = cell(obj.pd.nC, 1);
 
       for cdx = 1:obj.pd.nC
+        bdx = obj.pd.seriesIdx(cdx);
         % create needed vectors to assemble the sparse matrix
         Idx = ones(obj.nTrial, 1);
         Idy = ones(obj.nTrial, 1);
@@ -117,29 +125,29 @@ classdef SpatialAssemblySine < SpatialAssemblyAbstract
             % evaluate the spatial integral. there are several combinations of
             % sine / cosine products we have to consider
             intval = 0;
-            if mod(cdx, 2) == 0
-              % cdx even: sine function sin(pi * cdx * x)
+            if mod(bdx, 2) == 0
+              % bdx even: sine function sin(pi * bdx * x)
               if (mod(jdx, 2) == 0 && mod(ldx, 2) == 1) || ...
                 (mod(jdx, 2) == 1 && mod(ldx, 2) == 0)
                 intval = ((obj.pd.xspan(2) - obj.pd.xspan(1)) / 2 ) * ...
-                  ( 1 / (pi * (cdx + jdx - ldx)) ...
-                   + 1 / (pi * (-cdx + jdx + ldx)) ...
-                   + 1 / (pi * (cdx - jdx + ldx)) ...
-                   - 1 / (pi * (cdx + jdx + ldx)));
+                  ( 1 / (pi * (bdx + jdx - ldx)) ...
+                   + 1 / (pi * (-bdx + jdx + ldx)) ...
+                   + 1 / (pi * (bdx - jdx + ldx)) ...
+                   - 1 / (pi * (bdx + jdx + ldx)));
               end
             else
-              % cdx odd: cosine function cos(pi * (cdx + 1) * x)
+              % bdx odd: cosine function cos(pi * (bdx + 1) * x)
               val = 0;
-              if - cdx + jdx + ldx - 1 == 0
+              if - bdx + jdx + ldx - 1 == 0
                 val = val - 1;
               end
-              if cdx - jdx + ldx + 1 == 0
+              if bdx - jdx + ldx + 1 == 0
                 val = val + 1;
               end
-              if cdx + jdx - ldx + 1 == 0
+              if bdx + jdx - ldx + 1 == 0
                 val = val + 1;
               end
-              if cdx + jdx + ldx + 1 == 0
+              if bdx + jdx + ldx + 1 == 0
                 val = val - 1;
               end
               intval = ((obj.pd.xspan(2) - obj.pd.xspan(1)) / 4) * val;

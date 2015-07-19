@@ -26,8 +26,8 @@ classdef TestSpatialAssemblySine < matlab.unittest.TestCase
             testCase.basisFunc(xdx, x, xwidth), 0, xwidth);
         end
       end
-
-      assert(max(max(abs(actual - expected) < 1e-6)));
+      
+      assert(max(max(abs(actual - expected))) < 1e-6);
     end
 
     function stiffnessMatrix(testCase, nX, xwidth)
@@ -44,29 +44,31 @@ classdef TestSpatialAssemblySine < matlab.unittest.TestCase
         end
       end
 
-      assert(max(max(abs(actual - expected) < 1e-6)));
+      assert(max(max(abs(actual - expected))) < 1e-6);
     end
 
     function fieldDependentSine(testCase, nX, nC, xwidth)
       pd = ProblemData;
       pd.xspan = [0 xwidth];
       pd.nC = nC;
+      pd.seriesIdx = randi(1000, nC, 1);
       testCase.object = SpatialAssemblySine(pd, nX);
 
       actual = testCase.object.fieldDependentSine;
 
       expected = cell(nC, 1);
       for cdx = 1:nC
+        bdx = pd.seriesIdx(cdx);
         expected{cdx} = zeros(nX, nX);
         for xdx = 1:nX
           for ydx = 1:nX
-            expected{cdx}(ydx, xdx) = integral(@(x) testCase.sineFieldFunc(cdx, x, xwidth) .* testCase.basisFunc(ydx, x, xwidth) .*testCase.basisFunc(xdx, x, xwidth), 0, xwidth);
+            expected{cdx}(ydx, xdx) = integral(@(x) testCase.sineFieldFunc(bdx, x, xwidth) .* testCase.basisFunc(ydx, x, xwidth) .*testCase.basisFunc(xdx, x, xwidth), 0, xwidth);
           end
         end
       end
 
       for cdx = 1:nC
-        assert(max(max(abs(actual{cdx} - expected{cdx}) < 1e-6)));
+        assert(max(max(abs(actual{cdx} - expected{cdx}))) < 1e-6);
       end
     end
 
@@ -74,22 +76,24 @@ classdef TestSpatialAssemblySine < matlab.unittest.TestCase
       pd = ProblemData;
       pd.xspan = [0 xwidth];
       pd.nC = nC;
+      pd.seriesIdx = randi(1000, nC, 1);
       testCase.object = SpatialAssemblySine(pd, nX);
 
       actual = testCase.object.fieldDependentFourier;
 
       expected = cell(nC, 1);
       for cdx = 1:nC
+        bdx = pd.seriesIdx(cdx);
         expected{cdx} = zeros(nX, nX);
         for xdx = 1:nX
           for ydx = 1:nX
-            expected{cdx}(ydx, xdx) = integral(@(x) testCase.fourierFieldFunc(cdx, x, xwidth) .* testCase.basisFunc(ydx, x, xwidth) .*testCase.basisFunc(xdx, x, xwidth), 0, xwidth);
+            expected{cdx}(ydx, xdx) = integral(@(x) testCase.fourierFieldFunc(bdx, x, xwidth) .* testCase.basisFunc(ydx, x, xwidth) .*testCase.basisFunc(xdx, x, xwidth), 0, xwidth);
           end
         end
       end
 
       for cdx = 1:nC
-        assert(max(max(abs(actual{cdx} - expected{cdx}) < 1e-6)));
+        assert(max(max(abs(actual{cdx} - expected{cdx}))) < 1e-6);
       end
     end
 
@@ -106,24 +110,11 @@ classdef TestSpatialAssemblySine < matlab.unittest.TestCase
       % Return values:
       %   val: values of the basis function in x @type matrix
 
-      if index == 1
-        val = ones(size(x, 1), size(x, 2));
-      elseif mod(index, 2) == 0
-        val = sin(pi * index * x / width);
-      else
-        val = cos(pi * (index - 1) * x / width);
-      end
+      val = sin(pi * index * x / width);
     end
 
     function val = basisDerivativeFunc(obj, index, x, width)
-      if index == 1
-        val = zeros(size(x, 1), size(x, 2));
-      elseif mod(index, 2) == 0
-        val = (pi * index / width) * cos(pi * index * x / width);
-      else
-        val = - (pi * (index - 1) / width) * ...
-          sin(pi * (index - 1) * x / width);
-      end
+      val = (pi * index / width) * cos(pi * index * x / width);
     end
 
     function val = sineFieldFunc(obj, index, x, width)
