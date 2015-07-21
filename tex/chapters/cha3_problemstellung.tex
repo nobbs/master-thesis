@@ -30,24 +30,30 @@ Weiter sei an dieser Stelle angemerkt, dass es ausreicht sich auf die Betrachtun
 Seien nun $0 < T_{f} < T < \infty$ reelle Konstanten und $I = [0, T]$ ein reelles Intervall, welches wir in die beiden Teilintervalle $I_{1} = [0, T_{f})$ und $I_{2} = [T_{f}, T]$ zerlegen.
 Weiter sei $\Omega \subset \mathbb{R}^{n}$, $n \in \mathbb{N}$, ein beschränktes Gebiet, das heißt offen, nichtleer, zusammenhängend und beschränkt, welches einen Lipschitz-Rand besitzt.
 
-Da wir den Feldern an dieser Stelle noch keine allzu einschränkenden Bedingungen auferlegen wollen, schreiben wir diese in Form der Abbildung
-\begin{equation}
-\label{eq:ps:pde:omega_definition}
-    \omega \colon I \times \Omega \to \mathbb{R}, \quad (t, \vec{x}) \mapsto
-    w_{1}(\vec{x}) \chi_{I_{1}}(t) + w_{2}(\vec{x}) \chi_{I_{2}}(t)
-    =
-    \begin{cases}
-        w_{1}(\vec{x}), & t < T_{f}, \\
-        w_{2}(\vec{x}), & t \geq T_{f},
-    \end{cases}
-\end{equation}
-mit den $L_{\infty}(\Omega)$-Abbildungen $w_{1}, w_{2}$ und den charakteristischen Funktionen $\chi_{I_{i}}$ für die entsprechenden Intervalle.
+An dieser Stelle wollen wir den Begriff der Felder konkretisieren.
+Dies dient vor allem der einfacheren Notation und Benennung, weswegen wir den definierten Abbildungen möglichst wenige einschränkende Bedingungen auferlegen wollen.
+\begin{Definition}[Felder]
+    Seien Abbildungen $w_{1}, w_{2} \in L_{\infty}(\Omega)$ und charakteristische Funktionen $\chi_{I_{1}}, \chi_{I_{2}}$ gegeben.
+    Wir bezeichnen $w_{1}$ und $w_{2}$ als \emph{Felder}.
+    Ferner bezeichnen wir die Abbildung
+    \begin{equation}
+    \label{eq:ps:pde:omega_definition}
+        \omega \colon I \times \Omega \to \mathbb{R}, \quad (t, \vec{x}) \mapsto
+        w_{1}(\vec{x}) \chi_{I_{1}}(t) + w_{2}(\vec{x}) \chi_{I_{2}}(t)
+        =
+        \begin{cases}
+            w_{1}(\vec{x}), & t < T_{f}, \\
+            w_{2}(\vec{x}), & t \geq T_{f}.
+        \end{cases}
+    \end{equation}
+    als \emph{Raum-Zeit-Feld}.
+\end{Definition}
 
-Unter dem Begriff \emph{Propagator-Differentialgleichung} wollen wir im Weiteren nun die folgende parabolische Differentialgleichung verstehen.
+Ebenso wollen wir zunächst den Begriff der \emph{Propagator-Differentialgleichung} definieren.
 
 \begin{Definition}
 \label{def:ps:pde:propagator_dgl}
-    Es seien Felder $\omega$ wie in \cref{eq:ps:pde:omega_definition}, eine Anfangsbedingung $u_{0} \colon \Omega \to \mathbb{R}$, ein Quellterm $g \colon I \times \Omega \to \mathbb{R}$, eine Randbedingung, sowie Konstanten $c \in \mathbb{R}_{+}$ und $\mu \in \mathbb{R}$ gegeben.
+    Es sei ein Raum-Zeit-Feld $\omega$ wie in \cref{eq:ps:pde:omega_definition}, eine Anfangsbedingung $u_{0} \colon \Omega \to \mathbb{R}$, ein Quellterm $g \colon I \times \Omega \to \mathbb{R}$, eine Randbedingung, sowie Konstanten $c \in \mathbb{R}_{+}$ und $\mu \in \mathbb{R}$ gegeben.
     Als \emph{Propagator-Differentialgleichung} bezeichnen wir die parabolische partielle Differentialgleichung
     \begin{equation}
     \label{eq:ps:pde:propagator_dgl}
@@ -390,25 +396,27 @@ Dies Bedarf, wie zuvor, einen zeitlichen Wechsel zwischen mehreren Feldern $w_{i
 Wir beschränken uns auf den bereits bekannten Fall zweier Felder und erweitern die obige Operator-Definition um die zeitliche Abhängigkeit.
 Zunächst definieren wir analog zu \cref{eq:ps:pde:omega_definition} ein zeitabhängiges Feld.
 Dies geschieht auf Basis der affinen Darstellung von $w_{i}$ aus \cref{def:ps:pf:omega_affin}.
-Sei dazu $\sigma = (\sigma^{1}, \sigma^{2}) \in \mathcal P^{2} =  \mathcal P \times \mathcal P$, dann definieren wir die parametrische Feld-Abbildung als
+Sei dazu $\sigma \in \mathcal P$, dann definieren wir die folgenden Teilfolgen mit ungeraden respektive geraden Indizes als $\sigma_{\odd} = (\sigma_{2j-1})_{j \in \mathbb{N}}$ und $\sigma_{\even} = (\sigma_{2j})_{j \in \mathbb{N}}$.
+Diese verwenden wir nun als Koeffizientenfolgen der beiden Felder, dazu sei die parametrische Feld-Abbildung definiert als
 \begin{equation}
 \label{eq:ps:pde:omega_definition_affin}
     \omega(\blank, \blank; \sigma) \colon I \times \Omega \to \mathbb{R}, \quad (t, \vec{x}) \mapsto
-    w(\vec{x}; \sigma^{1}) \chi_{I_{1}}(t) + w(\vec{x}; \sigma^{2}) \chi_{I_{2}}(t).
+    % w(\vec{x}; \sigma^{1}) \chi_{I_{1}}(t) + w(\vec{x}; \sigma^{2}) \chi_{I_{2}}(t).
+    w(\vec{x}; \sigma_{\odd}) \chi_{I_{1}}(t) + w(\vec{x}; \sigma_{\even}) \chi_{I_{2}}(t).
 \end{equation}
 Offenbar lässt sich durch Einsetzen der entsprechenden affinen Darstellung von $w$ direkt die Darstellung
 \begin{equation}
-    \omega(t, \vec{x}; \sigma) = \sum_{j = 1}^{\infty} (\sigma^{1}_{j} \chi_{I_{1}}(t) + \sigma^{2}_{j} \chi_{I_{2}}(t)) \phi_{j}(\vec x)
+    \omega(t, \vec{x}; \sigma) = \sum_{j = 1}^{\infty} (\sigma_{2j-1} \chi_{I_{1}}(t) + \sigma_{2j} \chi_{I_{2}}(t)) \phi_{j}(\vec x)
 \end{equation}
 ableiten.
 Anhand dieser und der Zerlegung $I = I_{1} \cupdot I_{2}$ ist direkt ersichtlich, dass analog zu \cref{eq:ps:pf:omega_norm_abschaetzung} die Abschätzung
 \begin{equation}
 \label{eq:abschaetzung_feld_sigma_zeit}
-    \sup_{\sigma \in \mathcal P^{2}} \norm{\omega(\sigma)}_{L_{\infty}(I; L_{\infty}(\Omega))} \leq \sup_{\sigma \in \mathcal P} \norm{w(\sigma)}_{L_{\infty}(\Omega)} \leq \sum_{j = 1}^{\infty} \norm{\varphi_{j}}_{L_{\infty}(\Omega)} = c_{\varphi}
+    \sup_{\sigma \in \mathcal P} \norm{\omega(\sigma)}_{L_{\infty}(I; L_{\infty}(\Omega))} \leq \sup_{\sigma \in \mathcal P} \norm{w(\sigma)}_{L_{\infty}(\Omega)} \leq \sum_{j = 1}^{\infty} \norm{\varphi_{j}}_{L_{\infty}(\Omega)} = c_{\varphi}
 \end{equation}
 gilt.
 
-Erweitern wir nun die Operator-Definition \cref{eq:ps:pf:operator_A_sigma} um die Zeitabhängigkeit; setzen wir also für $\sigma \in \mathcal P^{2}$
+Erweitern wir nun die Operator-Definition \cref{eq:ps:pf:operator_A_sigma} um die Zeitabhängigkeit; setzen wir also für $\sigma \in \mathcal P$
 \begin{equation}
     \label{eq:ps:pf:operator_A_sigma_zeit}
     A(t; \sigma) \colon V \to V', \quad A(t, \sigma) \eta = -c \Delta \eta + \omega(t, \blank; \sigma) \eta + \mu \eta,
@@ -418,7 +426,7 @@ dann hat die zugehörige Familie von Bilinearformen die Form
     \label{eq:ps:pf:bilineaform_a_sigma_zeit}
     \begin{aligned}
         &a(\blank, \blank; t; \sigma) \colon V \times V \to \mathbb{R}, \\
-        &(\eta, \zeta) \mapsto c\skp{\grad \eta}{\grad \zeta}{H} + \sum_{j = 1}^{\infty} \sigma^{1}_{j} \chi_{I_{1}}(t) \skp{\varphi_{j} \eta}{\zeta}{H} + \sum_{j = 1}^{\infty} \sigma^{2}_{j} \chi_{I_{2}}(t) \skp{\varphi_{j} \eta}{\zeta}{H} + \mu \skp{\eta}{\zeta}{H}.
+        &(\eta, \zeta) \mapsto c\skp{\grad \eta}{\grad \zeta}{H} + \sum_{j = 1}^{\infty} \left[ \sigma_{2j-1} \chi_{I_{1}}(t) + \sigma_{2j} \chi_{I_{2}}(t)  \right] \skp{\varphi_{j} \eta}{\zeta}{H} + \mu \skp{\eta}{\zeta}{H}.
     \end{aligned}
 \end{equation}
 
@@ -429,7 +437,8 @@ Mit dieser Vorarbeit können wir die schwache Formulierung aus \cref{definition:
     Sei $g \in L_{2}(I; V')$ ein Quellterm und $u_{0} \in H$ eine Anfangsbedingung.
     Als \emph{parametrische schwache Formulierung} der Propagator-Differentialgleichung bezeichnen wir das folgende Variationsproblem:
     \begin{equation}
-        \text{Sei}~\sigma \in \mathcal P^{2},~\text{finde}~u(\sigma) \in \mathcal X : b(u(\sigma), v; \sigma) = f(v) \quad \fa v \in \mathcal Y.
+        \label{eq:fette_varprob_sigma_und_so}
+        \text{Sei}~\sigma \in \mathcal P,~\text{finde}~u(\sigma) \in \mathcal X : b(u(\sigma), v; \sigma) = f(v) \quad \fa v \in \mathcal Y.
     \end{equation}
     Dabei sei die Bilinearform $b(\blank, \blank; \sigma) \colon \mathcal X \times \mathcal Y \to \mathbb{R}$ gegeben durch
      \begin{equation}
@@ -452,16 +461,16 @@ Mit dieser Vorarbeit können wir die schwache Formulierung aus \cref{definition:
 \label{sec:regularit_t_bez_glich_der_parameter}
 
 Wir wollen nun nachweisen, dass die im vorherigen Abschnitt hergeleitete parametrische schwache Formulierung, \cref{ps:pf:definition:schwache_formulierung_par}, eine Regularität bezüglich des Parameters aufweist.
-Konkret werden wir nachweisen, dass die Lösung $u(\sigma)$ analytisch vom Parameter $\sigma$ abhängt.
-Dabei orientieren wir uns an den Arbeiten von \textcite{Cohen:2010kz,Kunoth:2013ef}, weisen diese Eigenschaften aber direkt für die Raum-Zeit-Variationsformulierung nach, statt wie in den beiden genannten Arbeiten den Umweg über den stationären Fall zu gehen.
+Konkret werden wir nachweisen, dass die Lösung $u(\sigma)$ unter gewissen, leider stark einschränkenden, Annahmen an das Funktionensystem $\Set{\varphi_{j}}_{j \in \mathbb{N}}$, analytisch vom Parameter $\sigma$ abhängt.
+Dabei orientieren wir uns an den Arbeiten von \textcite{Cohen:2010kz,Cohen:2011jp,Kunoth:2013ef}, weisen diese Eigenschaften aber direkt für die Raum-Zeit-Variationsformulierung nach, statt wie in den beiden genannten Arbeiten den Umweg über den stationären Fall zu gehen.
 
-Bevor wir uns an die Regularität wagen können, müssen wir zunächst nachweisen, dass die parametrische schwache Formulierung für alle Parameter $\sigma \in \mathcal P^{2}$ sachgemäß gestellt ist.
+Bevor wir uns an die Regularität wagen können, müssen wir zunächst nachweisen, dass die parametrische schwache Formulierung \cref{eq:fette_varprob_sigma_und_so} für alle Parameter $\sigma \in \mathcal P$ sachgemäß gestellt ist.
 Hierzu weisen wir analog zu \cref{satz:ps:rzvp:bilinearform_a_eigenschaften} nach, dass die darin vorkommende Bilinearform $a(\blank, \blank; t; \sigma)$ stetig ist und eine G\aa{}rding-Ungleichung erfüllt.
 
 \begin{Satz}
 \label{satz:bf_a_param_stetig_garding}
-    Sei $a(\blank, \blank; t; \sigma)$, $t \in I$ und $\sigma \in \mathcal P^{2}$, die Familie von Bilinearformen aus \cref{eq:ps:pf:bilineaform_a_sigma_zeit}.
-    Dann gelten für alle $t \in I$ und $\sigma \in \mathcal P^{2}$ die folgenden Eigenschaften:
+    Sei $a(\blank, \blank; t; \sigma)$, $t \in I$ und $\sigma \in \mathcal P$, die Familie von Bilinearformen aus \cref{eq:ps:pf:bilineaform_a_sigma_zeit}.
+    Dann gelten für alle $t \in I$ und $\sigma \in \mathcal P$ die folgenden Eigenschaften:
     \begin{thmenumerate}
         \item\label{satz:ps:rzvp:bilinearform_a_eigenschaften_stetig}
         \emph{Stetigkeit:} es gilt
@@ -478,7 +487,7 @@ Hierzu weisen wir analog zu \cref{satz:ps:rzvp:bilinearform_a_eigenschaften} nac
         \end{equation}
         mit $\alpha = c \gamma_{\Omega}^{2} > 0$ und $\lambda = \max\Set{c_{\varphi} - \mu, 0} \geq 0$, wobei $\gamma_{\Omega}$ die Poincaré-Friedrichs-Konstante ist.
     \end{thmenumerate}
-    Dabei ist $c_{\varphi}$ die Konstante aus \cref{eq:varphi_l1_norm_konst} und die Konstanten $\gamma_{a}$, $\lambda$ und $\alpha$ sind sowohl unabhängig von $t \in I$ als auch von $\sigma \in \mathcal P^{2}$.
+    Dabei ist $c_{\varphi}$ die Konstante aus \cref{eq:varphi_l1_norm_konst} und die Konstanten $\gamma_{a}$, $\lambda$ und $\alpha$ sind sowohl unabhängig von $t \in I$ als auch von $\sigma \in \mathcal P$.
 
     \begin{Beweis}
         Der Nachweis läuft komplett analog zum nicht-parametrischen Fall in \cref{satz:ps:rzvp:bilinearform_a_eigenschaften}.
@@ -489,7 +498,7 @@ Hierzu weisen wir analog zu \cref{satz:ps:rzvp:bilinearform_a_eigenschaften} nac
 Anwenden der Aussagen aus \cref{satz:gl:le:ss09_theorem51} und \cref{kor:gl:le:ss09_theorem51_ungleichungen} liefert uns nun:
 \begin{Korollar}
 \label{satz:ps:eel:schwache_formulierung_sachgemaess_gestellt}
-    Das parametrische schwache Formulierung aus \cref{def:ps:pf:schwache_formulierung_par} ist für alle $\sigma \in \mathcal P^{2}$ sachgemäß gestellt.
+    Das parametrische Raum-Zeit-Variationsproblem \cref{def:ps:pf:schwache_formulierung_par} ist für alle $\sigma \in \mathcal P$ sachgemäß gestellt.
     Ferner erhalten wir von $\sigma$ unabhängige Schranken für die Stetigkeitskonstante $\gamma_{b}$ und die inf-sup-Konstante $\beta$.
 
     \begin{Beweis}
@@ -499,284 +508,217 @@ Anwenden der Aussagen aus \cref{satz:gl:le:ss09_theorem51} und \cref{kor:gl:le:s
 
 Zunächst einige notationelle Vorbemerkungen.
 \begin{Bemerkung}
-    Bezeichne mit $\mathfrak F = \Set{ \nu \in \mathbb{N}^{\mathbb{N}}_{0} \given \norm{\nu}_{\ell_{1}(\mathbb{N})} < \infty }$ die Menge aller Folgen nichtnegativer ganzer Zahlen, wobei
+    Bezeichne mit $\mathcal F = \Set{ \nu \in \mathbb{N}^{\mathbb{N}}_{0} \given \norm{\nu}_{\ell_{1}(\mathbb{N})} < \infty }$ die Menge aller Folgen nichtnegativer ganzer Zahlen, wobei
     \begin{equation}
         \norm{\nu}_{\ell_{1}(\mathbb{N})} = \sum_{k = 1}^{\infty} \abs{\nu_{k}}
     \end{equation}
     die $\ell_{1}(\mathbb{N})$-Norm sei.
-    Damit ergibt sich, dass $\mathfrak F$ gerade diejenigen Folgen enthält, die nur endlich viele Einträge ungleich Null enthalten.
+    Anders formuliert, besteht $\mathcal F$ gerade aus den Folgen aus $\mathbb{N}_{0}$, welche nur endliche viele Einträge ungleich Null enthalten.
 
-    Sei $\nu \in \mathfrak F$ und $b \in \ell_{p}(\mathbb{N})$, $p > 0$, dann schreiben wir
+    Sei $\nu \in \mathcal F$ und $b \in \ell_{p}(\mathbb{N})$, $p > 0$, dann schreiben wir
     \begin{equation}
         b^{\nu} = \prod_{j = 1}^{\infty} b_{j}^{\nu_{j}}
     \end{equation}
     mit der Konvention $0^{0} = 1$.
     Wegen $\norm{\nu}_{\ell_{1}(\mathbb{N})} < \infty$ ist dieses Produkt stets endlich.
+\end{Bemerkung}
 
-    Dies verallgemeinern wir etwas; sei dazu $\nu = (\nu^{1}, \nu^{2}) \in \mathfrak F^{2}$ und $b = (b^{1}, b^{2}) \in (\ell_{p}(\mathbb{N}))^{2}$, dann schreiben wir analog
+Um die Notation für die nachfolgenden Beweise zu vereinfachen, ordnen wir die Darstellung der parametrischen Raum-Zeit-Felder folgendermaßen um:
+\begin{Bemerkung}
+    Wir definieren neue charakteristische Funktionen und Entwicklungsfunktionen durch
     \begin{equation}
-        b^{\nu} = (b^{1})^{\nu^{1}} (b^{2})^{\nu^{2}} = \prod_{j = 1}^{\infty} (b^{1})^{\nu^{1}_{j}} (b^{2})^{\nu^{2}_{j}}.
+        \tilde{\chi}_{j} = \begin{cases}
+            \chi_{I_{1}}, & j~\text{ungerade}\\
+            \chi_{I_{2}}, & j~\text{gerade}
+        \end{cases}, \quad
+        \tilde{\varphi}_{j} = \begin{cases}
+            \varphi_{(j+1)/{2}}, & j~\text{ungerade}\\
+            \varphi_{j / 2}, & j~\text{gerade}.
+        \end{cases}
+    \end{equation}
+    Damit können wir \cref{} auch schreiben als
+    \begin{equation}
+        w(t, \vec{x}) = \sum_{j = 1}^{\infty} \sigma_{j} \tilde{\chi}_{j}(t) \tilde{\varphi}_{j}(\vec{x}).
     \end{equation}
 \end{Bemerkung}
 
-TODO: das nachfolgende irgendwie verwursten:
-
-\begin{Satz}
-    Sei $\omega$ die parametrische Feld-Abbildung aus \cref{eq:ps:pde:omega_definition_affin}
-    Das parametrische Variationsproblem aus \cref{def:ps:pf:schwache_formulierung_par} besitzt für jeden Parameter $\sigma \in \mathcal P^{2}$ eine eindeutige Lösung.
-    Ferner existieren von $\sigma$ unabhängige Schranken für die Stetigkeitskonstante $\gamma_{b}$ und die inf-sup-Konstante $\beta$ der Bilinearform $b(\blank, \blank; \sigma)$.
-
-    \begin{Beweis}
-
-    \end{Beweis}
-\end{Satz}
-
 \begin{Lemma}
-    Seien $\omega, \tilde{\omega}$ zwei Feld-Abbildungen wie in \cref{eq:ps:pde:omega_definition} mit entsprechenden Feldern $w_{1}, w_{2}, \tilde{w}_{1}, \tilde{w}_{2}$.
-    Weiter seien $u, \tilde{u}$ die zugehörigen Lösungen der schwachen Formulierung \cref{eq:gl:le:schwache_formulierung}.
+\label{satz:voll_stabil_ey}
+    Seien $\omega, \tilde{\omega}$ zwei Raum-Zeit-Felder wie in \cref{eq:ps:pde:omega_definition} und $u, \tilde{u}$ seien die zugehörigen Lösungen der schwachen Formulierung \cref{eq:gl:le:schwache_formulierung}.
     Dann gilt
     \begin{equation}
         \norm{u - \tilde{u}}_{\mathcal X} \leq \frac{\norm{f}_{\mathcal Y'}}{\beta^{2}} \norm{\omega - \tilde{\omega}}_{L_{\infty}(I; L_{\infty}(\Omega))}.
     \end{equation}
+
+    \begin{Beweis}
+        Wir vernachlässigen der Kürze wegen im Folgenden die explizite Angabe der Zeitabhängigkeit der jeweiligen Funktionen.
+        Weiter setzen wir $\theta = u - \tilde{u}$.
+        Subtraktion der Variationsformulierung für die beiden Lösungen $u$ und $\tilde{u}$ liefert für beliebige Testfunktionen $v = (v_{1}, v_{2}) \in \mathcal Y$ die Darstellung
+        \begin{align}
+            0
+            &= b(u, v; \omega) - b(\tilde{u}, v; \tilde{\omega})
+           \\&= \int_{I} \left[ \skp{u_{t} - \tilde{u}_{t}}{v_{1}}{V' \times V} + a(u, v; \omega) - a(\tilde{u}, v; \tilde{\omega}) \right] \diff t + \skp{u(0) - \tilde{u}(0)}{v_{2}}{H}.
+           \\&= \int_{I} \left[ \skp{\theta_{t}}{v_{1}}{V' \times V} + c \skp{\grad \theta}{\grad v_{1}}{H} + \mu \skp{\theta}{v_{1}}{H} + \skp{\omega u}{v_{1}}{H} - \skp{\tilde{\omega}\tilde{u}}{v_{1}}{H} \right] \diff t
+           \\&\qquad + \skp{\theta(0)}{v_{2}}{H}
+           \\&= \int_{I} \left[ \skp{\theta_{t}}{v_{1}}{V' \times V} + a(\theta, v; \omega) \right] \diff t + \skp{\theta(0)}{v_{2}}{H} + \int_{I} \skp{(w - \tilde{w})\tilde{u}}{v_{1}}{H} \diff t
+           \\&= b(\theta, v; \omega) + \int_{I} \skp{(w - \tilde{w})\tilde{u}}{v_{1}}{H} \diff t,
+        \end{align}
+        welche wir auch als
+        \begin{equation}
+            \label{eq:alle_so_yeah}
+            b(\theta, v; \omega) = h(v)
+        \end{equation}
+        mit der Abbildung
+        \begin{equation}
+            h \colon \mathcal Y \to \mathbb{R}, \quad v = (v_{1}, v_{2}) \mapsto - \int_{I} \skp{(w - \tilde{w})\tilde{u}}{v_{1}}{H} \diff t
+        \end{equation}
+        auffassen können.
+        Die Linearität von $h$ ist klar.
+        Wir weisen nun die Stetigkeit nach; betrachte also
+        \begin{align}
+            \norm{h}_{\mathcal Y'}
+            &= \sup_{\norm{v}_{\mathcal Y} = 1} \abs{\int_{I} \skp{(w - \tilde{w})\tilde{u}}{v_{1}}{H} \diff t}
+            \\&\leq \sup_{\norm{v}_{\mathcal Y} = 1} \abs{\int_{I} \norm{w - \tilde{w}}_{L_{\infty}(\Omega)} \skp{\tilde{u}}{v_{1}}{H} \diff t}
+            \\&\leq \norm{w - \tilde{w}}_{L_{\infty}(I; L_{\infty}(\Omega))} \sup_{\norm{v}_{\mathcal Y} = 1} \abs{\skp{\tilde{u}}{v_{1}}{L_{2}(I; H)}}
+            \\&\leq \norm{w - \tilde{w}}_{L_{\infty}(I; L_{\infty}(\Omega))} \sup_{\norm{v}_{\mathcal Y} = 1} \norm{\tilde{u}}_{L_{2}(I; H)} \norm{v_{1}}_{L_{2}(I; H)}
+            \\&\leq \norm{w - \tilde{w}}_{L_{\infty}(I; L_{\infty}(\Omega))} \sup_{\norm{v}_{\mathcal Y} = 1} \norm{\tilde{u}}_{\mathcal X} \norm{v}_{\mathcal Y}
+            < \infty.
+        \end{align}
+        Damit ist $h \in \mathcal Y'$, wir können also das vorherige \cref{satz:ps:eel:schwache_formulierung_sachgemaess_gestellt} auf das Variationsproblem \cref{eq:alle_so_yeah} anwenden und erhalten die Abschätzung
+        \begin{equation}
+            \norm{\theta}_{\mathcal X} \leq \frac{1}{\beta} \norm{h}_{\mathcal Y'}.
+        \end{equation}
+        Weiter haben wir, da $\tilde{u}$ selbst Lösung der schwachen Formulierung \cref{eq:ps:rzvp:schwache_formulierung} ist, die Abschätzung
+        \begin{equation}
+            \norm{\tilde{u}}_{\mathcal X} \leq \frac{1}{\beta} \norm{f}_{\mathcal Y'}.
+        \end{equation}
+        Zusammen erhalten wir damit die Behauptung
+        \begin{equation}
+            \norm{u - \tilde{u}}_{\mathcal X} = \norm{\theta}_{\mathcal X} \leq \frac{\norm{f}_{\mathcal Y'}}{\beta^{2}} \norm{\omega - \tilde{\omega}}_{L_{\infty}(I; L_{\infty}(\Omega))}.
+        \end{equation}
+    \end{Beweis}
 \end{Lemma}
 
 \begin{Satz}
-    Die Abbildung $\mathcal P^{2} \ni \sigma \mapsto u(\sigma) \in \mathcal X$, welche einem Parameter $\sigma$ die eindeutige Lösung $u(\sigma)$ der parametrischen schwachen Formulierung \cref{def:ps:pf:schwache_formulierung_par} zuordnet, besitzt für alle $\nu = (\nu^{1}, \nu^{2}) \in \mathfrak F^{2}$ eine partielle Ableitung $\partial^{\nu}_{\sigma} u(\sigma)$.
-\end{Satz}
-
-\begin{Bemerkung}
-    Alternativ über Differenzieren der Variationsformulierung
-\end{Bemerkung}
-
-\begin{Satz}
-    Sei $b = (b^{1}, b^{2}) \in \mathbb{R}^{\mathbb{N}} \times \mathbb{R}^{\mathbb{N}}$...
-\end{Satz}
-
-\begin{Satz}
-    Alles fertig hier!
-\end{Satz}
-
-% section regularit_t_bez_glich_der_parameter (end)
-
-
-\section{Regularität bezüglich der Parameter} % (fold)
-\label{sec:ps:rg:regularitaet_bezueglich_der_parameter}
-
-
-In diesem Abschnitt wollen wir nun nachweisen, dass die im vorherigen Abschnitt hergeleitete parametrische schwache Formulierung eine Regularität bezüglich des Parameters aufweist, konkret werden wir nachweisen, dass die Lösung $u(\sigma)$ analytisch im Parameter $\sigma$ ist.
-Dabei orientieren wir uns an den Arbeiten von \textcite{Cohen:2010kz,Kunoth:2013ef} und weisen diese Eigenschaften zunächst für den stationären Fall nach, das heißt, wir verlieren die Zeitabhängigkeit und betrachten stattdessen die parametrische Operatorgleichung
-\begin{equation}
-\label{eq:ps:rg:operatorgleichung_parametrisch}
-    A(\omega) \eta(\omega) = g \quad \text{in}~H^{-1}(\Omega)
-\end{equation}
-mit dem parametrischen Operator $A(\omega)$ aus Gleichung \cref{eq:ps:pf:operator_A}, beziehungsweise die zugehörige Variationsformulierung
-\begin{equation}
-\label{eq:ps:rg:variationsformulierung_parametrisch}
-    a(\eta, \zeta; \omega) = \skp{g}{\zeta}{H^{-1} \times H^{1}_{0}}
-\end{equation}
-mit der parametrischen Bilinearform $a(\blank, \blank; \omega)$ aus Gleichung \cref{eq:ps:pf:bilinearform_a}.
-
-Wir beginnen damit, die Existenz der partiellen Ableitung $\partial^{\nu}_{\sigma} \eta$ in jedem Punkt $\sigma \in \mathcal S$ nachzuweisen.
-
-Zunächst einige notationelle Vorbemerkungen.
-\begin{Bemerkung}
-    Bezeichne mit $\mathfrak F = \Set{ \nu \in \mathbb{N}^{\mathbb{N}}_{0} \given \norm{\nu}_{\ell_{1}(\mathbb{N})} < \infty }$ die Menge aller Folgen nichtnegativer ganzer Zahlen, wobei
-    \begin{equation}
-        \norm{\nu}_{\ell_{1}(\mathbb{N})} = \sum_{k = 1}^{\infty} \abs{\nu_{k}}
-    \end{equation}
-    die $\ell_{1}(\mathbb{N})$-Norm sei.
-    Damit ergibt sich, dass $\mathfrak F$ gerade diejenigen Folgen enthält, die nur endlich viele Einträgen ungleich Null enthalten.
-
-    Sei $\nu \in \mathfrak F$ und $b \in \ell_{p}(\mathbb{N})$, $p > 0$, dann schreiben wir
-    \begin{equation}
-        b^{\nu} = \prod_{j = 1}^{\infty} b_{j}^{\nu_{j}}
-    \end{equation}
-    mit der Konvention $0^{0} = 1$.
-    Wegen $\norm{\nu}_{\ell_{1}(\mathbb{N})} < \infty$ ist dieses Produkt stets endlich.
-\end{Bemerkung}
-
-Bevor wir uns an die partiellen Ableitungen wagen, beweisen wir eine Stabilitätsaussage für die obige parametrische Operatorgleichung \cref{eq:ps:rg:operatorgleichung_parametrisch}
-Um diese nachzuweisen, benötigen wir zunächst, dass die obige Operatorgleichung sachgemäß gestellt ist.
-
-\begin{Satz}
-\label{satz:ps:rg:lax_milgram_anwendung}
-    Seien $\omega \in L_{\infty}(\Omega)$, $A(\omega)$ wie in \cref{eq:ps:pf:operator_A} mit $\mu \geq \norm{\omega}_{L_{\infty}(\Omega)}$ und weiter $g \in H^{-1}(\Omega)$, dann besitzt die Operatorgleichung
-    \begin{equation}
-        \tag*{\cref{eq:ps:rg:operatorgleichung_parametrisch}}
-        A(\omega) \eta(\omega) = g \quad \text{in}~H^{-1}(\Omega)
-    \end{equation}
-    eine eindeutige Lösung $\eta(\omega) \in H^{1}_{0}(\Omega)$ und diese erfüllt
-    \begin{equation}
-        \norm{\eta(\omega)}_{H^{1}(\Omega)} \leq \frac{\norm{g}_{H^{-1}(\Omega)}}{\alpha}
-    \end{equation}
-    mit $\alpha$ aus \cref{satz:ps:rzvp:bilinearform_a_eigenschaften}.
+    Die Abbildung $\mathcal P \ni \sigma \mapsto u(\sigma) \in \mathcal X$, welche einem Parameter $\sigma$ die eindeutige Lösung $u(\sigma)$ der parametrischen schwachen Formulierung \cref{def:ps:pf:schwache_formulierung_par} zuordnet, besitzt für alle $\nu \in \mathcal F$ eine partielle Ableitung $\partial^{\nu}_{\sigma} u(\sigma)$.
 
     \begin{Beweis}
-        Folgt direkt aus dem Lemma vom Lax-Milgram, \cref{lem:gl:le:lax_milgram}.
-    \end{Beweis}
-\end{Satz}
+        Erneut verzichten wir auf die explizite Notation der Zeitabhängigkeit.
+        Wir beschränken uns darauf die Behauptung exemplarisch für die partiellen Ableitungen erster Ordnung für ein festes $\sigma \in \mathcal P$ nachzuweisen.
+        Ohne Einschränkung sei nun $\nu = e_{j} \in \mathcal F$ für ein $j \in \mathbb{N}$ und ferner sei $h \in \mathbb{R} \setminus \Set{ 0 }$.
+        Wir definieren $\sigma_{h} = \sigma + h \nu = \sigma + h e_{j}$ und
+        \begin{equation}
+            \theta_{h} = \frac{u(\sigma_{h}) - u(\sigma)}{h},
+        \end{equation}
+        wobei $u(\blank)$ die Lösungen der parametrischen schwachen Formulierung \eqref{def:ps:pf:schwache_formulierung_par} für die entsprechenden Parameter ist.
+        Ist $\abs{h}$ klein genug, so dass $\sigma_{h} \in \mathcal P$ gilt, dann existieren eindeutige Lösungen $u(\sigma_{h'})$ für alle $0 \leq \abs{h'} \leq \abs{h}$ nach \cref{satz:alles_loesbar_yeah}, das heißt, der obige Ausdruck für $\theta_{h'}$ ist für diese $h'$ wohldefiniert.
 
-Für den Rest des Abschnitts sei nun stets $\mu \geq \sum_{j = 1}^{\infty} \norm{\varphi_{j}}_{L_{\infty}(\Omega)}$ gegeben.
-Da nach Ungleichung \cref{eq:ps:pf:omega_norm_abschaetzung} damit insbesondere $\norm{\omega(\sigma)}_{L_{\infty}(\Omega)}$ für alle $\sigma \in \mathcal S$ gilt, sind im Folgenden stets die Voraussetzungen für \cref{satz:ps:rg:lax_milgram_anwendung} erfüllt.
-
-\mfix{Umformulieren für $\omega(\sigma)$ statt $\omega$!}
-\begin{Lemma}
-\label{lem:ps:rg:norm_abschaetzung}
-    Seien $\omega_{1}, \omega_{2} \in L_{\infty}(\Omega)$ und $\eta_{1}, \eta_{2}$ die zugehörigen Lösungen von \cref{eq:ps:rg:operatorgleichung_parametrisch}, dann gilt
-    \begin{equation}
-        \norm{\eta_{1} - \eta_{2}}_{H^{1}(\Omega)} \leq \frac{\norm{g}_{H^{-1}(\Omega)}}{\alpha^{2}} \norm{\omega_{1} - \omega_{2}}_{L_{\infty}(\Omega)}.
-    \end{equation}
-
-    \begin{Beweis}
-        Durch Subtraktion der Variationsformulierungen \cref{eq:ps:rg:variationsformulierung_parametrisch} für $\eta_{1}$ und $\eta_{2}$ erhalten wir für alle $\zeta \in H^{1}_{0}(\Omega)$ die Gleichung
+        Zunächst schreiben wir die Differenz der parametrischen Raum-Zeit-Felder um zu
         \begin{align}
-            0 &= a(\eta_{1}, \zeta; \omega_{1}) - a(\eta_{2}, \zeta; \omega_{2})
-            \\&= c \skp{\grad \eta_{1} - \grad \eta_{2}}{\grad \zeta}{L_{2}(\Omega)} + \skp{\omega_{1}\eta_{1} - \omega_{2} \eta_{2}}{\zeta}{L_{2}(\Omega)} + \mu \skp{\eta_{1} - \eta_{2}}{\zeta}{L_{2}(\Omega)},
-            \intertext{durch setzen von $\theta = \eta_{1} - \eta_{2}$ erhalten wir weiter}
-            0 &= c \skp{\grad \theta}{\grad \zeta}{L_{2}(\Omega)} + \skp{\omega_{1} \theta}{\zeta}{L_{2}(\Omega)} + \mu \skp{\theta}{\zeta}{L_{2}(\Omega)} + \skp{(\omega_{1} - \omega_{2}) \eta_{2}}{\zeta}{L_{2}(\Omega)}
-            \\&= a(\theta, \zeta; \omega_{1}) + \skp{(\omega_{1} - \omega_{2}) \eta_{2}}{\zeta}{L_{2}(\Omega)}.
+            \omega(t, \vec{x}; \sigma_{h}) - \omega(t, \vec{x}; \sigma)
+            % &= (w(\sigma_{h}^{(1)}) - w(\sigma^{(1)})) \chi_{I_{1}}(t) + (w(\sigma_{h}^{(2)}) - w(\sigma^{(2)})) \chi_{I_{2}}
+            &= \sum_{j = 1}^{\infty} (\sigma_{h,j} - \sigma_{j} ) \tilde{\chi}_{j}(t) \tilde{\varphi}_{j}(\vec{x})
+            \\&= h \tilde{\chi}_{j}(t) \tilde{\varphi}_{j}(\vec{x}).
         \end{align}
-        Dies lässt sich nun in der Form
+
+        Wir betrachten unter diesen Gegebenheiten nun die Differenz der $u(\sigma_{h})$ und $u(\sigma)$ zugehörigen Variationsprobleme.
+        Für $v = (v_{1}, v_{2}) \in \mathcal Y$ gilt dann
+        \begin{align}
+            0
+            &= b(u(\sigma_{h}), v; \sigma_{h}) - b(u(\sigma), v; \sigma)
+            \\&= \int_{I} \left[ \skp{u_{t}(\sigma_{h}) - u_{t}(\sigma)}{v_{1}}{V' \times V} + a(u(\sigma_{h}), v_{1}; \sigma_{h}) - a(u(\sigma), v_{1}; \sigma) \right] \diff t
+            \\&\qquad + \skp{u(0; \sigma_{h}) - u(0; \sigma)}{v_{2}}{H}
+            \\&=  h \int_{I} \left[ \skp{(\theta_{h})_{t}}{v_{1}}{V' \times V} + c\skp{\grad \theta_{h}}{\grad v_{1}}{H}  +  \mu \skp{\theta_{h}}{v_{1}}{H} \right] \diff t
+            \\&\qquad + \int_{I} \left[ \skp{\omega(\sigma_{h}) u(\sigma_{h})}{v_{1}}{H} - \skp{\omega(\sigma) u(\sigma)}{v_{1}}{H}  \right] \diff t + \skp{\theta_{h}(0)}{v_{2}}{H}
+            \\&= h \int_{I} \left[ \skp{(\theta_{h})_{t}}{v_{1}}{V' \times V} + a(\theta_{h}, v_{1}; \sigma)  \right] \diff t + \skp{\theta_{h}(0)}{v_{2}}{H}
+            \\&\qquad +\int_{I} \skp{(\omega(\sigma_{h}) - \omega(\sigma))u(\sigma_{h})}{v_{1}}{H} \diff t
+            \\&= h \cdot b(\theta_{h}, v; \sigma) + h \int_{I} \tilde{\chi}_{j} \skp{\tilde{\varphi}_{j} u(\sigma_{h})}{v_{1}}{H} \diff t.
+        \end{align}
+        Dies lässt sich erneut umschreiben zu
         \begin{equation}
-            a(\theta, \zeta; \omega_{1}) = - \skp{(\omega_{1} - \omega_{2}) \eta_{2}}{\zeta}{L_{2}(\Omega)} =: h(\zeta)
+            \label{eq:fettes_varprob}
+            b(\theta_{h}, v; \sigma) = F_{h}(v)
         \end{equation}
-        wieder als Variationsproblems \cref{eq:ps:rg:variationsformulierung_parametrisch} interpretieren.
-        Da es sich bei $h$ um ein stetiges lineares Funktional auf $H^{1}_{0}(\Omega)$ handelt, liefert nun \cref{satz:ps:rg:lax_milgram_anwendung}, dass $\theta = \eta_{1} - \eta_{2}$ die eindeutige Lösung dieses Variationsproblems ist und weiterhin die Ungleichung
+        mit der Abbildung
         \begin{equation}
-            \norm{\theta}_{H^{1}(\Omega)} \leq \frac{\norm{h}_{H^{-1}(\Omega)}}{\alpha}
+            F_{h} \colon \mathcal Y \to \mathbb{R}, \quad v = (v_{1}, v_{2}) \mapsto - \int_{I} \tilde{\chi}_{j} \skp{\tilde{\varphi}_{j}  u(\sigma_{h})}{v_{1}}{H} \diff t.
         \end{equation}
-        erfüllt.
-        Die Operatornorm von $h$ lässt sich mittels der Cauchy-Schwarz-Ungleichung und \cref{satz:ps:rg:lax_milgram_anwendung} bestimmen zu
+        Analog zum Beweis des vorherigen Lemmas kann man zeigen, dass $F_{h}$ ein stetiges lineares Funktional ist.
+        Weiter ist $F_{h}(\blank)$ stetig in $h = 0$, denn für festes $v \in \mathcal Y$ gilt unter Verwendung der Cauchy-Schwarz-Ungleichung die Abschätzung
+        \begin{align}
+            \abs{F_{h}(v) - F_{0}(v)}
+            &= \abs{\int_{I} \tilde{\chi}_{j} \skp{\tilde{\varphi}_{j}  (u(\sigma_{h}) - u(\sigma))}{v_{1}}{H} \diff t }
+            \\&\leq \norm{\tilde{\varphi}_{j}}_{L_{\infty}(\Omega)} \abs{\int_{I} \skp{u(\sigma_{h}) - u(\sigma)}{v_{1}}{H} \diff t }
+            \\&= \norm{\tilde{\varphi}_{j}}_{L_{\infty}(\Omega)} \abs{\skp{u(\sigma_{h}) - u(\sigma)}{v_{1}}{L_{2}(I; H)} }
+            \\&\leq \norm{\tilde{\varphi}_{j}}_{L_{\infty}(\Omega)} \norm{u(\sigma_{h}) - u(\sigma)}_{L_{2}(I; H)} \norm{v_{1}}_{L_{2}(I; H)}
+            \\&\leq \norm{\tilde{\varphi}_{j}}_{L_{\infty}(\Omega)} \norm{u(\sigma_{h}) - u(\sigma)}_{\mathcal X} \norm{v_{1}}_{\mathcal Y}
+        \end{align}
+        Hier setzen wir mit der Stabilitätsaussage \cref{satz:voll_stabil_ey} an um $\norm{u(\sigma_{h}) - u(\sigma)}_{\mathcal X}$ weiter abzuschätzen und erhalten zunächst
         \begin{equation}
             \begin{aligned}
-                \norm{h}_{H^{-1}(\Omega)}
-                  &=    \sup_{\norm{\zeta}_{H^{1}(\Omega)} = 1} \abs{h(\zeta)}
-                \\&=    \sup_{\norm{\zeta}_{H^{1}(\Omega)} = 1} \abs{\skp{(\omega_{1} - \omega_{2}) \eta_{2}}{\zeta}{L_{2}(\Omega)}}
-                \\&\leq \sup_{\norm{\zeta}_{H^{1}(\Omega)} = 1} \norm{\omega_{1} - \omega_{2}}_{L_{\infty}(\Omega)} \norm{\eta_{1}}_{L_{2}(\Omega)} \norm{\zeta}_{L_{2}(\Omega)}
-                \\&\leq \sup_{\norm{\zeta}_{H^{1}(\Omega)} = 1} \norm{\omega_{1} - \omega_{2}}_{L_{\infty}(\Omega)} \norm{\eta_{1}}_{H^{1}(\Omega)} \norm{\zeta}_{H^{1}(\Omega)}
-                \\&=    \norm{\omega_{1} - \omega_{2}}_{L_{\infty}(\Omega)} \norm{\eta_{1}}_{H^{1}(\Omega)}
-                \\&\leq \norm{\omega_{1} - \omega_{2}}_{L_{\infty}(\Omega)} \frac{\norm{g}_{H^{-1}(\Omega)}}{\alpha}.
+                \norm{u(\sigma_{h}) - u(\sigma)}_{\mathcal X}
+                &\leq \frac{\norm{f}_{\mathcal Y'}}{\beta^{2}} \norm{w(\sigma_{h}) - \omega(\sigma)}_{L_{\infty}(I; L_{\infty}(\Omega))}
+                \leq \frac{\norm{f}_{\mathcal Y'}}{\beta^{2}} \norm{h \tilde{\chi}_{j} \tilde{\varphi}_{j} }_{L_{\infty}(I; L_{\infty}(\Omega))}
+                \\&\leq \frac{\norm{f}_{\mathcal Y'}}{\beta^{2}} \abs{h} \norm{\tilde{\varphi}_{j}}_{L_{\infty}(\Omega)}.
             \end{aligned}
         \end{equation}
-        Zusammen liefert dies die Ungleichung
+        Zusammen liefert dies
         \begin{equation}
-            \norm{\eta_{1} - \eta_{2}}_{H^{1}(\Omega)}
-            = \norm{\theta}_{H^{1}(\Omega)} \leq \frac{\norm{g}_{H^{-1}(\Omega)}}{\alpha^{2}} \norm{\omega_{1} - \omega_{2}}_{L_{\infty}(\Omega)}
+            \abs{F_{h}(v) - F_{0}(v)}
+            \leq \norm{\tilde{\varphi}_{j}}^{2}_{L_{\infty}(\Omega)} \norm{v_{1}}_{\mathcal Y} \frac{\norm{f}_{\mathcal Y'}}{\beta^{2}} \abs{h} \to 0 \quad \text{für}~h \to 0,
         \end{equation}
-        und damit die Behauptung.
-    \end{Beweis}
-\end{Lemma}
+        das heißt, es gilt $F_{h} \to F_{0}$ in $\mathcal Y'$ für $h \to 0$,
+        was insbesondere $\theta_{h} \to \theta_{0}$ in $\mathcal X$ für $h \to 0$ impliziert, da die Lösung $\theta_{h}$ des Variationsproblems \cref{eq:fettes_varprob} nach \cref{satz:alles_loesbar_yeah} stetig von $F_{h}$ abhängt.
+        Da ferner $\theta_{0}$ das Variationsproblem
+        \begin{equation}
+            \label{eq:fette_abletung_jo}
+            \text{Finde}~\theta_{0} \in \mathcal X \colon \quad b(\theta_{0}, v; \sigma) = - \int_{I} \tilde{\chi}_{j} \skp{\tilde{\varphi}_{j}  u(\sigma)}{v_{1}}{H} \diff t \quad \fa v \in \mathcal Y
+        \end{equation}
+        eindeutig löst, ist mit $\partial^{\nu}_{\sigma} u(\sigma) = \theta_{0}$ die Existenz der gesuchten partiellen Ableitung nachgewiesen.
 
-\begin{Satz}
-\label{satz:ps:rg:existenz_partieller_ableitungen}
-    Die Abbildung $\mathcal S \ni \sigma \mapsto \eta(\sigma) \in H^{1}_{0}(\Omega)$, welche einem Parameter $\sigma$ die zugehörige Lösung $\eta(\sigma)$ des Variationsproblems \cref{eq:ps:rg:variationsformulierung_parametrisch} zuordnet, besitzt für alle $\nu \in \mathfrak F$ eine partielle Ableitung $\partial^{\nu}_{\sigma} \eta(\sigma)$.
-
-    \begin{Beweis}
-        Wir beschränken uns darauf die Behauptung exemplarisch für die partiellen Ableitungen erster Ordnung für ein festes $\sigma \in \mathcal S$ nachzuweisen.
-        Seien dazu $\nu = e_{j}$ für ein $j \in \mathbb{N}$ und sei weiter $h \in \mathbb{R} \setminus \Set{ 0 }$.
-        Definiere $\sigma_{h} = \sigma + h e_{j}$ und folglich $\sigma_{0} = \sigma$.
-        Weiter setzen wir
-        \begin{equation}
-            \theta_{h} = \frac{\eta(\sigma_{h}) - \eta(\sigma)}{h},
-        \end{equation}
-        wobei $\eta(\blank)$ die Lösungen des Variationsproblems zu den entsprechenden Parametern seien.
-        Ist $\abs{h}$ klein genug, so dass $\sigma_{h} = \sigma + h e_{j} \in \mathcal S$ gilt, dann existieren die eindeutigen $\eta(\blank)$ nach \cref{satz:ps:rg:lax_milgram_anwendung}, das heißt, der obige Ausdruck für $\theta_{h}$ ist für diese $h$ wohldefiniert.
-
-        Betrachte unter diesen Gegebenheiten nun die Differenz der zu $\eta(\sigma_{h})$ und $\eta(\sigma)$ zugehörigen Variationsprobleme \cref{eq:ps:rg:variationsformulierung_parametrisch}, dann gilt für alle $\zeta \in H^{1}_{0}(\Omega)$ die Gleichung
-        \begin{align}
-            0 &= a(\eta(\sigma_{h}), \zeta; \sigma_{h}) - a(\eta(\sigma), \zeta; \sigma)
-            %
-            \\ &= c \skp{\grad \eta(\sigma_{h}) - \grad \eta(\sigma)}{\grad \zeta}{L_{2}(\Omega)}
-                    + \skp{\omega(\sigma_{h})\eta(\sigma_{h}) - \omega(\sigma) \eta(\sigma)}{\zeta}{L_{2}(\Omega)}
-                    \\&\qquad+ \mu \skp{\eta(\sigma_{h}) - \eta(\sigma)}{\zeta}{L_{2}(\Omega)}
-            \\ &= h a(\theta_{h}, \zeta; \sigma) + \skp{(\omega(\sigma_{h}) - \omega(\sigma))\eta(\sigma_{h})}{\zeta}{L_{2}(\Omega)}
-        \end{align}
-        Erneut können wir diese Gleichung in die Form des Variationsproblems \cref{eq:ps:rg:variationsformulierung_parametrisch} bringen, konkret also
-        \begin{equation}
-            a(\theta_{h}, \zeta; \sigma) = F_{h}(\zeta) \quad \fa \zeta \in H^{1}_{0}(\Omega).
-        \end{equation}
-        Dabei lässt sich das stetige lineare Funktional $F_{h} \in H^{-1}(\Omega)$ wegen der affinen Darstellung \cref{eq:ps:pf:omega_affine_zerlegung} von $\omega(\blank)$ schreiben als
-        \begin{equation}
-            F_{h} \colon H^{1}_{0}(\Omega) \to \mathbb{R},
-            \quad \zeta \mapsto - h^{-1} \skp{(\omega(\sigma_{h}) - \omega(\sigma))\eta(\sigma_{h})}{\zeta}{L_{2}(\Omega)}
-            = - \skp{\varphi_{j} \eta(\sigma_{h})}{\zeta}{L_{2}(\Omega)}.
-        \end{equation}
-        Weiter ist $F_{h}(\blank)$ stetig in $h = 0$, denn für festes $\zeta \in H^{1}_{0}(\Omega)$ gilt unter Verwendung der Cauchy-Schwarz-Ungleichung die Abschätzung
-        \begin{align}
-            \abs{F_{h}(\zeta) - F_{0}(\zeta)}
-            &= \abs{\skp{\varphi_{j} (\eta(\sigma_{h}) - \eta(\sigma))}{\zeta}{L_{2}(\Omega)}}
-            \\&\leq \norm{\varphi_{j}}_{L_{\infty}(\Omega)} \abs{\skp{\eta(\sigma_{h}) - \eta(\sigma)}{\zeta}{L_{2}(\Omega)}}
-            \\&\leq \norm{\varphi_{j}}_{L_{\infty}(\Omega)} \norm{\eta(\sigma_{h}) - \eta(\sigma)}_{L_{2}(\Omega)} \norm{\zeta}_{L_{2}(\Omega)}
-            \\&\leq \norm{\varphi_{j}}_{L_{\infty}(\Omega)} \norm{\eta(\sigma_{h}) - \eta(\sigma)}_{H^{1}(\Omega)} \norm{\zeta}_{H^{1}(\Omega)}.
-        \end{align}
-        Weiter können wir die Stabilitätsaussage aus \cref{lem:ps:rg:norm_abschaetzung} für die hier auftretenden Parameter vereinfachen zu
-        \begin{equation}
-            \norm{\eta(\sigma_{h}) - \eta(\sigma)}_{H^{1}(\Omega)}
-            \leq \frac{\norm{g}_{H^{-1}(\Omega)}}{\alpha^{2}} \norm{\omega(\sigma_{h}) - \omega(\sigma)}_{L_{\infty}(\Omega)}
-            = \abs{h} \norm{\varphi_{j}}_{L_{\infty}(\Omega)} \frac{\norm{g}_{H^{-1}(\Omega)}}{\alpha^{2}}.
-        \end{equation}
-        Zusammen liefern die beiden obigen Abschätzungen
-        \begin{equation}
-            \abs{F_{h}(\zeta) - F_{0}(\zeta)} \leq \abs{h} \norm{\varphi_{j}}^{2}_{L_{\infty}(\Omega)} \norm{\zeta}_{H^{1}(\Omega)} \frac{\norm{g}_{H^{-1}(\Omega)}}{\gamma_{0}^{2}} \to 0 \quad \text{für}~h \to 0,
-        \end{equation}
-        das heißt, es gilt $F_{h} \to F_{0}$ in $H^{-1}(\Omega)$ für $h \to 0$.
-        \mfix{Genauer ausführen, warum. (vergleiche $\eta(\sigma_{h}) = A(\sigma_{h})^{-1} F_{h}$)}
-        Dies impliziert insbesondere $\theta_{h} \to \theta_{0}$ in $H^{1}_{0}(\Omega)$ für $h \to 0$.
-        Weiter erfüllt $\theta_{0}$ die Gleichung
-        \begin{equation}
-            a(\theta_{0}, \zeta; \sigma) = F_{0}(\zeta) \quad \fa \zeta \in H^{1}_{0}(\Omega).
-        \end{equation}
-        Damit existiert $\partial_{\sigma_{j}} \eta(\sigma) = \theta_{0}$ in $H^{1}_{0}(\Omega)$ und ist die eindeutige Lösung des Variationsproblems
-        \begin{equation}
-        \label{eq:ps:rg:variationsproblem_partielle_ableitung}
-            a(\partial_{\sigma_{j}} \eta(\sigma), \zeta; \sigma) = - \skp{\varphi_{j} \eta(\sigma)}{\zeta}{L_{2}(\Omega)} \quad \fa \zeta \in H^{1}_{0}(\Omega).
-        \end{equation}
-
-        Analog kann man auch die Existenz der partiellen Ableitungen höherer Ordnung nachweisen, indem man die in diesem Beweis verwendeten Schritte nun auf das neue Variationsproblem \cref{eq:ps:rg:variationsproblem_partielle_ableitung} anwendet.
+        Die Ableitungen höherer Ordnung lassen sich auf gleiche Weise durch Anwendung der beschriebenen Schritte auf die Variationsformulierung \cref{eq:fette_abletung_jo} et cetera konstruieren.
     \end{Beweis}
 \end{Satz}
 
 \begin{Bemerkung}
-\label{bem:ps:rg:partielle_ableitungen_alternativ_ueber_ableitung_des_operators}
-    Alternativ erhält man das Variationsproblem \cref{eq:ps:rg:variationsproblem_partielle_ableitung} auch durch formales Differenzieren der Variationsformulierung \cref{eq:ps:rg:variationsformulierung_parametrisch} nach $\sigma_{j}$.
-    Denn es gilt
+    Sei erneut ohne Einschränkung $\nu = e_{j} \in \mathcal{F}$ für ein $j \in \mathbb{N}$.
+    Alternativ erhält man das Variationsproblem \cref{eq:fette_abletung_jo} für die partielle Ableitung $\partial^{\nu}_{\sigma} u(\sigma)$ auch durch formales Differenzieren der Variationsformulierung \cref{eq:fette_varprob_sigma_und_so} nach $\sigma_{j}$, denn es gilt
     \begin{align}
-        \partial_{\sigma_{j}} a(\eta(\sigma), \zeta; \sigma)
-        &= \partial_{\sigma_{j}} \left( c \skp{\grad \eta(\sigma)}{\grad \zeta}{L_{2}(\Omega)} + \skp{\omega(\sigma)\eta(\sigma)}{\zeta}{L_{2}(\Omega)} + \mu \skp{\eta(\sigma)}{\zeta}{L_{2}(\Omega)} \right)
-        \\&= c \skp{\grad \partial_{\sigma_{j}} \eta(\sigma)}{\grad \zeta}{L_{2}(\Omega)}
-                + \skp{\partial_{\sigma_{j}} \omega(\sigma) \eta(\sigma) + \omega(\sigma) \partial_{\sigma_{j}} \eta(\sigma)}{\zeta}{L_{2}(\Omega)}
-            \\&\qquad + \mu \skp{\partial_{\sigma_{j}} \eta(\sigma)}{\zeta}{L_{2}(\Omega)}
-        \\&= a(\partial_{\sigma_{j}} \eta(\sigma), \zeta; \sigma) + \skp{\partial_{\sigma_{j}} \omega(\sigma) \eta(\sigma)}{\zeta}{L_{2}(\Omega)}
-        \\&= a(\partial_{\sigma_{j}} \eta(\sigma), \zeta; \sigma) + \skp{\varphi_{j} \eta(\sigma)}{\zeta}{L_{2}(\Omega)}
+        \partial^{\nu}_{\sigma} b(u(\sigma), v; \sigma)
+        &= \partial^{\nu}_{\sigma} \left( \int_{I} \left[ \skp{u_{t}(\sigma)}{v_{1}}{V' \times V} + c \skp{\grad u(\sigma)}{\grad v_{1}}{H} + \mu \skp{u(\sigma)}{v_{1}}{H} \right.\right.
+        \\&\qquad\qquad \left.\vphantom{\int_{I}}\left. + \skp{\omega(\sigma) u(\sigma)}{v_{1}}{H} \right] \diff t + \skp{u(0; \sigma)}{v_{2}}{H} \right)
+        \\&= \int_{I} \left[ \skp{\partial^{\nu}_{\sigma} u_{t}(\sigma)}{v_{1}}{V' \times V}
+            + \skp{\grad \partial^{\nu}_{\sigma} u(\sigma)}{\grad v_{1}}{H} + \mu \skp{\partial^{\nu}_{\sigma} u(\sigma)}{v_{1}}{H} \right.
+        \\&\qquad \quad \left.+ \skp{\partial^{\nu}_{\sigma} \omega(\sigma) u(\sigma) + \omega(\sigma) \partial^{\nu}_{\sigma} u(\sigma)}{v_{1}}{H} \right] \diff t + \skp{\partial^{\nu}_{\sigma} u(0; \sigma)}{v_{2}}{H}
+        \\&= b(\partial^{\nu}_{\sigma} u(\sigma), v; \sigma) + \int_{I} \skp{\partial^{\nu}_{\sigma} \omega(\sigma) u(\sigma)}{v_{1}}{H} \diff t
+        \\&= b(\partial^{\nu}_{\sigma} u(\sigma), v; \sigma) + \int_{I} \tilde{\chi}_{j} \skp{\tilde{\varphi}_{j} u(\sigma)}{v_{1}}{H} \diff t
     \end{align}
-    und
+    und ferner
     \begin{equation}
-        \partial_{\sigma_{j}} \skp{g}{\zeta}{H^{-1}(\Omega) \times H^{1}_{0}(\Omega)} = 0,
+        \partial^{\nu}_{\sigma} f(v) = 0,
     \end{equation}
-    woraus man insgesamt erneut das Variationsproblem \cref{eq:ps:rg:variationsproblem_partielle_ableitung},
+    woraus man insgesamt erneut das Variationsproblem \cref{eq:fette_abletung_jo}
     \begin{equation}
-        a(\partial_{\sigma_{j}} \eta(\sigma), \zeta; \sigma) = - \skp{\varphi_{j} \eta(\sigma)}{\zeta}{L_{2}(\Omega)} \quad \fa \zeta \in H^{1}_{0}(\Omega),
+        \text{Finde}~\partial^{\nu}_{\sigma} u(\sigma) \in \mathcal X \colon \quad b(\partial^{\nu}_{\sigma} u(\sigma), v; \sigma) = - \int_{I} \tilde{\chi}_{j} \skp{\tilde{\varphi}_{j}  u(\sigma)}{v_{1}}{H} \diff t \quad \fa v \in \mathcal Y
     \end{equation}
     erhält.
 \end{Bemerkung}
 
-Nach der Existenz der partiellen Ableitungen beliebiger Ordnung weisen wir nun weiter nach, dass diese jeweils gleichmäßig in $\sigma \in \mathcal S$ beschränkt sind.
-
 \begin{Satz}
-\label{satz:ps:rg:partielle_ableitungen_schranke}
-    Sei $b := (b_{j})_{j \in \mathbb{N}} \in \mathbb{R}^{\mathbb{N}}$ mit $b_{j} := \alpha^{-1} \norm{\varphi_{j}}_{L_{\infty}(\Omega)}$, dann gilt
+\label{satz:mhoo}
+    Sei $b = (b_j)_{j \in \mathbb{N}} \in \mathbb{R}^{\mathbb{N}}$ mit $b_{j} = \frac{1}{\beta} \norm{\tilde{\varphi}_{j}}_{L_{\infty}(\Omega)}$, dann gilt
     \begin{equation}
-    \label{eq:ps:rg:partielle_ableitungen_schranke}
-        \sup_{\sigma \in \mathcal S} \norm{\partial^{\nu}_{\sigma} \eta(\sigma)} \leq \frac{\norm{g}_{H^{-1}(\Omega)}}{\alpha} \norm{\nu}_{\ell_{1}(\mathbb{N})}! b^{\nu}.
+        \sup_{\sigma \in \mathcal P} \norm{\partial^{\nu}_{\sigma} u(\sigma)}_{\mathcal X} \leq \frac{\norm{f}_{\mathcal Y'}}{\beta} \norm{\nu}_{\ell_{1}(\mathbb{N})}! b^{\nu}
     \end{equation}
+    für alle $\nu \in \mathcal F$.
 
     \begin{Beweis}
-        Betrachte die Variationsprobleme, welche von den partiellen Ableitungen $\partial^{\nu}_{\sigma} \eta(\sigma)$ erfüllt werden.
+        Betrachte die Variationsprobleme, welche von den partiellen Ableitungen $\partial^{\nu}_{\sigma} u(\sigma)$ erfüllt werden.
         Wir zeigen zunächst, dass diese durch
         \begin{equation}
         \label{eq:ps:rg:partielle_ableitungen_rekursive_ableitungen}
-            a(\partial^{\nu}_{\sigma} \eta(\sigma), \zeta; \sigma)
-            = - \sum_{\Set{j \given \nu_{j} \neq 0}} \nu_{j} \skp{\varphi_{j} \partial^{\nu - e_{j}}_{\sigma} \eta(\sigma)}{\zeta}{L_{2}(\Omega)}.
+            b(\partial^{\nu}_{\sigma} u(\sigma), v; \sigma)
+            = - \sum_{\Set{j \given \nu_{j} \neq 0}} \nu_{j} \int_{I} \tilde{\chi}_{j} \skp{\tilde{\varphi}_{j} \partial^{\nu - e_{j}}_{\sigma} u(\sigma)}{v_{1}}{H} \diff t.
         \end{equation}
         rekursiv dargestellt werden können.
         Die Gültigkeit dieser Darstellung zeigen wir induktiv.
@@ -786,173 +728,105 @@ Nach der Existenz der partiellen Ableitungen beliebiger Ordnung weisen wir nun w
         Sei $k \in \mathbb{N}$ ein Index mit $\nu_{k} > 0$, dann definieren wir $\tilde{\nu} := \nu - e_{k}$ und es gilt offenbar $\norm{\tilde\nu}_{\ell_{1}(\mathbb{N})} = \norm{\nu}_{\ell_{1}(\mathbb{N})} - 1$.
         Nach Induktionsvoraussetzung gilt damit
         \begin{equation}
-            a(\partial^{\tilde{\nu}}_{\sigma} \eta(\sigma), \zeta; \sigma) + \sum_{\Set{j \given \tilde{\nu}_{j} \neq 0}} \tilde{\nu}_{j} \skp{\varphi_{j} \partial^{\tilde{\nu} - e_{j}}_{\sigma} \eta(\sigma)}{\zeta}{L_{2}(\Omega)} = 0,
+            b(\partial^{\tilde{\nu}}_{\sigma} u(\sigma), v; \sigma) + \sum_{\Set{j \given \tilde{\nu}_{j} \neq 0}} \tilde{\nu}_{j} \int_{I} \tilde{\chi}_{j} \skp{\tilde{\varphi}_{j} \partial^{\tilde{\nu} - e_{j}}_{\sigma} u(\sigma)}{v_{1}}{H} \diff t = 0,
         \end{equation}
         wobei nach Definition $\nu_{j} = \tilde{\nu}_{j}$ für $j \neq k$ und $\tilde{\nu}_{k} = \nu_{k} - 1$ ist.
         Partielles Differenzieren dieser Gleichung nach $\sigma_{k}$ analog zu \cref{bem:ps:rg:partielle_ableitungen_alternativ_ueber_ableitung_des_operators} liefert dann die Gleichung
         \begin{align}
             0 &=
-                a(\partial^{\nu}_{\sigma} \eta(\sigma), \zeta; \sigma)
-                + \skp{\varphi_{k} \partial^{\nu - e_{k}}_{\sigma} \eta(\sigma)}{\zeta}{L_{2}(\Omega)}
-                + (\nu_{k} - 1) \skp{\varphi_{k} \partial^{\nu - e_{k}}_{\sigma} \eta(\sigma) }{\zeta}{L_{2}(\Omega)}
-           \\&\qquad     + \sum_{\Set{j \neq k \given \nu_{j} \neq 0}} \nu_{j} \skp{\varphi_{j} \partial^{\nu - e_{j}}_{\sigma} \eta(\sigma)}{\zeta}{L_{2}(\Omega)},
+                b(\partial^{\nu}_{\sigma} u(\sigma), v; \sigma)
+           \\&\qquad          + \int_{I} \tilde{\chi}_{k} \skp{\tilde{\varphi}_{k} \partial^{\nu - e_{k}}_{\sigma} u(\sigma)}{v_{1}}{H} \diff t
+                + (\nu_{k} - 1) \int_{I} \tilde{\chi}_{k} \skp{\tilde{\varphi}_{k} \partial^{\nu - e_{k}}_{\sigma} u(\sigma) }{v_{1}}{H} \diff t
+           \\&\qquad     + \sum_{\Set{j \neq k \given \nu_{j} \neq 0}} \nu_{j} \int_{I} \tilde{\chi}_{j} \skp{\tilde{\varphi}_{j} \partial^{\nu - e_{j}}_{\sigma} u(\sigma)}{v_{1}}{H} \diff t,
         \end{align}
-        welche nach Zusammenfassen der Gleichung \cref{eq:ps:rg:partielle_ableitungen_rekursive_ableitungen} entspricht.
+        welche nach Zusammenfassen der Summanden der Gleichung \cref{eq:ps:rg:partielle_ableitungen_rekursive_ableitungen} entspricht.
 
-        Wählt man nun $v = \partial^{\nu}_{\sigma} \eta(\sigma)$, dann gilt einerseits aufgrund der Koerzivität von $a(\blank, \blank; \sigma)$ die Ungleichung
+        Fassen wir \cref{eq:ps:rg:partielle_ableitungen_rekursive_ableitungen} nun als Problem der Form \cref{??} auf, insbesondere also die rechte Seite als Funktional in $\mathcal Y'$, dann liefert \cref{satz:ps:eel:schwache_formulierung_sachgemaess_gestellt} die Abschätzung
         \begin{equation}
-            a(\partial^{\nu}_{\sigma} \eta(\sigma), \partial^{\nu}_{\sigma} \eta(\sigma); \sigma) \geq \alpha \norm{\partial^{\nu}_{\sigma} \eta(\sigma)}_{H^{1}(\Omega)}^{2}.
+            \norm{\partial^{\nu}_{\sigma} u(\sigma)}_{\mathcal X} \leq \frac{1}{\beta} \norm{\sum_{\Set{j \given \nu_{j} \neq 0}} \nu_{j} \int_{I} \tilde{\chi}_{j} \skp{\tilde{\varphi}_{j} \partial^{\nu - e_{j}}_{\sigma} u(\sigma)}{v_{1}}{H} \diff t}_{\mathcal Y'}.
         \end{equation}
-        Andererseits erhalten wir aus der rekursiven Darstellung \cref{eq:ps:rg:partielle_ableitungen_rekursive_ableitungen} mit Hilfe er Cauchy-Schwarz-Ungleichung die Abschätzung
+        Als nächstes wollen wir die $\mathcal Y'$-Norm auf der rechten Seite abschätzen.
+        Betrachte dazu analog zu $F_{h}$ im Beweis von \cref{3.22}
         \begin{align}
-            a(\partial^{\nu}_{\sigma} \eta(\sigma), \partial^{\nu}_{\sigma} \eta(\sigma); \sigma)
-            &= - \sum_{\Set{j \given \nu_{j} \neq 0}} \nu_{j} \skp{\varphi_{j} \partial^{\nu - e_{j}}_{\sigma} \eta(\sigma) }{\partial^{\nu}_{\sigma} \eta(\sigma)}{L_{2}(\Omega)}
-            \\&\leq \sum_{\Set{j \given \nu_{j} \neq 0}} \nu_{j} \norm{\varphi_{j}}_{L_{\infty}(\Omega)} \norm{\partial^{\nu - e_{j}}_{\sigma} \eta(\sigma)}_{H^{1}(\Omega)} \norm{\partial^{\nu}_{\sigma} \eta(\sigma)}_{H^{1}(\Omega)}.
+            &\abs{\sum_{\Set{j \given \nu_{j} \neq 0}} \nu_{j} \int_{I} \tilde{\chi}_{j} \skp{\tilde{\varphi}_{j} \partial^{\nu - e_{j}}_{\sigma} u(\sigma)}{v_{1}}{H} \diff t}
+            \\\leq
+            &\sum_{\Set{j \given \nu_{j} \neq 0}} \nu_{j} \abs {\int_{I} \tilde{\chi}_{j} \skp{\tilde{\varphi}_{j} \partial^{\nu - e_{j}}_{\sigma} u(\sigma)}{v_{1}}{H} \diff t}
+            \\\leq
+            &\sum_{\Set{j \given \nu_{j} \neq 0}} \nu_{j} \norm{\tilde{\varphi}_{j}}_{L_{\infty}(\Omega)} \norm{\partial^{\nu - e_{j}}_{\sigma} u(\sigma)}_{L_{2}(I; H)} \norm{v_{1}}_{L_{2}(I; H)}
+            \\\leq
+            &\sum_{\Set{j \given \nu_{j} \neq 0}} \nu_{j} \norm{\tilde{\varphi}_{j}}_{L_{\infty}(\Omega)} \norm{\partial^{\nu - e_{j}}_{\sigma} u(\sigma)}_{\mathcal X} \norm{v}_{\mathcal Y},
         \end{align}
-        Beide Ungleichungen zusammen ergeben
+        woraus wir die obige Abschätzung zu
         \begin{equation}
-        \label{eq:ps:rg:partielle_ableitungen_schranke_rekursiv}
-            \norm{\partial^{\nu}_{\sigma} \eta(\sigma)}_{H^{1}(\Omega)} \leq \sum_{\Set{j \given \nu_{j} \neq 0}} \nu_{j} \frac{\norm{\varphi_{j}}_{L_{\infty}(\Omega)}}{\alpha} \norm{\partial^{\nu - e_{j}}_{\sigma} \eta(\sigma)}_{H^{1}(\Omega)}.
+            \norm{\partial^{\nu}_{\sigma} u(\sigma)}_{\mathcal X} \leq \sum_{\Set{j \given \nu_{j} \neq 0}} \nu_{j} \frac{\norm{\tilde{\varphi}_{j}}_{L_{\infty}(\Omega)}}{\beta} \norm{\partial^{\nu - e_{j}}_{\sigma} u(\sigma)}_{\mathcal X}
         \end{equation}
+        weiterverarbeiten können.
 
         Um nun die eigentliche Behauptung zu beweisen, verfolgen wir erneut einen Induktionsansatz.
         Sei zunächst $\norm{\nu}_{\ell_{1}(\mathbb{N})} = 0$, dann entspricht
         \begin{equation}
-            \norm{\eta(\sigma)}_{H^{1}(\Omega)} \leq \frac{\norm{g}_{H^{-1}(\Omega)}}{\alpha},
+            \norm{u(\sigma)}_{\mathcal X} \leq \frac{\norm{f}_{\mathcal Y'}}{\beta},
         \end{equation}
         der Ungleichung \cref{eq:ps:rg:partielle_ableitungen_schranke} und ist nach \cref{satz:ps:rg:lax_milgram_anwendung} erfüllt.
-        Sei also weiter $\norm{\nu}_{\ell_{1}(\mathbb{N})} > 0$, dann gilt für die rekursive Darstellung \cref{eq:ps:rg:partielle_ableitungen_schranke_rekursiv} unter Verwendung der Induktionsvoraussetzung für $\norm{\partial^{\nu - e_{j}}_{\sigma} \eta(\sigma)}_{H^{1}(\Omega)}$ die Abschätzung
+        Sei also weiter $\norm{\nu}_{\ell_{1}(\mathbb{N})} > 0$, dann gilt für die rekursive Darstellung \cref{eq:ps:rg:partielle_ableitungen_schranke_rekursiv} unter Verwendung der Induktionsvoraussetzung für $\norm{\partial^{\nu - e_{j}}_{\sigma} u(\sigma)}_{\mathcal X}$ die Abschätzung
         \begin{align}
-            \norm{\partial^{\nu}_{\sigma} \eta(\sigma)}_{H^{1}(\Omega)}
+            \norm{\partial^{\nu}_{\sigma} u(\sigma)}_{\mathcal X}
             &\leq
-            \sum_{\Set{j \given \nu_{j} \neq 0}} \nu_{j} \frac{\norm{\varphi_{j}}_{L_{\infty}(\Omega)}}{\alpha} \norm{\partial^{\nu - e_{j}}_{\sigma} \eta(\sigma)}_{H^{1}(\Omega)}
+            \sum_{\Set{j \given \nu_{j} \neq 0}} \nu_{j} b_{j} \norm{\partial^{\nu - e_{j}}_{\sigma} u(\sigma)}_{\mathcal X}
             \\&\leq
-            \sum_{\Set{j \given \nu_{j} \neq 0}} \nu_{j} \frac{\norm{\varphi_{j}}_{L_{\infty}(\Omega)}}{\alpha} \frac{\norm{g}_{H^{-1}(\Omega)}}{\alpha} \norm{\nu - e_{j}}_{\ell_{1}(\mathbb{N})}! b^{\nu - e_{j}}
+            \sum_{\Set{j \given \nu_{j} \neq 0}} \nu_{j} b_{j} \frac{\norm{f}_{\mathcal Y'}}{\beta} \norm{\nu - e_{j}}_{\ell_{1}(\mathbb{N})}! b^{\nu - e_{j}}
             \\&=
-            \Bigg( \sum_{\Set{j \given \nu_{j} \neq 0}} \nu_{j} \Bigg) \Bigg( \frac{\norm{g}_{H^{-1}(\Omega)}}{\alpha} (\norm{\nu}_{\ell_{1}(\mathbb{N})} - 1)! b^{\nu} \Bigg)
+            \bigg( \sum_{\Set{j \given \nu_{j} \neq 0}} \nu_{j} \bigg) \bigg( \frac{\norm{f}_{\mathcal Y'}}{\beta} (\norm{\nu}_{\ell_{1}(\mathbb{N})} - 1)! b^{\nu} \bigg)
             \\&=
-            \frac{\norm{g}_{H^{-1}(\Omega)}}{\alpha} \norm{\nu}_{\ell_{1}(\mathbb{N})}! b^{\nu}
+            \frac{\norm{f}_{\mathcal Y'}}{\beta} \norm{\nu}_{\ell_{1}(\mathbb{N})}! b^{\nu}
          \end{align}
          und damit die Behauptung.
     \end{Beweis}
 \end{Satz}
 
-Zusammenfassend erhalten wir damit die folgende Aussage.
-\mfix{Sauber formulieren.}
+\begin{Satz}[{{{\cite[Theorem 7.2]{Cohen:2010kz}}}}]
+    Sei $0 < p \leq 1$.
+    Die Folge $(\frac{\abs{\nu}!}{\nu!} b^{\nu})_{\nu \in \mathcal F}$ liegt in $\ell_{p}(\mathcal F)$ genau dann, wenn $\norm{b}_{\ell_{1}(\mathbb{N})} < 1$ und $b \in \ell_{p}(\mathbb{N})$ gilt.
+\end{Satz}
 
 \begin{Satz}
-\label{satz:ps:rg:operatorgleichung_zusammenfassung}
-    Sei $\mu \geq \sum_{j = 1}^{\infty} \norm{\varphi_{j}}_{L_{\infty}(\Omega)}$ und $A(\sigma)$ wie in \cref{eq:ps:pf:operator_A_sigma}.
-    Dann existiert für jedes $g \in H^{-1}(\Omega)$ und jedes $\sigma \in \mathcal S$ eine eindeutige Lösung $\eta(\sigma)$ der parametrischen Operatorgleichung
-    \begin{equation}
-        A(\sigma) \eta(\sigma) = g \quad \text{in}~H^{-1}(\Omega).
-    \end{equation}
-    Weiter hängt diese Lösung $\eta(\sigma)$ analytisch vom Parameter $\sigma$ ab und es gilt die Abschätzung
-    \begin{equation}
-        \sup_{\sigma \in \mathcal S} \norm{\partial^{\nu}_{\sigma} \eta(\sigma)}_{H^{1}_{0}(\Omega)} \leq \frac{\norm{g}_{H^{-1}(\Omega)}}{\alpha} \norm{\nu}_{\ell_{1}(\mathbb{N})}! b^{\nu},
-    \end{equation}
-    mit $b = (b_{j})_{j \in \mathbb{N}} \in \ell_{1}(\mathbb{N})$ und $b_{j} = \alpha^{-1} \norm{\varphi_{j}}_{L_{\infty}(\Omega)}$.
+    Das Funktionensystem $\Set{\varphi_{j}}_{j \in \mathbb{N}}$ erfülle \cref{??}.
+    Dann ist die Abbildung $\mathcal P \ni \sigma \mapsto u(\sigma) \in \mathcal X$, welche einem Parameter $\sigma \in \mathcal P$ die zugehörige Lösung der schwachen Formulierung \cref{??} zuordnet, analytisch in $\sigma$.
 
     \begin{Beweis}
-        Existenz und Eindeutigkeit folgen analog zu \cref{satz:ps:rg:lax_milgram_anwendung} aus dem Lemma von Lax-Milgram, \cref{lem:gl:le:lax_milgram}.
-        Die Abschätzung wurde bereits in \cref{satz:ps:rg:partielle_ableitungen_schranke} gezeigt.
-        \mdo{Daraus folgern, dass die Lösung analytisch im Parameter ist.}
+        Wir zeigen, dass die Taylor-Reihenentwicklung von $u(\sigma)$ gleichmäßig konvergiert.
+        Die Taylor-Reihenentwicklung um den Nullpunkt $0 \in \mathcal P$ ausgewertet in $\sigma \in \mathcal P$ hat die Form
+        \begin{equation}
+            \sum_{\nu \in \mathcal F} t_{\nu} \sigma^{\nu},
+        \end{equation}
+        wobei der Ausdruck $t_{\nu}$ durch
+        \begin{equation}
+            t_{\nu} = \frac{1}{\nu!} \partial^{\nu}_{\sigma} u(0) \in \mathcal X
+        \end{equation}
+        gegeben ist.
+        Unter Verwendung von \cref{satz:mhoo} gilt
+        \begin{align}
+            \norm{t_{\nu}}_{\mathcal X}
+            = \frac{1}{\nu!} \norm{\partial^{\nu}_{\sigma} u(0)}
+            \leq \frac{1}{\nu!} \frac{\norm{f}_{\mathcal Y'}}{\beta} \norm{\nu}_{\ell_{1}(\mathbb{N})} b^{\nu}
+        \end{align}
+        für alle $\nu \in \mathcal F$.
+        Zusammen erhalten wir damit
+        \begin{equation}
+            \begin{aligned}
+                \sup_{\sigma \in \mathcal P} \norm{\sum_{\nu \in \mathcal F} t_{\nu} \sigma^{\nu}}_{\mathcal X}
+                \leq \sup_{\sigma \in \mathcal P} \sum_{\nu \in \mathcal F} \norm{t_{\nu} \sigma^{\nu}}_{\mathcal X}
+                \leq \sum_{\nu \in \mathcal F} \norm{t_{\nu}}_{\mathcal X}
+                \leq \frac{\norm{f}_{\mathcal Y'}}{\beta} \sum_{\nu \in \mathcal F} \frac{\norm{\nu}_{\ell_{1}(\mathbb{N})}!}{\nu!} b^{\nu}.
+            \end{aligned}
+        \end{equation}
+        Die rechte Seite ist endlich, wenn $(\frac{\norm{\nu}_{\ell_{1}(\mathbb{N})}!}{\nu!} b^{\nu})_{\nu \in \mathcal F}$ in $\ell_{1}(\mathcal F)$ liegt, was nach Voraussetzung der Fall ist.
+        Damit ist die Taylor-Reihe von $u(\sigma)$ gleichmäßig konvergent und folglich $u(\sigma)$ analytisch.
     \end{Beweis}
 \end{Satz}
 
-\mdo{Daraus folgern, dass es für den parabolischen Fall auch gilt.}
+% section regularit_t_bez_glich_der_parameter (end)
 
-\Cref{satz:ps:rg:operatorgleichung_zusammenfassung} wurde bei \textcite[Theorem 4]{Kunoth:2013ef}, unter Verweisung auf die Beweise von \cref{satz:ps:rg:existenz_partieller_ableitungen} und \cref{satz:ps:rg:partielle_ableitungen_schranke} bei \textcite[Theorem 4.2, 4.3]{Cohen:2010kz}, für allgemeinere parametrische Operatoren respektive Bilinearformen nachgewiesen.
-Dafür wurde im Wesentlichen gefordert, dass die partiellen Ableitungen der Operatoren beziehungsweise Bilinearformen wohldefiniert sind.
-Dies ist bei uns beispielsweise der Fall, wie in den Beweisen von \cref{satz:ps:rg:existenz_partieller_ableitungen} und \cref{satz:ps:rg:partielle_ableitungen_schranke} und an \cref{bem:ps:rg:partielle_ableitungen_alternativ_ueber_ableitung_des_operators} zu sehen ist.
-
-Aufbauend auf das Ergebnis in \cref{satz:ps:rg:operatorgleichung_zusammenfassung} können wir nun, analog zu \textcite[Section 4]{Kunoth:2013ef}, ein ähnliches Ergebnis für das parabolische Variationsproblem nachweisen.
-Dies wollen wir anhand der folgenden, aus \cite{Kunoth:2013ef} entnommenen, Punkte motivieren.
-
-\begin{Annahme}[{{\cite[Assumption 1]{Kunoth:2013ef}}}]
-\label{ann:ps:rg:kunoth13_assumption1}
-    Seien $X$ und $Y$ zwei reflexive Banachräume.
-    Die parametrische Familie von Operatoren
-    $\Set{ A(\sigma) \in \mathcal L(X, Y') \given \sigma \in \mathcal S }$ sei eine $\mathfrak p$-reguläre Operatorfamilie für ein $0 < \mathfrak p \leq 1$, das heißt,
-    \begin{thmenumerate}
-        \item $A(\sigma) \in \mathcal L(X, Y')$ sei stetig invertierbar für alle $\sigma \in \mathcal S$ mit gleichmäßig beschränktem Inversen $A{(\sigma)}^{-1} \in \mathcal L(Y', X)$, das heißt, es existiert ein $C_{0} > 0$ mit
-        \begin{equation}
-            \sup_{\sigma \in \mathcal S} \norm{A{(\sigma)}^{-1}}_{\mathcal L(Y', X)} \leq C_{0},
-        \end{equation}
-        \item für jedes feste $\sigma \in \mathcal S$ seien die Operatoren $A(\sigma)$ analytisch bezüglich $\sigma$.
-        Konkret existiert eine nichtnegative Folge $b = (b_{j})_{j \in \mathbb{N}} \in \ell_{\mathfrak p}(\mathbb{N})$, so dass
-        \begin{equation}
-            \sup_{\sigma \in \mathcal S} \norm{(A{(0)})^{-1}(\partial^{\nu}_{\sigma} A(\sigma))}_{\mathcal L(X, X)} \leq C_{0} b^{\nu}
-        \end{equation}
-        für alle $\nu \in \mathfrak F \setminus \{ 0 \}$ gilt.
-    \end{thmenumerate}
-\end{Annahme}
-%
-Diese Annahme alleine reicht bereits aus, um ein Analogon zu \cref{satz:ps:rg:operatorgleichung_zusammenfassung} zu erhalten, vergleiche \cite[Theorem 4]{Kunoth:2013ef}.
-
-Weiter wird die obige Annahme von unserem Variationsproblem für $\mathfrak p = 1$ erfüllt, denn in unserem Falle ist $C_{0} = \alpha^{-1}$ und $b_{j} = \alpha^{-1} \norm{\varphi_{j}}_{L_{\infty}(\Omega)}$ und nach Konstruktion insbesondere $b \in \ell_{1}(\mathbb{N})$.\mfix{referenzieren.}
-
-% \begin{Satz}[{{\cite[Theorem 4]{Kunoth:2013ef}}}]
-% \label{satz:ps:rg:kunoth13_theorem4}
-%     Die parametrische Familie von Operatoren $\Set{ A(\sigma) \in \mathcal L(X, Y') \given \sigma \in \mathcal S }$ erfülle \cref{ann:ps:rg:kunoth13_assumption1} für ein $0 \leq \mathfrak p \leq 1$.
-%     Dann existiert für jedes $g \in Y'$ und jedes $\sigma \in \mathcal S$ eine eindeutige Lösung $\eta(\sigma)$ der parametrischen Operatorgleichung
-%     \begin{equation}
-%         A(\sigma) \eta(\sigma) = g \quad \text{in}~Y'.
-%     \end{equation}
-%     Weiter hängt die Lösung $\eta(\sigma)$ analytisch vom Parameter $\sigma$ ab und es gilt
-%     \begin{equation}
-%     \label{eq:ps:rg:kunoth13_theorem4_abschaetzung}
-%         \sup_{\sigma \in \mathcal S} \norm{\partial^{\nu}_{\sigma} \eta(\sigma)}_{X} \leq C_{0} \norm{g}_{Y'} \norm{\nu}_{\ell_{1}(\mathbb{N})} ! \tilde{b}^{\nu},
-%     \end{equation}
-%     wobei $\tilde{b} \in \ell_{\mathfrak p}(\mathbb{N})}$ durch
-%     \begin{equation}
-%         \tilde{b}_{j} = \frac{b_{j}}{\ln 2} \quad \fa j \in \mathbb{N}
-%     \end{equation}
-%     definiert ist.
-% \end{Satz}
-
-% Bis auf einen konstanten Faktor bei der Abschätzung \cref{eq:ps:rg:kunoth13_theorem4_abschaetzung} entspricht dies den von uns nachgewiesenen Aussagen.
-
-% Der Grund für die Einführung der obigen Ergebnisse von \textcite{Kunoth:2013ef} ist der folgende:
-% Aus den Eigenschaften der Familie von parametrischen Operatoren $\Set{ A(\sigma, t) \in \mathcal L(V, V') \given \sigma \in \mathcal S, t \in [0, T] }$ können wir Rückschlüsse auf die parametrische Regularität der Lösungen des parabolischen Variationsproblems ziehen.
-
-Der Grund für die Einführung von \cref{ann:ps:rg:kunoth13_assumption1} ist der folgende:
-Erfüllt die Familie von parametrischen Operatoren $\Set{ A(\sigma, t) \in \mathcal L(V, V') \given \sigma \in \mathcal S, t \in [0, T] }$ \cref{ann:ps:rg:kunoth13_assumption1}, dann lässt sich zeigen, dass dies auch für die parametrische Raum-Zeit-Variationsformulierung aus \cref{def:ps:pf:schwache_formulierung} gilt.
-Zusammenfassend ergibt sich damit der folgende Satz, welcher eine auf unser Problem abgewandelte Version von \cite[Theorem 21]{Kunoth:2013ef} darstellt.
-
-\begin{Satz}
-\label{satz:ps:rg:kunoth13_theorem21}
-    Seien $\mathcal X$ und $\mathcal Y$ gegeben wie in \cref{eq:ps:rzvp:ansatzraum_testraum}.
-    Sei weiter für jedes $\sigma \in \mathcal S$ der Operator $B(\sigma) \in \mathcal L(\mathcal X, \mathcal Y')$ durch
-    \begin{equation}
-        \skp{B(\sigma) u}{v}{\mathcal Y' \times \mathcal Y} = b(u, v; \sigma), \quad u \in \mathcal X,~y \in \mathcal Y
-    \end{equation}
-    für die Bilinearform $b(\blank, \blank; \sigma)$ aus \cref{eq:ps:pf:schwache_formulierung_lhs_b} gegeben.
-    Dann ist $B(\sigma)$ für jedes $\sigma \in \mathcal S$ stetig invertierbar und es existieren Konstanten $0 < \beta_{1} \leq \beta_{2} < \infty$ mit
-    \begin{equation}
-        \label{eq:ps:rg:theorem21_abschaetzungen_normen_B_und_B_inv_parametrisch}
-        \sup_{\sigma \in \mathcal S} \norm{B(\sigma)}_{\mathcal L(\mathcal X, \mathcal Y')} \leq \beta_{2} \quad \text{und} \quad  \sup_{\sigma \in \mathcal S} \norm{B(\sigma)^{-1}}_{\mathcal L(\mathcal Y', \mathcal X)} \leq \frac{1}{\beta_{1}}.
-    \end{equation}
-
-    Ferner hängen die Lösungen $u(\sigma)$ des parametrischen Raum-Zeit-Variationsproblems \cref{eq:ps:pf:schwache_formulierung} analytisch vom Parameter $\sigma$ ab und es gilt die Abschätzung
-    \begin{equation}
-        \label{eq:ps:rg:theorem21_apriori_schranke}
-        \sup_{\sigma \in \mathcal S} \norm{(\partial^{\nu}_{\sigma} u)(\sigma)}_{\mathcal X} \leq \frac{\norm{f}_{\mathcal Y'}}{\beta_{1}} \norm{\nu}_{\ell_{1}(\mathbb{N})}! b^{\nu}
-    \end{equation}
-    für alle $\nu \in \mathfrak F$, wobei $f$ wie in~\cref{eq:ps:pf:schwache_formulierung_rhs_f} und $b = (b_{j})_{j \in \mathbb{N}} \in \ell_{1}(\mathbb{N})$ durch $b_{j} = \beta_{1}^{-1} \norm{\varphi_{j}}_{L_{\infty}(\Omega)}$ gegeben sind.
-
-    \begin{Beweis}
-        Wir beginnen mit der stetigen Invertierbarkeit von $B(\sigma)$.
-        Es bietet sich an, dies durch Anwendung von \cref{satz:gl:le:ss09_theorem51} nachzuweisen, das bedeutet, wir müssen dementsprechend die Voraussetzungen, welche in \cref{ann:gl:le:bilinearform_eigenschaften} zu finden sind, überprüfen.
-
-        Dies wurde in \cref{satz:ps:rzvp:bilinearform_a_eigenschaften} und \cref{kor:ps:rzvp:bilinearform_elliptisch} bereits getan.
-        Da wir weiter vom Fall $\mu \geq \sum_{j = 1}^{\infty} \norm{\varphi_{j}}_{L_{\infty}(\Omega)}$ ausgehen, liefert dies von $\omega$ respektive $\sigma$ unabhängige Konstanten $M_{a} = \max\Set{c, 2 \mu}$ und $\alpha = c \gamma_{\Omega}^{2}$, sowie $\lambda = 0$.
-        \Cref{satz:gl:le:ss09_theorem51} liefert damit die stetige Invertierbarkeit von $B(\sigma)$ für jedes $\sigma \in \mathcal S$.
-        Weiter erhalten wir damit durch \cref{kor:gl:le:ss09_theorem51_ungleichungen} auch die Konstanten $\beta_{1}$ und $\beta_{2}$, welche durch die obigen $M_{a}$ und $\alpha$ wiederum unabhängig von $\omega$ beziehungsweise $\sigma$ sind.
-
-        Die analytische Abhängigkeit und die zugehörige Abschätzung \cref{eq:ps:rg:theorem21_apriori_schranke} lassen sich nun vollkommen analog zu \cref{lem:ps:rg:norm_abschaetzung}, \cref{satz:ps:rg:existenz_partieller_ableitungen} und \cref{satz:ps:rg:partielle_ableitungen_schranke} nachweisen, weswegen wir dies an dieser Stelle auch nicht weiter ausführen wollen.
-    \end{Beweis}
-\end{Satz}
 
 \section{Exkurs: Periodische Randbedingungen} % (fold)
 \label{sec:ps:pr:periodische_randbedingungen}
