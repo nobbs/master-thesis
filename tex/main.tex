@@ -1,7 +1,7 @@
 %!TEX root = main.tex
 
 \documentclass[
-  draft,
+  % draft,
   % final,
   a4paper,
   % 11pt,
@@ -22,15 +22,14 @@
 
 \usepackage{dirtree}
 
+
+\KOMAoptions{cleardoublepage=plain}
+
 \addbibresource{literature.bib}
 
 
 \newtoggle{tot}
 \togglefalse{tot}
-
-\newtoggle{dictum}
-% \toggletrue{dictum}
-\togglefalse{dictum}
 
 \begin{document}
     % Deckblack / Titelseite
@@ -40,7 +39,7 @@
     \frontmatter{}
 
     % Danksagung
-    % \include{misc/danksagung}
+    \include{misc/danksagung}
 
     % Abstrakt
     % \include{chapters/zusammenfassung}
@@ -49,7 +48,7 @@
     \tableofcontents
 
     % TODO-Liste
-    % \listoftodos
+    \listoftodos
 
     %%% Hauptteil
     \mainmatter{}
@@ -60,21 +59,20 @@
     \input{chapters/cha2_grundlagen}
     \input{chapters/cha3_problemstellung}
     \input{chapters/cha4_galerkin}
-    % \input{chapters/cha5_rbm}
+    \input{chapters/cha5_rbm}
+    \input{chapters/cha6_ausblick}
+
     % % \input{chapters/cha5_eindim}
-    % \input{chapters/cha0_ausblick}
+    % Alles, was noch unbedingt rein muss
+    % \input{chapters/app1_funktionalanalytische_grundlagen}
+    % \input{chapters/app2_sammlung}
+    % \input{temp/onedim}
 
     %%% Anhang
     \appendix{}
 
-    % \input{temp/onedim}
-
-    % Alles, was noch unbedingt rein muss
-    % \input{chapters/app1_funktionalanalytische_grundlagen}
-    % \input{chapters/app2_sammlung}
+    % DVD Inhalt
     \input{chapters/app_code}
-    % Weitere Anhänge
-    % ...
 
     %% Los geht's mit den Verzeichnissen
 

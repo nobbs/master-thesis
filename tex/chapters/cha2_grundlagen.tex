@@ -1,13 +1,7 @@
 %!TEX root = ../main.tex
 
-\iftoggle{dictum}{
-    \setchapterpreamble[ul][0.6\textwidth]{%
-        \dictum[Iain M. Banks, \textit{The Algebraist}]{\enquote{Elegance is an algorithm.}}
-        \vspace*{2\baselineskip}
-    }
-}{}
 \chapter{Funktionalanalytische Grundlagen} % (fold)
-\label{cha:gl:grundlagen}
+\label{chapter:grundlagen}
 
 \mdo{Bei Bedarf erweitern!}
 
@@ -74,6 +68,7 @@ Dabei werden wir oft auf folgendes Konstrukt zurückgreifen.
 \nomenclature{$V, H$}{Hilberträume}
 
 \begin{Bemerkung}
+\label{bemekerung:duality_pairing_stetig_und_so}
     Mit $\skprod{\blank}{\blank}_{V}$ und $\skprod{\blank}{\blank}_{H}$ bezeichnen wir das Skalarprodukt auf $V$ respektive $H$.
     Weiterhin $\skprod{\blank}{\blank}_{V' \times V}$ wird auch für die duale Paarung auf $V' \times V$, die als die eindeutige stetige Fortsetzung von $\skprod{\blank}{\blank}_{H}$ definiert ist, verwendet.
     Insbesondere gilt für $u \in H \subset V'$ und $v \in V$ die Gleichheit
@@ -644,3 +639,6 @@ Aus dem Beweis des vorherigen Satzes bei \textcite{Schwab:2009ec} ergeben sich z
 % chapter grundlagen (end)
 
 
+\begin{Satz}
+    \label{satz:poincare_ungleichung}
+\end{Satz}

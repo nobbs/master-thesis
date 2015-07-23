@@ -17,7 +17,9 @@
 % Typographische Kleinigkeiten
 \usepackage{microtype}
 % Fraktur-Schriftsatz
-\usepackage{eufrak}
+% \usepackage{eufrak}
+% Fette Griechische
+\usepackage{bm}
 
 %% Lokalisierung
 
@@ -30,7 +32,8 @@
 
 \newcommand{\altfont}{\fontfamily{qpl}}
 % \newcommand{\altsffont}{\fontfamily{phv}}
-\newcommand{\altsffont}{\fontfamily{pfr}\fontseries{l}}
+\newcommand{\altsffont}{}
+% \newcommand{\altsffont}{\fontfamily{pfr}\fontseries{l}}
 
 % Zeilenabstand anpassen (MUST NOT USE!)
 % \usepackage{setspace}
@@ -83,6 +86,9 @@
 \usepackage{amssymb}
 \usepackage{stmaryrd}
 \usepackage{mathtools}
+
+% Erlaube Seitenumbrüche in Gleichungen
+\allowdisplaybreaks
 
 % "Bessere" Theorem-Umgebungen
 \usepackage[
@@ -144,16 +150,20 @@
 \addtokomafont{paragraph}{\bfseries}
 
 % Kopfzeile anpassen
-\addtokomafont{pageheadfoot}{\color{jgu_dunkelgrau}\normalfont\altfont\selectfont}
+\addtokomafont{pageheadfoot}{\normalfont\altfont\selectfont}
+% \addtokomafont{pageheadfoot}{\color{jgu_dunkelgrau}\normalfont\altfont\selectfont}
 % Seitenzahl anpassen
-\addtokomafont{pagenumber}{\color{jgu_dunkelgrau}\normalfont\altfont\selectfont}
+\addtokomafont{pagenumber}{\normalfont\altfont\selectfont}
+% \addtokomafont{pagenumber}{\color{jgu_dunkelgrau}\normalfont\altfont\selectfont}
 
 % Zitatblock für Kapitelanfang
-\renewcommand*\dictumwidth{.95\linewidth}
+\renewcommand*\dictumwidth{.35\linewidth}
 \renewcommand*\dictumrule{}
 \renewcommand*\dictumauthorformat[1]{--- #1}
-\addtokomafont{dictumtext}{\color{jgu_dunkelgrau}\normalfont\altsffont\fontsize{9}{12}\selectfont\itshape}
-\addtokomafont{dictumauthor}{\color{jgu_dunkelgrau}\normalfont\altsffont\fontsize{8}{12}\selectfont}
+\addtokomafont{dictumtext}{\normalfont\altsffont\selectfont\itshape}
+% \addtokomafont{dictumtext}{\color{jgu_dunkelgrau}\normalfont\altsffont\fontsize{9}{12}\selectfont\itshape}
+\addtokomafont{dictumauthor}{\normalfont\altsffont\fontsize{8}{11}\selectfont}
+% \addtokomafont{dictumauthor}{\color{jgu_dunkelgrau}\normalfont\altsffont\fontsize{8}{12}\selectfont}
 
 % Kapitel-Stil
 \renewcommand*{\chapterheadstartvskip}{\vspace*{3\baselineskip}}
@@ -216,8 +226,8 @@
 
 % Labels am Seitenrand anzeigen
 \usepackage[
-    inline,
-    final
+    % inline,
+    % final
 ]{showlabels}
 
 % todos

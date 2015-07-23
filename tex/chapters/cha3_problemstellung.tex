@@ -1,44 +1,39 @@
 %!TEX root = ../main.tex
 
-\iftoggle{dictum}{
-    \setchapterpreamble[ul][0.6\textwidth]{%
-        \dictum[Andy Weir, \textit{The Martian}]{\enquote{I guess you could call it a \enquote{failure}, but I prefer the term \enquote{learning
-        experience}.}}
-        \vspace*{2\baselineskip}
-    }
-}{}
 \chapter{Propagator-Differentialgleichung} % (fold)
-\label{cha:ps:problemstellung}
+\label{chapter:propagator_differentialgleichung}
 
-Wir greifen nun die aus \cref{cha:el:einleitung} bekannten parabolischen Differentialgleichungen \cref{eq:el:forward_propagator,eq:el:backward_propagator}, welche von den beiden Propagatoren $q$ und $q^{\dagger}$ erfüllt werden, auf.
-Der Einfachheit halber verwenden wir im Nachfolgenden den Begriff \emph{Propagator-Differentialglei"-chung"-en}, wenn wir uns auf die genannten partiellen Differentialgleichungen beziehen.
+Wir greifen nun die in \cref{chapter:einleitung} eingeführten parabolischen Differentialgleichungen \cref{eq:el:forward_propagator,eq:el:backward_propagator} auf, welche von den beiden Propagatoren $q$ und $q^{\dagger}$ erfüllt werden.
+Im Weiteren Verlauf der Arbeit verwenden wir den Begriff \emph{Propagator"=Differentialgleichung}, den wir noch genauer definieren werden, wenn wir uns
+auf die genannten partiellen Differentialgleichungen beziehen.
 
-In diesem Kapitel konkretisieren wir diese Propagator-Differentialgleichungen, schaffen geeignete Rahmenbedingungen und leiten eine schwache Formulierung her.
-Anschließend werden die in den Propagator-Differentialglei"-chung"-en auftretenden Felder $\omega_{\bullet}$ parametrisiert und als Grundlage für eine parametrische schwache Raum-Zeit-Formulierung verwendet.
-Für diese weisen wir abschließend nach, dass sie sachgemäß gestellt ist und eine gewisse Regularität bezüglich der Parameter aufweist.
+In diesem Kapitel konkretisieren wir zunächst diese Propagator"=Differentialgleichungen, schaffen geeignete Rahmenbedingungen und leiten eine schwache Raum"=Zeit"=Formulierung her.
+Anschließend werden die in den Propagator"=Differentialgleichungen auftretenden Felder $\omega_{i}$ parametrisiert und als Grundlage für eine parametrische schwache Formulierung verwendet.
+Für diese weisen wir abschließend nach, dass sie sachgemäß gestellt ist und unter zusätzlichen Bedingungen eine gewisse Regularität bezüglich der Parameter aufweist.
 
-\section{Raum-Zeit-Variationsformulierung} % (fold)
-\label{sub:ps:rzvp:raum_zeit_variationsformulierung}
 
-% \section{Die parabolische partielle Propagator-Differentialgleichung} % (fold)
-% \label{sec:ps:pde:die_parabolische_partielle_differentialgleichung}
+\section{Eine Raum-Zeit-Variationsformulierung}
+\label{section:raum_zeit_variationsformulierung}
 
-Wir wollen nun zunächst das Setting festlegen und die aus der Einführung bekannten Propagator-Gleichungen in einem allgemeineren Rahmen auffassen.
+Wir wollen nun zunächst das Setting festlegen und die aus der Einführung bekannten Propagator"=Differentialgleichungen in einem allgemeineren Rahmen formulieren.
 Dabei halten wir an dem Fall zweier Felder fest, wobei diese Einschränkung nicht notwendig ist, da die nachfolgenden Ergebnisse in gleicher Weise auch für jede andere endliche Felderanzahl nachgewiesen werden können.
-Weiter sei an dieser Stelle angemerkt, dass es ausreicht sich auf die Betrachtung des Vorwärts-Propagators \cref{eq:el:forward_propagator} zu beschränken, da der Rückwärts-Propagator \cref{eq:el:backward_propagator} durch die einfache Transformation $s \mapsto 1 - s$ auf die selbe Form, lediglich mit vertauschen Rollen bei den Feldern, gebracht werden kann.
+Weiter sei an dieser Stelle angemerkt, dass es ausreicht sich auf die Betrachtung des Vorwärts"=Propagators \cref{eq:el:forward_propagator} zu beschränken, da der Rückwärts"=Propagator \cref{eq:el:backward_propagator} durch die einfache Transformation $s \mapsto 1 - s$ auf die selbe Form, lediglich mit vertauschen Rollen bei den Feldern, gebracht werden kann.
 
-Seien nun $0 < T_{f} < T < \infty$ reelle Konstanten und $I = [0, T]$ ein reelles Intervall, welches wir in die beiden Teilintervalle $I_{1} = [0, T_{f})$ und $I_{2} = [T_{f}, T]$ zerlegen.
-Weiter sei $\Omega \subset \mathbb{R}^{n}$, $n \in \mathbb{N}$, ein beschränktes Gebiet, das heißt offen, nichtleer, zusammenhängend und beschränkt, welches einen Lipschitz-Rand besitzt.
+Seien nun $0 < T_{f} < T < \infty$ reelle Konstanten und $I = [0, T]$ ein reelles Intervall, welches wir in die beiden disjunkten Teilintervalle $I_{1} = [0, T_{f})$ und $I_{2} = [T_{f}, T]$ zerlegen.
+Wir interpretieren die Größe $t \in I$ als Zeit, wobei dies einen rein notationellen und keinen physikalischen Hintergrund hat.
+Weiter sei $\Omega \subset \mathbb{R}^{n}$, $n \in \mathbb{N}$, ein beschränktes Gebiet, das heißt offen, nichtleer, zusammenhängend und beschränkt, welches einen Lipschitz"=Rand besitzt.
 
-An dieser Stelle wollen wir den Begriff der Felder konkretisieren.
-Dies dient vor allem der einfacheren Notation und Benennung, weswegen wir den definierten Abbildungen möglichst wenige einschränkende Bedingungen auferlegen wollen.
-\begin{Definition}[Felder]
-    Seien Abbildungen $w_{1}, w_{2} \in L_{\infty}(\Omega)$ und charakteristische Funktionen $\chi_{I_{1}}, \chi_{I_{2}}$ gegeben.
-    Wir bezeichnen $w_{1}$ und $w_{2}$ als \emph{Felder}.
-    Ferner bezeichnen wir die Abbildung
+Zunächst wollen wir den Begriff der Felder konkretisieren.
+Dies dient vor allem der einfacheren Notation und Benennung, weswegen wir den definierten Abbildungen an dieser Stelle möglichst wenige einschränkende Bedingungen auferlegen wollen.
+
+\begin{Definition}
+\label{definition:feld_raum_zeit_feld}
+    Unter einem \emph{Feld} verstehen wir eine $L_{\infty}(\Omega)$-Abbildung $w$.
+    Seien $w_{1}, w_{2}$ Felder und $\chi_{I_{1}}, \chi_{I_{2}}$ charakteristische Funktionen.
+    Wir bezeichnen die Abbildung
     \begin{equation}
-    \label{eq:ps:pde:omega_definition}
-        \omega \colon I \times \Omega \to \mathbb{R}, \quad (t, \vec{x}) \mapsto
+    \label{eq:raum_zeit_feld}
+        \omega \colon I \times \Omega \to \mathbb{R}, \quad \omega(t, \vec{x}) =
         w_{1}(\vec{x}) \chi_{I_{1}}(t) + w_{2}(\vec{x}) \chi_{I_{2}}(t)
         =
         \begin{cases}
@@ -46,87 +41,88 @@ Dies dient vor allem der einfacheren Notation und Benennung, weswegen wir den de
             w_{2}(\vec{x}), & t \geq T_{f}.
         \end{cases}
     \end{equation}
-    als \emph{Raum-Zeit-Feld}.
+    als \emph{Raum"=Zeit"=Feld}.
 \end{Definition}
 
-Ebenso wollen wir zunächst den Begriff der \emph{Propagator-Differentialgleichung} definieren.
+Ebenso wollen wir nun den Begriff der \emph{Propagator"=Differentialgleichung} definieren.
 
 \begin{Definition}
-\label{def:ps:pde:propagator_dgl}
-    Es sei ein Raum-Zeit-Feld $\omega$ wie in \cref{eq:ps:pde:omega_definition}, eine Anfangsbedingung $u_{0} \colon \Omega \to \mathbb{R}$, ein Quellterm $g \colon I \times \Omega \to \mathbb{R}$, eine Randbedingung, sowie Konstanten $c \in \mathbb{R}_{+}$ und $\mu \in \mathbb{R}$ gegeben.
-    Als \emph{Propagator-Differentialgleichung} bezeichnen wir die parabolische partielle Differentialgleichung
+\label{definition:propagator_differentialgleichung}
+    Seien $\omega$ ein Raum"=Zeit"=Feld wie in \cref{eq:raum_zeit_feld}, $u_{0} \colon \Omega \to \mathbb{R}$ eine Anfangsbedingung, $g \colon I \times \Omega \to \mathbb{R}$ ein Quellterm sowie $c \in \mathbb{R}_{+}$ und $\mu \in \mathbb{R}$ Konstanten.
+    Als \emph{Propagator"=Differentialgleichung} bezeichnen wir die parabolische partielle Differentialgleichung
     \begin{equation}
-    \label{eq:ps:pde:propagator_dgl}
+    \label{eq:propagator_differentialgleichung}
         \left\{
         \begin{aligned}
-            u_{t}(t, x) - c \Delta u(t, x) + \omega(t, x) u(t, x) + \mu u(t, x) &= g(t, x) \quad &&\text{auf}~I \times \Omega,\\
-            u(0, x) &= u_{0}(x) \quad &&\text{auf}~\Omega, \\
-            u(t, x) \text{ erfüllt Randbedingung} &\quad &&\text{auf}~I \times \partial \Omega.
+            u_{t}(t, \vec{x}) - c \Delta u(t, \vec{x}) + \omega(t, \vec{x}) u(t, \vec{x}) + \mu u(t, \vec{x}) &= g(t, \vec{x}) \quad &&\text{auf}~I \times \Omega,\\
+            u(0, \vec{x}) &= u_{0}(\vec{x}) \quad &&\text{auf}~\Omega, \\
+            u(t, \vec{x})~\text{erfüllt eine vorgegebene Randbe}&\text{dingung} &&\text{auf}~I \times \partial \Omega.
         \end{aligned}
         \right.
     \end{equation}
 \end{Definition}
 
-Da, wie in \cref{cha:el:einleitung} erwähnt, der Mittelwert der Felder keinen Einfluss auf das Ergebnis des dort beschriebenen Iterationsverfahrens hat, führen wir den zusätzlichen Term $\mu u(t, x)$ ein.
-Dieser wird sich bei der späteren numerischen Umsetzung als nützlich erweisen.
+Wie in der Einleitung erwähnt, hat der Mittelwert der Felder keinen Einfluss auf das Ergebnis des dort beschriebenen Iterationsverfahrens, weswegen wir den zusätzlichen Term $\mu u(t, \vec{x})$ einführen können.
+Dieser wird sich bei den folgenden theoretischen Untersuchungen und auch numerischen Umsetzung als nützlich erweisen.
 
-% \section{Raum-Zeit-Variationsformulierung} % (fold)
-% \label{sub:ps:rzvp:raum_zeit_variationsformulierung}
-
-Unser Ziel ist es nun, eine Raum-Zeit-Variationsformulierung der Propagator-Differen"-ti"-al"-gleichung
-aus \cref{def:ps:pde:propagator_dgl} herzuleiten.
+Unser Ziel ist es nun, eine Raum"=Zeit"=Variationsformulierung der Propagator"=Differentialgleichung
+aus obiger Definition herzuleiten.
 Diese wird uns als Ausgangspunkt für die angedachten numerischen Verfahren dienen, weswegen wir uns auch bei der theoretischen Arbeit auf diese konzentrieren werden.
 
 Zunächst führen wir aber eine Einschränkung der möglichen Randbedingungen durch.
-Von größtem Interesse sind für uns, bedingt durch die Motivation der parabolischen Differentialgleichung in \cref{cha:el:einleitung}, der Fall homogener Dirichlet-Randbedingungen, also $u(t, x) = 0$ auf $I \times \partial \Omega$, und der Fall periodischer Randbedingungen.
-Letztere werden am Ende dieses Kapitels nochmals aufgegriffen, während wir uns im Rest der Ausführungen auf den Fall homogener Dirichlet-Randbedingungen beschränken.
+Von größtem Interesse sind für uns, bedingt durch die Motivation der parabolischen Differentialgleichung in \cref{chapter:einleitung}, der Fall homogener Dirichlet"=Randbedingungen, also $u(t, \vec{x}) = 0$ auf $I \times \partial \Omega$, und der Fall periodischer Randbedingungen.
+Letztere werden am Ende dieses Kapitels wieder aufgegriffen, während wir uns im Rest der Ausführungen auf den Fall homogener Dirichlet"=Randbedingungen beschränken.
 
-Bei der Herleitung der Raum-Zeit-Variationsformulierung der Propagator-Differential"-glei"-chung werden wir Schrittweise vorgehen und zunächst den stationären Fall betrachten, bevor wir darauf aufbauend die schwache Raum-Zeit-Variationsformulierung erhalten.
-Als Grundlage für die schwache Formulierung im stationären Fall verwenden wir die wohlbekannten Sobolev-Räume.
+Bei der Herleitung der Raum"=Zeit"=Variationsformulierung der Propagator"=Differentialgleichung werden wir Schrittweise vorgehen und zunächst den stationären Fall betrachten, bevor wir darauf aufbauend die schwache Raum"=Zeit"=Variationsformulierung erhalten.
+Als Grundlage für die schwache Formulierung im stationären Fall verwenden wir die wohlbekannten Sobolev"=Räume.
 Die folgende Bemerkung führt die notwendigen Notationen in diesem Zusammenhang ein.
 
 \begin{Bemerkung}
-\label{bemerkung:prop:gelfand}
-    Wir schreiben kurz $V = H^{1}_{0}(\Omega)$ und $H = L_{2}(\Omega)$ für den bekannten Sobolev- respektive Lebesgue-Raum auf $\Omega$.
-    Da es sich hierbei jeweils um einen Hilbertraum handelt, kennzeichnen wir die entsprechenden Skalarprodukte $\skp{\blank}{\blank}{}$ und Normen $\norm{\blank}$ durch den jeweiligen Index.
-    Da weiter $V$ ein dichter Unterraum von $H$ ist, können wir nach \cref{def:gl:br:gelfand_tripel} ein Gelfand-Tripel der Form
+\label{bemerkung:raeume_und_gelfand_tripel}
+    Wir schreiben kurz $V = H^{1}_{0}(\Omega)$ und $H = L_{2}(\Omega)$ für den bekannten Sobolev- respektive Lebesgue"=Raum auf $\Omega$.
+    Dabei handelt es sich jeweils um einen Hilbertraum; wir kennzeichnen durch den jeweiligen Index die entsprechenden Skalarprodukte $\skp{\blank}{\blank}{}$ und Normen $\norm{\blank}$.
+    Als $V$-Norm wählen wir $\norm{\eta}_{V} = (\norm{\eta}^{2}_{H} + \norm{\grad \eta}^{2}_{H})^{1/2}$.
+
+    Da bekanntermaßen $V$ dicht in $H$ eingebettet werden kann, definiert
     \begin{equation}
-        V \denseinclusion H \denseinclusion V' = (H^{1}_{0}(\Omega))' = H^{-1}(\Omega)
+        V \denseinclusion H \simeq H' \denseinclusion V' = (H^{1}_{0}(\Omega))' = H^{-1}(\Omega)
     \end{equation}
-    definieren.
-    Motiviert durch \cref{lemma:stetige_fortstetung_der_dualen_paarung} verwenden wir die Schreibweise $\skp{\blank}{\blank}{V' \times V}$ auch für die duale Paarung auf $V' \times V$.
+    ein Gelfand"=Tripel, vergleiche \cref{def:gl:br:gelfand_tripel}.
+    Motiviert durch \cref{bemekerung:duality_pairing_stetig_und_so} verwenden wir die Schreibweise $\skp{\blank}{\blank}{V' \times V}$ auch für die duale Paarung auf $V' \times V$.
 \end{Bemerkung}
 
-Damit können wir nun den folgenden Operator und eine zugehörige Bilinearform definieren.
+Damit können wir den folgenden Operator und die zugehörige Bilinearform definieren.
 
 \begin{Definition}
-\label{definition:prop:operator_und_bilinearform}
-    Es seien Felder $\omega$ wie in \cref{eq:ps:pde:omega_definition} und Konstanten $c \in \mathbb{R}_{+}$ sowie $\mu \in \mathbb{R}$ gegeben.
+\label{definition:operator_bilinearform_zeit}
+    Seien $\omega$ ein Raum"=Zeit"=Feld sowie $c \in \mathbb{R}_{+}$ und $\mu \in \mathbb{R}$ Konstanten.
     Wir definieren für $t \in I$ eine Familie von Operatoren
     \begin{equation}
-        A(t) \colon V \to V', \quad \eta \mapsto A(t) \eta = - c \Delta \eta + \omega(t, \blank) \eta + \mu \eta
+        \label{eq:operator_zeit}
+        A(t) \colon V \to V', \quad  A(t) \eta = - c \Delta \eta + \omega(t, \blank) \eta + \mu \eta
     \end{equation}
-    und eine Familie von Bilinearformen
+    und eine zugehörige Familie von Bilinearformen
     \begin{equation}
-        a(\blank, \blank; t) \colon V \times V \to \mathbb{R}, \quad (\eta, \zeta) \mapsto a(\eta, \zeta; t) = \skp{A(t)\eta}{\zeta}{V' \times V}.
+        \label{eq:bilinearform_zeit}
+        a(\blank, \blank; t) \colon V \times V \to \mathbb{R}, \quad  a(\eta, \zeta; t) = \skp{A(t)\eta}{\zeta}{V' \times V}.
     \end{equation}
 \end{Definition}
 
 \begin{Bemerkung}
-\label{bemerkung:prop:biliniearform_riesz}
-    Die Existenz der Bilinearform $a(\blank, \blank; t)$ zu dem Operator $A(t)$ lässt sich durch den Rieszschen Darstellungssatz begründen, siehe beispielsweise \cite[Theorem \S{}22.1]{Halmos:1957vd}.
+\label{bemerkung:operator_bilinearform_riesz}
+    Die Existenz der Bilinearform $a(\blank, \blank; t)$ zum jeweiligen Operator $A(t)$ lässt sich durch den Rieszschen Darstellungssatz begründen, siehe beispielsweise \cite[Theorem \S{}22.1]{Halmos:1957vd}.
 \end{Bemerkung}
 
-Aufgrund der gewählten Rahmenbedingungen können wir die Bilinearform $a(\blank, \blank; t)$ aus der vorhergehenden Definition explizit angeben.
-Dazu greifen wir unter anderem auf die wohlbekannte schwache Formulierung des Laplace-Operators $- \Delta \colon V \to V'$ zurück.
-Dieser lässt sich aufgrund der Wahl von $V$ auch als eine Bilinearform auf $V \times V$ der Form
+Aufgrund der gewählten Rahmenbedingungen können wir die Bilinearform $a(\blank, \blank; t)$ explizit angeben.
+Dazu greifen wir unter anderem auf die wohlbekannte schwache Formulierung des Laplace"=Operators $- \Delta \colon V \to V'$ zurück.
+Diese lässt sich durch die Wahl von $V$ als eine Bilinearform auf $V \times V$ der Form
 \begin{equation}
     (\eta, \zeta) \mapsto \skp{- \Delta \eta}{\zeta}{V' \times V} = \skp{\grad \eta}{\grad \zeta}{H}
 \end{equation}
 schreiben.
 Damit ergibt sich zusammen mit der Linearität der dualen Paarung
 \begin{equation}
-\label{eq:prop:bilinearform_darstellung}
+\label{eq:bilinearform_formel}
     \begin{aligned}
         a(\eta, \zeta; t)
             &= \skp{A(t) \eta}{\zeta}{V' \times V}
@@ -135,56 +131,69 @@ Damit ergibt sich zusammen mit der Linearität der dualen Paarung
           \\&= c\skp{\grad \eta}{\grad \zeta}{H} + \skp{\omega(t, \blank) \eta}{\zeta}{H} + \mu \skp{\eta}{\zeta}{H},
     \end{aligned}
 \end{equation}
-wobei bei der Wechsel von dualer Paarung auf $V' \times V$ zum $H$-Skalarprodukt beim zweiten und dritten Summanden durch \cref{lemma:stetige_fortstetung_der_dualen_paarung} und die Tatsache, dass mit $\eta \in V \subset H$ und der Definition von $\omega$ auch $\omega(t, \blank) \eta \in H$ gilt, gerechtfertigt ist.
+wobei bei der Wechsel von dualer Paarung auf $V' \times V$ zum $H$-Skalarprodukt beim zweiten und dritten Summanden durch \cref{bemekerung:duality_pairing_stetig_und_so} und die Tatsache, dass mit $\eta \in V \subset H$ und der \cref{definition:feld_raum_zeit_feld} von $\omega$ auch $\omega(t, \blank) \eta \in H$ gilt, gerechtfertigt ist.
 
-Wir weisen nun zwei Eigenschaften für diesen Operator respektive die zugehörige Bilinearform nach, welche eine wichtige Rolle für die spätere Raum-Zeit-Variationsformu"-lie"-rung spielen werden.
+\begin{Bemerkung}
+\label{bemerkung:raum_zeit_feld_norm_zeitunabhaengig}
+    Nach Definition von $\omega$ in \cref{eq:raum_zeit_feld} gilt offenbar
+    \begin{equation}
+        \norm{\omega(t, \blank)}_{L_{\infty}(\Omega)} = \norm{w_{1}}_{L_{\infty}(\Omega)} \chi_{I_{1}}(t) + \norm{w_{2}}_{L_{\infty}(\Omega)} \chi_{I_{2}}(t),
+    \end{equation}
+    damit gilt wegen der Zerlegung $I = I_{1} \cupdot I_{2}$ insbesondere
+    \begin{equation}
+        \norm{\omega}_{L_{\infty}(I; L_{\infty}(\Omega))} = \esssup_{t \in I} \norm{\omega(t, \blank)}_{L_{\infty}(\Omega)} = \max\Set{ \norm{w_{1}}_{L_{\infty}(\Omega)}, \norm{w_{2}}_{L_{\infty}(\Omega)} } < \infty.
+    \end{equation}
+\end{Bemerkung}
+
+Wir weisen nun zwei Eigenschaften für diesen Operator respektive die zugehörige Bilinearform nach, welche eine wichtige Rolle für die spätere Raum"=Zeit"=Variationsformulierung spielen werden.
 
 \begin{Satz}
-\label{satz:ps:rzvp:bilinearform_a_eigenschaften}
-    Sei $a(\blank, \blank; t)$, $t \in I$, die Familie von Bilinearformen aus \cref{definition:prop:operator_und_bilinearform} respektive \cref{eq:prop:bilinearform_darstellung}.
-    Für festes $t \in I$ erfüllt $a(\blank, \blank; t)$ die folgenden Eigenschaften:
+\label{satz:bilinearform_messbar_stetig_garding}
+    Sei $a(\blank, \blank; t)$, $t \in I$, die Familie von Bilinearformen aus \cref{eq:bilinearform_formel}.
+    Diese Bilinearformen erfüllen die folgenden Eigenschaften:
     \begin{thmenumerate}
-        \item\label{satz:ps:rzvp:bilinearform_a_eigenschaften_stetig}
+        \item\label{satz:bilinearform_messbar_stetig_garding:messbar}
+        \emph{Messbarkeit}: die Abbildung $I \ni t \mapsto a(\blank, \blank; t)$ ist messbar.
+        \item\label{satz:bilinearform_messbar_stetig_garding:stetig}
         \emph{Stetigkeit:} es gilt
         \begin{equation}
-            \label{eq:ps:rzvp:bilinearform_a_eigenschaften_stetig}
+            \label{eq:bilinearform_messbar_stetig_garding:stetig}
             \abs{a(\eta, \zeta; t)} \leq \gamma_{a} \norm{\eta}_{V} \norm{\zeta}_{V} \quad \text{für alle}~\eta, \zeta \in V
         \end{equation}
-        mit Stetigkeitskonstante $\gamma_{a} = \max\Set{c, \norm{\omega(t, \blank)}_{L_{\infty}(\Omega)} + \abs{\mu}} < \infty$.
-        \item\label{satz:ps:rzvp:bilinearform_a_eigenschaften_garding}
-        \emph{G\aa{}rding-Ungleichung:} es gilt
+        mit Stetigkeitskonstante $\gamma_{a} = \max\Set{c, \norm{\omega}_{L_{\infty}(I; L_{\infty}(\Omega))} + \abs{\mu}} < \infty$.
+        \item\label{satz:bilinearform_messbar_stetig_garding:garding}
+        \emph{G\aa{}rding"=Ungleichung:} es gilt
         \begin{equation}
-            \label{eq:ps:rzvp:bilinearform_a_eigenschaften_garding}
+            \label{eq:bilinearform_messbar_stetig_garding:garding}
             a(\eta, \eta; t) + \lambda \norm{\eta}_{H}^{2} \geq \alpha \norm{\eta}_{V}^{2} \quad \text{für alle}~\eta \in V
         \end{equation}
-        mit $\alpha = c \gamma_{\Omega}^{2} > 0$ und $\lambda = \max\Set{\norm{\omega(t, \blank)}_{L_{\infty}(\Omega)} - \mu, 0} \geq 0$, wobei $\gamma_{\Omega}$ die Poincaré-Friedrichs-Konstante ist.
+        mit $\alpha = c \gamma_{\Omega}^{2} > 0$ und $\lambda = \max\Set{\norm{\omega}_{L_{\infty}(I; L_{\infty}(\Omega))} - \mu, 0} \geq 0$, wobei $\gamma_{\Omega}$ die Poincaré"=Friedrichs"=Konstante ist.
     \end{thmenumerate}
 
     \begin{Beweis}
-        Für den Nachweis der beiden Eigenschaften nehmen wir ohne Einschränkung $t \in I_{1}$ an, das heißt, es gilt $\omega(t, \blank) = w_{1}$.
+        Die Messbarkeit folgt aus ... irgendwas!
 
         Zunächst zeigen wir die Stetigkeit.
-        Seien dazu $\eta, \zeta \in V$ beliebig, dann erhalten wir unter Verwendung der Dreiecks- und der Cauchy-Schwarz-Ungleichung
+        Seien dazu $\eta, \zeta \in V$ beliebig, dann erhalten wir unter Verwendung der Dreiecks- und der Cauchy"=Schwarz"=Ungleichung für beliebiges $t \in I$ die Abschätzung
         \begin{align}
             \abs{a(\eta, \zeta; t)}
-            &= \abs{c \skp{\grad \eta}{\grad \zeta}{H} + \skp{w_{1} \eta}{\zeta}{H} + \mu \skp{\eta}{\zeta}{H} }
-            \\&\leq c \abs{\skp{\grad \eta}{\grad \zeta}{H}} + \abs{\skp{w_{1} \eta}{\zeta}{H}} + \abs{\mu} \abs{\skp{\eta}{\zeta}{H}}
-            \\&\leq c \norm{\grad \eta}_{H} \norm{\grad \zeta}_{H} + \left( \norm{w_{1}}_{L_{\infty}(\Omega)} + \abs{\mu} \right) \norm{\eta}_{H} \norm{\zeta}_{H}
-            \\&\leq \max \Set{ c, \norm{w_{1}}_{L_{\infty}(\Omega)} + \abs{\mu}} \norm{\eta}_{V} \norm{\zeta}_{V}.
-            \\&= \max \Set{ c, \norm{\omega(t, \blank)}_{L_{\infty}(\Omega)} + \abs{\mu}} \norm{\eta}_{V} \norm{\zeta}_{V}.
+            &= \abs{c \skp{\grad \eta}{\grad \zeta}{H} + \skp{\omega(t, \blank) \eta}{\zeta}{H} + \mu \skp{\eta}{\zeta}{H} }
+            \\&\leq c \abs{\skp{\grad \eta}{\grad \zeta}{H}} + \abs{\skp{\omega(t, \blank) \eta}{\zeta}{H}} + \abs{\mu} \abs{\skp{\eta}{\zeta}{H}}
+            \\&\leq c \norm{\grad \eta}_{H} \norm{\grad \zeta}_{H} + \left( \norm{\omega}_{L_{\infty}(I; L_{\infty}(\Omega))} + \abs{\mu} \right) \norm{\eta}_{H} \norm{\zeta}_{H}
+            \\&\leq \max \Set{ c, \norm{\omega}_{L_{\infty}(I; L_{\infty}(\Omega))} + \abs{\mu}} \norm{\eta}_{V} \norm{\zeta}_{V}.
         \end{align}
-        Für die G\aa{}rding-Ungleichung seien nun $\eta \in V$ und $\lambda \in \mathbb{R}$.
+        Für die G\aa{}rding"=Ungleichung seien nun $\eta \in V$ und $\lambda \in \mathbb{R}$.
         Es gilt
         \begin{align}
             a(\eta, \eta; t) + \lambda \norm{\eta}^{2}_{H}
-            &= c \norm{\grad \eta}^{2}_{H} + \skprod{w_{1} \eta}{\eta}_{H} + \mu \skprod{\eta}{\eta}_{H} + \lambda \skprod{\eta}{\eta}_{H}
-            \\&= c \norm{\grad \eta}^{2}_{H} + \skprod{(w_{1} + \mu + \lambda) \eta}{\eta}_{H}.
+            &= c \norm{\grad \eta}^{2}_{H} + \skprod{\omega(t, \blank) \eta}{\eta}_{H} + \mu \skprod{\eta}{\eta}_{H} + \lambda \skprod{\eta}{\eta}_{H}
+            \\&= c \norm{\grad \eta}^{2}_{H} + \skprod{(\omega(t, \blank) + \mu + \lambda) \eta}{\eta}_{H}.
         \end{align}
-        Wählen wir nun $\lambda = \max\Set{\norm{w_{1}}_{L_{\infty}(\Omega)} - \mu, 0} = \max\Set{\norm{\omega(t, \blank)}_{L_{\infty}(\Omega)} - \mu, 0} \geq 0$, dann gilt $w_{1} + \mu + \lambda \geq 0$ fast überall in $\Omega$ und wir erhalten die Abschätzung
+        Wählen wir nun $\lambda = \max\Set{\norm{\omega}_{L_{\infty}(I; L_{\infty}(\Omega))} - \mu, 0} \geq 0$, dann gilt $\omega + \mu + \lambda \geq 0$ fast überall in $\Omega$ für alle $t \in I$ und wir erhalten die Abschätzung
         \begin{align}
             a(\eta, \eta; t) + \lambda \norm{\eta}^{2}_{H}
             &\geq c \norm{\grad \eta}^{2}_{H},
-            \intertext{woraus wir durch Anwenden der Poincaré-Friedrichs-Ungleichung (\cref{satz:gl:poincare_friedrichs_ungleichung})}
+            \intertext{woraus wir durch Anwenden der Poincaré"=Friedrichs"=Ungleichung, \cref{satz:poincare_ungleichung},}
             a(\eta, \eta;t ) + \lambda \norm{\eta}^{2}_{H}
             &\geq c \gamma_{\Omega}^{2} \norm{\eta}^{2}_{V}
         \end{align}
@@ -192,68 +201,52 @@ Wir weisen nun zwei Eigenschaften für diesen Operator respektive die zugehörig
     \end{Beweis}
 \end{Satz}
 
-\begin{Bemerkung}
-\label{bemerkung:rzvp:bilinearform_zeitunabhaengig}
-    Nach Definition von $\omega$ in \cref{eq:ps:pde:omega_definition} gilt offenbar
-    \begin{equation}
-        \norm{\omega(t, \blank)}_{L_{\infty}(\Omega)} = \norm{w_{1}}_{L_{\infty}(\Omega)} \chi_{I_{1}}(t) + \norm{w_{2}}_{L_{\infty}(\Omega)} \chi_{I_{2}}(t),
-    \end{equation}
-    damit gilt wegen der Zerlegung $I = I_{1} \cupdot I_{2}$ insbesondere die Ungleichung
-    \begin{equation}
-        \min\Set{ \norm{w_{1}}_{L_{\infty}(\Omega)}, \norm{w_{2}}_{L_{\infty}(\Omega)} } \leq \norm{\omega}_{L_{\infty}(I; L_{\infty}(\Omega))} \leq \max\Set{ \norm{w_{1}}_{L_{\infty}(\Omega)}, \norm{w_{2}}_{L_{\infty}(\Omega)} }.
-    \end{equation}
-    Dies erlaubt uns, die Konstanten $\gamma_{a}$ und $\lambda$ im vorherigen \cref{satz:ps:rzvp:bilinearform_a_eigenschaften} ebenfalls unabhängig von $t \in I$ zu wählen, beispielsweise als
-    \begin{equation}
-        \gamma_{a} = \max\Set{c, \norm{\omega}_{L_{\infty}(I; L_{\infty}(\Omega))} + \abs{\mu}}, \quad
-        \lambda = \max\Set{\norm{\omega}_{L_{\infty}(I; L_{\infty}(\Omega))} - \mu, 0}.
-    \end{equation}
-\end{Bemerkung}
-
 \begin{Korollar}
-\label{kor:ps:rzvp:bilinearform_elliptisch}
-    Ist $\mu \geq \norm{\omega(t, \blank)}_{L_{\infty}(\Omega)}$, dann ist die Bilinearform $a(\blank, \blank; t)$ aus \cref{satz:ps:rzvp:bilinearform_a_eigenschaften} elliptisch.
+\label{korollar:bilinearform_elliptisch}
+    Ist $\mu \geq \norm{\omega}_{L_{\infty}(I; L_{\infty}(\Omega))}$, dann ist die Bilinearform $a(\blank, \blank; t)$ elliptisch.
 \end{Korollar}
 
 
-Mit dieser Vorarbeit können wir uns nun der schwachen Formulierung der Propagator-Differentialgleichung widmen.
-Diese können wir informell durch Multiplikation der parabolischen Differentialgleichung aus \cref{def:ps:pde:propagator_dgl} mit einer Raum-Zeit-Testfunktion $v_{1}$ und Integration über $\Omega$ und $I$ sowie Addition der Anfangsbedingung, welche mit einer Raum-Testfunktion $v_{2}$ multipliziert und anschließend über $\Omega$ integriert wird, herleiten.
+Mit dieser Vorarbeit können wir uns nun der schwachen Formulierung der Propagator"=Differentialgleichung widmen.
+Diese können wir informell durch Multiplikation der parabolischen Differentialgleichung \cref{eq:propagator_differentialgleichung} mit einer Raum"=Zeit"=Testfunktion $v_{1}$ und Integration über $\Omega$ und $I$ sowie Addition der Anfangsbedingung, welche mit einer Raum"=Testfunktion $v_{2}$ multipliziert und anschließend über $\Omega$ integriert wird, herleiten.
 
-Um das Ganze auf eine rigorose Ebene zu bringen, benötigen wir zunächst zwei Hilberträume, welche als sogenannter Ansatz- respektive Testraum dienen werden.
-Dabei handelt es sich um die Räume
+Um das Ganze auf eine rigorose Ebene zu bringen, benötigen wir zunächst zwei Raum"=Zeit"=Hilberträume, welche als sogenannter Ansatz- respektive Testraum dienen werden.
+Es bietet sich an, die aus der \cref{def:gl:le:ansatz_und_testraum} bereits bekannten Räume
 \begin{equation}
-    \label{eq:ps:rzvp:ansatzraum_testraum}
+    \label{eq:raum_zeit_ansatzraum_testraum}
     \mathcal X = L_{2}(I; V) \cap H^{1}(I; V')
     \quad \text{und} \quad
     \mathcal Y = L_{2}(I; V) \times H,
 \end{equation}
-welche uns bereits aus \cref{def:gl:le:ansatz_und_testraum} bekannt sind.
-Damit können wir diesen Abschnitt mit der folgenden Definition der schwachen Formulierung abschließen:
+zu verwenden.
+Damit können wir die schwache Formulierung nun wie folgt definieren.
 
 \begin{Definition}[Schwache Formulierung]
-\label{definition:schwache_formulierung}
-    Es sei ein Quellterm $g \in L_{2}(I; V')$ und eine Anfangsbedingung $u_{0} \in H$ gegeben.
-    Als \emph{schwache Formulierung} oder \emph{Raum-Zeit-Variationsformulierung} der Propagator-Differentialgleichung bezeichnen wir das folgende Variationsproblem:
+\label{definition:raum_zeit_variationsformulierung}
+    Seien $g \in L_{2}(I; V')$ ein Quellterm und $u_{0} \in H$ eine Anfangsbedingung.
+    Als \emph{schwache Formulierung} oder \emph{Raum"=Zeit"=Variationsformulierung} der Propagator"=Differentialgleichung \cref{eq:propagator_differentialgleichung} bezeichnen wir das folgende Variationsproblem:
     \begin{equation}
-    \label{eq:ps:rzvp:schwache_formulierung}
+    \label{eq:raum_zeit_variationsformulierung}
         \text{Finde}~u \in \mathcal X \colon \quad  b(u, v) = f(v) \quad \fa v = (v_{1}, v_{2}) \in \mathcal Y.
     \end{equation}
     Dabei sei die Bilinearform $b(\blank, \blank) \colon \mathcal X \times \mathcal Y \to \mathbb{R}$ durch
     \begin{equation}
-        \label{eq:ps:rzvp:schwache_formulierung_lhs_b}
+        \label{eq:raum_zeit_variationsformulierung:lhs}
         b(u, v)
-            = \int_{I} \skprod{u_{t}(t)}{v_{1}(t)}_{V' \times V} + a(u(t), v_{1}(t); t) \diff t + \skprod{u(0)}{v_{2}}_{H}
+            = \int_{I} \left[ \skp{u_{t}(t)}{v_{1}(t)}{V' \times V} + a(u(t), v_{1}(t); t) \right]  \diff t + \skprod{u(0)}{v_{2}}_{H}
     \end{equation}
     und das stetige lineare Funktional $f \colon \mathcal Y \to \mathbb{R}$ auf der rechten Seite durch
     \begin{equation}
-        \label{eq:ps:rzvp:schwache_formulierung_rhs_f}
-        f(v) = \int_{I} \skprod{g(t)}{v_{1}(t)}_{V' \times V} \diff t + \skprod{u_{0}}{v_{2}}_{H}
+        \label{eq:raum_zeit_variationsformulierung:rhs}
+        f(v) = \int_{I} \skp{g(t)}{v_{1}(t)}{V' \times V} \diff t + \skprod{u_{0}}{v_{2}}_{H}
     \end{equation}
     gegeben.
 \end{Definition}
 
 \begin{Bemerkung}
+\label{bemerkung:raum_zeit_variationsformulierung_rhs_stetig}
     Die Linearität von $f$ ist direkt ersichtlich; die Stetigkeit aber wollen wir an dieser Stelle nachweisen.
-    Durch Anwendung der Cauchy-Schwarz- und der Hölder-Ungleichung erhalten wir
+    Durch Anwendung der Cauchy"=Schwarz- und der Hölder"=Ungleichung erhalten wir
     \begin{equation}
         \begin{aligned}
             f(v)
@@ -269,263 +262,264 @@ Damit können wir diesen Abschnitt mit der folgenden Definition der schwachen Fo
     und damit die Stetigkeit, wobei die Ungleichung $x + y \leq \sqrt{2} \sqrt{x^2 + y^2}$, welche für alle $x, y \in \mathbb{R}$ gilt, für die letzte Abschätzung verwendet wurde.
 \end{Bemerkung}
 
-
-\section{Existenz und Eindeutigkeit von Lösungen} % (fold)
-\label{sub:ps:eel:existenz_und_eindeutigkeit_von_loesungen}
-
-An dieser Stelle wollen wir nun nachweisen, dass die schwache Formulierung aus \cref{definition:schwache_formulierung} im Sinne von \cref{def:gl:le:hadamard_sachgemaess_gestellt} sachgemäß gestellt ist.
-Hier können wir mit \cref{satz:gl:le:ss09_theorem51} ansetzen, welcher unter den gegebenen Rahmenbedingungen die zu prüfenden Bedingungen auf die in \cref{satz:ps:rzvp:bilinearform_a_eigenschaften,bemerkung:rzvp:bilinearform_zeitunabhaengig} bereits nachgewiesenen reduziert.
-Wir fassen dies zu folgendem Satz zusammen:
+Der nächste Schritt ist nun, nachzuweisen, dass die obige Raum"=Zeit"=Variationsformulierung sachgemäß gestellt ist im Sinne von Hadamard, \cref{def:gl:le:hadamard_sachgemaess_gestellt}, also eine eindeutige Lösung besitzt, welche stetig von dem Funktional $f \in \mathcal Y'$ abhängt.
+Hierzu werden wir mit \cref{satz:gl:le:ss09_theorem51} ansetzen, welcher unter den gegebenen Rahmenbedingungen die zu prüfenden Bedingungen auf die in \cref{satz:bilinearform_messbar_stetig_garding} bereits nachgewiesenen reduziert.
 
 \begin{Korollar}
-\label{satz:ps:eel:schwache_formulierung_sachgemaess_gestellt}
-    Seien Ansatz- und Testraum $\mathcal X$ und $\mathcal Y$ wie in \cref{eq:ps:rzvp:ansatzraum_testraum} gegeben.
-    Sei weiter ein Operator $B \colon \mathcal X \to \mathcal Y'$ definiert durch
-    \begin{equation}
-        \skprod{Bu}{v}_{\mathcal Y' \times \mathcal Y}  = b(u, v), \quad u \in \mathcal X,~ v \in \mathcal Y,
-    \end{equation}
-    wobei $b(\blank, \blank)$ die Bilinearform aus \cref{eq:ps:rzvp:schwache_formulierung_lhs_b} sei,
-    dann ist $B$ stetig invertierbar.
-    Insbesondere ist damit die Raum-Zeit-Variationsformulierung sachgemäß gestellt.
+\label{satz:raum_zeit_variationsformulierung_sachgemaess_gestellt}
+    Seien Ansatz- und Testraum $\mathcal X$ und $\mathcal Y$ wie in \cref{eq:raum_zeit_ansatzraum_testraum}.
+    Dann ist die Raum"=Zeit"=Variationsformulierung \cref{eq:raum_zeit_variationsformulierung} sachgemäß gestellt.
+
+    \begin{Beweis}
+        Folgt nach Definition der Raum"=Zeit"=Variationsformulierung unmittelbar aus \cref{satz:gl:le:ss09_theorem51} und \cref{satz:bilinearform_messbar_stetig_garding}.
+    \end{Beweis}
 \end{Korollar}
 
-Weiter erhalten wir als Nebenprodukt aus \cref{kor:gl:le:ss09_theorem51_ungleichungen} auch Schranken für die Stetigkeitskonstante $\gamma_{b}$ sowie die inf-sup-Konstante $\beta$ der Bilinearform $b(\blank, \blank)$.
+Weiter erhalten wir als Nebenprodukt aus \cref{kor:gl:le:ss09_theorem51_ungleichungen} auch Schranken für die Stetigkeitskonstante $\gamma_{b}$ sowie die inf-sup"=Konstante $\beta$ der Bilinearform $b(\blank, \blank)$.
 
 \begin{Korollar}
-\label{kor:ps:eel:schwache_formulierung_operator_schranken}
-    Unter den selben Gegebenheiten wie in \cref{satz:ps:eel:schwache_formulierung_sachgemaess_gestellt} gelten, falls die Bilinearform $a(\blank, \blank;t)$ die G\aa{}rding-Ungleichung \cref{eq:ps:rzvp:bilinearform_a_eigenschaften_garding} mit $\lambda = 0$ erfüllt, die Abschätzungen
-    \begin{align}
-        \gamma_{b} = \norm{B}_{\mathcal L(\mathcal X, \mathcal Y')} &\leq \sqrt{2 \max\Set{ 1, c, \norm{\omega}_{L_{\infty}(I; L_{\infty}(\Omega))} + \abs{\mu} }^{2} + M_{e}^{2} }, \\
-        \beta^{-1} = \norm{B^{-1}}_{\mathcal L(\mathcal Y', \mathcal X)} &\leq \frac{\sqrt{2 \max\Set{c^{-2}\gamma_{\Omega}^{-4}, 1} + M_{e}^{2}}}{\gamma_{\Omega}^{2} \min\Set{c, c^{-1}, c (\norm{\omega}_{L_{\infty}(I; L_{\infty}(\Omega))} + \abs{\mu})^{-2}}}.
-    \end{align}
+\label{korollar:rz_variationsformulierung_stetig_infsup_schranken}
+    Seien die Voraussetzungen von \cref{satz:raum_zeit_variationsformulierung_sachgemaess_gestellt} gegeben.
+    Dann erfüllt die Bilinearform $b(\blank, \blank)$ die folgenden Eigenschaften:
+    \begin{thmenumerate}
+        \item \emph{Stetigkeit:} es gilt
+            \begin{equation}
+                \gamma_{b} = \sup_{u \in \mathcal X} \sup_{v \in \mathcal Y} \frac{b(u, v)}{\norm{u}_{\mathcal X} \norm{v}_{\mathcal Y}} < \infty.
+            \end{equation}
+        \item \emph{inf-sup-Bedingung:} es gilt
+            \begin{equation}
+                \beta = \inf_{u \in \mathcal X} \sup_{v \in \mathcal Y} \frac{b(u, v)}{\norm{u}_{\mathcal X} \norm{v}_{\mathcal Y}} > 0.
+            \end{equation}
+    \end{thmenumerate}
 
-    Ist dagegen $\lambda \neq 0$, dann erhält man zusätzliche Faktoren, wodurch die Abschätzungen zu
+    Erfüllt die Bilinearform $a(\blank, \blank; t)$ die G\aa{}rding"=Ungleichung \cref{eq:bilinearform_messbar_stetig_garding:garding} mit $\lambda = 0$, dann gilt
     \begin{align}
-        \gamma'_{b} = \norm{B}_{\mathcal L(\mathcal X, \mathcal Y')} &\leq \frac{\gamma_{b}}{\max\Set{\sqrt{1 + 2 (\norm{\omega}_{L_{\infty}(I; L_{\infty}(\Omega))} - \mu)^{2} \rho^{4} }, \sqrt{2}}}, \\
-        \beta'^{-1} = \norm{B^{-1}}_{\mathcal L(\mathcal Y', \mathcal X)} &\leq \frac{\max\Set{\sqrt{1 + 2 (\norm{\omega}_{L_{\infty}(I; L_{\infty}(\Omega))} - \mu)^{2} \rho^{4} }, \sqrt{2}}}{e^{-2(\norm{\omega}_{L_{\infty}(I; L_{\infty}(\Omega))} - \mu) T}} \beta^{-1}
+        \gamma_{b}  &\leq \sqrt{2 \max\Set{ 1, c, \norm{\omega}_{L_{\infty}(I; L_{\infty}(\Omega))} + \abs{\mu} }^{2} + M_{e}^{2} }, \\
+        \beta^{-1} &\leq \frac{\sqrt{2 \max\Set{c^{-2}\gamma_{\Omega}^{-4}, 1} + M_{e}^{2}}}{\gamma_{\Omega}^{2} \min\Set{c, c^{-1}, c (\norm{\omega}_{L_{\infty}(I; L_{\infty}(\Omega))} + \abs{\mu})^{-2}}}.
     \end{align}
-    werden.
-
+    Ist dagegen $\lambda > 0$, dann erhalten wir stattdessen die erweiterten Abschätzungen
+    \begin{align}
+        \gamma_{b} &\leq \frac{\gamma'_{b}}{\max\Set{\sqrt{1 + 2 (\norm{\omega}_{L_{\infty}(I; L_{\infty}(\Omega))} - \mu)^{2} \rho^{4} }, \sqrt{2}}}, \\
+        \beta^{-1} &\leq \frac{\max\Set{\sqrt{1 + 2 (\norm{\omega}_{L_{\infty}(I; L_{\infty}(\Omega))} - \mu)^{2} \rho^{4} }, \sqrt{2}}}{e^{-2(\norm{\omega}_{L_{\infty}(I; L_{\infty}(\Omega))} - \mu) T}} \beta'^{-1},
+    \end{align}
+    wobei $\gamma'_{b}$ und $\beta'$ den Größen $\gamma_{b}$ und $\beta$ des ersten Falles entsprechen.
     Die Größen $M_{e}$ und $\rho$ entsprechen dabei denen aus \cref{kor:gl:le:ss09_theorem51_ungleichungen}.
 \end{Korollar}
 
-% subsection existenz_und_eindeutigkeit_von_l_sungen (end)
-
-% section die_parabolische_partielle_differentialgleichung (end)
 
 \section{Parametrische Formulierung} % (fold)
-\label{sec:ps:pf:parametrische_formulierung}
+\label{section:parametrische_formulierung}
 
-Nachdem nun eine erste schwache Formulierung der Propagator-Differentialgleichung eingeführt wurde, welche in dieser Form bereits als Grundlage für eine numerische Umsetzung verwendet werden kann, wollen wir nun als nächsten Schritt eine Parametrisierung dieser vornehmen.
-Motiviert durch das Iterationsverfahren aus \cref{cha:el:einleitung}, in dem die Propagator-Differentialgleichung immer wieder für leicht variierte Felder $\omega$ berechnet wird, werden wir diese als Ausgangspunkt der Parametrisierung verwenden.
+Nachdem nun eine erste schwache Formulierung der Propagator"=Differentialgleichung eingeführt wurde, welche in dieser Form bereits als Grundlage für eine numerische Umsetzung verwendet werden kann, wollen wir nun als nächsten Schritt eine Parametrisierung dieser vornehmen.
+Motiviert durch das Iterationsverfahren aus \cref{chapter:einleitung}, in dem die Propagator"=Differentialgleichung immer wieder für leicht variierte Raum-Zeit-Felder $\omega$ berechnet wird, werden wir diese als Ausgangspunkt der Parametrisierung verwenden.
 
-Dazu kehren wir nun zunächst zum Operator $A(t)$ aus \cref{definition:prop:operator_und_bilinearform} zurück und betrachten diesen zunächst unabhängig von der Zeit $t \in I$, aber in Abhängigkeit von einem Feld $w \in L_{\infty}(\Omega)$.
+Dazu kehren wir nun zunächst zum Operator $A(t)$ aus \cref{definition:operator_bilinearform_zeit} zurück und betrachten diesen zunächst unabhängig von der Zeit $t \in I$, aber in Abhängigkeit von einem Feld $w \in L_{\infty}(\Omega)$.
 Wir definieren für $w \in L_{\infty}(\Omega)$ eine Familie von Operatoren $A(w)$ als
 \begin{equation}
-    \label{eq:ps:pf:operator_A}
+    \label{eq:operator_feld}
     A(w) \colon V \to V', \quad A(w) \eta = - c \Delta \eta + w \eta + \mu \eta
 \end{equation}
 und wie zuvor auch eine Familie von zugehörigen Bilinearformen $a(\blank, \blank; w)$ durch
 \begin{equation}
-    \label{eq:ps:pf:bilinearform_a}
+    \label{eq:bilinearform_feld}
     \begin{aligned}
         a(\blank, \blank; w) \colon V \times V \to \mathbb{R}, \quad
-        (\eta, \zeta) \mapsto c\skp{\grad \eta}{\grad \zeta}{H} + \skp{w \eta}{\zeta}{H} + \mu \skp{\eta}{\zeta}{H}.
+        a(\eta, \zeta; w) = c\skp{\grad \eta}{\grad \zeta}{H} + \skp{w \eta}{\zeta}{H} + \mu \skp{\eta}{\zeta}{H}.
     \end{aligned}
 \end{equation}
 
-Um die obige Abhängigkeit des Operators $A$ respektive der Bilinearformen vom Feld $w \in L_{\infty}(\Omega)$ auch für die nachfolgende numerische Umsetzung verwendbar zu machen, müssen wir die Abhängigkeit von einer Abbildung $w \in L_{\infty}(\Omega)$ durch eine Abhängigkeit von einer diskreten Größe, beispielsweise einer Koeffizientenfolge aus dem $\ell_{1}(\mathbb{N})$ oder ähnlichen Folgenräumen, ersetzen.
-Dies erreichen wir durch folgende Einschränkung der verwendeten Felder $w \in L_{\infty}(\Omega)$ auf Abbildungen, die wir als Reihenentwicklung von, hier noch nicht näher spezifizierten,  Abbildungen $\varphi_{j}$ darstellen können.
+Um die Abhängigkeit der obigen Operatoren respektive Bilinearformen vom Feld auch für die nachfolgende numerische Umsetzung verwendbar zu machen, wollen wir die Abhängigkeit von einer Abbildung $w \in L_{\infty}(\Omega)$ durch eine Abhängigkeit von einer diskreten Größe, beispielsweise einer Koeffizientenfolge aus dem $\ell_{1}(\mathbb{N})$ oder ähnlichen Folgenräumen, ersetzen.
+Dies erreichen wir durch folgende Einschränkung der verwendeten Felder $w \in L_{\infty}(\Omega)$ auf Abbildungen, die wir als Reihenentwicklung von hier noch nicht näher spezifizierten Abbildungen $\varphi_{j}$ darstellen können.
 
 \begin{Definition}
-\label{def:ps:pf:omega_affin}
-    Sei $\Set{\varphi_{j}}_{j \in \mathbb{N}} \subset L_{\infty}(\Omega)$ eine Folge von Funktionen und sei weiter ein Parameterraum $\mathcal P \subset \mathbb{R}^{\mathbb{N}}$ gegeben.
-    Wir nennen $w \in L_{\infty}(\Omega)$ \emph{affin} durch $\Set{\varphi_{j}}_{j \in \mathbb{N}}$ darstellbar, wenn ein $\sigma \in \mathcal P$ existiert, so dass $w$ mit
+\label{definition:feld_entwickelbar}
+    Sei $\Set{\varphi_{j}}_{j \in \mathbb{N}} \subset L_{\infty}(\Omega)$ ein System von Funktionen und sei weiter ein Parameterraum $\mathcal P \subset \mathbb{R}^{\mathbb{N}}$ gegeben.
+    Wir nennen ein Feld $w \in L_{\infty}(\Omega)$ \emph{darstellbar} durch $\Set{\varphi_{j}}_{j \in \mathbb{N}}$, wenn ein $\bm{\sigma} \in \mathcal P$ existiert, so dass $w$ mit
     \begin{equation}
-        w(\blank; \sigma) = \sum_{j = 1}^{\infty} \sigma_{j} \varphi_{j}
+        w(\blank; \bm\sigma) = \sum_{j = 1}^{\infty} \sigma_{j} \varphi_{j}
     \end{equation}
     übereinstimmt.
 \end{Definition}
 
+Wir können mit einem festen System $\Set{\varphi_{j}}_{j \in \mathbb{N}}$ im Allgemeinen nicht alle möglichen $L_{\infty}(\Omega)$-Funktionen darstellen.
+Dies ist aber auch nicht nötig, da, wie man in der Einführung bereits gesehen hat, die während des Iterationsverfahrens tatsächlich auftretenden Felder gewisse Eigenschaften, beispielsweise Symmetrien, aufweisen, und wir diese in die Wahl des Systems $\Set{\varphi_{j}}_{j \in \mathbb{N}}$ einfließen lassen können.
+
 \begin{Bemerkung}
     Für den Rest dieses Kapitels beschränken wir uns bei der Wahl des Parameterraums auf $\mathcal P = [-1, 1]^{\mathbb{N}}$.
-    Dies stellt keine Einschränkung dar, da die Funktionen $\Set{ \varphi_{j} }_{j \in \mathbb{N}}$ entsprechend umskaliert werden können.
+    Dies dient hauptsächlich der Notation und stellt keine Einschränkung dar, da die Funktionen $\Set{ \varphi_{j} }_{j \in \mathbb{N}}$ entsprechend umskaliert werden können.
 \end{Bemerkung}
 
-Um sicherzustellen, dass derartige Felder $w(\sigma)$ wohldefinierte Operatoren $A(w(\sigma))$ liefern, fordern wir die folgende Eigenschaften von der Funktionenfolge $\Set{\varphi_{j}}_{j \in \mathbb{N}}$.
+Um sicherzustellen, dass derartige Felder $w(\bm\sigma)$ wohldefinierte Operatoren $A(w(\bm\sigma))$ liefern, fordern wir die folgende Eigenschaften von der Funktionenfolge $\Set{\varphi_{j}}_{j \in \mathbb{N}}$.
 
 \begin{Annahme}
-    \label{annahme:l1_summierbar}
-    Das Funktionensystem $\Set{ \varphi_{j} }_{j \in \mathbb{N}} \subset L_{\infty}(\Omega)$ sei einfach summierbar in der $L_{\infty}$-Norm, das heißt es gelte
-    \begin{equation}
-        \Set{ \norm{\varphi_{j}}_{L_{\infty}(\Omega) } }_{j \in \mathbb{N}} \in \ell_{1}(\mathbb{N}).
-    \end{equation}
+\label{annahme:system_l1_summierbar}
+    Das Funktionensystem $\Set{ \varphi_{j} }_{j \in \mathbb{N}} \subset L_{\infty}(\Omega)$ sei einfach summierbar in der $L_{\infty}$-Norm, das heißt, es gelte $\Set{ \norm{\varphi_{j}}_{L_{\infty}(\Omega) } }_{j \in \mathbb{N}} \in \ell_{1}(\mathbb{N})$.
 \end{Annahme}
 
 Im Folgenden bezeichnen wir die obige $\ell_{1}(\mathbb{N})$-Norm der Kürze wegen als
 \begin{equation}
-    \label{eq:varphi_l1_norm_konst}
+\label{eq:system_l1_norm}
     c_{\varphi} = \sum_{j = 1}^{\infty} \norm{\varphi_{j}}_{L_{\infty}(\Omega)}.
 \end{equation}
 
-Diese Annahme stellt insbesondere die gleichmäßige Konvergenz von $w(\sigma)$ für alle $\sigma \in \mathcal P$ sicher, denn es gilt
+Diese Annahme stellt insbesondere die gleichmäßige Konvergenz von $w(\bm\sigma)$ für alle $\bm\sigma \in \mathcal P$ sicher, denn es gilt
 \begin{equation}
-\label{eq:ps:pf:omega_norm_abschaetzung}
-    \sup_{\sigma \in \mathcal P} \norm{w(\sigma)}_{L_{\infty}(\Omega)} \leq \sum_{j = 1}^{\infty} \norm{\varphi_{j}}_{L_{\infty}(\Omega)} = c_{\varphi} < \infty.
+\label{eq:rz_feld_norm_schranke}
+    \sup_{\bm\sigma \in \mathcal P} \norm{w(\bm\sigma)}_{L_{\infty}(\Omega)} \leq \sum_{j = 1}^{\infty} \norm{\varphi_{j}}_{L_{\infty}(\Omega)} = c_{\varphi} < \infty.
 \end{equation}
 
-Legen wir uns auf ein konkretes Funktionensystem $\Set{\varphi_{j}}_{j \in \mathbb{N}}$, welches die \cref{annahme:l1_summierbar} erfüllt, fest, dann können wir die Operatoren $A(\omega)$ nun auch als Familie von Operatoren $A(\sigma)$ betrachten, denn durch Einsetzen von $w(\sigma)$ in \cref{eq:ps:pf:operator_A} erhalten wir
+Legen wir uns auf ein konkretes Funktionensystem $\Set{\varphi_{j}}_{j \in \mathbb{N}}$, welches die \cref{annahme:system_l1_summierbar} erfüllt, fest, dann können wir die Operatoren $A(\omega)$ nun auch als Familie von Operatoren $A(\bm\sigma)$ betrachten, denn durch Einsetzen von $w(\bm\sigma)$ in \cref{eq:operator_feld} erhalten wir
 \begin{equation}
-\label{eq:ps:pf:operator_A_sigma}
-    A(\sigma) = A(w(\sigma)) \colon V \to V', \quad A(\sigma) \eta = -c \Delta \eta + \sum_{j = 1}^{\infty} \sigma_{j} \varphi_{j} \eta + \mu \eta.
+\label{eq:operator_parameter}
+    A(\bm\sigma) \colon V \to V', \quad A(\bm\sigma) \eta -c \Delta \eta + \sum_{j = 1}^{\infty} \sigma_{j} \varphi_{j} \eta + \mu \eta.
 \end{equation}
-Weiter können wir auch die zugehörige Bilinearform $a(\blank, \blank; \sigma)$ angeben als
+Weiter können wir auch die zugehörige Bilinearform $a(\blank, \blank; \bm\sigma)$ angeben als
 \begin{equation}
-\label{eq:ps:pf:bilinearform_a_sigma}
+\label{eq:bilinearform_parameter}
     \begin{aligned}
-    &a(\blank, \blank; \sigma) = a(\blank, \blank; w(\sigma)) \colon V \times V \to \mathbb{R}, \\
-    &(\eta, \zeta) \mapsto c\skp{\grad \eta}{\grad \zeta}{H} + \sum_{j = 1}^{\infty} \sigma_{j} \skp{\varphi_{j} \eta}{\zeta}{H} + \mu \skp{\eta}{\zeta}{H}.
+    a(\blank, \blank; \bm\sigma) \colon V \times V \to \mathbb{R},
+    \quad a(\eta, \zeta; \bm\sigma) = c\skp{\grad \eta}{\grad \zeta}{H} + \sum_{j = 1}^{\infty} \sigma_{j} \skp{\varphi_{j} \eta}{\zeta}{H} + \mu \skp{\eta}{\zeta}{H}.
     \end{aligned}
 \end{equation}
 
-Die bei der Bilinearform vorgenommene Vertauschung von Summe und $H$-Skalarprodukt ist durch \cref{annahme:l1_summierbar} respektive Ungleichung \cref{eq:ps:pf:omega_norm_abschaetzung} und den Satz von Lebesgue gerechtfertigt.
-Wie auch für den nicht-parametrischen Fall werden wir nachweisen, dass es sich hierbei um Operatoren beziehungsweise Bilinearformen handelt, welche die für uns wichtigen Eigenschaften der Stetigkeit und die Gültigkeit einer G\aa{}rding-Ungleichung besitzen.
-Zunächst wollen wir an dieser Stelle noch ein parametrisches Äquivalent der Raum-Zeit-Variationsformulierung aus \cref{definition:schwache_formulierung} formulieren.
+Die bei der Bilinearform vorgenommene Vertauschung von Summe und $H$-Skalarprodukt ist durch \cref{annahme:system_l1_summierbar} respektive Ungleichung \cref{eq:rz_feld_norm_schranke} und den Satz von Lebesgue gerechtfertigt.
+Wie auch für den nicht"=parametrischen Fall werden wir nachweisen, dass es sich hierbei um Operatoren beziehungsweise Bilinearformen handelt, welche die für uns wichtigen Eigenschaften der Stetigkeit und die Gültigkeit einer G\aa{}rding"=Ungleichung besitzen.
+Zunächst wollen wir an dieser Stelle noch ein parametrisches Äquivalent der Raum"=Zeit"=Variationsformulierung aus \cref{definition:raum_zeit_variationsformulierung} formulieren.
 
 Dies Bedarf, wie zuvor, einen zeitlichen Wechsel zwischen mehreren Feldern $w_{i}$.
-Wir beschränken uns auf den bereits bekannten Fall zweier Felder und erweitern die obige Operator-Definition um die zeitliche Abhängigkeit.
-Zunächst definieren wir analog zu \cref{eq:ps:pde:omega_definition} ein zeitabhängiges Feld.
-Dies geschieht auf Basis der affinen Darstellung von $w_{i}$ aus \cref{def:ps:pf:omega_affin}.
-Sei dazu $\sigma \in \mathcal P$, dann definieren wir die folgenden Teilfolgen mit ungeraden respektive geraden Indizes als $\sigma_{\odd} = (\sigma_{2j-1})_{j \in \mathbb{N}}$ und $\sigma_{\even} = (\sigma_{2j})_{j \in \mathbb{N}}$.
-Diese verwenden wir nun als Koeffizientenfolgen der beiden Felder, dazu sei die parametrische Feld-Abbildung definiert als
+Wir beschränken uns auf den bereits bekannten Fall zweier Felder und erweitern die obige Operator"=Definition um die zeitliche Abhängigkeit.
+Zunächst definieren wir analog zu \cref{eq:raum_zeit_feld} ein parametrisches Raum"=Zeit"=Feld.
+Dies geschieht auf Basis der Darstellung von $w_{i}$ aus \cref{definition:feld_entwickelbar}.
+Sei dazu $\bm\sigma \in \mathcal P$, dann definieren wir die folgenden Teilfolgen der ungeraden respektive geraden Indizes als $\bm\sigma_{\odd} = (\sigma_{2j-1})_{j \in \mathbb{N}}$ und $\bm\sigma_{\even} = (\sigma_{2j})_{j \in \mathbb{N}}$.
+
+\begin{Definition}
+\label{definition:parametrisches_raum_zeit_feld}
+    Sei $\bm\sigma \in \mathcal P$.
+    Unter einem \emph{parametrischen Raum-Zeit-Feld} verstehen wir die Abbildung
+    $\omega(\blank, \blank; \bm\sigma) \colon I \times \Omega \to \mathbb{R}$, die durch
+    \begin{equation}
+    \label{eq:parametrisches_raum_zeit_feld}
+        \begin{aligned}
+            \omega(t, \vec{x}; \bm\sigma)
+            &= w(\vec{x}; \bm\sigma_{\odd}) \chi_{I_{1}}(t) + w(\vec{x}; \bm\sigma_{\even}) \chi_{I_{2}}(t)\\
+            &= \sum_{j = 1}^{\infty} (\sigma_{2j-1} \chi_{I_{1}}(t) + \sigma_{2j} \chi_{I_{2}}(t)) \varphi_{j}(\vec x)
+        \end{aligned}
+    \end{equation}
+    gegeben ist.
+\end{Definition}
+
+Wegen der Zerlegung $I = I_{1} \cupdot I_{2}$ ist direkt ersichtlich, dass analog zu \cref{eq:rz_feld_norm_schranke} die Abschätzung
 \begin{equation}
-\label{eq:ps:pde:omega_definition_affin}
-    \omega(\blank, \blank; \sigma) \colon I \times \Omega \to \mathbb{R}, \quad (t, \vec{x}) \mapsto
-    % w(\vec{x}; \sigma^{1}) \chi_{I_{1}}(t) + w(\vec{x}; \sigma^{2}) \chi_{I_{2}}(t).
-    w(\vec{x}; \sigma_{\odd}) \chi_{I_{1}}(t) + w(\vec{x}; \sigma_{\even}) \chi_{I_{2}}(t).
-\end{equation}
-Offenbar lässt sich durch Einsetzen der entsprechenden affinen Darstellung von $w$ direkt die Darstellung
-\begin{equation}
-    \omega(t, \vec{x}; \sigma) = \sum_{j = 1}^{\infty} (\sigma_{2j-1} \chi_{I_{1}}(t) + \sigma_{2j} \chi_{I_{2}}(t)) \phi_{j}(\vec x)
-\end{equation}
-ableiten.
-Anhand dieser und der Zerlegung $I = I_{1} \cupdot I_{2}$ ist direkt ersichtlich, dass analog zu \cref{eq:ps:pf:omega_norm_abschaetzung} die Abschätzung
-\begin{equation}
-\label{eq:abschaetzung_feld_sigma_zeit}
-    \sup_{\sigma \in \mathcal P} \norm{\omega(\sigma)}_{L_{\infty}(I; L_{\infty}(\Omega))} \leq \sup_{\sigma \in \mathcal P} \norm{w(\sigma)}_{L_{\infty}(\Omega)} \leq \sum_{j = 1}^{\infty} \norm{\varphi_{j}}_{L_{\infty}(\Omega)} = c_{\varphi}
+\label{eq:parametrisches_raum_zeit_feld_schranke}
+    \sup_{\bm\sigma \in \mathcal P} \norm{\omega(\bm\sigma)}_{L_{\infty}(I; L_{\infty}(\Omega))}
+    = \sup_{\bm\sigma \in \mathcal P} \norm{w(\bm\sigma)}_{L_{\infty}(\Omega)} \leq \sum_{j = 1}^{\infty} \norm{\varphi_{j}}_{L_{\infty}(\Omega)} = c_{\varphi}
 \end{equation}
 gilt.
 
-Erweitern wir nun die Operator-Definition \cref{eq:ps:pf:operator_A_sigma} um die Zeitabhängigkeit; setzen wir also für $\sigma \in \mathcal P$
+Erweitern wir nun die Operator"=Definition \cref{eq:operator_parameter} um die Zeitabhängigkeit; definieren wir also für $t \in I$ und $\bm\sigma \in \mathcal P$ die Operatorfamilie
 \begin{equation}
-    \label{eq:ps:pf:operator_A_sigma_zeit}
-    A(t; \sigma) \colon V \to V', \quad A(t, \sigma) \eta = -c \Delta \eta + \omega(t, \blank; \sigma) \eta + \mu \eta,
+    \label{eq:operator_zeit_parameter}
+    A(t, \bm\sigma) \colon V \to V', \quad A(t, \bm\sigma) \eta = -c \Delta \eta + \omega(t, \blank; \bm\sigma) \eta + \mu \eta,
 \end{equation}
-dann hat die zugehörige Familie von Bilinearformen die Form
+dann hat die zugehörige Familie von Bilinearformen $a(\blank, \blank; t, \bm\sigma) \colon V \times V \to \mathbb{R}$ die Form
 \begin{equation}
-    \label{eq:ps:pf:bilineaform_a_sigma_zeit}
+    \label{eq:bilinearform_zeit_parameter}
     \begin{aligned}
-        &a(\blank, \blank; t; \sigma) \colon V \times V \to \mathbb{R}, \\
-        &(\eta, \zeta) \mapsto c\skp{\grad \eta}{\grad \zeta}{H} + \sum_{j = 1}^{\infty} \left[ \sigma_{2j-1} \chi_{I_{1}}(t) + \sigma_{2j} \chi_{I_{2}}(t)  \right] \skp{\varphi_{j} \eta}{\zeta}{H} + \mu \skp{\eta}{\zeta}{H}.
+        a(\eta, \zeta; t, \bm\sigma) = c\skp{\grad \eta}{\grad \zeta}{H} + \sum_{j = 1}^{\infty} \left[ \sigma_{2j-1} \chi_{I_{1}}(t) + \sigma_{2j} \chi_{I_{2}}(t)  \right] \skp{\varphi_{j} \eta}{\zeta}{H} + \mu \skp{\eta}{\zeta}{H}.
     \end{aligned}
 \end{equation}
 
-Mit dieser Vorarbeit können wir die schwache Formulierung aus \cref{definition:schwache_formulierung} nun zu der folgenden parametrischen schwachen Formulierung ausweiten.
+Mit dieser Vorarbeit können wir analog zu \cref{definition:raum_zeit_variationsformulierung} nun die folgende parametrische schwache Formulierung definieren.
 
 \begin{Definition}[Parametrische schwache Formulierung]
-\label{def:ps:pf:schwache_formulierung_par}
-    Sei $g \in L_{2}(I; V')$ ein Quellterm und $u_{0} \in H$ eine Anfangsbedingung.
-    Als \emph{parametrische schwache Formulierung} der Propagator-Differentialgleichung bezeichnen wir das folgende Variationsproblem:
+\label{definition:parametrische_rz_variationsformulierung}
+    Seien $g \in L_{2}(I; V')$ ein Quellterm und $u_{0} \in H$ eine Anfangsbedingung.
+    Als \emph{parametrische schwache Formulierung} oder \emph{parametrische Raum"=Zeit"=Variationsformulierung} der Propagator"=Differentialgleichung \cref{eq:propagator_differentialgleichung} bezeichnen wir das folgende Variationsproblem:
     \begin{equation}
-        \label{eq:fette_varprob_sigma_und_so}
-        \text{Sei}~\sigma \in \mathcal P,~\text{finde}~u(\sigma) \in \mathcal X : b(u(\sigma), v; \sigma) = f(v) \quad \fa v \in \mathcal Y.
+    \label{eq:parametrisches_rz_variationsproblem}
+        \text{Sei}~\bm\sigma \in \mathcal P,~\text{finde}~u(\bm\sigma) \in \mathcal X : b(u(\bm\sigma), v; \bm\sigma) = f(v) \quad \fa v \in \mathcal Y.
     \end{equation}
-    Dabei sei die Bilinearform $b(\blank, \blank; \sigma) \colon \mathcal X \times \mathcal Y \to \mathbb{R}$ gegeben durch
+    Dabei sei die Familie von Bilinearformen $b(\blank, \blank; \bm\sigma) \colon \mathcal X \times \mathcal Y \to \mathbb{R}$ gegeben durch
      \begin{equation}
-         \label{eq:ps:rzvp:schwache_formulierung_lhs_b_sigma}
-         b(u, v; \sigma)
-             = \int_{I} \skprod{u_{t}(t)}{v_{1}(t)}_{V' \times V} + a(u(t), v_{1}(t); t; \sigma) \diff t + \skprod{u(0)}{v_{2}}_{H},
+     \label{eq:parametrisches_rz_variationsproblem:lhs}
+         b(u, v; \bm\sigma)
+             = \int_{I} \left[ \skp{u_{t}(t)}{v_{1}(t)}{V' \times V} + a(u(t), v_{1}(t); t, \bm\sigma) \right] \diff t + \skp{u(0)}{v_{2}}{H},
      \end{equation}
-     wobei $a(\blank, \blank; t; \sigma)$ wie in \cref{eq:ps:pf:bilineaform_a_sigma_zeit} definiert sei.
-     Das stetige lineare Funktional $f \colon \mathcal Y \to \mathbb{R}$ sei wie zuvor durch
+     wobei $a(\blank, \blank; t, \bm\sigma)$ wie in \cref{eq:bilinearform_zeit_parameter} definiert sei.
+     Das stetige lineare Funktional $f \colon \mathcal Y \to \mathbb{R}$ sei wie zuvor
      \begin{equation}
-         \label{eq:ps:rzvp:schwache_formulierung_rhs_f_sigma}
-         f(v) = \int_{I} \skprod{g(t)}{v_{1}(t)}_{V' \times V} \diff t + \skprod{u_{0}}{v_{2}}_{H}
+     \label{eq:parametrisches_rz_variationsproblem:rhs}
+         f(v) = \int_{I} \skp{g(t)}{v_{1}(t)}{V' \times V} \diff t + \skp{u_{0}}{v_{2}}{H}.
      \end{equation}
-     gegeben.
 \end{Definition}
 
-% section parametrische_formulierung (end)
-
-\section{Regularität bezüglich der Parameter} % (fold)
-\label{sec:regularit_t_bez_glich_der_parameter}
-
-Wir wollen nun nachweisen, dass die im vorherigen Abschnitt hergeleitete parametrische schwache Formulierung, \cref{ps:pf:definition:schwache_formulierung_par}, eine Regularität bezüglich des Parameters aufweist.
-Konkret werden wir nachweisen, dass die Lösung $u(\sigma)$ unter gewissen, leider stark einschränkenden, Annahmen an das Funktionensystem $\Set{\varphi_{j}}_{j \in \mathbb{N}}$, analytisch vom Parameter $\sigma$ abhängt.
-Dabei orientieren wir uns an den Arbeiten von \textcite{Cohen:2010kz,Cohen:2011jp,Kunoth:2013ef}, weisen diese Eigenschaften aber direkt für die Raum-Zeit-Variationsformulierung nach, statt wie in den beiden genannten Arbeiten den Umweg über den stationären Fall zu gehen.
-
-Bevor wir uns an die Regularität wagen können, müssen wir zunächst nachweisen, dass die parametrische schwache Formulierung \cref{eq:fette_varprob_sigma_und_so} für alle Parameter $\sigma \in \mathcal P$ sachgemäß gestellt ist.
-Hierzu weisen wir analog zu \cref{satz:ps:rzvp:bilinearform_a_eigenschaften} nach, dass die darin vorkommende Bilinearform $a(\blank, \blank; t; \sigma)$ stetig ist und eine G\aa{}rding-Ungleichung erfüllt.
+Hierfür weisen wir nun erneut nach, dass die schwache Formulierung sachgemäß gestellt ist.
+Wie zuvor wollen wir \cref{satz:gl:le:ss09_theorem51} verwenden, müssen also die Bedingungen an $a(\blank, \blank;t, \bm\sigma)$ nachweisen.
 
 \begin{Satz}
-\label{satz:bf_a_param_stetig_garding}
-    Sei $a(\blank, \blank; t; \sigma)$, $t \in I$ und $\sigma \in \mathcal P$, die Familie von Bilinearformen aus \cref{eq:ps:pf:bilineaform_a_sigma_zeit}.
-    Dann gelten für alle $t \in I$ und $\sigma \in \mathcal P$ die folgenden Eigenschaften:
+\label{satz:parametrische_bilinearform_messbar_stetig_garding}
+    Sei $a(\blank, \blank; t; \bm\sigma)$, $t \in I$ und $\bm\sigma \in \mathcal P$, die Familie von Bilinearformen aus \cref{eq:bilinearform_zeit_parameter}.
+    Dann gelten für alle $t \in I$ und $\bm\sigma \in \mathcal P$ die folgenden Eigenschaften:
     \begin{thmenumerate}
-        \item\label{satz:ps:rzvp:bilinearform_a_eigenschaften_stetig}
+        \item\label{satz:parametrische_bilinearform_messbar_stetig_garding:messbar}
+        \emph{Messbarkeit}: die Abbildung $I \ni t \mapsto a(\blank, \blank; t, \bm\sigma)$ ist messbar.
+        \item\label{satz:parametrische_bilinearform_messbar_stetig_garding:stetig}
         \emph{Stetigkeit:} es gilt
         \begin{equation}
-            \label{eq:ps:rzvp:bilinearform_a_eigenschaften_stetig}
-            \abs{a(\eta, \zeta; t; \sigma)} \leq \gamma_{a} \norm{\eta}_{V} \norm{\zeta}_{V} \quad \text{für alle}~\eta, \zeta \in V
+            \label{eq:parametrische_bilinearform_messbar_stetig_garding:stetig}
+            \abs{a(\eta, \zeta; t; \bm\sigma)} \leq \gamma_{a} \norm{\eta}_{V} \norm{\zeta}_{V} \quad \text{für alle}~\eta, \zeta \in V
         \end{equation}
         mit Stetigkeitskonstante $\gamma_{a} = \max\Set{c, c_{\varphi} + \abs{\mu}} < \infty$.
-        \item\label{satz:ps:rzvp:bilinearform_a_eigenschaften_garding}
-        \emph{G\aa{}rding-Ungleichung:} es gilt
+        \item\label{satz:parametrische_bilinearform_messbar_stetig_garding:garding}
+        \emph{G\aa{}rding"=Ungleichung:} es gilt
         \begin{equation}
-            \label{eq:ps:rzvp:bilinearform_a_eigenschaften_garding}
-            a(\eta, \eta; t; \sigma) + \lambda \norm{\eta}_{H}^{2} \geq \alpha \norm{\eta}_{V}^{2} \quad \text{für alle}~\eta \in V
+            \label{eq:parametrische_bilinearform_messbar_stetig_garding:garding}
+            a(\eta, \eta; t; \bm\sigma) + \lambda \norm{\eta}_{H}^{2} \geq \alpha \norm{\eta}_{V}^{2} \quad \text{für alle}~\eta \in V
         \end{equation}
-        mit $\alpha = c \gamma_{\Omega}^{2} > 0$ und $\lambda = \max\Set{c_{\varphi} - \mu, 0} \geq 0$, wobei $\gamma_{\Omega}$ die Poincaré-Friedrichs-Konstante ist.
+        mit $\alpha = c \gamma_{\Omega}^{2} > 0$ und $\lambda = \max\Set{c_{\varphi} - \mu, 0} \geq 0$.
     \end{thmenumerate}
-    Dabei ist $c_{\varphi}$ die Konstante aus \cref{eq:varphi_l1_norm_konst} und die Konstanten $\gamma_{a}$, $\lambda$ und $\alpha$ sind sowohl unabhängig von $t \in I$ als auch von $\sigma \in \mathcal P$.
+    Dabei ist $c_{\varphi}$ die Konstante aus \cref{eq:system_l1_norm} und die Konstanten $\gamma_{a}$, $\lambda$ und $\alpha$ sind sowohl unabhängig von $t \in I$ als auch von $\bm\sigma \in \mathcal P$.
 
     \begin{Beweis}
-        Der Nachweis läuft komplett analog zum nicht-parametrischen Fall in \cref{satz:ps:rzvp:bilinearform_a_eigenschaften}.
-        Wir müssen zusätzlich lediglich die $L_{\infty}(\Omega)$-Norm des Feldes $\omega(t, \blank; \sigma)$ mit Hilfe von \cref{eq:abschaetzung_feld_sigma_zeit} nach oben durch $c_{\varphi}$ abschätzen.
+        Der Nachweis läuft komplett analog zum nicht"=parametrischen Fall in \cref{satz:bilinearform_messbar_stetig_garding}.
+        Wir müssen zusätzlich lediglich die $L_{\infty}(\Omega)$-Norm des von $\omega(t, \blank; \bm\sigma)$ mit Hilfe von \cref{eq:parametrisches_raum_zeit_feld_schranke} nach oben durch $c_{\varphi}$ abschätzen.
     \end{Beweis}
 \end{Satz}
 
-Anwenden der Aussagen aus \cref{satz:gl:le:ss09_theorem51} und \cref{kor:gl:le:ss09_theorem51_ungleichungen} liefert uns nun:
 \begin{Korollar}
-\label{satz:ps:eel:schwache_formulierung_sachgemaess_gestellt}
-    Das parametrische Raum-Zeit-Variationsproblem \cref{def:ps:pf:schwache_formulierung_par} ist für alle $\sigma \in \mathcal P$ sachgemäß gestellt.
-    Ferner erhalten wir von $\sigma$ unabhängige Schranken für die Stetigkeitskonstante $\gamma_{b}$ und die inf-sup-Konstante $\beta$.
-
-    \begin{Beweis}
-        Die nötige Vorarbeit wurde in \cref{satz:bf_a_param_stetig_garding} geleistet, der Rest folgt direkt durch die Anwendung der beiden genannten Aussagen.
-    \end{Beweis}
+\label{korollar:parametrisches_rz_variationsproblem_sachgemaess}
+    Die parametrische schwache Formulierung \cref{eq:parametrisches_rz_variationsproblem} ist für alle $\bm\sigma \in \mathcal P$ sachgemäß gestellt.
+    Ferner existieren analog zu \cref{korollar:rz_variationsformulierung_stetig_infsup_schranken} Schranken für die Stetigkeitskonstante $\gamma_{b}$ und die inf-sup"=Konstante $\beta$, welche unabhängig von $\bm \sigma \in \mathcal P$ sind.
 \end{Korollar}
+
+
+\section{Regularität bezüglich der Parameter} % (fold)
+\label{section:regularitaet_bezueglich_der_parameter}
+
+Wir interessieren uns nun für die Regularität der Abhängigkeit der Lösung $u(\bm\sigma)$ der parametrischen schwachen Formulierung vom Parameter $\bm \sigma \in \mathcal P$.
+Konkret werden wir nachweisen, dass die Lösung unter gewissen, leider stark einschränkenden und in unserem Fall bei der numerischen Umsetzung nicht immer erfüllbaren, Annahmen an das Funktionensystem $\Set{\varphi_{j}}_{j \in \mathbb{N}}$, analytisch vom Parameter $\bm \sigma$ abhängt.
+Dabei orientieren wir uns an den Arbeiten von \textcite{Cohen:2010kz,Cohen:2011jp,Kunoth:2013ef}, weisen diese Eigenschaften aber direkt für die Raum"=Zeit"=Variationsformulierung nach, statt wie in den genannten Arbeiten den Umweg über den stationären Fall zu gehen.
 
 Zunächst einige notationelle Vorbemerkungen.
 \begin{Bemerkung}
-    Bezeichne mit $\mathcal F = \Set{ \nu \in \mathbb{N}^{\mathbb{N}}_{0} \given \norm{\nu}_{\ell_{1}(\mathbb{N})} < \infty }$ die Menge aller Folgen nichtnegativer ganzer Zahlen, wobei
+    Bezeichne mit $\mathcal F = \Set{ \bm\nu \in \mathbb{N}^{\mathbb{N}}_{0} \given \norm{\bm\nu}_{\ell_{1}(\mathbb{N})} < \infty }$ die Menge aller Folgen nichtnegativer ganzer Zahlen, wobei
     \begin{equation}
-        \norm{\nu}_{\ell_{1}(\mathbb{N})} = \sum_{k = 1}^{\infty} \abs{\nu_{k}}
+        \norm{\bm\nu}_{\ell_{1}(\mathbb{N})} = \sum_{k = 1}^{\infty} \abs{\nu_{k}}
     \end{equation}
     die $\ell_{1}(\mathbb{N})$-Norm sei.
-    Anders formuliert, besteht $\mathcal F$ gerade aus den Folgen aus $\mathbb{N}_{0}$, welche nur endliche viele Einträge ungleich Null enthalten.
+    Anders formuliert, besteht $\mathcal F$ gerade aus denjenigen Folgen in $\mathbb{N}_{0}$, welche nur endliche viele Einträge ungleich Null aufweisen.
 
-    Sei $\nu \in \mathcal F$ und $b \in \ell_{p}(\mathbb{N})$, $p > 0$, dann schreiben wir
+    Sei $\bm\nu \in \mathcal F$ und $\vec{b} \in \ell_{p}(\mathbb{N})$, $p > 0$, dann schreiben wir
     \begin{equation}
-        b^{\nu} = \prod_{j = 1}^{\infty} b_{j}^{\nu_{j}}
+        \vec{b}^{\bm\nu} = \prod_{j = 1}^{\infty} b_{j}^{\nu_{j}}
     \end{equation}
     mit der Konvention $0^{0} = 1$.
-    Wegen $\norm{\nu}_{\ell_{1}(\mathbb{N})} < \infty$ ist dieses Produkt stets endlich.
+    Wegen $\norm{\bm\nu}_{\ell_{1}(\mathbb{N})} < \infty$ ist dieses Produkt stets endlich.
 \end{Bemerkung}
 
-Um die Notation für die nachfolgenden Beweise zu vereinfachen, ordnen wir die Darstellung der parametrischen Raum-Zeit-Felder folgendermaßen um:
+Um die Notation für die nachfolgenden Beweise zu vereinfachen, ordnen wir die Darstellung der parametrischen Raum"=Zeit"=Felder folgendermaßen um:
 \begin{Bemerkung}
-    Wir definieren neue charakteristische Funktionen und Entwicklungsfunktionen durch
+    Wir definieren neue charakteristische Funktionen und Entwicklungsfunktionen für $j \in \mathbb{N}$ durch
     \begin{equation}
         \tilde{\chi}_{j} = \begin{cases}
             \chi_{I_{1}}, & j~\text{ungerade}\\
@@ -536,41 +530,43 @@ Um die Notation für die nachfolgenden Beweise zu vereinfachen, ordnen wir die D
             \varphi_{j / 2}, & j~\text{gerade}.
         \end{cases}
     \end{equation}
-    Damit können wir \cref{} auch schreiben als
+    Damit können wir \cref{eq:parametrisches_raum_zeit_feld} auch schreiben als
     \begin{equation}
-        w(t, \vec{x}) = \sum_{j = 1}^{\infty} \sigma_{j} \tilde{\chi}_{j}(t) \tilde{\varphi}_{j}(\vec{x}).
+        w(t, \vec{x}; \bm \sigma) = \sum_{j = 1}^{\infty} \sigma_{j} \tilde{\chi}_{j}(t) \tilde{\varphi}_{j}(\vec{x}).
     \end{equation}
 \end{Bemerkung}
 
+Für die nachfolgenden Beweise fixieren wir die rechte Seite $f \in \mathcal Y'$ der schwachen Formulierungen \cref{eq:raum_zeit_variationsformulierung,eq:parametrisches_rz_variationsproblem} und beginnen den Nachweis der Regularität mit einer Stabilitätsaussage, welche in den folgenden Beweisen nützlich sein wird.
+
 \begin{Lemma}
-\label{satz:voll_stabil_ey}
-    Seien $\omega, \tilde{\omega}$ zwei Raum-Zeit-Felder wie in \cref{eq:ps:pde:omega_definition} und $u, \tilde{u}$ seien die zugehörigen Lösungen der schwachen Formulierung \cref{eq:gl:le:schwache_formulierung}.
+\label{lemma:stabilitaetsaussage}
+    Seien $\omega, \tilde{\omega}$ zwei Raum"=Zeit"=Felder wie in \cref{eq:raum_zeit_feld} und $u, \tilde{u}$ die zugehörigen Lösungen der schwachen Formulierung \cref{section:raum_zeit_variationsformulierung}.
     Dann gilt
     \begin{equation}
-        \norm{u - \tilde{u}}_{\mathcal X} \leq \frac{\norm{f}_{\mathcal Y'}}{\beta^{2}} \norm{\omega - \tilde{\omega}}_{L_{\infty}(I; L_{\infty}(\Omega))}.
+        \norm{u - \tilde{u}}_{\mathcal X} \leq \frac{\norm{f}_{\mathcal Y'}}{\beta^{2}} \norm{\omega - \tilde{\omega}}_{L_{\infty}(I; L_{\infty}(\Omega))},
     \end{equation}
+    wobei $\beta$ eine Feld-unabhängige inf-sup"=Konstante ist.
 
     \begin{Beweis}
         Wir vernachlässigen der Kürze wegen im Folgenden die explizite Angabe der Zeitabhängigkeit der jeweiligen Funktionen.
         Weiter setzen wir $\theta = u - \tilde{u}$.
-        Subtraktion der Variationsformulierung für die beiden Lösungen $u$ und $\tilde{u}$ liefert für beliebige Testfunktionen $v = (v_{1}, v_{2}) \in \mathcal Y$ die Darstellung
+        Subtraktion der Variationsformulierung für die beiden Lösungen $u$ und $\tilde{u}$ liefert für beliebige Testfunktionen $v = (v_{1}, v_{2}) \in \mathcal Y$ die Gleichung
         \begin{align}
             0
-            &= b(u, v; \omega) - b(\tilde{u}, v; \tilde{\omega})
+            &= f(v) - f(v) = b(u, v; \omega) - b(\tilde{u}, v; \tilde{\omega})
            \\&= \int_{I} \left[ \skp{u_{t} - \tilde{u}_{t}}{v_{1}}{V' \times V} + a(u, v; \omega) - a(\tilde{u}, v; \tilde{\omega}) \right] \diff t + \skp{u(0) - \tilde{u}(0)}{v_{2}}{H}.
-           \\&= \int_{I} \left[ \skp{\theta_{t}}{v_{1}}{V' \times V} + c \skp{\grad \theta}{\grad v_{1}}{H} + \mu \skp{\theta}{v_{1}}{H} + \skp{\omega u}{v_{1}}{H} - \skp{\tilde{\omega}\tilde{u}}{v_{1}}{H} \right] \diff t
-           \\&\qquad + \skp{\theta(0)}{v_{2}}{H}
+           \\&= \int_{I} \left[ \skp{\theta_{t}}{v_{1}}{V' \times V} + c \skp{\grad \theta}{\grad v_{1}}{H} + \mu \skp{\theta}{v_{1}}{H} + \skp{\omega u - \tilde{\omega}\tilde{u}}{v_{1}}{H} \right] \diff t + \skp{\theta(0)}{v_{2}}{H}
            \\&= \int_{I} \left[ \skp{\theta_{t}}{v_{1}}{V' \times V} + a(\theta, v; \omega) \right] \diff t + \skp{\theta(0)}{v_{2}}{H} + \int_{I} \skp{(w - \tilde{w})\tilde{u}}{v_{1}}{H} \diff t
            \\&= b(\theta, v; \omega) + \int_{I} \skp{(w - \tilde{w})\tilde{u}}{v_{1}}{H} \diff t,
         \end{align}
         welche wir auch als
         \begin{equation}
-            \label{eq:alle_so_yeah}
+            \label{eq:stabilitaetsaussage:beweis:variationsproblem}
             b(\theta, v; \omega) = h(v)
         \end{equation}
         mit der Abbildung
         \begin{equation}
-            h \colon \mathcal Y \to \mathbb{R}, \quad v = (v_{1}, v_{2}) \mapsto - \int_{I} \skp{(w - \tilde{w})\tilde{u}}{v_{1}}{H} \diff t
+            h \colon \mathcal Y \to \mathbb{R}, \quad h(v) = - \int_{I} \skp{(w - \tilde{w})\tilde{u}}{v_{1}}{H} \diff t
         \end{equation}
         auffassen können.
         Die Linearität von $h$ ist klar.
@@ -578,258 +574,275 @@ Um die Notation für die nachfolgenden Beweise zu vereinfachen, ordnen wir die D
         \begin{align}
             \norm{h}_{\mathcal Y'}
             &= \sup_{\norm{v}_{\mathcal Y} = 1} \abs{\int_{I} \skp{(w - \tilde{w})\tilde{u}}{v_{1}}{H} \diff t}
-            \\&\leq \sup_{\norm{v}_{\mathcal Y} = 1} \abs{\int_{I} \norm{w - \tilde{w}}_{L_{\infty}(\Omega)} \skp{\tilde{u}}{v_{1}}{H} \diff t}
             \\&\leq \norm{w - \tilde{w}}_{L_{\infty}(I; L_{\infty}(\Omega))} \sup_{\norm{v}_{\mathcal Y} = 1} \abs{\skp{\tilde{u}}{v_{1}}{L_{2}(I; H)}}
             \\&\leq \norm{w - \tilde{w}}_{L_{\infty}(I; L_{\infty}(\Omega))} \sup_{\norm{v}_{\mathcal Y} = 1} \norm{\tilde{u}}_{L_{2}(I; H)} \norm{v_{1}}_{L_{2}(I; H)}
             \\&\leq \norm{w - \tilde{w}}_{L_{\infty}(I; L_{\infty}(\Omega))} \sup_{\norm{v}_{\mathcal Y} = 1} \norm{\tilde{u}}_{\mathcal X} \norm{v}_{\mathcal Y}
+            \\&= \norm{w - \tilde{w}}_{L_{\infty}(I; L_{\infty}(\Omega))} \norm{\tilde{u}}_{\mathcal X}
             < \infty.
         \end{align}
-        Damit ist $h \in \mathcal Y'$, wir können also das vorherige \cref{satz:ps:eel:schwache_formulierung_sachgemaess_gestellt} auf das Variationsproblem \cref{eq:alle_so_yeah} anwenden und erhalten die Abschätzung
+        Damit ist $h \in \mathcal Y'$, wir können \cref{eq:stabilitaetsaussage:beweis:variationsproblem} also selbst als Raum"=Zeit"=Variationsproblem der Form \cref{eq:raum_zeit_variationsformulierung} auffassen und erhalten damit durch \cref{satz:raum_zeit_variationsformulierung_sachgemaess_gestellt} die Abschätzung
         \begin{equation}
             \norm{\theta}_{\mathcal X} \leq \frac{1}{\beta} \norm{h}_{\mathcal Y'}.
         \end{equation}
-        Weiter haben wir, da $\tilde{u}$ selbst Lösung der schwachen Formulierung \cref{eq:ps:rzvp:schwache_formulierung} ist, die Abschätzung
+        Wenden wir \cref{satz:raum_zeit_variationsformulierung_sachgemaess_gestellt} weiter auf die schwache Formulierung zu $\tilde{\omega}$ an, dann gilt
         \begin{equation}
             \norm{\tilde{u}}_{\mathcal X} \leq \frac{1}{\beta} \norm{f}_{\mathcal Y'}.
         \end{equation}
-        Zusammen erhalten wir damit die Behauptung
+        Die Unabhängigkeit von $\beta$ von den Feldern kann durch das Minimum der beiden Feld-abhängigen inf-sup-Konstanten sichergestellt werden.
+
+        Durch zusammenfassen dieser drei Abschätzungen erhalten wir die Behauptung
         \begin{equation}
             \norm{u - \tilde{u}}_{\mathcal X} = \norm{\theta}_{\mathcal X} \leq \frac{\norm{f}_{\mathcal Y'}}{\beta^{2}} \norm{\omega - \tilde{\omega}}_{L_{\infty}(I; L_{\infty}(\Omega))}.
         \end{equation}
     \end{Beweis}
 \end{Lemma}
 
+Als ersten Schritt des Regularitätsnachweises zeigen wir nun die Existenz beliebiger partieller Ableitungen.
+
 \begin{Satz}
-    Die Abbildung $\mathcal P \ni \sigma \mapsto u(\sigma) \in \mathcal X$, welche einem Parameter $\sigma$ die eindeutige Lösung $u(\sigma)$ der parametrischen schwachen Formulierung \cref{def:ps:pf:schwache_formulierung_par} zuordnet, besitzt für alle $\nu \in \mathcal F$ eine partielle Ableitung $\partial^{\nu}_{\sigma} u(\sigma)$.
+\label{satz:existenz_partieller_ableitungen}
+    Die Abbildung $\mathcal P \ni \bm\sigma \mapsto u(\bm\sigma) \in \mathcal X$, welche einem Parameter $\bm\sigma$ die eindeutige Lösung $u(\bm\sigma)$ der parametrischen schwachen Formulierung \cref{eq:parametrisches_rz_variationsproblem} zuordnet, besitzt für alle $\bm\nu \in \mathcal F$ eine partielle Ableitung $\partial^{\bm\nu}_{\bm\sigma} u(\bm\sigma)$.
 
     \begin{Beweis}
         Erneut verzichten wir auf die explizite Notation der Zeitabhängigkeit.
-        Wir beschränken uns darauf die Behauptung exemplarisch für die partiellen Ableitungen erster Ordnung für ein festes $\sigma \in \mathcal P$ nachzuweisen.
-        Ohne Einschränkung sei nun $\nu = e_{j} \in \mathcal F$ für ein $j \in \mathbb{N}$ und ferner sei $h \in \mathbb{R} \setminus \Set{ 0 }$.
-        Wir definieren $\sigma_{h} = \sigma + h \nu = \sigma + h e_{j}$ und
+        Wir beschränken uns darauf die Behauptung exemplarisch für die partiellen Ableitungen erster Ordnung für ein festes $\bm\sigma \in \mathcal P$ nachzuweisen.
+        Ohne Einschränkung sei nun $\bm\nu = \vec{e}_{j} \in \mathcal F$ für ein $j \in \mathbb{N}$ und ferner sei $h \in \mathbb{R} \setminus \Set{ 0 }$.
+        Wir definieren $\bm\sigma_{h} = \bm\sigma + h \bm\nu = \bm\sigma + h \vec e_{j}$ und
         \begin{equation}
-            \theta_{h} = \frac{u(\sigma_{h}) - u(\sigma)}{h},
+            \theta_{h} = \frac{u(\bm\sigma_{h}) - u(\bm\sigma)}{h},
         \end{equation}
-        wobei $u(\blank)$ die Lösungen der parametrischen schwachen Formulierung \eqref{def:ps:pf:schwache_formulierung_par} für die entsprechenden Parameter ist.
-        Ist $\abs{h}$ klein genug, so dass $\sigma_{h} \in \mathcal P$ gilt, dann existieren eindeutige Lösungen $u(\sigma_{h'})$ für alle $0 \leq \abs{h'} \leq \abs{h}$ nach \cref{satz:alles_loesbar_yeah}, das heißt, der obige Ausdruck für $\theta_{h'}$ ist für diese $h'$ wohldefiniert.
+        wobei $u(\blank)$ die Lösungen der parametrischen schwachen Formulierung \cref{eq:parametrisches_rz_variationsproblem} für die entsprechenden Parameter ist.
+        Ist $\abs{h}$ klein genug, dann existieren diese auch im Fall $\bm\sigma_{h} \not\in \mathcal P$, da analog zu \cref{eq:parametrisches_raum_zeit_feld_schranke} wegen
+        \begin{equation}
+            \norm{\omega(\bm \sigma_{h})}_{L_{\infty}(I; L_{\infty}(\Omega))} \leq \sum_{j' = 1}^{\infty} \norm{\varphi_{j'}}_{L_{\infty}(\Omega)} + \abs{h} \norm{\varphi_{j}}_{L_{\infty}(\Omega)}\leq c_{\varphi} + \abs{h} \norm{\varphi_{j}}_{L_{\infty}(\Omega)} < \infty
+        \end{equation}
+        die schwache Formulierung nach wie vor sachgemäß gestellt ist.
 
         Zunächst schreiben wir die Differenz der parametrischen Raum-Zeit-Felder um zu
-        \begin{align}
-            \omega(t, \vec{x}; \sigma_{h}) - \omega(t, \vec{x}; \sigma)
-            % &= (w(\sigma_{h}^{(1)}) - w(\sigma^{(1)})) \chi_{I_{1}}(t) + (w(\sigma_{h}^{(2)}) - w(\sigma^{(2)})) \chi_{I_{2}}
-            &= \sum_{j = 1}^{\infty} (\sigma_{h,j} - \sigma_{j} ) \tilde{\chi}_{j}(t) \tilde{\varphi}_{j}(\vec{x})
-            \\&= h \tilde{\chi}_{j}(t) \tilde{\varphi}_{j}(\vec{x}).
-        \end{align}
+        \begin{equation}
+            \omega(t, \vec{x}; \bm\sigma_{h}) - \omega(t, \vec{x}; \bm\sigma)
+            = \sum_{j = 1}^{\infty} (\sigma_{h,j} - \sigma_{j} ) \tilde{\chi}_{j}(t) \tilde{\varphi}_{j}(\vec{x})
+            = h \tilde{\chi}_{j}(t) \tilde{\varphi}_{j}(\vec{x}).
+        \end{equation}
 
-        Wir betrachten unter diesen Gegebenheiten nun die Differenz der $u(\sigma_{h})$ und $u(\sigma)$ zugehörigen Variationsprobleme.
+        Unter diesen Gegebenheiten betrachten wir nun die Differenz der zu $u(\bm\sigma_{h})$ und $u(\bm\sigma)$ zugehörigen Variationsprobleme.
         Für $v = (v_{1}, v_{2}) \in \mathcal Y$ gilt dann
         \begin{align}
             0
-            &= b(u(\sigma_{h}), v; \sigma_{h}) - b(u(\sigma), v; \sigma)
-            \\&= \int_{I} \left[ \skp{u_{t}(\sigma_{h}) - u_{t}(\sigma)}{v_{1}}{V' \times V} + a(u(\sigma_{h}), v_{1}; \sigma_{h}) - a(u(\sigma), v_{1}; \sigma) \right] \diff t
-            \\&\qquad + \skp{u(0; \sigma_{h}) - u(0; \sigma)}{v_{2}}{H}
+            &= b(u(\bm\sigma_{h}), v; \bm\sigma_{h}) - b(u(\bm\sigma), v; \bm\sigma)
+            \\&= \int_{I} \left[ \skp{u_{t}(\bm\sigma_{h}) - u_{t}(\bm\sigma)}{v_{1}}{V' \times V} + a(u(\bm\sigma_{h}), v_{1}; \bm\sigma_{h}) - a(u(\bm\sigma), v_{1}; \bm\sigma) \right] \diff t
+            \\&\qquad + \skp{u(0; \bm\sigma_{h}) - u(0; \bm\sigma)}{v_{2}}{H}
             \\&=  h \int_{I} \left[ \skp{(\theta_{h})_{t}}{v_{1}}{V' \times V} + c\skp{\grad \theta_{h}}{\grad v_{1}}{H}  +  \mu \skp{\theta_{h}}{v_{1}}{H} \right] \diff t
-            \\&\qquad + \int_{I} \left[ \skp{\omega(\sigma_{h}) u(\sigma_{h})}{v_{1}}{H} - \skp{\omega(\sigma) u(\sigma)}{v_{1}}{H}  \right] \diff t + \skp{\theta_{h}(0)}{v_{2}}{H}
-            \\&= h \int_{I} \left[ \skp{(\theta_{h})_{t}}{v_{1}}{V' \times V} + a(\theta_{h}, v_{1}; \sigma)  \right] \diff t + \skp{\theta_{h}(0)}{v_{2}}{H}
-            \\&\qquad +\int_{I} \skp{(\omega(\sigma_{h}) - \omega(\sigma))u(\sigma_{h})}{v_{1}}{H} \diff t
-            \\&= h \cdot b(\theta_{h}, v; \sigma) + h \int_{I} \tilde{\chi}_{j} \skp{\tilde{\varphi}_{j} u(\sigma_{h})}{v_{1}}{H} \diff t.
+            \\&\qquad + \int_{I} \left[ \skp{\omega(\bm\sigma_{h}) u(\bm\sigma_{h})}{v_{1}}{H} - \skp{\omega(\bm\sigma) u(\bm\sigma)}{v_{1}}{H}  \right] \diff t + h \skp{\theta_{h}(0)}{v_{2}}{H}
+            \\&= h \int_{I} \left[ \skp{(\theta_{h})_{t}}{v_{1}}{V' \times V} + a(\theta_{h}, v_{1}; \bm\sigma)  \right] \diff t + h \skp{\theta_{h}(0)}{v_{2}}{H}
+            \\&\qquad +\int_{I} \skp{(\omega(\bm\sigma_{h}) - \omega(\bm\sigma))u(\bm\sigma_{h})}{v_{1}}{H} \diff t
+            \\&= h \cdot b(\theta_{h}, v; \bm\sigma) + h \int_{I} \tilde{\chi}_{j} \skp{\tilde{\varphi}_{j} u(\bm\sigma_{h})}{v_{1}}{H} \diff t.
         \end{align}
-        Dies lässt sich erneut umschreiben zu
+        Dies schreiben wir erneut in Form der Gleichung
         \begin{equation}
-            \label{eq:fettes_varprob}
-            b(\theta_{h}, v; \sigma) = F_{h}(v)
+            \label{eq:existenz_partieller_ableitungen:beweis:variationsproblem}
+            b(\theta_{h}, v; \bm\sigma) = F_{h}(v)
         \end{equation}
         mit der Abbildung
         \begin{equation}
-            F_{h} \colon \mathcal Y \to \mathbb{R}, \quad v = (v_{1}, v_{2}) \mapsto - \int_{I} \tilde{\chi}_{j} \skp{\tilde{\varphi}_{j}  u(\sigma_{h})}{v_{1}}{H} \diff t.
+            F_{h} \colon \mathcal Y \to \mathbb{R}, \quad F_{h}(v) = - \int_{I} \tilde{\chi}_{j} \skp{\tilde{\varphi}_{j}  u(\bm\sigma_{h})}{v_{1}}{H} \diff t.
         \end{equation}
-        Analog zum Beweis des vorherigen Lemmas kann man zeigen, dass $F_{h}$ ein stetiges lineares Funktional ist.
+        Vollkommen analog zum Beweis des vorherigen Lemmas kann man zeigen, dass $F_{h}$ ein stetiges lineares Funktional auf $\mathcal Y$ definiert, das heißt, $\theta_{h}$ ist die eindeutige Lösung des Variationsproblems \cref{eq:existenz_partieller_ableitungen:beweis:variationsproblem}.
         Weiter ist $F_{h}(\blank)$ stetig in $h = 0$, denn für festes $v \in \mathcal Y$ gilt unter Verwendung der Cauchy-Schwarz-Ungleichung die Abschätzung
         \begin{align}
             \abs{F_{h}(v) - F_{0}(v)}
-            &= \abs{\int_{I} \tilde{\chi}_{j} \skp{\tilde{\varphi}_{j}  (u(\sigma_{h}) - u(\sigma))}{v_{1}}{H} \diff t }
-            \\&\leq \norm{\tilde{\varphi}_{j}}_{L_{\infty}(\Omega)} \abs{\int_{I} \skp{u(\sigma_{h}) - u(\sigma)}{v_{1}}{H} \diff t }
-            \\&= \norm{\tilde{\varphi}_{j}}_{L_{\infty}(\Omega)} \abs{\skp{u(\sigma_{h}) - u(\sigma)}{v_{1}}{L_{2}(I; H)} }
-            \\&\leq \norm{\tilde{\varphi}_{j}}_{L_{\infty}(\Omega)} \norm{u(\sigma_{h}) - u(\sigma)}_{L_{2}(I; H)} \norm{v_{1}}_{L_{2}(I; H)}
-            \\&\leq \norm{\tilde{\varphi}_{j}}_{L_{\infty}(\Omega)} \norm{u(\sigma_{h}) - u(\sigma)}_{\mathcal X} \norm{v_{1}}_{\mathcal Y}
+            &= \abs{\int_{I} \tilde{\chi}_{j} \skp{\tilde{\varphi}_{j}  (u(\bm\sigma_{h}) - u(\bm\sigma))}{v_{1}}{H} \diff t }
+            \\&\leq \norm{\tilde{\varphi}_{j}}_{L_{\infty}(\Omega)} \abs{\skp{u(\bm\sigma_{h}) - u(\bm\sigma)}{v_{1}}{L_{2}(I; H)} }
+            \\&\leq \norm{\tilde{\varphi}_{j}}_{L_{\infty}(\Omega)} \norm{u(\bm\sigma_{h}) - u(\bm\sigma)}_{L_{2}(I; H)} \norm{v_{1}}_{L_{2}(I; H)}
+            \\&\leq \norm{\tilde{\varphi}_{j}}_{L_{\infty}(\Omega)} \norm{u(\bm\sigma_{h}) - u(\bm\sigma)}_{\mathcal X} \norm{v}_{\mathcal Y}
         \end{align}
-        Hier setzen wir mit der Stabilitätsaussage \cref{satz:voll_stabil_ey} an um $\norm{u(\sigma_{h}) - u(\sigma)}_{\mathcal X}$ weiter abzuschätzen und erhalten zunächst
+        Hier setzen wir mit der Stabilitätsaussage \cref{lemma:stabilitaetsaussage} an um $\norm{u(\bm\sigma_{h}) - u(\bm\sigma)}_{\mathcal X}$ weiter abzuschätzen und erhalten
         \begin{equation}
             \begin{aligned}
-                \norm{u(\sigma_{h}) - u(\sigma)}_{\mathcal X}
-                &\leq \frac{\norm{f}_{\mathcal Y'}}{\beta^{2}} \norm{w(\sigma_{h}) - \omega(\sigma)}_{L_{\infty}(I; L_{\infty}(\Omega))}
-                \leq \frac{\norm{f}_{\mathcal Y'}}{\beta^{2}} \norm{h \tilde{\chi}_{j} \tilde{\varphi}_{j} }_{L_{\infty}(I; L_{\infty}(\Omega))}
+                \norm{u(\bm\sigma_{h}) - u(\bm\sigma)}_{\mathcal X}
+                &\leq \frac{\norm{f}_{\mathcal Y'}}{\beta^{2}} \norm{w(\bm\sigma_{h}) - \omega(\bm\sigma)}_{L_{\infty}(I; L_{\infty}(\Omega))}
+                = \frac{\norm{f}_{\mathcal Y'}}{\beta^{2}} \norm{h \tilde{\chi}_{j} \tilde{\varphi}_{j} }_{L_{\infty}(I; L_{\infty}(\Omega))}
                 \\&\leq \frac{\norm{f}_{\mathcal Y'}}{\beta^{2}} \abs{h} \norm{\tilde{\varphi}_{j}}_{L_{\infty}(\Omega)}.
             \end{aligned}
         \end{equation}
-        Zusammen liefert dies
+        Zusammen mit obiger Ungleichung liefert dies
         \begin{equation}
             \abs{F_{h}(v) - F_{0}(v)}
-            \leq \norm{\tilde{\varphi}_{j}}^{2}_{L_{\infty}(\Omega)} \norm{v_{1}}_{\mathcal Y} \frac{\norm{f}_{\mathcal Y'}}{\beta^{2}} \abs{h} \to 0 \quad \text{für}~h \to 0,
+            \leq \norm{\tilde{\varphi}_{j}}^{2}_{L_{\infty}(\Omega)} \norm{v}_{\mathcal Y} \frac{\norm{f}_{\mathcal Y'}}{\beta^{2}} \abs{h} \to 0 \quad \text{für}~h \to 0,
         \end{equation}
         das heißt, es gilt $F_{h} \to F_{0}$ in $\mathcal Y'$ für $h \to 0$,
-        was insbesondere $\theta_{h} \to \theta_{0}$ in $\mathcal X$ für $h \to 0$ impliziert, da die Lösung $\theta_{h}$ des Variationsproblems \cref{eq:fettes_varprob} nach \cref{satz:alles_loesbar_yeah} stetig von $F_{h}$ abhängt.
-        Da ferner $\theta_{0}$ das Variationsproblem
+        was insbesondere $\theta_{h} \to \theta_{0}$ in $\mathcal X$ für $h \to 0$ impliziert, da $\theta_{h}$ als Lösung des Variationsproblems \cref{eq:existenz_partieller_ableitungen:beweis:variationsproblem} nach \cref{korollar:parametrisches_rz_variationsproblem_sachgemaess} stetig von $F_{h}$ abhängt.
+        Ferner ist durch $\partial^{\bm\nu}_{\bm\sigma} u(\bm\sigma) = \theta_{0}$ als Lösung von
         \begin{equation}
-            \label{eq:fette_abletung_jo}
-            \text{Finde}~\theta_{0} \in \mathcal X \colon \quad b(\theta_{0}, v; \sigma) = - \int_{I} \tilde{\chi}_{j} \skp{\tilde{\varphi}_{j}  u(\sigma)}{v_{1}}{H} \diff t \quad \fa v \in \mathcal Y
+            \label{eq:existenz_partieller_ableitungen:beweis:variationsproblem_ableitung}
+            \text{Finde}~\theta_{0} \in \mathcal X \colon \quad b(\theta_{0}, v; \bm\sigma) = - \int_{I} \tilde{\chi}_{j} \skp{\tilde{\varphi}_{j}  u(\bm\sigma)}{v_{1}}{H} \diff t, \quad \fa v \in \mathcal Y,
         \end{equation}
-        eindeutig löst, ist mit $\partial^{\nu}_{\sigma} u(\sigma) = \theta_{0}$ die Existenz der gesuchten partiellen Ableitung nachgewiesen.
+        die Existenz und Wohldefiniertheit der gesuchten partiellen Ableitung gegeben.
 
-        Die Ableitungen höherer Ordnung lassen sich auf gleiche Weise durch Anwendung der beschriebenen Schritte auf die Variationsformulierung \cref{eq:fette_abletung_jo} et cetera konstruieren.
+        Die Ableitungen höherer Ordnung lassen sich auf gleiche Weise durch Anwendung der beschriebenen Schritte auf die Variationsformulierung \cref{eq:existenz_partieller_ableitungen:beweis:variationsproblem_ableitung} et cetera konstruieren.
     \end{Beweis}
 \end{Satz}
 
 \begin{Bemerkung}
-    Sei erneut ohne Einschränkung $\nu = e_{j} \in \mathcal{F}$ für ein $j \in \mathbb{N}$.
-    Alternativ erhält man das Variationsproblem \cref{eq:fette_abletung_jo} für die partielle Ableitung $\partial^{\nu}_{\sigma} u(\sigma)$ auch durch formales Differenzieren der Variationsformulierung \cref{eq:fette_varprob_sigma_und_so} nach $\sigma_{j}$, denn es gilt
+\label{bemerkung:alternative_herleitung_variationsproblem_ableitung}
+    Sei erneut ohne Einschränkung $\bm\nu = \vec e_{j} \in \mathcal{F}$ für ein $j \in \mathbb{N}$.
+    Alternativ erhält man das Variationsproblem \cref{eq:existenz_partieller_ableitungen:beweis:variationsproblem_ableitung} für die partielle Ableitung $\partial^{\bm\nu}_{\bm\sigma} u(\bm\sigma)$ auch durch formales Differenzieren der Variationsformulierung \cref{eq:parametrisches_rz_variationsproblem} nach $\sigma_{j}$, denn es gilt
     \begin{align}
-        \partial^{\nu}_{\sigma} b(u(\sigma), v; \sigma)
-        &= \partial^{\nu}_{\sigma} \left( \int_{I} \left[ \skp{u_{t}(\sigma)}{v_{1}}{V' \times V} + c \skp{\grad u(\sigma)}{\grad v_{1}}{H} + \mu \skp{u(\sigma)}{v_{1}}{H} \right.\right.
-        \\&\qquad\qquad \left.\vphantom{\int_{I}}\left. + \skp{\omega(\sigma) u(\sigma)}{v_{1}}{H} \right] \diff t + \skp{u(0; \sigma)}{v_{2}}{H} \right)
-        \\&= \int_{I} \left[ \skp{\partial^{\nu}_{\sigma} u_{t}(\sigma)}{v_{1}}{V' \times V}
-            + \skp{\grad \partial^{\nu}_{\sigma} u(\sigma)}{\grad v_{1}}{H} + \mu \skp{\partial^{\nu}_{\sigma} u(\sigma)}{v_{1}}{H} \right.
-        \\&\qquad \quad \left.+ \skp{\partial^{\nu}_{\sigma} \omega(\sigma) u(\sigma) + \omega(\sigma) \partial^{\nu}_{\sigma} u(\sigma)}{v_{1}}{H} \right] \diff t + \skp{\partial^{\nu}_{\sigma} u(0; \sigma)}{v_{2}}{H}
-        \\&= b(\partial^{\nu}_{\sigma} u(\sigma), v; \sigma) + \int_{I} \skp{\partial^{\nu}_{\sigma} \omega(\sigma) u(\sigma)}{v_{1}}{H} \diff t
-        \\&= b(\partial^{\nu}_{\sigma} u(\sigma), v; \sigma) + \int_{I} \tilde{\chi}_{j} \skp{\tilde{\varphi}_{j} u(\sigma)}{v_{1}}{H} \diff t
+        \partial^{\bm\nu}_{\bm\sigma} b(u(\bm\sigma), v; \bm\sigma)
+        &= \partial^{\bm\nu}_{\bm\sigma} \left( \int_{I} \left[ \skp{u_{t}(\bm\sigma)}{v_{1}}{V' \times V} + c \skp{\grad u(\bm\sigma)}{\grad v_{1}}{H} + \mu \skp{u(\bm\sigma)}{v_{1}}{H} \right.\right.
+        \\&\qquad\qquad \left.\vphantom{\int_{I}}\left. + \skp{\omega(\bm\sigma) u(\bm\sigma)}{v_{1}}{H} \right] \diff t + \skp{u(0; \bm\sigma)}{v_{2}}{H} \right)
+        \\&= \int_{I} \left[ \skp{\partial^{\bm\nu}_{\bm\sigma} u_{t}(\bm\sigma)}{v_{1}}{V' \times V}
+            + \skp{\grad \partial^{\bm\nu}_{\bm\sigma} u(\bm\sigma)}{\grad v_{1}}{H} + \mu \skp{\partial^{\bm\nu}_{\bm\sigma} u(\bm\sigma)}{v_{1}}{H} \right.
+        \\&\qquad \quad \left.+ \skp{\partial^{\bm\nu}_{\bm\sigma} \omega(\bm\sigma) u(\bm\sigma) + \omega(\bm\sigma) \partial^{\bm\nu}_{\bm\sigma} u(\bm\sigma)}{v_{1}}{H} \right] \diff t + \skp{\partial^{\bm\nu}_{\bm\sigma} u(0; \bm\sigma)}{v_{2}}{H}
+        \\&= b(\partial^{\bm\nu}_{\bm\sigma} u(\bm\sigma), v; \bm\sigma) + \int_{I} \skp{\partial^{\bm\nu}_{\bm\sigma} \omega(\bm\sigma) u(\bm\sigma)}{v_{1}}{H} \diff t
+        \\&= b(\partial^{\bm\nu}_{\bm\sigma} u(\bm\sigma), v; \bm\sigma) + \int_{I} \tilde{\chi}_{j} \skp{\tilde{\varphi}_{j} u(\bm\sigma)}{v_{1}}{H} \diff t
     \end{align}
-    und ferner
+    und ferner $\partial^{\bm\nu}_{\bm\sigma} f(v) = 0$, woraus man insgesamt erneut das Variationsproblem \cref{eq:existenz_partieller_ableitungen:beweis:variationsproblem_ableitung}
     \begin{equation}
-        \partial^{\nu}_{\sigma} f(v) = 0,
-    \end{equation}
-    woraus man insgesamt erneut das Variationsproblem \cref{eq:fette_abletung_jo}
-    \begin{equation}
-        \text{Finde}~\partial^{\nu}_{\sigma} u(\sigma) \in \mathcal X \colon \quad b(\partial^{\nu}_{\sigma} u(\sigma), v; \sigma) = - \int_{I} \tilde{\chi}_{j} \skp{\tilde{\varphi}_{j}  u(\sigma)}{v_{1}}{H} \diff t \quad \fa v \in \mathcal Y
+        \text{Finde}~\partial^{\bm\nu}_{\bm\sigma} u(\bm\sigma) \in \mathcal X \colon \quad b(\partial^{\bm\nu}_{\bm\sigma} u(\bm\sigma), v; \bm\sigma) = - \int_{I} \tilde{\chi}_{j} \skp{\tilde{\varphi}_{j}  u(\bm\sigma)}{v_{1}}{H} \diff t, \quad \fa v \in \mathcal Y,
     \end{equation}
     erhält.
 \end{Bemerkung}
 
 \begin{Satz}
-\label{satz:mhoo}
-    Sei $b = (b_j)_{j \in \mathbb{N}} \in \mathbb{R}^{\mathbb{N}}$ mit $b_{j} = \frac{1}{\beta} \norm{\tilde{\varphi}_{j}}_{L_{\infty}(\Omega)}$, dann gilt
+\label{satz:abschaetzung_norm_partieller_ableitungen}
+    Sei $\vec b = (b_j)_{j \in \mathbb{N}} \in \mathbb{R}^{\mathbb{N}}$ die durch $b_{j} = \beta^{-1} \norm{\tilde{\varphi}_{j}}_{L_{\infty}(\Omega)}$ gegebene Folge, wobei $\beta$ die nach \cref{satz:raum_zeit_variationsformulierung_sachgemaess_gestellt} existierende parameterunabhängige inf-sup"=Konstante ist.
+    Dann gilt
     \begin{equation}
-        \sup_{\sigma \in \mathcal P} \norm{\partial^{\nu}_{\sigma} u(\sigma)}_{\mathcal X} \leq \frac{\norm{f}_{\mathcal Y'}}{\beta} \norm{\nu}_{\ell_{1}(\mathbb{N})}! b^{\nu}
+        \label{eq:abschaetzung_norm_partieller_ableitungen}
+        \sup_{\bm\sigma \in \mathcal P} \norm{\partial^{\bm\nu}_{\bm\sigma} u(\bm\sigma)}_{\mathcal X} \leq \frac{\norm{f}_{\mathcal Y'}}{\beta} \norm{\bm\nu}_{\ell_{1}(\mathbb{N})}! \vec b^{\bm\nu} \quad \fa \bm \nu \in \mathcal F.
     \end{equation}
-    für alle $\nu \in \mathcal F$.
 
     \begin{Beweis}
-        Betrachte die Variationsprobleme, welche von den partiellen Ableitungen $\partial^{\nu}_{\sigma} u(\sigma)$ erfüllt werden.
-        Wir zeigen zunächst, dass diese durch
+        Wir beginnen damit eine Darstellung der Variationsprobleme, welche von den partiellen Ableitungen erfüllt werden, herzuleiten.
+        Diese lassen sich durch
         \begin{equation}
-        \label{eq:ps:rg:partielle_ableitungen_rekursive_ableitungen}
-            b(\partial^{\nu}_{\sigma} u(\sigma), v; \sigma)
-            = - \sum_{\Set{j \given \nu_{j} \neq 0}} \nu_{j} \int_{I} \tilde{\chi}_{j} \skp{\tilde{\varphi}_{j} \partial^{\nu - e_{j}}_{\sigma} u(\sigma)}{v_{1}}{H} \diff t.
+        \label{eq:abschaetzung_norm_partieller_ableitungen:rekursiv}
+            b(\partial^{\bm\nu}_{\bm\sigma} u(\bm\sigma), v; \bm\sigma)
+            = - \sum_{\Set{j \given \nu_{j} \neq 0}} \nu_{j} \int_{I} \tilde{\chi}_{j} \skp{\tilde{\varphi}_{j} \partial^{\bm\nu - \vec e_{j}}_{\bm\sigma} u(\bm\sigma)}{v_{1}}{H} \diff t.
         \end{equation}
-        rekursiv dargestellt werden können.
-        Die Gültigkeit dieser Darstellung zeigen wir induktiv.
+        rekursiv darstellen, was wir im Folgenden induktiv zeigen werden.
 
-        Den Fall $\norm{\nu}_{\ell_{1}(\mathbb{N})} = 1$ haben wir in \cref{bem:ps:rg:partielle_ableitungen_alternativ_ueber_ableitung_des_operators} bereits gezeigt.
-        Betrachte also $\norm{\nu}_{\ell_{1}(\mathbb{N})} > 1$.
-        Sei $k \in \mathbb{N}$ ein Index mit $\nu_{k} > 0$, dann definieren wir $\tilde{\nu} := \nu - e_{k}$ und es gilt offenbar $\norm{\tilde\nu}_{\ell_{1}(\mathbb{N})} = \norm{\nu}_{\ell_{1}(\mathbb{N})} - 1$.
+        Den Fall $\norm{\bm\nu}_{\ell_{1}(\mathbb{N})} = 1$ haben wir in \cref{bemerkung:alternative_herleitung_variationsproblem_ableitung} bereits gezeigt.
+        Sei nun also $\norm{\bm\nu}_{\ell_{1}(\mathbb{N})} > 1$.
+        Sei weiter $k \in \mathbb{N}$ ein Index mit $\nu_{k} > 0$, dann definieren wir $\tilde{\bm\nu} := \bm\nu - \vec e_{k}$ und es gilt offenbar $\norm{\tilde{\bm\nu}}_{\ell_{1}(\mathbb{N})} = \norm{\bm\nu}_{\ell_{1}(\mathbb{N})} - 1$.
         Nach Induktionsvoraussetzung gilt damit
         \begin{equation}
-            b(\partial^{\tilde{\nu}}_{\sigma} u(\sigma), v; \sigma) + \sum_{\Set{j \given \tilde{\nu}_{j} \neq 0}} \tilde{\nu}_{j} \int_{I} \tilde{\chi}_{j} \skp{\tilde{\varphi}_{j} \partial^{\tilde{\nu} - e_{j}}_{\sigma} u(\sigma)}{v_{1}}{H} \diff t = 0,
+            b(\partial^{\tilde{\bm\nu}}_{\bm\sigma} u(\bm\sigma), v; \bm\sigma) + \sum_{\Set{j \given \tilde{\nu}_{j} \neq 0}} \tilde{\nu}_{j} \int_{I} \tilde{\chi}_{j} \skp{\tilde{\varphi}_{j} \partial^{\tilde{\bm\nu} - \vec e_{j}}_{\bm\sigma} u(\bm\sigma)}{v_{1}}{H} \diff t = 0,
         \end{equation}
         wobei nach Definition $\nu_{j} = \tilde{\nu}_{j}$ für $j \neq k$ und $\tilde{\nu}_{k} = \nu_{k} - 1$ ist.
-        Partielles Differenzieren dieser Gleichung nach $\sigma_{k}$ analog zu \cref{bem:ps:rg:partielle_ableitungen_alternativ_ueber_ableitung_des_operators} liefert dann die Gleichung
+        Partielles Differenzieren dieser Gleichung nach $\sigma_{k}$ analog zu \cref{bemerkung:alternative_herleitung_variationsproblem_ableitung} liefert dann die Gleichung
         \begin{align}
             0 &=
-                b(\partial^{\nu}_{\sigma} u(\sigma), v; \sigma)
-           \\&\qquad          + \int_{I} \tilde{\chi}_{k} \skp{\tilde{\varphi}_{k} \partial^{\nu - e_{k}}_{\sigma} u(\sigma)}{v_{1}}{H} \diff t
-                + (\nu_{k} - 1) \int_{I} \tilde{\chi}_{k} \skp{\tilde{\varphi}_{k} \partial^{\nu - e_{k}}_{\sigma} u(\sigma) }{v_{1}}{H} \diff t
-           \\&\qquad     + \sum_{\Set{j \neq k \given \nu_{j} \neq 0}} \nu_{j} \int_{I} \tilde{\chi}_{j} \skp{\tilde{\varphi}_{j} \partial^{\nu - e_{j}}_{\sigma} u(\sigma)}{v_{1}}{H} \diff t,
+                b(\partial^{\bm\nu}_{\bm\sigma} u(\bm\sigma), v; \bm\sigma)
+           \\&\qquad          + \int_{I} \tilde{\chi}_{k} \skp{\tilde{\varphi}_{k} \partial^{\bm\nu - \vec e_{k}}_{\bm\sigma} u(\bm\sigma)}{v_{1}}{H} \diff t
+                + (\nu_{k} - 1) \int_{I} \tilde{\chi}_{k} \skp{\tilde{\varphi}_{k} \partial^{\bm\nu - \vec e_{k}}_{\bm\sigma} u(\bm\sigma) }{v_{1}}{H} \diff t
+           \\&\qquad     + \sum_{\Set{j \neq k \given \nu_{j} \neq 0}} \nu_{j} \int_{I} \tilde{\chi}_{j} \skp{\tilde{\varphi}_{j} \partial^{\bm\nu - \vec e_{j}}_{\bm\sigma} u(\bm\sigma)}{v_{1}}{H} \diff t,
         \end{align}
-        welche nach Zusammenfassen der Summanden der Gleichung \cref{eq:ps:rg:partielle_ableitungen_rekursive_ableitungen} entspricht.
+        welche nach Zusammenfassen der Summanden der Gleichung \cref{eq:abschaetzung_norm_partieller_ableitungen:rekursiv} entspricht.
 
-        Fassen wir \cref{eq:ps:rg:partielle_ableitungen_rekursive_ableitungen} nun als Problem der Form \cref{??} auf, insbesondere also die rechte Seite als Funktional in $\mathcal Y'$, dann liefert \cref{satz:ps:eel:schwache_formulierung_sachgemaess_gestellt} die Abschätzung
+        Für die rechte Seite von \cref{eq:abschaetzung_norm_partieller_ableitungen:rekursiv} können wir wie zuvor nachweisen, dass es sich um ein stetiges lineares Funktional auf $\mathcal Y$ handelt; wir können also \cref{satz:raum_zeit_variationsformulierung_sachgemaess_gestellt} verwenden um die Abschätzung
         \begin{equation}
-            \norm{\partial^{\nu}_{\sigma} u(\sigma)}_{\mathcal X} \leq \frac{1}{\beta} \norm{\sum_{\Set{j \given \nu_{j} \neq 0}} \nu_{j} \int_{I} \tilde{\chi}_{j} \skp{\tilde{\varphi}_{j} \partial^{\nu - e_{j}}_{\sigma} u(\sigma)}{v_{1}}{H} \diff t}_{\mathcal Y'}.
+            \norm{\partial^{\bm\nu}_{\bm\sigma} u(\bm\sigma)}_{\mathcal X} \leq \frac{1}{\beta} \norm{\sum_{\Set{j \given \nu_{j} \neq 0}} \nu_{j} \int_{I} \tilde{\chi}_{j} \skp{\tilde{\varphi}_{j} \partial^{\bm\nu - \vec e_{j}}_{\bm\sigma} u(\bm\sigma)}{v_{1}}{H} \diff t}_{\mathcal Y'}
         \end{equation}
-        Als nächstes wollen wir die $\mathcal Y'$-Norm auf der rechten Seite abschätzen.
-        Betrachte dazu analog zu $F_{h}$ im Beweis von \cref{3.22}
+        zu erhalten.
+        Wir wollen nun die $\mathcal Y'$-Norm der rechten Seite weiter abschätzen.
+        Dazu verwenden wir erneut die Cauchy"=Schwarz"=Ungleichung und erhalten wegen
         \begin{align}
-            &\abs{\sum_{\Set{j \given \nu_{j} \neq 0}} \nu_{j} \int_{I} \tilde{\chi}_{j} \skp{\tilde{\varphi}_{j} \partial^{\nu - e_{j}}_{\sigma} u(\sigma)}{v_{1}}{H} \diff t}
-            \\\leq
-            &\sum_{\Set{j \given \nu_{j} \neq 0}} \nu_{j} \abs {\int_{I} \tilde{\chi}_{j} \skp{\tilde{\varphi}_{j} \partial^{\nu - e_{j}}_{\sigma} u(\sigma)}{v_{1}}{H} \diff t}
-            \\\leq
-            &\sum_{\Set{j \given \nu_{j} \neq 0}} \nu_{j} \norm{\tilde{\varphi}_{j}}_{L_{\infty}(\Omega)} \norm{\partial^{\nu - e_{j}}_{\sigma} u(\sigma)}_{L_{2}(I; H)} \norm{v_{1}}_{L_{2}(I; H)}
-            \\\leq
-            &\sum_{\Set{j \given \nu_{j} \neq 0}} \nu_{j} \norm{\tilde{\varphi}_{j}}_{L_{\infty}(\Omega)} \norm{\partial^{\nu - e_{j}}_{\sigma} u(\sigma)}_{\mathcal X} \norm{v}_{\mathcal Y},
+            &\abs{\sum_{\Set{j \given \nu_{j} \neq 0}} \nu_{j} \int_{I} \tilde{\chi}_{j} \skp{\tilde{\varphi}_{j} \partial^{\bm\nu - \vec e_{j}}_{\bm\sigma} u(\bm\sigma)}{v_{1}}{H} \diff t}
+            \\\leq~
+            &\sum_{\Set{j \given \nu_{j} \neq 0}} \nu_{j} \abs {\int_{I} \tilde{\chi}_{j} \skp{\tilde{\varphi}_{j} \partial^{\bm\nu - \vec e_{j}}_{\bm\sigma} u(\bm\sigma)}{v_{1}}{H} \diff t}
+            \\\leq~
+            &\sum_{\Set{j \given \nu_{j} \neq 0}} \nu_{j} \norm{\tilde{\varphi}_{j}}_{L_{\infty}(\Omega)} \norm{\partial^{\bm\nu - \vec e_{j}}_{\bm\sigma} u(\bm\sigma)}_{L_{2}(I; H)} \norm{v_{1}}_{L_{2}(I; H)}
+            \\\leq~
+            &\sum_{\Set{j \given \nu_{j} \neq 0}} \nu_{j} \norm{\tilde{\varphi}_{j}}_{L_{\infty}(\Omega)} \norm{\partial^{\bm\nu - \vec e_{j}}_{\bm\sigma} u(\bm\sigma)}_{\mathcal X} \norm{v}_{\mathcal Y},
         \end{align}
-        woraus wir die obige Abschätzung zu
+        weiter die Abschätzung
         \begin{equation}
-            \norm{\partial^{\nu}_{\sigma} u(\sigma)}_{\mathcal X} \leq \sum_{\Set{j \given \nu_{j} \neq 0}} \nu_{j} \frac{\norm{\tilde{\varphi}_{j}}_{L_{\infty}(\Omega)}}{\beta} \norm{\partial^{\nu - e_{j}}_{\sigma} u(\sigma)}_{\mathcal X}
+            \label{eq:abschaetzung_norm_partieller_ableitungen:rekursive_schranke}
+            \norm{\partial^{\bm\nu}_{\bm\sigma} u(\bm\sigma)}_{\mathcal X} \leq \sum_{\Set{j \given \nu_{j} \neq 0}} \nu_{j} \frac{\norm{\tilde{\varphi}_{j}}_{L_{\infty}(\Omega)}}{\beta} \norm{\partial^{\bm\nu - \vec e_{j}}_{\bm\sigma} u(\bm\sigma)}_{\mathcal X}.
         \end{equation}
-        weiterverarbeiten können.
 
         Um nun die eigentliche Behauptung zu beweisen, verfolgen wir erneut einen Induktionsansatz.
-        Sei zunächst $\norm{\nu}_{\ell_{1}(\mathbb{N})} = 0$, dann entspricht
+        Sei zunächst $\norm{\bm\nu}_{\ell_{1}(\mathbb{N})} = 0$, dann entspricht
         \begin{equation}
-            \norm{u(\sigma)}_{\mathcal X} \leq \frac{\norm{f}_{\mathcal Y'}}{\beta},
+            \sup_{\bm \sigma \in \mathcal P} \norm{u(\bm\sigma)}_{\mathcal X} \leq \frac{\norm{f}_{\mathcal Y'}}{\beta}
         \end{equation}
-        der Ungleichung \cref{eq:ps:rg:partielle_ableitungen_schranke} und ist nach \cref{satz:ps:rg:lax_milgram_anwendung} erfüllt.
-        Sei also weiter $\norm{\nu}_{\ell_{1}(\mathbb{N})} > 0$, dann gilt für die rekursive Darstellung \cref{eq:ps:rg:partielle_ableitungen_schranke_rekursiv} unter Verwendung der Induktionsvoraussetzung für $\norm{\partial^{\nu - e_{j}}_{\sigma} u(\sigma)}_{\mathcal X}$ die Abschätzung
+        Ungleichung \cref{eq:abschaetzung_norm_partieller_ableitungen} und ist nach \cref{satz:raum_zeit_variationsformulierung_sachgemaess_gestellt} erfüllt.
+        Sei also weiter $\norm{\bm\nu}_{\ell_{1}(\mathbb{N})} > 0$, dann gilt für die rekursive Darstellung \cref{eq:abschaetzung_norm_partieller_ableitungen:rekursive_schranke} unter Verwendung der Induktionsvoraussetzung \cref{eq:abschaetzung_norm_partieller_ableitungen} für $\norm{\partial^{\bm\nu - \vec e_{j}}_{\bm\sigma} u(\bm\sigma)}_{\mathcal X}$ die Abschätzung
         \begin{align}
-            \norm{\partial^{\nu}_{\sigma} u(\sigma)}_{\mathcal X}
+            \norm{\partial^{\bm\nu}_{\bm\sigma} u(\bm\sigma)}_{\mathcal X}
             &\leq
-            \sum_{\Set{j \given \nu_{j} \neq 0}} \nu_{j} b_{j} \norm{\partial^{\nu - e_{j}}_{\sigma} u(\sigma)}_{\mathcal X}
+            \sum_{\Set{j \given \nu_{j} \neq 0}} \nu_{j} b_{j} \norm{\partial^{\bm\nu - \vec e_{j}}_{\bm\sigma} u(\bm\sigma)}_{\mathcal X}
             \\&\leq
-            \sum_{\Set{j \given \nu_{j} \neq 0}} \nu_{j} b_{j} \frac{\norm{f}_{\mathcal Y'}}{\beta} \norm{\nu - e_{j}}_{\ell_{1}(\mathbb{N})}! b^{\nu - e_{j}}
+            \sum_{\Set{j \given \nu_{j} \neq 0}} \nu_{j} b_{j} \frac{\norm{f}_{\mathcal Y'}}{\beta} \norm{\bm\nu - \vec e_{j}}_{\ell_{1}(\mathbb{N})}! \vec b^{\bm\nu - \vec e_{j}}
             \\&=
-            \bigg( \sum_{\Set{j \given \nu_{j} \neq 0}} \nu_{j} \bigg) \bigg( \frac{\norm{f}_{\mathcal Y'}}{\beta} (\norm{\nu}_{\ell_{1}(\mathbb{N})} - 1)! b^{\nu} \bigg)
+            \bigg( \sum_{\Set{j \given \nu_{j} \neq 0}} \nu_{j} \bigg) \bigg( \frac{\norm{f}_{\mathcal Y'}}{\beta} (\norm{\bm\nu}_{\ell_{1}(\mathbb{N})} - 1)! \vec b^{\bm\nu} \bigg)
             \\&=
-            \frac{\norm{f}_{\mathcal Y'}}{\beta} \norm{\nu}_{\ell_{1}(\mathbb{N})}! b^{\nu}
+            \frac{\norm{f}_{\mathcal Y'}}{\beta} \norm{\bm\nu}_{\ell_{1}(\mathbb{N})}! \vec b^{\bm\nu}
          \end{align}
          und damit die Behauptung.
     \end{Beweis}
 \end{Satz}
 
-\begin{Satz}[{{{\cite[Theorem 7.2]{Cohen:2010kz}}}}]
+Bisher mussten keine zusätzlichen Bedingungen auferlegt werden um die Aussagen zu beweisen.
+Dies ändert sich an dieser Stelle, zunächst aber wollen wir darauf eingehen, wie die obigen Aussagen dazu führen, die analytische Abhängigkeit der Lösung vom Parameter nachzuweisen.
+
+\begin{Definition}
+\label{definition:analytisch}
+    Wir nennen die Abbildung $\mathcal P \ni \bm \sigma \mapsto u(\bm \sigma) \in \mathcal X$ \emph{analytisch}, wenn sie in jedem $\bm\sigma_{0} \in \mathcal P$ als lokal gleichmäßig konvergente Potenzreihe
+    \begin{equation}
+        \sum_{\bm \nu \in \mathcal F} t_{\bm \nu} (\bm \sigma - \bm \sigma_{0})^{\bm \nu}
+    \end{equation}
+    dargestellt werden kann.
+\end{Definition}
+
+Ist die Abbildung analytisch, dann entspricht die Potenzreihe gerade ihrer Taylorreihe.
+Diese Eigenschaft wollen wir ausnutzen, denn in diesem Fall sind die Koeffizienten $t_{\bm \nu}$ gerade durch
+\begin{equation}
+    t_{\bm \nu} = \frac{1}{\bm\nu!} \partial^{\bm \nu}_{\bm \sigma} u(\bm \sigma_{0})
+\end{equation}
+gegeben.
+
+Betrachten wir beispielsweise die Taylorreihe von $u(\blank)$ um den Nullpunkt $\vec 0 \in \mathcal P$, dann erhalten wir wegen $\mathcal P = [-1, 1]^{\mathbb{N}}$ die Abschätzung
+\begin{equation}
+    \sup_{\bm\sigma \in \mathcal P} \norm{\sum_{\bm\nu \in \mathcal F} t_{\bm\nu} \bm\sigma^{\bm\nu}}_{\mathcal X}
+    \leq \sup_{\bm\sigma \in \mathcal P} \sum_{\bm\nu \in \mathcal F} \norm{t_{\bm\nu} \bm\sigma^{\bm\nu}}_{\mathcal X}
+    \leq \sum_{\bm\nu \in \mathcal F} \norm{t_{\bm\nu}}_{\mathcal X}
+    \leq \sum_{\bm \nu \in \mathcal F} \frac{1}{\bm\nu!} \norm{ \partial^{\bm \nu}_{\bm \sigma} u(\vec 0)}_{\mathcal X},
+\end{equation}
+beziehungsweise nach \cref{satz:abschaetzung_norm_partieller_ableitungen} weiter
+\begin{equation}
+    \sup_{\bm\sigma \in \mathcal P} \norm{\sum_{\bm\nu \in \mathcal F} t_{\bm\nu} \bm\sigma^{\bm\nu}}_{\mathcal X}
+    \leq \frac{\norm{f}_{\mathcal Y'}}{\beta} \sum_{\bm \nu \in \mathcal F} \frac{\norm{\bm\nu}_{\ell_{1}(\mathbb{N})}!}{\bm\nu!} \vec b^{\bm\nu}.
+\end{equation}
+Die Frage, ob die Abbildung $\mathcal P \ni \bm \sigma \mapsto u(\bm \sigma) \in \mathcal X$ analytisch ist, hat sich damit also auf die Frage, unter welchen Bedingungen $\sum_{\bm \nu \in \mathcal F} (\norm{\bm\nu}_{\ell_{1}(\mathbb{N})}!)(\bm\nu!)^{-1} \vec b^{\bm\nu}$ konvergiert, reduziert.
+Wann dies der Fall ist, wurde beispielsweise in \cite[Theorem 7.2]{Cohen:2010kz} untersucht.
+Wir geben die Aussage hier ohne Beweis wieder.
+
+\begin{Satz}
+\label{satz:cohen2010kz:theorem72}
     Sei $0 < p \leq 1$.
-    Die Folge $(\frac{\abs{\nu}!}{\nu!} b^{\nu})_{\nu \in \mathcal F}$ liegt in $\ell_{p}(\mathcal F)$ genau dann, wenn $\norm{b}_{\ell_{1}(\mathbb{N})} < 1$ und $b \in \ell_{p}(\mathbb{N})$ gilt.
+    Die Folge $(\frac{\norm{\bm\nu}_{\ell_{1}(\mathbb{N})}!}{\bm\nu!} \vec b^{\bm\nu})_{\bm\nu \in \mathcal F}$ liegt genau dann in $\ell_{p}(\mathcal F)$, wenn $\norm{\vec b}_{\ell_{1}(\mathbb{N})} < 1$ und $\vec b \in \ell_{p}(\mathbb{N})$ gilt.
 \end{Satz}
 
 \begin{Satz}
-    Das Funktionensystem $\Set{\varphi_{j}}_{j \in \mathbb{N}}$ erfülle \cref{??}.
-    Dann ist die Abbildung $\mathcal P \ni \sigma \mapsto u(\sigma) \in \mathcal X$, welche einem Parameter $\sigma \in \mathcal P$ die zugehörige Lösung der schwachen Formulierung \cref{??} zuordnet, analytisch in $\sigma$.
+\label{satz:loesungen_analytisch}
+    Das Funktionensystem $\Set{\varphi_{j}}_{j \in \mathbb{N}}$ sei wo gewählt, dass $\vec b \in \ell_{1}(\mathbb{N})$, definiert als $b_{j} = \beta^{-1} \norm{\varphi_{j}}_{L_{\infty}(\Omega)}$, die Bedingung $\norm{\vec b}_{\ell_{1}(\mathbb{N})} < 1$ erfüllt.
+    Dann hängt die Lösung $u(\bm \sigma)$ des parametrischen Raum"=Zeit"=Variationsproblems \cref{eq:parametrisches_rz_variationsproblem} analytisch vom Parameter $\bm \sigma \in \mathcal P$ ab.
 
     \begin{Beweis}
-        Wir zeigen, dass die Taylor-Reihenentwicklung von $u(\sigma)$ gleichmäßig konvergiert.
-        Die Taylor-Reihenentwicklung um den Nullpunkt $0 \in \mathcal P$ ausgewertet in $\sigma \in \mathcal P$ hat die Form
-        \begin{equation}
-            \sum_{\nu \in \mathcal F} t_{\nu} \sigma^{\nu},
-        \end{equation}
-        wobei der Ausdruck $t_{\nu}$ durch
-        \begin{equation}
-            t_{\nu} = \frac{1}{\nu!} \partial^{\nu}_{\sigma} u(0) \in \mathcal X
-        \end{equation}
-        gegeben ist.
-        Unter Verwendung von \cref{satz:mhoo} gilt
-        \begin{align}
-            \norm{t_{\nu}}_{\mathcal X}
-            = \frac{1}{\nu!} \norm{\partial^{\nu}_{\sigma} u(0)}
-            \leq \frac{1}{\nu!} \frac{\norm{f}_{\mathcal Y'}}{\beta} \norm{\nu}_{\ell_{1}(\mathbb{N})} b^{\nu}
-        \end{align}
-        für alle $\nu \in \mathcal F$.
-        Zusammen erhalten wir damit
-        \begin{equation}
-            \begin{aligned}
-                \sup_{\sigma \in \mathcal P} \norm{\sum_{\nu \in \mathcal F} t_{\nu} \sigma^{\nu}}_{\mathcal X}
-                \leq \sup_{\sigma \in \mathcal P} \sum_{\nu \in \mathcal F} \norm{t_{\nu} \sigma^{\nu}}_{\mathcal X}
-                \leq \sum_{\nu \in \mathcal F} \norm{t_{\nu}}_{\mathcal X}
-                \leq \frac{\norm{f}_{\mathcal Y'}}{\beta} \sum_{\nu \in \mathcal F} \frac{\norm{\nu}_{\ell_{1}(\mathbb{N})}!}{\nu!} b^{\nu}.
-            \end{aligned}
-        \end{equation}
-        Die rechte Seite ist endlich, wenn $(\frac{\norm{\nu}_{\ell_{1}(\mathbb{N})}!}{\nu!} b^{\nu})_{\nu \in \mathcal F}$ in $\ell_{1}(\mathcal F)$ liegt, was nach Voraussetzung der Fall ist.
-        Damit ist die Taylor-Reihe von $u(\sigma)$ gleichmäßig konvergent und folglich $u(\sigma)$ analytisch.
+        Der vorherige Satz und die Überlegungen davor liefern unter diesen Voraussetzungen die behauptete Aussage.
     \end{Beweis}
 \end{Satz}
 
-% section regularit_t_bez_glich_der_parameter (end)
+Die Bedingung $\norm{\vec b}_{\ell_{1}(\mathbb{N})} < 1$ kann dabei so interpretiert werden, dass der feld-abhängige Teil der partiellen Differentialgleichung den feld-unabhängigen Anteil nicht zu stark stören darf, damit die analytische Abhängigkeit gewährleistet ist.
+Dies verträgt sich leider nur bedingt mit der Motivation der Propagator-Differentialgleichung, da bei dieser die Felder einen starken Einfluss haben.
 
+Im Rahmen der numerischen Untersuchung in \cref{chapter:galerkin} werden wir auf diesen Punkt noch einmal eingehen und anhand der numerischen Ergebnisse deutlich machen, inwiefern die Bedingung eingehalten wird respektive eingehalten werden kann.
 
 \section{Exkurs: Periodische Randbedingungen} % (fold)
-\label{sec:ps:pr:periodische_randbedingungen}
+\label{section:periodische_randbedingungen}
 
 Da wir in diesem Kapitel bisher ausschließlich mit homogenen Dirichlet-Randbedingungen gearbeitet haben, wollen wir an dieser Stelle auf den Fall periodischer Randbedingungen eingehen.
 Dabei werden wir feststellen, dass Aufgrund der Struktur der Propagator-Differentialgleichung nur sehr geringe Unterschiede zum betrachteten homogenen Fall bestehen.
@@ -837,57 +850,61 @@ Dabei werden wir feststellen, dass Aufgrund der Struktur der Propagator-Differen
 Zunächst müssen wir die Rahmenbedingungen für die Betrachtung periodischer Randbedingungen festlegen.
 Dazu beschränken wir uns der Einfachheit halber auf den Fall, dass $\Omega = \bigtimes_{i = 1}^{n} (0, l_{i}) \subset \mathbb{R}^{n}$ ein beschränkter offener Quader ist, wobei $l_{i} \in \mathbb{R}_{+}$ für $i = 1 \dots n$ sei.
 Weiter führen wir nun die Äquivalente des Lebesgue-Raums $L_{2}(\Omega)$ und des Sobolev-Raums $H^{1}(\Omega)$ für periodische Funktionen ein.
-Dies wird an dieser Stelle sehr einfach gehalten; ausführlich kann dies bespielsweise bei \cite{??} gefunden werden.
+Dies wird an dieser Stelle sehr einfach gehalten; ausführlicher kann dies bespielsweise bei \textcite{Han2009} gefunden werden.
 
 \begin{Definition}
-    Sei $\mathcal C_{\text{p}}^{\infty}(\Omega) \subset \mathcal C^{\infty}(\mathbb{R}^{n})$ die Teilmenge der glatten $\Omega$-periodischen Funktionen.
-    Als den Lebesgue-Raum $\Omega$-periodischer Funktionen $L_{2,\text{p}}(\Omega)$  definieren wir den Abschluss von $C_{\text{p}}^{\infty}(\Omega)$ bezüglich der $L_{2}$-Norm.
-    Weiter definieren wir den Sobolev-Raum $\Omega$-periodischer Funktionen $H^{1}_{\text{p}}(\Omega)$ als den Abschluss $C_{\text{p}}^{\infty}(\Omega)$ bezüglich der $H^{1}$-Norm.
+\label{definition:periodische_sobolev_raeume}
+    Sei $\mathcal C_{\text{per}}^{\infty}(\Omega) \subset \mathcal C^{\infty}(\mathbb{R}^{n})$ die Teilmenge der glatten $\Omega$-periodischen Funktionen.
+    Als den Lebesgue-Raum $\Omega$-periodischer Funktionen $L_{2,\text{per}}(\Omega)$  definieren wir den Abschluss von $C_{\text{per}}^{\infty}(\Omega)$ bezüglich der $L_{2}$-Norm.
+    Weiter definieren wir den Sobolev-Raum $\Omega$-periodischer Funktionen $H^{1}_{\text{per}}(\Omega)$ als den Abschluss $C_{\text{per}}^{\infty}(\Omega)$ bezüglich der $H^{1}$-Norm.
 \end{Definition}
 
-Diese Räume verwenden wir nun um die Räume $V$ und $H$, vergleiche \cref{bemerkung:prop:gelfand}, zu definieren.
-Nach Konstruktion handelt es sich bei $H^{1}_{\text{p}}(\Omega)$ und $L_{2,\text{p}}(\Omega)$ um Hilberträume und weiter ist $H^{1}_{\text{p}}(\Omega)$ ein dichter Unterraum von $L_{2,\text{p}}(\Omega)$.
-Wählen wir also $V = H^{1}_{\text{p}}(\Omega)$ und $H = L_{2,\text{p}}(\Omega)$, dann erhalten wir nach \cref{def:gl:br:gelfand_tripel} wie zuvor ein Gelfand-Tripel der Form
+Diese Räume verwenden wir nun um die Räume $V$ und $H$, vergleiche \cref{bemerkung:raeume_und_gelfand_tripel}, zu definieren.
+Nach Konstruktion handelt es sich bei $H^{1}_{\text{per}}(\Omega)$ und $L_{2,\text{per}}(\Omega)$ um Hilberträume und weiter ist $H^{1}_{\text{per}}(\Omega)$ ein dichter Unterraum von $L_{2,\text{per}}(\Omega)$.
+Wählen wir also $V = H^{1}_{\text{per}}(\Omega)$ und $H = L_{2,\text{per}}(\Omega)$, dann erhalten wir nach \cref{def:gl:br:gelfand_tripel} wie zuvor ein Gelfand-Tripel der Form
 \begin{equation}
-    V \denseinclusion H \denseinclusion V' = (H^{1}_{\text{p}}(\Omega))'.
+    V \denseinclusion H \simeq H' \denseinclusion V' = (H^{1}_{\text{per}}(\Omega))'.
 \end{equation}
 
 Inspiziert man die Ausführungen dieses Kapitels für den Fall homogener Dirichlet-Randbedingungen, dann stellt man fest, dass lediglich die Bedingungen aus \cref{ann:gl:le:bilinearform_eigenschaften} an die Bilinearform $a(\blank, \blank)$, deren Darstellung durch den Wechsel zu periodischen Randbedingungen unverändert bleibt, nachgewiesen werden müssen.
 
 \begin{Lemma}
-    Sei $a(\blank, \blank; t)$, $t \in I$, die Familie von Bilinearformen aus \cref{definition:prop:operator_und_bilinearform} respektive \cref{eq:prop:bilinearform_darstellung}, wobei die Hilberträume als $V = H^{1}_{\text{p}}(\Omega)$ und $H = L_{2,\text{p}}(\Omega)$ gegeben seien.
-    Für festes $t \in I$ erfüllt $a(\blank, \blank; t)$ die folgenden Eigenschaften:
+\label{lemma:bilinearform_periodisch_messbar_stetig_garding}
+    Sei $a(\blank, \blank; t)$, $t \in I$, die Familie von Bilinearformen aus \cref{definition:operator_bilinearform_zeit}, wobei die Hilberträume als $V = H^{1}_{\text{per}}(\Omega)$ und $H = L_{2,\text{per}}(\Omega)$ gegeben seien.
+    Diese Bilinearformen erfüllen die folgenden Eigenschaften:
     \begin{thmenumerate}
-        \item\label{satz:ps:rzvp:bilinearform_a_eigenschaften_stetig}
+        \item \label{lemma:bilinearform_periodisch_messbar_stetig_garding:messbar}
+        \emph{Messbarkeit:} die Abbildung $I \ni t \mapsto a(\blank, \blank; t)$ ist messbar.
+        \item\label{lemma:bilinearform_periodisch_messbar_stetig_garding:stetig}
         \emph{Stetigkeit:} es gilt
         \begin{equation}
-            \label{eq:ps:rzvp:bilinearform_a_eigenschaften_stetig}
+            \label{eq:bilinearform_periodisch_messbar_stetig_garding:stetig}
             \abs{a(\eta, \zeta; t)} \leq \gamma_{a} \norm{\eta}_{V} \norm{\zeta}_{V} \quad \text{für alle}~\eta, \zeta \in V
         \end{equation}
-        mit Stetigkeitskonstante $\gamma_{a} = \max\Set{c, \norm{\omega(t, \blank)}_{L_{\infty}(\Omega)} + \abs{\mu}} < \infty$.
-        \item\label{satz:ps:rzvp:bilinearform_a_eigenschaften_garding}
+        mit Stetigkeitskonstante $\gamma_{a} = \max\Set{c, \norm{\omega}_{L_{\infty}(I; L_{\infty}(\Omega))} + \abs{\mu}} < \infty$.
+        \item\label{lemma:bilinearform_periodisch_messbar_stetig_garding:garding}
         \emph{G\aa{}rding-Ungleichung:} es gilt
         \begin{equation}
-            \label{eq:ps:rzvp:bilinearform_a_eigenschaften_garding}
+            \label{eq:bilinearform_periodisch_messbar_stetig_garding:garding}
             a(\eta, \eta; t) + \lambda \norm{\eta}_{H}^{2} \geq \alpha \norm{\eta}_{V}^{2} \quad \text{für alle}~\eta \in V
         \end{equation}
-        mit $\alpha = c > 0$ und $\lambda = \max\Set{\norm{\omega(t, \blank)}_{L_{\infty}(\Omega)} - \mu + c, c} \geq c > 0$.
+        mit $\alpha = c > 0$ und $\lambda = \max\Set{\norm{\omega}_{L_{\infty}(I;L_{\infty}(\Omega))} - \mu + c, c} \geq c > 0$.
     \end{thmenumerate}
 
     \begin{Beweis}
-        Wie zuvor sei ohne Einschränkung $t \in I_{1}$, also $\omega(t, \blank) = w_{1}$.
-        Der Nachweis der Stetigkeit bleibt unverändert und wird hier nicht wiederholt.
+        Die Nachweise der Messbarkeit und Stetigkeit bleiben unverändert wie in \cref{satz:bilinearform_messbar_stetig_garding} und werden hier nicht wiederholt.
+
         Für die G\aa{}rding-Ungleichung sei zunächst $\eta \in V$ beliebig und $\lambda \in \mathbb{R}$, dann gilt
         \begin{align}
             a(\eta, \eta; t) + \lambda \norm{\eta}^{2}_{H}
-            &= c \norm{\grad \eta}^{2}_{H} + \skprod{w_{1} \eta}{\eta}_{H} + \mu \skprod{\eta}{\eta}_{H} + \lambda \skprod{\eta}{\eta}_{H}
-            \\&= c \norm{\grad \eta}^{2}_{H} + \skprod{(w_{1} + \mu + \lambda) \eta}{\eta}_{H}.
+            &= c \norm{\grad \eta}^{2}_{H} + \skprod{\omega(t, \blank) \eta}{\eta}_{H} + \mu \skprod{\eta}{\eta}_{H} + \lambda \skprod{\eta}{\eta}_{H}
+            \\&= c \norm{\grad \eta}^{2}_{H} + \skprod{\omega(t, \blank) + \mu + \lambda) \eta}{\eta}_{H}.
         \end{align}
 
-        Wählen wir $\lambda = \max\Set{\norm{w_{1}}_{L_{\infty}(\Omega)} - \mu + c, c} = \max\Set{\norm{\omega(t, \blank)}_{L_{\infty}(\Omega)} - \mu + c, c} \geq c > 0$, dann gilt $w_{1} + \mu + \lambda - c \geq 0$ fast überall in $\Omega$ und wir erhalten die Abschätzung
+        Wählen wir $\lambda = \max\Set{\norm{\omega}_{L_{\infty}(I; L_{\infty}(\Omega))} - \mu + c, c} \geq c > 0$, dann gilt $\omega(t, \blank) + \mu + \lambda - c \geq 0$ fast überall in $\Omega$ und wir erhalten die Abschätzung
         \begin{align}
             a(\eta, \eta; t) + \lambda \norm{\eta}^{2}_{H}
-            &= c \norm{\grad \eta}^{2}_{H} + \skprod{(w_{1} + \mu + \lambda - c) \eta}{\eta}_{H} + c \norm{\eta}^{2}_{H} \\
+            &= c \norm{\grad \eta}^{2}_{H} + \skprod{(\omega(t, \blank) + \mu + \lambda - c) \eta}{\eta}_{H} + c \norm{\eta}^{2}_{H} \\
             &\geq c \norm{\grad \eta}^{2}_{H} + c \norm{\eta}^{2}_{H}
             \\&= c \norm{\eta}^{2}_{V}.
         \end{align}

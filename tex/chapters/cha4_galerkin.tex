@@ -1,16 +1,10 @@
 %!TEX root = ../main.tex
 
-\iftoggle{dictum}{
-    \setchapterpreamble[ul][0.6\textwidth]{%
-        \dictum[Alfréd Rényi]{\enquote{A mathematician is a device for turning coffee into theorems.}}
-        \vspace*{2\baselineskip}
-    }
-}{}
 \chapter{Petrov-Galerkin-Verfahren} % (fold)
-\label{cha:grb:galerkin_und_reduzierte_basis}
+\label{chapter:galerkin}
 
 In diesem Kapitel wiederholen wir das in der Numerik wohlbekannte Galerkin-Verfahren, welches als Grundlage für die Reduzierte-Basis-Methoden des nächsten Kapitels dienen wird.
-Dies wird, wie es auch bereits bei den funktionalanalytischen Grundlagen in \cref{cha:gl:grundlagen} der Fall war, möglichst allgemein gehalten.
+Dies wird, wie es auch bereits bei den funktionalanalytischen Grundlagen in \cref{chapter:grundlagen} der Fall war, möglichst allgemein gehalten.
 Als Quellen für dieses Kapitel dienten vorwiegend die Arbeiten von \textcite{Braess:2007wm,Patera:2007un,Quarteroni:2011jm}, weitere werden an den entsprechenden Stellen angegeben.
 
 Als Setting für diese Ausführungen soll das folgende abstrakte Variationsproblem dienen, wobei wir uns an die bereits bekannten Notationen halten: Seien $\mathcal X$ und $\mathcal Y$ zwei Hilberträume mit Skalarprodukten $\skp{\blank}{\blank}{\bullet}$ und Normen $\norm{\blank}_{\bullet}$, welche durch entsprechende Indizes markiert werden.
@@ -19,7 +13,7 @@ Wir betrachten für eine stetige Bilinearform $b \colon \mathcal X \times \mathc
     \label{eq:gal:abstraktes_variationsproblem}
     \text{Finde}~u \in \mathcal X \colon \quad  b(u, v) = f(v) \quad \fa v \in \mathcal Y.
 \end{equation}
-Unter welchen Bedingungen dieses Variationsproblem lösbar ist, haben wir bereits in \cref{cha:gl:grundlagen} diskutiert.
+Unter welchen Bedingungen dieses Variationsproblem lösbar ist, haben wir bereits in \cref{chapter:grundlagen} diskutiert.
 Für den Rest dieses Kapitels nehmen wir an, dass \cref{eq:gal:abstraktes_variationsproblem} sachgemäß gestellt ist und insbesondere die inf-sup-Konstante $\beta$ die Bedingung
 \begin{equation}
     \label{eq:gal:abstraktes_variationsproblem_infsup}
@@ -173,7 +167,7 @@ Dies motiviert insbesondere die folgende Stabilitätseigenschaft:
 \section{Raum-Zeit-Diskretisierung} % (fold)
 \label{sub:raum_zeit_diskretisierung}
 
-Wir kehren nun wieder zu der Problemstellung aus \cref{cha:ps:problemstellung} zurück und wollen eine Raum-Zeit-Diskretisierung in Form eines Petrov-Galerkin-Verfahrens durchführen.
+Wir kehren nun wieder zu der Problemstellung aus \cref{chapter:propagator_differentialgleichung} zurück und wollen eine Raum-Zeit-Diskretisierung in Form eines Petrov-Galerkin-Verfahrens durchführen.
 \mdo{quelle}
 
 Dazu greifen wir auf \cref{satz:gl:br:bochner_als_tensorprodukt} zurück um eine Zerlegung der verwendeten Bochnerräume in Tensorprodukte von nur raum- beziehungsweise zeitabhängigen Räumen zu erreichen.

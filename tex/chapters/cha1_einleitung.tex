@@ -1,15 +1,7 @@
 %!TEX root = ../main.tex
 
-\iftoggle{dictum}{
-    \setchapterpreamble[ul][0.6\textwidth]{%
-        \dictum[Douglas Adams, \textit{The Hitchhiker’s Guide to the Galaxy}]{%
-            \enquote{\foreignlanguage{english}{He attacked everything in life with a mixture of extraordinary genius and naive incompetence and it was often difficult to tell which was which.}}
-        }
-        \vspace*{2\baselineskip}
-    }
-}{}
 \chapter{Einleitung} % (fold)
-\label{cha:el:einleitung}
+\label{chapter:einleitung}
 
 Ein Polymer, oder auch Makromolekül, ist ein Molekül, welches sich aus vielen kleineren, sich wiederholenden Molekülen, sogenannten Monomeren, zusammensetzt.
 Besteht ein Polymer aus nur einer Monomer-Art, dann spricht man von einem Homopolymer, sonst von einem Heteropolymer oder auch Copolymer.
@@ -299,15 +291,12 @@ Dies ist in aller Kürze das angestrebte Ziel dieser Arbeit.
 
 \subsection*{Aufbau der restlichen Arbeit}
 
-In \cref{cha:gl:grundlagen} werden zunächst die benötigten funktionalanalytischen und numerischen Grundlagen eingeführt, beziehungsweise wiederholt.
-Einige weitere Aussagen, die sich thematisch nur bedingt in diesem Kapitel unterbringen lassen, werden in \cref{cha:funktionalanalytische_grundlagen} gesammelt.
+In \cref{chapter:grundlagen} werden zunächst die die funktionalanalytischen Grundlagen eingeführt beziehungsweise wiederholt, welche dann in \cref{chapter:propagator_differentialgleichung} verwendet werden um die parabolische partielle Differentialgleichung, welche im Rahmen dieser Einleitung bereits vorgestellt wurde, unter passenden Rahmenbedingungen zu formalisieren.
+Weiter parametrisieren wir die Differentialgleichung und weisen einige Eigenschaften nach, welche zwar nicht notwendig sind, aber die nachfolgende numerische Behandlung unter gewissen Bedingungen stützen.
 
-Es folgt \cref{cha:ps:problemstellung}, in dem die parabolische partielle Differentialgleichung, welche im Rahmen dieser Einleitung bereits vorgestellt wurde, konkretisiert und als parametrische Differentialgleichung formalisiert wird.
-Anschließend werden wünschenswerte Aussagen hergeleitet, die eine sinnvolle Bearbeitung durch numerische Methoden erst ermöglichen.
+Nachfolgend werden in \cref{chapter:galerkin} die ersten numerischen Grundlagen in Form des Petrov-Galerkin-Verfahrens gelegt und an einigen Beispiele analysiert, um dann darauf aufbauend in \cref{chapter:rbm} die Reduzierte-Basis-Methoden einzuführen und diese ebenfalls auf die in dieser Arbeit betrachtete Problemstellung anzuwenden.
 
-\cref{cha:der_eindimensionale_fall} dient dazu, die bis dahin ausgearbeitete Theorie auf den einfachen, eindimensionalen Fall anzuwenden und numerische Methoden für diesen zu entwickeln.
-
-Im nachfolgenden \cref{cha:galerkin_und_reduzierte_basis} werden diese Methoden als Grundlage für eine Reduzierte-Basis-Methode verwendet und dadurch ein effizientes Verfahren für die Approximation der parametrischen Differentialgleichung entwickelt.
+Abschließend wird in \cref{chapter:ausblick} ein Resümee der Arbeit und daran anknüpfend ein Ausblick, welcher mögliche Ansatzpunkte für Verbesserungen und Weiterentwicklungen erläutert, gegeben.
 
 % subsection aufbau_der_restlichen_arbeit (end)
 
