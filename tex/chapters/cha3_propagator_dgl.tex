@@ -153,7 +153,7 @@ Wir weisen nun zwei Eigenschaften für diesen Operator respektive die zugehörig
     Diese Bilinearformen erfüllen die folgenden Eigenschaften:
     \begin{thmenumerate}
         \item\label{satz:bilinearform_messbar_stetig_garding:messbar}
-        \emph{Messbarkeit}: die Abbildung $I \ni t \mapsto a(\blank, \blank; t)$ ist messbar.
+        \emph{Messbarkeit}: die Abbildung $I \ni t \mapsto a(\eta, \zeta; t)$ ist messbar für alle $\eta, \zeta \in V$.
         \item\label{satz:bilinearform_messbar_stetig_garding:stetig}
         \emph{Stetigkeit:} es gilt
         \begin{equation}
@@ -171,9 +171,14 @@ Wir weisen nun zwei Eigenschaften für diesen Operator respektive die zugehörig
     \end{thmenumerate}
 
     \begin{Beweis}
-        Die Messbarkeit folgt aus ... irgendwas!
+        Für den Nachweis der Messbarkeit stützen wir uns auf die Aussagen in \cite[177]{fattorini2005infinite} und \cite[Theorem 2.7.9, Corollary 2.7.10, Lemma 8.1.1]{Andreev:2012ep}.
+        Demnach ist für $\xi \in L_{\infty}(I \times \Omega)$ und $\psi \in L_{1}(\Omega)$ die Abbildung $I \ni t \mapsto \skp{\xi(t, \blank)}{\psi}{L_{2}(\Omega)}$ messbar.
 
-        Zunächst zeigen wir die Stetigkeit.
+        Wegen $\eta, \zeta \in V = H^{1}_{0}(\Omega)$ ist sowohl die Abbildung $\Omega \ni \vec x \mapsto \skp{\grad \eta(\vec{x})}{\grad \zeta (\vec x)}{H}$ als auch $\Omega \ni \vec x \mapsto \eta(\vec{x})\zeta (\vec x)$ in $L_{1}(\Omega)$.
+        Es bleibt also lediglich $\omega \in L_{\infty}(I \times \Omega)$ zu zeigen, dies ist aber aufgrund von $\chi_{I_{1}}, \chi_{I_{2}} \in L_{\infty}(I)$ und $w_{1}, w_{2} \in L_{\infty}(\Omega)$ ebenfalls gegeben.
+        Damit erfüllt jeder der Summanden von $a(\blank, \blank; t)$ und folglich auch die Bilinearform selbst die geforderte Messbarkeit.
+
+        Als nächstes zeigen wir die Stetigkeit.
         Seien dazu $\eta, \zeta \in V$ beliebig, dann erhalten wir unter Verwendung der Dreiecks- und der Cauchy"=Schwarz"=Ungleichung für beliebiges $t \in I$ die Abschätzung
         \begin{align}
             \abs{a(\eta, \zeta; t)}
@@ -182,6 +187,7 @@ Wir weisen nun zwei Eigenschaften für diesen Operator respektive die zugehörig
             \\&\leq c \norm{\grad \eta}_{H} \norm{\grad \zeta}_{H} + \left( \norm{\omega}_{L_{\infty}(I; L_{\infty}(\Omega))} + \abs{\mu} \right) \norm{\eta}_{H} \norm{\zeta}_{H}
             \\&\leq \max \Set{ c, \norm{\omega}_{L_{\infty}(I; L_{\infty}(\Omega))} + \abs{\mu}} \norm{\eta}_{V} \norm{\zeta}_{V}.
         \end{align}
+
         Für die G\aa{}rding"=Ungleichung seien nun $\eta \in V$ und $\lambda \in \mathbb{R}$.
         Es gilt
         \begin{align}
@@ -193,7 +199,7 @@ Wir weisen nun zwei Eigenschaften für diesen Operator respektive die zugehörig
         \begin{align}
             a(\eta, \eta; t) + \lambda \norm{\eta}^{2}_{H}
             &\geq c \norm{\grad \eta}^{2}_{H},
-            \intertext{woraus wir durch Anwenden der Poincaré"=Friedrichs"=Ungleichung, \cref{satz:poincare_ungleichung},}
+            \intertext{woraus wir durch Anwenden der Poincaré"=Friedrichs"=Ungleichung \cite[Lemma 89.4]{HankeBourgeois:2009fk}}
             a(\eta, \eta;t ) + \lambda \norm{\eta}^{2}_{H}
             &\geq c \gamma_{\Omega}^{2} \norm{\eta}^{2}_{V}
         \end{align}
@@ -462,7 +468,7 @@ Wie zuvor wollen wir \cref{satz:gl:le:ss09_theorem51} verwenden, müssen also di
     Dann gelten für alle $t \in I$ und $\bm\sigma \in \mathcal P$ die folgenden Eigenschaften:
     \begin{thmenumerate}
         \item\label{satz:parametrische_bilinearform_messbar_stetig_garding:messbar}
-        \emph{Messbarkeit}: die Abbildung $I \ni t \mapsto a(\blank, \blank; t, \bm\sigma)$ ist messbar.
+        \emph{Messbarkeit}: die Abbildung $I \ni t \mapsto a(\eta, \zeta; t, \bm\sigma)$ ist messbar für alle $\eta, \zeta \in V$.
         \item\label{satz:parametrische_bilinearform_messbar_stetig_garding:stetig}
         \emph{Stetigkeit:} es gilt
         \begin{equation}
@@ -844,7 +850,7 @@ Im Rahmen der numerischen Untersuchung in \cref{chapter:galerkin} werden wir auf
 \section{Periodische Randbedingungen} % (fold)
 \label{section:periodische_randbedingungen}
 
-Da wir in diesem Kapitel bisher ausschließlich mit homogenen Dirichlet-Randbedingungen gearbeitet haben, wollen wir an dieser Stelle auf den Fall periodischer Randbedingungen eingehen.
+Da wir in diesem Kapitel bisher ausschließlich mit homogenen Dirichlet"=Randbedingungen gearbeitet haben, wollen wir an dieser Stelle auf den Fall periodischer Randbedingungen eingehen.
 Dabei werden wir feststellen, dass Aufgrund der Struktur der Propagator-Differentialgleichung nur sehr geringe Unterschiede zum betrachteten homogenen Fall bestehen.
 
 Zunächst müssen wir die Rahmenbedingungen für die Betrachtung periodischer Randbedingungen festlegen.
@@ -874,7 +880,7 @@ Inspiziert man die Ausführungen dieses Kapitels für den Fall homogener Dirichl
     Diese Bilinearformen erfüllen die folgenden Eigenschaften:
     \begin{thmenumerate}
         \item \label{lemma:bilinearform_periodisch_messbar_stetig_garding:messbar}
-        \emph{Messbarkeit:} die Abbildung $I \ni t \mapsto a(\blank, \blank; t)$ ist messbar.
+        \emph{Messbarkeit:} die Abbildung $I \ni t \mapsto a(\eta, \zeta; t)$ ist messbar für alle $\eta, \zeta \in V$.
         \item\label{lemma:bilinearform_periodisch_messbar_stetig_garding:stetig}
         \emph{Stetigkeit:} es gilt
         \begin{equation}

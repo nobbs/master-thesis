@@ -190,162 +190,139 @@ Abschließen wollen wir diesen Abschnitt mit einer alternativen Charakterisierun
 \end{Satz}
 
 
-% section bochner_r_ume (end)
-
 \section{Lineare Evolutionsgleichungen} % (fold)
 \label{sec:gl:le:lineare_evolutionsgleichungen}
 
-In diesem Abschnitt werden lineare Evolutionsgleichungen, eine bestimmte Unterart parabolischer partieller Differentialgleichungen, eingeführt.
-Diese Einführung orientiert sich an \textcite{Lions:1971wp,Schwab:2009ec,Urban:2014kg}.
+Nach der Einführung der benötigten Funktionenräume wenden wir uns nun den linearen Evolutionsgleichungen, einer bestimmten Unterart parabolischer partieller Differentialgleichungen, zu.
+Wir orientieren uns hierbei an \textcite{Lions:1971wp,Schwab:2009ec,Urban:2014kg},
+definieren den Begriff der linearen Evolutionsgleichungen, leiten eine schwache Formulierung her und weißen abschließend nach, dass diese sachgemäß gestellt ist.
 
-Zunächst definieren wir, was wir unter dem Begriff einer linearen Evolutionsgleichungen verstehen wollen.
-Anschließend leiten wir eine Raum-Zeit-Variationsformulierung her und geben einen Satz an, der unter geeigneten Voraussetzungen Existenz und Eindeutigkeit einer Lösung dieser Variationsformulierung garantiert.
-
-Wir befinden uns nun im Folgenden Setting:
-wie in \cref{definition:gelfand_tripel} seien $V$ und $H$ zwei separable Hilberträume und $(V, H, V')$ das daraus resultierende Gelfand-Tripel.
-Wie zuvor verwenden wir $\skprod{\blank}{\blank}$ mit entsprechendem Index sowohl für die Skalarprodukte auf $V$ und $H$, als auch für die duale Paarung auf $V' \times V$.
-
-Es sei $0 < T < \infty$ und damit $[0, T]$ ein endliches Zeitintervall.
-Weiterhin sei für fast alle $t \in [0, T]$ eine Familie $a(\blank, \blank; t)$ von Bilinearformen
+Um den Begriff der linearen Evolutionsgleichungen definieren zu können, müssen wir zunächst die richtigen Rahmenbedingungen schaffen.
+Sei $V \denseinclusion H \denseinclusion V'$ ein Gelfand-Tripel im Sinne von \cref{definition:gelfand_tripel}, das heißt, $V$ und $H$ seien separable Hilberträume und die Inklusionen seien jeweils dicht und stetig.
+Weiter sei $0 < T < \infty$ und $I = [0, T]$.
+Wir betrachten nun eine Familie von stetigen linearen Operatoren $A(t) \in \mathcal L(V, V')$ für $t \in I$.
+Nach dem Rieszschen Darstellungssatz, genauer siehe \cite[Theorem \S{}22.1]{Halmos:1957vd}, können wir diesen Operatoren eine Familie von Bilinearformen $a(\blank, \blank; t) \colon V \times V \to \mathbb{R}$ zuordnen, wobei diese durch
 \begin{equation}
-    \label{eq:gl:le:bilinearformen_familie}
-    a(\blank, \blank; t) \colon V \times V \to \mathbb{R}, \quad (\eta, \zeta) \mapsto a(\eta, \zeta; t)
+    \skp{A(t)\eta}{\zeta}{V' \times V} = a(\eta, \zeta; t) \quad \fa \eta, \zeta \in V
 \end{equation}
-gegeben.
-Für alle $\eta, \zeta \in V$ sei die Abbildung $t \mapsto a(\eta, \zeta; t)$ messbar auf $[0, T]$ und erfülle die folgenden Bedingungen:
+induziert werden.
+
+Wie wir später sehen werden, stellt die nachfolgende Annahme sicher, dass die auf diese Operatoren aufbauenden linearen Evolutionsgleichungen gewisse wünschenswerte Eigenschaften, wie Lösbarkeit und Eindeutigkeit dieser Lösung, besitzen.
 
 \begin{Annahme}
 \label{ann:gl:le:bilinearform_eigenschaften}
+    Die Familie von Bilinearformen $a(\blank, \blank; t)$, $t \in I$, erfülle die folgenden Eigenschaften:
     \leavevmode
     \begin{thmenumerate}
-        \item \emph{Stetigkeit.}
-        Es existiert eine Konstante $0 < M_{a} < \infty$ mit
+        \item \emph{Messbarkeit:} die Abbildung $I \ni t \mapsto a(\eta, \zeta; t)$ ist messbar für alle $\eta, \zeta \in V$.
+        \item \emph{Stetigkeit:}
+        es existiert ein $0 < \gamma_{a} < \infty$ mit
         \begin{equation}
             \label{eq:gl:le:bilinearform_stetig}
-            \abs{a(\eta, \zeta; t)} \leq M_{a} \norm{\eta}_{V} \norm{\zeta}_{V} \quad \fa \eta, \zeta \in V
+            \abs{a(\eta, \zeta; t)} \leq \gamma_{a} \norm{\eta}_{V} \norm{\zeta}_{V}, \quad \fa \eta, \zeta \in V \text{ und fast alle } t \in I.
         \end{equation}
-        für fast alle $t \in [0, T]$.
-        \item \emph{G\r{a}rding-Ungleichung}.
-        Es existieren Konstanten $\alpha > 0$ und $\lambda \geq 0$ mit
+        \item \emph{G\r{a}rding-Ungleichung:}
+        es existieren $\alpha > 0$ und $\lambda \geq 0$ mit
         \begin{equation}
             \label{eq:gl:le:bilinearform_garding}
-            a(\eta, \eta; t) + \lambda \norm{\eta}_{H}^{2} \geq \alpha \norm{\eta}_{V}^{2} \quad \fa \eta \in V
+            a(\eta, \eta; t) + \lambda \norm{\eta}_{H}^{2} \geq \alpha \norm{\eta}_{V}^{2}, \quad \fa \eta \in V \text{ und fast alle } t \in I.
         \end{equation}
-        für fast alle $t \in [0, T]$.
     \end{thmenumerate}
 \end{Annahme}
 
-Nach dem Rieszschen Darstellungssatz, vergleiche \cite[Theorem \S{}22.1]{Halmos:1957vd}, wird durch die Familie $a(\blank, \blank; t)$ für fast alle $t \in [0, T]$ durch
-\begin{equation}
-    \skprod{A(t)\eta}{\zeta}_{H} = a(\eta, \zeta; t)
-\end{equation}
-eine Familie stetiger linearer Operatoren $A(t) \in \mathcal L(V, V')$ induziert.
+Für den Rest dieses Abschnitts nehmen wir stets an, dass die Bilinearform $a(\blank, \blank; t)$ obige Annahme erfüllt.
+Mit dieser Vorarbeit definieren wir nun den Begriff der linearen Evolutionsgleichung.
 
-Mit dieser Vorarbeit können wir nun definieren, was wir unter einer linearen Evolutionsgleichung verstehen wollen.
-
-\mfix{Quelle angeben!}
 \begin{Definition}
 \label{def:gl:le:lineare_evolutionsgleichung}
-    Seien $a(\blank, \blank; t)$ und $A(t)$ wie oben gegeben.
-    Weiterhin sei ein \emph{Quellterm} $g \in L_{2}(0, T; V')$ und ein \emph{Anfangswert} $u_{0} \in H$ gegeben.
+    Sei $g \in L_{2}(I; V')$ ein \emph{Quellterm} und $u_{0} \in H$ ein \emph{Anfangswert}.
     Als \emph{lineare Evolutionsgleichung} bezeichnen wir die parabolische partielle Differentialgleichung
     \begin{equation}
         \label{eq:gl:le:lineare_evolutionsgleichung}
-        \begin{cases}
-            u_{t}(t) + A(t) u(t) = g(t)     &\text{in}~V', \quad \text{für fast alle}~t \in I, \\
-            u(0) = u_{0}                    &\text{in}~H.
-        \end{cases}
+        \left\{
+        \begin{aligned}
+            u_{t}(t) + A(t) u(t) &= g(t)     \quad&&\text{in}~V', \quad \text{für fast alle}~t \in I, \\
+            u(0) &= u_{0}                    \quad&&\text{in}~H,
+        \end{aligned}
+        \right.
+    \end{equation}
+    wobei die  Operatorfamilie $A(t) \in \mathcal L(V, V')$ wie oben gegeben sei.
+\end{Definition}
+
+Darauf aufbauend leiten wir als nächstes eine Raum-Zeit-Variationsformulierung für~\cref{eq:gl:le:lineare_evolutionsgleichung} her.
+Dazu benötigen wir geeignete Ansatz- und Testfunktionenräume; hierzu verwenden wir die im vorherigen Abschnitt eingeführten Bochner-Räume.
+
+\begin{Definition}
+\label{def:gl:le:ansatz_und_testraum}
+    Den Ansatzfunktionenraum $\mathcal X$ definieren wir als den Hilbertraum
+    \begin{equation}
+        \label{eq:gl:le:ansatzraum_X}
+        \mathcal X = W(I; V, V') = L_{2}(I; V) \cap H^{1}(I; V')
+    \end{equation}
+    mit dem Skalarprodukt
+    \begin{equation}
+        \skp{u}{v}{\mathcal X} = \skp{u}{v}{L_{2}(I; V)} + \skp{u'}{v'}{L_{2}(I; V')}.
+    \end{equation}
+    Der Testfunktionenraum $\mathcal Y$ sei der Hilbertraum
+    \begin{equation}
+    \label{eq:gl:le:testraum_Y}
+        \mathcal Y = L_{2}(0, T; V) \times H
+    \end{equation}
+    mit Skalarprodukt
+    \begin{equation}
+        \label{eq:gl:le:testraum_Y_norm}
+        \skp{u}{v}{\mathcal Y} = \skp{u_{1}}{v_{1}}{L_{2}(I; V)} + \skp{u_{2}}{v_{2}}{H} \quad \text{für } u = (u_{1}, u_{2}), v = (v_{1}, v_{2}) \in \mathcal Y.
+    \end{equation}
+\end{Definition}
+
+Das $\mathcal X$ tatsächlich ein Hilbertraum ist, wissen wir nach \cref{lem:gl:br:bochner_W_ist_hilbertraum}.
+Ferner ist $\mathcal Y$ als direkte Summe zweier Hilberträume wieder ein Hilbertraum.
+\mdo{Fragwürdig.}
+
+Um nun aus~\cref{eq:gl:le:lineare_evolutionsgleichung} eine schwache Formulierung zu erhalten, \enquote{multiplizieren} wir die lineare Evolutionsgleichung mit $v = (v_{1}, v_{2}) \in \mathcal Y$ und integrieren anschließend über das Zeitintervall $[0, T]$.
+Dadurch erhalten wir die folgende Raum"=Zeit"=Variationsformulierung:
+
+\begin{Definition}
+\label{def:gl:le:schwache_raum_zeit_formulierung}
+    Seien $\mathcal X$ und $\mathcal Y$ wie in~\cref{eq:gl:le:ansatzraum_X,eq:gl:le:testraum_Y}, $g \in L_{2}(I; V')$ ein Quellterm und $u_{0} \in H$ ein Anfangswert.
+    Als \emph{Raum"=Zeit"=Variationsformulierung} der linearen Evolutionsgleichung~\cref{eq:gl:le:lineare_evolutionsgleichung} bezeichnen wir das folgende Problem:
+    \begin{equation}
+        \label{eq:gl:le:schwache_formulierung}
+        \text{Finde } u \in \mathcal X \colon \quad b(u, v) = f(v) \quad \fa v \in \mathcal Y.
+    \end{equation}
+    Dabei sei die Bilinearform $b \colon \mathcal X \times \mathcal Y \to \mathbb{R}$ durch
+    \begin{equation}
+        \label{eq:gl:le:schwache_formulierung_lhs_b}
+        b(u, v) = \int_{I} \left[   \skp{u_{t}(t)}{v_{1}(t)}{V' \times V} + a(u(t), v_{1}(t); t)  \right] \diff t + \skp{u(0)}{v_{2}}{H}
+    \end{equation}
+    definiert und das Funktional $f \colon \mathcal Y \to \mathbb{R}$ durch
+    \begin{equation}
+        \label{eq:gl:le:schwache_formulierung_rhs_f}
+        f(v) = \int_{0}^{T} \skp{g(t)}{v_{1}(t)}{V' \times V} \diff t + \skp{u_{0}}{v_{2}}{H}.
     \end{equation}
 \end{Definition}
 
 \begin{Bemerkung}
-\leavevmode
-\begin{thmenumerate}
-    \item Die Anfangswertbedingung $u(0) = u_{0}$ in $H$ ist wegen \cref{korollar:spursatz} wohldefiniert.
-    \item Ist die Bilinearform $a(\blank, \blank; t)$ respektive der zugehörige stetige lineare Operator $A(t)$ unabhängig von $t \in [0, T]$, dann sprechen wir von einer \emph{autonomen} linearen Evolutionsgleichung.
-\end{thmenumerate}
+    Die Anfangswertbedingung $u(0) = u_{0}$ in $H$ ist wegen \cref{korollar:spursatz} wohldefiniert.
 \end{Bemerkung}
 
-Als nächstes leiten wir eine Raum-Zeit-Variationsformulierung für~\cref{eq:gl:le:lineare_evolutionsgleichung} her.
-Dazu werden geeignete Ansatz- und Testfunktionenräume benötigt.
-Hier kommen nun die in \cref{section:bochner_raeume} definierten Bochner-Räume zum Einsatz.
-
-\begin{Definition}
-\label{def:gl:le:ansatz_und_testraum}
-    Als Ansatzfunktionenraum $\mathcal X$ bezeichnen wir den Raum $W(0, T; V, V')$ aus \cref{definition:bochner_raum_W}.
-    Es ist also
-    \begin{equation}
-        \label{eq:gl:le:ansatzraum_X}
-        \begin{aligned}
-            \mathcal X &= L_{2}(0, T; V) \cap H^{1}(0, T; V')
-            \\&= \Set*{ u \in L_{2}(0, T; V) \given u_{t} \in L_{2}(0, T; V') }
-        \end{aligned}
-    \end{equation}
-    ausgestattet mit der Norm
-    \begin{equation}
-        \label{eq:gl:le:ansatzraum_X_norm}
-        \norm{u}_{\mathcal X} = \left( \norm{u}_{L_{2}{(0, T; V)}}^{2} + \norm{u_{t}}_{L_{2}{(0, T; V')}}^{2} \right)^{1 / 2}, \quad u \in \mathcal X.
-    \end{equation}
-    Der Testfunktionenraum $\mathcal Y$ sei gegeben durch
-    \begin{equation}
-        \label{eq:gl:le:testraum_Y}
-        \mathcal Y = L_{2}(0, T; V) \times H
-    \end{equation}
-    mit der Norm
-    \begin{equation}
-        \label{eq:gl:le:testraum_Y_norm}
-        \norm{v}_{\mathcal Y} = \left( \norm{v_{1}}_{L_{2}(0, T; V)}^{2} + \norm{v_{2}}_{H}^{2} \right)^{1 / 2}, \quad v = (v_{1}, v_{2}) \in \mathcal Y.
-    \end{equation}
-\end{Definition}
-
-Beide Räume sind Hilberträume, $\mathcal X$ nach \cref{lem:gl:br:bochner_W_ist_hilbertraum} und $\mathcal Y$ als direkte Summe zweier Hilberträume.
-
-Um aus~\cref{eq:gl:le:lineare_evolutionsgleichung} eine Variationsformulierung zu erhalten, multiplizieren wir die lineare Evolutionsgleichung mit $v = (v_{1}, v_{2}) \in \mathcal Y$ und integrieren anschließend über das Zeitintervall $[0, T]$.
-Dadurch ergibt sich folgende schwache Formulierung der linearen Evolutionsgleichung aus \cref{def:gl:le:lineare_evolutionsgleichung}:
-
-\begin{Definition}
-\label{def:gl:le:schwache_raum_zeit_formulierung}
-    Seien $\mathcal X$ und $\mathcal Y$ wie in~\cref{eq:gl:le:ansatzraum_X} respektive~\cref{eq:gl:le:testraum_Y}.
-    Als \emph{Raum-Zeit-Variations"-for"-mu"-lie"-rung} der linearen Evolutionsgleichung~\cref{eq:gl:le:lineare_evolutionsgleichung} bezeichnen wir das folgende Problem:
-
-    Gegeben ein Quellterm $g \in L_{2}(0, T; V')$ und ein Anfangswert $u_{0} \in H$.
-    Finde ein $u \in \mathcal X$ mit
-    \begin{equation}
-        \label{eq:gl:le:schwache_formulierung}
-        b(u, v) = f(v) \quad \fa v \in \mathcal Y.
-    \end{equation}
-    Dabei ist $b \colon \mathcal X \times \mathcal Y \to \mathbb{R}$ die durch
-    \begin{equation}
-        \label{eq:gl:le:schwache_formulierung_lhs_b}
-        b(u, v) = \int_{0}^{T} \skprod{u_{t}(t)}{v_{1}(t)}_{H} + a(u(t), v_{1}(t); t) \diff t + \skprod{u(0)}{v_{2}}_{H}
-    \end{equation}
-    definierte Bilinearform und $f \colon \mathcal Y \to \mathbb{R}$ das durch
-    \begin{equation}
-        \label{eq:gl:le:schwache_formulierung_rhs_f}
-        f(v) = \int_{0}^{T} \skprod{g(t)}{v_{1}(t)}_{H} \diff t + \skprod{u_{0}}{v_{2}}_{H}
-    \end{equation}
-    gegebene Funktional.
-\end{Definition}
-
-Es bleibt nun zu zeigen, welche Bedingungen hinreichend sind, damit obige Raum-Zeit-Variationsformulierung \emph{sachgemäß gestellt} ist.
+Es bleibt nun zu zeigen, welche Bedingungen hinreichend sind, damit obige Raum"=Zeit"=Variationsformulierung \emph{sachgemäß gestellt} ist.
 Dazu definieren wir zunächst, was wir unter dem Begriff \enquote{sachgemäß gestellt} verstehen wollen und greifen dazu auf die Definition nach \textcite{hadamard1902problemes} zurück.
 
-\begin{Definition}
+\begin{Definition}[Hadamard]
 \label{def:gl:le:hadamard_sachgemaess_gestellt}
-    Seien $U$ und $V$ normierte Vektorräume.
-    Seien weiter eine stetige Bilinearform $a \in \mathcal L(U \times V, \mathbb{R})$ und ein stetiges Funktional $f \in \mathcal L(V)$ gegeben.
-    Betrachte das folgende Problem: finde ein $u \in U$, so dass
+    Seien $U$ und $V$ normierte Vektorräume, $a \in \mathcal L(U \times V)$ eine stetige Bilinearform und $f \in \mathcal L(V)$ ein stetiges lineares Funktional.
+    Wir nennen das abstrakte Variationsproblem
     \begin{equation}
     \label{eq:gl:le:hadamard_variationsproblem}
-        a(u, v) = f(v) \quad \fa v \in V
+        \text{Finde } u \in U \colon \quad a(u, v) = f(v) \quad \fa v \in V.
     \end{equation}
-    gilt.
-    Wir nennen \cref{eq:gl:le:hadamard_variationsproblem} \emph{sachgemäß gestellt}, wenn eine eindeutige Lösung $u \in U$ existiert und diese eine A-priori-Abschätzung der Form
+    \emph{sachgemäß gestellt}, wenn eine eindeutige Lösung $u \in U$ existiert und diese eine A-priori-Abschätzung der Form
     \begin{equation}
     \label{eq:gl:le:hadamard_abschaetzung}
         \norm{u}_{U} \leq c \norm{f}_{V'} \quad \fa f \in V'
     \end{equation}
-    und eine von $f$ unabhängige Konstante $c > 0$ erfüllt.
+    mit einer von $f$ unabhängigen Konstante $c > 0$ erfüllt.
 \end{Definition}
 
 Um dies für die Raum-Zeit-Variationsformulierung aus \cref{def:gl:le:schwache_raum_zeit_formulierung} nachzuweisen, werden wir den folgenden bekannten und wichtigen Satz, welcher in dieser oder ähnlicher Form bei \textcites[Theorem 2.1]{Babuska:1971fx}[Theorem 5.2.1]{Aziz:2014wf}[Theorem \S{}3.3.6]{Braess:2007wm} zu finden ist, verwenden.
@@ -669,8 +646,3 @@ Aus dem Beweis des vorherigen Satzes bei \textcite{Schwab:2009ec} ergeben sich z
 % section homogenisierung (end)
 
 % chapter grundlagen (end)
-
-
-\begin{Satz}
-    \label{satz:poincare_ungleichung}
-\end{Satz}
