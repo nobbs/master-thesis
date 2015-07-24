@@ -85,10 +85,10 @@ Die folgende Bemerkung führt die notwendigen Notationen in diesem Zusammenhang 
 
     Da bekanntermaßen $V$ dicht in $H$ eingebettet werden kann, definiert
     \begin{equation}
-        V \denseinclusion H \simeq H' \denseinclusion V' = (H^{1}_{0}(\Omega))' = H^{-1}(\Omega)
+        V \denseinclusion H \cong H' \denseinclusion V' = (H^{1}_{0}(\Omega))' = H^{-1}(\Omega)
     \end{equation}
-    ein Gelfand"=Tripel, vergleiche \cref{def:gl:br:gelfand_tripel}.
-    Motiviert durch \cref{bemekerung:duality_pairing_stetig_und_so} verwenden wir die Schreibweise $\skp{\blank}{\blank}{V' \times V}$ auch für die duale Paarung auf $V' \times V$.
+    ein Gelfand"=Tripel, vergleiche \cref{definition:gelfand_tripel}.
+    Motiviert durch \cref{bemerkung:skalarprodukte_und_duality_pairing} verwenden wir die Schreibweise $\skp{\blank}{\blank}{V' \times V}$ auch für die duale Paarung auf $V' \times V$.
 \end{Bemerkung}
 
 Damit können wir den folgenden Operator und die zugehörige Bilinearform definieren.
@@ -131,7 +131,7 @@ Damit ergibt sich zusammen mit der Linearität der dualen Paarung
           \\&= c\skp{\grad \eta}{\grad \zeta}{H} + \skp{\omega(t, \blank) \eta}{\zeta}{H} + \mu \skp{\eta}{\zeta}{H},
     \end{aligned}
 \end{equation}
-wobei bei der Wechsel von dualer Paarung auf $V' \times V$ zum $H$-Skalarprodukt beim zweiten und dritten Summanden durch \cref{bemekerung:duality_pairing_stetig_und_so} und die Tatsache, dass mit $\eta \in V \subset H$ und der \cref{definition:feld_raum_zeit_feld} von $\omega$ auch $\omega(t, \blank) \eta \in H$ gilt, gerechtfertigt ist.
+wobei bei der Wechsel von dualer Paarung auf $V' \times V$ zum $H$-Skalarprodukt beim zweiten und dritten Summanden durch \cref{bemerkung:skalarprodukte_und_duality_pairing} und die Tatsache, dass mit $\eta \in V \subset H$ und der \cref{definition:feld_raum_zeit_feld} von $\omega$ auch $\omega(t, \blank) \eta \in H$ gilt, gerechtfertigt ist.
 
 \begin{Bemerkung}
 \label{bemerkung:raum_zeit_feld_norm_zeitunabhaengig}
@@ -841,7 +841,7 @@ Dies verträgt sich leider nur bedingt mit der Motivation der Propagator-Differe
 
 Im Rahmen der numerischen Untersuchung in \cref{chapter:galerkin} werden wir auf diesen Punkt noch einmal eingehen und anhand der numerischen Ergebnisse deutlich machen, inwiefern die Bedingung eingehalten wird respektive eingehalten werden kann.
 
-\section{Exkurs: Periodische Randbedingungen} % (fold)
+\section{Periodische Randbedingungen} % (fold)
 \label{section:periodische_randbedingungen}
 
 Da wir in diesem Kapitel bisher ausschließlich mit homogenen Dirichlet-Randbedingungen gearbeitet haben, wollen wir an dieser Stelle auf den Fall periodischer Randbedingungen eingehen.
@@ -861,9 +861,9 @@ Dies wird an dieser Stelle sehr einfach gehalten; ausführlicher kann dies bespi
 
 Diese Räume verwenden wir nun um die Räume $V$ und $H$, vergleiche \cref{bemerkung:raeume_und_gelfand_tripel}, zu definieren.
 Nach Konstruktion handelt es sich bei $H^{1}_{\text{per}}(\Omega)$ und $L_{2,\text{per}}(\Omega)$ um Hilberträume und weiter ist $H^{1}_{\text{per}}(\Omega)$ ein dichter Unterraum von $L_{2,\text{per}}(\Omega)$.
-Wählen wir also $V = H^{1}_{\text{per}}(\Omega)$ und $H = L_{2,\text{per}}(\Omega)$, dann erhalten wir nach \cref{def:gl:br:gelfand_tripel} wie zuvor ein Gelfand-Tripel der Form
+Wählen wir also $V = H^{1}_{\text{per}}(\Omega)$ und $H = L_{2,\text{per}}(\Omega)$, dann erhalten wir nach \cref{definition:gelfand_tripel} wie zuvor ein Gelfand-Tripel der Form
 \begin{equation}
-    V \denseinclusion H \simeq H' \denseinclusion V' = (H^{1}_{\text{per}}(\Omega))'.
+    V \denseinclusion H \cong H' \denseinclusion V' = (H^{1}_{\text{per}}(\Omega))'.
 \end{equation}
 
 Inspiziert man die Ausführungen dieses Kapitels für den Fall homogener Dirichlet-Randbedingungen, dann stellt man fest, dass lediglich die Bedingungen aus \cref{ann:gl:le:bilinearform_eigenschaften} an die Bilinearform $a(\blank, \blank)$, deren Darstellung durch den Wechsel zu periodischen Randbedingungen unverändert bleibt, nachgewiesen werden müssen.

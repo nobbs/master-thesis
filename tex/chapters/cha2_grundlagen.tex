@@ -3,160 +3,192 @@
 \chapter{Funktionalanalytische Grundlagen} % (fold)
 \label{chapter:grundlagen}
 
-\mdo{Bei Bedarf erweitern!}
+Um die in der Einleitung beschriebene parabolische partielle Differentialgleichungen theoretisch und numerisch untersuchen zu können, müssen wir zunächst ein robustes Grundgerüst schaffen.
+Dies beginnen wir in diesem Kapitel mit der Einführung respektive der Wiederholung der benötigten Grundlagen aus der Funktionalanalysis.
+Dabei orientieren wir uns maßgeblich an den Arbeiten von \textcite{Dautray:1992by,Schweizer2013}, in welchen die nachfolgenden Ausführungen weit detaillierter zu finden sind.
 
-In diesem ersten Kapitel werden die für diese Arbeit benötigten Grundlagen aus der Funktionalanalysis und der Numerik zusammengefasst und wiederholt.
-Wir orientieren uns in den ersten beiden, funktionalanalytischen Abschnitten maßgeblich an \textcite{Dautray:1992by,Lions:1972tg}, während für die nachfolgenden Abschnitte [Quelle].
 
-\mdo{Quellen ergänzen!}
+\section{Bochner"=Räume} % (fold)
+\label{section:bochner_raeume}
 
-\section{Bochner-Räume} % (fold)
-\label{sec:gl:br:bochner_raeume}
+Bevor wir uns an die Einführung einer Raum"=Zeit"=Variationsformulierung parabolischer partieller Differentialgleichungen wagen können, müssen wir zunächst die zugrundeliegenden Funktionenräume einführen.
+Hierbei konzentrieren wir uns auf die sogenannten \emph{Bochner"=Räume}, welche eine Verallgemeinerungen der bekannten Lebesgue"=Räume $L_{p}$ auf Banachraum"=wertige Funktionen darstellen, schränken uns dabei aber stets auf den für uns relevanten Fall eines endlichen Zeitintervalls ein.
 
-Wir beginnen mit der Einführung sogenannter Bochner-Räume.
-Dabei handelt es sich um Verallgemeinerungen der Lebesgue-Räume $L_{p}$ auf Banachraum-wertige Funktionen.
-Bochner-Räume treten bei der Betrachtung parabolischer partieller Differentialgleichungen in natürlicher Weise auf.
+Wir beginnen nun mit der folgenden Definition der Bochner"=Räume nach \cite[Definition XVIII.1.1]{Dautray:1992by}.
 
-\begin{Definition}[{{{\cite[Definition XVIII.1.1]{Dautray:1992by}}}}]
-\label{def:gl:br:bochner_raum}
-    Sei $X$ ein Banachraum.
-    Weiter seien $- \infty \leq a < b \leq \infty$ und $1 \leq p < \infty$.
-    Als \emph{Bochner-Raum} $L_{p}(a, b; X)$ bezeichnen wir die Menge (der Äquivalenzklassen) $L_{p}$-integrierbarer Funktionen $f \colon [a, b] \to X$, das heißt, aller Lebesgue-messbarer Funktionen auf $[a, b]$ mit
+\begin{Definition}
+\label{definition:bochner_raum}
+    Seien $X$ ein Banachraum, $- \infty < a < b < \infty$ und $1 \leq p < \infty$.
+    Als \emph{Bochner"=Raum} $L_{p}(a, b; X)$ bezeichnen wir die Menge (der Äquivalenzklassen) $L_{p}$-integrierbarer Funktionen $f \colon [a, b] \to X$, das heißt, aller messbarer Funktionen auf $[a, b]$ mit
     \begin{equation}
         \norm{f}_{L_{p}(a, b; X)} \deq \left( \int_{a}^{b} \norm{f(t)}_{X}^{p} \diff t \right)^{1 / p} < \infty.
     \end{equation}
-    Weiterhin ist der \emph{Bochner-Raum} $L_{\infty}(a, b; X)$ definiert als die Menge (der Äquivalenzklassen) der für fast alle $t \in [a, b]$ wesentlich beschränkten Funktionen mit
+    Ferner ist der \emph{Bochner"=Raum} $L_{\infty}(a, b; X)$ definiert als die Menge (der Äquivalenzklassen) der für fast alle $t \in [a, b]$ wesentlich beschränkten Funktionen, also aller messbaren Funktionen $f \colon [a, b] \to X$ mit
     \begin{equation}
         \norm{f}_{L_{\infty}(a, b; X)} \deq \esssup_{t \in [a, b]} \norm{f(t)}_{X} < \infty.
     \end{equation}
 \end{Definition}
-\nomenclature{$X, Y$}{Banachräume}
 
-\begin{Lemma}[{{\cite[Proposition XVIII.1.1]{Dautray:1992by}}}, {{\cite[Abschnitt 1.1.3]{Lions:1972tg}}}]
-\label{lem:gl:br:bochner_ist_banachraum}
+\begin{Lemma}
+\label{lemma:bochnerraum_ist_banachraum_bzw_hilbertraum}
     Für alle $1 \leq p \leq \infty$ ist $L_{p}(a, b; X)$ ein Banachraum.
-    Falls $H$ ein Hilbertraum ist, so auch $L_{2}(a, b; H)$.
+    Ist ferner $H$ ein Hilbertraum, so auch $L_{2}(a, b; H)$ mit dem Skalarprodukt
+    \begin{equation}
+        \skp{u}{v}{L_{2}(a, b; H)} = \int_{a}^{b} \skp{u(t)}{v(t)}{H} \diff t, \quad \text{für}~u,v \in L_{2}(a, b; H).
+    \end{equation}
+
+    \begin{Beweis}
+        Die erste Aussage findet sich in \cite[Proposition XVIII.1.1]{Dautray:1992by}, die zweite in \cite[Abschnitt 1.1.3]{Lions:1972tg}.
+    \end{Beweis}
 \end{Lemma}
 
-\begin{Definition}[Schwache Zeitableitung, {{{\cite{Dautray:1992by}}}}]
-\label{def:gl:br:schwache_zeitableitung}
-    Seien $X$ und $Y$ Banachräume mit $X \hookrightarrow Y$ und $u \in L_{2}(a, b; X)$.
-    Die distributionelle Ableitung $\frac{\partial}{\partial t} u \in L_{2}(a, b; Y)$ sei definiert als das $v \in L_{2}(a, b; Y)$, welches
+Weiter können wir für Funktionen aus einem Bochner"=Raum eine Zeitableitung definieren, hier nach \cites[471]{Dautray:1992by}[Definition 10.6]{Schweizer2013}.
+
+\begin{Definition}[Zeitableitung]
+\label{definition:zeitableitung}
+    Seien $X$ und $Y$ Banachräume mit stetiger Einbettung $X \hookrightarrow Y$ und sei $u \in L_{2}(a, b; X)$.
+    Als \emph{Zeitableitung} bezeichnen wir die distributionelle Ableitung $\frac{\mathrm{d}}{\mathrm{d} t} u \in L_{2}(a, b; Y)$, welche als das $v \in L_{2}(a, b; Y)$ definiert ist, welches
     \begin{equation}
-        \int_{a}^{b} v(t) \varphi(t) \diff t = - \int_{a}^{b} u(t) \frac{\partial}{\partial t} \varphi(t) \diff t \quad \fa \phi \in C^{\infty}_{0}((a, b), \mathbb{R})
+        \int_{a}^{b} v(t) \varphi(t) \diff t = - \int_{a}^{b} u(t) \frac{\mathrm{d}}{\mathrm{d} t} \varphi(t) \diff t \quad \fa \varphi \in \mathcal C^{\infty}_{0}((a, b), \mathbb{R})
     \end{equation}
     erfüllt, falls ein solches $v$ existiert.
 \end{Definition}
 
 \begin{Bemerkung}
-    Je nach Situation werden wir der Einfachheit halber eine der Schreibweisen $\frac{\partial}{\partial t} u = u' = u_{t}$ verwenden.
+    Je nach Situation werden wir der Einfachheit halber eine der Schreibweisen $\frac{\mathrm{d}}{\mathrm{d} t} u = u' = u_{t}$ verwenden.
 \end{Bemerkung}
 
-Im Zuge dieser Arbeit werden wir es stets mit Hilberträumen zu tun haben.
-Dabei werden wir oft auf folgendes Konstrukt zurückgreifen.
+Obige Definition einer Zeitableitung ermöglicht die Definition der Bochner"=Sobolev"=Räume.
+Wir beschränken uns hier auf den für uns relevanten Raum erster Ordnung, siehe \cite[Section 5.9.2]{evans2010partial}.
 
 \begin{Definition}
-\label{def:gl:br:gelfand_tripel}
-    Seien $V$ und $H$ separable Hilberträume mit den Dualräumen $V'$ und $H'$.
-    Weiter sei $V$ ein dichter Unterraum von $H$.
-    Durch Identifikation von $H$ mit seinem Dualraum $H'$ erhalten wir das sogenannte \emph{Gelfand-Tripel} $V \denseinclusion H \simeq H' \denseinclusion V'$, oder auch
+\label{definition:bochner_sobolev_raum}
+    Sei $X$ ein Banachraum.
+    Als \emph{Bochner"=Sobolev"=Raum} erster Ordnung definieren wir den Raum
     \begin{equation}
-        V \denseinclusion H \simeq H' \denseinclusion V',
+        H^{1}(a, b; X) = \Set{u \in L_{2}(a, b; X) \given u' \in L_{2}(a, b; X)}.
     \end{equation}
-    wobei die Inklusionen jeweils dichte stetige Einbettungen sind.
 \end{Definition}
-\nomenclature{$V, H$}{Hilberträume}
+
+Ferner gilt eine zu \cref{lemma:bochnerraum_ist_banachraum_bzw_hilbertraum} analoge Aussage auch für Bochner"=Sobolev"=Räume.
+
+Da wir im Zuge dieser Arbeit ausschließlich mit Hilberträumen arbeiten werden, wird sich das folgende als Gelfand"=Tripel bekannte Konstrukt als grundlegend erweisen.
+Die folgende Definition ist eine leichte Abwandlung von \cite[Abschnitt 10.2]{Schweizer2013}.
+
+\begin{Definition}
+\label{definition:gelfand_tripel}
+    Seien $V$ und $H$ separable Hilberträume mit den Dualräumen $V'$ und $H'$.
+    Weiter sei die Einbettung $V \denseinclusion H$ dicht und stetig.
+    Durch die Identifikation $H \cong H'$ erhalten wir das sogenannte \emph{Gelfand"=Tripel} $V \denseinclusion H \denseinclusion V'$, wobei die Inklusionen jeweils dichte stetige Einbettungen sind.
+\end{Definition}
 
 \begin{Bemerkung}
-\label{bemekerung:duality_pairing_stetig_und_so}
-    Mit $\skprod{\blank}{\blank}_{V}$ und $\skprod{\blank}{\blank}_{H}$ bezeichnen wir das Skalarprodukt auf $V$ respektive $H$.
-    Weiterhin $\skprod{\blank}{\blank}_{V' \times V}$ wird auch für die duale Paarung auf $V' \times V$, die als die eindeutige stetige Fortsetzung von $\skprod{\blank}{\blank}_{H}$ definiert ist, verwendet.
-    Insbesondere gilt für $u \in H \subset V'$ und $v \in V$ die Gleichheit
+\label{bemerkung:skalarprodukte_und_duality_pairing}
+    Bezeichne mit $\skp{\blank}{\blank}{V}$ und $\skp{\blank}{\blank}{H}$ die Skalarprodukte auf $V$ respektive $H$.
+    Weiter verwenden wir $\skp{\blank}{\blank}{V' \times V}$ auch für die duale Paarung auf $V' \times V$, welche die eindeutige stetige Fortsetzung von $\skp{\blank}{\blank}{H}$ ist.
+    Dadurch gilt insbesondere
     \begin{equation}
-        \skprod{u}{v}_{V' \times V} = \skprod{u}{v}_{H}.
+        \skp{u}{v}{V' \times V} = \skp{u}{v}{H}, \quad \fa u \in H, v \in V.
     \end{equation}
 \end{Bemerkung}
-\nomenclature{$\skprod{\blank}{\blank}$}{Je nach Index Skalarprodukt oder duale Paarung}
 
-\begin{Definition}[{{{\cite[Definition XVIII.2.4]{Dautray:1992by}}}}]
-\label{def:gl:br:bochner_raum_W}
-    Sei $V \denseinclusion H \denseinclusion V'$ ein Gelfand-Tripel.
-    Definiere den Raum $W(a, b; V, V')$ als
+Mit Hilfe dieser Gelfand"=Tripel können wir nun die Räume definieren, welche wir letztendlich für die schwache Formulierung parabolischer partieller Differentialgleichungen benutzen werden.
+Dies geschieht analog zu \cite[Definition XVIII.2.4]{Dautray:1992by}.
+
+\begin{Definition}
+\label{definition:bochner_raum_W}
+    Sei $V \denseinclusion H \denseinclusion V'$ ein Gelfand"=Tripel.
+    Wir definieren den Raum
     \begin{equation}
         W(a, b; V, V') \deq \Set{u \in L_{2}(a, b; V) \given u' \in L_{2}(a, b; V')}
     \end{equation}
-    wobei $u'$ im Sinne von \cref{def:gl:br:schwache_zeitableitung} zu verstehen ist.
-\end{Definition}
-\nomenclature{$\denseinclusion$}{Dichte stetige Einbettung}
-
-\begin{Bemerkung}
-\label{bem:gl:br:bochner_alternative_darstellung}
-    Eine alternative Darstellung von $W(a, b; V, V')$ ist
+    wobei $u'$ im Sinne von \cref{definition:zeitableitung} zu verstehen ist.
+    Es gilt ferner
     \begin{equation}
         W(a, b; V, V') = L_{2}(a, b; V) \cap H^{1}(a, b; V').
     \end{equation}
-\end{Bemerkung}
-
-Bochner-Räume lassen sich anhand folgender Charakterisierung auch als Tensor-Produkte auffassen.
-\begin{Satz}[{{\cite[Theorem 12.6.1, Theorem 12.7.1]{Aubin:2000un}}}]
-\label{satz:gl:br:bochner_als_tensorprodukt}
-    Seien $H$ ein Hilbertraum und $I \subset \mathbb{R}$ eine offene Menge.
-    Dann ist der Bochner-Sobolev-Raum $H^{m}(I; H)$, $m \geq 0$, isometrisch zum Hilbert-Tensor-Produkt $H^{m}(I) \otimes H$.
-\end{Satz}
-
-\begin{Lemma}[{{{\cite[Proposition XVIII.2.6]{Dautray:1992by}}}}]
-\label{lem:gl:br:bochner_W_ist_hilbertraum}
-    Mit dem Skalarprodukt
-    \begin{equation}
-        \skprod{u}{v}_{W(a, b; V, V')} \deq \skprod{u'}{v'}_{L_{2}(a, b; V')} +  \skprod{u}{v}_{L_{2}(a, b; V)}
-    \end{equation}
-    und der induzierten Norm
-    \begin{equation}
-        \begin{aligned}
-            \norm{u}_{W(a, b; V, V')}
-            \deq& \left( \int_{a}^{b} \norm{u'(t)}_{V'}^{2} \diff t + \int_{a}^{b} \norm{u(t)}_{V}^{2} \diff t \right)^{1/2}
-            \\=& \left( \norm{u'}_{L_{2}(a, b; V')}^{2} + \norm{u}_{L_{2}(a, b; V)}^{2} \right)^{1/2}
-        \end{aligned}
-    \end{equation}
-    ist $W(a, b; V, V')$ ein Hilbertraum.
-\end{Lemma}
-
-\begin{Definition}
-\label{def:gl:br:stetige_funktionen}
-    Mit $\mathcal C([a, b]; X)$ bezeichnen wir die Menge aller bezüglich der Norm $\norm{f} = \sup_{t \in [a, b]} \norm{f(t)}_{X}$ stetigen Funktionen $f \colon [a, b] \to X$.
 \end{Definition}
 
-\begin{Satz}[{{{\cite[Theorem XVIII.2.1]{Dautray:1992by}}}}]
-\label{satz:gl:br:bochner_eingebettet_in_stetigen_funktionen}
-    Seien $a, b \in \mathbb{R}$, dann stimmt jedes $u \in W(a, b)$ fast überall mit einer stetigen Funktion von $[a, b]$ nach $H$ überein.
-    Genauer gilt
-    \begin{equation}
-        W(a, b; V, V') \hookrightarrow \mathcal C([a, b]; H).
-    \end{equation}
-\end{Satz}
-\nomenclature{$\hookrightarrow$}{Stetige Einbettung}
+Weiter können wir diesem Raum ein Skalarprodukt und damit auch eine Norm zuordnen, dies liefert die folgende Aussage.
 
-\begin{Korollar}[{{{\cite[Remark XVIII.2.4]{Dautray:1992by}}}}]
-\label{kor:gl:br:bochner_spur_wohldefiniert}
-    Sei $a, b \in \mathbb{R}$ und $u \in W(a, b; V, V')$.
-    Dann sind $u(a), u(b) \in H$ wohldefiniert.
+\begin{Lemma}
+\label{lem:gl:br:bochner_W_ist_hilbertraum}
+    Versehen wir $W(a, b; V, V')$ mit dem Skalarprodukt
+    \begin{equation}
+        \skp{u}{v}{W(a, b; V, V')} \deq \skp{u}{v}{L_{2}(a, b; V)} + \skp{u'}{v'}{L_{2}(a, b; V')}
+    \end{equation}
+    und der dadurch induzierten Norm
+    \begin{equation}
+        \norm{u}_{W(a, b; V, V')} = \left( \norm{u}_{L_{2}(a, b; V)}^{2} + \norm{u'}_{L_{2}(a, b; V')}^{2} \right)^{1/2},
+    \end{equation}
+    so ist $W(a, b; V, V')$ ein Hilbertraum.
+
+    \begin{Beweis}
+        Siehe \cite[Proposition XVIII.2.6]{Dautray:1992by}.
+    \end{Beweis}
+\end{Lemma}
+
+Da die von uns betrachteten parabolischen partiellen Differentialgleichungen jeweils mit Anfangsbedingungen versehen sein werden, müssen wir an dieser Stelle klären, in welchem Sinne diese zu verstehen sind.
+Dies führt zum sogenannten Spursatz, welchen wir durch die folgende Einbettungsaussage erhalten.
+
+\begin{Satz}
+\label{satz:bochner_raum_W_stetige_einbettung_C0}
+    Seien $V \denseinclusion H \denseinclusion V'$ ein Gelfand"=Tripel und $a, b \in \mathbb{R}$.
+    Ferner sei $\mathcal C^{0}([a, b]; H)$ die Menge aller stetigen Funktionen $f \colon [a, b] \to H$.
+    Dann ist die Einbettung
+    \begin{equation}
+        W(a, b; V, V') \hookrightarrow \mathcal C^{0}([a, b], H).
+    \end{equation}
+    stetig.
+    Insbesondere stimmt jedes $u \in W(a, b; V, V')$ fast überall mit einer stetigen Funktion aus $\mathcal C^{0}([a, b], H)$ überein.
+
+    \begin{Beweis}
+        Siehe \cites[Theorem XVIII.2.1]{Dautray:1992by}[Theorem 10.9]{Schweizer2013}.
+    \end{Beweis}
+\end{Satz}
+
+\begin{Korollar}[Spursatz]
+\label{korollar:spursatz}
+    Seien $a, b \in \mathbb{R}$ und $u \in W(a, b; V, V')$.
+    Dann sind die \emph{Spuren} $u(a), u(b) \in H$ wohldefiniert.
+
+    \begin{Beweis}
+        Direkte Folgerung aus \cref{satz:bochner_raum_W_stetige_einbettung_C0}, siehe auch \cite[Remark XVIII.2.4]{Dautray:1992by}.
+    \end{Beweis}
 \end{Korollar}
 
-\mfix{Prüfen, ob das so auch stimmt.}
+Ferner erhalten wir aus obiger Einbettungsaussage \cref{satz:bochner_raum_W_stetige_einbettung_C0} auch das folgende Ergebnis, welches im Rahmen der Betrachtung linearer Evolutionsgleichungen benötigt wird.
+
 \begin{Korollar}
-\label{kor:gl:br:einbettungskonstante_M_e}
+\label{korollar:einbettungskonstante_M_e}
     Seien $a, b \in \mathbb{R}$.
     Die Einbettungskonstante
     \begin{equation}
-        \label{eq:gl:br:einbettungskonst_M_e}
-        M_{e} \deq \sup_{\substack{u\in W(a, b; V, V')\\u \neq 0}} \frac{\norm{u(0)}_{H}}{\norm{u}_{W(a, b; V, V')}}
+        \label{eq:einbettungskonstante_M_e}
+        M_{e} \deq \sup_{\substack{u\in W(a, b; V, V')\\u \neq 0}} \frac{\norm{u(a)}_{H}}{\norm{u}_{W(a, b; V, V')}}
     \end{equation}
-    ist gleichmäßig beschränkt in der Wahl $V \hookrightarrow H$ und hängt nur im Fall $T \to 0$ von $T$ ab.
+    ist gleichmäßig beschränkt in der Wahl $V \hookrightarrow H$ und hängt nur im Fall $b \to a$ von $b$ ab.
 
     \begin{Beweis}
-        Siehe \textcite[Beweis zu Theorem XVIII.2.1]{Dautray:1992by}.
+        Siehe \cites[Section 5]{Schwab:2009ec}[Beweis zu Theorem XVIII.2.1]{Dautray:1992by}.
     \end{Beweis}
 \end{Korollar}
+
+Abschließen wollen wir diesen Abschnitt mit einer alternativen Charakterisierung der hier betrachteten Bochner"=Räume als Tensor"=Produkt, welche erst bei der numerischen Umsetzung in \cref{chapter:galerkin} relevant wird.
+
+\begin{Satz}
+\label{satz:bochner_sobolev_raum_als_tensorprodukt}
+    Seien $H$ ein Hilbertraum und $a, b \in \mathbb{R}$ mit $a < b$.
+    Dann ist der Bochner"=Sobolev"=Raum $H^{m}(a, b; H)$, $m \geq 0$, isometrisch isomorph zum Hilbertraum"=Tensorprodukt $H^{m}([a, b]) \otimes H$, kurz
+    \begin{equation}
+        H^{m}(a, b; H) \cong H^{m}([a, b]) \otimes H.
+    \end{equation}
+
+    \begin{Beweis}
+        Siehe \cite[Theorem 12.6.1, Theorem 12.7.1]{Aubin:2000un}.
+    \end{Beweis}
+\end{Satz}
+
 
 % section bochner_r_ume (end)
 
@@ -170,7 +202,7 @@ Zunächst definieren wir, was wir unter dem Begriff einer linearen Evolutionsgle
 Anschließend leiten wir eine Raum-Zeit-Variationsformulierung her und geben einen Satz an, der unter geeigneten Voraussetzungen Existenz und Eindeutigkeit einer Lösung dieser Variationsformulierung garantiert.
 
 Wir befinden uns nun im Folgenden Setting:
-wie in \cref{def:gl:br:gelfand_tripel} seien $V$ und $H$ zwei separable Hilberträume und $(V, H, V')$ das daraus resultierende Gelfand-Tripel.
+wie in \cref{definition:gelfand_tripel} seien $V$ und $H$ zwei separable Hilberträume und $(V, H, V')$ das daraus resultierende Gelfand-Tripel.
 Wie zuvor verwenden wir $\skprod{\blank}{\blank}$ mit entsprechendem Index sowohl für die Skalarprodukte auf $V$ und $H$, als auch für die duale Paarung auf $V' \times V$.
 
 Es sei $0 < T < \infty$ und damit $[0, T]$ ein endliches Zeitintervall.
@@ -229,18 +261,18 @@ Mit dieser Vorarbeit können wir nun definieren, was wir unter einer linearen Ev
 \begin{Bemerkung}
 \leavevmode
 \begin{thmenumerate}
-    \item Die Anfangswertbedingung $u(0) = u_{0}$ in $H$ ist wegen \cref{kor:gl:br:bochner_spur_wohldefiniert} wohldefiniert.
+    \item Die Anfangswertbedingung $u(0) = u_{0}$ in $H$ ist wegen \cref{korollar:spursatz} wohldefiniert.
     \item Ist die Bilinearform $a(\blank, \blank; t)$ respektive der zugehörige stetige lineare Operator $A(t)$ unabhängig von $t \in [0, T]$, dann sprechen wir von einer \emph{autonomen} linearen Evolutionsgleichung.
 \end{thmenumerate}
 \end{Bemerkung}
 
 Als nächstes leiten wir eine Raum-Zeit-Variationsformulierung für~\cref{eq:gl:le:lineare_evolutionsgleichung} her.
 Dazu werden geeignete Ansatz- und Testfunktionenräume benötigt.
-Hier kommen nun die in \cref{sec:gl:br:bochner_raeume} definierten Bochner-Räume zum Einsatz.
+Hier kommen nun die in \cref{section:bochner_raeume} definierten Bochner-Räume zum Einsatz.
 
 \begin{Definition}
 \label{def:gl:le:ansatz_und_testraum}
-    Als Ansatzfunktionenraum $\mathcal X$ bezeichnen wir den Raum $W(0, T; V, V')$ aus \cref{def:gl:br:bochner_raum_W}.
+    Als Ansatzfunktionenraum $\mathcal X$ bezeichnen wir den Raum $W(0, T; V, V')$ aus \cref{definition:bochner_raum_W}.
     Es ist also
     \begin{equation}
         \label{eq:gl:le:ansatzraum_X}
@@ -503,7 +535,7 @@ Aus dem Beweis des vorherigen Satzes bei \textcite{Schwab:2009ec} ergeben sich z
         \label{kor:gl:le:einbettungskonstante_M_e}
         M_{e} = \sup_{0 \neq u \in \mathcal X} \frac{\norm{u(0)}_{H}}{\norm{u}_{\mathcal X}},
     \end{equation}
-    vergleiche \cref{kor:gl:br:einbettungskonstante_M_e}, beziehungsweise
+    vergleiche \cref{korollar:einbettungskonstante_M_e}, beziehungsweise
     \begin{equation}
         \label{kor:gl:le:einbettungskonstante_rho}
         \rho = \sup_{0 \neq \eta \in V} \frac{\norm{\eta}_{H}}{\norm{\eta}_{V}}
