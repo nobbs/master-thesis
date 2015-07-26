@@ -103,7 +103,7 @@ Obwohl die Bedingungen \cref{punkt:gal:tfae_infsup_x,punkt:gal:tfae_infsup_y,pun
     \end{equation}
 
     \begin{Beweis}
-        Direkte Folgerung aus dem \ac{bnb}, \cref{satz:gl:le:bnb_theorem}.
+        Direkte Folgerung aus dem \ac{bnb}, \cref{satz:bnb_theorem}.
     \end{Beweis}
 \end{Satz}
 
@@ -173,13 +173,13 @@ Wir kehren nun wieder zu der Problemstellung aus \cref{chapter:propagator_differ
 Dazu greifen wir auf \cref{satz:bochner_sobolev_raum_als_tensorprodukt} zurück um eine Zerlegung der verwendeten Bochnerräume in Tensorprodukte von nur raum- beziehungsweise zeitabhängigen Räumen zu erreichen.
 
 \begin{Korollar}
-    Der Ansatzraum $\mathcal X$ aus \cref{eq:gl:le:ansatzraum_X} lässt sich schreiben als
+    Der Ansatzraum $\mathcal X$ aus \cref{eq:ansatzraum_X} lässt sich schreiben als
     \begin{equation}
         \label{eq:gal:ansatzraum_tensor}
         \mathcal X = L_{2}(0, T; V) \cap H^{1}(0, T; V')
             = (L_2(0, T) \otimes V) \cap (H^{1}(0, T) \otimes V'),
     \end{equation}
-    für den Testraum $\mathcal Y$ aus \cref{eq:gl:le:testraum_Y} gilt weiter
+    für den Testraum $\mathcal Y$ aus \cref{eq:testraum_Y} gilt weiter
     \begin{equation}
         \label{eq:gal:testraum_tensor}
         \mathcal Y = L_{2}(0, T; V) \times H = (L_{2}(0, T) \otimes V) \times H.
@@ -314,7 +314,7 @@ Es gilt offenbar $\Phi \subset \mathcal X^{\mathcal N}$ sowie $\Psi \subset \mat
 \begin{Lemma}[Diskrete $\mathcal{Y}$-Norm]
 % todo: fixme
     Sei bla.
-    Die $\mathcal{Y}^{\mathcal N}$-Norm aus \eqref{eq:gl:le:testraum_Y_norm} wird durch den folgenden Operator
+    Die $\mathcal{Y}^{\mathcal N}$-Norm aus \eqref{eq:testraum_Y_skalarprodukt} wird durch den folgenden Operator
     \begin{equation}
         \mat{N} = \begin{pmatrix}
             \mat{M}_{t} \otimes (\mat{M}_{x} + \mat{A}_{x}) & \mat{0} \\

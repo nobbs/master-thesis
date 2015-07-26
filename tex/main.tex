@@ -9,10 +9,12 @@
   % BCOR=1cm,
   twoside=semi,
   % oneside,
-  halfparskip,
+  parskip=half,
   toc=bibliography,
   toc=listof,
   chapterprefix=true,
+  version=last,
+  cleardoublepage=empty,
 ]{scrbook}
 
 \input{packages}
@@ -22,21 +24,14 @@
 
 \usepackage{dirtree}
 
-
-\KOMAoptions{cleardoublepage=plain}
-
 \addbibresource{literature.bib}
 
-
-\newtoggle{tot}
-\togglefalse{tot}
-
 \begin{document}
-    % Deckblack / Titelseite
-    \include{misc/deckblatt}
-
     %%% Frontmatter-Teil
     \frontmatter{}
+
+    % Deckblack / Titelseite
+    \include{misc/deckblatt}
 
     % Danksagung
     \include{misc/danksagung}
@@ -48,13 +43,12 @@
     \tableofcontents
 
     % TODO-Liste
-    \listoftodos
+    % \listoftodos
 
     %%% Hauptteil
     \mainmatter{}
 
-    % Kapitel
-
+    % Kapitel einbinden
     \input{chapters/cha1_einleitung}
     \input{chapters/cha2_grundlagen}
     \input{chapters/cha3_propagator_dgl}
@@ -76,19 +70,11 @@
 
     %% Los geht's mit den Verzeichnissen
 
-    % Theoremverzeichnis
-    \iftoggle{tot}{
-        \chapter*{Theoremverzeichnis}
-        \addcontentsline{toc}{chapter}{Theoremverzeichnis}
-        \theoremlisttype{allname}
-        \listtheorems{Satz,Lemma,Definition,Annahme,Bemerkung}
-    }
-
     % Abbildungsverzeichnis
-    % \listoffigures
+    \listoffigures
 
     % Tabellenverzeichnis
-    % \listoftables
+    \listoftables
 
     % Symbolverzeichnis
     % \printnomenclature{}

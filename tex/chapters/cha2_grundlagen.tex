@@ -112,7 +112,7 @@ Dies geschieht analog zu \cite[Definition XVIII.2.4]{Dautray:1992by}.
 Weiter können wir diesem Raum ein Skalarprodukt und damit auch eine Norm zuordnen, dies liefert die folgende Aussage.
 
 \begin{Lemma}
-\label{lem:gl:br:bochner_W_ist_hilbertraum}
+\label{lemma:bochner_W_ist_hilbertraum}
     Versehen wir $W(a, b; V, V')$ mit dem Skalarprodukt
     \begin{equation}
         \skp{u}{v}{W(a, b; V, V')} \deq \skp{u}{v}{L_{2}(a, b; V)} + \skp{u'}{v'}{L_{2}(a, b; V')}
@@ -165,7 +165,7 @@ Ferner erhalten wir aus obiger Einbettungsaussage \cref{satz:bochner_raum_W_stet
     Die Einbettungskonstante
     \begin{equation}
         \label{eq:einbettungskonstante_M_e}
-        M_{e} \deq \sup_{\substack{u\in W(a, b; V, V')\\u \neq 0}} \frac{\norm{u(a)}_{H}}{\norm{u}_{W(a, b; V, V')}}
+        \gamma_{e} \deq \sup_{\substack{u\in W(a, b; V, V')\\u \neq 0}} \frac{\norm{u(a)}_{H}}{\norm{u}_{W(a, b; V, V')}}
     \end{equation}
     ist gleichmäßig beschränkt in der Wahl $V \hookrightarrow H$ und hängt nur im Fall $b \to a$ von $b$ ab.
 
@@ -191,7 +191,7 @@ Abschließen wollen wir diesen Abschnitt mit einer alternativen Charakterisierun
 
 
 \section{Lineare Evolutionsgleichungen} % (fold)
-\label{sec:gl:le:lineare_evolutionsgleichungen}
+\label{section:lineare_evolutionsgleichungen}
 
 Nach der Einführung der benötigten Funktionenräume wenden wir uns nun den linearen Evolutionsgleichungen, einer bestimmten Unterart parabolischer partieller Differentialgleichungen, zu.
 Wir orientieren uns hierbei an \textcite{Lions:1971wp,Schwab:2009ec,Urban:2014kg},
@@ -210,7 +210,7 @@ induziert werden.
 Wie wir später sehen werden, stellt die nachfolgende Annahme sicher, dass die auf diese Operatoren aufbauenden linearen Evolutionsgleichungen gewisse wünschenswerte Eigenschaften, wie Lösbarkeit und Eindeutigkeit dieser Lösung, besitzen.
 
 \begin{Annahme}
-\label{ann:gl:le:bilinearform_eigenschaften}
+\label{annahme:eigenschaften_der_bilinearform_a}
     Die Familie von Bilinearformen $a(\blank, \blank; t)$, $t \in I$, erfülle die folgenden Eigenschaften:
     \leavevmode
     \begin{thmenumerate}
@@ -218,13 +218,13 @@ Wie wir später sehen werden, stellt die nachfolgende Annahme sicher, dass die a
         \item \emph{Stetigkeit:}
         es existiert ein $0 < \gamma_{a} < \infty$ mit
         \begin{equation}
-            \label{eq:gl:le:bilinearform_stetig}
+            \label{eq:eigenschaften_der_bilinearform_a:stetigkeit}
             \abs{a(\eta, \zeta; t)} \leq \gamma_{a} \norm{\eta}_{V} \norm{\zeta}_{V}, \quad \fa \eta, \zeta \in V \text{ und fast alle } t \in I.
         \end{equation}
         \item \emph{G\r{a}rding-Ungleichung:}
         es existieren $\alpha > 0$ und $\lambda \geq 0$ mit
         \begin{equation}
-            \label{eq:gl:le:bilinearform_garding}
+            \label{eq:eigenschaften_der_bilinearform_a:garding}
             a(\eta, \eta; t) + \lambda \norm{\eta}_{H}^{2} \geq \alpha \norm{\eta}_{V}^{2}, \quad \fa \eta \in V \text{ und fast alle } t \in I.
         \end{equation}
     \end{thmenumerate}
@@ -234,11 +234,11 @@ Für den Rest dieses Abschnitts nehmen wir stets an, dass die Bilinearform $a(\b
 Mit dieser Vorarbeit definieren wir nun den Begriff der linearen Evolutionsgleichung.
 
 \begin{Definition}
-\label{def:gl:le:lineare_evolutionsgleichung}
+\label{definition:lineare_evolutionsgleichung}
     Sei $g \in L_{2}(I; V')$ ein \emph{Quellterm} und $u_{0} \in H$ ein \emph{Anfangswert}.
     Als \emph{lineare Evolutionsgleichung} bezeichnen wir die parabolische partielle Differentialgleichung
     \begin{equation}
-        \label{eq:gl:le:lineare_evolutionsgleichung}
+        \label{eq:lineare_evolutionsgleichung}
         \left\{
         \begin{aligned}
             u_{t}(t) + A(t) u(t) &= g(t)     \quad&&\text{in}~V', \quad \text{für fast alle}~t \in I, \\
@@ -249,56 +249,53 @@ Mit dieser Vorarbeit definieren wir nun den Begriff der linearen Evolutionsgleic
     wobei die  Operatorfamilie $A(t) \in \mathcal L(V, V')$ wie oben gegeben sei.
 \end{Definition}
 
-Darauf aufbauend leiten wir als nächstes eine Raum-Zeit-Variationsformulierung für~\cref{eq:gl:le:lineare_evolutionsgleichung} her.
+Darauf aufbauend leiten wir als nächstes eine Raum-Zeit-Variationsformulierung für~\cref{eq:lineare_evolutionsgleichung} her.
 Dazu benötigen wir geeignete Ansatz- und Testfunktionenräume; hierzu verwenden wir die im vorherigen Abschnitt eingeführten Bochner-Räume.
 
 \begin{Definition}
-\label{def:gl:le:ansatz_und_testraum}
+\label{definition:ansatz_und_testraum}
     Den Ansatzfunktionenraum $\mathcal X$ definieren wir als den Hilbertraum
     \begin{equation}
-        \label{eq:gl:le:ansatzraum_X}
+    \label{eq:ansatzraum_X}
         \mathcal X = W(I; V, V') = L_{2}(I; V) \cap H^{1}(I; V')
     \end{equation}
     mit dem Skalarprodukt
     \begin{equation}
+    \label{eq:ansatzraum_skalarprodukt}
         \skp{u}{v}{\mathcal X} = \skp{u}{v}{L_{2}(I; V)} + \skp{u'}{v'}{L_{2}(I; V')}.
     \end{equation}
     Der Testfunktionenraum $\mathcal Y$ sei der Hilbertraum
     \begin{equation}
-    \label{eq:gl:le:testraum_Y}
+    \label{eq:testraum_Y}
         \mathcal Y = L_{2}(0, T; V) \times H
     \end{equation}
     mit Skalarprodukt
     \begin{equation}
-        \label{eq:gl:le:testraum_Y_norm}
+        \label{eq:testraum_skalarprodukt}
         \skp{u}{v}{\mathcal Y} = \skp{u_{1}}{v_{1}}{L_{2}(I; V)} + \skp{u_{2}}{v_{2}}{H} \quad \text{für } u = (u_{1}, u_{2}), v = (v_{1}, v_{2}) \in \mathcal Y.
     \end{equation}
 \end{Definition}
 
-Das $\mathcal X$ tatsächlich ein Hilbertraum ist, wissen wir nach \cref{lem:gl:br:bochner_W_ist_hilbertraum}.
-Ferner ist $\mathcal Y$ als direkte Summe zweier Hilberträume wieder ein Hilbertraum.
-\mdo{Fragwürdig.}
-
-Um nun aus~\cref{eq:gl:le:lineare_evolutionsgleichung} eine schwache Formulierung zu erhalten, \enquote{multiplizieren} wir die lineare Evolutionsgleichung mit $v = (v_{1}, v_{2}) \in \mathcal Y$ und integrieren anschließend über das Zeitintervall $[0, T]$.
+Um nun aus~\cref{eq:lineare_evolutionsgleichung} eine schwache Formulierung zu erhalten, \enquote{multiplizieren} wir die lineare Evolutionsgleichung mit $v = (v_{1}, v_{2}) \in \mathcal Y$ und integrieren anschließend über das Zeitintervall $I = [0, T]$.
 Dadurch erhalten wir die folgende Raum"=Zeit"=Variationsformulierung:
 
 \begin{Definition}
-\label{def:gl:le:schwache_raum_zeit_formulierung}
-    Seien $\mathcal X$ und $\mathcal Y$ wie in~\cref{eq:gl:le:ansatzraum_X,eq:gl:le:testraum_Y}, $g \in L_{2}(I; V')$ ein Quellterm und $u_{0} \in H$ ein Anfangswert.
-    Als \emph{Raum"=Zeit"=Variationsformulierung} der linearen Evolutionsgleichung~\cref{eq:gl:le:lineare_evolutionsgleichung} bezeichnen wir das folgende Problem:
+\label{definition:absktrakte_raum_zeit_formulierung}
+    Seien $\mathcal X$ und $\mathcal Y$ wie in~\cref{eq:ansatzraum_X,eq:testraum_Y}, $g \in L_{2}(I; V')$ ein Quellterm und $u_{0} \in H$ ein Anfangswert.
+    Als \emph{Raum"=Zeit"=Variationsformulierung} der linearen Evolutionsgleichung~\cref{eq:lineare_evolutionsgleichung} bezeichnen wir das folgende Problem:
     \begin{equation}
-        \label{eq:gl:le:schwache_formulierung}
+        \label{eq:absktrakte_raum_zeit_formulierung}
         \text{Finde } u \in \mathcal X \colon \quad b(u, v) = f(v) \quad \fa v \in \mathcal Y.
     \end{equation}
     Dabei sei die Bilinearform $b \colon \mathcal X \times \mathcal Y \to \mathbb{R}$ durch
     \begin{equation}
-        \label{eq:gl:le:schwache_formulierung_lhs_b}
+        \label{eq:absktrakte_raum_zeit_formulierung:lhs}
         b(u, v) = \int_{I} \left[   \skp{u_{t}(t)}{v_{1}(t)}{V' \times V} + a(u(t), v_{1}(t); t)  \right] \diff t + \skp{u(0)}{v_{2}}{H}
     \end{equation}
     definiert und das Funktional $f \colon \mathcal Y \to \mathbb{R}$ durch
     \begin{equation}
-        \label{eq:gl:le:schwache_formulierung_rhs_f}
-        f(v) = \int_{0}^{T} \skp{g(t)}{v_{1}(t)}{V' \times V} \diff t + \skp{u_{0}}{v_{2}}{H}.
+        \label{eq:absktrakte_raum_zeit_formulierung:rhs}
+        f(v) = \int_{I} \skp{g(t)}{v_{1}(t)}{V' \times V} \diff t + \skp{u_{0}}{v_{2}}{H}.
     \end{equation}
 \end{Definition}
 
@@ -307,342 +304,122 @@ Dadurch erhalten wir die folgende Raum"=Zeit"=Variationsformulierung:
 \end{Bemerkung}
 
 Es bleibt nun zu zeigen, welche Bedingungen hinreichend sind, damit obige Raum"=Zeit"=Variationsformulierung \emph{sachgemäß gestellt} ist.
-Dazu definieren wir zunächst, was wir unter dem Begriff \enquote{sachgemäß gestellt} verstehen wollen und greifen dazu auf die Definition nach \textcite{hadamard1902problemes} zurück.
+Dazu definieren wir zunächst, was wir darunter verstehen wollen und greifen dazu auf die Definition nach \textcite{hadamard1902problemes} zurück.
 
 \begin{Definition}[Hadamard]
-\label{def:gl:le:hadamard_sachgemaess_gestellt}
-    Seien $U$ und $V$ normierte Vektorräume, $a \in \mathcal L(U \times V)$ eine stetige Bilinearform und $f \in \mathcal L(V)$ ein stetiges lineares Funktional.
+\label{definition:sachgemaess_gestellt_nach_hadamard}
+    Seien $X$ und $Y$ zwei Hilberträume, $a \in \mathcal L(X \times Y)$ eine stetige Bilinearform und $f \in Y'$ ein stetiges lineares Funktional.
     Wir nennen das abstrakte Variationsproblem
     \begin{equation}
-    \label{eq:gl:le:hadamard_variationsproblem}
-        \text{Finde } u \in U \colon \quad a(u, v) = f(v) \quad \fa v \in V.
+    \label{eq:hadamard_variationsproblem}
+        \text{Finde } u \in X \colon \quad a(u, v) = f(v) \quad \fa v \in Y.
     \end{equation}
-    \emph{sachgemäß gestellt}, wenn eine eindeutige Lösung $u \in U$ existiert und diese eine A-priori-Abschätzung der Form
+    \emph{sachgemäß gestellt}, wenn eine eindeutige Lösung $u \in X$ existiert und diese eine A-priori-Abschätzung der Form
     \begin{equation}
-    \label{eq:gl:le:hadamard_abschaetzung}
-        \norm{u}_{U} \leq c \norm{f}_{V'} \quad \fa f \in V'
+    \label{eq:hadamard_abschaetzung}
+        \norm{u}_{X} \leq c \norm{f}_{Y'}, \quad \fa f \in Y',
     \end{equation}
     mit einer von $f$ unabhängigen Konstante $c > 0$ erfüllt.
 \end{Definition}
 
-Um dies für die Raum-Zeit-Variationsformulierung aus \cref{def:gl:le:schwache_raum_zeit_formulierung} nachzuweisen, werden wir den folgenden bekannten und wichtigen Satz, welcher in dieser oder ähnlicher Form bei \textcites[Theorem 2.1]{Babuska:1971fx}[Theorem 5.2.1]{Aziz:2014wf}[Theorem \S{}3.3.6]{Braess:2007wm} zu finden ist, verwenden.
+Um dies für die Raum"=Zeit"=Variationsformulierung \cref{eq:absktrakte_raum_zeit_formulierung} nachzuweisen, werden wir indirekt auf den nachfolgenden wichtigen Satz zurückgreifen.
+Dieser findet sich in dieser oder ähnlicher Form bei \textcites[Theorem 2.1]{Babuska:1971fx}[Theorem 5.2.1]{Aziz:2014wf}[Theorem \S{}3.3.6]{Braess:2007wm} sowie vielen weiteren einschlägigen Quellen.
 
 \begin{Satz}[Banach-Ne{\v c}as-Babu{\v s}ka-Theorem]
-\label{satz:gl:le:bnb_theorem}
-    Seien $U$ und $V$ Hilberträume.
-    Eine lineare Abbildung $A \colon U \to V'$ ist genau dann ein Isomorphismus, das heißt stetig invertierbar, wenn die zugehörige Bilinearform $a \colon U \times V \to \mathbb{R}$ die folgenden Bedingungen erfüllt:
+\label{satz:bnb_theorem}
+    Seien $X$ und $Y$ zwei Hilberträume.
+    Eine lineare Abbildung $A \colon X \to Y'$ ist genau dann ein Isomorphismus, das heißt stetig invertierbar, wenn die zugehörige Bilinearform $a \colon X \times Y \to \mathbb{R}$ die folgenden Bedingungen erfüllt:
     \begin{thmenumerate}
-        \item \label{satz:gl:le:bnb_theorem_bedingung_stetig}
-        \emph{Stetigkeit}.
-        Es existiert ein $0 < C < \infty$ mit
+        \item \label{satz:bnb_theorem:stetig}
+        \emph{Stetigkeit:}
+        es existiert eine Konstante $0 < \gamma < \infty$ mit
         \begin{equation}
-            \abs{a(u, v)} \leq C \norm{u}_{U} \norm{v}_{V} \quad \fa u \in U,~v\in V.
+            \abs{a(u, v)} \leq \gamma \norm{u}_{X} \norm{v}_{Y} \quad \fa u \in X,~v\in Y.
         \end{equation}
-        \item \label{satz:gl:le:bnb_theorem_bedingung_inf_sup}
-        \emph{Inf-sup-Bedingung}.
-        Es existiert ein $\alpha > 0$ mit
+        \item \label{satz:bnb_theorem:inf_sup_bedingung}
+        \emph{Inf-sup-Bedingung:}
+        es existiert eine Konstante $\beta > 0$ mit
         \begin{equation}
-            \inf_{u \in U} \sup_{v \in V} \frac{a(u, v)}{\norm{u}_{U} \norm{v}_{V}} \geq \alpha.
+            \inf_{u \in X} \sup_{v \in Y} \frac{a(u, v)}{\norm{u}_{X} \norm{v}_{Y}} \geq \beta.
         \end{equation}
-        \item \label{satz:gl:le:bnb_theorem_bedingung_surjektiv}
-        Zu jedem $v \in V$, $v \neq 0$, existiert ein $u \in U$ mit
+        \item \label{satz:bnb_theorem:surjektiv}
+        \emph{Surjektivität:}
+        zu jedem $v \in Y$, $v \neq 0$, existiert ein $u \in X$ mit
         \begin{equation}
             a(u, v) \neq 0.
         \end{equation}
     \end{thmenumerate}
-    Ist dies der Fall und ist weiter ein Funktional $f \in V'$ gegeben, dann existiert eine eindeutige Lösung $\hat u \in U$ mit
+    Gelten die drei Bedingungen und ist weiter ein Funktional $f \in Y'$ gegeben, dann existiert eine eindeutige Lösung $\hat u \in X$ mit
     \begin{equation}
-        a(\hat u, v) = f(v) \quad \fa v \in V
+        a(\hat u, v) = f(v) \quad \fa v \in Y
     \end{equation}
     und es gilt
     \begin{equation}
-        \norm{\hat u}_{U} \leq \frac{1}{\alpha} \norm{f}_{V'}.
+        \norm{\hat u}_{X} \leq \frac{1}{\beta} \norm{f}_{Y'}.
     \end{equation}
 \end{Satz}
 
 \begin{Bemerkung}
-\label{bem:gl:le:bnb_staerkere_voraussetzungen}
-    Die letzte Bedingung im vorherigen Satz kann durch eine stärkere inf-sup-Bedingung ersetzt werden, denn existiert ein $\beta > 0$ mit
+\label{bemerkung:bnb_theorem_inf_sup_statt_surjektiv}
+    Die Surjektivitätsbedingung \cref{satz:bnb_theorem:surjektiv} kann durch eine weitere inf"=sup"=Bedingung ersetzt werden, denn existiert ein $\beta' > 0$ mit
     \begin{equation}
-        \inf_{v \in V} \sup_{u \in U} \frac{a(u, v)}{\norm{u}_{U} \norm{v}_{V}} \geq \beta,
+        \inf_{v \in Y} \sup_{u \in X} \frac{a(u, v)}{\norm{u}_{X} \norm{v}_{Y}} \geq \beta',
     \end{equation}
-    dann gilt insbesondere auch \ref{satz:gl:le:bnb_theorem_bedingung_surjektiv}.
+    dann gilt insbesondere auch \cref{satz:bnb_theorem:surjektiv}.
 \end{Bemerkung}
 
-Aus dem Banach-Ne{\v c}as-Babu{\v s}ka-Theorem lässt sich auch das bekannte Lax-Milgram-Lemma ableiten, weswegen wir es hier kurz wiederholen wollen.
+Für das abstrakte Raum"=Zeit"=Variationsproblem \cref{eq:absktrakte_raum_zeit_formulierung} wurde für die hier vorliegenden Rahmenbedingungen bereits von \textcite[Section XVIII.3]{Dautray:1992by} nachgewiesen, dass es sich hierbei um ein sachgemäß gestelltes Problem handelt.
+Ein alternativer Beweis, welcher die Bedingungen des \acl{bnb}s nachweist und weiter explizite Schranken für die Stetigkeitskonstante $\gamma_{b}$ und die Inf"=sup"=Konstante $\beta$ der Bilinearform $b$ aus \cref{eq:absktrakte_raum_zeit_formulierung:lhs} liefert, wurde von \textcite{Schwab:2009ec} geführt.
+Wir wiederholen die Kernaussage \cite[Theorem 5.1]{Schwab:2009ec} und verweisen für einen ausführlichen Beweis auf \cite[Appendix A]{Schwab:2009ec}.
 
-\begin{Lemma}[Lax-Milgram]
-\label{lem:gl:le:lax_milgram}
-    Sei $V$ ein Hilbertraum, seien weiter $a \in \mathcal L(V \times V, \mathbb{R})$ eine stetige Bilinearform und $f \in \mathcal L (V, \mathbb{R})$ ein stetiges Funktional und betrachte das Problem:
-    finde ein $u \in V$, so dass
+\begin{Satz}
+\label{satz:ss09:theorem51}
+    Seien $\mathcal X$ und $\mathcal Y$ durch \cref{eq:ansatzraum_X,eq:testraum_Y} gegeben und sei $a(\blank, \blank; t) \colon V \times V \to \mathbb{R}$ eine Familie von Bilinearformen, welche \cref{annahme:eigenschaften_der_bilinearform_a} erfüllt.
+    Dann ist das Raum"=Zeit"=Variationsproblem \cref{eq:absktrakte_raum_zeit_formulierung} sachgemäß gestellt, das heißt, für alle $f \in \mathcal Y'$ existiert eine eindeutige Lösung $u \in \mathcal X$, so dass
     \begin{equation}
-        a(u, v) = f(v) \quad \fa v \in V
+        b(u, v) = f(v) \quad \fa v \in \mathcal Y
     \end{equation}
-    gilt.
-    Ist die Bilinearform $a$ elliptisch, das heißt, es existiert ein $\alpha > 0$ mit
+    gilt und ferner existiert eine von $f$ unabhängige Konstante $\beta > 0$ mit
     \begin{equation}
-    \label{eq:gl:le:lax_milgram_elliptisch}
-        a(u, u) \geq \alpha \norm{u}_{V}^{2} \quad \fa u \in V,
+        \norm{u}_{\mathcal X} \leq \frac{1}{\beta} \norm{f}_{\mathcal Y'}.
     \end{equation}
-    dann ist das Problem sachgemäß gestellt und es gilt
-    \begin{equation}
-        \norm{u}_{V} \leq \frac{1}{\alpha} \norm{f}_{V'}.
-    \end{equation}
-
-    \begin{Beweis}
-        Aus der Elliptizität können wir eine inf-sup-Bedingung folgern, denn es gilt
-        \begin{equation}
-            \sup_{v \in V} \frac{a(u, v)}{\norm{v}_{V}} \geq \frac{a(u, u)}{\norm{u}_{V}} \geq \alpha \norm{u}_{V}.
-        \end{equation}
-        Damit sind neben der Stetigkeit von $a$ auch die die Bedingungen \ref{satz:gl:le:bnb_theorem_bedingung_inf_sup} und \ref{satz:gl:le:bnb_theorem_bedingung_surjektiv} aus dem Banach-Ne{\v c}as-Babu{\v s}ka-Theorem, \cref{satz:gl:le:bnb_theorem}, erfüllt und es folgt die Aussage.
-    \end{Beweis}
-\end{Lemma}
-
-Für das Raum-Zeit-Variationsproblem aus \cref{def:gl:le:schwache_raum_zeit_formulierung} lässt sich die Tatsache, dass es sachgemäß gestellt ist, zu folgendem Satz zusammenfassen.
-
-\begin{Satz}[{{\cite[Theorem 5.1]{Schwab:2009ec}}}]
-\label{satz:gl:le:ss09_theorem51}
-    Seien $\mathcal X$ und $\mathcal Y$ wie in~\cref{eq:gl:le:ansatzraum_X} respektive~\cref{eq:gl:le:testraum_Y}.
-    Sei weiter $B \colon \mathcal X \to \mathcal Y'$ definiert durch
-    \begin{equation}
-        \label{eq:gl:le:ss09_variationsproblem_als_operatorgleichung}
-        \skprod{B u}{v}_{\mathcal Y' \times \mathcal Y} = b(u, v), \quad u \in \mathcal X,~v \in \mathcal Y,
-    \end{equation}
-    wobei $b$ die Bilinearform aus~\cref{eq:gl:le:schwache_formulierung_lhs_b} sei.
-    Dann ist $B$ stetig invertierbar.
-
-    \begin{Beweis}
-        Ein ausführlicher Beweis, in dem die Bedingungen des Banach-Ne\v{c}as-Babu\v{s}ka-Theorems nachgewiesen werden, ist bei \textcite[Appendix A]{Schwab:2009ec} zu finden.
-        % \begin{Beweis}
-        %     Wir weisen die Bedingungen von \cref{satz:babuska-aziz} nach.
-
-        %     Zunächst sei anzumerken, dass wir in~\cref{eq:garding-inequality} ohne Einschränkung $\lambda = 0$ wählen können.
-        %     Wähle
-        %     \begin{equation}
-        %         u(t) = \hat u(t) e^{\lambda t}, \quad v_{1}(t) = \hat v_{1}(t) e^{- \lambda t}, \quad g(t) = \hat g(t) e^{\lambda t},
-        %     \end{equation}
-        %     dann sieht man, dass $u$ die Gleichung~\cref{eq:bilinearform} genau dann löst, wenn $\hat u$ die Gleichung
-        %     \begin{equation}
-        %         \label{eq:bilinearform_tmp}
-        %         \begin{gathered}
-        %             \int_{I} \skprod{\hat{u}_{t}(t)}{\hat{v}_{1}(t)}_{H} + \lambda \skprod{\hat{u}(t)}{\hat{v}_{1}(t)}_{H} + a(t; \hat{u}(t), \hat{v}_{1}(t)) \diff t + \skprod{\hat{u}(0)}{v_{2}}_{H}
-        %                 \\= \int_{I} \skprod{\hat{g}(t)}{\hat{v}_{1}(t)}_{H} \diff t + \skprod{u_{0}}{v_{2}}_{H}
-        %         \end{gathered}
-        %     \end{equation}
-        %     für alle $\hat{v} = (\hat{v}_{1}, v) \in \mathcal Y$ löst.
-
-        %     \paragraph{Stetigkeit} % (fold)
-        %     \label{par:stetigkeit}
-        %     Betrachte für $u \in \mathcal X$ und $v = (v_{1}, v_{2}) \in \mathcal Y$ die Bilinearform $b(u, v)$.
-        %     Nach Anwenden der Dreiecksungleichung erhalten wir
-        %     \begin{equation}
-        %         \label{eq:stetigkeit_zweiter_term}
-        %         \abs{b(u, v)} = \int_{I} \abs{\skprod{u_{t}(t)}{v_{1}(t)}_{H}} + \abs{a(u(t), v_{1}(t))} \diff t + \abs{\skprod{u(0)}{v_{2}}_{H}}.
-        %     \end{equation}
-        %     Betrachten wir zunächst den hinteren Term, dann erhalten wir unter Verwendung der Cauchy-Schwarz-Ungleichung und der Einbettungs-Konstante $M_{e}$ die Abschätzung
-        %     \begin{equation}
-        %         \abs{\skprod{u(0)}{v_{2}}_{H}} \leq \norm{u(0)}_{H} \norm{v_{2}}_{H} \leq M_{e} \norm{u}_{X} \norm{v_{2}}_{H}.
-        %     \end{equation}
-        %     Widmen wir uns nun dem ersten Term und wenden ebenfalls die Cauchy-Schwarz-Ungleichung sowie die Stetigkeit von $a$ an, dann erhalten wir
-        %     \begin{align}
-        %         &\int_{I} \abs{\skprod{u_{t}(t)}{v_{1}(t)}_{H}} + \abs{a(u(t), v_{1}(t))} \diff t
-        %         \\&\qquad
-        %         \leq \int_{I} \norm{u_{t}(t)}_{H} \norm{v_{1}(t)}_{H} + M_{a} \norm{u(t)}_{H} \norm{v_{1}(t)}_{H} \diff t
-        %         \\&\qquad
-        %         \leq \int_{I} \max\{1, M_{a}\} \norm{v_{1}(t)}_{H} \left(  \norm{u_{t}(t)}_{H} + \norm{u(t)}_{H} \right) \diff t
-        %         \intertext{mittels Hölder-Ungleichung lässt sich dies weiter abschätzen zu}
-        %         &\qquad
-        %         \leq \left( \int_{I} \max\{1, M_{a}\}^{2} \norm{v_{1}(t)}_{H}^{2} \diff t \right)^{\frac 12} \left( \int_{I} \left( \norm{u_{t}(t)}_{H} + \norm{u(t)}_{H} \right)^{2} \diff t \right)^{\frac 12},
-        %         \intertext{und unter Verwendung der Youngschen-Ungleichung zu}
-        %         &\qquad
-        %         \leq \left( \int_{I} \max\{1, M_{a}\}^{2} \norm{v_{1}(t)}_{H}^{2} \diff t \right)^{\frac 12} \left( \int_{I} 2 \left( \norm{u_{t}(t)}_{H}^{2} + \norm{u(t)}_{H}^{2} \right) \diff t \right)^{\frac 12}
-        %         \intertext{was nach Definition der verwendeten Normen auch geschrieben werden kann als}
-        %         &\qquad
-        %         = \sqrt{2 \max\{1, M_{a}^{2}\}} \norm{u}_{\mathcal X} \norm{v_{1}}_{L_{2}(I; V)}
-        %     \end{align}
-        %     Zusammen mit~\cref{eq:stetigkeit_zweiter_term} liefert dies nach einer erneuten Anwendung der Cauchy-Schwarz-Ungleichung
-        %     \begin{align}
-        %     \abs{b(u, v)}
-        %     &\leq \sqrt{2 \max\{1, M_{a}\}^{2}} \norm{u}_{\mathcal X} \norm{v_{1}}_{L_{2}(I; V)} + M_{e} \norm{u}_{X} \norm{v_{2}}_{H}
-        %     \\
-        %     &\leq \norm{u}_{\mathcal X} \left( \norm{v_{1}}_{L_{2}(I; V)}^{2} + \norm{v_{2}}_{H}^{2} \right)^{\frac 12} \left( 2 \max\{1, M_{a}\}^{2} + M_{e}^{2} \right)^{\frac 12}
-        %     \\
-        %     &= \sqrt{2 \max\{1, M_{a}^{2}\} + M_{e}^{2}} \norm{u}_{\mathcal X} \norm{v}_{\mathcal Y}.
-        %     \end{align}
-        %     Damit folgt die Stetigkeit.
-        %     % paragraph stetigkeit (end)
-
-        %     \paragraph{Inf-Sup-Bedingung} % (fold)
-        %     \label{par:inf_sup_bedingung}
-
-        %     % paragraph inf_sup_bedingung (end)
-    \end{Beweis}
 \end{Satz}
 
-Aus dem Beweis des vorherigen Satzes bei \textcite{Schwab:2009ec} ergeben sich zugleich auch Abschätzungen für die Operatornormen von $B$ und $B^{-1}$.
-
-\mdo{Ungleichung der stetigen Abhängigkeit einbauen. Wat? Was wollte ich mir damit sagen? ...}
+Abschließend wollen wir im nachfolgenden Korollar die bereits angesprochenen Schranken für die Stetigkeitskonstante $\gamma_{b}$ und die inf"=sup"=Konstante $\beta$ der Bilinearform $b$ angeben.
 
 \begin{Korollar}
-\label{kor:gl:le:ss09_theorem51_ungleichungen}
-    Unter der Gegebenheiten aus \cref{satz:gl:le:ss09_theorem51} und der Bedingung, dass die Bilinearform $a$ die G\aa{}rding-Ungleichung mit $\lambda = 0$ erfüllt, gilt
+\label{korrolar:ss09:theorem51_abschaetzungen}
+    Unter den gleichen Voraussetzungen wie in \cref{satz:ss09:theorem51} und der Bedingung, dass die Bilinearformen $a(\blank, \blank; t)$ die G\aa{}rding-Ungleichung mit $\lambda = 0$ erfüllen, gilt
     \begin{equation}
-        \norm{B}_{\mathcal L(\mathcal X, \mathcal Y')} \leq \sqrt{2 \max\Set{1, M_{a}^{2}} + M_{e}^{2}}
+        \label{eq:ss09:theorem51_abschaetzungen:lambda_null:stetig}
+        \gamma_{b}  \leq \sqrt{2 \max\Set{1, \gamma_{a}^{2}} + \gamma_{e}^{2}}
     \end{equation}
     und
     \begin{equation}
-        \norm{B^{-1}}_{\mathcal L(\mathcal Y', \mathcal X)} \leq \frac{\sqrt{2 \max \Set{\alpha^{-2}, 1} + M_{e}^{2}}}{\min\Set{\alpha M_{a}^{-2}, \alpha}}.
+        \label{eq:ss09:theorem51_abschaetzungen:lambda_null:inf_sup}
+        \beta  \geq \frac{\min\Set{\alpha \gamma_{a}^{-2}, \alpha}}{\sqrt{2 \max \Set{\alpha^{-2}, 1} + \gamma_{e}^{2}}}.
     \end{equation}
-
-    Ist $\lambda \neq 0$, dann gilt ferner
+    Im Fall $\lambda \neq 0$ werden die Abschätzungen zu
     \begin{equation}
-        \label{kor:gl:le:norm_B_abschaetzung}
-        \norm{B}_{\mathcal L(\mathcal X, \mathcal Y')} \leq \frac{\sqrt{2\max\Set{1, M_{a}^{2}} + M_{e}^{2}}}{\max\Set{\sqrt{1 + 2 \lambda^{2} \rho^{4}}, \sqrt{2}}}
+        \label{eq:ss09:theorem51_abschaetzungen:lambda_nicht_null:stetig}
+        \gamma_{b}  \leq \frac{\sqrt{2\max\Set{1, \gamma_{a}^{2}} + \gamma_{e}^{2}}}{\max\Set{\sqrt{1 + 2 \lambda^{2} \rho^{4}}, \sqrt{2}}}
     \end{equation}
     und
     \begin{equation}
-        \label{kor:gl:le:norm_B_inv_abschaetzung}
-        \norm{B^{-1}}_{\mathcal L(\mathcal Y', \mathcal X)} \leq e^{2 \lambda T} \max\Set{\sqrt{1 + 2 \lambda^{2} \rho^{4}}, \sqrt{2}}  \frac{\sqrt{2 \max\Set{ \alpha^{-2}, 1} + M_{e}^{2}}}{\min\Set{\alpha M_{a}^{-2}, \alpha}}.
+        \label{eq:ss09:theorem51_abschaetzungen:lambda_nicht_null:inf_sup}
+        \beta  \geq \frac{ e^{-2 \lambda T}}{\max\Set{\sqrt{1 + 2 \lambda^{2} \rho^{4}}, \sqrt{2}}  } \cdot \frac{\min\Set{\alpha \gamma_{a}^{-2}, \alpha}}{\sqrt{2 \max\Set{ \alpha^{-2}, 1} + \gamma_{e}^{2}}}.
     \end{equation}
 
-    Die Größen $M_{a}$, $\alpha$ und $\lambda$ stammen aus \cref{ann:gl:le:bilinearform_eigenschaften},
-    während die Konstanten $M_{e}$ und $\rho$ als die Einbettungskonstanten
-
+    Die Größen $\gamma_{a}$, $\alpha$ und $\lambda$ stammen aus \cref{annahme:eigenschaften_der_bilinearform_a},
+    während die Konstanten $\rho$ und $\gamma_{e}$, für letztere siehe auch \cref{korollar:einbettungskonstante_M_e}, als die Einbettungskonstanten
     \begin{equation}
-        \label{kor:gl:le:einbettungskonstante_M_e}
-        M_{e} = \sup_{0 \neq u \in \mathcal X} \frac{\norm{u(0)}_{H}}{\norm{u}_{\mathcal X}},
-    \end{equation}
-    vergleiche \cref{korollar:einbettungskonstante_M_e}, beziehungsweise
-    \begin{equation}
-        \label{kor:gl:le:einbettungskonstante_rho}
+        \label{eq:ss09:einbettungskonstanten}
+        \gamma_{e} = \sup_{0 \neq u \in \mathcal X} \frac{\norm{u(0)}_{H}}{\norm{u}_{\mathcal X}}, \qquad
         \rho = \sup_{0 \neq \eta \in V} \frac{\norm{\eta}_{H}}{\norm{\eta}_{V}}
     \end{equation}
+    definiert sind.
 
     \begin{Beweis}
-        $\,$\newline
-        \mwarn{Will ich das beweisen?}
+        Siehe \cite[Appendix A]{Schwab:2009ec}.
     \end{Beweis}
 \end{Korollar}
-
-% section lineare_evolutionsgleichungen (end)
-
-% \section{Homogenisierung} % (fold)
-% \label{sec:homogenisierung}
-
-% \todo[inline]{Ist das nützlich?}
-% \todo[inline]{Quelle!}
-% Die im vorherigen Abschnitt hergeleitete inhomogene Raum-Zeit-Variationsformulierung lässt sich zu einer äquivalenten homogenen Raum-Zeit-Variationsformulierung umformen.
-
-% Dazu definieren wir erneut zunächst die benötigten Ansatz- und Testfunktionenräume und anschließend das darauf aufbauende homogene Raum-Zeit-Variationsproblem.
-
-% \begin{Definition}
-% \label{def:gl:le:ansatz_und_testraum_homogen}
-%     Der Ansatzfunktionenraum $\hat{\mathcal X}$ sei als der folgende Unterraum von $W(0, T; V, V')$
-%     \begin{equation}
-%         \label{eq:gl:le:ansatzraum_X_homogen}
-%         \begin{aligned}
-%             \hat{\mathcal X} &= L_{2}(0, T; V) \cap H^{1}_{\{0\}}(0, T; V')
-%             \\&= \Set*{ u \in L_{2}(0, T; V) \given u_{t} \in L_{2}(0, T; V'),~u(0) = 0 }
-%         \end{aligned}
-%     \end{equation}
-%     definiert, ausgestattet mit der bekannten Norm
-%     \begin{equation}
-%         \label{eq:gl:le:ansatzraum_X_norm_homogen}
-%         \norm{u}_{\hat{\mathcal X}} = \left( \norm{u}_{L_{2}{(0, T; V)}}^{2} + \norm{u_{t}}_{L_{2}{(0, T; V')}}^{2} \right)^{1 / 2}, \quad u \in \hat{\mathcal X}.
-%     \end{equation}
-%     Der zugehörige Testfunktionenraum $\hat{\mathcal Y}$ sei gegeben durch
-%     \begin{equation}
-%         \label{eq:gl:le:testraum_Y_homogen}
-%         \hat{\mathcal Y} = L_{2}(0, T; V)
-%     \end{equation}
-%     mit der üblichen Norm
-%     \begin{equation}
-%         \label{eq:gl:le:testraum_Y_norm_homogen}
-%         \norm{v}_{\hat{\mathcal Y}} = \norm{v_{1}}_{L_{2}(0, T; V)}, \quad v \in \hat{\mathcal Y}.
-%     \end{equation}
-% \end{Definition}
-
-% \begin{Definition}
-% \label{def:gl:le:schwache_raum_zeit_formulierung_homogen}
-%     Seien $\hat{\mathcal X}$ und $\hat{\mathcal Y}$ wie in~\cref{eq:gl:le:ansatzraum_X_homogen} respektive~\cref{eq:gl:le:testraum_Y_homogen}.
-%     Als \emph{homogenisierte Raum-Zeit-Variations"-for"-mu"-lie"-rung} der linearen Evolutionsgleichung~\cref{eq:gl:le:lineare_evolutionsgleichung} bezeichnen wir das folgende Problem:
-
-%     Gegeben ein Quellterm $g \in L_{2}(0, T; V')$ und ein Anfangswert $u_{0} \in H$, sodass ein $\hat u_{0} \in \mathcal X$ existiert, welches $\hat{u}_{0}(0) = u_{0}$ erfüllt.
-%     Finde ein $u \in \hat{\mathcal X}$ mit
-%     \begin{equation}
-%         \label{eq:gl:le:schwache_formulierung_homogen}
-%         \hat{b}(u, v) = \hat{f}(v) \quad \fa v \in \hat{\mathcal Y}.
-%     \end{equation}
-%     Dabei ist $\hat{b} \colon \hat{\mathcal X} \times \hat{\mathcal Y} \to \mathbb{R}$ die durch
-%     \begin{equation}
-%         \label{eq:gl:le:schwache_formulierung_lhs_b_homogen}
-%         \hat{b}(u, v) = \int_{0}^{T} \skp{u_{t}(t)}{v(t)}{V' \times V} + a(u(t), v(t); t) \diff t
-%     \end{equation}
-%     definierte Bilinearform und $\hat{f} \colon \hat{\mathcal Y} \to \mathbb{R}$ das durch
-%     \begin{equation}
-%         \label{eq:gl:le:schwache_formulierung_rhs_f_homogen}
-%         \hat{f}(v) = \int_{0}^{T} \skp{\hat g(t)}{v(t)}{V' \times V} \diff t
-%     \end{equation}
-%     gegebene Funktional,
-%     wobei $\hat{g} \in $ als
-%     \begin{equation}
-%         \hat{g} = g(t) - \left[ (\hat u_{0})_{t}(t) + A(t) \hat u_{0}(t) \right]
-%     \end{equation}
-%     definiert sei.
-% \end{Definition}
-
-% Das es sich hierbei tatsächlich um eine Homogenisierung handelt, liefert der folgende Satz.
-
-% \begin{Satz}
-%     Sei $H = L_{2}(\Omega)$ für ein beschränktes Gebiet $\Omega \in \mathbb{R}^{n}$.
-%     Dann gilt: $\hat u \in \tilde{\mathcal X}$ ist genau dann eine Lösung des homogenisierten RZVP aus \cref{def:gl:le:schwache_raum_zeit_formulierung_homogen}, wenn $u := \hat u + \hat u_{0} \in \mathcal X$ eine Lösung  des RZVP aus \cref{def:gl:le:schwache_raum_zeit_formulierung} ist.
-
-%     \todo[inline]{Beweis}
-%     % \begin{Beweis}
-%     %     \emph{Hinrichtung.} Sei $\hat u \in \tilde{\mathcal X}$ eine Lösung, dann gilt
-%     %     \begin{equation}
-%     %         u(0) = \hat u(0) + \hat u_{0}(0) = 0 + u_{0} = u_{0}.
-%     %     \end{equation}
-%     %     Seien nun $v = (v_{1}, v_{2}) \in \mathcal Y$ beliebig.
-%     %     Dann gilt
-%     %     \begin{align}
-%     %         b(u, v)
-%     %           &= b(u, (v_{1}, v_{2}))
-%     %         \\&= \hat b(u, v_{1}) + \skp{u(0)}{v_{2}}{H}
-%     %         \\&= \hat b(\hat u, v_{1}) + \hat b(\hat u_{0}, v_{1}) + \skp{u(0)}{v_{2}}{H}
-%     %         \\&= \hat f(v_{1}) + \int_{0}^{T} \skp{\hat u_{0})_{t}(t) + A(t) \hat u_{0}(t)}{V' \times V} + \skp{u(0)}{v_{2}}{H}
-%     %         \\&= \int_{0}^{T} \skp{\hat g(t) + \hat u_{0})_{t}(t) + A(t) \hat u_{0}(t)}{v_{1}(t)}{V' \times V} + \skp{u(0)}{v_{2}}{H}
-%     %         \\&= \int_{0}^{T} \skp{g(t)}{v_{1}(t)}{V' \times V} + \skp{u(0)}{v_{2}}{H}
-%     %         \\&= f(v).
-%     %     \end{align}
-
-%     %     \emph{Rückrichtung.} Sei $u \in \mathcal X$ eine Lösung.
-%     %     Dann gilt
-%     %     \begin{equation}
-%     %             \hat u(0) = u(0) - \hat u_{0}(0) = u_{0} - u_{0} = 0.
-%     %     \end{equation}
-%     %     \todo[inline]{Bla?}
-%     %     Damit ist insbesondere $\hat u \in \tilde{\mathcal X}$.
-%     %     Sei nun $v_{1} \in \tilde{\mathcal Y}$ beliebig und $v_{2} \in H$, dann gilt
-%     %     \begin{align}
-%     %         \hat b(u, v_{1})
-%     %           &= \hat b(u - \hat u_{0}, v_{1})
-%     %         \\&= (b(u, (v_{1}, v_{2})) - \skp{u(0)}{v_{2}}{H}) - (b(\hat u_{0}, (v_{1}, v_{2})) - \skp{\hat u_{0}(0)}{v_{2}}{H})
-%     %         \\&= f(v_{1}, v_{2}) - b(\hat u_{0}, (v_{1}, v_{2}) - \skp{u(0) - \hat u_{0}(0)}{v_{2}}{H}
-%     %         \\&= f(v_{1}, v_{2}) - b(\hat u_{0}, (v_{1}, v_{2}) - \skp{u(0)
-%     %         \\&= \int_{0}^{T} \skp{g(t)}{v_{1}(t)}{V' \times V} \diff t + \skp{u_{0}}{v_{2}}{H}
-%     %                 - \int_{0}^{T} \skp{(\hat u_{0})_{t}(t)}{v_{1}(t)}{V' \times V} + a(\hat u_{0}(t), v_{1}(t); t) \diff t - \skp{u_{0}}{v_{2}}_{H}
-%     %         \\&= \hat f(v_{1}).
-%     %     \end{align}
-%     %     Damit ist die Äquivalenz gezeigt.
-%     % \end{Beweis}
-% \end{Satz}
-
-% \begin{Bemerkung}
-%     Ist $u_{0} \in V$ gegeben, dann erhalten wir $\hat{u}_{0}$ via $\hat{u}_{0} = 1 \otimes u_{0}$, denn dann gilt
-%     $\hat{u}_{0}(0) = u_{0}$ und $\hat{u}_{0} \in \mathcal X$.
-% \end{Bemerkung}
-
-% section homogenisierung (end)
-
-% chapter grundlagen (end)

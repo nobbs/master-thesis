@@ -217,7 +217,7 @@ Mit dieser Vorarbeit können wir uns nun der schwachen Formulierung der Propagat
 Diese können wir informell durch Multiplikation der parabolischen Differentialgleichung \cref{eq:propagator_differentialgleichung} mit einer Raum"=Zeit"=Testfunktion $v_{1}$ und Integration über $\Omega$ und $I$ sowie Addition der Anfangsbedingung, welche mit einer Raum"=Testfunktion $v_{2}$ multipliziert und anschließend über $\Omega$ integriert wird, herleiten.
 
 Um das Ganze auf eine rigorose Ebene zu bringen, benötigen wir zunächst zwei Raum"=Zeit"=Hilberträume, welche als sogenannter Ansatz- respektive Testraum dienen werden.
-Es bietet sich an, die aus der \cref{def:gl:le:ansatz_und_testraum} bereits bekannten Räume
+Es bietet sich an, die aus der \cref{definition:ansatz_und_testraum} bereits bekannten Räume
 \begin{equation}
     \label{eq:raum_zeit_ansatzraum_testraum}
     \mathcal X = L_{2}(I; V) \cap H^{1}(I; V')
@@ -268,8 +268,8 @@ Damit können wir die schwache Formulierung nun wie folgt definieren.
     und damit die Stetigkeit, wobei die Ungleichung $x + y \leq \sqrt{2} \sqrt{x^2 + y^2}$, welche für alle $x, y \in \mathbb{R}$ gilt, für die letzte Abschätzung verwendet wurde.
 \end{Bemerkung}
 
-Der nächste Schritt ist nun, nachzuweisen, dass die obige Raum"=Zeit"=Variationsformulierung sachgemäß gestellt ist im Sinne von Hadamard, \cref{def:gl:le:hadamard_sachgemaess_gestellt}, also eine eindeutige Lösung besitzt, welche stetig von dem Funktional $f \in \mathcal Y'$ abhängt.
-Hierzu werden wir mit \cref{satz:gl:le:ss09_theorem51} ansetzen, welcher unter den gegebenen Rahmenbedingungen die zu prüfenden Bedingungen auf die in \cref{satz:bilinearform_messbar_stetig_garding} bereits nachgewiesenen reduziert.
+Der nächste Schritt ist nun, nachzuweisen, dass die obige Raum"=Zeit"=Variationsformulierung sachgemäß gestellt ist im Sinne von Hadamard, \cref{definition:sachgemaess_gestellt_nach_hadamard}, also eine eindeutige Lösung besitzt, welche stetig von dem Funktional $f \in \mathcal Y'$ abhängt.
+Hierzu werden wir mit \cref{satz:ss09:theorem51} ansetzen, welcher unter den gegebenen Rahmenbedingungen die zu prüfenden Bedingungen auf die in \cref{satz:bilinearform_messbar_stetig_garding} bereits nachgewiesenen reduziert.
 
 \begin{Korollar}
 \label{satz:raum_zeit_variationsformulierung_sachgemaess_gestellt}
@@ -277,11 +277,11 @@ Hierzu werden wir mit \cref{satz:gl:le:ss09_theorem51} ansetzen, welcher unter d
     Dann ist die Raum"=Zeit"=Variationsformulierung \cref{eq:raum_zeit_variationsformulierung} sachgemäß gestellt.
 
     \begin{Beweis}
-        Folgt nach Definition der Raum"=Zeit"=Variationsformulierung unmittelbar aus \cref{satz:gl:le:ss09_theorem51} und \cref{satz:bilinearform_messbar_stetig_garding}.
+        Folgt nach Definition der Raum"=Zeit"=Variationsformulierung unmittelbar aus \cref{satz:ss09:theorem51} und \cref{satz:bilinearform_messbar_stetig_garding}.
     \end{Beweis}
 \end{Korollar}
 
-Weiter erhalten wir als Nebenprodukt aus \cref{kor:gl:le:ss09_theorem51_ungleichungen} auch Schranken für die Stetigkeitskonstante $\gamma_{b}$ sowie die inf-sup"=Konstante $\beta$ der Bilinearform $b(\blank, \blank)$.
+Weiter erhalten wir als Nebenprodukt aus \cref{korrolar:ss09:theorem51_abschaetzungen} auch Schranken für die Stetigkeitskonstante $\gamma_{b}$ sowie die inf-sup"=Konstante $\beta$ der Bilinearform $b(\blank, \blank)$.
 
 \begin{Korollar}
 \label{korollar:rz_variationsformulierung_stetig_infsup_schranken}
@@ -309,7 +309,7 @@ Weiter erhalten wir als Nebenprodukt aus \cref{kor:gl:le:ss09_theorem51_ungleich
         \beta^{-1} &\leq \frac{\max\Set{\sqrt{1 + 2 (\norm{\omega}_{L_{\infty}(I; L_{\infty}(\Omega))} - \mu)^{2} \rho^{4} }, \sqrt{2}}}{e^{-2(\norm{\omega}_{L_{\infty}(I; L_{\infty}(\Omega))} - \mu) T}} \beta'^{-1},
     \end{align}
     wobei $\gamma'_{b}$ und $\beta'$ den Größen $\gamma_{b}$ und $\beta$ des ersten Falles entsprechen.
-    Die Größen $M_{e}$ und $\rho$ entsprechen dabei denen aus \cref{kor:gl:le:ss09_theorem51_ungleichungen}.
+    Die Größen $M_{e}$ und $\rho$ entsprechen dabei denen aus \cref{korrolar:ss09:theorem51_abschaetzungen}.
 \end{Korollar}
 
 
@@ -460,7 +460,7 @@ Mit dieser Vorarbeit können wir analog zu \cref{definition:raum_zeit_variations
 \end{Definition}
 
 Hierfür weisen wir nun erneut nach, dass die schwache Formulierung sachgemäß gestellt ist.
-Wie zuvor wollen wir \cref{satz:gl:le:ss09_theorem51} verwenden, müssen also die Bedingungen an $a(\blank, \blank;t, \bm\sigma)$ nachweisen.
+Wie zuvor wollen wir \cref{satz:ss09:theorem51} verwenden, müssen also die Bedingungen an $a(\blank, \blank;t, \bm\sigma)$ nachweisen.
 
 \begin{Satz}
 \label{satz:parametrische_bilinearform_messbar_stetig_garding}
@@ -872,7 +872,7 @@ Wählen wir also $V = H^{1}_{\text{per}}(\Omega)$ und $H = L_{2,\text{per}}(\Ome
     V \denseinclusion H \cong H' \denseinclusion V' = (H^{1}_{\text{per}}(\Omega))'.
 \end{equation}
 
-Inspiziert man die Ausführungen dieses Kapitels für den Fall homogener Dirichlet-Randbedingungen, dann stellt man fest, dass lediglich die Bedingungen aus \cref{ann:gl:le:bilinearform_eigenschaften} an die Bilinearform $a(\blank, \blank)$, deren Darstellung durch den Wechsel zu periodischen Randbedingungen unverändert bleibt, nachgewiesen werden müssen.
+Inspiziert man die Ausführungen dieses Kapitels für den Fall homogener Dirichlet-Randbedingungen, dann stellt man fest, dass lediglich die Bedingungen aus \cref{annahme:eigenschaften_der_bilinearform_a} an die Bilinearform $a(\blank, \blank)$, deren Darstellung durch den Wechsel zu periodischen Randbedingungen unverändert bleibt, nachgewiesen werden müssen.
 
 \begin{Lemma}
 \label{lemma:bilinearform_periodisch_messbar_stetig_garding}
