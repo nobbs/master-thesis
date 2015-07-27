@@ -3,7 +3,7 @@
 \chapter{Propagator-Differentialgleichung} % (fold)
 \label{chapter:propagator_differentialgleichung}
 
-Wir greifen nun die in \cref{chapter:einleitung} eingeführten parabolischen Differentialgleichungen \cref{eq:el:forward_propagator,eq:el:backward_propagator} auf, welche von den beiden Propagatoren $q$ und $q^{\dagger}$ erfüllt werden.
+Wir greifen nun die in \cref{chapter:einleitung} eingeführten parabolischen Differentialgleichungen \cref{eq:forward_propagator,eq:backward_propagator} auf, welche von den beiden Propagatoren $q$ und $q^{\dagger}$ erfüllt werden.
 Im Weiteren Verlauf der Arbeit verwenden wir den Begriff \emph{Propagator"=Differentialgleichung}, den wir noch genauer definieren werden, wenn wir uns
 auf die genannten partiellen Differentialgleichungen beziehen.
 
@@ -17,7 +17,7 @@ Für diese weisen wir abschließend nach, dass sie sachgemäß gestellt ist und 
 
 Wir wollen nun zunächst das Setting festlegen und die aus der Einführung bekannten Propagator"=Differentialgleichungen in einem allgemeineren Rahmen formulieren.
 Dabei halten wir an dem Fall zweier Felder fest, wobei diese Einschränkung nicht notwendig ist, da die nachfolgenden Ergebnisse in gleicher Weise auch für jede andere endliche Felderanzahl nachgewiesen werden können.
-Weiter sei an dieser Stelle angemerkt, dass es ausreicht sich auf die Betrachtung des Vorwärts"=Propagators \cref{eq:el:forward_propagator} zu beschränken, da der Rückwärts"=Propagator \cref{eq:el:backward_propagator} durch die einfache Transformation $s \mapsto 1 - s$ auf die selbe Form, lediglich mit vertauschen Rollen bei den Feldern, gebracht werden kann.
+Weiter sei an dieser Stelle angemerkt, dass es ausreicht sich auf die Betrachtung des Vorwärts"=Propagators \cref{eq:forward_propagator} zu beschränken, da der Rückwärts"=Propagator \cref{eq:backward_propagator} durch die einfache Transformation $s \mapsto 1 - s$ auf die selbe Form, lediglich mit vertauschen Rollen bei den Feldern, gebracht werden kann.
 
 Seien nun $0 < T_{f} < T < \infty$ reelle Konstanten und $I = [0, T]$ ein reelles Intervall, welches wir in die beiden disjunkten Teilintervalle $I_{1} = [0, T_{f})$ und $I_{2} = [T_{f}, T]$ zerlegen.
 Wir interpretieren die Größe $t \in I$ als Zeit, wobei dies einen rein notationellen und keinen physikalischen Hintergrund hat.
@@ -300,16 +300,20 @@ Weiter erhalten wir als Nebenprodukt aus \cref{korrolar:ss09:theorem51_abschaetz
 
     Erfüllt die Bilinearform $a(\blank, \blank; t)$ die G\aa{}rding"=Ungleichung \cref{eq:bilinearform_messbar_stetig_garding:garding} mit $\lambda = 0$, dann gilt
     \begin{align}
-        \gamma_{b}  &\leq \sqrt{2 \max\Set{ 1, c, \norm{\omega}_{L_{\infty}(I; L_{\infty}(\Omega))} + \abs{\mu} }^{2} + M_{e}^{2} }, \\
-        \beta^{-1} &\leq \frac{\sqrt{2 \max\Set{c^{-2}\gamma_{\Omega}^{-4}, 1} + M_{e}^{2}}}{\gamma_{\Omega}^{2} \min\Set{c, c^{-1}, c (\norm{\omega}_{L_{\infty}(I; L_{\infty}(\Omega))} + \abs{\mu})^{-2}}}.
+        \gamma_{b}  &\leq \sqrt{2 \max\Set{ 1, c, \norm{\omega}_{L_{\infty}(I; L_{\infty}(\Omega))} + \abs{\mu} }^{2} + \gamma_{e}^{2} }, \\
+        \beta &\geq \frac{\gamma_{\Omega}^{2} \min\Set{c, c^{-1}, c (\norm{\omega}_{L_{\infty}(I; L_{\infty}(\Omega))} + \abs{\mu})^{-2}}}{\sqrt{2 \max\Set{c^{-2}\gamma_{\Omega}^{-4}, 1} + \gamma_{e}^{2}}}.
     \end{align}
     Ist dagegen $\lambda > 0$, dann erhalten wir stattdessen die erweiterten Abschätzungen
     \begin{align}
         \gamma_{b} &\leq \frac{\gamma'_{b}}{\max\Set{\sqrt{1 + 2 (\norm{\omega}_{L_{\infty}(I; L_{\infty}(\Omega))} - \mu)^{2} \rho^{4} }, \sqrt{2}}}, \\
-        \beta^{-1} &\leq \frac{\max\Set{\sqrt{1 + 2 (\norm{\omega}_{L_{\infty}(I; L_{\infty}(\Omega))} - \mu)^{2} \rho^{4} }, \sqrt{2}}}{e^{-2(\norm{\omega}_{L_{\infty}(I; L_{\infty}(\Omega))} - \mu) T}} \beta'^{-1},
+        \beta &\geq \frac{e^{-2(\norm{\omega}_{L_{\infty}(I; L_{\infty}(\Omega))} - \mu) T}}{\max\Set{\sqrt{1 + 2 (\norm{\omega}_{L_{\infty}(I; L_{\infty}(\Omega))} - \mu)^{2} \rho^{4} }, \sqrt{2}}} \beta',
     \end{align}
     wobei $\gamma'_{b}$ und $\beta'$ den Größen $\gamma_{b}$ und $\beta$ des ersten Falles entsprechen.
-    Die Größen $M_{e}$ und $\rho$ entsprechen dabei denen aus \cref{korrolar:ss09:theorem51_abschaetzungen}.
+    Die Größen $\gamma_{e}$ und $\rho$ entsprechen dabei denen aus \cref{korrolar:ss09:theorem51_abschaetzungen}.
+
+    \begin{Beweis}
+        Die Schranken ergeben sich durch Einsetzen der Größen $\gamma_{a}, \lambda$ und $\alpha$ aus \cref{satz:bilinearform_messbar_stetig_garding} in die Schranken von \cref{korrolar:ss09:theorem51_abschaetzungen}.
+    \end{Beweis}
 \end{Korollar}
 
 
