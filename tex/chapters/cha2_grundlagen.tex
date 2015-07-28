@@ -11,7 +11,7 @@ Dabei orientieren wir uns maßgeblich an den Arbeiten von \textcite{Dautray:1992
 \section{Bochner"=Räume} % (fold)
 \label{section:bochner_raeume}
 
-Bevor wir uns an die Einführung einer Raum"=Zeit"=Variationsformulierung parabolischer partieller Differentialgleichungen wagen können, müssen wir zunächst die zugrundeliegenden Funktionenräume einführen.
+Bevor wir uns an die Einführung einer Raum"=Zeit"=Variationsformulierung parabolischer partieller Differentialgleichungen begeben, müssen wir zunächst die zugrundeliegenden Funktionenräume einführen.
 Hierbei konzentrieren wir uns auf die sogenannten \emph{Bochner"=Räume}, welche eine Verallgemeinerungen der bekannten Lebesgue"=Räume $L_{p}$ auf Banachraum"=wertige Funktionen darstellen, schränken uns dabei aber stets auf den für uns relevanten Fall eines endlichen Zeitintervalls ein.
 
 Wir beginnen nun mit der folgenden Definition der Bochner"=Räume nach \cite[Definition XVIII.1.1]{Dautray:1992by}.
@@ -44,7 +44,7 @@ Wir beginnen nun mit der folgenden Definition der Bochner"=Räume nach \cite[Def
 
 Weiter können wir für Funktionen aus einem Bochner"=Raum eine Zeitableitung definieren, hier nach \cites[471]{Dautray:1992by}[Definition 10.6]{Schweizer2013}.
 
-\begin{Definition}[Zeitableitung]
+\begin{Definition}%[Zeitableitung]
 \label{definition:zeitableitung}
     Seien $X$ und $Y$ Banachräume mit stetiger Einbettung $X \hookrightarrow Y$ und sei $u \in L_{2}(a, b; X)$.
     Als \emph{Zeitableitung} bezeichnen wir die distributionelle Ableitung $\frac{\mathrm{d}}{\mathrm{d} t} u \in L_{2}(a, b; Y)$, welche als das $v \in L_{2}(a, b; Y)$ definiert ist, welches
@@ -71,7 +71,6 @@ Wir beschränken uns hier auf den für uns relevanten Raum erster Ordnung, siehe
 \end{Definition}
 
 Ferner gilt eine zu \cref{lemma:bochnerraum_ist_banachraum_bzw_hilbertraum} analoge Aussage auch für Bochner"=Sobolev"=Räume.
-
 Da wir im Zuge dieser Arbeit ausschließlich mit Hilberträumen arbeiten werden, wird sich das folgende als Gelfand"=Tripel bekannte Konstrukt als grundlegend erweisen.
 Die folgende Definition ist eine leichte Abwandlung von \cite[Abschnitt 10.2]{Schweizer2013}.
 
@@ -178,10 +177,10 @@ Abschließen wollen wir diesen Abschnitt mit einer alternativen Charakterisierun
 
 \begin{Satz}
 \label{satz:bochner_sobolev_raum_als_tensorprodukt}
-    Seien $H$ ein Hilbertraum und $a, b \in \mathbb{R}$ mit $a < b$.
-    Dann ist der Bochner"=Sobolev"=Raum $H^{m}(a, b; H)$, $m \geq 0$, isometrisch isomorph zum Hilbertraum"=Tensorprodukt $H^{m}([a, b]) \otimes H$, kurz
+    Seien $V$ ein Hilbertraum und $a, b \in \mathbb{R}$ mit $a < b$.
+    Dann ist der Bochner"=Sobolev"=Raum $H^{m}(a, b; V)$, $m \geq 0$, isometrisch isomorph zum Hilbertraum"=Tensorprodukt $H^{m}([a, b]) \otimes V$, kurz
     \begin{equation}
-        H^{m}(a, b; H) \cong H^{m}([a, b]) \otimes H.
+        H^{m}(a, b; V) \cong H^{m}([a, b]) \otimes V.
     \end{equation}
 
     \begin{Beweis}
@@ -409,7 +408,6 @@ Abschließend wollen wir im nachfolgenden Korollar die bereits angesprochenen Sc
         \label{eq:ss09:theorem51_abschaetzungen:lambda_nicht_null:inf_sup}
         \beta  \geq \frac{ e^{-2 \lambda T}}{\max\Set{\sqrt{1 + 2 \lambda^{2} \rho^{4}}, \sqrt{2}}  } \cdot \frac{\min\Set{\alpha \gamma_{a}^{-2}, \alpha}}{\sqrt{2 \max\Set{ \alpha^{-2}, 1} + \gamma_{e}^{2}}}.
     \end{equation}
-
     Die Größen $\gamma_{a}$, $\alpha$ und $\lambda$ stammen aus \cref{annahme:eigenschaften_der_bilinearform_a},
     während die Konstanten $\rho$ und $\gamma_{e}$, für letztere siehe auch \cref{korollar:einbettungskonstante_M_e}, als die Einbettungskonstanten
     \begin{equation}
