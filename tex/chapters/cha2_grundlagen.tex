@@ -195,7 +195,7 @@ Abschließen wollen wir diesen Abschnitt mit einer alternativen Charakterisierun
 
 Nach der Einführung der benötigten Funktionenräume wenden wir uns nun den linearen Evolutionsgleichungen, einer bestimmten Unterart parabolischer partieller Differentialgleichungen, zu.
 Wir orientieren uns hierbei an \textcite{Lions:1971wp,Schwab:2009ec,Urban:2014kg},
-definieren den Begriff der linearen Evolutionsgleichungen, leiten eine schwache Formulierung her und weißen abschließend nach, dass diese sachgemäß gestellt ist.
+definieren den Begriff der linearen Evolutionsgleichungen, leiten eine schwache Formulierung her und weißen abschließend nach, dass diese korrekt gestellt ist.
 
 Um den Begriff der linearen Evolutionsgleichungen definieren zu können, müssen wir zunächst die richtigen Rahmenbedingungen schaffen.
 Sei $V \denseinclusion H \denseinclusion V'$ ein Gelfand-Tripel im Sinne von \cref{definition:gelfand_tripel}, das heißt, $V$ und $H$ seien separable Hilberträume und die Inklusionen seien jeweils dicht und stetig.
@@ -303,7 +303,7 @@ Dadurch erhalten wir die folgende Raum"=Zeit"=Variationsformulierung:
     Die Anfangswertbedingung $u(0) = u_{0}$ in $H$ ist wegen \cref{korollar:spursatz} wohldefiniert.
 \end{Bemerkung}
 
-Es bleibt nun zu zeigen, welche Bedingungen hinreichend sind, damit obige Raum"=Zeit"=Variationsformulierung \emph{sachgemäß gestellt} ist.
+Es bleibt nun zu zeigen, welche Bedingungen hinreichend sind, damit obige Raum"=Zeit"=Variationsformulierung \emph{korrekt gestellt} ist.
 Dazu definieren wir zunächst, was wir darunter verstehen wollen und greifen dazu auf die Definition nach \textcite{hadamard1902problemes} zurück.
 
 \begin{Definition}[Hadamard]
@@ -314,7 +314,7 @@ Dazu definieren wir zunächst, was wir darunter verstehen wollen und greifen daz
     \label{eq:hadamard_variationsproblem}
         \text{Finde } u \in X \colon \quad a(u, v) = f(v) \quad \fa v \in Y.
     \end{equation}
-    \emph{sachgemäß gestellt}, wenn eine eindeutige Lösung $u \in X$ existiert und diese eine A-priori-Abschätzung der Form
+    \emph{korrekt gestellt}, wenn eine eindeutige Lösung $u \in X$ existiert und diese eine a-priori-Abschätzung der Form
     \begin{equation}
     \label{eq:hadamard_abschaetzung}
         \norm{u}_{X} \leq c \norm{f}_{Y'}, \quad \fa f \in Y',
@@ -368,14 +368,14 @@ Dieser findet sich in dieser oder ähnlicher Form bei \textcites[Theorem 2.1]{Ba
     dann gilt insbesondere auch \cref{satz:bnb_theorem:surjektiv}.
 \end{Bemerkung}
 
-Für das abstrakte Raum"=Zeit"=Variationsproblem \cref{eq:absktrakte_raum_zeit_formulierung} wurde für die hier vorliegenden Rahmenbedingungen bereits von \textcite[Section XVIII.3]{Dautray:1992by} nachgewiesen, dass es sich hierbei um ein sachgemäß gestelltes Problem handelt.
+Für das abstrakte Raum"=Zeit"=Variationsproblem \cref{eq:absktrakte_raum_zeit_formulierung} wurde für die hier vorliegenden Rahmenbedingungen bereits von \textcite[Section XVIII.3]{Dautray:1992by} nachgewiesen, dass es sich hierbei um ein korrekt gestelltes Problem handelt.
 Ein alternativer Beweis, welcher die Bedingungen des \acl{bnb}s nachweist und weiter explizite Schranken für die Stetigkeitskonstante $\gamma_{b}$ und die Inf"=sup"=Konstante $\beta$ der Bilinearform $b$ aus \cref{eq:absktrakte_raum_zeit_formulierung:lhs} liefert, wurde von \textcite{Schwab:2009ec} geführt.
 Wir wiederholen die Kernaussage \cite[Theorem 5.1]{Schwab:2009ec} und verweisen für einen ausführlichen Beweis auf \cite[Appendix A]{Schwab:2009ec}.
 
 \begin{Satz}
 \label{satz:ss09:theorem51}
     Seien $\mathcal X$ und $\mathcal Y$ durch \cref{eq:ansatzraum_X,eq:testraum_Y} gegeben und sei $a(\blank, \blank; t) \colon V \times V \to \mathbb{R}$ eine Familie von Bilinearformen, welche \cref{annahme:eigenschaften_der_bilinearform_a} erfüllt.
-    Dann ist das Raum"=Zeit"=Variationsproblem \cref{eq:absktrakte_raum_zeit_formulierung} sachgemäß gestellt, das heißt, für alle $f \in \mathcal Y'$ existiert eine eindeutige Lösung $u \in \mathcal X$, so dass
+    Dann ist das Raum"=Zeit"=Variationsproblem \cref{eq:absktrakte_raum_zeit_formulierung} korrekt gestellt, das heißt, für alle $f \in \mathcal Y'$ existiert eine eindeutige Lösung $u \in \mathcal X$, so dass
     \begin{equation}
         b(u, v) = f(v) \quad \fa v \in \mathcal Y
     \end{equation}
