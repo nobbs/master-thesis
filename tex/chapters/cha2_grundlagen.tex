@@ -249,7 +249,7 @@ Mit dieser Vorarbeit definieren wir nun den Begriff der linearen Evolutionsgleic
     wobei die  Operatorfamilie $A(t) \in \mathcal L(V, V')$ wie oben gegeben sei.
 \end{Definition}
 
-Darauf aufbauend leiten wir als nächstes eine Raum-Zeit-Variationsformulierung für~\cref{eq:lineare_evolutionsgleichung} her.
+Darauf aufbauend leiten wir als nächstes eine Raum"=Zeit"=Variationsformulierung für \cref{eq:lineare_evolutionsgleichung} her.
 Dazu benötigen wir geeignete Ansatz- und Testfunktionenräume; hierzu verwenden wir die im vorherigen Abschnitt eingeführten Bochner-Räume.
 
 \begin{Definition}
@@ -385,7 +385,7 @@ Wir wiederholen die Kernaussage \cite[Theorem 5.1]{Schwab:2009ec} und verweisen 
     \end{equation}
 \end{Satz}
 
-Abschließend wollen wir im nachfolgenden Korollar die bereits angesprochenen Schranken für die Stetigkeitskonstante $\gamma_{b}$ und die inf"=sup"=Konstante $\beta$ der Bilinearform $b$ angeben.
+Weiter wollen wir im nachfolgenden Korollar die bereits angesprochenen Schranken für die Stetigkeitskonstante $\gamma_{b}$ und die inf"=sup"=Konstante $\beta$ der Bilinearform $b$ angeben.
 
 \begin{Korollar}
 \label{korrolar:ss09:theorem51_abschaetzungen}
@@ -407,7 +407,7 @@ Abschließend wollen wir im nachfolgenden Korollar die bereits angesprochenen Sc
     und
     \begin{equation}
         \label{eq:ss09:theorem51_abschaetzungen:lambda_nicht_null:inf_sup}
-        \beta  \geq \frac{ e^{-2 \lambda T}}{\max\Set{\sqrt{1 + 2 \lambda^{2} \rho^{4}}, \sqrt{2}}  } \cdot \frac{\min\Set{\alpha \gamma_{a}^{-2}, \alpha}}{\sqrt{2 \max\Set{ \alpha^{-2}, 1} + \gamma_{e}^{2}}}.
+        \beta  \geq \frac{ \ee^{-2 \lambda T}}{\max\Set{\sqrt{1 + 2 \lambda^{2} \rho^{4}}, \sqrt{2}}  } \cdot \frac{\min\Set{\alpha \gamma_{a}^{-2}, \alpha}}{\sqrt{2 \max\Set{ \alpha^{-2}, 1} + \gamma_{e}^{2}}}.
     \end{equation}
 
     Die Größen $\gamma_{a}$, $\alpha$ und $\lambda$ stammen aus \cref{annahme:eigenschaften_der_bilinearform_a},
@@ -423,3 +423,63 @@ Abschließend wollen wir im nachfolgenden Korollar die bereits angesprochenen Sc
         Siehe \cite[Appendix A]{Schwab:2009ec}.
     \end{Beweis}
 \end{Korollar}
+
+Abschließen wollen wir mit einer Möglichkeit, das Raum"=Zeit"=Variationsproblem \cref{eq:raum_zeit_variationsformulierung} zu einem äquivalenten Problem mit $\lambda = 0$ zu transformieren.
+Dazu seien eine Familie von Bilinearformen $a(\blank, \blank; t)$, welche \cref{annahme:eigenschaften_der_bilinearform_a} mit $\lambda \geq 0$ erfüllen, und weiter $u \in \mathcal X$, $v = (v_{1}, v_{2}) \in \mathcal Y$ sowie $g \in L_{2}(I; V')$ und $u_{0} \in H$ gegeben.
+Wir definieren
+\begin{equation}
+    \hat{u}(t) := u(t)\ee^{- \lambda t}, \quad \check{v}_{1}(t) := v_{1}(t)\ee^{\lambda t}, \quad \check{v} = (\check{v}_{1}, v_{2}), \quad \hat{g}(t) := g(t)\ee^{-\lambda t}.
+\end{equation}
+Weiter definieren wir das transformierte Variationsproblem
+\begin{equation}
+\label{eq:transformiertes_raum_zeit_variationsproblem}
+    \text{Finde } \hat{u} \in \mathcal X \colon \quad \hat{b}(\hat{u}, \check{v}) = \hat{f}(\check{v}) \quad \fa \check{v} = (\check{v}_{1}, v) \in \mathcal Y,
+\end{equation}
+wobei die Bilinearform $\hat{b} \colon \mathcal X \times \mathcal Y \to \mathbb{R}$ durch
+\begin{equation}
+    \hat{b}(\hat{u}, \check{v}) := \int_{I} \left[ \skp{\hat{u}_{t}(t)}{\check{v}_{1}(t)}{V' \times V} + \lambda \skp{\hat{u}(t)}{\check{v}_{1}(t)}{H} + a(\hat{u}(t), \check{v}_{1}(t); t) \right] \diff t + \skp{\hat{u}(0)}{v_{2}}{H}
+\end{equation}
+und das Funktional $\hat{f} \colon \mathcal Y \to \mathbb{R}$ durch
+\begin{equation}
+    \hat{f}(\check{v}) := \int_{I} \skp{\hat{g}(t)}{\check{v}_{1}(t)}{V' \times V} \diff t + \skp{u_{0}}{v_{2}}{H}
+\end{equation}
+gegeben seien.
+
+\begin{Lemma}
+\label{lemma:transformation_zu_elliptischem_operator}
+    Sei $\Set{a(\blank, \blank; t)}_{t \in I}$ eine Familie von Bilinearformen, die \cref{annahme:eigenschaften_der_bilinearform_a} mit $\lambda \neq 0$ erfüllt.
+    Dann ist $u$ genau dann die Lösung des Raum"=Zeit"=Variationsproblems \cref{eq:absktrakte_raum_zeit_formulierung}, wenn $\hat{u}$ die Lösung von  \cref{eq:transformiertes_raum_zeit_variationsproblem} ist.
+    Insbesondere erfüllt $\Set{a(\blank, \blank; t) + \lambda \skp{\blank}{\blank}{H}}_{t \in I}$ \cref{annahme:eigenschaften_der_bilinearform_a} mit $\lambda = 0$.
+
+    \begin{Beweis}
+        Wir beginnen mit der zweiten Aussage.
+        Die Messbarkeit der neuen Familie von Bilinearformen ist direkt ersichtlich, ebenso die Stetigkeit, da $\lambda < \infty$ gilt.
+        Auch die behauptete G\aa{}rding-Ungleichung mit $\lambda = 0$ folgt direkt aus der Konstruktion.
+
+        Die Äquivalenzaussage lässt sich unter Verwendung der Bilinearität der Skalarprodukte, der Dualen Paarung und der Bilinearformen sowie \cref{bemerkung:skalarprodukte_und_duality_pairing} durch direktes nachrechnen nachweisen; betrachte dazu die Gleichungskette
+        \begin{equation}
+            \begin{aligned}
+                \hat{b}(\hat{u}, \check{v})
+                &= \int_{I} \left[ \skp{\hat{u}_{t}(t)}{\check{v}_{1}(t)}{V' \times V} + \lambda \skp{\hat{u}(t)}{\check{v}_{1}(t)}{H} + a(\hat{u}(t), \check{v}_{1}(t); t) \right] \diff t + \skp{\hat{u}(0)}{v_{2}}{H}
+                \\
+                &= \int_{I} \left[ \skp{(u(t)\ee^{- \lambda t})_{t}}{v_{1}(t) \ee^{\lambda t}}{V' \times V} + \lambda \skp{u(t)\ee^{- \lambda t}}{v_{1}(t)\ee^{\lambda t}}{H} \right.
+                \\&\qquad \quad
+                \left. +\;a(u(t)\ee^{- \lambda t}, v_{1}(t)\ee^{\lambda t}; t) \right] \diff t + \skp{u(0)}{v_{2}}{H}
+                \\
+                &= \int_{I} \left[ \skp{u_{t}(t)}{v_{1}(t)}{V' \times V} + a(u(t), v_{1}(t); t) \right] \diff t + \skp{u(0)}{v_{2}}{H}
+                = b(u, v).
+            \end{aligned}
+        \end{equation}
+        Für das Funktional auf der rechten Seite ergibt sich analog
+        \begin{equation}
+            \begin{aligned}
+                \hat{f}(\check{v})
+                &= \int_{I} \skp{\hat{g}(t)}{\check{v}_{1}(t)}{V' \times V} \diff t + \skp{u_{0}}{v_{2}}{H}
+                = \int_{I} \skp{g(t)\ee^{- \lambda t}}{v_{1}(t)\ee^{\lambda t}}{V' \times V} \diff t + \skp{u_{0}}{v_{2}}{H}
+                \\&= \int_{I} \skp{g(t)}{v_{1}(t)}{V' \times V} \diff t + \skp{u_{0}}{v_{2}}{H}
+                = f(v)
+            \end{aligned}
+        \end{equation}
+        und damit die insgesamt die Behauptung.
+    \end{Beweis}
+\end{Lemma}

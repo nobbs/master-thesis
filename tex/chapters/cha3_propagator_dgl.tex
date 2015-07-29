@@ -209,8 +209,32 @@ Wir weisen nun zwei Eigenschaften für diesen Operator respektive die zugehörig
 
 \begin{Korollar}
 \label{korollar:bilinearform_elliptisch}
-    Ist $\mu \geq \norm{\omega}_{L_{\infty}(I; L_{\infty}(\Omega))}$, dann ist die Bilinearform $a(\blank, \blank; t)$ elliptisch.
+    Ist $\lambda = 0$, beispielsweise wenn $\mu \geq \norm{\omega}_{L_{\infty}(I; L_{\infty}(\Omega))}$ gilt, dann ist die Bilinearform $a(\blank, \blank; t)$ elliptisch.
 \end{Korollar}
+
+Ferner wollen wir an dieser Stelle eine Aussage nachweisen, welche wir erst in \cref{chapter:galerkin} benötigen werden.
+
+\begin{Lemma}
+\label{lemma:operator_selbstadjungiert}
+    Die Operatoren $A(t)$ aus \cref{definition:operator_bilinearform_zeit} bilden eine Familie von selbstadjungierten Operatoren.
+
+    \begin{Beweis}
+        Diese Aussage kann direkt aus der zu den Operatoren $A(t)$ zugehörigen Bilinearformen $a(\blank, \blank; t)$ gefolgert werden, da diese analog zu \cref{eq:bilinearform_formel} umgeschrieben werden können zu
+        \begin{equation}
+        \begin{aligned}
+            a(\eta, \zeta; t)
+            &= c\skp{\grad \eta}{\grad \zeta}{H} + \skp{\omega(t, \blank) \eta}{\zeta}{H} + \mu \skp{\eta}{\zeta}{H},
+            \\&= - c\skp{\eta}{\Delta \zeta}{V \times V'} + \skp{\eta}{\omega(t, \blank) \zeta}{V \times V'} + \mu \skp{\eta}{\zeta}{V \times V'}
+            \\&= \skp{\eta}{A(t) \zeta}{V \times V'},
+        \end{aligned}
+        \end{equation}
+        damit insbesondere also
+        \begin{equation}
+            \skp{A(t)\eta}{\zeta}{V' \times V} = a(\eta, \zeta; t) = \skp{\eta}{A(t) \zeta}{V \times V'} \quad \fa \eta, \zeta \in V.
+        \end{equation}
+        Dies zeigt gerade die Selbstadjungiertheit.
+    \end{Beweis}
+\end{Lemma}
 
 
 Mit dieser Vorarbeit können wir uns nun der schwachen Formulierung der Propagator"=Differentialgleichung widmen.
@@ -392,7 +416,7 @@ Weiter können wir auch die zugehörige Bilinearform $a(\blank, \blank; \bm\sigm
     \end{aligned}
 \end{equation}
 
-Die bei der Bilinearform vorgenommene Vertauschung von Summe und $H$-Skalarprodukt ist durch \cref{annahme:system_l1_summierbar} respektive Ungleichung \cref{eq:rz_feld_norm_schranke} und den Satz von Lebesgue gerechtfertigt.
+Die bei der Bilinearform vorgenommene Vertauschung von Summe und $H$"=Skalarprodukt ist durch \cref{annahme:system_l1_summierbar} respektive Ungleichung \cref{eq:rz_feld_norm_schranke} und den Satz von Lebesgue gerechtfertigt.
 Wie auch für den nicht"=parametrischen Fall werden wir nachweisen, dass es sich hierbei um Operatoren beziehungsweise Bilinearformen handelt, welche die für uns wichtigen Eigenschaften der Stetigkeit und die Gültigkeit einer G\aa{}rding"=Ungleichung besitzen.
 Zunächst wollen wir an dieser Stelle noch ein parametrisches Äquivalent der Raum"=Zeit"=Variationsformulierung aus \cref{definition:raum_zeit_variationsformulierung} formulieren.
 
@@ -441,7 +465,7 @@ dann hat die zugehörige Familie von Bilinearformen $a(\blank, \blank; t, \bm\si
 
 Mit dieser Vorarbeit können wir analog zu \cref{definition:raum_zeit_variationsformulierung} nun die folgende parametrische schwache Formulierung definieren.
 
-\begin{Definition}[Parametrische schwache Formulierung]
+\begin{Definition}%[Parametrische schwache Formulierung]
 \label{definition:parametrische_rz_variationsformulierung}
     Seien $g \in L_{2}(I; V')$ ein Quellterm und $u_{0} \in H$ eine Anfangsbedingung.
     Als \emph{parametrische schwache Formulierung} oder \emph{parametrische Raum"=Zeit"=Variationsformulierung} der Propagator"=Differentialgleichung \cref{eq:propagator_differentialgleichung} bezeichnen wir das folgende Variationsproblem:
@@ -529,7 +553,7 @@ Zunächst einige notationelle Vorbemerkungen.
 
 Um die Notation für die nachfolgenden Beweise zu vereinfachen, ordnen wir die Darstellung der parametrischen Raum"=Zeit"=Felder folgendermaßen um:
 \begin{Bemerkung}
-    Wir definieren neue charakteristische Funktionen und Entwicklungsfunktionen für $j \in \mathbb{N}$ durch
+    Definiere neue charakteristische Funktionen und Entwicklungsfunktionen für $j \in \mathbb{N}$ durch
     \begin{equation}
         \tilde{\chi}_{j} = \begin{cases}
             \chi_{I_{1}}, & j~\text{ungerade}\\
@@ -846,7 +870,7 @@ Wir geben die Aussage hier ohne Beweis wieder.
     \end{Beweis}
 \end{Satz}
 
-Die Bedingung $\norm{\vec b}_{\ell_{1}(\mathbb{N})} < 1$ kann dabei so interpretiert werden, dass der feld-abhängige Teil der partiellen Differentialgleichung den feld-unabhängigen Anteil nicht zu stark stören darf, damit die analytische Abhängigkeit gewährleistet ist.
+Die Bedingung $\norm{\vec b}_{\ell_{1}(\mathbb{N})} < 1$ kann dabei so interpretiert werden, dass der feld"=abhängige Teil der partiellen Differentialgleichung den feld"=unabhängigen Anteil nicht zu stark stören darf, damit die analytische Abhängigkeit gewährleistet ist.
 Dies verträgt sich leider nur bedingt mit der Motivation der Propagator-Differentialgleichung, da bei dieser die Felder einen starken Einfluss haben.
 
 Im Rahmen der numerischen Untersuchung in \cref{chapter:galerkin} werden wir auf diesen Punkt noch einmal eingehen und anhand der numerischen Ergebnisse deutlich machen, inwiefern die Bedingung eingehalten wird respektive eingehalten werden kann.
