@@ -23,7 +23,7 @@ Seien nun $0 < T_{f} < T < \infty$ reelle Konstanten und $I = [0, T]$ ein reelle
 Wir interpretieren die Größe $t \in I$ als Zeit, wobei dies einen rein notationellen und keinen physikalischen Hintergrund hat.
 Weiter sei $\Omega \subset \mathbb{R}^{n}$, $n \in \mathbb{N}$, ein beschränktes Gebiet, das heißt offen, nichtleer, zusammenhängend und beschränkt, welches einen Lipschitz"=Rand besitzt.
 
-Zunächst wollen wir den Begriff der Felder konkretisieren.
+Zunächst wollen wir den Begriff der Felder und der Propagator-Differentialgleichung konkretisieren.
 Dies dient vor allem der einfacheren Notation und Benennung, weswegen wir den definierten Abbildungen an dieser Stelle möglichst wenige einschränkende Bedingungen auferlegen wollen.
 
 \begin{Definition}
@@ -44,8 +44,6 @@ Dies dient vor allem der einfacheren Notation und Benennung, weswegen wir den de
     als \emph{Raum"=Zeit"=Feld}.
 \end{Definition}
 
-Ebenso wollen wir nun den Begriff der \emph{Propagator"=Differentialgleichung} definieren.
-
 \begin{Definition}
 \label{definition:propagator_differentialgleichung}
     Seien $\omega$ ein Raum"=Zeit"=Feld wie in \cref{eq:raum_zeit_feld}, $u_{0} \colon \Omega \to \mathbb{R}$ eine Anfangsbedingung, $g \colon I \times \Omega \to \mathbb{R}$ ein Quellterm sowie $c \in \mathbb{R}_{+}$ und $\mu \in \mathbb{R}$ Konstanten.
@@ -63,14 +61,13 @@ Ebenso wollen wir nun den Begriff der \emph{Propagator"=Differentialgleichung} d
 \end{Definition}
 
 Wie in der Einleitung erwähnt, hat der Mittelwert der Felder keinen Einfluss auf das Ergebnis des dort beschriebenen Iterationsverfahrens, weswegen wir den zusätzlichen Term $\mu u(t, \vec{x})$ einführen können.
-Dieser wird sich bei den folgenden theoretischen Untersuchungen und auch numerischen Umsetzung als nützlich erweisen.
+Dieser wird sich bei den folgenden theoretischen Untersuchungen und numerischen Umsetzung als nützlich erweisen.
 
-Unser Ziel ist es nun, eine Raum"=Zeit"=Variationsformulierung der Propagator"=Differentialgleichung
-aus obiger Definition herzuleiten.
-Diese wird uns als Ausgangspunkt für die angedachten numerischen Verfahren dienen, weswegen wir uns auch bei der theoretischen Arbeit auf diese konzentrieren werden.
+Unser Ziel ist es nun, eine Raum"=Zeit"=Variationsformulierung der Propagator"=Differentialgleichung aus obiger Definition herzuleiten.
+Diese wird uns als Ausgangspunkt für unsere numerischen Verfahren dienen, weswegen wir uns auch bei der theoretischen Arbeit auf diese konzentrieren werden.
 
 Zunächst führen wir aber eine Einschränkung der möglichen Randbedingungen durch.
-Von größtem Interesse sind für uns, bedingt durch die Motivation der parabolischen Differentialgleichung in \cref{chapter:einleitung}, der Fall homogener Dirichlet"=Randbedingungen, also $u(t, \vec{x}) = 0$ auf $I \times \partial \Omega$, und der Fall periodischer Randbedingungen.
+Von größtem Interesse sind für uns, bedingt durch die Motivation der parabolischen Differentialgleichung in \cref{chapter:einleitung}, der Fall homogener Dirichlet"=Randbedingungen, also $u(t, \vec{x}) = 0$ auf $I \times \partial \Omega$, sowie der Fall periodischer Randbedingungen.
 Letztere werden am Ende dieses Kapitels wieder aufgegriffen, während wir uns im Rest der Ausführungen auf den Fall homogener Dirichlet"=Randbedingungen beschränken.
 
 Bei der Herleitung der Raum"=Zeit"=Variationsformulierung der Propagator"=Differentialgleichung werden wir Schrittweise vorgehen und zunächst den stationären Fall betrachten, bevor wir darauf aufbauend die schwache Raum"=Zeit"=Variationsformulierung erhalten.
@@ -82,7 +79,6 @@ Die folgende Bemerkung führt die notwendigen Notationen in diesem Zusammenhang 
     Wir schreiben kurz $V = H^{1}_{0}(\Omega)$ und $H = L_{2}(\Omega)$ für den bekannten Sobolev- respektive Lebesgue"=Raum auf $\Omega$.
     Dabei handelt es sich jeweils um einen Hilbertraum; wir kennzeichnen durch den jeweiligen Index die entsprechenden Skalarprodukte $\skp{\blank}{\blank}{}$ und Normen $\norm{\blank}$.
     Als $V$-Norm wählen wir $\norm{\eta}_{V} = (\norm{\eta}^{2}_{H} + \norm{\grad \eta}^{2}_{H})^{1/2}$.
-
     Da bekanntermaßen $V$ dicht in $H$ eingebettet werden kann, definiert
     \begin{equation}
         V \denseinclusion H \cong H' \denseinclusion V' = (H^{1}_{0}(\Omega))' = H^{-1}(\Omega)
@@ -91,7 +87,7 @@ Die folgende Bemerkung führt die notwendigen Notationen in diesem Zusammenhang 
     Motiviert durch \cref{bemerkung:skalarprodukte_und_duality_pairing} verwenden wir die Schreibweise $\skp{\blank}{\blank}{V' \times V}$ auch für die duale Paarung auf $V' \times V$.
 \end{Bemerkung}
 
-Damit können wir den folgenden Operator und die zugehörige Bilinearform definieren.
+Damit können wir nun die folgende Operatorfamilie und die zugehörigen Bilinearform definieren.
 
 \begin{Definition}
 \label{definition:operator_bilinearform_zeit}
@@ -235,7 +231,6 @@ Ferner wollen wir an dieser Stelle eine Aussage nachweisen, welche wir erst in \
         Dies zeigt gerade die Selbstadjungiertheit.
     \end{Beweis}
 \end{Lemma}
-
 
 Mit dieser Vorarbeit können wir uns nun der schwachen Formulierung der Propagator"=Differentialgleichung widmen.
 Diese können wir informell durch Multiplikation der parabolischen Differentialgleichung \cref{eq:propagator_differentialgleichung} mit einer Raum"=Zeit"=Testfunktion $v_{1}$ und Integration über $\Omega$ und $I$ sowie Addition der Anfangsbedingung, welche mit einer Raum"=Testfunktion $v_{2}$ multipliziert und anschließend über $\Omega$ integriert wird, herleiten.
@@ -395,7 +390,6 @@ Im Folgenden bezeichnen wir die obige $\ell_{1}(\mathbb{N})$-Norm der Kürze weg
 \label{eq:system_l1_norm}
     c_{\varphi} = \sum_{j = 1}^{\infty} \norm{\varphi_{j}}_{L_{\infty}(\Omega)}.
 \end{equation}
-
 Diese Annahme stellt insbesondere die gleichmäßige Konvergenz von $w(\bm\sigma)$ für alle $\bm\sigma \in \mathcal P$ sicher, denn es gilt
 \begin{equation}
 \label{eq:rz_feld_norm_schranke}
@@ -405,7 +399,7 @@ Diese Annahme stellt insbesondere die gleichmäßige Konvergenz von $w(\bm\sigma
 Legen wir uns auf ein konkretes Funktionensystem $\Set{\varphi_{j}}_{j \in \mathbb{N}}$, welches die \cref{annahme:system_l1_summierbar} erfüllt, fest, dann können wir die Operatoren $A(\omega)$ nun auch als Familie von Operatoren $A(\bm\sigma)$ betrachten, denn durch Einsetzen von $w(\bm\sigma)$ in \cref{eq:operator_feld} erhalten wir
 \begin{equation}
 \label{eq:operator_parameter}
-    A(\bm\sigma) \colon V \to V', \quad A(\bm\sigma) \eta -c \Delta \eta + \sum_{j = 1}^{\infty} \sigma_{j} \varphi_{j} \eta + \mu \eta.
+    A(\bm\sigma) \colon V \to V', \quad A(\bm\sigma) \eta = -c \Delta \eta + \sum_{j = 1}^{\infty} \sigma_{j} \varphi_{j} \eta + \mu \eta.
 \end{equation}
 Weiter können wir auch die zugehörige Bilinearform $a(\blank, \blank; \bm\sigma)$ angeben als
 \begin{equation}
@@ -455,14 +449,13 @@ Erweitern wir nun die Operator"=Definition \cref{eq:operator_parameter} um die Z
     \label{eq:operator_zeit_parameter}
     A(t, \bm\sigma) \colon V \to V', \quad A(t, \bm\sigma) \eta = -c \Delta \eta + \omega(t, \blank; \bm\sigma) \eta + \mu \eta,
 \end{equation}
-dann hat die zugehörige Familie von Bilinearformen $a(\blank, \blank; t, \bm\sigma) \colon V \times V \to \mathbb{R}$ die Form
+dann hat die zugehörige Familie von Bilinearformen $a(\blank, \blank; t, \bm\sigma) \colon V \times V \to \mathbb{R}$ nach \cref{eq:parametrisches_raum_zeit_feld} die Form
 \begin{equation}
     \label{eq:bilinearform_zeit_parameter}
     \begin{aligned}
         a(\eta, \zeta; t, \bm\sigma) = c\skp{\grad \eta}{\grad \zeta}{H} + \sum_{j = 1}^{\infty} \left[ \sigma_{2j-1} \chi_{I_{1}}(t) + \sigma_{2j} \chi_{I_{2}}(t)  \right] \skp{\varphi_{j} \eta}{\zeta}{H} + \mu \skp{\eta}{\zeta}{H}.
     \end{aligned}
 \end{equation}
-
 Mit dieser Vorarbeit können wir analog zu \cref{definition:raum_zeit_variationsformulierung} nun die folgende parametrische schwache Formulierung definieren.
 
 \begin{Definition}%[Parametrische schwache Formulierung]
@@ -531,14 +524,14 @@ Wie zuvor wollen wir \cref{satz:ss09:theorem51} verwenden, müssen also die Bedi
 \label{section:regularitaet_bezueglich_der_parameter}
 
 Wir interessieren uns nun für die Regularität der Abhängigkeit der Lösung $u(\bm\sigma)$ der parametrischen schwachen Formulierung vom Parameter $\bm \sigma \in \mathcal P$.
-Konkret werden wir nachweisen, dass die Lösung unter gewissen, leider stark einschränkenden und in unserem Fall bei der numerischen Umsetzung nicht immer erfüllbaren, Annahmen an das Funktionensystem $\Set{\varphi_{j}}_{j \in \mathbb{N}}$, analytisch vom Parameter $\bm \sigma$ abhängt.
+Konkret werden wir nachweisen, dass die Lösung unter gewissen Annahmen an das Funktionensystem $\Set{\varphi_{j}}_{j \in \mathbb{N}}$ analytisch vom Parameter $\bm \sigma$ abhängt.
 Dabei orientieren wir uns an den Arbeiten von \textcite{Cohen:2010kz,Cohen:2011jp,Kunoth:2013ef}, weisen diese Eigenschaften aber direkt für die Raum"=Zeit"=Variationsformulierung nach, statt wie in den genannten Arbeiten den Umweg über den stationären Fall zu gehen.
 
 Zunächst einige notationelle Vorbemerkungen.
 \begin{Bemerkung}
-    Bezeichne mit $\mathcal F = \Set{ \bm\nu \in \mathbb{N}^{\mathbb{N}}_{0} \given \norm{\bm\nu}_{\ell_{1}(\mathbb{N})} < \infty }$ die Menge aller Folgen nichtnegativer ganzer Zahlen, wobei
+    Bezeichne mit $\mathcal F = \Set{ \bm\nu \in \mathbb{N}^{\mathbb{N}}_{0} \given \abs{\bm\nu} < \infty }$ die Menge aller Folgen nichtnegativer ganzer Zahlen, wobei
     \begin{equation}
-        \norm{\bm\nu}_{\ell_{1}(\mathbb{N})} = \sum_{k = 1}^{\infty} \abs{\nu_{k}}
+        \abs{\bm\nu} = \sum_{k = 1}^{\infty} \abs{\nu_{k}}
     \end{equation}
     die $\ell_{1}(\mathbb{N})$-Norm sei.
     Anders formuliert, besteht $\mathcal F$ gerade aus denjenigen Folgen in $\mathbb{N}_{0}$, welche nur endliche viele Einträge ungleich Null aufweisen.
@@ -548,7 +541,7 @@ Zunächst einige notationelle Vorbemerkungen.
         \vec{b}^{\bm\nu} = \prod_{j = 1}^{\infty} b_{j}^{\nu_{j}}
     \end{equation}
     mit der Konvention $0^{0} = 1$.
-    Wegen $\norm{\bm\nu}_{\ell_{1}(\mathbb{N})} < \infty$ ist dieses Produkt stets endlich.
+    Wegen $\abs{\bm\nu} < \infty$ ist dieses Produkt stets endlich.
 \end{Bemerkung}
 
 Um die Notation für die nachfolgenden Beweise zu vereinfachen, ordnen wir die Darstellung der parametrischen Raum"=Zeit"=Felder folgendermaßen um:
@@ -604,7 +597,7 @@ Für die nachfolgenden Beweise fixieren wir die rechte Seite $f \in \mathcal Y'$
         \end{equation}
         auffassen können.
         Die Linearität von $h$ ist klar.
-        Wir weisen nun die Stetigkeit nach; betrachte also
+        Wir weisen nun die Stetigkeit nach; betrachten also
         \begin{align}
             \norm{h}_{\mathcal Y'}
             &= \sup_{\norm{v}_{\mathcal Y} = 1} \abs{\int_{I} \skp{(w - \tilde{w})\tilde{u}}{v_{1}}{H} \diff t}
@@ -624,7 +617,7 @@ Für die nachfolgenden Beweise fixieren wir die rechte Seite $f \in \mathcal Y'$
         \end{equation}
         Die Unabhängigkeit von $\beta$ von den Feldern kann durch das Minimum der beiden Feld-abhängigen inf-sup-Konstanten sichergestellt werden.
 
-        Durch zusammenfassen dieser drei Abschätzungen erhalten wir die Behauptung
+        Durch Zusammenfassen dieser drei Abschätzungen erhalten wir die Behauptung
         \begin{equation}
             \norm{u - \tilde{u}}_{\mathcal X} = \norm{\theta}_{\mathcal X} \leq \frac{\norm{f}_{\mathcal Y'}}{\beta^{2}} \norm{\omega - \tilde{\omega}}_{L_{\infty}(I; L_{\infty}(\Omega))}.
         \end{equation}
@@ -658,7 +651,6 @@ Als ersten Schritt des Regularitätsnachweises zeigen wir nun die Existenz belie
             = \sum_{j = 1}^{\infty} (\sigma_{h,j} - \sigma_{j} ) \tilde{\chi}_{j}(t) \tilde{\varphi}_{j}(\vec{x})
             = h \tilde{\chi}_{j}(t) \tilde{\varphi}_{j}(\vec{x}).
         \end{equation}
-
         Unter diesen Gegebenheiten betrachten wir nun die Differenz der zu $u(\bm\sigma_{h})$ und $u(\bm\sigma)$ zugehörigen Variationsprobleme.
         Für $v = (v_{1}, v_{2}) \in \mathcal Y$ gilt dann
         \begin{align}
@@ -688,7 +680,7 @@ Als ersten Schritt des Regularitätsnachweises zeigen wir nun die Existenz belie
             &= \abs{\int_{I} \tilde{\chi}_{j} \skp{\tilde{\varphi}_{j}  (u(\bm\sigma_{h}) - u(\bm\sigma))}{v_{1}}{H} \diff t }
             \\&\leq \norm{\tilde{\varphi}_{j}}_{L_{\infty}(\Omega)} \abs{\skp{u(\bm\sigma_{h}) - u(\bm\sigma)}{v_{1}}{L_{2}(I; H)} }
             \\&\leq \norm{\tilde{\varphi}_{j}}_{L_{\infty}(\Omega)} \norm{u(\bm\sigma_{h}) - u(\bm\sigma)}_{L_{2}(I; H)} \norm{v_{1}}_{L_{2}(I; H)}
-            \\&\leq \norm{\tilde{\varphi}_{j}}_{L_{\infty}(\Omega)} \norm{u(\bm\sigma_{h}) - u(\bm\sigma)}_{\mathcal X} \norm{v}_{\mathcal Y}
+            \\&\leq \norm{\tilde{\varphi}_{j}}_{L_{\infty}(\Omega)} \norm{u(\bm\sigma_{h}) - u(\bm\sigma)}_{\mathcal X} \norm{v}_{\mathcal Y}.
         \end{align}
         Hier setzen wir mit der Stabilitätsaussage \cref{lemma:stabilitaetsaussage} an um $\norm{u(\bm\sigma_{h}) - u(\bm\sigma)}_{\mathcal X}$ weiter abzuschätzen und erhalten
         \begin{equation}
@@ -744,7 +736,7 @@ Als ersten Schritt des Regularitätsnachweises zeigen wir nun die Existenz belie
     Dann gilt
     \begin{equation}
         \label{eq:abschaetzung_norm_partieller_ableitungen}
-        \sup_{\bm\sigma \in \mathcal P} \norm{\partial^{\bm\nu}_{\bm\sigma} u(\bm\sigma)}_{\mathcal X} \leq \frac{\norm{f}_{\mathcal Y'}}{\beta} \norm{\bm\nu}_{\ell_{1}(\mathbb{N})}! \vec b^{\bm\nu} \quad \fa \bm \nu \in \mathcal F.
+        \sup_{\bm\sigma \in \mathcal P} \norm{\partial^{\bm\nu}_{\bm\sigma} u(\bm\sigma)}_{\mathcal X} \leq \frac{\norm{f}_{\mathcal Y'}}{\beta} \abs{\bm\nu}! \vec b^{\bm\nu} \quad \fa \bm \nu \in \mathcal F.
     \end{equation}
 
     \begin{Beweis}
@@ -757,9 +749,9 @@ Als ersten Schritt des Regularitätsnachweises zeigen wir nun die Existenz belie
         \end{equation}
         rekursiv darstellen, was wir im Folgenden induktiv zeigen werden.
 
-        Den Fall $\norm{\bm\nu}_{\ell_{1}(\mathbb{N})} = 1$ haben wir in \cref{bemerkung:alternative_herleitung_variationsproblem_ableitung} bereits gezeigt.
-        Sei nun also $\norm{\bm\nu}_{\ell_{1}(\mathbb{N})} > 1$.
-        Sei weiter $k \in \mathbb{N}$ ein Index mit $\nu_{k} > 0$, dann definieren wir $\tilde{\bm\nu} := \bm\nu - \vec e_{k}$ und es gilt offenbar $\norm{\tilde{\bm\nu}}_{\ell_{1}(\mathbb{N})} = \norm{\bm\nu}_{\ell_{1}(\mathbb{N})} - 1$.
+        Den Fall $\abs{\bm\nu} = 1$ haben wir in \cref{bemerkung:alternative_herleitung_variationsproblem_ableitung} bereits gezeigt.
+        Sei nun also $\abs{\bm\nu} > 1$.
+        Sei weiter $k \in \mathbb{N}$ ein Index mit $\nu_{k} > 0$, dann definieren wir $\tilde{\bm\nu} := \bm\nu - \vec e_{k}$ und es gilt offenbar $\abs{\tilde{\bm\nu}} = \abs{\bm\nu} - 1$.
         Nach Induktionsvoraussetzung gilt damit
         \begin{equation}
             b(\partial^{\tilde{\bm\nu}}_{\bm\sigma} u(\bm\sigma), v; \bm\sigma) + \sum_{\Set{j \given \tilde{\nu}_{j} \neq 0}} \tilde{\nu}_{j} \int_{I} \tilde{\chi}_{j} \skp{\tilde{\varphi}_{j} \partial^{\tilde{\bm\nu} - \vec e_{j}}_{\bm\sigma} u(\bm\sigma)}{v_{1}}{H} \diff t = 0,
@@ -798,22 +790,22 @@ Als ersten Schritt des Regularitätsnachweises zeigen wir nun die Existenz belie
         \end{equation}
 
         Um nun die eigentliche Behauptung zu beweisen, verfolgen wir erneut einen Induktionsansatz.
-        Sei zunächst $\norm{\bm\nu}_{\ell_{1}(\mathbb{N})} = 0$, dann entspricht
+        Sei zunächst $\abs{\bm\nu} = 0$, dann entspricht
         \begin{equation}
             \sup_{\bm \sigma \in \mathcal P} \norm{u(\bm\sigma)}_{\mathcal X} \leq \frac{\norm{f}_{\mathcal Y'}}{\beta}
         \end{equation}
         Ungleichung \cref{eq:abschaetzung_norm_partieller_ableitungen} und ist nach \cref{satz:raum_zeit_variationsformulierung_sachgemaess_gestellt} erfüllt.
-        Sei also weiter $\norm{\bm\nu}_{\ell_{1}(\mathbb{N})} > 0$, dann gilt für die rekursive Darstellung \cref{eq:abschaetzung_norm_partieller_ableitungen:rekursive_schranke} unter Verwendung der Induktionsvoraussetzung \cref{eq:abschaetzung_norm_partieller_ableitungen} für $\norm{\partial^{\bm\nu - \vec e_{j}}_{\bm\sigma} u(\bm\sigma)}_{\mathcal X}$ die Abschätzung
+        Sei also weiter $\abs{\bm\nu} > 0$, dann gilt für die rekursive Darstellung \cref{eq:abschaetzung_norm_partieller_ableitungen:rekursive_schranke} unter Verwendung der Induktionsvoraussetzung \cref{eq:abschaetzung_norm_partieller_ableitungen} für $\norm{\partial^{\bm\nu - \vec e_{j}}_{\bm\sigma} u(\bm\sigma)}_{\mathcal X}$ die Abschätzung
         \begin{align}
             \norm{\partial^{\bm\nu}_{\bm\sigma} u(\bm\sigma)}_{\mathcal X}
             &\leq
             \sum_{\Set{j \given \nu_{j} \neq 0}} \nu_{j} b_{j} \norm{\partial^{\bm\nu - \vec e_{j}}_{\bm\sigma} u(\bm\sigma)}_{\mathcal X}
             \\&\leq
-            \sum_{\Set{j \given \nu_{j} \neq 0}} \nu_{j} b_{j} \frac{\norm{f}_{\mathcal Y'}}{\beta} \norm{\bm\nu - \vec e_{j}}_{\ell_{1}(\mathbb{N})}! \vec b^{\bm\nu - \vec e_{j}}
+            \sum_{\Set{j \given \nu_{j} \neq 0}} \nu_{j} b_{j} \frac{\norm{f}_{\mathcal Y'}}{\beta} \abs{\bm\nu - \vec e_{j}}! \vec b^{\bm\nu - \vec e_{j}}
             \\&=
-            \bigg( \sum_{\Set{j \given \nu_{j} \neq 0}} \nu_{j} \bigg) \bigg( \frac{\norm{f}_{\mathcal Y'}}{\beta} (\norm{\bm\nu}_{\ell_{1}(\mathbb{N})} - 1)! \vec b^{\bm\nu} \bigg)
+            \bigg( \sum_{\Set{j \given \nu_{j} \neq 0}} \nu_{j} \bigg) \bigg( \frac{\norm{f}_{\mathcal Y'}}{\beta} (\abs{\bm\nu} - 1)! \vec b^{\bm\nu} \bigg)
             \\&=
-            \frac{\norm{f}_{\mathcal Y'}}{\beta} \norm{\bm\nu}_{\ell_{1}(\mathbb{N})}! \vec b^{\bm\nu}
+            \frac{\norm{f}_{\mathcal Y'}}{\beta} \abs{\bm\nu}! \vec b^{\bm\nu}
          \end{align}
          und damit die Behauptung.
     \end{Beweis}
@@ -848,16 +840,16 @@ Betrachten wir beispielsweise die Taylorreihe von $u(\blank)$ um den Nullpunkt $
 beziehungsweise nach \cref{satz:abschaetzung_norm_partieller_ableitungen} weiter
 \begin{equation}
     \sup_{\bm\sigma \in \mathcal P} \norm{\sum_{\bm\nu \in \mathcal F} t_{\bm\nu} \bm\sigma^{\bm\nu}}_{\mathcal X}
-    \leq \frac{\norm{f}_{\mathcal Y'}}{\beta} \sum_{\bm \nu \in \mathcal F} \frac{\norm{\bm\nu}_{\ell_{1}(\mathbb{N})}!}{\bm\nu!} \vec b^{\bm\nu}.
+    \leq \frac{\norm{f}_{\mathcal Y'}}{\beta} \sum_{\bm \nu \in \mathcal F} \frac{\abs{\bm\nu}!}{\bm\nu!} \vec b^{\bm\nu}.
 \end{equation}
-Die Frage, ob die Abbildung $\mathcal P \ni \bm \sigma \mapsto u(\bm \sigma) \in \mathcal X$ analytisch ist, hat sich damit also auf die Frage, unter welchen Bedingungen $\sum_{\bm \nu \in \mathcal F} (\norm{\bm\nu}_{\ell_{1}(\mathbb{N})}!)(\bm\nu!)^{-1} \vec b^{\bm\nu}$ konvergiert, reduziert.
+Die Frage, ob die Abbildung $\mathcal P \ni \bm \sigma \mapsto u(\bm \sigma) \in \mathcal X$ analytisch ist, hat sich somit auf jene, unter welchen Bedingungen $\sum_{\bm \nu \in \mathcal F} (\abs{\bm\nu}!)(\bm\nu!)^{-1} \vec b^{\bm\nu}$ konvergiert, reduziert.
 Wann dies der Fall ist, wurde beispielsweise in \cite[Theorem 7.2]{Cohen:2010kz} untersucht.
 Wir geben die Aussage hier ohne Beweis wieder.
 
 \begin{Satz}
 \label{satz:cohen2010kz:theorem72}
     Sei $0 < p \leq 1$.
-    Die Folge $(\frac{\norm{\bm\nu}_{\ell_{1}(\mathbb{N})}!}{\bm\nu!} \vec b^{\bm\nu})_{\bm\nu \in \mathcal F}$ liegt genau dann in $\ell_{p}(\mathcal F)$, wenn $\norm{\vec b}_{\ell_{1}(\mathbb{N})} < 1$ und $\vec b \in \ell_{p}(\mathbb{N})$ gilt.
+    Die Folge $(\frac{\abs{\bm\nu}!}{\bm\nu!} \vec b^{\bm\nu})_{\bm\nu \in \mathcal F}$ liegt genau dann in $\ell_{p}(\mathcal F)$, wenn $\norm{\vec b}_{\ell_{1}(\mathbb{N})} < 1$ und $\vec b \in \ell_{p}(\mathbb{N})$ gilt.
 \end{Satz}
 
 \begin{Satz}
@@ -866,14 +858,14 @@ Wir geben die Aussage hier ohne Beweis wieder.
     Dann hängt die Lösung $u(\bm \sigma)$ des parametrischen Raum"=Zeit"=Variationsproblems \cref{eq:parametrisches_rz_variationsproblem} analytisch vom Parameter $\bm \sigma \in \mathcal P$ ab.
 
     \begin{Beweis}
-        Der vorherige Satz und die Überlegungen davor liefern unter diesen Voraussetzungen die behauptete Aussage.
+        Der vorherige Satz und vorangegangene Überlegungen liefern unter diesen Voraussetzungen die behauptete Aussage.
     \end{Beweis}
 \end{Satz}
 
-Die Bedingung $\norm{\vec b}_{\ell_{1}(\mathbb{N})} < 1$ kann dabei so interpretiert werden, dass der feld"=abhängige Teil der partiellen Differentialgleichung den feld"=unabhängigen Anteil nicht zu stark stören darf, damit die analytische Abhängigkeit gewährleistet ist.
-Dies verträgt sich leider nur bedingt mit der Motivation der Propagator-Differentialgleichung, da bei dieser die Felder einen starken Einfluss haben.
+Die Bedingung $\norm{\vec b}_{\ell_{1}(\mathbb{N})} < 1$ kann dabei so interpretiert werden, dass der feld"=abhängige Teil der partiellen Differentialgleichung den feld"=unabhängigen Anteil nicht zu stark stören darf, um analytische Abhängigkeit garantieren zu können.
+Dies verträgt sich leider nur bedingt mit der Motivation der Propagator"=Differentialgleichung, da bei dieser die Felder einen starken Einfluss haben.
 
-Im Rahmen der numerischen Untersuchung in \cref{chapter:galerkin} werden wir auf diesen Punkt noch einmal eingehen und anhand der numerischen Ergebnisse deutlich machen, inwiefern die Bedingung eingehalten wird respektive eingehalten werden kann.
+In \cref{chapter:galerkin} werden wir auf diesen Punkt noch einmal eingehen und anhand der numerischen Ergebnisse deutlich machen, inwiefern die Bedingung eingehalten wird respektive eingehalten werden kann.
 
 \section{Periodische Randbedingungen} % (fold)
 \label{section:periodische_randbedingungen}
@@ -893,8 +885,8 @@ Dies wird an dieser Stelle sehr einfach gehalten; ausführlicher kann dies bespi
     Weiter definieren wir den Sobolev-Raum $\Omega$-periodischer Funktionen $H^{1}_{\text{per}}(\Omega)$ als den Abschluss $C_{\text{per}}^{\infty}(\Omega)$ bezüglich der $H^{1}$-Norm.
 \end{Definition}
 
-Diese Räume verwenden wir nun um die Räume $V$ und $H$, vergleiche \cref{bemerkung:raeume_und_gelfand_tripel}, zu definieren.
-Nach Konstruktion handelt es sich bei $H^{1}_{\text{per}}(\Omega)$ und $L_{2,\text{per}}(\Omega)$ um Hilberträume und weiter ist $H^{1}_{\text{per}}(\Omega)$ ein dichter Unterraum von $L_{2,\text{per}}(\Omega)$.
+Diese Räume verwenden wir nun, um die Räume $V$ und $H$, vergleiche \cref{bemerkung:raeume_und_gelfand_tripel}, zu definieren.
+Nach Konstruktion handelt es sich bei $H^{1}_{\text{per}}(\Omega)$ und $L_{2,\text{per}}(\Omega)$ um Hilberträume und desweiteren ist $H^{1}_{\text{per}}(\Omega)$ ein dichter Unterraum von $L_{2,\text{per}}(\Omega)$.
 Wählen wir also $V = H^{1}_{\text{per}}(\Omega)$ und $H = L_{2,\text{per}}(\Omega)$, dann erhalten wir nach \cref{definition:gelfand_tripel} wie zuvor ein Gelfand-Tripel der Form
 \begin{equation}
     V \denseinclusion H \cong H' \denseinclusion V' = (H^{1}_{\text{per}}(\Omega))'.
@@ -934,7 +926,6 @@ Inspiziert man die Ausführungen dieses Kapitels für den Fall homogener Dirichl
             &= c \norm{\grad \eta}^{2}_{H} + \skprod{\omega(t, \blank) \eta}{\eta}_{H} + \mu \skprod{\eta}{\eta}_{H} + \lambda \skprod{\eta}{\eta}_{H}
             \\&= c \norm{\grad \eta}^{2}_{H} + \skprod{\omega(t, \blank) + \mu + \lambda) \eta}{\eta}_{H}.
         \end{align}
-
         Wählen wir $\lambda = \max\Set{\norm{\omega}_{L_{\infty}(I; L_{\infty}(\Omega))} - \mu + c, c} \geq c > 0$, dann gilt $\omega(t, \blank) + \mu + \lambda - c \geq 0$ fast überall in $\Omega$ und wir erhalten die Abschätzung
         \begin{align}
             a(\eta, \eta; t) + \lambda \norm{\eta}^{2}_{H}

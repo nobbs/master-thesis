@@ -4,7 +4,7 @@
 \label{chapter:einleitung}
 
 Als Polymer bezeichnet man einen aus Makromolekülen bestehenden Stoff.
-Diese Makromoleküle setzen sich wiederum aus vielen kleineren sich wiederholenden Molekülen, in diesem Zusammenhang Monomere genannt, zusammen.
+Diese Makromoleküle setzen sich wiederum aus vielen kleineren, sich wiederholenden Molekülen, in diesem Zusammenhang Monomere genannt, zusammen.
 Besteht ein Polymer aus nur einer Monomer-Gattung, dann spricht man von einem Homopolymer, sonst von einem Heteropolymer oder auch Copolymer.
 Obwohl Polymere in vielen verschiedenen Konfigurationen, beispielsweise ring- oder sternförmig, auftreten können, beschränken wir uns hier auf den Fall eines kettenförmigen Aufbaus.
 Weiter interessieren wir uns hier nur für Copolymere, vor allem die sogenannten Blockcopolymere, welche aus mehreren Monomer-Gattungen, die homogene zusammenhängende Blöcke bilden, aufgebaut sind; siehe \cref{figure:polymerketten}.
@@ -74,8 +74,8 @@ Eine deutlich ausführlichere und vor allem mathematisch begründete Einführung
 
 Im Folgenden betrachten wir eine nicht näher spezifizierte Volumenzelle und geben mit dem Vektor $\vec{r}$ eine Position in diesem Volumen an.
 
-Das diskrete Modell stellt die Polymerkette als eine diskrete Kette von Partikeln so dar, dass aneinanderhängende Monomere ähnlich einem Scharnier frei beweglich sind.
-Dabei werden Wechselwirkung zwischen benachbarten Monomeren berücksichtigt, zwischen auf der Kette weit auseinanderliegenden Partikeln aber ignoriert.
+Das diskrete Modell stellt die Polymerkette als eine diskrete Kette von Partikeln dar, derart, dass aneinanderhängende Monomere ähnlich einem Scharnier frei beweglich sind.
+Dabei werden Wechselwirkung zwischen benachbarten Monomeren berücksichtigt, während auf der Kette weit auseinanderliegende Partikel aber ignoriert werden.
 Diese Wechselwirkungen können in \cref{figure:kettenmodelle} beispielsweise als Einschränkung des Winkels $\vartheta_9$ durch die gegenseitige Beeinflussung der Partikel $8, 9$ und $10$ auftreten.
 
 Das stetige Gaußsche Kettenmodell, welches man unter anderem auch als stetigen Grenzfall des beschriebenen diskreten Modells erhält, hat sich als besonders nützlich erwiesen, sowohl bei analytischen als auch numerischen Betrachtungen.
@@ -132,7 +132,6 @@ hat, wobei $\chi$ der sogenannte Flory-Huggins-Wechselwirkungsparameter für die
 
 Stabile Anordnungen entsprechen nun Sattelpunkten von $F$ bezüglich der Konzentrationen $\phi_{\mathrm{A}}$, $\phi_{\mathrm{B}}$ und der Felder $\omega_{\mathrm{A}}$ und $\omega_{\mathrm{B}}$.
 Betrachtet man die Funktionalableitungen von $F$ bezüglich dieser Größen, dann erhält man ein System von Gleichungen, kurz \ac{scft}-Gleichungen genannt, anhand derer die gesuchten Sattelpunkte bestimmt werden können.
-
 Diese Gleichungen bestehen aus der Inkompressibilität der Schmelze
 \begin{equation}
 \label{eq:inkompressibilitaet}
@@ -195,7 +194,8 @@ Der Propagator $q(\vec{r}, s)$ repräsentiert das statistische Gewicht, im Wesen
 Damit lässt sich die Anfangsbedingung $q(\vec r, 0) = 1$ so interpretieren, dass ein Polymer der Länge Null von den externen Feldern nicht beeinflusst wird.
 Der Rückwärts-Propagator hat die selbe Bedeutung, allerdings wird hierbei das andere Ende des Polymers festgehalten.
 
-Je nachdem, welches Szenario man betrachtet, das heißt, eine Volumenzelle innerhalb eines größeren Systems, oder eine Zelle, die durch feste Wände begrenzt wird, erhält man verschiedene Randbedingungen an die beiden Differentialgleichungen, so entspricht ersteres beispielsweise periodischen Randbedingungen.
+Je nachdem, welches Szenario man betrachtet, entweder eine Volumenzelle innerhalb eines größeren Systems, oder eine Zelle, welche durch feste Wände begrenzt wird, erhält man verschiedene Randbedingungen an die beiden Differentialgleichungen.
+Ersteres entspricht dabei beispielsweise periodischen Randbedingungen.
 
 Ferner ist an dieser Stelle erwähnenswert, dass das Funktional der freien Energie \cref{eq:freie_energie_funktional} invariant ist bezüglich konstanter Verschiebungen der Felder $\omega_{\mathrm{A}}$ und $\omega_{\mathrm{B}}$, wie beispielsweise \cite{Ceniceros:2006is} entnommen werden kann.
 Dies wird sich sowohl in der späteren theoretischen als auch numerischen Untersuchung als äußerst nützlich erweisen.
@@ -205,7 +205,7 @@ Dies wird sich sowohl in der späteren theoretischen als auch numerischen Unters
 
 Es gibt verschiedene Ansätze, die \ac{scft}-Gleichungen zu einem numerischen Verfahren zu verarbeiten, die meisten führen auf das folgende iterative, Newton-artige Schema:
 \begin{enumerate}[label={\itshape\roman*.},ref={\itshape\roman*}]
-    \item Zunächst werden zwei externe Felder $\omega^{(0)}_{\mathrm{A}}$ und $\omega^{(0)}_{\mathrm{B}}$ generiert, typischerweise zufällig, um von vornherein auftretende Verzerrungen zu verhindern.
+    \item Zunächst werden zwei externe Felder $\omega^{(0)}_{\mathrm{A}}$ und $\omega^{(0)}_{\mathrm{B}}$ generiert, typischerweise zufällig, um von vornherein auftretende Verzerrungen zu einem bestimmten Sattelpunkt zu verhindern.
     \item\label{enum:iterationsverfahren_punkt_2} Die Differentialgleichungen \cref{eq:forward_propagator,eq:backward_propagator} werden für die Felder $\omega^{(k)}_{\mathrm{A}}$ und $\omega^{(k)}_{\mathrm{B}}$ gelöst.
     \item Die Konzentrationen $\phi^{(k)}_{\mathrm{A}}$ und $\phi^{(k)}_{\mathrm{B}}$ werden durch die Gleichungen \cref{eq:partitionsfunktion,eq:konzentrationen} bestimmt.
     \item Diese werden nun benutzt um aus den Gleichungen \cref{eq:felder} die zu diesen Konzentrationen zugehörigen Felder zu bestimmen.
@@ -213,16 +213,15 @@ Es gibt verschiedene Ansätze, die \ac{scft}-Gleichungen zu einem numerischen Ve
     Das Mixing dient dazu, die Konvergenz des Verfahrens sicherzustellen beziehungsweise zu verbessern, typischerweise gehen hier die Inkompressibilität \cref{eq:inkompressibilitaet} und zurückliegende Iterationen ein.
     \item Sind die neuen Konzentrationen und Felder noch kein Sattelpunkt von \cref{eq:freie_energie_funktional}, dann gehe zurück zu \cref{enum:iterationsverfahren_punkt_2}.
 \end{enumerate}
-
+%
 Bei dem beschriebenen Verfahren stellen sich die folgenden beiden Schritte als besonders wichtig heraus, da sie massiv die Laufzeit des Iterationsverfahren beeinflussen:
 \begin{enumerate}[label={\itshape\roman*.}]
     \item das Lösungsverfahren für die Differentialgleichungen \cref{eq:forward_propagator} und \cref{eq:backward_propagator},
     \item das Mixing-Verfahren, mit dem iterativ neue Felder $\omega_{\mathrm{A}}$ und $\omega_{\mathrm{B}}$ bestimmt werden.
 \end{enumerate}
-
-Auf den zweiten Punkt, das Mixing-Verfahren, werden wir im Verlauf dieser Arbeit nicht weiter eingehen.
-Trotz dessen, und insbesondere, da es viele, sehr verschiedene Verfahren gibt, die hierfür zum Einsatz kommen, wollen wir hier einige Ansätze nennen.
-Da es sich beim Mixing-Schritt im Wesentlichen um die Suche nach einem Sattelpunkt eines nichtlinearen Funktionals handelt, lassen sich hierfür viele bekannte Verfahren der nichtlinearen Optimierung, aber auch aus anderen Bereichen, anwenden.
+%
+Auf den zweiten Punkt, das Mixing-Verfahren, werden wir im Verlauf dieser Arbeit nicht weiter eingehen und stattdessen hier einige der verwendeten Ansätze erwähnen.
+Da der Mixing-Schritt im Wesentlich als Konvergenzbeschleuniger des Iterationsverfahrens angedacht ist, lassen sich hierfür viele bekannte Verfahren der nichtlinearen Optimierung, aber auch aus anderen Bereichen, anwenden.
 Dies reicht von einem Quasi-Newton-Verfahren \cite{Matsen:1994bz} bis zu Integrationsverfahren, wie zum Beispiel Runge-Kutta-Verfahren oder Mehrschrittverfahren.
 Ein auf einem solchen Integrationsverfahren basierendes Mixing findet sich in \cite{Ceniceros:2006is}, ferner findet man darin auch ein auf einem CG-Verfahren aufbauendes Mixing.
 Als besonders effektiver Ansatz hat sich das sogenannte Anderson-Mixing erwiesen, siehe die Arbeiten \cite{Thompson:2004um,Stasiak:2011ba}, dabei werden neue Felder durch Kombination der Felder vieler zurückliegender Iterationen gewonnen.
@@ -235,22 +234,6 @@ Weiter darf zu Gunsten der Laufzeit aber auch nicht die Genauigkeit des Lösers 
 Ähnlich wie beim Mixing-Schritt wurden bereits viele verschiedene Ansätze mit mehr oder weniger zufriedenstellenden Ergebnissen verfolgt.
 Da es sich bei \cref{eq:forward_propagator} im Grunde um eine Diffusionsgleichung handelt, lassen sich gut bekannte Verfahren, zum Beispiel ein Finite-Differenzen-Verfahren, anwenden.
 So wird in \cite{Drolet:1999bs} ein Crank-Nicolson-Verfahren eingesetzt, wobei hierbei explizit der Laufzeit Vorrang gegenüber der Genauigkeit gegeben wurde.
-
-Als guter Kompromiss zwischen Laufzeit und Genauigkeit haben sich Spektral- und Pseudospektralverfahren etabliert.
-Erstere wurden von \textcite{Matsen:1994bz} erfolgreich eingesetzt, wobei hier erst das explizite Berücksichtigen der Symmetrien der zu erwartenden resultierenden Anordnung bei der Konstruktion des Spektralverfahrens zu annehmbaren Laufzeiten führt.
-Die damit verwandten Pseudospektralverfahren kommen zwar nicht an die Genauigkeit der Spektralverfahren heran, können aber unter Ausnutzung der Struktur der partiellen Differentialgleichung massiv Laufzeit einsparen.
-Dazu wird in \cite{Rasmussen:2002kt} der Differentialoperator mittels Operator-Splitting so zerlegt, dass man das Lösen der Differentialgleichung mittels schneller Fourier-Transformation im Wesentlichen auf komponentenweise Vektor-Multiplikationen zurückführt.
-Das daraus resultierende Verfahren zweiter Ordnung wurde von \cite{GarciaCervera:2006uu,Ranjan:2007kl} auf unterschiedliche Weisen zu Verfahren vierter Ordnung erweitert, ohne signifikant Laufzeit einzubüßen.
-Eine gute Übersicht über die meisten der hier genannten Methoden findet man bei \textcites[Section 3.6]{Fredrickson:2006th}{Audus:2013ep}.
-
-Obwohl die Literatur zur \ac{scft} für Polymere verschiedenste Verfahren für das Lösen der partiellen Differentialgleichung bietet, ist ein Finite-Elemente-Ansatz basierend auf einer Raum-Zeit-Variationsformulierung unseres Wissens nach bisher nicht verfolgt worden.
-
-Hier knüpfen wir an und betrachten das Problem, eine Lösung für die Differentialgleichung zu finden, losgelöst vom eigentlichen \ac{scft}-Iterationsverfahren, da der Berechnungsaufwand des in dieser Arbeit hergeleiteten Verfahrens eine Integration in das Iterationsverfahren im Rahmen dieser Arbeit unmöglich macht.
-Die Grundidee ist die Verwendung eines Galerkin-Verfahrens für die Differentialgleichung mit anschließendem Aufsetzen eines Reduzierte-Basis-Ansatzes.
-Für diesen ist es notwendig die Differentialgleichung zu parametrisieren, das heißt, von möglichst wenigen Parametern abhängig zu machen.
-Dies erreichen wir, indem wir die in der Differentialgleichung auftretenden Felder in einem geeigneten Funktionensystem entwickeln.
-Dieses sollte so gewählt werden, dass die Entwicklungskoeffizienten möglichst schnell abfallen.
-Hierzu sei auf \cref{figure:felder_nach_iterationsverfahren} verwiesen, welche ein Felder-Paar von einem Iterationsdurchlauf und dessen Fourier-Koeffizienten zeigt.
 
 \begin{figure}[tb]
     \centering
@@ -276,17 +259,31 @@ Hierzu sei auf \cref{figure:felder_nach_iterationsverfahren} verwiesen, welche e
     \label{figure:felder_nach_iterationsverfahren}
 \end{figure}
 
+Als guter Kompromiss zwischen Laufzeit und Genauigkeit haben sich Spektral- und Pseudospektralverfahren etabliert.
+Erstere wurden von \textcite{Matsen:1994bz} erfolgreich eingesetzt, wobei hier erst das explizite Berücksichtigen der Symmetrien der zu erwartenden resultierenden Anordnung bei der Konstruktion des Spektralverfahrens zu annehmbaren Laufzeiten führt.
+Die damit verwandten Pseudospektralverfahren kommen zwar nicht an die Genauigkeit der Spektralverfahren heran, können aber unter Ausnutzung der Struktur der partiellen Differentialgleichung massiv Laufzeit einsparen.
+Dazu wird in \cite{Rasmussen:2002kt} der Differentialoperator mittels Operator-Splitting so zerlegt, dass man das Lösen der Differentialgleichung mittels schneller Fourier-Transformation im Wesentlichen auf komponentenweise Vektor-Multiplikationen zurückführt.
+Das daraus resultierende Verfahren zweiter Ordnung wurde von \cite{GarciaCervera:2006uu,Ranjan:2007kl} auf unterschiedliche Weisen zu Verfahren vierter Ordnung erweitert, ohne signifikant Laufzeit einzubüßen.
+Eine gute Übersicht über die meisten der hier genannten Methoden findet man bei \textcites[Section 3.6]{Fredrickson:2006th}{Audus:2013ep}.
 
-% subsection einsatz_numerischer_methoden (end)
+Obwohl die Literatur zur \ac{scft} für Polymere verschiedenste Verfahren für das Lösen der partiellen Differentialgleichung bietet, ist ein Finite-Elemente-Ansatz basierend auf einer Raum-Zeit-Variationsformulierung unseres Wissens nach bisher nicht verfolgt worden.
+
+Hier knüpfen wir an und betrachten das Problem, eine Lösung für die Differentialgleichung zu finden, losgelöst vom eigentlichen \ac{scft}-Iterationsverfahren, da der Berechnungsaufwand des in dieser Arbeit hergeleiteten Verfahrens eine Integration in das Iterationsverfahren im Rahmen dieser Arbeit unmöglich macht.
+Die Grundidee ist die Verwendung eines Galerkin-Verfahrens für die Differentialgleichung mit anschließendem Aufsetzen eines Reduzierte-Basis-Ansatzes.
+Für diesen ist es notwendig die Differentialgleichung zu parametrisieren, das heißt, von möglichst wenigen Parametern abhängig zu machen.
+Dies erreichen wir, indem wir die in der Differentialgleichung auftretenden Felder in einem geeigneten Funktionensystem entwickeln.
+Dieses sollte so gewählt werden, dass die Entwicklungskoeffizienten möglichst schnell abfallen.
+Hierzu sei auf \cref{figure:felder_nach_iterationsverfahren} verwiesen, welche ein Felder-Paar von einem Iterationsdurchlauf und dessen Fourier-Koeffizienten zeigt.
+
 
 \subsection*{Aufbau der restlichen Arbeit}
 
 In \cref{chapter:grundlagen} werden zunächst die die funktionalanalytischen Grundlagen eingeführt beziehungsweise wiederholt, welche dann in \cref{chapter:propagator_differentialgleichung} verwendet werden um die parabolische partielle Differentialgleichung, welche im Rahmen dieser Einleitung bereits vorgestellt wurde, unter passenden Rahmenbedingungen zu formalisieren.
-Weiter parametrisieren wir die Differentialgleichung und weisen einige Eigenschaften nach, welche zwar nicht notwendig sind, aber die nachfolgende numerische Behandlung unter gewissen Bedingungen stützen.
+Weiter paremetrisieren wir die Differentialgleichung und weisen unter bestimmten Bedingungen eine Regularität der Lösungen der Differentialgleichung vom Parameter nach.
 
 Nachfolgend werden in \cref{chapter:galerkin} die ersten numerischen Grundlagen in Form des Petrov-Galerkin-Verfahrens gelegt und an einigen Beispiele analysiert, um dann darauf aufbauend in \cref{chapter:rbm} die Reduzierte-Basis-Methoden einzuführen und diese ebenfalls auf die in dieser Arbeit betrachtete Problemstellung anzuwenden.
 
-Abschließend wird in \cref{chapter:ausblick} ein Resümee der Arbeit und daran anknüpfend ein Ausblick, welcher mögliche Ansatzpunkte für Verbesserungen und Weiterentwicklungen erläutert, gegeben.
+Abschließend wird in \cref{chapter:ausblick} ein Résumé der Arbeit und daran anknüpfend ein Ausblick, welcher mögliche Ansatzpunkte für Verbesserungen und Weiterentwicklungen erläutert, gegeben.
 
 % subsection aufbau_der_restlichen_arbeit (end)
 
