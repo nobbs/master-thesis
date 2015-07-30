@@ -21,11 +21,11 @@ Wir beginnen nun mit der folgenden Definition der Bochner"=Räume nach \cite[Def
     Seien $X$ ein Banachraum, $- \infty < a < b < \infty$ und $1 \leq p < \infty$.
     Als \emph{Bochner"=Raum} $L_{p}(a, b; X)$ bezeichnen wir die Menge (der Äquivalenzklassen) $L_{p}$-integrierbarer Funktionen $f \colon [a, b] \to X$, das heißt, aller messbarer Funktionen auf $[a, b]$ mit
     \begin{equation}
-        \norm{f}_{L_{p}(a, b; X)} \deq \left( \int_{a}^{b} \norm{f(t)}_{X}^{p} \diff t \right)^{1 / p} < \infty.
+        \norm{f}_{L_{p}(a, b; X)} := \left( \int_{a}^{b} \norm{f(t)}_{X}^{p} \diff t \right)^{1 / p} < \infty.
     \end{equation}
     Ferner ist der \emph{Bochner"=Raum} $L_{\infty}(a, b; X)$ definiert als die Menge (der Äquivalenzklassen) der für fast alle $t \in [a, b]$ wesentlich beschränkten Funktionen, also aller messbaren Funktionen $f \colon [a, b] \to X$ mit
     \begin{equation}
-        \norm{f}_{L_{\infty}(a, b; X)} \deq \esssup_{t \in [a, b]} \norm{f(t)}_{X} < \infty.
+        \norm{f}_{L_{\infty}(a, b; X)} := \esssup_{t \in [a, b]} \norm{f(t)}_{X} < \infty.
     \end{equation}
 \end{Definition}
 
@@ -99,7 +99,7 @@ Dies geschieht analog zu \cite[Definition XVIII.2.4]{Dautray:1992by}.
     Sei $V \denseinclusion H \denseinclusion V'$ ein Gelfand"=Tripel.
     Wir definieren den Raum
     \begin{equation}
-        W(a, b; V, V') \deq \Set{u \in L_{2}(a, b; V) \given u' \in L_{2}(a, b; V')}
+        W(a, b; V, V') = \Set{u \in L_{2}(a, b; V) \given u' \in L_{2}(a, b; V')}
     \end{equation}
     wobei $u'$ im Sinne von \cref{definition:zeitableitung} zu verstehen ist.
     Es gilt ferner
@@ -114,7 +114,7 @@ Weiter können wir diesem Raum ein Skalarprodukt und damit auch eine Norm zuordn
 \label{lemma:bochner_W_ist_hilbertraum}
     Versehen wir $W(a, b; V, V')$ mit dem Skalarprodukt
     \begin{equation}
-        \skp{u}{v}{W(a, b; V, V')} \deq \skp{u}{v}{L_{2}(a, b; V)} + \skp{u'}{v'}{L_{2}(a, b; V')}
+        \skp{u}{v}{W(a, b; V, V')} = \skp{u}{v}{L_{2}(a, b; V)} + \skp{u'}{v'}{L_{2}(a, b; V')}
     \end{equation}
     und der dadurch induzierten Norm
     \begin{equation}
@@ -164,7 +164,7 @@ Ferner erhalten wir aus obiger Einbettungsaussage \cref{satz:bochner_raum_W_stet
     Die Einbettungskonstante
     \begin{equation}
         \label{eq:einbettungskonstante_M_e}
-        \gamma_{e} \deq \sup_{\substack{u\in W(a, b; V, V')\\u \neq 0}} \frac{\norm{u(a)}_{H}}{\norm{u}_{W(a, b; V, V')}}
+        \gamma_{e} = \sup_{\substack{u\in W(a, b; V, V')\\u \neq 0}} \frac{\norm{u(a)}_{H}}{\norm{u}_{W(a, b; V, V')}}
     \end{equation}
     ist gleichmäßig beschränkt in der Wahl $V \hookrightarrow H$ und hängt nur im Fall $b \to a$ von $b$ ab.
 
