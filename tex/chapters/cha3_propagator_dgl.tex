@@ -33,7 +33,7 @@ Dies dient vor allem der einfacheren Notation und Benennung, weswegen wir den de
     Wir bezeichnen die Abbildung
     \begin{equation}
     \label{eq:raum_zeit_feld}
-        \omega \colon I \times \Omega \to \mathbb{R}, \quad \omega(t, \vec{x}) =
+        \omega \colon I \times \Omega \to \mathbb{R}, \quad \omega(t, \vec{x}) :=
         w_{1}(\vec{x}) \chi_{I_{1}}(t) + w_{2}(\vec{x}) \chi_{I_{2}}(t)
         =
         \begin{cases}
@@ -95,12 +95,12 @@ Damit können wir nun die folgende Operatorfamilie und die zugehörigen Bilinear
     Wir definieren für $t \in I$ eine Familie von Operatoren
     \begin{equation}
         \label{eq:operator_zeit}
-        A(t) \colon V \to V', \quad  A(t) \eta = - c \Delta \eta + \omega(t, \blank) \eta + \mu \eta
+        A(t) \colon V \to V', \quad  A(t) \eta := - c \Delta \eta + \omega(t, \blank) \eta + \mu \eta
     \end{equation}
     und eine zugehörige Familie von Bilinearformen
     \begin{equation}
         \label{eq:bilinearform_zeit}
-        a(\blank, \blank; t) \colon V \times V \to \mathbb{R}, \quad  a(\eta, \zeta; t) = \skp{A(t)\eta}{\zeta}{V' \times V}.
+        a(\blank, \blank; t) \colon V \times V \to \mathbb{R}, \quad  a(\eta, \zeta; t) := \skp{A(t)\eta}{\zeta}{V' \times V}.
     \end{equation}
 \end{Definition}
 
@@ -109,7 +109,7 @@ Damit können wir nun die folgende Operatorfamilie und die zugehörigen Bilinear
     Die Existenz der Bilinearform $a(\blank, \blank; t)$ zum jeweiligen Operator $A(t)$ lässt sich durch den Rieszschen Darstellungssatz begründen, siehe beispielsweise \cite[Theorem \S{}22.1]{Halmos:1957vd}.
 \end{Bemerkung}
 
-Aufgrund der gewählten Rahmenbedingungen können wir die Bilinearform $a(\blank, \blank; t)$ explizit angeben.
+Aufgrund der gewählten Rahmenbedingungen können wir die Bilinearformen $a(\blank, \blank; t)$ für $t \in I$ explizit angeben.
 Dazu greifen wir unter anderem auf die wohlbekannte schwache Formulierung des Laplace"=Operators $- \Delta \colon V \to V'$ zurück.
 Diese lässt sich durch die Wahl von $V$ als eine Bilinearform auf $V \times V$ der Form
 \begin{equation}
@@ -145,7 +145,7 @@ Wir weisen nun zwei Eigenschaften für diesen Operator respektive die zugehörig
 
 \begin{Satz}
 \label{satz:bilinearform_messbar_stetig_garding}
-    Sei $a(\blank, \blank; t)$, $t \in I$, die Familie von Bilinearformen aus \cref{eq:bilinearform_formel}.
+    Sei $\Set{a(\blank, \blank; t)}_{t \in I}$ die Familie von Bilinearformen aus \cref{eq:bilinearform_formel}.
     Diese Bilinearformen erfüllen die folgenden Eigenschaften:
     \begin{thmenumerate}
         \item\label{satz:bilinearform_messbar_stetig_garding:messbar}
@@ -205,14 +205,14 @@ Wir weisen nun zwei Eigenschaften für diesen Operator respektive die zugehörig
 
 \begin{Korollar}
 \label{korollar:bilinearform_elliptisch}
-    Ist $\lambda = 0$, beispielsweise wenn $\mu \geq \norm{\omega}_{L_{\infty}(I; L_{\infty}(\Omega))}$ gilt, dann ist die Bilinearform $a(\blank, \blank; t)$ elliptisch.
+    Ist $\lambda = 0$, beispielsweise wenn $\mu \geq \norm{\omega}_{L_{\infty}(I; L_{\infty}(\Omega))}$ gilt, dann sind die Bilinearformen $\Set{a(\blank, \blank; t)}_{t \in I}$ elliptisch.
 \end{Korollar}
 
 Ferner wollen wir an dieser Stelle eine Aussage nachweisen, welche wir erst in \cref{chapter:galerkin} benötigen werden.
 
 \begin{Lemma}
 \label{lemma:operator_selbstadjungiert}
-    Die Operatoren $A(t)$ aus \cref{definition:operator_bilinearform_zeit} bilden eine Familie von selbstadjungierten Operatoren.
+    Die Operatoren $\Set{A(t)}_{t \in I}$ aus \cref{definition:operator_bilinearform_zeit} bilden eine Familie von selbstadjungierten Operatoren.
 
     \begin{Beweis}
         Diese Aussage kann direkt aus der zu den Operatoren $A(t)$ zugehörigen Bilinearformen $a(\blank, \blank; t)$ gefolgert werden, da diese analog zu \cref{eq:bilinearform_formel} umgeschrieben werden können zu
@@ -258,12 +258,12 @@ Damit können wir die schwache Formulierung nun wie folgt definieren.
     \begin{equation}
         \label{eq:raum_zeit_variationsformulierung:lhs}
         b(u, v)
-            = \int_{I} \left[ \skp{u_{t}(t)}{v_{1}(t)}{V' \times V} + a(u(t), v_{1}(t); t) \right]  \diff t + \skprod{u(0)}{v_{2}}_{H}
+            := \int_{I} \left[ \skp{u_{t}(t)}{v_{1}(t)}{V' \times V} + a(u(t), v_{1}(t); t) \right]  \diff t + \skprod{u(0)}{v_{2}}_{H}
     \end{equation}
     und das stetige lineare Funktional $f \colon \mathcal Y \to \mathbb{R}$ auf der rechten Seite durch
     \begin{equation}
         \label{eq:raum_zeit_variationsformulierung:rhs}
-        f(v) = \int_{I} \skp{g(t)}{v_{1}(t)}{V' \times V} \diff t + \skprod{u_{0}}{v_{2}}_{H}
+        f(v) := \int_{I} \skp{g(t)}{v_{1}(t)}{V' \times V} \diff t + \skprod{u_{0}}{v_{2}}_{H}
     \end{equation}
     gegeben.
 \end{Definition}
@@ -309,11 +309,11 @@ Weiter erhalten wir als Nebenprodukt aus \cref{korrolar:ss09:theorem51_abschaetz
     \begin{thmenumerate}
         \item \emph{Stetigkeit:} es gilt
             \begin{equation}
-                \gamma_{b} = \sup_{u \in \mathcal X} \sup_{v \in \mathcal Y} \frac{b(u, v)}{\norm{u}_{\mathcal X} \norm{v}_{\mathcal Y}} < \infty.
+                \gamma_{b} := \sup_{u \in \mathcal X} \sup_{v \in \mathcal Y} \frac{b(u, v)}{\norm{u}_{\mathcal X} \norm{v}_{\mathcal Y}} < \infty.
             \end{equation}
         \item \emph{inf-sup-Bedingung:} es gilt
             \begin{equation}
-                \beta = \inf_{u \in \mathcal X} \sup_{v \in \mathcal Y} \frac{b(u, v)}{\norm{u}_{\mathcal X} \norm{v}_{\mathcal Y}} > 0.
+                \beta := \inf_{u \in \mathcal X} \sup_{v \in \mathcal Y} \frac{b(u, v)}{\norm{u}_{\mathcal X} \norm{v}_{\mathcal Y}} > 0.
             \end{equation}
     \end{thmenumerate}
 
@@ -346,14 +346,14 @@ Dazu kehren wir nun zunächst zum Operator $A(t)$ aus \cref{definition:operator_
 Wir definieren für $w \in L_{\infty}(\Omega)$ eine Familie von Operatoren $A(w)$ als
 \begin{equation}
     \label{eq:operator_feld}
-    A(w) \colon V \to V', \quad A(w) \eta = - c \Delta \eta + w \eta + \mu \eta
+    A(w) \colon V \to V', \quad A(w) \eta := - c \Delta \eta + w \eta + \mu \eta
 \end{equation}
 und wie zuvor auch eine Familie von zugehörigen Bilinearformen $a(\blank, \blank; w)$ durch
 \begin{equation}
     \label{eq:bilinearform_feld}
     \begin{aligned}
         a(\blank, \blank; w) \colon V \times V \to \mathbb{R}, \quad
-        a(\eta, \zeta; w) = c\skp{\grad \eta}{\grad \zeta}{H} + \skp{w \eta}{\zeta}{H} + \mu \skp{\eta}{\zeta}{H}.
+        a(\eta, \zeta; w) := c\skp{\grad \eta}{\grad \zeta}{H} + \skp{w \eta}{\zeta}{H} + \mu \skp{\eta}{\zeta}{H}.
     \end{aligned}
 \end{equation}
 
@@ -388,7 +388,7 @@ Um sicherzustellen, dass derartige Felder $w(\bm\sigma)$ wohldefinierte Operator
 Im Folgenden bezeichnen wir die obige $\ell_{1}(\mathbb{N})$-Norm der Kürze wegen als
 \begin{equation}
 \label{eq:system_l1_norm}
-    c_{\varphi} = \sum_{j = 1}^{\infty} \norm{\varphi_{j}}_{L_{\infty}(\Omega)}.
+    c_{\varphi} := \sum_{j = 1}^{\infty} \norm{\varphi_{j}}_{L_{\infty}(\Omega)}.
 \end{equation}
 Diese Annahme stellt insbesondere die gleichmäßige Konvergenz von $w(\bm\sigma)$ für alle $\bm\sigma \in \mathcal P$ sicher, denn es gilt
 \begin{equation}
@@ -429,8 +429,8 @@ Sei dazu $\bm\sigma \in \mathcal P$, dann definieren wir die folgenden Teilfolge
     \label{eq:parametrisches_raum_zeit_feld}
         \begin{aligned}
             \omega(t, \vec{x}; \bm\sigma)
-            &= w(\vec{x}; \bm\sigma_{\odd}) \chi_{I_{1}}(t) + w(\vec{x}; \bm\sigma_{\even}) \chi_{I_{2}}(t)\\
-            &= \sum_{j = 1}^{\infty} (\sigma_{2j-1} \chi_{I_{1}}(t) + \sigma_{2j} \chi_{I_{2}}(t)) \varphi_{j}(\vec x)
+            &:= w(\vec{x}; \bm\sigma_{\odd}) \chi_{I_{1}}(t) + w(\vec{x}; \bm\sigma_{\even}) \chi_{I_{2}}(t)\\
+            &\phantom{:}= \sum_{j = 1}^{\infty} (\sigma_{2j-1} \chi_{I_{1}}(t) + \sigma_{2j} \chi_{I_{2}}(t)) \varphi_{j}(\vec x)
         \end{aligned}
     \end{equation}
     gegeben ist.
@@ -447,7 +447,7 @@ gilt.
 Erweitern wir nun die Operator"=Definition \cref{eq:operator_parameter} um die Zeitabhängigkeit; definieren wir also für $t \in I$ und $\bm\sigma \in \mathcal P$ die Operatorfamilie
 \begin{equation}
     \label{eq:operator_zeit_parameter}
-    A(t, \bm\sigma) \colon V \to V', \quad A(t, \bm\sigma) \eta = -c \Delta \eta + \omega(t, \blank; \bm\sigma) \eta + \mu \eta,
+    A(t, \bm\sigma) \colon V \to V', \quad A(t, \bm\sigma) \eta := -c \Delta \eta + \omega(t, \blank; \bm\sigma) \eta + \mu \eta,
 \end{equation}
 dann hat die zugehörige Familie von Bilinearformen $a(\blank, \blank; t, \bm\sigma) \colon V \times V \to \mathbb{R}$ nach \cref{eq:parametrisches_raum_zeit_feld} die Form
 \begin{equation}
@@ -470,13 +470,13 @@ Mit dieser Vorarbeit können wir analog zu \cref{definition:raum_zeit_variations
      \begin{equation}
      \label{eq:parametrisches_rz_variationsproblem:lhs}
          b(u, v; \bm\sigma)
-             = \int_{I} \left[ \skp{u_{t}(t)}{v_{1}(t)}{V' \times V} + a(u(t), v_{1}(t); t, \bm\sigma) \right] \diff t + \skp{u(0)}{v_{2}}{H},
+             := \int_{I} \left[ \skp{u_{t}(t)}{v_{1}(t)}{V' \times V} + a(u(t), v_{1}(t); t, \bm\sigma) \right] \diff t + \skp{u(0)}{v_{2}}{H},
      \end{equation}
      wobei $a(\blank, \blank; t, \bm\sigma)$ wie in \cref{eq:bilinearform_zeit_parameter} definiert sei.
      Das stetige lineare Funktional $f \colon \mathcal Y \to \mathbb{R}$ sei wie zuvor
      \begin{equation}
      \label{eq:parametrisches_rz_variationsproblem:rhs}
-         f(v) = \int_{I} \skp{g(t)}{v_{1}(t)}{V' \times V} \diff t + \skp{u_{0}}{v_{2}}{H}.
+         f(v) := \int_{I} \skp{g(t)}{v_{1}(t)}{V' \times V} \diff t + \skp{u_{0}}{v_{2}}{H}.
      \end{equation}
 \end{Definition}
 
@@ -529,16 +529,16 @@ Dabei orientieren wir uns an den Arbeiten von \textcite{Cohen:2010kz,Cohen:2011j
 
 Zunächst einige notationelle Vorbemerkungen.
 \begin{Bemerkung}
-    Bezeichne mit $\mathcal F = \Set{ \bm\nu \in \mathbb{N}^{\mathbb{N}}_{0} \given \abs{\bm\nu} < \infty }$ die Menge aller Folgen nichtnegativer ganzer Zahlen, wobei
+    Bezeichne mit $\mathcal F := \Set{ \bm\nu \in \mathbb{N}^{\mathbb{N}}_{0} \given \abs{\bm\nu} < \infty }$ die Menge aller Folgen nichtnegativer ganzer Zahlen, wobei
     \begin{equation}
-        \abs{\bm\nu} = \sum_{k = 1}^{\infty} \abs{\nu_{k}}
+        \abs{\bm\nu} := \sum_{k = 1}^{\infty} \abs{\nu_{k}}
     \end{equation}
     die $\ell_{1}(\mathbb{N})$-Norm sei.
     Anders formuliert, besteht $\mathcal F$ gerade aus denjenigen Folgen in $\mathbb{N}_{0}$, welche nur endliche viele Einträge ungleich Null aufweisen.
 
     Sei $\bm\nu \in \mathcal F$ und $\vec{b} \in \ell_{p}(\mathbb{N})$, $p > 0$, dann schreiben wir
     \begin{equation}
-        \vec{b}^{\bm\nu} = \prod_{j = 1}^{\infty} b_{j}^{\nu_{j}}
+        \vec{b}^{\bm\nu} := \prod_{j = 1}^{\infty} b_{j}^{\nu_{j}}
     \end{equation}
     mit der Konvention $0^{0} = 1$.
     Wegen $\abs{\bm\nu} < \infty$ ist dieses Produkt stets endlich.
@@ -548,11 +548,11 @@ Um die Notation für die nachfolgenden Beweise zu vereinfachen, ordnen wir die D
 \begin{Bemerkung}
     Definiere neue charakteristische Funktionen und Entwicklungsfunktionen für $j \in \mathbb{N}$ durch
     \begin{equation}
-        \tilde{\chi}_{j} = \begin{cases}
+        \tilde{\chi}_{j} := \begin{cases}
             \chi_{I_{1}}, & j~\text{ungerade}\\
             \chi_{I_{2}}, & j~\text{gerade}
         \end{cases}, \quad
-        \tilde{\varphi}_{j} = \begin{cases}
+        \tilde{\varphi}_{j} := \begin{cases}
             \varphi_{(j+1)/{2}}, & j~\text{ungerade}\\
             \varphi_{j / 2}, & j~\text{gerade}.
         \end{cases}
@@ -593,7 +593,7 @@ Für die nachfolgenden Beweise fixieren wir die rechte Seite $f \in \mathcal Y'$
         \end{equation}
         mit der Abbildung
         \begin{equation}
-            h \colon \mathcal Y \to \mathbb{R}, \quad h(v) = - \int_{I} \skp{(w - \tilde{w})\tilde{u}}{v_{1}}{H} \diff t
+            h \colon \mathcal Y \to \mathbb{R}, \quad h(v) := - \int_{I} \skp{(w - \tilde{w})\tilde{u}}{v_{1}}{H} \diff t
         \end{equation}
         auffassen können.
         Die Linearität von $h$ ist klar.
@@ -634,9 +634,9 @@ Als ersten Schritt des Regularitätsnachweises zeigen wir nun die Existenz belie
         Erneut verzichten wir auf die explizite Notation der Zeitabhängigkeit.
         Wir beschränken uns darauf die Behauptung exemplarisch für die partiellen Ableitungen erster Ordnung für ein festes $\bm\sigma \in \mathcal P$ nachzuweisen.
         Ohne Einschränkung sei nun $\bm\nu = \vec{e}_{j} \in \mathcal F$ für ein $j \in \mathbb{N}$ und ferner sei $h \in \mathbb{R} \setminus \Set{ 0 }$.
-        Wir definieren $\bm\sigma_{h} = \bm\sigma + h \bm\nu = \bm\sigma + h \vec e_{j}$ und
+        Wir definieren $\bm\sigma_{h} := \bm\sigma + h \bm\nu = \bm\sigma + h \vec e_{j}$ und
         \begin{equation}
-            \theta_{h} = \frac{u(\bm\sigma_{h}) - u(\bm\sigma)}{h},
+            \theta_{h} := \frac{u(\bm\sigma_{h}) - u(\bm\sigma)}{h},
         \end{equation}
         wobei $u(\blank)$ die Lösungen der parametrischen schwachen Formulierung \cref{eq:parametrisches_rz_variationsproblem} für die entsprechenden Parameter ist.
         Ist $\abs{h}$ klein genug, dann existieren diese auch im Fall $\bm\sigma_{h} \not\in \mathcal P$, da analog zu \cref{eq:parametrisches_raum_zeit_feld_schranke} wegen
@@ -671,7 +671,7 @@ Als ersten Schritt des Regularitätsnachweises zeigen wir nun die Existenz belie
         \end{equation}
         mit der Abbildung
         \begin{equation}
-            F_{h} \colon \mathcal Y \to \mathbb{R}, \quad F_{h}(v) = - \int_{I} \tilde{\chi}_{j} \skp{\tilde{\varphi}_{j}  u(\bm\sigma_{h})}{v_{1}}{H} \diff t.
+            F_{h} \colon \mathcal Y \to \mathbb{R}, \quad F_{h}(v) := - \int_{I} \tilde{\chi}_{j} \skp{\tilde{\varphi}_{j}  u(\bm\sigma_{h})}{v_{1}}{H} \diff t.
         \end{equation}
         Vollkommen analog zum Beweis des vorherigen Lemmas kann man zeigen, dass $F_{h}$ ein stetiges lineares Funktional auf $\mathcal Y$ definiert, das heißt, $\theta_{h}$ ist die eindeutige Lösung des Variationsproblems \cref{eq:existenz_partieller_ableitungen:beweis:variationsproblem}.
         Weiter ist $F_{h}(\blank)$ stetig in $h = 0$, denn für festes $v \in \mathcal Y$ gilt unter Verwendung der Cauchy-Schwarz-Ungleichung die Abschätzung
@@ -854,7 +854,7 @@ Wir geben die Aussage hier ohne Beweis wieder.
 
 \begin{Satz}
 \label{satz:loesungen_analytisch}
-    Das Funktionensystem $\Set{\varphi_{j}}_{j \in \mathbb{N}}$ sei wo gewählt, dass $\vec b \in \ell_{1}(\mathbb{N})$, definiert als $b_{j} = \beta^{-1} \norm{\varphi_{j}}_{L_{\infty}(\Omega)}$, die Bedingung $\norm{\vec b}_{\ell_{1}(\mathbb{N})} < 1$ erfüllt.
+    Das Funktionensystem $\Set{\varphi_{j}}_{j \in \mathbb{N}}$ sei so gewählt, dass $\vec b \in \ell_{1}(\mathbb{N})$, definiert als $b_{j} := \beta^{-1} \norm{\varphi_{j}}_{L_{\infty}(\Omega)}$, die Bedingung $\norm{\vec b}_{\ell_{1}(\mathbb{N})} < 1$ erfüllt.
     Dann hängt die Lösung $u(\bm \sigma)$ des parametrischen Raum"=Zeit"=Variationsproblems \cref{eq:parametrisches_rz_variationsproblem} analytisch vom Parameter $\bm \sigma \in \mathcal P$ ab.
 
     \begin{Beweis}
@@ -926,7 +926,7 @@ Inspiziert man die Ausführungen dieses Kapitels für den Fall homogener Dirichl
             &= c \norm{\grad \eta}^{2}_{H} + \skprod{\omega(t, \blank) \eta}{\eta}_{H} + \mu \skprod{\eta}{\eta}_{H} + \lambda \skprod{\eta}{\eta}_{H}
             \\&= c \norm{\grad \eta}^{2}_{H} + \skprod{\omega(t, \blank) + \mu + \lambda) \eta}{\eta}_{H}.
         \end{align}
-        Wählen wir $\lambda = \max\Set{\norm{\omega}_{L_{\infty}(I; L_{\infty}(\Omega))} - \mu + c, c} \geq c > 0$, dann gilt $\omega(t, \blank) + \mu + \lambda - c \geq 0$ fast überall in $\Omega$ und wir erhalten die Abschätzung
+        Wählen wir $\lambda := \max\Set{\norm{\omega}_{L_{\infty}(I; L_{\infty}(\Omega))} - \mu + c, c} \geq c > 0$, dann gilt $\omega(t, \blank) + \mu + \lambda - c \geq 0$ fast überall in $\Omega$ und wir erhalten die Abschätzung
         \begin{align}
             a(\eta, \eta; t) + \lambda \norm{\eta}^{2}_{H}
             &= c \norm{\grad \eta}^{2}_{H} + \skprod{(\omega(t, \blank) + \mu + \lambda - c) \eta}{\eta}_{H} + c \norm{\eta}^{2}_{H} \\
