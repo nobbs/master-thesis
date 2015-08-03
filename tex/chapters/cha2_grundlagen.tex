@@ -19,7 +19,7 @@ Wir beginnen nun mit der folgenden Definition der Bochner"=Räume nach \cite[Def
 \begin{Definition}
 \label{definition:bochner_raum}
     Seien $X$ ein Banachraum, $- \infty < a < b < \infty$ und $1 \leq p < \infty$.
-    Als \emph{Bochner"=Raum} $L_{p}(a, b; X)$ bezeichnen wir die Menge (der Äquivalenzklassen) $L_{p}$-integrierbarer Funktionen $f \colon [a, b] \to X$, das heißt, aller messbarer Funktionen auf $[a, b]$ mit
+    Als \emph{Bochner"=Raum} $L_{p}(a, b; X)$ bezeichnen wir die Menge (der Äquivalenzklassen) $L_{p}$"=integrierbarer Funktionen $f \colon [a, b] \to X$, das heißt aller auf $[a, b]$ messbarer Funktionen mit
     \begin{equation}
         \norm{f}_{L_{p}(a, b; X)} \deq \left( \int_{a}^{b} \norm{f(t)}_{X}^{p} \diff t \right)^{1 / p} < \infty.
     \end{equation}
@@ -47,15 +47,15 @@ Weiter können wir für Funktionen aus einem Bochner"=Raum eine Zeitableitung de
 \begin{Definition}%[Zeitableitung]
 \label{definition:zeitableitung}
     Seien $X$ und $Y$ Banachräume mit stetiger Einbettung $X \hookrightarrow Y$ und sei $u \in L_{2}(a, b; X)$.
-    Als \emph{Zeitableitung} bezeichnen wir die distributionelle Ableitung $\frac{\mathrm{d}}{\mathrm{d} t} u \in L_{2}(a, b; Y)$, welche als das $v \in L_{2}(a, b; Y)$ definiert ist, welches
+    Als \emph{Zeitableitung} bezeichnen wir die distributionelle Ableitung $u_{t} \in L_{2}(a, b; Y)$, welche als das $v \in L_{2}(a, b; Y)$ definiert ist, welches
     \begin{equation}
-        \int_{a}^{b} v(t) \varphi(t) \diff t = - \int_{a}^{b} u(t) \frac{\mathrm{d}}{\mathrm{d} t} \varphi(t) \diff t \quad \fa \varphi \in \mathcal C^{\infty}_{0}((a, b), \mathbb{R})
+        \int_{a}^{b} v(t) \varphi(t) \diff t = - \int_{a}^{b} u(t) \varphi'(t) \diff t, \quad \fa \varphi \in \mathcal C^{\infty}_{0}((a, b), \mathbb{R}),
     \end{equation}
     erfüllt, falls ein solches $v$ existiert.
 \end{Definition}
 
 \begin{Bemerkung}
-    Je nach Situation werden wir der Einfachheit halber eine der Schreibweisen $\frac{\mathrm{d}}{\mathrm{d} t} u = u' = u_{t}$ verwenden.
+    Je nach Situation werden wir eine der beiden Notationen $u_{t}$ oder $u'$ verwenden.
 \end{Bemerkung}
 
 Obige Definition einer Zeitableitung ermöglicht die Definition der Bochner"=Sobolev"=Räume.
@@ -99,7 +99,7 @@ Dies geschieht analog zu \cite[Definition XVIII.2.4]{Dautray:1992by}.
     Sei $V \denseinclusion H \denseinclusion V'$ ein Gelfand"=Tripel.
     Wir definieren den Raum
     \begin{equation}
-        W(a, b; V, V') \deq \Set{u \in L_{2}(a, b; V) \given u' \in L_{2}(a, b; V')}
+        W(a, b; V, V') \deq \Set{u \in L_{2}(a, b; V) \given u' \in L_{2}(a, b; V')},
     \end{equation}
     wobei $u'$ im Sinne von \cref{definition:zeitableitung} zu verstehen ist.
     Es gilt ferner
@@ -108,7 +108,8 @@ Dies geschieht analog zu \cite[Definition XVIII.2.4]{Dautray:1992by}.
     \end{equation}
 \end{Definition}
 
-Weiter können wir diesem Raum ein Skalarprodukt und damit auch eine Norm zuordnen, dies liefert die folgende Aussage.
+Weiter können wir diesem Raum ein Skalarprodukt und damit auch eine Norm zuordnen.
+Dies liefert die folgende Aussage.
 
 \begin{Lemma}
 \label{lemma:bochner_W_ist_hilbertraum}
@@ -123,7 +124,7 @@ Weiter können wir diesem Raum ein Skalarprodukt und damit auch eine Norm zuordn
     so ist $W(a, b; V, V')$ ein Hilbertraum.
 
     \begin{Beweis}
-        Siehe \cite[Proposition XVIII.2.6]{Dautray:1992by}.
+        Ein Beweis findet sich in \cite[Proposition XVIII.2.6]{Dautray:1992by}.
     \end{Beweis}
 \end{Lemma}
 
@@ -152,11 +153,11 @@ Dies führt zum sogenannten Spursatz, welchen wir durch die folgende Einbettungs
     Dann sind die \emph{Spuren} $u(a), u(b) \in H$ wohldefiniert.
 
     \begin{Beweis}
-        Direkte Folgerung aus \cref{satz:bochner_raum_W_stetige_einbettung_C0}, siehe auch \cite[Remark XVIII.2.4]{Dautray:1992by}.
+        Ergibt sich als direkte Folgerung aus \cref{satz:bochner_raum_W_stetige_einbettung_C0}, siehe auch \cite[Remark XVIII.2.4]{Dautray:1992by}.
     \end{Beweis}
 \end{Korollar}
 
-Ferner erhalten wir aus obiger Einbettungsaussage \cref{satz:bochner_raum_W_stetige_einbettung_C0} auch das folgende Ergebnis, welches im Rahmen der Betrachtung linearer Evolutionsgleichungen benötigt wird.
+Ferner erhalten wir aus obiger Einbettungsaussage, \cref{satz:bochner_raum_W_stetige_einbettung_C0}, auch das folgende Ergebnis, welches im Rahmen der Betrachtung linearer Evolutionsgleichungen benötigt wird.
 
 \begin{Korollar}
 \label{korollar:einbettungskonstante_M_e}
@@ -184,7 +185,7 @@ Abschließen wollen wir diesen Abschnitt mit einer alternativen Charakterisierun
     \end{equation}
 
     \begin{Beweis}
-        Siehe \cite[Theorem 12.6.1, Theorem 12.7.1]{Aubin:2000un}.
+        Siehe \cite[Theorem 12.6.1, Theorem 12.7.1]{Aubin:2000un} für einen ausführlichen Nachweis.
     \end{Beweis}
 \end{Satz}
 
@@ -213,15 +214,15 @@ Wie wir später sehen werden, stellt die nachfolgende Annahme sicher, dass die a
     Die Familie von Bilinearformen $a(\blank, \blank; t)$, $t \in I$, erfülle die folgenden Eigenschaften:
     \leavevmode
     \begin{thmenumerate}
-        \item \emph{Messbarkeit:} die Abbildung $I \ni t \mapsto a(\eta, \zeta; t)$ ist messbar für alle $\eta, \zeta \in V$.
+        \item \emph{Messbarkeit:} Die Abbildung $I \ni t \mapsto a(\eta, \zeta; t)$ ist messbar für alle $\eta, \zeta \in V$.
         \item \emph{Stetigkeit:}
-        es existiert ein $0 < \gamma_{a} < \infty$ mit
+        Es existiert ein $0 < \gamma_{a} < \infty$ mit
         \begin{equation}
             \label{eq:eigenschaften_der_bilinearform_a:stetigkeit}
             \abs{a(\eta, \zeta; t)} \leq \gamma_{a} \norm{\eta}_{V} \norm{\zeta}_{V}, \quad \fa \eta, \zeta \in V \text{ und fast alle } t \in I.
         \end{equation}
         \item \emph{G\r{a}rding-Ungleichung:}
-        es existieren $\alpha > 0$ und $\lambda \geq 0$ mit
+        Es existieren $\alpha > 0$ und $\lambda \geq 0$ mit
         \begin{equation}
             \label{eq:eigenschaften_der_bilinearform_a:garding}
             a(\eta, \eta; t) + \lambda \norm{\eta}_{H}^{2} \geq \alpha \norm{\eta}_{V}^{2}, \quad \fa \eta \in V \text{ und fast alle } t \in I.
@@ -249,11 +250,11 @@ Mit dieser Vorarbeit definieren wir nun den Begriff der linearen Evolutionsgleic
 \end{Definition}
 
 Darauf aufbauend leiten wir als nächstes eine Raum-Zeit-Variationsformulierung für~\cref{eq:lineare_evolutionsgleichung} her.
-Dazu benötigen wir geeignete Ansatz- und Testfunktionenräume; hierzu verwenden wir die im vorherigen Abschnitt eingeführten Bochner-Räume.
+Dazu benötigen wir geeignete Ansatz- und Testfunktionenräume, wofür die im vorherigen Abschnitt eingeführten Bochner-Räume verwendet werden.
 
 \begin{Definition}
 \label{definition:ansatz_und_testraum}
-    Den Ansatzfunktionenraum $\mathcal X$ definieren wir als den Hilbertraum
+    Den \emph{Ansatzfunktionenraum} $\mathcal X$ definieren wir als den Hilbertraum
     \begin{equation}
     \label{eq:ansatzraum_X}
         \mathcal X = W(I; V, V') = L_{2}(I; V) \cap H^{1}(I; V')
@@ -263,7 +264,7 @@ Dazu benötigen wir geeignete Ansatz- und Testfunktionenräume; hierzu verwenden
     \label{eq:ansatzraum_skalarprodukt}
         \skp{u}{v}{\mathcal X} = \skp{u}{v}{L_{2}(I; V)} + \skp{u'}{v'}{L_{2}(I; V')}.
     \end{equation}
-    Der Testfunktionenraum $\mathcal Y$ sei der Hilbertraum
+    Der \emph{Testfunktionenraum} $\mathcal Y$ sei der Hilbertraum
     \begin{equation}
     \label{eq:testraum_Y}
         \mathcal Y = L_{2}(0, T; V) \times H
@@ -276,7 +277,7 @@ Dazu benötigen wir geeignete Ansatz- und Testfunktionenräume; hierzu verwenden
 \end{Definition}
 
 Um nun aus~\cref{eq:lineare_evolutionsgleichung} eine schwache Formulierung zu erhalten, \enquote{multiplizieren} wir die lineare Evolutionsgleichung mit $v = (v_{1}, v_{2}) \in \mathcal Y$ und integrieren anschließend über das Zeitintervall $I = [0, T]$.
-Dadurch erhalten wir die folgende Raum"=Zeit"=Variationsformulierung:
+Dadurch erhalten wir die nachfolgende Raum"=Zeit"=Variationsformulierung.
 
 \begin{Definition}
 \label{definition:absktrakte_raum_zeit_formulierung}
@@ -308,12 +309,12 @@ Dazu definieren wir zunächst, was wir darunter verstehen wollen und greifen daz
 \begin{Definition}[Hadamard]
 \label{definition:sachgemaess_gestellt_nach_hadamard}
     Seien $X$ und $Y$ zwei Hilberträume, $a \in \mathcal L(X \times Y)$ eine stetige Bilinearform und $f \in Y'$ ein stetiges lineares Funktional.
-    Wir nennen das abstrakte Variationsproblem
+    Sei weiter ein abstraktes Variationsproblem gegeben durch:
     \begin{equation}
     \label{eq:hadamard_variationsproblem}
         \text{Finde } u \in X \colon \quad a(u, v) = f(v) \quad \fa v \in Y.
     \end{equation}
-    \emph{sachgemäß gestellt}, wenn eine eindeutige Lösung $u \in X$ existiert und diese eine A-priori-Abschätzung der Form
+    Wir nennen dieses \emph{sachgemäß gestellt}, wenn eine eindeutige Lösung $u \in X$ existiert und diese eine A-priori-Abschätzung der Form
     \begin{equation}
     \label{eq:hadamard_abschaetzung}
         \norm{u}_{X} \leq c \norm{f}_{Y'}, \quad \fa f \in Y',
@@ -322,7 +323,7 @@ Dazu definieren wir zunächst, was wir darunter verstehen wollen und greifen daz
 \end{Definition}
 
 Um dies für die Raum"=Zeit"=Variationsformulierung \cref{eq:absktrakte_raum_zeit_formulierung} nachzuweisen, werden wir indirekt auf den nachfolgenden wichtigen Satz zurückgreifen.
-Dieser findet sich in dieser oder ähnlicher Form bei \textcites[Theorem 2.1]{Babuska:1971fx}[Theorem 5.2.1]{Aziz:2014wf}[Theorem \S{}3.3.6]{Braess:2007wm} sowie vielen weiteren einschlägigen Quellen.
+Dieser findet sich in dieser oder ähnlicher Form bei \textcites[Theorem 2.1]{Babuska:1971fx}[Theorem 5.2.1]{Aziz:2014wf}[Theorem \S{}3.3.6]{Braess:2007wm}.
 
 \begin{Satz}[Banach-Ne{\v c}as-Babu{\v s}ka-Theorem]
 \label{satz:bnb_theorem}
@@ -331,26 +332,26 @@ Dieser findet sich in dieser oder ähnlicher Form bei \textcites[Theorem 2.1]{Ba
     \begin{thmenumerate}
         \item \label{satz:bnb_theorem:stetig}
         \emph{Stetigkeit:}
-        es existiert eine Konstante $0 < \gamma < \infty$ mit
+        Es existiert eine Konstante $0 < \gamma < \infty$ mit
         \begin{equation}
-            \abs{a(u, v)} \leq \gamma \norm{u}_{X} \norm{v}_{Y} \quad \fa u \in X,~v\in Y.
+            \abs{a(u, v)} \leq \gamma \norm{u}_{X} \norm{v}_{Y}, \quad \fa u \in X,~v\in Y.
         \end{equation}
         \item \label{satz:bnb_theorem:inf_sup_bedingung}
         \emph{Inf-sup-Bedingung:}
-        es existiert eine Konstante $\beta > 0$ mit
+        Es existiert eine Konstante $\beta > 0$ mit
         \begin{equation}
             \inf_{u \in X} \sup_{v \in Y} \frac{a(u, v)}{\norm{u}_{X} \norm{v}_{Y}} \geq \beta.
         \end{equation}
         \item \label{satz:bnb_theorem:surjektiv}
         \emph{Surjektivität:}
-        zu jedem $v \in Y$, $v \neq 0$, existiert ein $u \in X$ mit
+        Zu jedem $v \in Y$, $v \neq 0$, existiert ein $u \in X$ mit
         \begin{equation}
             a(u, v) \neq 0.
         \end{equation}
     \end{thmenumerate}
     Gelten die drei Bedingungen und ist weiter ein Funktional $f \in Y'$ gegeben, dann existiert eine eindeutige Lösung $\hat u \in X$ mit
     \begin{equation}
-        a(\hat u, v) = f(v) \quad \fa v \in Y
+        a(\hat u, v) = f(v), \quad \fa v \in Y,
     \end{equation}
     und es gilt
     \begin{equation}
@@ -367,7 +368,7 @@ Dieser findet sich in dieser oder ähnlicher Form bei \textcites[Theorem 2.1]{Ba
     dann gilt insbesondere auch \cref{satz:bnb_theorem:surjektiv}.
 \end{Bemerkung}
 
-Für das abstrakte Raum"=Zeit"=Variationsproblem \cref{eq:absktrakte_raum_zeit_formulierung} wurde für die hier vorliegenden Rahmenbedingungen bereits von \textcite[Section XVIII.3]{Dautray:1992by} nachgewiesen, dass es sich hierbei um ein sachgemäß gestelltes Problem handelt.
+Für das abstrakte Raum"=Zeit"=Variationsproblem \cref{eq:absktrakte_raum_zeit_formulierung} wurde für die hier vorliegenden Rahmenbedingungen bereits von \textcite[Section XVIII.3]{Dautray:1992by} nachgewiesen, dass es sich um ein sachgemäß gestelltes Problem handelt.
 Ein alternativer Beweis, welcher die Bedingungen des \acl{bnb}s nachweist und weiter explizite Schranken für die Stetigkeitskonstante $\gamma_{b}$ und die Inf"=sup"=Konstante $\beta$ der Bilinearform $b$ aus \cref{eq:absktrakte_raum_zeit_formulierung:lhs} liefert, wurde von \textcite{Schwab:2009ec} geführt.
 Wir wiederholen die Kernaussage \cite[Theorem 5.1]{Schwab:2009ec} und verweisen für einen ausführlichen Beweis auf \cite[Appendix A]{Schwab:2009ec}.
 
