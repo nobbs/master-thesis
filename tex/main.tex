@@ -1,7 +1,7 @@
-%!TEX root = main.tex
+% -*- root: main.tex -*-
 
 \documentclass[
-  draft,
+  % draft,
   % final,
   a4paper,
   % 11pt,
@@ -22,8 +22,6 @@
 \input{meta}
 \input{acronyms}
 
-\usepackage{dirtree}
-
 \addbibresource{literature.bib}
 
 \begin{document}
@@ -34,7 +32,7 @@
     \include{misc/deckblatt}
 
     % Danksagung
-    % \include{misc/danksagung}
+    \include{misc/danksagung}
 
     % Abstrakt
     % \include{chapters/zusammenfassung}
@@ -49,12 +47,12 @@
     \mainmatter{}
 
     % Kapitel einbinden
-    \input{chapters/cha1_einleitung}
-    \input{chapters/cha2_grundlagen}
-    \input{chapters/cha3_propagator_dgl}
-    \input{chapters/cha4_galerkin}
-    % \input{chapters/cha5_rbm}
-    % \input{chapters/cha6_ausblick}
+    \subfile{chapters/cha1_einleitung}
+    \subfile{chapters/cha2_grundlagen}
+    \subfile{chapters/cha3_propagator_dgl}
+    \subfile{chapters/cha4_galerkin}
+    \subfile{chapters/cha5_rbm}
+    \subfile{chapters/cha6_ausblick}
 
     % % \input{chapters/cha5_eindim}
     % Alles, was noch unbedingt rein muss
@@ -66,7 +64,7 @@
     \appendix{}
 
     % DVD Inhalt
-    % \input{chapters/app_code}
+    \subfile{chapters/app_code}
 
     %% Los geht's mit den Verzeichnissen
 

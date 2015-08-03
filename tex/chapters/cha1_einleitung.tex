@@ -1,4 +1,7 @@
-%!TEX root = ../main.tex
+% -*- root: ../main.tex -*-
+
+\documentclass[../main.tex]{subfiles}
+\begin{document}
 
 \chapter{Einleitung} % (fold)
 \label{chapter:einleitung}
@@ -13,17 +16,17 @@ Weiter interessieren wir uns hier nur für Copolymere, vor allem die sogenannten
     \centering
     \begin{subfigure}[b]{\textwidth}
         \centering
-        \includestandalone[width=0.7\textwidth]{tikz/einleitung/fig1}
+        \includegraphics[width=0.7\textwidth]{figures/einleitung/copoly1.pdf}
     \end{subfigure}
-    \\[0.33em]
+    \\[-0.75em]
     \begin{subfigure}[b]{\textwidth}
         \centering
-        \includestandalone[width=0.7\textwidth]{tikz/einleitung/fig2}
+        \includegraphics[width=0.7\textwidth]{figures/einleitung/copoly2.pdf}
     \end{subfigure}
-    \\[0.33em]
+    \\[-0.75em]
     \begin{subfigure}[b]{\textwidth}
         \centering
-        \includestandalone[width=0.7\textwidth]{tikz/einleitung/fig3}
+        \includegraphics[width=0.7\textwidth]{figures/einleitung/copoly3.pdf}
     \end{subfigure}
     \caption[Skizzenhafte Darstellung verschiedener Polymerarten]{%
         Skizzenhafte Darstellung verschiedener Polymerarten.
@@ -44,19 +47,19 @@ Als nützliches und relativ gut handhabbares theoretisches Modell hat sich die s
 \begin{figure}[tb]
     \centering
     \begin{subfigure}[b]{0.15\textwidth}
-        \includegraphics[width=\textwidth]{figures/einleitung/fig1}
+        \includegraphics[width=\textwidth]{figures/einleitung/phase1}
     \end{subfigure}
     \begin{subfigure}[b]{0.15\textwidth}
-        \includegraphics[width=\textwidth]{figures/einleitung/fig2}
+        \includegraphics[width=\textwidth]{figures/einleitung/phase2}
     \end{subfigure}
     \begin{subfigure}[b]{0.15\textwidth}
-        \includegraphics[width=\textwidth]{figures/einleitung/fig3}
+        \includegraphics[width=\textwidth]{figures/einleitung/phase3}
     \end{subfigure}
     \begin{subfigure}[b]{0.15\textwidth}
-        \includegraphics[width=\textwidth]{figures/einleitung/fig4}
+        \includegraphics[width=\textwidth]{figures/einleitung/phase4}
     \end{subfigure}
     \begin{subfigure}[b]{0.15\textwidth}
-        \includegraphics[width=\textwidth]{figures/einleitung/fig5}
+        \includegraphics[width=\textwidth]{figures/einleitung/phase5}
     \end{subfigure}
     \caption[Verschiedene Phasen bei Diblockcopolymeren]{%
         Verschiedene Phasen bei Diblockcopolymeren, welche experimentell beobachtet wurden, wobei hierbei nur eine der beiden Monomer-Gattungen dargestellt wird.
@@ -83,7 +86,7 @@ Dabei wird die Polymerkette als stetige, linear elastische Faser aufgefasst und 
 
 \begin{figure}[tb]
     \centering
-        \includestandalone[width=0.6\textwidth]{tikz/einleitung/chains}
+        \includegraphics[width=0.6\textwidth]{figures/einleitung/chainmodell.pdf}
     \caption[%
         Polymerkette in diskretem und Gaußschen Kettenmodell
     ]{%
@@ -139,19 +142,15 @@ Diese Gleichungen bestehen aus der Inkompressibilität der Schmelze
 sowie der Kopplung der Felder und der Konzentrationen durch
 \begin{equation}
 \label{eq:felder}
-    % \begin{aligned}
-        \omega_{\mathrm{A}}(\vec{r}) = \chi N \phi_{\mathrm{B}}(\vec{r}) + \xi(\vec{r}), \qquad
-        \omega_{\mathrm{B}}(\vec{r}) = \chi N \phi_{\mathrm{A}}(\vec{r}) + \xi(\vec{r}),
-    % \end{aligned}
+    \omega_{\mathrm{A}}(\vec{r}) = \chi N \phi_{\mathrm{B}}(\vec{r}) + \xi(\vec{r}), \qquad
+    \omega_{\mathrm{B}}(\vec{r}) = \chi N \phi_{\mathrm{A}}(\vec{r}) + \xi(\vec{r}),
 \end{equation}%
 wobei mit dem Lagrange-Multiplikator $\xi(\vec{r})$ die Inkompressibilität \cref{eq:inkompressibilitaet} erzwungen wird.
 Weiter erhält man eine Darstellung der Konzentrationen in Form von
 \begin{equation}
 \label{eq:konzentrationen}
-    % \begin{aligned}
-        \phi_{\mathrm{A}}(\vec{r}) = \frac{V}{Q} \int_{0}^{f} q(\vec{r}, s) q^{\dagger}(\vec{r}, s) \diff s, \qquad
-        \phi_{\mathrm{B}}(\vec{r}) = \frac{V}{Q} \int_{f}^{1} q(\vec{r}, s) q^{\dagger}(\vec{r}, s) \diff s,
-    % \end{aligned}
+    \phi_{\mathrm{A}}(\vec{r}) = \frac{V}{Q} \int_{0}^{f} q(\vec{r}, s) q^{\dagger}(\vec{r}, s) \diff s, \qquad
+    \phi_{\mathrm{B}}(\vec{r}) = \frac{V}{Q} \int_{f}^{1} q(\vec{r}, s) q^{\dagger}(\vec{r}, s) \diff s,
 \end{equation}%
 wobei $Q = Q[\omega_{\mathrm{A}}, \omega_{\mathrm{B}}]$ die Partitionsfunktion (\foreign{engl.}{partition function}) eines einzelnen Polymers ist und durch
 \begin{equation}
@@ -234,13 +233,13 @@ So wird in \cite{Drolet:1999bs} ein Crank-Nicolson-Verfahren eingesetzt, wobei h
     \centering
     \begin{subfigure}[b]{0.475\textwidth}
         \centering
-        \includestandalone[width=1\textwidth]{tikz/einleitung/plot1}
+        \includegraphics[width=1\textwidth]{figures/einleitung/scft1.pdf}
         \caption{Felder}
     \end{subfigure}
     ~
     \begin{subfigure}[b]{0.475\textwidth}
         \centering
-        \includestandalone[width=1\textwidth]{tikz/einleitung/plot2}
+        \includegraphics[width=1\textwidth]{figures/einleitung/scft2.pdf}
         \caption{Fourier-Koeffizienten}
     \end{subfigure}
     \caption[%
@@ -279,6 +278,4 @@ Nachfolgend werden in \cref{chapter:galerkin} die ersten numerischen Grundlagen 
 
 Abschließend wird in \cref{chapter:ausblick} ein Résumé der Arbeit und daran anknüpfend ein Ausblick, welcher mögliche Ansatzpunkte für Verbesserungen und Weiterentwicklungen erläutert, gegeben.
 
-% subsection aufbau_der_restlichen_arbeit (end)
-
-% chapter einleitung (end)
+\end{document}

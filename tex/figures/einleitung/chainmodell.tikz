@@ -1,10 +1,5 @@
-%!TEX root = ../../main.tex
+% -*- root: ../../main.tex -*-
 
-\documentclass[tikz, border=10pt]{standalone}
-
-% \input{../../misc/colors}
-
-\begin{document}
 \begin{tikzpicture}[
   rotate=90,
   knoten/.style={
@@ -100,4 +95,3 @@
               (3.8, -3.7 - 6)
             };
 \end{tikzpicture}
-\end{document}

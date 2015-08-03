@@ -1,8 +1,4 @@
-%!TEX root = ../../main.tex
-
-\documentclass[tikz, border=10pt]{standalone}
-
-\begin{document}
+% -*- root: ../../main.tex -*-
 
 \begin{tikzpicture}[
   nodeAll/.style={draw, rounded corners=3pt, text width=1.5em, align=center, thick},
@@ -30,5 +26,3 @@
     (HP1) edge (HP2)
     (HP2) edge (HP3);
 \end{tikzpicture}
-
-\end{document}
