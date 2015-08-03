@@ -21,6 +21,7 @@
 \input{commands}
 \input{meta}
 \input{acronyms}
+\input{glossar}
 
 \addbibresource{literature.bib}
 
@@ -75,7 +76,9 @@
     \listoftables
 
     % Symbolverzeichnis
-    \printnomenclature{}
+    % \printnomenclature{}
+    \glsaddall[]
+    \printglossary[type=symbolslist, nonumberlist, style=long]
 
     % Akronymverzeichnis
     % \printacronyms[heading=chapter*]

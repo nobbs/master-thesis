@@ -24,11 +24,11 @@ Wir beginnen nun mit der folgenden Definition der Bochner"=Räume nach \cite[Def
     Seien $X$ ein Banachraum, $- \infty < a < b < \infty$ und $1 \leq p < \infty$.
     Als \emph{Bochner"=Raum} $L_{p}(a, b; X)$ bezeichnen wir die Menge (der Äquivalenzklassen) $L_{p}$"=integrierbarer Funktionen $f \colon [a, b] \to X$, das heißt aller auf $[a, b]$ messbarer Funktionen mit
     \begin{equation}
-        \norm{f}_{L_{p}(a, b; X)} \deq \left( \int_{a}^{b} \norm{f(t)}_{X}^{p} \diff t \right)^{1 / p} < \infty.
+        \norm{f}_{L_{p}(a, b; X)} := \left( \int_{a}^{b} \norm{f(t)}_{X}^{p} \diff t \right)^{1 / p} < \infty.
     \end{equation}
     Ferner ist der \emph{Bochner"=Raum} $L_{\infty}(a, b; X)$ definiert als die Menge (der Äquivalenzklassen) der für fast alle $t \in [a, b]$ wesentlich beschränkten Funktionen, also aller messbaren Funktionen $f \colon [a, b] \to X$ mit
     \begin{equation}
-        \norm{f}_{L_{\infty}(a, b; X)} \deq \esssup_{t \in [a, b]} \norm{f(t)}_{X} < \infty.
+        \norm{f}_{L_{\infty}(a, b; X)} := \esssup_{t \in [a, b]} \norm{f(t)}_{X} < \infty.
     \end{equation}
 \end{Definition}
 
@@ -37,7 +37,7 @@ Wir beginnen nun mit der folgenden Definition der Bochner"=Räume nach \cite[Def
     Für alle $1 \leq p \leq \infty$ ist $L_{p}(a, b; X)$ ein Banachraum.
     Ist ferner $H$ ein Hilbertraum, so auch $L_{2}(a, b; H)$ mit dem Skalarprodukt
     \begin{equation}
-        \skp{u}{v}{L_{2}(a, b; H)} = \int_{a}^{b} \skp{u(t)}{v(t)}{H} \diff t, \quad \text{für}~u,v \in L_{2}(a, b; H).
+        \skp{u}{v}{L_{2}(a, b; H)} := \int_{a}^{b} \skp{u(t)}{v(t)}{H} \diff t, \quad \text{für}~u,v \in L_{2}(a, b; H).
     \end{equation}
 
     \begin{Beweis}
@@ -69,7 +69,7 @@ Wir beschränken uns hier auf den für uns relevanten Raum erster Ordnung, siehe
     Sei $X$ ein Banachraum.
     Als \emph{Bochner"=Sobolev"=Raum} erster Ordnung definieren wir den Raum
     \begin{equation}
-        H^{1}(a, b; X) = \Set{u \in L_{2}(a, b; X) \given u' \in L_{2}(a, b; X)}.
+        H^{1}(a, b; X) := \Set{u \in L_{2}(a, b; X) \given u' \in L_{2}(a, b; X)}.
     \end{equation}
 \end{Definition}
 
@@ -102,7 +102,7 @@ Dies geschieht analog zu \cite[Definition XVIII.2.4]{Dautray:1992by}.
     Sei $V \denseinclusion H \denseinclusion V'$ ein Gelfand"=Tripel.
     Wir definieren den Raum
     \begin{equation}
-        W(a, b; V, V') \deq \Set{u \in L_{2}(a, b; V) \given u' \in L_{2}(a, b; V')},
+        W(a, b; V, V') := \Set{u \in L_{2}(a, b; V) \given u' \in L_{2}(a, b; V')},
     \end{equation}
     wobei $u'$ im Sinne von \cref{definition:zeitableitung} zu verstehen ist.
     Es gilt ferner
@@ -118,7 +118,7 @@ Dies liefert die folgende Aussage.
 \label{lemma:bochner_W_ist_hilbertraum}
     Versehen wir $W(a, b; V, V')$ mit dem Skalarprodukt
     \begin{equation}
-        \skp{u}{v}{W(a, b; V, V')} \deq \skp{u}{v}{L_{2}(a, b; V)} + \skp{u'}{v'}{L_{2}(a, b; V')}
+        \skp{u}{v}{W(a, b; V, V')} := \skp{u}{v}{L_{2}(a, b; V)} + \skp{u'}{v'}{L_{2}(a, b; V')}
     \end{equation}
     und der dadurch induzierten Norm
     \begin{equation}
@@ -168,7 +168,7 @@ Ferner erhalten wir aus obiger Einbettungsaussage, \cref{satz:bochner_raum_W_ste
     Die Einbettungskonstante
     \begin{equation}
         \label{eq:einbettungskonstante_M_e}
-        \gamma_{e} \deq \sup_{\substack{u\in W(a, b; V, V')\\u \neq 0}} \frac{\norm{u(a)}_{H}}{\norm{u}_{W(a, b; V, V')}}
+        \gamma_{e} := \sup_{\substack{u\in W(a, b; V, V')\\u \neq 0}} \frac{\norm{u(a)}_{H}}{\norm{u}_{W(a, b; V, V')}}
     \end{equation}
     ist gleichmäßig beschränkt in der Wahl $V \hookrightarrow H$ und hängt nur im Fall $b \to a$ von $b$ ab.
 
@@ -176,6 +176,13 @@ Ferner erhalten wir aus obiger Einbettungsaussage, \cref{satz:bochner_raum_W_ste
         Siehe \cites[Section 5]{Schwab:2009ec}[Beweis zu Theorem XVIII.2.1]{Dautray:1992by}.
     \end{Beweis}
 \end{Korollar}
+%
+\newglossaryentry{sym:einbettungskonsanten_gamma_e}{
+    sort={kEinbettungskonstante_gamma_e},
+    name={$\gamma_{e}$},
+    description={Einbettungskonstante, siehe \cref{korollar:einbettungskonstante_M_e}},
+    type=symbolslist
+}
 
 Abschließen wollen wir diesen Abschnitt mit einer alternativen Charakterisierung der hier betrachteten Bochner"=Räume als Tensor"=Produkt, welche erst bei der numerischen Umsetzung in \cref{chapter:galerkin} relevant wird.
 
@@ -203,8 +210,8 @@ definieren den Begriff der linearen Evolutionsgleichungen, leiten eine schwache 
 Um den Begriff der linearen Evolutionsgleichungen definieren zu können, müssen wir zunächst die richtigen Rahmenbedingungen schaffen.
 Sei $V \denseinclusion H \denseinclusion V'$ ein Gelfand-Tripel im Sinne von \cref{definition:gelfand_tripel}, das heißt, $V$ und $H$ seien separable Hilberträume und die Inklusionen seien jeweils dicht und stetig.
 Weiter sei $0 < T < \infty$ und $I = [0, T]$.
-Wir betrachten nun eine Familie von stetigen linearen Operatoren $A(t) \in \mathcal L(V, V')$ für $t \in I$.
-Nach dem Rieszschen Darstellungssatz, genauer siehe \cite[Theorem \S{}22.1]{Halmos:1957vd}, können wir diesen Operatoren eine Familie von Bilinearformen $a(\blank, \blank; t) \colon V \times V \to \mathbb{R}$ zuordnen, wobei diese durch
+Wir betrachten nun eine Familie $\Set{A(t) \in \mathcal L(V, V')}_{t \in I}$ von stetigen linearen Operatoren.
+Nach dem Rieszschen Darstellungssatz, genauer siehe \cite[Theorem \S{}22.1]{Halmos:1957vd}, können wir diesen Operatoren eine Familie von Bilinearformen $\Set{a(\blank, \blank; t) \in \mathcal L(V \times V)}_{t \in I}$ zuordnen, wobei diese durch
 \begin{equation}
     \skp{A(t)\eta}{\zeta}{V' \times V} = a(\eta, \zeta; t) \quad \fa \eta, \zeta \in V
 \end{equation}
@@ -214,7 +221,7 @@ Wie wir später sehen werden, stellt die nachfolgende Annahme sicher, dass die a
 
 \begin{Annahme}
 \label{annahme:eigenschaften_der_bilinearform_a}
-    Die Familie von Bilinearformen $a(\blank, \blank; t)$, $t \in I$, erfülle die folgenden Eigenschaften:
+    Die Familie $\Set{a(\blank, \blank; t) \in \mathcal L(V \times V)}_{t \in I}$ von Bilinearformen erfülle die folgenden Eigenschaften:
     \leavevmode
     \begin{thmenumerate}
         \item \emph{Messbarkeit:} Die Abbildung $I \ni t \mapsto a(\eta, \zeta; t)$ ist messbar für alle $\eta, \zeta \in V$.
@@ -232,8 +239,15 @@ Wie wir später sehen werden, stellt die nachfolgende Annahme sicher, dass die a
         \end{equation}
     \end{thmenumerate}
 \end{Annahme}
+%
+\newglossaryentry{sym:stetigkeitskonstante_gamma_a_b}{
+    sort={kStetigkeitskonstanten},
+    name={$\gamma_{a}$, $\gamma_{b}$},
+    description={Stetigkeitskonstanten},
+    type=symbolslist
+}
 
-Für den Rest dieses Abschnitts nehmen wir stets an, dass die Bilinearform $a(\blank, \blank; t)$ obige Annahme erfüllt.
+Für den Rest dieses Abschnitts nehmen wir stets an, dass die Bilinearformen $a(\blank, \blank; t)$ obige Annahme erfüllen.
 Mit dieser Vorarbeit definieren wir nun den Begriff der linearen Evolutionsgleichung.
 
 \begin{Definition}
@@ -249,7 +263,7 @@ Mit dieser Vorarbeit definieren wir nun den Begriff der linearen Evolutionsgleic
         \end{aligned}
         \right.
     \end{equation}
-    wobei die  Operatorfamilie $A(t) \in \mathcal L(V, V')$ wie oben gegeben sei.
+    wobei die  Operatorfamilie $\Set{A(t) \in \mathcal L(V, V')}_{t \in I}$ wie oben gegeben sei.
 \end{Definition}
 
 Darauf aufbauend leiten wir als nächstes eine Raum-Zeit-Variationsformulierung für \cref{eq:lineare_evolutionsgleichung} her.
@@ -260,22 +274,22 @@ Dazu benötigen wir geeignete Ansatz- und Testfunktionenräume, wofür die im vo
     Den \emph{Ansatzfunktionenraum} $\mathcal X$ definieren wir als den Hilbertraum
     \begin{equation}
     \label{eq:ansatzraum_X}
-        \mathcal X = W(I; V, V') = L_{2}(I; V) \cap H^{1}(I; V')
+        \mathcal X := W(I; V, V') = L_{2}(I; V) \cap H^{1}(I; V')
     \end{equation}
     mit dem Skalarprodukt
     \begin{equation}
     \label{eq:ansatzraum_skalarprodukt}
-        \skp{u}{v}{\mathcal X} = \skp{u}{v}{L_{2}(I; V)} + \skp{u'}{v'}{L_{2}(I; V')}.
+        \skp{u}{v}{\mathcal X} := \skp{u}{v}{L_{2}(I; V)} + \skp{u'}{v'}{L_{2}(I; V')}.
     \end{equation}
     Der \emph{Testfunktionenraum} $\mathcal Y$ sei der Hilbertraum
     \begin{equation}
     \label{eq:testraum_Y}
-        \mathcal Y = L_{2}(0, T; V) \times H
+        \mathcal Y := \mathcal Y_{1} \times \mathcal Y_{2} := L_{2}(0, T; V) \times H
     \end{equation}
     mit Skalarprodukt
     \begin{equation}
         \label{eq:testraum_skalarprodukt}
-        \skp{u}{v}{\mathcal Y} = \skp{u_{1}}{v_{1}}{L_{2}(I; V)} + \skp{u_{2}}{v_{2}}{H} \quad \text{für } u = (u_{1}, u_{2}), v = (v_{1}, v_{2}) \in \mathcal Y.
+        \skp{u}{v}{\mathcal Y} := \skp{u_{1}}{v_{1}}{L_{2}(I; V)} + \skp{u_{2}}{v_{2}}{H}.
     \end{equation}
 \end{Definition}
 
@@ -293,12 +307,12 @@ Dadurch erhalten wir die nachfolgende Raum"=Zeit"=Variationsformulierung.
     Dabei sei die Bilinearform $b \colon \mathcal X \times \mathcal Y \to \mathbb{R}$ durch
     \begin{equation}
         \label{eq:absktrakte_raum_zeit_formulierung:lhs}
-        b(u, v) = \int_{I} \left[   \skp{u_{t}(t)}{v_{1}(t)}{V' \times V} + a(u(t), v_{1}(t); t)  \right] \diff t + \skp{u(0)}{v_{2}}{H}
+        b(u, v) := \int_{I} \left[   \skp{u_{t}(t)}{v_{1}(t)}{V' \times V} + a(u(t), v_{1}(t); t)  \right] \diff t + \skp{u(0)}{v_{2}}{H}
     \end{equation}
     definiert und das Funktional $f \colon \mathcal Y \to \mathbb{R}$ durch
     \begin{equation}
         \label{eq:absktrakte_raum_zeit_formulierung:rhs}
-        f(v) = \int_{I} \skp{g(t)}{v_{1}(t)}{V' \times V} \diff t + \skp{u_{0}}{v_{2}}{H}.
+        f(v) := \int_{I} \skp{g(t)}{v_{1}(t)}{V' \times V} \diff t + \skp{u_{0}}{v_{2}}{H}.
     \end{equation}
 \end{Definition}
 
@@ -377,7 +391,7 @@ Wir wiederholen die Kernaussage \cite[Theorem 5.1]{Schwab:2009ec} und verweisen 
 
 \begin{Satz}
 \label{satz:ss09:theorem51}
-    Seien $\mathcal X$ und $\mathcal Y$ durch \cref{eq:ansatzraum_X,eq:testraum_Y} gegeben und sei $a(\blank, \blank; t) \colon V \times V \to \mathbb{R}$ eine Familie von Bilinearformen, welche \cref{annahme:eigenschaften_der_bilinearform_a} erfüllt.
+    Seien $\mathcal X$ und $\mathcal Y$ wie in \cref{eq:ansatzraum_X,eq:testraum_Y} und sei $\Set{a(\blank, \blank; t) \in \mathcal L (V \times V)}_{t \in I}$ eine Familie von Bilinearformen, welche \cref{annahme:eigenschaften_der_bilinearform_a} erfüllt.
     Dann ist das Raum"=Zeit"=Variationsproblem \cref{eq:absktrakte_raum_zeit_formulierung} korrekt gestellt, das heißt, für alle $f \in \mathcal Y'$ existiert eine eindeutige Lösung $u \in \mathcal X$, so dass
     \begin{equation}
         b(u, v) = f(v) \quad \fa v \in \mathcal Y
@@ -392,7 +406,7 @@ Weiter wollen wir im nachfolgenden Korollar die bereits angesprochenen Schranken
 
 \begin{Korollar}
 \label{korrolar:ss09:theorem51_abschaetzungen}
-    Unter den gleichen Voraussetzungen wie in \cref{satz:ss09:theorem51} und der Bedingung, dass die Bilinearformen $a(\blank, \blank; t)$ die G\aa{}rding-Ungleichung mit $\lambda = 0$ erfüllen, gilt
+    Unter den gleichen Voraussetzungen wie in \cref{satz:ss09:theorem51} und der Bedingung, dass die Bilinearformen $\Set{a(\blank, \blank; t)}_{t \in I}$ die G\aa{}rding-Ungleichung mit $\lambda = 0$ erfüllen, gilt
     \begin{equation}
         \label{eq:ss09:theorem51_abschaetzungen:lambda_null:stetig}
         \gamma_{b}  \leq \sqrt{2 \max\Set{1, \gamma_{a}^{2}} + \gamma_{e}^{2}}
@@ -416,8 +430,8 @@ Weiter wollen wir im nachfolgenden Korollar die bereits angesprochenen Schranken
     während die Konstanten $\rho$ und $\gamma_{e}$, für letztere siehe auch \cref{korollar:einbettungskonstante_M_e}, als die Einbettungskonstanten
     \begin{equation}
         \label{eq:ss09:einbettungskonstanten}
-        \gamma_{e} = \sup_{0 \neq u \in \mathcal X} \frac{\norm{u(0)}_{H}}{\norm{u}_{\mathcal X}}, \qquad
-        \rho = \sup_{0 \neq \eta \in V} \frac{\norm{\eta}_{H}}{\norm{\eta}_{V}}
+        \gamma_{e} := \sup_{0 \neq u \in \mathcal X} \frac{\norm{u(0)}_{H}}{\norm{u}_{\mathcal X}}, \qquad
+        \rho := \sup_{0 \neq \eta \in V} \frac{\norm{\eta}_{H}}{\norm{\eta}_{V}}
     \end{equation}
     definiert sind.
 
@@ -427,10 +441,10 @@ Weiter wollen wir im nachfolgenden Korollar die bereits angesprochenen Schranken
 \end{Korollar}
 
 Abschließen wollen wir mit einer Möglichkeit, das Raum"=Zeit"=Variationsproblem \cref{eq:raum_zeit_variationsformulierung} zu einem äquivalenten Problem mit $\lambda = 0$ zu transformieren.
-Dazu seien eine Familie von Bilinearformen $a(\blank, \blank; t)$, welche \cref{annahme:eigenschaften_der_bilinearform_a} mit $\lambda \geq 0$ erfüllen, und weiter $u \in \mathcal X$, $v = (v_{1}, v_{2}) \in \mathcal Y$ sowie $g \in L_{2}(I; V')$ und $u_{0} \in H$ gegeben.
+Dazu seien erneut eine Familie von Bilinearformen $\Set{a(\blank, \blank; t)}_{t \in I}$, welche \cref{annahme:eigenschaften_der_bilinearform_a} mit $\lambda \geq 0$ erfüllen, und weiter $u \in \mathcal X$, $v = (v_{1}, v_{2}) \in \mathcal Y$ sowie $g \in L_{2}(I; V')$ und $u_{0} \in H$ gegeben.
 Wir definieren
 \begin{equation}
-    \hat{u}(t) := u(t)\ee^{- \lambda t}, \quad \check{v}_{1}(t) := v_{1}(t)\ee^{\lambda t}, \quad \check{v} = (\check{v}_{1}, v_{2}), \quad \hat{g}(t) := g(t)\ee^{-\lambda t}.
+    \hat{u}(t) := u(t)\ee^{- \lambda t}, \quad \check{v}_{1}(t) := v_{1}(t)\ee^{\lambda t}, \quad \check{v} := (\check{v}_{1}, v_{2}), \quad \hat{g}(t) := g(t)\ee^{-\lambda t}.
 \end{equation}
 Weiter definieren wir das transformierte Variationsproblem
 \begin{equation}
@@ -447,11 +461,11 @@ und das Funktional $\hat{f} \colon \mathcal Y \to \mathbb{R}$ durch
 \end{equation}
 gegeben seien.
 
-\begin{Lemma}
+\begin{Proposition}
 \label{lemma:transformation_zu_elliptischem_operator}
-    Sei $\Set{a(\blank, \blank; t)}_{t \in I}$ eine Familie von Bilinearformen, die \cref{annahme:eigenschaften_der_bilinearform_a} mit $\lambda \neq 0$ erfüllt.
+    Sei $\Set{a(\blank, \blank; t) \in \mathcal L(V \times V)}_{t \in I}$ eine Familie von Bilinearformen, die \cref{annahme:eigenschaften_der_bilinearform_a} mit $\lambda \neq 0$ erfüllt.
     Dann ist $u$ genau dann die Lösung des Raum"=Zeit"=Variationsproblems \cref{eq:absktrakte_raum_zeit_formulierung}, wenn $\hat{u}$ die Lösung von  \cref{eq:transformiertes_raum_zeit_variationsproblem} ist.
-    Insbesondere erfüllt $\Set{a(\blank, \blank; t) + \lambda \skp{\blank}{\blank}{H}}_{t \in I}$ \cref{annahme:eigenschaften_der_bilinearform_a} mit $\lambda = 0$.
+    Insbesondere erfüllt die Familie $\Set{a(\blank, \blank; t) + \lambda \skp{\blank}{\blank}{H} \in \mathcal L(V \times V)}_{t \in I}$ \cref{annahme:eigenschaften_der_bilinearform_a} mit $\lambda = 0$.
 
     \begin{Beweis}
         Wir beginnen mit der zweiten Aussage.
@@ -484,6 +498,6 @@ gegeben seien.
         \end{equation}
         und damit die insgesamt die Behauptung.
     \end{Beweis}
-\end{Lemma}
+\end{Proposition}
 
 \end{document}
