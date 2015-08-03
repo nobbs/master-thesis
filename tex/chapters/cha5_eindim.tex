@@ -123,19 +123,19 @@ Wir wollen nun die Regularität von $\omega(\blank; \sigma)$ in Abhängigkeit vo
         \sum_{j = 1}^{\infty} \frac{1}{j^{2 + \epsilon}} \leq \frac{(\kappa c (\tfrac{\pi}{L})^{2} - K) \pi^{2 + \epsilon}}{4 C_{\infty} K L^{3/2}}
     \end{equation}
     gilt,
-    wobei $c$ und $K$ die Konstanten aus \eqref{eq:def_op_A} respektive \eqref{eq:sinusfunktionen_ansatz} und $C_{\infty}$ die Einbettungskonstante von $H^{1}_{0}(\Omega) \hookrightarrow L_{\infty}(\Omega)$ sind.
+    wobei $c$ und $K$ die Konstanten aus \cref{eq:def_op_A} respektive \cref{eq:sinusfunktionen_ansatz} und $C_{\infty}$ die Einbettungskonstante von $H^{1}_{0}(\Omega) \hookrightarrow L_{\infty}(\Omega)$ sind.
     Dann erfüllt die affine Zerlegung $\Set{\hat A, A_{j} \given j \in \mathbb{N}_{0}}$ \thref{thm:kunoth:assumption2}.
 
     \begin{Beweis}
-        Wir weisen zunächst die inf-sup-Bedingungen \eqref{eq:kunoth:ass2_gamma_0} für $\hat a(\blank, \blank)$ nach und bestimmen die Konstante $\gamma_{0}$.
-        Da $\hat a(\blank, \blank)$ symmetrisch ist, genügt es, die inf-sup-Bedingung \eqref{eq:kunoth:ass2_gamma_0_a} nachzuweisen. Die zweite inf-sup-Bedingung \eqref{eq:kunoth:ass2_gamma_0_b} folgt dann analog mit dem selben $\gamma_{0}$.
+        Wir weisen zunächst die inf-sup-Bedingungen \cref{eq:kunoth:ass2_gamma_0} für $\hat a(\blank, \blank)$ nach und bestimmen die Konstante $\gamma_{0}$.
+        Da $\hat a(\blank, \blank)$ symmetrisch ist, genügt es, die inf-sup-Bedingung \cref{eq:kunoth:ass2_gamma_0_a} nachzuweisen. Die zweite inf-sup-Bedingung \cref{eq:kunoth:ass2_gamma_0_b} folgt dann analog mit dem selben $\gamma_{0}$.
 
         Nach \thref{lem:sauter:2.1.48} reicht es, für alle $\eta \in H^{1}_{0}(\Omega)$ ein $\zeta = \zeta(\eta) \in H^{1}_{0}(\Omega)$ und von $\eta$ und $\zeta$ unabhängige Konstanten $C_{1}, C_{2} > 0$ mit
         \begin{equation}
             \hat a(\eta, \zeta) \geq C_{1} \norm{\eta}_{H^{1}(\Omega)}^{2} \quad \text{und} \quad \norm{\zeta}_{H^{1}(\Omega)} \leq C_{2} \norm{\eta}_{H^{1}(\Omega)}
         \end{equation}
         zu finden.
-        Dann ist die inf-sup-Bedingung \eqref{eq:kunoth:ass2_gamma_0_a} mit $\gamma_{0} = \frac{C_{1}}{C_{2}}$ erfüllt.
+        Dann ist die inf-sup-Bedingung \cref{eq:kunoth:ass2_gamma_0_a} mit $\gamma_{0} = \frac{C_{1}}{C_{2}}$ erfüllt.
 
         Sei nun also $\eta \in H^{1}_{0}(\Omega)$ beliebig.
         Wir wählen $\zeta = \eta \in H^{1}_{0}(\Omega)$, das heißt, es gilt $C_{2} = 1$.
@@ -143,7 +143,7 @@ Wir wollen nun die Regularität von $\omega(\blank; \sigma)$ in Abhängigkeit vo
         \begin{align}
             \hat a(\eta, \zeta) = \hat a(\eta, \eta) = c \skprod{\grad \eta}{\grad \eta}_{L_{2}(\Omega)} = c \norm{\grad \eta}_{L_{2}(\Omega)}^{2} \geq c \gamma_{\Omega}^{2} \norm{\eta}_{H^{1}(\Omega)}^{2},
         \end{align}
-        wobei die letzte Abschätzung aus der Poincaré-Friedrichs-Ungleichung \eqref{eq:gl:poincare_friedrichs_ungleichung} folgt.
+        wobei die letzte Abschätzung aus der Poincaré-Friedrichs-Ungleichung \cref{eq:gl:poincare_friedrichs_ungleichung} folgt.
         Zusammen liefert dies $\gamma_{0} = c \gamma_{\Omega}^{2}$ als inf-sup-Konstante.
 
         Für den vorliegenden Fall können wir $\gamma_{\Omega}^{2}$ exakt bestimmen.
@@ -211,7 +211,7 @@ Wir wollen nun die Regularität von $\omega(\blank; \sigma)$ in Abhängigkeit vo
             \\&\leq K + \sum_{j = 1}^{\infty} \frac{4 K L^{3 / 2} C_{\infty}}{(\pi j)^{2 + \epsilon}}
             \\&\leq K + \frac{4 K L^{3 / 2} C_{\infty}}{\pi^{2+ \epsilon}} \sum_{j = 1}^{\infty} \frac{1}{j^{2 + \epsilon}}
         \end{align}
-        Fordern wir nun die Gültigkeit von \eqref{eq:kunoth:ass2_abs_reihe}, also
+        Fordern wir nun die Gültigkeit von \cref{eq:kunoth:ass2_abs_reihe}, also
         \begin{equation}
             \sum_{j \geq 0} \norm{A_{j}}_{\mathcal L(V, V')} \leq \kappa \gamma_{0}
         \end{equation}
@@ -227,15 +227,15 @@ Zusammenfassend erhalten wir damit die folgende Aussage.
 
 \todo[inline]{Besser ausformulieren}
 \begin{Satz}
-    Seien $\mathcal X$ und $\mathcal Y$ gegeben wie in~\eqref{eq:ps:rzvp:ansatzraum_testraum}.
-    Weiter sei $\Set{\hat A, A_{j} \given j \in \mathbb{N}_{0}}$ die affine Zerlegung von $A = -c \Delta + \omega$ wie in \eqref{eq:1d:affine_zerlegung} und es gelte \thref{satz:regularitaet_nachrechnen}.
+    Seien $\mathcal X$ und $\mathcal Y$ gegeben wie in~\cref{eq:ps:rzvp:ansatzraum_testraum}.
+    Weiter sei $\Set{\hat A, A_{j} \given j \in \mathbb{N}_{0}}$ die affine Zerlegung von $A = -c \Delta + \omega$ wie in \cref{eq:1d:affine_zerlegung} und es gelte \thref{satz:regularitaet_nachrechnen}.
     Für jedes $\sigma \in \mathcal S$ sei $B(\sigma) \in \mathcal L(\mathcal X, \mathcal Y')$ definiert durch
     \begin{equation}
         \label{eq:ps:rg:theorem21_variationsproblem_als_operatorgleichung_parametrisch}
         \skprod{B(\sigma) u}{v}_{\mathcal Y' \times \mathcal Y} = b(u, v; \sigma), \quad u \in \mathcal X,~y \in \mathcal Y,
     \end{equation}
-    mit $b(\blank, \blank; \sigma)$ wie in~\eqref{eq:ps:rzvp:schwache_formulierung_lhs_b_2}.
-    Dann ist $B(\sigma)$ für jedes $\sigma \in \mathcal S$ stetig invertierbar und die parametrische Familie von Lösungen $u(\sigma)$ des parametrischen Raum-Zeit-Variationsproblems \eqref{eq:ps:rzvp:schwache_formulierung_2} hängt analytisch von $\sigma$ ab.
+    mit $b(\blank, \blank; \sigma)$ wie in~\cref{eq:ps:rzvp:schwache_formulierung_lhs_b_2}.
+    Dann ist $B(\sigma)$ für jedes $\sigma \in \mathcal S$ stetig invertierbar und die parametrische Familie von Lösungen $u(\sigma)$ des parametrischen Raum-Zeit-Variationsproblems \cref{eq:ps:rzvp:schwache_formulierung_2} hängt analytisch von $\sigma$ ab.
 
     \begin{Beweis}
         Direkte Folgerung aus \thref{satz:regularitaet_nachrechnen} und \thref{satz:ps:rg:kunoth13_theorem21}.
@@ -251,7 +251,7 @@ Zusammenfassend erhalten wir damit die folgende Aussage.
 \label{sub:zu_kl_rende_fragen}
 
 \begin{enumerate}
-    \item Wohldefiniertheit der PDE \eqref{eq:parabolische_pde}, das heißt die Voraussetzungen von \thref{satz:gl:le:ss09_theorem51} nachweisen. Weiterhin lassen sich damit die inf-sup-Bedingung von \eqref{eq:ps:rzvp:schwache_formulierung} nachrechnen und damit die Schranken für $B$ und $B^{-1}$ bestimmen.
+    \item Wohldefiniertheit der PDE \cref{eq:parabolische_pde}, das heißt die Voraussetzungen von \thref{satz:gl:le:ss09_theorem51} nachweisen. Weiterhin lassen sich damit die inf-sup-Bedingung von \cref{eq:ps:rzvp:schwache_formulierung} nachrechnen und damit die Schranken für $B$ und $B^{-1}$ bestimmen.
     \item Parametrische Variante des Variationsproblems herleiten.
     Dazu Ansetzen mit Entwicklung des Parameters $\omega$ in eine Reihe
     \begin{equation}

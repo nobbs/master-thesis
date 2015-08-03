@@ -1,15 +1,13 @@
 % -*- root: main.tex -*-
 
 \documentclass[
-  % draft,
+  draft,
   % final,
   a4paper,
-  % 11pt,
-  % twoside,
   % BCOR=1cm,
+  % twoside,
   twoside=semi,
   % oneside,
-  % parskip=half,
   toc=bibliography,
   toc=listof,
   chapterprefix=true,
@@ -76,16 +74,12 @@
     \listoftables
 
     % Symbolverzeichnis
-    % \printnomenclature{}
     \glsaddall[]
     \printglossary[type=symbolslist, nonumberlist, style=long]
-
-    % Akronymverzeichnis
-    % \printacronyms[heading=chapter*]
 
     % Literaturverzeichnis
     \printbibliography
 
     % Eidesstattliche Erklärung
-    % \include{misc/eidesstattliche_erklaerung}
+    \include{misc/eidesstattliche_erklaerung}
 \end{document}

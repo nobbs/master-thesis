@@ -9,7 +9,8 @@
 
 % subfile-System
 \usepackage{subfiles}
-
+% etoolbox?
+\usepackage{etoolbox}
 
 %%% Schriften, Lokalisierung und Typographie
 
@@ -30,13 +31,6 @@
 \usepackage[english,ngerman]{babel}
 % Deutsche Anführungszeichen
 \usepackage[babel,german=quotes]{csquotes}
-
-%% Weitere Schriften vordefinieren
-
-\newcommand{\altfont}{\fontfamily{qpl}}
-% \newcommand{\altsffont}{\fontfamily{phv}}
-\newcommand{\altsffont}{}
-% \newcommand{\altsffont}{\fontfamily{pfr}\fontseries{l}}
 
 % Zeilenabstand anpassen (MUST NOT USE!)
 % \usepackage{setspace}
@@ -74,7 +68,7 @@
 \usepackage[%
     backend=biber,
     style=alphabetic,
-    backref=true,
+    % backref=true,
     firstinits=true
 ]{biblatex}
 
@@ -140,6 +134,10 @@
 
 %% Chapter-Style und mehr
 
+%% BEGIN STYLE
+% Schrift vordefinieren
+\newcommand{\altfont}{\fontfamily{qpl}}
+
 % Alle Überschriften in TeX Gyre Pagella
 \addtokomafont{disposition}{\normalfont\altfont\selectfont}
 % Alle Überschriften in Dunkelgrau
@@ -156,31 +154,30 @@
 \addtokomafont{paragraph}{\bfseries}
 
 % Kopfzeile anpassen
-\addtokomafont{pageheadfoot}{\normalfont\altfont\selectfont}
+% \addtokomafont{pageheadfoot}{\normalfont\altfont\selectfont}
 % \addtokomafont{pageheadfoot}{\color{jgu_dunkelgrau}\normalfont\altfont\selectfont}
 % Seitenzahl anpassen
-\addtokomafont{pagenumber}{\normalfont\altfont\selectfont}
+% \addtokomafont{pagenumber}{\normalfont\altfont\selectfont}
 % \addtokomafont{pagenumber}{\color{jgu_dunkelgrau}\normalfont\altfont\selectfont}
-
-% Zitatblock für Kapitelanfang
-\renewcommand*\dictumwidth{.35\linewidth}
-\renewcommand*\dictumrule{}
-\renewcommand*\dictumauthorformat[1]{--- #1}
-\addtokomafont{dictumtext}{\normalfont\altsffont\selectfont\itshape}
-% \addtokomafont{dictumtext}{\color{jgu_dunkelgrau}\normalfont\altsffont\fontsize{9}{12}\selectfont\itshape}
-\addtokomafont{dictumauthor}{\normalfont\altsffont\fontsize{8}{11}\selectfont}
-% \addtokomafont{dictumauthor}{\color{jgu_dunkelgrau}\normalfont\altsffont\fontsize{8}{12}\selectfont}
 
 % Kapitel-Stil
 \renewcommand*{\chapterheadstartvskip}{\vspace*{3\baselineskip}}
 \renewcommand*{\chapterheadendvskip}{\vspace*{2\baselineskip}}
 \renewcommand*{\chapterformat}{%
-				\raggedright
-				\color{jgu_rot}
+                \raggedright
+                \color{jgu_rot}
                 \altfont\fontsize{60}{30}\selectfont\thechapter
                 \fontsize{20}{30}\scshape\selectfont\enskip\chapappifchapterprefix
                 }
 \renewcommand*{\raggedchapter}{\raggedleft}
+%% END STYLE
+
+% Zitatblock für Kapitelanfang
+\renewcommand*\dictumwidth{.35\linewidth}
+\renewcommand*\dictumrule{}
+\renewcommand*\dictumauthorformat[1]{--- #1}
+\addtokomafont{dictumtext}{\normalfont\selectfont\itshape}
+\addtokomafont{dictumauthor}{\normalfont\fontsize{8}{11}\selectfont}
 
 % Inhaltsverzeichnis
 % \addtokomafont{sectionentrypagenumber}{\color{black}}
@@ -198,12 +195,6 @@
     page-name={siehe S.\@\,},
 }
 
-% Symbolverzeichnis
-% \usepackage[german,intoc]{nomencl}
-% \setlength{\nomitemsep}{-\parsep}
-% \makenomenclature
-
-
 % ntheorem-Umgebungen laden
 \input{misc/ntheorem}
 
@@ -211,7 +202,7 @@
 %%% Alles andere
 
 % Querformatseiten
-\usepackage{pdflscape}
+% \usepackage{pdflscape}
 
 % Enumerates anpassen
 \usepackage{enumitem}
@@ -231,36 +222,33 @@
 %%% "Debugging"
 
 % Labels am Seitenrand anzeigen
-\usepackage[
-    % inline,
-    final
-]{showlabels}
+% \usepackage[
+%     % inline,
+%     % final
+% ]{showlabels}
 
 % todos
-\usepackage[%
-    german,
-    colorinlistoftodos,
-    % disable
-]{todonotes}
+% \usepackage[%
+%     german,
+%     colorinlistoftodos,
+%     % disable
+% ]{todonotes}
 
-% Todos vordefinieren
-\newcommand{\mdo}[1]{\todo[color=yellow!50]{#1}}
-\newcommand{\mfix}[1]{\todo[color=red!50]{#1}}
-\newcommand{\mwarn}[1]{\todo[color=blue!50]{#1}}
+% % Todos vordefinieren
+% \newcommand{\mdo}[1]{\todo[color=yellow!50]{#1}}
+% \newcommand{\mfix}[1]{\todo[color=red!50]{#1}}
+% \newcommand{\mwarn}[1]{\todo[color=blue!50]{#1}}
 
 % Blindtext
-\usepackage{blindtext}
-\blindmathtrue{}
-
-% etoolbox?
-\usepackage{etoolbox}
+% \usepackage{blindtext}
+% \blindmathtrue{}
 
 % \usepackage{showframe}
 
+% Verzeichnisstruktur setzen
 \usepackage{dirtree}
 
-\usepackage{dirtree}
-
-\usepackage[nopostdot]{glossaries}
+% Symbolverzeichnis
+\usepackage[nopostdot,toc]{glossaries}
 \newglossary[slg]{symbolslist}{syi}{syg}{Symbolverzeichnis}
-% \makeglossaries
+\makeglossaries

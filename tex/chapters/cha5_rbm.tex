@@ -9,12 +9,12 @@
 % chapter reduzierte_basis_methode (end)
 
 Nun wird aufbauend auf das Petrov-Galerkin-Verfahren des vorherigen Kapitels die Reduzierte-Basis-Methode eingeführt und auf das gegebene Setting übertragen.
-Anschließend wird die numerische Umsetzung dieser für unsere bereits in \cref{sub:grb:gv:numerische_umsetzung} betrachtete Problemstellung angegangen und die Ergebnisse diskutiert.
+Anschließend wird die numerische Umsetzung dieser für unsere bereits in \cref{section:galerkin_numerische_umsetzung_und_experimente} betrachtete Problemstellung angegangen und die Ergebnisse diskutiert.
 
 \section{Grundlagen} % (fold)
 \label{sub:grb:rb:grundlagen}
 
-Wir beginnen mit einer kurzen Motivation und Einführung der Reduzierte-Basis-Methoden.
+Wir beginnen mit einer kurzen Motivation und Einführung der Reduzierte"=Basis"=Methoden.
 Dabei handelt es sich um ein relativ junges Verfahren, welches besonders in den letzten Jahren viel Aufmerksamkeit und Weiterentwicklung erfahren hat.
 Eine weitaus umfassendere Einführung als die nachfolgende findet man beispielsweise in der Arbeit von \textcite{Patera:2007un}.
 
@@ -25,22 +25,22 @@ Sei $\mu \in \mathcal P$, finde $u(\mu) \in \mathcal X$ mit
     b(u(\mu), v; \mu) = f(v; \mu) \quad \fa v \in \mathcal Y,
 \end{equation}
 wobei $b(\blank, \blank; \mu) \colon \mathcal X \times \mathcal Y \to \mathbb{R}$ eine Bilinearform und $f(\blank; \mu) \colon \mathcal Y \to \mathbb{R}$ ein lineares Funktional ist, so dass für alle $\mu \in \mathcal P$ das obige Variationsproblem korrekt gestellt ist.
-Probleme dieser Art werden oft, wie beispielsweise in \autoref{kapitel_petrov_galerkin} beschrieben, mittels Galerkin-Verfahren auf hochdimensionalen Räumen $\mathcal X^{\mathcal N}$ und $\mathcal Y^{\mathcal N}$ gelöst.
+Probleme dieser Art werden oft, wie beispielsweise in \cref{chapter:galerkin} beschrieben, mittels Galerkin-Verfahren auf hochdimensionalen Räumen $\mathcal X^{\mathcal N}$ und $\mathcal Y^{\mathcal N}$ gelöst.
 Wir stützen uns darauf, dass der Fehler dieser Diskretisierung theoretisch beliebig klein gehalten werden kann und bezeichnen im Folgenden die Räume $\mathcal X^{\mathcal N}$ und $\mathcal Y^{\mathcal N}$ als Truth-Ansatz- respektive Truth-Testraum und die entsprechende diskrete Lösung $u^{\mathcal N}(\mu) \in \mathcal X^{\mathcal N}$ als Truth-Lösung.
 
-Unter der Annahme, dass die Lösung $u(\mu) \in \mathcal X$ eine gewissen Regularität bezüglich des Parameters $\mu \in \mathcal P$ aufweist, hat die durch die Lösungen gebildete Mannigfaltigkeit $\mathcal M^{\mathcal N} = \Set{u^{\mathcal N}(\mu) \in \mathcal X^{\mathcal N} \given \mu \in \mathcal P}$ meist eine eher niedrige Dimension, vergleiche \autoref{fig:figure1}.
+Unter der Annahme, dass die Lösung $u(\mu) \in \mathcal X$ eine gewissen Regularität bezüglich des Parameters $\mu \in \mathcal P$ aufweist, hat die durch die Lösungen gebildete Mannigfaltigkeit $\mathcal M^{\mathcal N} = \Set{u^{\mathcal N}(\mu) \in \mathcal X^{\mathcal N} \given \mu \in \mathcal P}$ meist eine eher niedrige Dimension, vergleiche \cref{fig:figure1}.
 Hier setzen die Reduzierte-Basis-Methoden an; der Reduzierte-Basis-Ansatzraum $\mathcal X_{N}$ wird definiert als $N$-dimensionale Approximation
 \begin{equation}
     \mathcal X_{N} = \spn\Set{u^{\mathcal N}(\mu_{i}) \given i = 1 \dots N} = \spn\Set{\xi_{1}, \dots, \xi_{N}}
 \end{equation}
 an $\mathcal M^{\mathcal N}$, wobei $N \ll \mathcal N$ wünschenswert ist.
-Die Reduzierte-Basis-Lösung $u_{N}(\mu)$ wird dann durch erneute Galerkin-Projektion von \autoref{eq:rbm_varprob_allgemein} auf $\mathcal X_{N}$ und einen noch näher zu bestimmenden Reduzierte-Basis-Testraum $\mathcal Y_{N}$ bestimmt.
+Die Reduzierte-Basis-Lösung $u_{N}(\mu)$ wird dann durch erneute Galerkin-Projektion von \cref{eq:rbm_varprob_allgemein} auf $\mathcal X_{N}$ und einen noch näher zu bestimmenden Reduzierte-Basis-Testraum $\mathcal Y_{N}$ bestimmt.
 
 \begin{figure}[tb]
     \centering
     \includegraphics[width=0.6\textwidth]{figures/rb.pdf}
     \caption[%
-    Skizzenhafte Darstellung der Funktionsweise der Reduzierte-Basis-Methode.
+    Skizze zur Motivation der Reduzierte-Basis-Methode.
     ]{
         Skizzenhafte Darstellung der Funktionsweise der Reduzierte-Basis-Methode.
         Die Reduzierte-Basis-Approximation $u_{N}(\mu)$ ergibt sich als Linearkombination der Finite-Elemente-Snapshots $u^{\mathcal N}(\mu_{i})$, welche mutmaßlich eine glatte parametrische Manigfaltigkeit bilden.
@@ -56,7 +56,7 @@ Hierfür bietet sich die sogenannte \ac{SCM} an, welche speziell für die Anwend
 
 Wir orientieren uns dabei an dem Originalartikel von \textcite{Huynh2007} und den Verbesserungen von \textcite{Chen2009}.
 
-Seien wie zuvor $\mathcal X^{\mathcal N}$ und $\mathcal Y^{\mathcal N}$ Ansatz- beziehungsweise Testraum des Truth-Variationsproblems welches durch
+Seien wie zuvor $\mathcal X^{\mathcal N}$ und $\mathcal Y^{\mathcal N}$ Ansatz- beziehungsweise Testraum des Truth"=Variationsproblems welches durch
 \begin{equation}
 0
 \end{equation}

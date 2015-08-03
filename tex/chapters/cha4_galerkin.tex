@@ -430,21 +430,21 @@ geschrieben werden kann.
 Wir bestimmen nun die für die Berechnung dieser affinen Darstellungen die benötigten \enquote{Bausteine}.
 Dazu definieren wir für den räumlichen Anteil die Matrizen
 \begin{equation}
-    \mat{M}_{x} := \left[ \skp{\eta_{m}}{\eta_{n}}{H} \right]_{m,n=1,\dots,\mathcal J}
+    \mat{M}_{x} := \left[ \skp{\eta_{m}}{\eta_{n}}{H} \right]_{n,m = 1}^{\mathcal J}
 \end{equation}
 und
 \begin{equation}
-    \mat{A}_{x} := \left[ \skp{\grad \eta_{m}}{\grad \eta_{n}}{H} \right]_{m,n=1,\dots,\mathcal J}
+    \mat{A}_{x} := \left[ \skp{\grad \eta_{m}}{\grad \eta_{n}}{H} \right]_{n,m = 1}^{\mathcal J}
 \end{equation}
 sowie für den räumlichen Anteil die Matrizen
 \begin{equation}
-    \mat{M}_{t} := \left[ \skp{\theta_{m}}{\xi_{n}}{L_{2}(I)} \right]_{n = 1, \dots, \mathcal K, m = 0, \dots, \mathcal K},
+    \mat{M}_{t} := \left[ \skp{\theta_{m}}{\xi_{n}}{L_{2}(I)} \right]_{n = 1, m = 0}^{\mathcal K},
 \end{equation}
 \begin{equation}
-    \mat{C}_{t} := \left[ \skp{\theta_{m}'}{\xi_{n}}{L_{2}(I)} \right]_{n = 1, \dots, \mathcal K, m = 0, \dots, \mathcal K},
+    \mat{C}_{t} := \left[ \skp{\theta_{m}'}{\xi_{n}}{L_{2}(I)} \right]_{n = 1, m = 0}^{\mathcal K},
 \end{equation}
 \begin{equation}
-    \mat{A}_{t} := \left[ \skp{\theta_{m}'}{\xi_{n}'}{L_{2}(I)} \right]_{n = 1, \dots, \mathcal K, m = 0, \dots, \mathcal K}.
+    \mat{A}_{t} := \left[ \skp{\theta_{m}'}{\theta_{n}'}{L_{2}(I)} \right]_{n,m = 0}^{\mathcal K}.
 \end{equation}
 
 
@@ -477,7 +477,7 @@ und
 \begin{Lemma}[Diskrete $\mathcal{X}$-Norm]
 % todo: fixme
     Sei $\mathcal{X}^{\mathcal{N}} = \spn\Set{ \phi_{i} \given i = 1 \dots \mathcal N } \subset \mathcal X$ ein endlichdimensionaler Unterraum.
-    Die $\mathcal X$-Norm aus \eqref{eq:gl:le:ansatzraum_X_norm}
+    Die $\mathcal X$-Norm aus \cref{eq:gl:le:ansatzraum_X_norm}
     wird für den Unterraum $\mathcal{X}_{\mathcal N}$ durch den folgenden Operator
     \begin{equation}
         \mat{M} = \mat{M}_{t} \otimes (\mat{M}_{x} + \mat{A}_{x}) + \mat{A}_{t} \otimes (\mat{M}_{x} (\mat{M}_{x} + \mat{A}_{x})^{-1} \mat{M}_{x})
@@ -488,7 +488,7 @@ und
 \begin{Lemma}[Diskrete $\mathcal{Y}$-Norm]
 % todo: fixme
     Sei bla.
-    Die $\mathcal{Y}_{\mathcal N}$-Norm aus \eqref{eq:testraum_Y_skalarprodukt} wird durch den folgenden Operator
+    Die $\mathcal{Y}_{\mathcal N}$-Norm aus \cref{eq:testraum_Y_skalarprodukt} wird durch den folgenden Operator
     \begin{equation}
         \mat{N} = \begin{pmatrix}
             \mat{M}_{t} \otimes (\mat{M}_{x} + \mat{A}_{x}) & \mat{0} \\
