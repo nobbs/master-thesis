@@ -15,7 +15,7 @@ Für diese weisen wir abschließend nach, dass sie korrekt gestellt ist und unte
 \section{Eine Raum-Zeit-Variationsformulierung}
 \label{section:raum_zeit_variationsformulierung}
 
-Wir wollen nun zunächst das Setting festlegen und die aus der Einführung bekannten Propagator"=Differentialgleichungen in einem allgemeineren Rahmen formulieren.
+Wir wollen nun zunächst die Rahmenbedingungen festlegen und die aus der Einführung bekannten Propagator"=Differentialgleichungen in einem allgemeineren Rahmen formulieren.
 Dabei halten wir an dem Fall zweier Felder fest, wobei diese Einschränkung nicht notwendig ist, da die nachfolgenden Ergebnisse in gleicher Weise auch für jede andere endliche Felderanzahl nachgewiesen werden können.
 Weiter sei an dieser Stelle angemerkt, dass es ausreicht sich auf die Betrachtung des Vorwärts"=Propagators \cref{eq:forward_propagator} zu beschränken, da der Rückwärts"=Propagator \cref{eq:backward_propagator} durch die einfache Transformation $s \mapsto 1 - s$ auf die selbe Form, lediglich mit vertauschen Rollen bei den Feldern, gebracht werden kann.
 
@@ -70,7 +70,7 @@ Zunächst führen wir aber eine Einschränkung der möglichen Randbedingungen du
 Von größtem Interesse sind für uns, bedingt durch die Motivation der parabolischen Differentialgleichung in \cref{chapter:einleitung}, der Fall homogener Dirichlet"=Randbedingungen, also $u(t, \vec{x}) = 0$ auf $I \times \partial \Omega$, sowie der Fall periodischer Randbedingungen.
 Letztere werden am Ende dieses Kapitels wieder aufgegriffen, während wir uns im Rest der Ausführungen auf den Fall homogener Dirichlet"=Randbedingungen beschränken.
 
-Bei der Herleitung der Raum"=Zeit"=Variationsformulierung der Propagator"=Differentialgleichung werden wir Schrittweise vorgehen und zunächst den stationären Fall betrachten, bevor wir darauf aufbauend die schwache Raum"=Zeit"=Variationsformulierung erhalten.
+Bei der Herleitung der Raum"=Zeit"=Variationsformulierung der Propagator"=Differentialgleichung werden wir schrittweise vorgehen und zunächst den stationären Fall betrachten, bevor wir darauf aufbauend die schwache Raum"=Zeit"=Variationsformulierung erhalten.
 Als Grundlage für die schwache Formulierung im stationären Fall verwenden wir die wohlbekannten Sobolev"=Räume.
 Die folgende Bemerkung führt die notwendigen Notationen in diesem Zusammenhang ein.
 
@@ -79,7 +79,7 @@ Die folgende Bemerkung führt die notwendigen Notationen in diesem Zusammenhang 
     Wir schreiben kurz $V = H^{1}_{0}(\Omega)$ und $H = L_{2}(\Omega)$ für den bekannten Sobolev- respektive Lebesgue"=Raum auf $\Omega$.
     Dabei handelt es sich jeweils um einen Hilbertraum; wir kennzeichnen durch den jeweiligen Index die entsprechenden Skalarprodukte $\skp{\blank}{\blank}{}$ und Normen $\norm{\blank}$.
     Als $V$-Norm wählen wir $\norm{\eta}_{V} = (\norm{\eta}^{2}_{H} + \norm{\grad \eta}^{2}_{H})^{1/2}$.
-    Da bekanntermaßen $V$ dicht in $H$ eingebettet werden kann, definiert
+    Da $V$ dicht in $H$ eingebettet werden kann, definiert
     \begin{equation}
         V \denseinclusion H \cong H' \denseinclusion V' = (H^{1}_{0}(\Omega))' = H^{-1}(\Omega)
     \end{equation}
@@ -149,19 +149,19 @@ Wir weisen nun zwei Eigenschaften für diesen Operator respektive die zugehörig
     Diese Bilinearformen erfüllen die folgenden Eigenschaften:
     \begin{thmenumerate}
         \item\label{satz:bilinearform_messbar_stetig_garding:messbar}
-        \emph{Messbarkeit}: die Abbildung $I \ni t \mapsto a(\eta, \zeta; t)$ ist messbar für alle $\eta, \zeta \in V$.
+        \emph{Messbarkeit}: Die Abbildung $I \ni t \mapsto a(\eta, \zeta; t)$ ist messbar für alle $\eta, \zeta \in V$.
         \item\label{satz:bilinearform_messbar_stetig_garding:stetig}
-        \emph{Stetigkeit:} es gilt
+        \emph{Stetigkeit:} Es gilt
         \begin{equation}
             \label{eq:bilinearform_messbar_stetig_garding:stetig}
-            \abs{a(\eta, \zeta; t)} \leq \gamma_{a} \norm{\eta}_{V} \norm{\zeta}_{V} \quad \text{für alle}~\eta, \zeta \in V
+            \abs{a(\eta, \zeta; t)} \leq \gamma_{a} \norm{\eta}_{V} \norm{\zeta}_{V}, \quad \fa \eta, \zeta \in V,
         \end{equation}
         mit Stetigkeitskonstante $\gamma_{a} = \max\Set{c, \norm{\omega}_{L_{\infty}(I; L_{\infty}(\Omega))} + \abs{\mu}} < \infty$.
         \item\label{satz:bilinearform_messbar_stetig_garding:garding}
-        \emph{G\aa{}rding"=Ungleichung:} es gilt
+        \emph{G\aa{}rding"=Ungleichung:} Es gilt
         \begin{equation}
             \label{eq:bilinearform_messbar_stetig_garding:garding}
-            a(\eta, \eta; t) + \lambda \norm{\eta}_{H}^{2} \geq \alpha \norm{\eta}_{V}^{2} \quad \text{für alle}~\eta \in V
+            a(\eta, \eta; t) + \lambda \norm{\eta}_{H}^{2} \geq \alpha \norm{\eta}_{V}^{2}, \quad \fa \eta \in V,
         \end{equation}
         mit $\alpha = c \gamma_{\Omega}^{2} > 0$ und $\lambda = \max\Set{\norm{\omega}_{L_{\infty}(I; L_{\infty}(\Omega))} - \mu, 0} \geq 0$, wobei $\gamma_{\Omega}$ die Poincaré"=Friedrichs"=Konstante ist.
     \end{thmenumerate}
@@ -171,7 +171,8 @@ Wir weisen nun zwei Eigenschaften für diesen Operator respektive die zugehörig
         Demnach ist für $\xi \in L_{\infty}(I \times \Omega)$ und $\psi \in L_{1}(\Omega)$ die Abbildung $I \ni t \mapsto \skp{\xi(t, \blank)}{\psi}{L_{2}(\Omega)}$ messbar.
 
         Wegen $\eta, \zeta \in V = H^{1}_{0}(\Omega)$ ist sowohl die Abbildung $\Omega \ni \vec x \mapsto \skp{\grad \eta(\vec{x})}{\grad \zeta (\vec x)}{H}$ als auch $\Omega \ni \vec x \mapsto \eta(\vec{x})\zeta (\vec x)$ in $L_{1}(\Omega)$.
-        Es bleibt also lediglich $\omega \in L_{\infty}(I \times \Omega)$ zu zeigen, dies ist aber aufgrund von $\chi_{I_{1}}, \chi_{I_{2}} \in L_{\infty}(I)$ und $w_{1}, w_{2} \in L_{\infty}(\Omega)$ ebenfalls gegeben.
+        Es bleibt also lediglich $\omega \in L_{\infty}(I \times \Omega)$ zu zeigen.
+        Dies ist aber aufgrund von $\chi_{I_{1}}, \chi_{I_{2}} \in L_{\infty}(I)$ und $w_{1}, w_{2} \in L_{\infty}(\Omega)$ ebenfalls gegeben.
         Damit erfüllt jeder der Summanden von $a(\blank, \blank; t)$ und folglich auch die Bilinearform selbst die geforderte Messbarkeit.
 
         Als nächstes zeigen wir die Stetigkeit.
@@ -232,11 +233,11 @@ Ferner wollen wir an dieser Stelle eine Aussage nachweisen, welche wir erst in \
     \end{Beweis}
 \end{Lemma}
 
-Mit dieser Vorarbeit können wir uns nun der schwachen Formulierung der Propagator"=Differentialgleichung widmen.
+Mit diesem Satz sind die notwendigen theoretischen Grundlagen abgeschlossen, so dass im Folgenden die Raum"=Zeit"=Variationsformulierung der Propagator-Differentialgleichung formuliert werden kann.
 Diese können wir informell durch Multiplikation der parabolischen Differentialgleichung \cref{eq:propagator_differentialgleichung} mit einer Raum"=Zeit"=Testfunktion $v_{1}$ und Integration über $\Omega$ und $I$ sowie Addition der Anfangsbedingung, welche mit einer Raum"=Testfunktion $v_{2}$ multipliziert und anschließend über $\Omega$ integriert wird, herleiten.
 
-Um das Ganze auf eine rigorose Ebene zu bringen, benötigen wir zunächst zwei Raum"=Zeit"=Hilberträume, welche als sogenannter Ansatz- respektive Testraum dienen werden.
-Es bietet sich an, die aus der \cref{definition:ansatz_und_testraum} bereits bekannten Räume
+Um eine exakte Definition zu ermöglichen, benötigen wir zunächst zwei Raum"=Zeit"=Hilberträume, welche als Ansatz- respektive Testraum dienen werden.
+Es bietet sich an, die aus \cref{definition:ansatz_und_testraum} bereits bekannten Räume
 \begin{equation}
     \label{eq:raum_zeit_ansatzraum_testraum}
     \mathcal X = L_{2}(I; V) \cap H^{1}(I; V')
@@ -287,7 +288,7 @@ Damit können wir die schwache Formulierung nun wie folgt definieren.
     und damit die Stetigkeit, wobei die Ungleichung $x + y \leq \sqrt{2} \sqrt{x^2 + y^2}$, welche für alle $x, y \in \mathbb{R}$ gilt, für die letzte Abschätzung verwendet wurde.
 \end{Bemerkung}
 
-Der nächste Schritt ist nun, nachzuweisen, dass die obige Raum"=Zeit"=Variationsformulierung korrekt gestellt ist im Sinne von Hadamard, \cref{definition:sachgemaess_gestellt_nach_hadamard}, also eine eindeutige Lösung besitzt, welche stetig von dem Funktional $f \in \mathcal Y'$ abhängt.
+Der nächste Schritt ist nun, nachzuweisen, dass obige Raum"=Zeit"=Variationsformulierung im Sinne von \cref{definition:sachgemaess_gestellt_nach_hadamard} korrekt gestellt ist, also eine eindeutige Lösung besitzt, welche stetig von dem Funktional $f \in \mathcal Y'$ abhängt.
 Hierzu werden wir mit \cref{satz:ss09:theorem51} ansetzen, welcher unter den gegebenen Rahmenbedingungen die zu prüfenden Bedingungen auf die in \cref{satz:bilinearform_messbar_stetig_garding} bereits nachgewiesenen reduziert.
 
 \begin{Korollar}
@@ -296,7 +297,7 @@ Hierzu werden wir mit \cref{satz:ss09:theorem51} ansetzen, welcher unter den geg
     Dann ist die Raum"=Zeit"=Variationsformulierung \cref{eq:raum_zeit_variationsformulierung} korrekt gestellt.
 
     \begin{Beweis}
-        Folgt nach Definition der Raum"=Zeit"=Variationsformulierung unmittelbar aus \cref{satz:ss09:theorem51} und \cref{satz:bilinearform_messbar_stetig_garding}.
+        Ist nach Definition der Raum"=Zeit"=Variationsformulierung eine unmittelbare Folgerung aus \cref{satz:ss09:theorem51} und \cref{satz:bilinearform_messbar_stetig_garding}.
     \end{Beweis}
 \end{Korollar}
 
@@ -307,11 +308,11 @@ Weiter erhalten wir als Nebenprodukt aus \cref{korrolar:ss09:theorem51_abschaetz
     Seien die Voraussetzungen von \cref{satz:raum_zeit_variationsformulierung_sachgemaess_gestellt} gegeben.
     Dann erfüllt die Bilinearform $b(\blank, \blank)$ die folgenden Eigenschaften:
     \begin{thmenumerate}
-        \item \emph{Stetigkeit:} es gilt
+        \item \emph{Stetigkeit:} Es gilt
             \begin{equation}
                 \gamma_{b} = \sup_{u \in \mathcal X} \sup_{v \in \mathcal Y} \frac{b(u, v)}{\norm{u}_{\mathcal X} \norm{v}_{\mathcal Y}} < \infty.
             \end{equation}
-        \item \emph{inf-sup-Bedingung:} es gilt
+        \item \emph{inf-sup-Bedingung:} Es gilt
             \begin{equation}
                 \beta = \inf_{u \in \mathcal X} \sup_{v \in \mathcal Y} \frac{b(u, v)}{\norm{u}_{\mathcal X} \norm{v}_{\mathcal Y}} > 0.
             \end{equation}
@@ -346,9 +347,9 @@ Dazu kehren wir nun zunächst zum Operator $A(t)$ aus \cref{definition:operator_
 Wir definieren für $w \in L_{\infty}(\Omega)$ eine Familie von Operatoren $A(w)$ als
 \begin{equation}
     \label{eq:operator_feld}
-    A(w) \colon V \to V', \quad A(w) \eta = - c \Delta \eta + w \eta + \mu \eta
+    A(w) \colon V \to V', \quad A(w) \eta = - c \Delta \eta + w \eta + \mu \eta.
 \end{equation}
-und wie zuvor auch eine Familie von zugehörigen Bilinearformen $a(\blank, \blank; w)$ durch
+Wie zuvor sei auch eine Familie von zugehörigen Bilinearformen $a(\blank, \blank; w)$ gegeben durch
 \begin{equation}
     \label{eq:bilinearform_feld}
     \begin{aligned}
@@ -359,6 +360,7 @@ und wie zuvor auch eine Familie von zugehörigen Bilinearformen $a(\blank, \blan
 
 Um die Abhängigkeit der obigen Operatoren respektive Bilinearformen vom Feld auch für die nachfolgende numerische Umsetzung verwendbar zu machen, wollen wir die Abhängigkeit von einer Abbildung $w \in L_{\infty}(\Omega)$ durch eine Abhängigkeit von einer diskreten Größe, beispielsweise einer Koeffizientenfolge aus dem $\ell_{1}(\mathbb{N})$ oder ähnlichen Folgenräumen, ersetzen.
 Dies erreichen wir durch folgende Einschränkung der verwendeten Felder $w \in L_{\infty}(\Omega)$ auf Abbildungen, die wir als Reihenentwicklung von hier noch nicht näher spezifizierten Abbildungen $\varphi_{j}$ darstellen können.
+Auf die Wahl dieser $\varphi_{j}$ werden wir bei der numerischen Untersuchung in \cref{chapter:galerkin} erneut eingehen.
 
 \begin{Definition}
 \label{definition:feld_entwickelbar}
@@ -378,7 +380,7 @@ Dies ist aber auch nicht nötig, da, wie man in der Einführung bereits gesehen 
     Dies dient hauptsächlich der Notation und stellt keine Einschränkung dar, da die Funktionen $\Set{ \varphi_{j} }_{j \in \mathbb{N}}$ entsprechend umskaliert werden können.
 \end{Bemerkung}
 
-Um sicherzustellen, dass derartige Felder $w(\bm\sigma)$ wohldefinierte Operatoren $A(w(\bm\sigma))$ liefern, fordern wir die folgende Eigenschaften von der Funktionenfolge $\Set{\varphi_{j}}_{j \in \mathbb{N}}$.
+Um sicherzustellen, dass derartige Felder $w(\bm\sigma)$ wohldefinierte Operatoren $A(w(\bm\sigma))$ liefern, fordern wir die in der folgenden Annahme festgehaltene Eigenschaft von der Funktionenfolge $\Set{\varphi_{j}}_{j \in \mathbb{N}}$.
 
 \begin{Annahme}
 \label{annahme:system_l1_summierbar}
@@ -489,27 +491,27 @@ Wie zuvor wollen wir \cref{satz:ss09:theorem51} verwenden, müssen also die Bedi
     Dann gelten für alle $t \in I$ und $\bm\sigma \in \mathcal P$ die folgenden Eigenschaften:
     \begin{thmenumerate}
         \item\label{satz:parametrische_bilinearform_messbar_stetig_garding:messbar}
-        \emph{Messbarkeit}: die Abbildung $I \ni t \mapsto a(\eta, \zeta; t, \bm\sigma)$ ist messbar für alle $\eta, \zeta \in V$.
+        \emph{Messbarkeit}: Die Abbildung $I \ni t \mapsto a(\eta, \zeta; t, \bm\sigma)$ ist messbar für alle $\eta, \zeta \in V$.
         \item\label{satz:parametrische_bilinearform_messbar_stetig_garding:stetig}
-        \emph{Stetigkeit:} es gilt
+        \emph{Stetigkeit:} Es gilt
         \begin{equation}
             \label{eq:parametrische_bilinearform_messbar_stetig_garding:stetig}
-            \abs{a(\eta, \zeta; t; \bm\sigma)} \leq \gamma_{a} \norm{\eta}_{V} \norm{\zeta}_{V} \quad \text{für alle}~\eta, \zeta \in V
+            \abs{a(\eta, \zeta; t; \bm\sigma)} \leq \gamma_{a} \norm{\eta}_{V} \norm{\zeta}_{V}, \quad \fa \eta, \zeta \in V,
         \end{equation}
         mit Stetigkeitskonstante $\gamma_{a} = \max\Set{c, c_{\varphi} + \abs{\mu}} < \infty$.
         \item\label{satz:parametrische_bilinearform_messbar_stetig_garding:garding}
-        \emph{G\aa{}rding"=Ungleichung:} es gilt
+        \emph{G\aa{}rding"=Ungleichung:} Es gilt
         \begin{equation}
             \label{eq:parametrische_bilinearform_messbar_stetig_garding:garding}
-            a(\eta, \eta; t; \bm\sigma) + \lambda \norm{\eta}_{H}^{2} \geq \alpha \norm{\eta}_{V}^{2} \quad \text{für alle}~\eta \in V
+            a(\eta, \eta; t; \bm\sigma) + \lambda \norm{\eta}_{H}^{2} \geq \alpha \norm{\eta}_{V}^{2}, \quad \fa \eta \in V,
         \end{equation}
         mit $\alpha = c \gamma_{\Omega}^{2} > 0$ und $\lambda = \max\Set{c_{\varphi} - \mu, 0} \geq 0$.
     \end{thmenumerate}
-    Dabei ist $c_{\varphi}$ die Konstante aus \cref{eq:system_l1_norm} und die Konstanten $\gamma_{a}$, $\lambda$ und $\alpha$ sind sowohl unabhängig von $t \in I$ als auch von $\bm\sigma \in \mathcal P$.
+    Dabei ist $c_{\varphi}$ die Konstante aus \cref{eq:system_l1_norm} und die Konstanten $\gamma_{a}$, $\lambda$ und $\alpha$ sind sowohl unabhängig von $t \in I$, als auch von $\bm\sigma \in \mathcal P$.
 
     \begin{Beweis}
-        Der Nachweis läuft komplett analog zum nicht"=parametrischen Fall in \cref{satz:bilinearform_messbar_stetig_garding}.
-        Wir müssen zusätzlich lediglich die $L_{\infty}(\Omega)$-Norm des von $\omega(t, \blank; \bm\sigma)$ mit Hilfe von \cref{eq:parametrisches_raum_zeit_feld_schranke} nach oben durch $c_{\varphi}$ abschätzen.
+        Der Nachweis erfolgt analog zum nicht"=parametrischen Fall in \cref{satz:bilinearform_messbar_stetig_garding}.
+        Wir müssen zusätzlich lediglich die $L_{\infty}(\Omega)$-Norm von $\omega(t, \blank; \bm\sigma)$ mit Hilfe von \cref{eq:parametrisches_raum_zeit_feld_schranke} weiter durch $c_{\varphi}$ abschätzen.
     \end{Beweis}
 \end{Satz}
 
@@ -527,9 +529,9 @@ Wir interessieren uns nun für die Regularität der Abhängigkeit der Lösung $u
 Konkret werden wir nachweisen, dass die Lösung unter gewissen Annahmen an das Funktionensystem $\Set{\varphi_{j}}_{j \in \mathbb{N}}$ analytisch vom Parameter $\bm \sigma$ abhängt.
 Dabei orientieren wir uns an den Arbeiten von \textcite{Cohen:2010kz,Cohen:2011jp,Kunoth:2013ef}, weisen diese Eigenschaften aber direkt für die Raum"=Zeit"=Variationsformulierung nach, statt wie in den genannten Arbeiten den Umweg über den stationären Fall zu gehen.
 
-Zunächst einige notationelle Vorbemerkungen.
+Zunächst folgen einige notationelle Vorbemerkungen.
 \begin{Bemerkung}
-    Bezeichne mit $\mathcal F = \Set{ \bm\nu \in \mathbb{N}^{\mathbb{N}}_{0} \given \abs{\bm\nu} < \infty }$ die Menge aller Folgen nichtnegativer ganzer Zahlen, wobei
+    Als Multiindexmenge $\mathcal F$ definieren wir $\mathcal F = \Set{ \bm\nu \in \mathbb{N}^{\mathbb{N}}_{0} \given \abs{\bm\nu} < \infty }$, wobei
     \begin{equation}
         \abs{\bm\nu} = \sum_{k = 1}^{\infty} \abs{\nu_{k}}
     \end{equation}
@@ -544,16 +546,16 @@ Zunächst einige notationelle Vorbemerkungen.
     Wegen $\abs{\bm\nu} < \infty$ ist dieses Produkt stets endlich.
 \end{Bemerkung}
 
-Um die Notation für die nachfolgenden Beweise zu vereinfachen, ordnen wir die Darstellung der parametrischen Raum"=Zeit"=Felder folgendermaßen um:
+Um die Notation für die nachfolgenden Beweise zu vereinfachen, ordnen wir die Darstellung der parametrischen Raum"=Zeit"=Felder um.
 \begin{Bemerkung}
     Definiere neue charakteristische Funktionen und Entwicklungsfunktionen für $j \in \mathbb{N}$ durch
     \begin{equation}
         \tilde{\chi}_{j} = \begin{cases}
-            \chi_{I_{1}}, & j~\text{ungerade}\\
-            \chi_{I_{2}}, & j~\text{gerade}
-        \end{cases}, \quad
+            \chi_{I_{1}}, & j~\text{ungerade},\\
+            \chi_{I_{2}}, & j~\text{gerade},
+        \end{cases} \quad
         \tilde{\varphi}_{j} = \begin{cases}
-            \varphi_{(j+1)/{2}}, & j~\text{ungerade}\\
+            \varphi_{(j+1)/{2}}, & j~\text{ungerade},\\
             \varphi_{j / 2}, & j~\text{gerade}.
         \end{cases}
     \end{equation}
@@ -581,7 +583,7 @@ Für die nachfolgenden Beweise fixieren wir die rechte Seite $f \in \mathcal Y'$
         \begin{align}
             0
             &= f(v) - f(v) = b(u, v; \omega) - b(\tilde{u}, v; \tilde{\omega})
-           \\&= \int_{I} \left[ \skp{u_{t} - \tilde{u}_{t}}{v_{1}}{V' \times V} + a(u, v; \omega) - a(\tilde{u}, v; \tilde{\omega}) \right] \diff t + \skp{u(0) - \tilde{u}(0)}{v_{2}}{H}.
+           \\&= \int_{I} \left[ \skp{u_{t} - \tilde{u}_{t}}{v_{1}}{V' \times V} + a(u, v; \omega) - a(\tilde{u}, v; \tilde{\omega}) \right] \diff t + \skp{u(0) - \tilde{u}(0)}{v_{2}}{H}
            \\&= \int_{I} \left[ \skp{\theta_{t}}{v_{1}}{V' \times V} + c \skp{\grad \theta}{\grad v_{1}}{H} + \mu \skp{\theta}{v_{1}}{H} + \skp{\omega u - \tilde{\omega}\tilde{u}}{v_{1}}{H} \right] \diff t + \skp{\theta(0)}{v_{2}}{H}
            \\&= \int_{I} \left[ \skp{\theta_{t}}{v_{1}}{V' \times V} + a(\theta, v; \omega) \right] \diff t + \skp{\theta(0)}{v_{2}}{H} + \int_{I} \skp{(w - \tilde{w})\tilde{u}}{v_{1}}{H} \diff t
            \\&= b(\theta, v; \omega) + \int_{I} \skp{(w - \tilde{w})\tilde{u}}{v_{1}}{H} \diff t,
@@ -624,7 +626,7 @@ Für die nachfolgenden Beweise fixieren wir die rechte Seite $f \in \mathcal Y'$
     \end{Beweis}
 \end{Lemma}
 
-Als ersten Schritt des Regularitätsnachweises zeigen wir nun die Existenz beliebiger partieller Ableitungen.
+Als erster Schritt des Regularitätsnachweises wird zunächst die Existenz beliebiger partieller Ableitungen gezeigt, bevor dann nachfolgend schrittweise die Konvergenz der Taylorreihe der Lösung $u(\bm \sigma) \in \mathcal X$ nachgewiesen wird.
 
 \begin{Satz}
 \label{satz:existenz_partieller_ableitungen}
@@ -632,18 +634,18 @@ Als ersten Schritt des Regularitätsnachweises zeigen wir nun die Existenz belie
 
     \begin{Beweis}
         Erneut verzichten wir auf die explizite Notation der Zeitabhängigkeit.
-        Wir beschränken uns darauf die Behauptung exemplarisch für die partiellen Ableitungen erster Ordnung für ein festes $\bm\sigma \in \mathcal P$ nachzuweisen.
+        Wir beschränken uns darauf, die Behauptung exemplarisch für die partiellen Ableitungen erster Ordnung für ein festes $\bm\sigma \in \mathcal P$ nachzuweisen.
         Ohne Einschränkung sei nun $\bm\nu = \vec{e}_{j} \in \mathcal F$ für ein $j \in \mathbb{N}$ und ferner sei $h \in \mathbb{R} \setminus \Set{ 0 }$.
         Wir definieren $\bm\sigma_{h} = \bm\sigma + h \bm\nu = \bm\sigma + h \vec e_{j}$ und
         \begin{equation}
             \theta_{h} = \frac{u(\bm\sigma_{h}) - u(\bm\sigma)}{h},
         \end{equation}
         wobei $u(\blank)$ die Lösungen der parametrischen schwachen Formulierung \cref{eq:parametrisches_rz_variationsproblem} für die entsprechenden Parameter ist.
-        Ist $\abs{h}$ klein genug, dann existieren diese auch im Fall $\bm\sigma_{h} \not\in \mathcal P$, da analog zu \cref{eq:parametrisches_raum_zeit_feld_schranke} wegen
+        Ist $\abs{h}$ klein genug, dann existieren diese auch im Fall $\bm\sigma_{h} \not\in \mathcal P$, da analog zu \cref{eq:parametrisches_raum_zeit_feld_schranke} die schwache Formulierung nach wie vor korrekt gestellt ist.
+        Dies ergibt sich durch die Abschätzung
         \begin{equation}
-            \norm{\omega(\bm \sigma_{h})}_{L_{\infty}(I; L_{\infty}(\Omega))} \leq \sum_{j' = 1}^{\infty} \norm{\varphi_{j'}}_{L_{\infty}(\Omega)} + \abs{h} \norm{\varphi_{j}}_{L_{\infty}(\Omega)}\leq c_{\varphi} + \abs{h} \norm{\varphi_{j}}_{L_{\infty}(\Omega)} < \infty
+            \norm{\omega(\bm \sigma_{h})}_{L_{\infty}(I; L_{\infty}(\Omega))} \leq \sum_{j' = 1}^{\infty} \norm{\varphi_{j'}}_{L_{\infty}(\Omega)} + \abs{h} \norm{\varphi_{j}}_{L_{\infty}(\Omega)}\leq c_{\varphi} + \abs{h} \norm{\varphi_{j}}_{L_{\infty}(\Omega)} < \infty.
         \end{equation}
-        die schwache Formulierung nach wie vor korrekt gestellt ist.
 
         Zunächst schreiben wir die Differenz der parametrischen Raum-Zeit-Felder um zu
         \begin{equation}
@@ -673,7 +675,7 @@ Als ersten Schritt des Regularitätsnachweises zeigen wir nun die Existenz belie
         \begin{equation}
             F_{h} \colon \mathcal Y \to \mathbb{R}, \quad F_{h}(v) = - \int_{I} \tilde{\chi}_{j} \skp{\tilde{\varphi}_{j}  u(\bm\sigma_{h})}{v_{1}}{H} \diff t.
         \end{equation}
-        Vollkommen analog zum Beweis des vorherigen Lemmas kann man zeigen, dass $F_{h}$ ein stetiges lineares Funktional auf $\mathcal Y$ definiert, das heißt, $\theta_{h}$ ist die eindeutige Lösung des Variationsproblems \cref{eq:existenz_partieller_ableitungen:beweis:variationsproblem}.
+        Vollkommen analog zum Beweis des vorherigen Lemmas kann gezeigt werden, dass $F_{h}$ ein stetiges lineares Funktional auf $\mathcal Y$ definiert, das heißt, $\theta_{h}$ ist die eindeutige Lösung des Variationsproblems \cref{eq:existenz_partieller_ableitungen:beweis:variationsproblem}.
         Weiter ist $F_{h}(\blank)$ stetig in $h = 0$, denn für festes $v \in \mathcal Y$ gilt unter Verwendung der Cauchy-Schwarz-Ungleichung die Abschätzung
         \begin{align}
             \abs{F_{h}(v) - F_{0}(v)}
@@ -682,7 +684,7 @@ Als ersten Schritt des Regularitätsnachweises zeigen wir nun die Existenz belie
             \\&\leq \norm{\tilde{\varphi}_{j}}_{L_{\infty}(\Omega)} \norm{u(\bm\sigma_{h}) - u(\bm\sigma)}_{L_{2}(I; H)} \norm{v_{1}}_{L_{2}(I; H)}
             \\&\leq \norm{\tilde{\varphi}_{j}}_{L_{\infty}(\Omega)} \norm{u(\bm\sigma_{h}) - u(\bm\sigma)}_{\mathcal X} \norm{v}_{\mathcal Y}.
         \end{align}
-        Hier setzen wir mit der Stabilitätsaussage \cref{lemma:stabilitaetsaussage} an um $\norm{u(\bm\sigma_{h}) - u(\bm\sigma)}_{\mathcal X}$ weiter abzuschätzen und erhalten
+        Hier setzen wir mit der Stabilitätsaussage \cref{lemma:stabilitaetsaussage} an, um $\norm{u(\bm\sigma_{h}) - u(\bm\sigma)}_{\mathcal X}$ weiter abzuschätzen und erhalten
         \begin{equation}
             \begin{aligned}
                 \norm{u(\bm\sigma_{h}) - u(\bm\sigma)}_{\mathcal X}
@@ -694,14 +696,14 @@ Als ersten Schritt des Regularitätsnachweises zeigen wir nun die Existenz belie
         Zusammen mit obiger Ungleichung liefert dies
         \begin{equation}
             \abs{F_{h}(v) - F_{0}(v)}
-            \leq \norm{\tilde{\varphi}_{j}}^{2}_{L_{\infty}(\Omega)} \norm{v}_{\mathcal Y} \frac{\norm{f}_{\mathcal Y'}}{\beta^{2}} \abs{h} \to 0 \quad \text{für}~h \to 0,
+            \leq \norm{\tilde{\varphi}_{j}}^{2}_{L_{\infty}(\Omega)} \norm{v}_{\mathcal Y} \frac{\norm{f}_{\mathcal Y'}}{\beta^{2}} \abs{h} \to 0 \quad \text{für}~h \to 0.
         \end{equation}
-        das heißt, es gilt $F_{h} \to F_{0}$ in $\mathcal Y'$ für $h \to 0$,
+        Das bedeutet, dass $F_{h} \to F_{0}$ in $\mathcal Y'$ für $h \to 0$ gilt,
         was insbesondere $\theta_{h} \to \theta_{0}$ in $\mathcal X$ für $h \to 0$ impliziert, da $\theta_{h}$ als Lösung des Variationsproblems \cref{eq:existenz_partieller_ableitungen:beweis:variationsproblem} nach \cref{korollar:parametrisches_rz_variationsproblem_sachgemaess} stetig von $F_{h}$ abhängt.
         Ferner ist durch $\partial^{\bm\nu}_{\bm\sigma} u(\bm\sigma) = \theta_{0}$ als Lösung von
         \begin{equation}
             \label{eq:existenz_partieller_ableitungen:beweis:variationsproblem_ableitung}
-            \text{Finde}~\theta_{0} \in \mathcal X \colon \quad b(\theta_{0}, v; \bm\sigma) = - \int_{I} \tilde{\chi}_{j} \skp{\tilde{\varphi}_{j}  u(\bm\sigma)}{v_{1}}{H} \diff t, \quad \fa v \in \mathcal Y,
+            \text{Finde}~\theta_{0} \in \mathcal X \colon \quad b(\theta_{0}, v; \bm\sigma) = - \int_{I} \tilde{\chi}_{j} \skp{\tilde{\varphi}_{j}  u(\bm\sigma)}{v_{1}}{H} \diff t \quad \fa v \in \mathcal Y;
         \end{equation}
         die Existenz und Wohldefiniertheit der gesuchten partiellen Ableitung gegeben.
 
@@ -723,11 +725,11 @@ Als ersten Schritt des Regularitätsnachweises zeigen wir nun die Existenz belie
         \\&= b(\partial^{\bm\nu}_{\bm\sigma} u(\bm\sigma), v; \bm\sigma) + \int_{I} \skp{\partial^{\bm\nu}_{\bm\sigma} \omega(\bm\sigma) u(\bm\sigma)}{v_{1}}{H} \diff t
         \\&= b(\partial^{\bm\nu}_{\bm\sigma} u(\bm\sigma), v; \bm\sigma) + \int_{I} \tilde{\chi}_{j} \skp{\tilde{\varphi}_{j} u(\bm\sigma)}{v_{1}}{H} \diff t
     \end{align}
-    und ferner $\partial^{\bm\nu}_{\bm\sigma} f(v) = 0$, woraus man insgesamt erneut das Variationsproblem \cref{eq:existenz_partieller_ableitungen:beweis:variationsproblem_ableitung}
+    und ferner $\partial^{\bm\nu}_{\bm\sigma} f(v) = 0$.
+    Daraus erhält man insgesamt erneut das Variationsproblem \cref{eq:existenz_partieller_ableitungen:beweis:variationsproblem_ableitung}
     \begin{equation}
-        \text{Finde}~\partial^{\bm\nu}_{\bm\sigma} u(\bm\sigma) \in \mathcal X \colon \quad b(\partial^{\bm\nu}_{\bm\sigma} u(\bm\sigma), v; \bm\sigma) = - \int_{I} \tilde{\chi}_{j} \skp{\tilde{\varphi}_{j}  u(\bm\sigma)}{v_{1}}{H} \diff t, \quad \fa v \in \mathcal Y,
+        \text{Finde}~\partial^{\bm\nu}_{\bm\sigma} u(\bm\sigma) \in \mathcal X \colon \quad b(\partial^{\bm\nu}_{\bm\sigma} u(\bm\sigma), v; \bm\sigma) = - \int_{I} \tilde{\chi}_{j} \skp{\tilde{\varphi}_{j}  u(\bm\sigma)}{v_{1}}{H} \diff t \quad \fa v \in \mathcal Y.
     \end{equation}
-    erhält.
 \end{Bemerkung}
 
 \begin{Satz}
@@ -757,7 +759,7 @@ Als ersten Schritt des Regularitätsnachweises zeigen wir nun die Existenz belie
             b(\partial^{\tilde{\bm\nu}}_{\bm\sigma} u(\bm\sigma), v; \bm\sigma) + \sum_{\Set{j \given \tilde{\nu}_{j} \neq 0}} \tilde{\nu}_{j} \int_{I} \tilde{\chi}_{j} \skp{\tilde{\varphi}_{j} \partial^{\tilde{\bm\nu} - \vec e_{j}}_{\bm\sigma} u(\bm\sigma)}{v_{1}}{H} \diff t = 0,
         \end{equation}
         wobei nach Definition $\nu_{j} = \tilde{\nu}_{j}$ für $j \neq k$ und $\tilde{\nu}_{k} = \nu_{k} - 1$ ist.
-        Partielles Differenzieren dieser Gleichung nach $\sigma_{k}$ analog zu \cref{bemerkung:alternative_herleitung_variationsproblem_ableitung} liefert dann die Gleichung
+        Partielles Differenzieren dieser Gleichung nach $\sigma_{k}$, analog zu \cref{bemerkung:alternative_herleitung_variationsproblem_ableitung}, liefert dann die Gleichung
         \begin{align}
             0 &=
                 b(\partial^{\bm\nu}_{\bm\sigma} u(\bm\sigma), v; \bm\sigma)
@@ -765,9 +767,10 @@ Als ersten Schritt des Regularitätsnachweises zeigen wir nun die Existenz belie
                 + (\nu_{k} - 1) \int_{I} \tilde{\chi}_{k} \skp{\tilde{\varphi}_{k} \partial^{\bm\nu - \vec e_{k}}_{\bm\sigma} u(\bm\sigma) }{v_{1}}{H} \diff t
            \\&\qquad     + \sum_{\Set{j \neq k \given \nu_{j} \neq 0}} \nu_{j} \int_{I} \tilde{\chi}_{j} \skp{\tilde{\varphi}_{j} \partial^{\bm\nu - \vec e_{j}}_{\bm\sigma} u(\bm\sigma)}{v_{1}}{H} \diff t,
         \end{align}
-        welche nach Zusammenfassen der Summanden der Gleichung \cref{eq:abschaetzung_norm_partieller_ableitungen:rekursiv} entspricht.
+        welche nach Zusammenfassen der Summanden Gleichung \cref{eq:abschaetzung_norm_partieller_ableitungen:rekursiv} entspricht.
 
-        Für die rechte Seite von \cref{eq:abschaetzung_norm_partieller_ableitungen:rekursiv} können wir wie zuvor nachweisen, dass es sich um ein stetiges lineares Funktional auf $\mathcal Y$ handelt; wir können also \cref{satz:raum_zeit_variationsformulierung_sachgemaess_gestellt} verwenden um die Abschätzung
+        Für die rechte Seite von \cref{eq:abschaetzung_norm_partieller_ableitungen:rekursiv} können wir wie zuvor nachweisen, dass es sich um ein stetiges lineares Funktional auf $\mathcal Y$ handelt.
+        Wir können also \cref{satz:raum_zeit_variationsformulierung_sachgemaess_gestellt} verwenden um die Abschätzung
         \begin{equation}
             \norm{\partial^{\bm\nu}_{\bm\sigma} u(\bm\sigma)}_{\mathcal X} \leq \frac{1}{\beta} \norm{\sum_{\Set{j \given \nu_{j} \neq 0}} \nu_{j} \int_{I} \tilde{\chi}_{j} \skp{\tilde{\varphi}_{j} \partial^{\bm\nu - \vec e_{j}}_{\bm\sigma} u(\bm\sigma)}{v_{1}}{H} \diff t}_{\mathcal Y'}
         \end{equation}
@@ -811,8 +814,7 @@ Als ersten Schritt des Regularitätsnachweises zeigen wir nun die Existenz belie
     \end{Beweis}
 \end{Satz}
 
-Bisher mussten keine zusätzlichen Bedingungen auferlegt werden um die Aussagen zu beweisen.
-Dies ändert sich an dieser Stelle, zunächst aber wollen wir darauf eingehen, wie die obigen Aussagen dazu führen, die analytische Abhängigkeit der Lösung vom Parameter nachzuweisen.
+Bevor zusätzliche Annahmen notwendig werden, um die benötigten Aussagen zu beweisen, wird an dieser Stelle zunächst erläutert, wie die obigen Aussagen zum Nachweis der analytischen Abhängigkeit der Lösung vom Parameter beitragen.
 
 \begin{Definition}
 \label{definition:analytisch}
@@ -854,7 +856,7 @@ Wir geben die Aussage hier ohne Beweis wieder.
 
 \begin{Satz}
 \label{satz:loesungen_analytisch}
-    Das Funktionensystem $\Set{\varphi_{j}}_{j \in \mathbb{N}}$ sei wo gewählt, dass $\vec b \in \ell_{1}(\mathbb{N})$, definiert als $b_{j} = \beta^{-1} \norm{\varphi_{j}}_{L_{\infty}(\Omega)}$, die Bedingung $\norm{\vec b}_{\ell_{1}(\mathbb{N})} < 1$ erfüllt.
+    Das Funktionensystem $\Set{\varphi_{j}}_{j \in \mathbb{N}}$ sei so gewählt, dass $\vec b \in \ell_{1}(\mathbb{N})$, definiert als $b_{j} = \beta^{-1} \norm{\varphi_{j}}_{L_{\infty}(\Omega)}$, die Bedingung $\norm{\vec b}_{\ell_{1}(\mathbb{N})} < 1$ erfüllt.
     Dann hängt die Lösung $u(\bm \sigma)$ des parametrischen Raum"=Zeit"=Variationsproblems \cref{eq:parametrisches_rz_variationsproblem} analytisch vom Parameter $\bm \sigma \in \mathcal P$ ab.
 
     \begin{Beweis}
@@ -863,7 +865,7 @@ Wir geben die Aussage hier ohne Beweis wieder.
 \end{Satz}
 
 Die Bedingung $\norm{\vec b}_{\ell_{1}(\mathbb{N})} < 1$ kann dabei so interpretiert werden, dass der feld"=abhängige Teil der partiellen Differentialgleichung den feld"=unabhängigen Anteil nicht zu stark stören darf, um analytische Abhängigkeit garantieren zu können.
-Dies verträgt sich leider nur bedingt mit der Motivation der Propagator"=Differentialgleichung, da bei dieser die Felder einen starken Einfluss haben.
+Dies verträgt sich allerdings nur bedingt mit der Motivation der Propagator"=Differentialgleichung, da bei dieser die Felder einen starken Einfluss haben.
 
 In \cref{chapter:galerkin} werden wir auf diesen Punkt noch einmal eingehen und anhand der numerischen Ergebnisse deutlich machen, inwiefern die Bedingung eingehalten wird respektive eingehalten werden kann.
 
@@ -874,9 +876,9 @@ Da wir in diesem Kapitel bisher ausschließlich mit homogenen Dirichlet"=Randbed
 Dabei werden wir feststellen, dass Aufgrund der Struktur der Propagator-Differentialgleichung nur sehr geringe Unterschiede zum betrachteten homogenen Fall bestehen.
 
 Zunächst müssen wir die Rahmenbedingungen für die Betrachtung periodischer Randbedingungen festlegen.
-Dazu beschränken wir uns der Einfachheit halber auf den Fall, dass $\Omega = \bigtimes_{i = 1}^{n} (0, l_{i}) \subset \mathbb{R}^{n}$ ein beschränkter offener Quader ist, wobei $l_{i} \in \mathbb{R}_{+}$ für $i = 1 \dots n$ sei.
+Dazu beschränken wir uns auf den Fall, dass $\Omega = \bigtimes_{i = 1}^{n} (0, l_{i}) \subset \mathbb{R}^{n}$ ein beschränkter offener Quader ist, wobei $l_{i} \in \mathbb{R}_{+}$ für $i = 1 \dots n$ sei.
 Weiter führen wir nun die Äquivalente des Lebesgue-Raums $L_{2}(\Omega)$ und des Sobolev-Raums $H^{1}(\Omega)$ für periodische Funktionen ein.
-Dies wird an dieser Stelle sehr einfach gehalten; ausführlicher kann dies bespielsweise bei \textcite{Han2009} gefunden werden.
+Da dies für die diese Arbeit von untergeordneter Bedeutung ist, wird an dieser Stelle nur ein Überblick über die benötigten Ergebnisse gegeben, und kann beispielsweise ausführlicher bei \textcite{Han2009} gefunden werden.
 
 \begin{Definition}
 \label{definition:periodische_sobolev_raeume}
@@ -892,7 +894,7 @@ Wählen wir also $V = H^{1}_{\text{per}}(\Omega)$ und $H = L_{2,\text{per}}(\Ome
     V \denseinclusion H \cong H' \denseinclusion V' = (H^{1}_{\text{per}}(\Omega))'.
 \end{equation}
 
-Inspiziert man die Ausführungen dieses Kapitels für den Fall homogener Dirichlet-Randbedingungen, dann stellt man fest, dass lediglich die Bedingungen aus \cref{annahme:eigenschaften_der_bilinearform_a} an die Bilinearform $a(\blank, \blank)$, deren Darstellung durch den Wechsel zu periodischen Randbedingungen unverändert bleibt, nachgewiesen werden müssen.
+Untersucht man die Ausführungen dieses Kapitels für den Fall homogener Dirichlet-Randbedingungen, dann stellt man fest, dass lediglich die aus \cref{annahme:eigenschaften_der_bilinearform_a} stammenden Bedingungen an die Bilinearform $a(\blank, \blank)$, deren Darstellung durch den Wechsel zu periodischen Randbedingungen unverändert bleibt, nachgewiesen werden müssen.
 
 \begin{Lemma}
 \label{lemma:bilinearform_periodisch_messbar_stetig_garding}
@@ -900,19 +902,19 @@ Inspiziert man die Ausführungen dieses Kapitels für den Fall homogener Dirichl
     Diese Bilinearformen erfüllen die folgenden Eigenschaften:
     \begin{thmenumerate}
         \item \label{lemma:bilinearform_periodisch_messbar_stetig_garding:messbar}
-        \emph{Messbarkeit:} die Abbildung $I \ni t \mapsto a(\eta, \zeta; t)$ ist messbar für alle $\eta, \zeta \in V$.
+        \emph{Messbarkeit:} Die Abbildung $I \ni t \mapsto a(\eta, \zeta; t)$ ist messbar für alle $\eta, \zeta \in V$.
         \item\label{lemma:bilinearform_periodisch_messbar_stetig_garding:stetig}
-        \emph{Stetigkeit:} es gilt
+        \emph{Stetigkeit:} Es gilt
         \begin{equation}
             \label{eq:bilinearform_periodisch_messbar_stetig_garding:stetig}
-            \abs{a(\eta, \zeta; t)} \leq \gamma_{a} \norm{\eta}_{V} \norm{\zeta}_{V} \quad \text{für alle}~\eta, \zeta \in V
+            \abs{a(\eta, \zeta; t)} \leq \gamma_{a} \norm{\eta}_{V} \norm{\zeta}_{V}, \quad \fa \eta, \zeta \in V,
         \end{equation}
         mit Stetigkeitskonstante $\gamma_{a} = \max\Set{c, \norm{\omega}_{L_{\infty}(I; L_{\infty}(\Omega))} + \abs{\mu}} < \infty$.
         \item\label{lemma:bilinearform_periodisch_messbar_stetig_garding:garding}
-        \emph{G\aa{}rding-Ungleichung:} es gilt
+        \emph{G\aa{}rding-Ungleichung:} Es gilt
         \begin{equation}
             \label{eq:bilinearform_periodisch_messbar_stetig_garding:garding}
-            a(\eta, \eta; t) + \lambda \norm{\eta}_{H}^{2} \geq \alpha \norm{\eta}_{V}^{2} \quad \text{für alle}~\eta \in V
+            a(\eta, \eta; t) + \lambda \norm{\eta}_{H}^{2} \geq \alpha \norm{\eta}_{V}^{2}, \quad \fa \eta \in V,
         \end{equation}
         mit $\alpha = c > 0$ und $\lambda = \max\Set{\norm{\omega}_{L_{\infty}(I;L_{\infty}(\Omega))} - \mu + c, c} \geq c > 0$.
     \end{thmenumerate}
