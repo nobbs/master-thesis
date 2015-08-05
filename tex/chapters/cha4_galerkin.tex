@@ -198,6 +198,7 @@ mit den Dimensionen
 \begin{equation}
     \mathcal N := \dim \mathcal X_{\mathcal N} = (\mathcal K + 1) \mathcal J = \mathcal K \mathcal J + \mathcal J = \dim \mathcal Y_{\mathcal N}.
 \end{equation}
+An dieser Stelle definieren wir weiter die Größe $\mathcal I := \mathcal K \mathcal J$.
 
 Nachdem nun geklärt ist, wie die Raum-Zeit-Räume zusammengesetzt werden können, konstruieren wir nun die einzelnen Bauteile.
 
@@ -249,12 +250,12 @@ Dazu definieren wir mittels Tensorprodukt zunächst die Basen
 \label{eq:diskreter_ansatzraum_basis_phi}
 \label{eq:diskreter_testraum_basis_psi1}
     \mathcal B^{\mathcal X}_{\mathcal N} := \Set{\theta \otimes \eta \given \theta \in \mathcal B^{E}_{\mathcal K}, \eta \in \mathcal B^{V}_{\mathcal J}}, \quad
-    \mathcal B^{\mathcal Y_{1}}_{\mathcal N} := \Set{\xi \otimes \eta \given \xi \in \mathcal B^{F}_{\mathcal K}, \eta \in \mathcal B^{V}_{\mathcal J}}.
+    \mathcal B^{\mathcal Y_{1}}_{\mathcal I} := \Set{\xi \otimes \eta \given \xi \in \mathcal B^{F}_{\mathcal K}, \eta \in \mathcal B^{V}_{\mathcal J}}.
 \end{equation}
 und weiter
 \begin{equation}
 \label{eq:diskreter_testraum_basis_psi}
-    \mathcal B^{\mathcal Y}_{\mathcal N} := (\mathcal B^{\mathcal Y_{1}}_{\mathcal N} \times \Set{ 0 }) \cup (\Set{0} \times \mathcal B^{V}_{\mathcal J}).
+    \mathcal B^{\mathcal Y}_{\mathcal N} := (\mathcal B^{\mathcal Y_{1}}_{\mathcal I} \times \Set{ 0 }) \cup (\Set{0} \times \mathcal B^{V}_{\mathcal J}).
 \end{equation}
 Nach Konstruktion und den Definitionen \cref{eq:diskrete_tensor_raueme} gilt nun
 \begin{equation}
@@ -348,7 +349,7 @@ Unter Verwendung dieser Definitionen lässt sich letztendlich die nachfolgende S
 Nachdem nun die benötigten Grundlagen in einem möglichst allgemeinen Rahmen gelegt wurden, widmen wir uns nun der Anwendung dieser auf die schwache parametrische Formulierung der Propagator-Differentialgleichung.
 
 Um diese Parametrisierung numerisch umsetzen zu können, müssen wir zunächst den in \cref{chapter:propagator_differentialgleichung} noch unendlichdimensionalen Parameterraum $\mathcal P$ auf einen endlichdimensionalen einschränken.
-Da wir weiter in Einklang mit den Bedingungen aus \cref{section:parametrische_formulierung} bleiben wollen, werden wir dies im Folgenden durch die Wahl einer Dimension $N_{\mathcal P} \in \mathbb{N}$ und der Entwicklungsfunktionen $\varphi_{j} = 0$ für alle $j > N_{\mathcal P}$ motivieren.
+Da wir weiter in Einklang mit den Bedingungen aus \cref{section:parametrische_formulierung} bleiben wollen, werden wir dies im Folgenden durch die Wahl einer Dimension $N_{\mathcal P} \in \mathbb{N}$ und der Entwicklungsfunktionen $\varphi_{i} = 0$ für alle $i > N_{\mathcal P}$ motivieren.
 
 Wir wiederholen an dieser Stelle das parametrische Raum"=Zeit"=Variationsproblem und führen die benötigten Definitionen noch einmal in Kurzform durch.
 Im Nachfolgenden seien $\mathcal X$ und $\mathcal Y$ die aus \cref{eq:ansatzraum_X,eq:testraum_Y} bekannten Ansatz- respektive Testräume.
@@ -357,7 +358,7 @@ Im Nachfolgenden seien $\mathcal X$ und $\mathcal Y$ die aus \cref{eq:ansatzraum
     Mit $N_{\mathcal P} \in \mathbb{N}$ bezeichnen wir die Anzahl der Parameter.
     Weiter sei $\mathcal P = [-1, 1]^{N_{\mathcal P}}$ der sogenannte Parameterraum und durch
     \begin{equation}
-        \mathcal B^{\omega}_{N_{\mathcal P}} := \Set{ \varphi_{j} \in L_{\infty}(\Omega) \given j = 1, \dots, N_{\mathcal P}}
+        \mathcal B^{\omega}_{N_{\mathcal P}} := \Set{ \varphi_{i} \in L_{\infty}(\Omega) \given i = 1, \dots, N_{\mathcal P}}
     \end{equation}
     eine endliche Menge von Feld-Entwicklungsfunktionen gegeben.
 \end{Bemerkung}
@@ -375,24 +376,24 @@ Im Nachfolgenden seien $\mathcal X$ und $\mathcal Y$ die aus \cref{eq:ansatzraum
 \label{lemma:bilinearform_affin_parametrisch}
     Die parametrische Bilinearform $b$ aus \cref{eq:parametrisches_rz_variationsproblem:lhs} ist unter diesen Gegebenheiten affin vom Parameter $\bm \sigma \in \mathcal P$ abhängig, genauer gilt
     \begin{equation}
-        b(\blank, \blank; \bm \sigma) = b_{0}(\blank, \blank) + \sum_{j = 1}^{N_{\mathcal P}} \sigma_{j} b_{j}(\blank, \blank)
+        b(\blank, \blank; \bm \sigma) = b_{0}(\blank, \blank) + \sum_{i = 1}^{N_{\mathcal P}} \sigma_{i} b_{i}(\blank, \blank)
     \end{equation}
-    mit parameterunabhängigen Bilinearformen $b_{j} \colon \mathcal X \times \mathcal Y \to \mathbb{R}$, $j = 0, \dots, N_{\mathcal P}$.
+    mit parameterunabhängigen Bilinearformen $b_{i} \colon \mathcal X \times \mathcal Y \to \mathbb{R}$, $i = 0, \dots, N_{\mathcal P}$.
 
     \begin{Beweis}
         Ohne Einschränkung nehmen wir an, dass das parametrische Raum"=Zeit"=Feld $\omega$ die Darstellung
         \begin{equation}
             \omega \colon I \times \Omega \times \mathcal P \to \mathbb{R}, \quad
-            \omega(t, \vec{x}; \bm \sigma) = \sum_{j = 1}^{N_{\mathcal P}} \sigma_{j} \chi_{j}(t) \varphi_{j}(\vec x)
+            \omega(t, \vec{x}; \bm \sigma) = \sum_{i = 1}^{N_{\mathcal P}} \sigma_{i} \chi_{i}(t) \varphi_{i}(\vec x)
         \end{equation}
-        mit charakteristischen Funktionen $\chi_{j} \in \Set{\chi_{I_{1}}, \chi_{I_{2}}}$ für $j = 1, \dots, N_{\mathcal P}$ hat.
+        mit charakteristischen Funktionen $\chi_{i} \in \Set{\chi_{I_{1}}, \chi_{I_{2}}}$ für $i = 1, \dots, N_{\mathcal P}$ hat.
         Damit lässt sich die Bilinearform $b$ der parametrischen schwachen Formulierung \cref{eq:parametrisches_rz_variationsproblem:lhs} in eine bezüglich des Parameters $\bm \sigma$ affine Form bringen.
         Definiere dazu die Bilinearformen
-        $b_{j} \colon \mathcal X \times \mathcal Y \to \mathbb{R}$ durch
+        $b_{i} \colon \mathcal X \times \mathcal Y \to \mathbb{R}$ durch
         \begin{equation}
             \begin{aligned}
                 b_{0} &:= \int_{I} \left[ \skp{u_{t}}{v_{1}}{V' \times V} + c\skp{\grad u}{\grad v_{1}}{H} + \mu \skp{u}{v_{1}}{H} \right] \diff t + \skp{u(0)}{v_{2}}{H},\\
-                b_{j} &:= \int_{I} \chi_{j} \skp{\varphi_{j}u}{v_{1}}{H} \diff t, \quad j = 1, \dots, N_{\mathcal P}.
+                b_{i} &:= \int_{I} \chi_{i} \skp{\varphi_{i}u}{v_{1}}{H} \diff t, \quad i = 1, \dots, N_{\mathcal P}.
             \end{aligned}
         \end{equation}
         Unter Verwendung dieser gilt nun offenbar
@@ -401,68 +402,211 @@ Im Nachfolgenden seien $\mathcal X$ und $\mathcal Y$ die aus \cref{eq:ansatzraum
                 b(u, v; \bm \sigma)
                 &= \int_{I} \left[ \skp{u_{t}}{v_{1}}{V' \times V} + a(u, v_{1}; \bm \sigma) \right] \diff t + \skp{u(0)}{v_{2}}{H}
                 \\&= \int_{I} \left[ \skp{u_{t}}{v_{1}}{V' \times V} + c\skp{\grad u}{\grad v_{1}}{H} + \mu \skp{u}{v_{1}}{H} \right] \diff t + \skp{u(0)}{v_{2}}{H}
-                \\&\qquad + \sum_{j = 1}^{N_{\mathcal P}} \sigma_{j} \int_{I} \chi_{j} \skp{\varphi_{j}u}{v_{1}}{H} \diff t
-                \\&= b_{0}(u, v) + \sum_{j = 1}^{N_{\mathcal P}} \sigma_{j} b_{j}(u, v).
+                \\&\qquad + \sum_{i = 1}^{N_{\mathcal P}} \sigma_{i} \int_{I} \chi_{i} \skp{\varphi_{i}u}{v_{1}}{H} \diff t
+                \\&= b_{0}(u, v) + \sum_{i = 1}^{N_{\mathcal P}} \sigma_{i} b_{i}(u, v).
             \end{aligned}
         \end{equation}
     \end{Beweis}
 \end{Lemma}
 
-Um nun unter Verwendung der endlichdimensionalen Ansatz- und Testraumbasen \cref{eq:diskreter_ansatzraum_basis_phi,eq:diskreter_testraum_basis_psi} eine Diskretisierung von \cref{eq:wiederholung_variationsproblem} zu erhalten, nutzen wir die erneut die Tensorprodukt"=Struktur von $\mathcal X^{\mathcal N}$ und $\mathcal Y^{\mathcal N}$ und die Tatsache, dass Zeit- und Ortsableitungen in der betrachteten Variationsformulierung nur getrennt vorkommen.
-Dies ermöglicht die Berechnung von $\mat B(\bm \sigma) \in \mathbb{R}^{\mathcal N \times \mathcal N}$ und $\vec{f} \in \mathbb{R}^{\mathcal N}$ mittels Kronecker-Produkten gewisser Matrizen und Vektoren der zeitlichen und räumlichen Diskretisierung.
-
-\paragraph{System-Matrix} % (fold)
-
-Die System-Matrix $\mat{B}(\bm \sigma) \in \mathbb{R}^{\mathcal N \times \mathcal N}$ erhalten wir für $\phi_{m} \in \mathcal B^{\mathcal X}_{\mathcal N}$ und $\psi_{n} \in \mathcal B^{\mathcal Y}_{\mathcal N}$ durch
+Das parametrische diskrete Raum"=Zeit"=Variationsproblem lässt sich schreiben als
 \begin{equation}
-    \mat{B}(\bm \sigma) := \left[ b(\phi_{m}, \psi_{n}) \right]_{n, m = 1, \dots, \mathcal N},
+    \text{Sei } \bm \sigma \in \mathcal P, \text{ finde } u^{\mathcal{N}}(\bm \sigma) \in \mathcal{X} \colon \quad b(u^{\mathcal{N}}(\bm \sigma), v; \bm \sigma) = f(v) \quad \fa v \in \mathcal Y.
 \end{equation}
-was aufgrund von \cref{lemma:bilinearform_affin_parametrisch} mit Hilfe der Matrizen
+Um diese nun in eine Form zu bringen, welche verwendet werden kann, um die Lösung $u^{\mathcal N}(\bm \sigma)$ zu bestimmen, setzen wir zunächst die Basen $\mathcal B^{\mathcal X}_{\mathcal N}$ und $\mathcal B^{\mathcal Y}_{\mathcal N}$ ein.
+Unter Verwendung der Tensorprodukt-Darstellung der verwendeten Räume können wir ein Element $u^{\mathcal N} \in \mathcal X^{\mathcal N}$ schreiben als
 \begin{equation}
-    \mat{B}_{j} := \left[ b_{j}(\phi_{m}, \psi_{n}) \right]_{n,m = 1, \dots, \mathcal N}, \quad j = 1, \dots, N_{\mathcal P}
+    u^{\mathcal N} = \sum_{k = 0}^{\mathcal K} \sum_{j = 1}^{\mathcal J} u_{j}^{k} (\vartheta_{k} \otimes \eta_{j})
 \end{equation}
-auch in der affin-parametrischen Darstellung
+und ein Element $v^{\mathcal N} = (y^{\mathcal I}, z^{\mathcal J}) \in \mathcal Y^{\mathcal N}$ als
 \begin{equation}
-    \mat{B}(\bm \sigma) = \mat{B}_{0} + \sum_{j = 1}^{N_{\mathcal P}} \sigma_{j} \mat{B}_{j}
+    y^{\mathcal I} = \sum_{k = 1}^{\mathcal K} \sum_{j = 1}^{\mathcal J} y_{j}^{k} (\xi_{k} \otimes \eta_{j}), \qquad
+    z^{\mathcal J} = \sum_{j = 1}^{\mathcal J} z_{j} \eta_{j}.
 \end{equation}
-geschrieben werden kann.
+Dabei seien durch $\vec{u}^{\mathcal N} := (u^{k}_{j})_{j = 1, \dots, \mathcal J, k = 0, \dots, \mathcal K}$ sowie $\vec{y}^{\mathcal I} := (y^{k}_{j})_{j = 1, \dots, \mathcal J, k = 1, \dots, \mathcal K}$, $\vec{z}^{\mathcal J} := (z_{m})_{m = 1, \dots, \mathcal J}$ die Koeffizientenvektoren der jeweiligen Funktionen gegeben.
 
-Wir bestimmen nun die für die Berechnung dieser affinen Darstellungen die benötigten \enquote{Bausteine}.
-Dazu definieren wir für den räumlichen Anteil die Matrizen
+\paragraph{Systemmatrix} % (fold)
+\label{par:systemmatrix}
+
+% paragraph systemmatrix (end)
+
+Durch anwenden der Bilinearformen $b_{i}$ auf diese Funktionen erhalten wir
+\begin{align}
+    &b_{0}(u^{\mathcal N}, v^{\mathcal N})
+    \\&\quad=
+    \int_{I} \left[ \skp{u^{\mathcal N}_{t}}{y^{\mathcal J}}{V' \times V} + c \skp{\grad u^{\mathcal N}}{\grad y^{\mathcal J}}{H} + \mu \skp{u^{\mathcal N}}{y^{\mathcal I}}{H} \right] \diff t + \skp{u^{\mathcal N}(0)}{z^{\mathcal J}}{H}
+    \\&\quad= \begin{multlined}[t][.8\displaywidth]
+    \sum_{\subalign{k &= 0\cr m &= 1}}^{\mathcal K} \sum_{j, n = 1}^{\mathcal J} u^{k}_{j} y^{m}_{n}
+    \int_{I} \left[ \skp{\theta_{k}' \eta_{j}}{\xi_{m} \eta_{n}}{V' \times V} + c \skp{\theta_{k} \grad \eta_{j}}{\xi_{m} \grad \eta_{n}}{H} \right.
+    \\ \left.+ \mu \skp{\theta_{k} \eta_{j}}{\xi_{m} \eta_{n}}{H} \right] \diff t
+    + \sum_{k = 0}^{\mathcal K} \sum_{j,n = 1}^{\mathcal J} u^{k}_{j} z_{n} \skp{\theta_{k}(0) \eta_{j}}{\eta_{n}}{H}
+    \end{multlined}
+    \\&\quad=\begin{multlined}[t][.8\displaywidth]
+    \sum_{\subalign{k &= 0\cr m &= 1}}^{\mathcal K} \sum_{j,n = 1}^{\mathcal J} u^{k}_{j} y^{m}_{n} \left[ \skp{\theta_{k}'}{\xi_{m}}{L_{2}(I)} \skp{\eta_{j}}{\eta_{n}}{H} + c \skp{\theta_{k}}{\xi_{m}}{L_{2}(I)}\skp{\grad \eta_{j}}{\grad \eta_{n}}{H} \right.
+    \\\left. + \mu \skp{\theta_{k}}{\xi_{m}}{L_{2}(I)} \skp{\eta_{j}}{\eta_{n}}{H} \right] + \sum_{j,n = 1}^{\mathcal J} u^{0}_{j}  z_{n} \skp{\eta_{j}}{\eta_{n}}{H}
+    \end{multlined}
+\end{align}
+und analog für $i = 1, \dots, N_{\mathcal P}$
+\begin{align}
+    b_{i}(u^{\mathcal N}, v^{\mathcal N})
+    &= \int_{I} \chi_{i} \skp{\varphi_{i} u^{\mathcal N}}{y^{\mathcal I}}{H} \diff t
+    \\&= \sum_{\subalign{k &= 0 \cr m &= 1}}^{\mathcal K} \sum_{j, n = 1}^{\mathcal J} u^{k}_{j} y^{m}_{n} \int_{I} \chi_{i} \skp{\varphi_{i} \theta_{k} \eta_{j}}{\xi_{m} \eta_{n}}{H} \diff t
+    \\&= \sum_{\subalign{k &= 0 \cr m &= 1}}^{\mathcal K} \sum_{j, n = 1}^{\mathcal J} u^{k}_{j} y^{m}_{n} \skp{\chi_{i} \theta_{k}}{\xi_{m}}{L_{2}(I)} \skp{\varphi_{i} \eta_{j}}{\eta_{n}}{H}.
+\end{align}
+
+Definieren wir nun zunächst die benötigten Bausteine durch
 \begin{equation}
-    \mat{M}_{x} := \left[ \skp{\eta_{m}}{\eta_{n}}{H} \right]_{n,m = 1}^{\mathcal J}
+    \mat{C}_{t}^{FE} := \left[ \skp{\theta_{k}'}{\xi_{m}}{L_{2}(I)} \right]_{\subalign{m &= 1, \dots, \mathcal K \cr k &= 0, \dots, \mathcal K}} \in \mathbb{R}^{\mathcal K \times \mathcal K + 1}, \qquad
+    \mat{M}_{t}^{FE} := \left[ \skp{\theta_{k}}{\xi_{m}}{L_{2}(I)} \right]_{\subalign{m &= 1, \dots, \mathcal K \cr k &= 0, \dots, \mathcal K}} \in \mathbb{R}^{\mathcal K \times \mathcal K + 1},
+\end{equation}
+sowie die Anteile
+\begin{equation}
+    \mat{M}_{t}^{FE, i} := \left[ \skp{\chi_{i}\theta_{k}}{\xi_{m}}{L_{2}(I)} \right]_{\subalign{m &= 1, \dots, \mathcal K \cr k &= 0, \dots, \mathcal K}} \in \mathbb{R}^{\mathcal K \times \mathcal K + 1}, \quad i = 1, \dots, N_{\mathcal P},
 \end{equation}
 und
 \begin{equation}
-    \mat{A}_{x} := \left[ \skp{\grad \eta_{m}}{\grad \eta_{n}}{H} \right]_{n,m = 1}^{\mathcal J}
-\end{equation}
-sowie für den räumlichen Anteil die Matrizen
-\begin{equation}
-    \mat{M}_{t} := \left[ \skp{\theta_{m}}{\xi_{n}}{L_{2}(I)} \right]_{n = 1, m = 0}^{\mathcal K},
-\end{equation}
-\begin{equation}
-    \mat{C}_{t} := \left[ \skp{\theta_{m}'}{\xi_{n}}{L_{2}(I)} \right]_{n = 1, m = 0}^{\mathcal K},
-\end{equation}
-\begin{equation}
-    \mat{A}_{t} := \left[ \skp{\theta_{m}'}{\theta_{n}'}{L_{2}(I)} \right]_{n,m = 0}^{\mathcal K}.
-\end{equation}
-
-
-Um nun mit Hilfe der in \cref{eq:diskreter_ansatzraum_basis_phi,eq:diskreter_testraum_basis_psi} definierten Basen $\mathcal B^{\mathcal X}_{\mathcal N}$ und $\mathcal B^{\mathcal Y}_{\mathcal N}$ zu einem diskreten Variationsproblem zu gelangen, müssen wir, wie bei Galerkin-Verfahren üblich, die rechte und die linke Seite des Variationsproblems für alle $\phi \in \mathcal B^{\mathcal X}_{\mathcal N}$ und $\psi \in \mathcal B^{\mathcal Y}_{\mathcal N}$ auswerten.
-Dies liefert uns dann ein lineares Gleichungssystem
-\begin{equation}
-    \mat{B(\bm \sigma)} \vec{x} = \vec{f}.
-\end{equation}
-
-Dies tun wir, indem wir die affine Zerlegung von $b$ ausnutzen.
-Definiere
-\begin{equation}
-    \mat{B}_{0} := [b_{0}(\phi_{k}, \psi_{l})]_{l, k}
+    \vec{e}_{t} := \left[ \delta_{0,k} \right]_{k = 0, \dots, \mathcal K}  \in \mathbb{R}^{1 \times \mathcal K + 1}
 \end{equation}
 und
 \begin{equation}
-    \mat{B}_{j} := [b_{j}(\phi_{k}, \psi_{l})]_{l, k}.
+    \mat{H}_{x} := \left[ \skp{\eta_{j}}{\eta_{n}}{H} \right]_{j,n=1, \dots, \mathcal J} \in \mathbb{R}^{\mathcal J \times \mathcal J},
+    \qquad
+    \mat{A}_{x} := \left[ \skp{\grad \eta_{j}}{\grad \eta_{n}}{H} \right]_{j,n=1, \dots, \mathcal J}  \in \mathbb{R}^{\mathcal J \times \mathcal J}
 \end{equation}
+und
+\begin{equation}
+    \mat{V}_{x} := \left[ \skp{\eta_{j}}{\eta_{n}}{V} \right]_{j,n = 1, \dots, \mathcal J} \in \mathbb{R}^{\mathcal J \times \mathcal J},
+\end{equation}
+wobei in unserem Setting stets $\mat{V}_{x} = \mat{H}_{x} + \mat{A}_{x}$ gilt,
+und
+\begin{equation}
+    \mat{W}_{x}^{i} := \left[ \skp{\varphi_{i} \eta_{j}}{\eta_{n}}{H} \right]_{j, n = 1, \dots, \mathcal J}  \in \mathbb{R}^{\mathcal J \times \mathcal J}.
+\end{equation}
+
+Damit können wir die folgenden Raum"=Zeit"=Matrizen definieren:
+\begin{equation}
+    \mat{B}_{0} := \begin{pmatrix}
+    \mat{C}_{t}^{FE} \otimes \mat{H}_{x} + c\,\mat{M}_{t}^{FE} \otimes \mat{A}_{x} + \mu \mat{M}_{t}^{FE} \otimes \mat{H}_{x} \\
+    \vec{e}_{t}^{E} \otimes \mat{H}_{x}
+    \end{pmatrix}
+\end{equation}
+und
+\begin{equation}
+    \mat{B}_{i} :=  \begin{pmatrix}
+    \mat{M}_{t}^{FE, i} \otimes \mat{W}_{x}^{i} \\
+    \vec{0}
+    \end{pmatrix}.
+\end{equation}
+und damit schlußendlich
+\begin{equation}
+    \mat{B}(\bm \sigma) = \mat{B}_{0} + \sum_{i = 1}^{N_{\mathcal P}} \sigma_{i} \mat{B}_{i}.
+\end{equation}
+
+
+\paragraph{Lastvektor} % (fold)
+\label{par:lastvektor}
+
+% paragraph lastvektor (end)
+
+Um die rechte Seite des Variationsproblems, das heißt,
+\begin{equation}
+    f(v) = \int_{I} \skp{g}{v_{1}}{V' \times V} \diff t + \skp{u_{0}}{v_{2}}{H}
+\end{equation}
+zu berechnen, gehen wir analog vor und verwenden für den Quellterm eine Trapez-Formel für das zeitliche Integral, dann gilt
+\begin{align}
+    f(v^{\mathcal N})
+    &= \int_{I} \skp{g}{y^{\mathcal I}}{V' \times V} \diff t + \skp{u_{0}}{z^{\mathcal J}}{H}
+    \\&= \sum_{k = 1}^{\mathcal K} \sum_{j = 1}^{\mathcal J} y^{k}_{j} \int_{I} \skp{g}{\xi_{k} \eta_{j}}{V' \times V} \diff t + \sum_{j = 1}^{\mathcal J} z_{j} \skp{u_{0}}{\eta_{j}}{H}
+    \\&= \sum_{k = 1}^{\mathcal K} \sum_{j = 1}^{\mathcal J} \frac{\Delta t_{k}}{2} \skp{g(t_{k}) + g(t_{k - 1})}{\eta_{j}}{v' \times V}
+         + \sum_{j = 1}^{\mathcal J} z_{j} \skp{u_{0}}{\eta_{j}}{H}
+    \\&= \sum_{k = 1}^{\mathcal K} \sum_{j = 1}^{\mathcal J} \Delta t_{k} (\vec{g}^{k - 1/2})_{j} + \sum_{j = 1}^{\mathcal J} (\vec{u}_{0})_{j}
+\end{align}
+mit den Größen
+\begin{equation}
+    \Delta t_{k} := t_{k} - t_{k - 1},
+    \quad
+    \vec{g}^{k - 1/2} := \left[ \tfrac{1}{2} \skp{g(t_{k}) + g(t_{k - 1})}{\eta_{j}}{V' \times V}  \right]_{j = 1, \dots, \mathcal J },
+    \quad
+    \vec{u}_{0} := \left[ \skp{u_{0}}{\eta_{j}}{H} \right]_{j = 1, \dots, \mathcal J }.
+\end{equation}
+
+Dies führt zum diskreten Lastvektor
+\begin{equation}
+    \vec{f} := \begin{pmatrix}
+        \vec{g}^{1/2} \\
+        \vdots\\
+        \vec{g}^{\mathcal K - 1/2}\\
+        \vec{u}_{0}
+    \end{pmatrix}
+\end{equation}
+
+\paragraph{$\mathcal X$-Norm} % (fold)
+\label{par:_mathcal_x_norm}
+
+Weiter benötigen wir die Norm des Ansatzraums $\mathcal X$ für die gewählten Basisfunktionen.
+Diese kann erneut durch Kronecker-Produkte von raum und zeit Matrizen dargestellt werden.
+Betrachte dazu erneut die durch das Skalarprodukt \cref{eq:ansatzraum_skalarprodukt} induzierte Norm
+\begin{equation}
+    \norm{u}_{\mathcal X} = \left( \norm{u}_{L_{2}(I; V)}^{2} + \norm{u_{t}}_{L_2(I; V')}^2  \right)^{1/2}
+\end{equation},
+welche unter Verwendung von $u^{\mathcal N}$ geschrieben werden kann als
+\begin{align}
+    \norm{u^{\mathcal N}}_{\mathcal X}^{2}
+    &= \int_{I} \norm{u^{\mathcal N}(t)}^2_{V} \diff t
+        + \int_{I} \norm{u^{\mathcal N}_{t}(t)}_{V'}^2 \diff t
+    \\&= \sum_{k,m = 0}^{\mathcal K} \sum_{j,n = 1}^{\mathcal J} u^{k}_{j} u^{m}_{n} \int_{I} \skp{\theta_{k} \eta_{j}}{\theta_{m} \eta_{n}}{V} \diff t
+        + \sum_{k,m = 0}^{\mathcal K} \sum_{j,n = 1}^{\mathcal J} u^{k}_{j} u^{m}_{n} \int_{I} \skp{\theta_{k}' \eta_{j}}{\theta_{m}' \eta_{n}}{V'} \diff t
+    \\&= \sum_{k,m = 0}^{\mathcal K} \sum_{j,n = 1}^{\mathcal J} u^{k}_{j} u^{m}_{n} \left[ \skp{\theta_{k}}{\theta_{m}}{L_{2}(I)} \skp{\eta_{j}}{\eta_{n}}{V} + \skp{\theta_{k}'}{\theta_{m}'}{L_{2}(I)} \skp{\eta_{j}}{\eta_{n}}{V'} \right]
+\end{align}
+
+Um das Ganze in eine handliche Matrix-Schreibweise zu verwandeln, müssen wir zunächst klären, wie die das diskrete $V'$-Skalarprodukt bestimmt werden kann.
+Dazu verwenden wir \cref{lemma:berechnung_rieszsche_darstellung} um die Rieszsche Darstellung zu bestimmen, dann existiert ein $x_{j} \in V$ mit $\norm{x_{j}}_{V} = \norm{\eta_{j}}_{V'}$ und $\skp{x_{j}}{v}{V} = \skp{\eta_{j}}{v}{V' \times V}$ für alle $v \in V$.
+Insbesondere gilt für die entsprechenden Koeffizientenvektoren $\mat{M} := (\vec{x}_{j})_{j = 1, \dots, \mathcal J}$ und $\mat H_{x}$ die Gleichung
+\begin{equation}
+    \mat{V}_{x} \vec x_{j} = \bm \eta_{j},
+\end{equation}
+also $\mat M = \mat{V}_{x}^{-1} \mat H_{x}$ und damit
+\begin{equation}
+    \skp{\eta_{h}}{\eta_{n}}{V'}
+    = \skp{\mat{V}_{x}^{-1} \bm{\eta}_{j}}{\mat{V}_{x}^{-1} \bm{\eta}_{n}}{V}
+    = (\mat{V}_{x}^{-1} \bm{\eta}_{j})\Transp \mat{V}_{x} (\mat(V)_{x}^{-1} \bm{\eta}_{n})
+    = \bm{\eta}_{j}\Transp \mat{V}_{x}^{-1} \bm{\eta}_{n},
+\end{equation}
+oder zusammengefasst für alle $n$ und $j$ als diskrete Norm
+\begin{equation}
+    \mat{V}_{\mathrm{dual}} := \mat H_{x}\Transp \mat V_{x}^{-1} \mat H_{x}.
+\end{equation}
+
+Alles zusammen wird zu
+\begin{equation}
+    \mat X = \mat M_{t} \otimes \mat V_{x} + \mat A_{t} \otimes (\mat H_{x}\Transp \mat V_{x}^{-1} \mat H_{x}).
+\end{equation}
+
+% paragraph _mathcal_x_norm (end)
+
+\paragraph{$\mathcal Y$-Norm} % (fold)
+\label{par:_mathcal_y_norm}
+
+Die $\mathcal Y$-Norm hat die Form
+\begin{equation}
+    \norm{v}_{\mathcal Y} = \left( \norm{v_{1}}^{2}_{L_{2}(I; V)} + \norm{v_{2}}^{2}_{H} \right)^{1/2},
+\end{equation}
+oder eingesetzt
+\begin{align}
+    \norm{v^{\mathcal N}}_{\mathcal Y}^{2}
+    &= \int_{I} \norm{y^{\mathcal I}(t)}_{V}^{2} \diff t + \norm{z^{\mathcal J}}_{H}^{2}
+    \\&= \sum_{k,m = 1}^{\mathcal K} \sum_{j, n = 1}^{\mathcal J} y^{k}_{j} y^{m}_{n} \int_{I} \skp{\xi_{k} \eta_{j}}{\xi_{m} \eta_{n}}{V} \diff t + \sum_{j, n = 1}^{\mathcal J} z_{j} z_{n} \skp{\eta_{j}}{\eta_{n}}{H}
+    \\&= \sum_{k,m = 1}^{\mathcal K} \sum_{j, n = 1}^{\mathcal J} y^{k}_{j} y^{m}_{n} \skp{\xi_{k}}{\xi_{m}}{L_{2}(I)} \skp{\eta_{j}}{\eta_{n}}{V} \diff t + \sum_{j, n = 1}^{\mathcal J} z_{j} z_{n} \skp{\eta_{j}}{\eta_{n}}{H}
+\end{align}
+oder kurz in Matrixschreibweise
+\begin{equation}
+    \mat{Y} := \begin{pmatrix}
+    \mat{M}_{t}^{F} \otimes \mat{V}_{x} & \mat 0\\
+    \mat 0 & \mat M_{x}
+    \end{pmatrix}.
+\end{equation}
+% paragraph _mathcal_y_norm (end)
+
 
 \subsection{Sammlung zur numerischen Umsetzung} % (fold)
 \label{sub:sammlung_zur_numerischen_umsetzung}
@@ -472,30 +616,6 @@ und
     Sei $X$ ein endlichdimensionaler Hilbertraum mit Basis ${\phi_i}_{i=1}^{N}$.
     Sei weiter $g \in X'$.
     Der Koeffizientenvektor $\vec{v} \in \mathbb{R}^{N}$ der Rieszschen Darstellung $v_g = \sum_{i=1}^{N} v_{i} \phi_{i} \in X$ von $g$, das heißt, es gilt $\skp{v_g}{w}{X} = \skp{g}{w}{X' \times X}$ für alle $w \in X$, lässt sich durch das Gleichungssystem $\mat{K}\vec{v} = \vec{g}$ berechnen, wobei $\mat{K} = [\skp{\phi_{i}}{\phi_{j}}{X}]_{i,j}$ die Massematrix zum inneren Produkt auf $X$ sei und weiter $\vec{g} = [\skp{g}{\phi_{i}}{X' \times X}]_{i}$ sei.
-\end{Lemma}
-
-\begin{Lemma}[Diskrete $\mathcal{X}$-Norm]
-% todo: fixme
-    Sei $\mathcal{X}^{\mathcal{N}} = \spn\Set{ \phi_{i} \given i = 1 \dots \mathcal N } \subset \mathcal X$ ein endlichdimensionaler Unterraum.
-    Die $\mathcal X$-Norm aus \cref{eq:gl:le:ansatzraum_X_norm}
-    wird für den Unterraum $\mathcal{X}_{\mathcal N}$ durch den folgenden Operator
-    \begin{equation}
-        \mat{M} = \mat{M}_{t} \otimes (\mat{M}_{x} + \mat{A}_{x}) + \mat{A}_{t} \otimes (\mat{M}_{x} (\mat{M}_{x} + \mat{A}_{x})^{-1} \mat{M}_{x})
-    \end{equation}
-    induziert.
-\end{Lemma}
-
-\begin{Lemma}[Diskrete $\mathcal{Y}$-Norm]
-% todo: fixme
-    Sei bla.
-    Die $\mathcal{Y}_{\mathcal N}$-Norm aus \cref{eq:testraum_Y_skalarprodukt} wird durch den folgenden Operator
-    \begin{equation}
-        \mat{N} = \begin{pmatrix}
-            \mat{M}_{t} \otimes (\mat{M}_{x} + \mat{A}_{x}) & \mat{0} \\
-            \mat{0} & \mat{M}_{x}.
-        \end{pmatrix}
-    \end{equation}
-    induziert.
 \end{Lemma}
 
 \end{document}
