@@ -471,13 +471,13 @@ Diese werden uns später als Bausteine zur Berechnung der Raum"=Zeit"=Systeme di
     Die \emph{räumlichen Gramschen Matrizen} $\mat{H}_{x}, \mat{A}_{x}, \mat{V}_{x}, \mat{W}_{x,i} \in \mathbb{R}^{\mathcal J \times \mathcal J}$ seien durch
     \begin{equation}
     \begin{aligned}
-        \mat{H}_{x} &:= \left[ \skp{\eta_{j}}{\eta_{n}}{H} \right]_{j,n=1, \dots, \mathcal J},&
+        \mat{H}_{x} &:= \left[ \skp{\eta_{j}}{\eta_{l}}{H} \right]_{j,l=1, \dots, \mathcal J},&
         \quad
-        \mat{A}_{x} &:= \left[ \skp{\grad \eta_{j}}{\grad \eta_{n}}{H} \right]_{j,n=1, \dots, \mathcal J},
+        \mat{A}_{x} &:= \left[ \skp{\grad \eta_{j}}{\grad \eta_{l}}{H} \right]_{j,l=1, \dots, \mathcal J},
         \\
-        \mat{V}_{x} &:= \left[ \skp{\eta_{j}}{\eta_{n}}{V} \right]_{j,n = 1, \dots, \mathcal J},&
+        \mat{V}_{x} &:= \left[ \skp{\eta_{j}}{\eta_{l}}{V} \right]_{j,l = 1, \dots, \mathcal J},&
         \quad
-        \mat{W}_{x,i} &:= \left[ \skp{\varphi_{i} \eta_{j}}{\eta_{n}}{H} \right]_{j, n = 1, \dots, \mathcal J}, \quad \text{für } i = 1, \dots, N_{\mathcal P}
+        \mat{W}_{x,i} &:= \left[ \skp{\varphi_{i} \eta_{j}}{\eta_{l}}{H} \right]_{j, l = 1, \dots, \mathcal J}, \quad \text{für } i = 1, \dots, N_{\mathcal P},
     \end{aligned}
     \end{equation}
     definiert.
@@ -487,6 +487,7 @@ Da das $V$-Skalarprodukt bei uns nach \cref{..} durch $\skp{\blank}{\blank}{V} =
 
 Mit dieser Vorarbeit können die benötigten Raum"=Zeit-Strukturen hergeleitet werden.
 Wir beginnen mit der Systemmatrix, welche durch die Bilinearform $b(\blank, \blank; \bm \sigma)$ erzeugt wird, fahren danach mit dem Lastvektor und abschließend den diskreten Darstellungen der Normen auf Ansatz- und Testraum fort.
+Um die Berechnung möglichst knapp zu halten, verzichten wir sowohl auf die Argumente der Funktionen als auch auf das $\otimes$-Symbol für das Tensorprodukt.
 
 \subsection*{Systemmatrix}
 
@@ -498,22 +499,22 @@ Im Fall von $b_{0}$ führt dies zu
     &=
     \int_{I} \left[ \skp{u^{\mathcal N}_{t}}{y^{\mathcal J}}{V' \times V} + c \skp{\grad u^{\mathcal N}}{\grad y^{\mathcal J}}{H} + \mu \skp{u^{\mathcal N}}{y^{\mathcal I}}{H} \right] \diff t + \skp{u^{\mathcal N}(0)}{z^{\mathcal J}}{H}
     \\&= \begin{multlined}[t][.8\displaywidth]
-    \sum_{\subalign{k &= 0\cr m &= 1}}^{\mathcal K} \sum_{\subalign{j &= 1\cr n &= 1}}^{\mathcal J} u^{k}_{j} y^{m}_{n}
-    \int_{I} \left[ \skp{\theta_{k}' \eta_{j}}{\xi_{m} \eta_{n}}{V' \times V} + c \skp{\theta_{k} \grad \eta_{j}}{\xi_{m} \grad \eta_{n}}{H} \right.
-    \\ \left.+ \mu \skp{\theta_{k} \eta_{j}}{\xi_{m} \eta_{n}}{H} \right] \diff t
-    + \sum_{k = 0}^{\mathcal K} \sum_{\subalign{j &= 1\cr n &= 1}}^{\mathcal J} u^{k}_{j} z_{n} \skp{\theta_{k}(0) \eta_{j}}{\eta_{n}}{H}
+    \sum_{\subalign{k &= 0\cr m &= 1}}^{\mathcal K} \sum_{\subalign{j &= 1\cr l &= 1}}^{\mathcal J} u^{k}_{j} y^{m}_{l}
+    \int_{I} \left[ \skp{\theta_{k}' \eta_{j}}{\xi_{m} \eta_{l}}{V' \times V} + c \skp{\theta_{k} \grad \eta_{j}}{\xi_{m} \grad \eta_{l}}{H} \right.
+    \\ \left.+ \mu \skp{\theta_{k} \eta_{j}}{\xi_{m} \eta_{l}}{H} \right] \diff t
+    + \sum_{k = 0}^{\mathcal K} \sum_{\subalign{j &= 1\cr l &= 1}}^{\mathcal J} u^{k}_{j} z_{l} \skp{\theta_{k}(0) \eta_{j}}{\eta_{l}}{H}
     \end{multlined}
     \\&=\begin{multlined}[t][.8\displaywidth]
-    \sum_{\subalign{k &= 0\cr m &= 1}}^{\mathcal K} \sum_{\subalign{j &= 1\cr n &= 1}}^{\mathcal J} u^{k}_{j} y^{m}_{n} \left[ \skp{\theta_{k}'}{\xi_{m}}{L_{2}(I)} \skp{\eta_{j}}{\eta_{n}}{H} + c \skp{\theta_{k}}{\xi_{m}}{L_{2}(I)}\skp{\grad \eta_{j}}{\grad \eta_{n}}{H} \right.
-    \\\left. + \mu \skp{\theta_{k}}{\xi_{m}}{L_{2}(I)} \skp{\eta_{j}}{\eta_{n}}{H} \right] + \sum_{\subalign{j &= 1\cr n &= 1}}^{\mathcal J} u^{0}_{j}  z_{n} \skp{\eta_{j}}{\eta_{n}}{H}
+    \sum_{\subalign{k &= 0\cr m &= 1}}^{\mathcal K} \sum_{\subalign{j &= 1\cr l &= 1}}^{\mathcal J} u^{k}_{j} y^{m}_{l} \left[ \skp{\theta_{k}'}{\xi_{m}}{L_{2}(I)} \skp{\eta_{j}}{\eta_{l}}{H} + c \skp{\theta_{k}}{\xi_{m}}{L_{2}(I)}\skp{\grad \eta_{j}}{\grad \eta_{l}}{H} \right.
+    \\\left. + \mu \skp{\theta_{k}}{\xi_{m}}{L_{2}(I)} \skp{\eta_{j}}{\eta_{l}}{H} \right] + \sum_{\subalign{j &= 1\cr l &= 1}}^{\mathcal J} u^{0}_{j}  z_{l} \skp{\eta_{j}}{\eta_{l}}{H}
     \end{multlined}
 \end{align}
 und analog für $b_{i}$ mit $i = 1, \dots, N_{\mathcal P}$ zu
 \begin{align}
     b_{i}(u^{\mathcal N}, v^{\mathcal N})
     &= \int_{I} \chi_{i} \skp{\varphi_{i} u^{\mathcal N}}{y^{\mathcal I}}{H} \diff t
-    = \sum_{\subalign{k &= 0 \cr m &= 1}}^{\mathcal K} \sum_{\subalign{j &= 1\cr n &= 1}}^{\mathcal J} u^{k}_{j} y^{m}_{n} \int_{I} \chi_{i} \skp{\varphi_{i} \theta_{k} \eta_{j}}{\xi_{m} \eta_{n}}{H} \diff t
-    \\&= \sum_{\subalign{k &= 0 \cr m &= 1}}^{\mathcal K} \sum_{\subalign{j &= 1\cr n &= 1}}^{\mathcal J} u^{k}_{j} y^{m}_{n} \skp{\chi_{i} \theta_{k}}{\xi_{m}}{L_{2}(I)} \skp{\varphi_{i} \eta_{j}}{\eta_{n}}{H}.
+    = \sum_{\subalign{k &= 0 \cr m &= 1}}^{\mathcal K} \sum_{\subalign{j &= 1\cr l &= 1}}^{\mathcal J} u^{k}_{j} y^{m}_{l} \int_{I} \chi_{i} \skp{\varphi_{i} \theta_{k} \eta_{j}}{\xi_{m} \eta_{l}}{H} \diff t
+    \\&= \sum_{\subalign{k &= 0 \cr m &= 1}}^{\mathcal K} \sum_{\subalign{j &= 1\cr l &= 1}}^{\mathcal J} u^{k}_{j} y^{m}_{l} \skp{\chi_{i} \theta_{k}}{\xi_{m}}{L_{2}(I)} \skp{\varphi_{i} \eta_{j}}{\eta_{l}}{H}.
 \end{align}
 Diese Darstellungen lassen sich für $i = 0, \dots, N_{\mathcal P}$ mit Hilfe des Kronecker-Produkts in Form von Matrizen $\mat{B}_{i} \in \mathbb{R}^{\mathcal N \times \mathcal N}$ als
 \begin{equation}
@@ -532,9 +533,9 @@ Diese Darstellungen lassen sich für $i = 0, \dots, N_{\mathcal P}$ mit Hilfe de
 \end{equation}
 schreiben, denn damit gilt
 \begin{equation}
-    (\vec{y}^{\mathcal I}, \vec{z}^{\mathcal J}) \mat{B}_{i} \vec{u}^{\mathcal N} = b_{i}(u^{N}, (y^{\mathcal I}, z^{\mathcal J})), \quad \text{für } i = 0, \dots, N_{\mathcal P}.
+    (\vec{y}^{\mathcal I}; \vec{z}^{\mathcal J})\Transp \mat{B}_{i} \vec{u}^{\mathcal N} = b_{i}(u^{N}, (y^{\mathcal I}, z^{\mathcal J})), \quad \text{für } i = 0, \dots, N_{\mathcal P}.
 \end{equation}
-Die affin-parametrische Darstellung der Bilinearformen überträgt sich auch auf diese Matrizen und wir definieren die diskrete parametrische Systemmatrix $\mat B(\bm \sigma) \in \mathbb{R}^{\mathcal N \times \mathcal N}$ für $\sigma \in \mathcal P$ durch
+Die affin-parametrische Darstellung der Bilinearformen überträgt sich auch auf diese Matrizen und wir definieren die diskrete parametrische Systemmatrix $\mat B(\bm \sigma) \in \mathbb{R}^{\mathcal N \times \mathcal N}$ für $\bm \sigma \in \mathcal P$ durch
 \begin{equation}
     \mat{B}(\bm \sigma) := \mat{B}_{0} + \sum_{i = 1}^{N_{\mathcal P}} \sigma_{i} \mat{B}_{i}.
 \end{equation}
@@ -547,7 +548,7 @@ Die affin-parametrische Darstellung der Bilinearformen überträgt sich auch auf
     f(v) = \int_{I} \skp{g}{v_{1}}{V' \times V} \diff t + \skp{u_{0}}{v_{2}}{H}.
 \end{equation}
 
-Da der Quellterm $g \in L_{2}(I; V')$ im Allgemeinen nicht in rein zeit- und raumabhängige Funktionen zerlegt werden kann, wenden wir in der zeitlichen Komponente eine Trapezformel als numerische Quadratur an.
+Da der Quellterm $g \in L_{2}(I; V')$ im Allgemeinen nicht in rein zeit- und raumabhängige Funktionen zerlegt werden kann, wenden wir in der zeitlichen Komponente aufgrund der verwendeten zeitlichen Testraumbasisfunktionen eine Trapezformel als numerische Quadratur an.
 Dies führt zu folgender Darstellung des Lastvektors
 \begin{align}
     f(v^{\mathcal N})
@@ -574,7 +575,7 @@ und Auswertung dieser Skalarprodukte mittels geeigneter Quadraturformeln, auf we
     \end{pmatrix}.
 \end{equation}
 
-Dieser Lastvektor, zusammen mit obiger Systemmatrix $\mat{B}(\bm \sigma)$ reicht bereits aus, um eine diskrete Lösung des parametrischen Variationsproblems zu bestimmen, denn ist das diskrete Variationsproblem korrekt gestellt, erfüllt es beispielsweise eine der Bedingungen aus \cref{satz:galerkin_wohldefiniertheit}, dann lässt sich der Koeffizientenvektor $\vec{u}^{\mathcal N}(\bm \sigma) \in \mathbb{R}^{\mathcal N}$ der eindeutigen Lösung $u^{\mathcal N}(\bm \sigma)$ durch das Gleichungssystem
+Dieser Lastvektor, zusammen mit obiger Systemmatrix $\mat{B}(\bm \sigma)$ reicht bereits aus, um eine diskrete Lösung des parametrischen Variationsproblems zu bestimmen, denn ist das diskrete Variationsproblem korrekt gestellt, erfüllt es beispielsweise eine der Bedingungen aus \cref{satz:galerkin_wohldefiniertheit}, dann lässt sich der Koeffizientenvektor $\vec{u}^{\mathcal N}(\bm \sigma) \in \mathbb{R}^{\mathcal N}$ der eindeutigen Lösung $u^{\mathcal N}(\bm \sigma)$ als Lösung des Gleichungssystems
 \begin{equation}
     \mat{B}(\bm \sigma) \vec{u}^{\mathcal N}(\bm \sigma) = \vec f
 \end{equation}
@@ -583,9 +584,9 @@ bestimmen.
 \subsection*{Normen}
 
 Weiter benötigen wir eine Möglichkeit die Norm einer diskreten Funktion $u^{\mathcal N}$ des Ansatzraumes über den zugehörigen Koeffizientenvektor $\vec{u}^{\mathcal N}$ zu berechnen.
-Dazu sei zunächst an das norminduzierende $\mathcal X$-Skalaprodukt \cref{eq:ansatzraum_skalarprodukt}
+Dazu sei zunächst an das norminduzierende $\mathcal X$-Skalaprodukt
 \begin{equation}
-    \skp{u}{v}{\mathcal X} = \skp{u}{v}{L_{2}(I; V)} + \skp{u_t}{v_t}{L_2(I; V')}, \quad \text{für } u, v \in \mathcal X,
+    \skp{u}{v}{\mathcal X} = \skp{u}{v}{L_{2}(I; V)} + \skp{u_t}{v_t}{L_2(I; V')}, \quad \text{für } u, v \in \mathcal X, \tag*{\cref{eq:ansatzraum_skalarprodukt}}
 \end{equation}
 erinnert.
 Einsetzen der diskreten Darstellung \cref{eq:darstellung_diskrete_ansatzfunktion} von $u^{\mathcal N}$ für beide Argumente liefert
@@ -593,20 +594,20 @@ Einsetzen der diskreten Darstellung \cref{eq:darstellung_diskrete_ansatzfunktion
     \norm{u^{\mathcal N}}_{\mathcal X}^{2}
     &= \int_{I} \norm{u^{\mathcal N}(t)}^2_{V} \diff t
         + \int_{I} \norm{u^{\mathcal N}_{t}(t)}_{V'}^2 \diff t
-    \\&= \sum_{\subalign{k &= 0 \cr m &= 0}}^{\mathcal K} \sum_{\subalign{j &= 1 \cr n &= 1}}^{\mathcal J} u^{k}_{j} u^{m}_{n} \int_{I} \skp{\theta_{k} \eta_{j}}{\theta_{m} \eta_{n}}{V} \diff t
-        + \sum_{\subalign{k &= 0 \cr m &= 0}}^{\mathcal K} \sum_{\subalign{j &= 1 \cr n &= 1}}^{\mathcal J} u^{k}_{j} u^{m}_{n} \int_{I} \skp{\theta_{k}' \eta_{j}}{\theta_{m}' \eta_{n}}{V'} \diff t
-    \\&= \sum_{\subalign{k &= 0 \cr m &= 0}}^{\mathcal K} \sum_{\subalign{j &= 1 \cr n &= 1}}^{\mathcal J} u^{k}_{j} u^{m}_{n} \left[ \skp{\theta_{k}}{\theta_{m}}{L_{2}(I)} \skp{\eta_{j}}{\eta_{n}}{V} + \skp{\theta_{k}'}{\theta_{m}'}{L_{2}(I)} \skp{\eta_{j}}{\eta_{n}}{V'} \right]
+    \\&= \sum_{\subalign{k &= 0 \cr m &= 0}}^{\mathcal K} \sum_{\subalign{j &= 1 \cr l &= 1}}^{\mathcal J} u^{k}_{j} u^{m}_{l} \int_{I} \skp{\theta_{k} \eta_{j}}{\theta_{m} \eta_{l}}{V} \diff t
+        + \sum_{\subalign{k &= 0 \cr m &= 0}}^{\mathcal K} \sum_{\subalign{j &= 1 \cr l &= 1}}^{\mathcal J} u^{k}_{j} u^{m}_{l} \int_{I} \skp{\theta_{k}' \eta_{j}}{\theta_{m}' \eta_{l}}{V'} \diff t
+    \\&= \sum_{\subalign{k &= 0 \cr m &= 0}}^{\mathcal K} \sum_{\subalign{j &= 1 \cr l &= 1}}^{\mathcal J} u^{k}_{j} u^{m}_{l} \left[ \skp{\theta_{k}}{\theta_{m}}{L_{2}(I)} \skp{\eta_{j}}{\eta_{l}}{V} + \skp{\theta_{k}'}{\theta_{m}'}{L_{2}(I)} \skp{\eta_{j}}{\eta_{l}}{V'} \right]
 \end{align}
 
 Bevor wir diese Darstellung in eine handliche Matrix-Schreibweise umformulieren können, müssen wir klären, wie das diskrete $V'$-Skalarprodukt bestimmt werden kann.
-Wir greifen auf \cref{lemma:berechnung_rieszsche_darstellung} zurück und erhalten für festes $j = 1, \dots, \mathcal J$ für das Funktional $\skp{\eta_{j}}{\blank}{V' \times V}$ und dessen Vektor $\bm \eta_{j} := [\skp{\eta_{j}}{\eta_{n}}{V' \times V}]_{n = 1, \dots, \mathcal J}$ zunächst den Koeffizientenvektor $\vec{h}_{j} = \mat{V}_{x}^{-1} \bm \eta_{j}$.
-Die durch diese Funktionen definierten Funktionen $h_{j} = \sum_{n = 1}^{\mathcal J} (\vec{h}_{j})_{n} \eta_{n}$ können wir nun verwenden um die $V'$-Norm zu bestimmen, denn es gilt nach dem Rieszschen Darstellungssatz
+Wir greifen auf \cref{lemma:berechnung_rieszsche_darstellung} zurück und erhalten für festes $j = 1, \dots, \mathcal J$ für das Funktional $\skp{\eta_{j}}{\blank}{V' \times V}$ und dessen Vektor $\bm \eta_{j} := [\skp{\eta_{j}}{\eta_{l}}{V' \times V}]_{l = 1, \dots, \mathcal J}$ zunächst den Koeffizientenvektor $\vec{h}_{j} = \mat{V}_{x}^{-1} \bm \eta_{j}$.
+Die durch diese Funktionen definierten Funktionen $h_{j} = \sum_{l = 1}^{\mathcal J} (\vec{h}_{j})_{l} \eta_{l}$ können wir nun verwenden um die $V'$-Norm zu bestimmen, denn es gilt nach dem Rieszschen Darstellungssatz
 \begin{equation}
-    \skp{\eta_{j}}{\eta_{n}}{V'} = \skp{h_{j}}{h_{n}}{V} = (\mat V_{x}^{-1} \bm \eta_{j})\Transp \mat V_{x} (\mat V_{x}^{-1} \bm \eta_{j}) = \bm{\eta}_{j}\Transp \mat{V}_{x}^{-1} \bm{\eta}_{n},
+    \skp{\eta_{j}}{\eta_{l}}{V'} = \skp{h_{j}}{h_{l}}{V} = (\mat V_{x}^{-1} \bm \eta_{j})\Transp \mat V_{x} (\mat V_{x}^{-1} \bm \eta_{j}) = \bm{\eta}_{j}\Transp \mat{V}_{x}^{-1} \bm{\eta}_{l},
 \end{equation}
 und die Gramsche Matrix $\mat V_{\mathrm{dual}} \in \mathbb{R}^{\mathcal J \times \mathcal J}$ ist dementsprechend
 \begin{equation}
-    \mat V_{\mathrm{dual}} := [\bm{\eta}_{j}\Transp \mat{V}_{x}^{-1} \bm{\eta}_{n}]_{j,n = 1, \dots, \mathcal J} = \mat H_{x}\Transp \mat V_{x}^{-1} \mat H_{x}.
+    \mat V_{\mathrm{dual}} := [\bm{\eta}_{j}\Transp \mat{V}_{x}^{-1} \bm{\eta}_{l}]_{j,l = 1, \dots, \mathcal J} = \mat H_{x}\Transp \mat V_{x}^{-1} \mat H_{x}.
 \end{equation}
 Definieren wir nun die Gramsche Matrix $\mat X \in \mathbb{R}^{\mathcal N \times \mathcal N}$ der $\mathcal X$-Norm auf $\mathcal X^{\mathcal N}$ durch
 \begin{equation}
@@ -615,17 +616,18 @@ Definieren wir nun die Gramsche Matrix $\mat X \in \mathbb{R}^{\mathcal N \times
 dann können wir für alle $u^{\mathcal N}$ die $\mathcal X$-Norm bestimmen über $\norm{u^{\mathcal N}}_{\mathcal X} = \sqrt{(\vec{u}^{\mathcal N})\Transp \mat X (\vec{u}^{\mathcal N})}$.
 
 Auch die Norm des Testraums wird für uns wichtig sein, weswegen wir auch für diese eine diskrete Repräsentation herleiten wollen.
-Auch hier sei an das norminduzierende $\mathcal Y$-Skalarprodukt \cref{eq:testraum_skalarprodukt}
+Auch hier sei an das norminduzierende $\mathcal Y$-Skalarprodukt
 \begin{equation}
     \skp{u}{v}{\mathcal Y} = \skp{u_{1}}{v_{1}}{L_2(I; V)} + \skp{u_{2}}{v_{2}}{H}, \quad \text{für } u, v \in \mathcal Y,
+    \tag*{\cref{eq:testraum_skalarprodukt}}
 \end{equation}
 erinnert.
 Analog zur vorherigen Betrachtung erhalten wir
 \begin{align}
     \norm{v^{\mathcal N}}_{\mathcal Y}^{2}
     &= \int_{I} \norm{y^{\mathcal I}(t)}_{V}^{2} \diff t + \norm{z^{\mathcal J}}_{H}^{2}
-    \\&= \sum_{k,m = 1}^{\mathcal K} \sum_{j, n = 1}^{\mathcal J} y^{k}_{j} y^{m}_{n} \int_{I} \skp{\xi_{k} \eta_{j}}{\xi_{m} \eta_{n}}{V} \diff t + \sum_{j, n = 1}^{\mathcal J} z_{j} z_{n} \skp{\eta_{j}}{\eta_{n}}{H}
-    \\&= \sum_{k,m = 1}^{\mathcal K} \sum_{j, n = 1}^{\mathcal J} y^{k}_{j} y^{m}_{n} \skp{\xi_{k}}{\xi_{m}}{L_{2}(I)} \skp{\eta_{j}}{\eta_{n}}{V} \diff t + \sum_{j, n = 1}^{\mathcal J} z_{j} z_{n} \skp{\eta_{j}}{\eta_{n}}{H},
+    \\&= \sum_{k,m = 1}^{\mathcal K} \sum_{j, l = 1}^{\mathcal J} y^{k}_{j} y^{m}_{l} \int_{I} \skp{\xi_{k} \eta_{j}}{\xi_{m} \eta_{l}}{V} \diff t + \sum_{j, l = 1}^{\mathcal J} z_{j} z_{l} \skp{\eta_{j}}{\eta_{l}}{H}
+    \\&= \sum_{k,m = 1}^{\mathcal K} \sum_{j, l = 1}^{\mathcal J} y^{k}_{j} y^{m}_{l} \skp{\xi_{k}}{\xi_{m}}{L_{2}(I)} \skp{\eta_{j}}{\eta_{l}}{V} \diff t + \sum_{j, l = 1}^{\mathcal J} z_{j} z_{l} \skp{\eta_{j}}{\eta_{l}}{H},
 \end{align}
 was in Matrixschreibweise zu der durch
 \begin{equation}
