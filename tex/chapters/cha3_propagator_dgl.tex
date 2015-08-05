@@ -362,56 +362,56 @@ Wie zuvor sei auch eine Familie von zugehörigen Bilinearformen $a(\blank, \blan
 \end{equation}
 
 Um die Abhängigkeit der obigen Operatoren respektive Bilinearformen vom Feld auch für die nachfolgende numerische Umsetzung verwendbar zu machen, wollen wir die Abhängigkeit von einer Abbildung $w \in L_{\infty}(\Omega)$ durch eine Abhängigkeit von einer diskreten Größe, beispielsweise einer Koeffizientenfolge aus dem $\ell_{1}(\mathbb{N})$ oder ähnlichen Folgenräumen, ersetzen.
-Dies erreichen wir durch folgende Einschränkung der verwendeten Felder $w \in L_{\infty}(\Omega)$ auf Abbildungen, die wir als Reihenentwicklung von hier noch nicht näher spezifizierten Abbildungen $\varphi_{j}$ darstellen können.
-Auf die Wahl dieser $\varphi_{j}$ werden wir bei der numerischen Untersuchung in \cref{chapter:galerkin} erneut eingehen.
+Dies erreichen wir durch folgende Einschränkung der verwendeten Felder $w \in L_{\infty}(\Omega)$ auf Abbildungen, die wir als Reihenentwicklung von hier noch nicht näher spezifizierten Abbildungen $\varphi_{i}$ darstellen können.
+Auf die Wahl dieser $\varphi_{i}$ werden wir bei der numerischen Untersuchung in \cref{chapter:galerkin} erneut eingehen.
 
 \begin{Definition}
 \label{definition:feld_entwickelbar}
-    Sei $\Set{\varphi_{j}}_{j \in \mathbb{N}} \subset L_{\infty}(\Omega)$ ein System von Funktionen und sei weiter ein Parameterraum $\mathcal P \subset \mathbb{R}^{\mathbb{N}}$ gegeben.
-    Wir nennen ein Feld $w \in L_{\infty}(\Omega)$ \emph{darstellbar} durch $\Set{\varphi_{j}}_{j \in \mathbb{N}}$, wenn ein $\bm{\sigma} \in \mathcal P$ existiert, so dass $w$ mit
+    Sei $\Set{\varphi_{i}}_{i \in \mathbb{N}} \subset L_{\infty}(\Omega)$ ein System von Funktionen und sei weiter ein Parameterraum $\mathcal P \subset \mathbb{R}^{\mathbb{N}}$ gegeben.
+    Wir nennen ein Feld $w \in L_{\infty}(\Omega)$ \emph{darstellbar} durch $\Set{\varphi_{i}}_{i \in \mathbb{N}}$, wenn ein $\bm{\sigma} \in \mathcal P$ existiert, so dass $w$ mit
     \begin{equation}
-        w(\blank; \bm\sigma) = \sum_{j = 1}^{\infty} \sigma_{j} \varphi_{j}
+        w(\blank; \bm\sigma) = \sum_{i = 1}^{\infty} \sigma_{i} \varphi_{i}
     \end{equation}
     übereinstimmt.
 \end{Definition}
 
-Wir können mit einem festen System $\Set{\varphi_{j}}_{j \in \mathbb{N}}$ im Allgemeinen nicht alle möglichen $L_{\infty}(\Omega)$-Funktionen darstellen.
-Dies ist aber auch nicht nötig, da, wie man in der Einführung bereits gesehen hat, die während des Iterationsverfahrens tatsächlich auftretenden Felder gewisse Eigenschaften, beispielsweise Symmetrien, aufweisen, und wir diese in die Wahl des Systems $\Set{\varphi_{j}}_{j \in \mathbb{N}}$ einfließen lassen können.
+Wir können mit einem festen System $\Set{\varphi_{i}}_{i \in \mathbb{N}}$ im Allgemeinen nicht alle möglichen $L_{\infty}(\Omega)$-Funktionen darstellen.
+Dies ist aber auch nicht nötig, da, wie man in der Einführung bereits gesehen hat, die während des Iterationsverfahrens tatsächlich auftretenden Felder gewisse Eigenschaften, beispielsweise Symmetrien, aufweisen, und wir diese in die Wahl des Systems $\Set{\varphi_{i}}_{i \in \mathbb{N}}$ einfließen lassen können.
 
 \begin{Bemerkung}
     Für den Rest dieses Kapitels beschränken wir uns bei der Wahl des Parameterraums auf $\mathcal P = [-1, 1]^{\mathbb{N}}$.
-    Dies dient hauptsächlich der Notation und stellt keine Einschränkung dar, da die Funktionen $\Set{ \varphi_{j} }_{j \in \mathbb{N}}$ entsprechend umskaliert werden können.
+    Dies dient hauptsächlich der Vereinfachung der Beweise und stellt keine Einschränkung dar, da die Funktionen $\Set{ \varphi_{i} }_{i \in \mathbb{N}}$ entsprechend umskaliert werden können.
 \end{Bemerkung}
 
-Um sicherzustellen, dass derartige Felder $w(\bm\sigma)$ wohldefinierte Operatoren $A(w(\bm\sigma))$ liefern, fordern wir die in der folgenden Annahme festgehaltene Eigenschaft von der Funktionenfolge $\Set{\varphi_{j}}_{j \in \mathbb{N}}$.
+Um sicherzustellen, dass derartige Felder $w(\bm\sigma)$ wohldefinierte Operatoren $A(w(\bm\sigma))$ liefern, fordern wir die in der folgenden Annahme festgehaltene Eigenschaft von der Funktionenfolge $\Set{\varphi_{i}}_{i \in \mathbb{N}}$.
 
 \begin{Annahme}
 \label{annahme:system_l1_summierbar}
-    Das Funktionensystem $\Set{ \varphi_{j} }_{j \in \mathbb{N}} \subset L_{\infty}(\Omega)$ sei einfach summierbar in der $L_{\infty}$-Norm, das heißt, es gelte $\Set{ \norm{\varphi_{j}}_{L_{\infty}(\Omega) } }_{j \in \mathbb{N}} \in \ell_{1}(\mathbb{N})$.
+    Das Funktionensystem $\Set{ \varphi_{i} }_{i \in \mathbb{N}} \subset L_{\infty}(\Omega)$ sei einfach summierbar in der $L_{\infty}$-Norm, das heißt, es gelte $\Set{ \norm{\varphi_{i}}_{L_{\infty}(\Omega) } }_{i \in \mathbb{N}} \in \ell_{1}(\mathbb{N})$.
 \end{Annahme}
-
+%
 Im Folgenden bezeichnen wir die obige $\ell_{1}(\mathbb{N})$-Norm der Kürze wegen als
 \begin{equation}
 \label{eq:system_l1_norm}
-    c_{\varphi} := \sum_{j = 1}^{\infty} \norm{\varphi_{j}}_{L_{\infty}(\Omega)}.
+    c_{\varphi} := \sum_{i = 1}^{\infty} \norm{\varphi_{i}}_{L_{\infty}(\Omega)}.
 \end{equation}
 Diese Annahme stellt insbesondere die gleichmäßige Konvergenz von $w(\bm\sigma)$ für alle $\bm\sigma \in \mathcal P$ sicher, denn es gilt
 \begin{equation}
 \label{eq:rz_feld_norm_schranke}
-    \sup_{\bm\sigma \in \mathcal P} \norm{w(\bm\sigma)}_{L_{\infty}(\Omega)} \leq \sum_{j = 1}^{\infty} \norm{\varphi_{j}}_{L_{\infty}(\Omega)} = c_{\varphi} < \infty.
+    \sup_{\bm\sigma \in \mathcal P} \norm{w(\bm\sigma)}_{L_{\infty}(\Omega)} \leq \sum_{i = 1}^{\infty} \norm{\varphi_{i}}_{L_{\infty}(\Omega)} = c_{\varphi} < \infty.
 \end{equation}
 
-Legen wir uns auf ein konkretes Funktionensystem $\Set{\varphi_{j}}_{j \in \mathbb{N}}$, welches die \cref{annahme:system_l1_summierbar} erfüllt, fest, dann können wir die Operatoren $A(\omega)$ nun auch als Familie von Operatoren $A(\bm\sigma)$ betrachten, denn durch Einsetzen von $w(\bm\sigma)$ in \cref{eq:operator_feld} erhalten wir
+Legen wir uns auf ein konkretes Funktionensystem $\Set{\varphi_{i}}_{i \in \mathbb{N}}$, welches die \cref{annahme:system_l1_summierbar} erfüllt, fest, dann können wir die Operatoren $A(\omega)$ nun auch als Familie von Operatoren $A(\bm\sigma)$ betrachten, denn durch Einsetzen von $w(\bm\sigma)$ in \cref{eq:operator_feld} erhalten wir
 \begin{equation}
 \label{eq:operator_parameter}
-    A(\bm\sigma) \colon V \to V', \quad A(\bm\sigma) \eta = -c \Delta \eta + \sum_{j = 1}^{\infty} \sigma_{j} \varphi_{j} \eta + \mu \eta.
+    A(\bm\sigma) \colon V \to V', \quad A(\bm\sigma) \eta = -c \Delta \eta + \sum_{i = 1}^{\infty} \sigma_{i} \varphi_{i} \eta + \mu \eta.
 \end{equation}
 Weiter können wir auch die zugehörige Bilinearform $a(\blank, \blank; \bm\sigma)$ angeben als
 \begin{equation}
 \label{eq:bilinearform_parameter}
     \begin{aligned}
     a(\blank, \blank; \bm\sigma) \colon V \times V \to \mathbb{R},
-    \quad a(\eta, \zeta; \bm\sigma) = c\skp{\grad \eta}{\grad \zeta}{H} + \sum_{j = 1}^{\infty} \sigma_{j} \skp{\varphi_{j} \eta}{\zeta}{H} + \mu \skp{\eta}{\zeta}{H}.
+    \quad a(\eta, \zeta; \bm\sigma) = c\skp{\grad \eta}{\grad \zeta}{H} + \sum_{i = 1}^{\infty} \sigma_{i} \skp{\varphi_{i} \eta}{\zeta}{H} + \mu \skp{\eta}{\zeta}{H}.
     \end{aligned}
 \end{equation}
 
@@ -423,7 +423,7 @@ Dies Bedarf, wie zuvor, einen zeitlichen Wechsel zwischen mehreren Feldern $w_{i
 Wir beschränken uns auf den bereits bekannten Fall zweier Felder und erweitern die obige Operator"=Definition um die zeitliche Abhängigkeit.
 Zunächst definieren wir analog zu \cref{eq:raum_zeit_feld} ein parametrisches Raum"=Zeit"=Feld.
 Dies geschieht auf Basis der Darstellung von $w_{i}$ aus \cref{definition:feld_entwickelbar}.
-Sei dazu $\bm\sigma \in \mathcal P$, dann definieren wir die folgenden Teilfolgen der ungeraden respektive geraden Indizes als $\bm\sigma_{\odd} = (\sigma_{2j-1})_{j \in \mathbb{N}}$ und $\bm\sigma_{\even} = (\sigma_{2j})_{j \in \mathbb{N}}$.
+Sei dazu $\bm\sigma \in \mathcal P$, dann definieren wir die folgenden Teilfolgen der ungeraden respektive geraden Indizes als $\bm\sigma_{\odd} = (\sigma_{2i-1})_{i \in \mathbb{N}}$ und $\bm\sigma_{\even} = (\sigma_{2i})_{i \in \mathbb{N}}$.
 
 \begin{Definition}
 \label{definition:parametrisches_raum_zeit_feld}
@@ -435,7 +435,7 @@ Sei dazu $\bm\sigma \in \mathcal P$, dann definieren wir die folgenden Teilfolge
         \begin{aligned}
             \omega(t, \vec{x}; \bm\sigma)
             &:= w(\vec{x}; \bm\sigma_{\odd}) \chi_{I_{1}}(t) + w(\vec{x}; \bm\sigma_{\even}) \chi_{I_{2}}(t)\\
-            &\phantom{:}= \sum_{j = 1}^{\infty} (\sigma_{2j-1} \chi_{I_{1}}(t) + \sigma_{2j} \chi_{I_{2}}(t)) \varphi_{j}(\vec x)
+            &\phantom{:}= \sum_{i = 1}^{\infty} \left[\sigma_{2i-1} \chi_{I_{1}}(t) + \sigma_{2i} \chi_{I_{2}}(t)\right] \varphi_{i}(\vec x)
         \end{aligned}
     \end{equation}
     gegeben ist.
@@ -445,7 +445,7 @@ Wegen der Zerlegung $I = I_{1} \cupdot I_{2}$ ist direkt ersichtlich, dass analo
 \begin{equation}
 \label{eq:parametrisches_raum_zeit_feld_schranke}
     \sup_{\bm\sigma \in \mathcal P} \norm{\omega(\bm\sigma)}_{L_{\infty}(I; L_{\infty}(\Omega))}
-    = \sup_{\bm\sigma \in \mathcal P} \norm{w(\bm\sigma)}_{L_{\infty}(\Omega)} \leq \sum_{j = 1}^{\infty} \norm{\varphi_{j}}_{L_{\infty}(\Omega)} = c_{\varphi}
+    = \sup_{\bm\sigma \in \mathcal P} \norm{w(\bm\sigma)}_{L_{\infty}(\Omega)} \leq \sum_{i = 1}^{\infty} \norm{\varphi_{i}}_{L_{\infty}(\Omega)} = c_{\varphi}
 \end{equation}
 gilt.
 
@@ -458,7 +458,7 @@ dann hat die zugehörige Familie von Bilinearformen $a(\blank, \blank; t, \bm\si
 \begin{equation}
     \label{eq:bilinearform_zeit_parameter}
     \begin{aligned}
-        a(\eta, \zeta; t, \bm\sigma) = c\skp{\grad \eta}{\grad \zeta}{H} + \sum_{j = 1}^{\infty} \left[ \sigma_{2j-1} \chi_{I_{1}}(t) + \sigma_{2j} \chi_{I_{2}}(t)  \right] \skp{\varphi_{j} \eta}{\zeta}{H} + \mu \skp{\eta}{\zeta}{H}.
+        a(\eta, \zeta; t, \bm\sigma) = c\skp{\grad \eta}{\grad \zeta}{H} + \sum_{i = 1}^{\infty} \left[ \sigma_{2i-1} \chi_{I_{1}}(t) + \sigma_{2i} \chi_{I_{2}}(t)  \right] \skp{\varphi_{i} \eta}{\zeta}{H} + \mu \skp{\eta}{\zeta}{H}.
     \end{aligned}
 \end{equation}
 Mit dieser Vorarbeit können wir analog zu \cref{definition:raum_zeit_variationsformulierung} nun die folgende parametrische schwache Formulierung definieren.
@@ -529,21 +529,21 @@ Wie zuvor wollen wir \cref{satz:ss09:theorem51} verwenden, müssen also die Bedi
 \label{section:regularitaet_bezueglich_der_parameter}
 
 Wir interessieren uns nun für die Regularität der Abhängigkeit der Lösung $u(\bm\sigma)$ der parametrischen schwachen Formulierung vom Parameter $\bm \sigma \in \mathcal P$.
-Konkret werden wir nachweisen, dass die Lösung unter gewissen Annahmen an das Funktionensystem $\Set{\varphi_{j}}_{j \in \mathbb{N}}$ analytisch vom Parameter $\bm \sigma$ abhängt.
+Konkret werden wir nachweisen, dass die Lösung unter gewissen Annahmen an das Funktionensystem $\Set{\varphi_{i}}_{i \in \mathbb{N}}$ analytisch vom Parameter $\bm \sigma$ abhängt.
 Dabei orientieren wir uns an den Arbeiten von \textcite{Cohen:2010kz,Cohen:2011jp,Kunoth:2013ef}, weisen diese Eigenschaften aber direkt für die Raum"=Zeit"=Variationsformulierung nach, statt wie in den genannten Arbeiten den Umweg über den stationären Fall zu gehen.
 
 Zunächst folgen einige notationelle Vorbemerkungen.
 \begin{Bemerkung}
-    Als Multiindexmenge $\mathcal F$ definieren wir $\mathcal F := \Set{ \bm\nu \in \mathbb{N}^{\mathbb{N}}_{0} \given \abs{\bm\nu} < \infty }$, wobei
+    Die Multiindexmenge $\mathcal F$ definieren wir als $\mathcal F := \Set{ \bm\nu \in \mathbb{N}^{\mathbb{N}}_{0} \given \abs{\bm\nu} < \infty }$, wobei
     \begin{equation}
-        \abs{\bm\nu} := \sum_{k = 1}^{\infty} \abs{\nu_{k}}
+        \abs{\bm\nu} := \sum_{i = 1}^{\infty} \abs{\nu_{i}}
     \end{equation}
     die $\ell_{1}(\mathbb{N})$-Norm sei.
     Anders formuliert, besteht $\mathcal F$ gerade aus denjenigen Folgen in $\mathbb{N}_{0}$, welche nur endliche viele Einträge ungleich Null aufweisen.
 
     Sei $\bm\nu \in \mathcal F$ und $\vec{b} \in \ell_{p}(\mathbb{N})$, $p > 0$, dann schreiben wir
     \begin{equation}
-        \vec{b}^{\bm\nu} := \prod_{j = 1}^{\infty} b_{j}^{\nu_{j}}
+        \vec{b}^{\bm\nu} := \prod_{i = 1}^{\infty} b_{i}^{\nu_{i}}
     \end{equation}
     mit der Konvention $0^{0} = 1$.
     Wegen $\abs{\bm\nu} < \infty$ ist dieses Produkt stets endlich.
@@ -551,20 +551,20 @@ Zunächst folgen einige notationelle Vorbemerkungen.
 
 Um die Notation für die nachfolgenden Beweise zu vereinfachen, ordnen wir die Darstellung der parametrischen Raum"=Zeit"=Felder um.
 \begin{Bemerkung}
-    Definiere neue charakteristische Funktionen und Entwicklungsfunktionen für $j \in \mathbb{N}$ durch
+    Definiere neue charakteristische Funktionen und Entwicklungsfunktionen für $i \in \mathbb{N}$ durch
     \begin{equation}
-        \tilde{\chi}_{j} := \begin{cases}
-            \chi_{I_{1}}, & j~\text{ungerade},\\
-            \chi_{I_{2}}, & j~\text{gerade},
+        \tilde{\chi}_{i} := \begin{cases}
+            \chi_{I_{1}}, & i~\text{ungerade},\\
+            \chi_{I_{2}}, & i~\text{gerade},
         \end{cases} \quad
-        \tilde{\varphi}_{j} := \begin{cases}
-            \varphi_{(j+1)/{2}}, & j~\text{ungerade},\\
-            \varphi_{j / 2}, & j~\text{gerade}.
+        \tilde{\varphi}_{i} := \begin{cases}
+            \varphi_{(i+1)/{2}}, & i~\text{ungerade},\\
+            \varphi_{i / 2}, & i~\text{gerade}.
         \end{cases}
     \end{equation}
     Damit können wir \cref{eq:parametrisches_raum_zeit_feld} auch schreiben als
     \begin{equation}
-        w(t, \vec{x}; \bm \sigma) = \sum_{j = 1}^{\infty} \sigma_{j} \tilde{\chi}_{j}(t) \tilde{\varphi}_{j}(\vec{x}).
+        w(t, \vec{x}; \bm \sigma) = \sum_{i = 1}^{\infty} \sigma_{i} \tilde{\chi}_{i}(t) \tilde{\varphi}_{i}(\vec{x}).
     \end{equation}
 \end{Bemerkung}
 
@@ -572,7 +572,7 @@ Für die nachfolgenden Beweise fixieren wir die rechte Seite $f \in \mathcal Y'$
 
 \begin{Lemma}
 \label{lemma:stabilitaetsaussage}
-    Seien $\omega, \tilde{\omega}$ zwei Raum"=Zeit"=Felder wie in \cref{eq:raum_zeit_feld} und $u, \tilde{u}$ die zugehörigen Lösungen der schwachen Formulierung \cref{section:raum_zeit_variationsformulierung}.
+    Seien $\omega, \tilde{\omega}$ zwei Raum"=Zeit"=Felder wie in \cref{eq:raum_zeit_feld} und $u, \tilde{u}$ die zugehörigen Lösungen der schwachen Formulierung \cref{eq:raum_zeit_variationsformulierung}.
     Dann gilt
     \begin{equation}
         \norm{u - \tilde{u}}_{\mathcal X} \leq \frac{\norm{f}_{\mathcal Y'}}{\beta^{2}} \norm{\omega - \tilde{\omega}}_{L_{\infty}(I; L_{\infty}(\Omega))},
@@ -647,13 +647,13 @@ Als erster Schritt des Regularitätsnachweises wird zunächst die Existenz belie
         Ist $\abs{h}$ klein genug, dann existieren diese auch im Fall $\bm\sigma_{h} \not\in \mathcal P$, da analog zu \cref{eq:parametrisches_raum_zeit_feld_schranke} die schwache Formulierung nach wie vor korrekt gestellt ist.
         Dies ergibt sich durch die Abschätzung
         \begin{equation}
-            \norm{\omega(\bm \sigma_{h})}_{L_{\infty}(I; L_{\infty}(\Omega))} \leq \sum_{j' = 1}^{\infty} \norm{\varphi_{j'}}_{L_{\infty}(\Omega)} + \abs{h} \norm{\varphi_{j}}_{L_{\infty}(\Omega)}\leq c_{\varphi} + \abs{h} \norm{\varphi_{j}}_{L_{\infty}(\Omega)} < \infty.
+            \norm{\omega(\bm \sigma_{h})}_{L_{\infty}(I; L_{\infty}(\Omega))} \leq \sum_{i = 1}^{\infty} \norm{\varphi_{i}}_{L_{\infty}(\Omega)} + \abs{h} \norm{\varphi_{j}}_{L_{\infty}(\Omega)}\leq c_{\varphi} + \abs{h} \norm{\varphi_{j}}_{L_{\infty}(\Omega)} < \infty.
         \end{equation}
 
         Zunächst schreiben wir die Differenz der parametrischen Raum-Zeit-Felder um zu
         \begin{equation}
             \omega(t, \vec{x}; \bm\sigma_{h}) - \omega(t, \vec{x}; \bm\sigma)
-            = \sum_{j = 1}^{\infty} (\sigma_{h,j} - \sigma_{j} ) \tilde{\chi}_{j}(t) \tilde{\varphi}_{j}(\vec{x})
+            = \sum_{i = 1}^{\infty} (\sigma_{h,i} - \sigma_{i} ) \tilde{\chi}_{i}(t) \tilde{\varphi}_{i}(\vec{x})
             = h \tilde{\chi}_{j}(t) \tilde{\varphi}_{j}(\vec{x}).
         \end{equation}
         Unter diesen Gegebenheiten betrachten wir nun die Differenz der zu $u(\bm\sigma_{h})$ und $u(\bm\sigma)$ zugehörigen Variationsprobleme.
@@ -737,7 +737,7 @@ Als erster Schritt des Regularitätsnachweises wird zunächst die Existenz belie
 
 \begin{Satz}
 \label{satz:abschaetzung_norm_partieller_ableitungen}
-    Sei $\vec b = (b_j)_{j \in \mathbb{N}} \in \mathbb{R}^{\mathbb{N}}$ die durch $b_{j} = \beta^{-1} \norm{\tilde{\varphi}_{j}}_{L_{\infty}(\Omega)}$ gegebene Folge, wobei $\beta$ die nach \cref{satz:raum_zeit_variationsformulierung_sachgemaess_gestellt} existierende parameterunabhängige inf-sup"=Konstante ist.
+    Sei $\vec b = (b_i)_{i \in \mathbb{N}} \in \mathbb{R}^{\mathbb{N}}$ die durch $b_{i} = \beta^{-1} \norm{\tilde{\varphi}_{i}}_{L_{\infty}(\Omega)}$ gegebene Folge, wobei $\beta$ die nach \cref{satz:raum_zeit_variationsformulierung_sachgemaess_gestellt} existierende parameterunabhängige inf-sup"=Konstante ist.
     Dann gilt
     \begin{equation}
         \label{eq:abschaetzung_norm_partieller_ableitungen}
@@ -745,7 +745,7 @@ Als erster Schritt des Regularitätsnachweises wird zunächst die Existenz belie
     \end{equation}
 
     \begin{Beweis}
-        Wir beginnen damit eine Darstellung der Variationsprobleme, welche von den partiellen Ableitungen erfüllt werden, herzuleiten.
+        Wir beginnen damit, eine Darstellung der Variationsprobleme, welche von den partiellen Ableitungen erfüllt werden, herzuleiten.
         Diese lassen sich durch
         \begin{equation}
         \label{eq:abschaetzung_norm_partieller_ableitungen:rekursiv}
@@ -859,7 +859,7 @@ Wir geben die Aussage hier ohne Beweis wieder.
 
 \begin{Satz}
 \label{satz:loesungen_analytisch}
-    Das Funktionensystem $\Set{\varphi_{j}}_{j \in \mathbb{N}}$ sei so gewählt, dass $\vec b \in \ell_{1}(\mathbb{N})$, definiert als $b_{j} := \beta^{-1} \norm{\varphi_{j}}_{L_{\infty}(\Omega)}$, die Bedingung $\norm{\vec b}_{\ell_{1}(\mathbb{N})} < 1$ erfüllt.
+    Das Funktionensystem $\Set{\varphi_{i}}_{i \in \mathbb{N}}$ sei so gewählt, dass $\vec b \in \ell_{1}(\mathbb{N})$, definiert als $b_{i} := \beta^{-1} \norm{\varphi_{i}}_{L_{\infty}(\Omega)}$, die Bedingung $\norm{\vec b}_{\ell_{1}(\mathbb{N})} < 1$ erfüllt.
     Dann hängt die Lösung $u(\bm \sigma)$ des parametrischen Raum"=Zeit"=Variationsproblems \cref{eq:parametrisches_rz_variationsproblem} analytisch vom Parameter $\bm \sigma \in \mathcal P$ ab.
 
     \begin{Beweis}
