@@ -233,31 +233,87 @@ classdef SolverNodal < SolverAbstract
       % set up the vector
       F = sparse(obj.nTestDim, 1);
 
-      % precalculate the function handles of the source for fixed time points
-      gfun = cell(obj.temporal.nTrial, 1);
-      for kdx = 1:obj.temporal.nTrial
-        gfun{kdx} = @(x) obj.pd.sourcefun(obj.pd.tgrid(kdx), x);
+      % first we check whether the source term is a constant, only space
+      % dependent or depends on both time an space
+      sourceIsConst = isnumeric(obj.pd.sourcefun);
+      if ~sourceIsConst
+        sourceIsSpatial = nargin(obj.pd.sourcefun) == 1;
+      else
+        sourceIsSpatial = false;
       end
 
-      % calculate the source term part
-      for kdx = 1:obj.temporal.nTest
+      % compute the source term part of the load vector
+      if sourceIsConst
+        % first case: source is a constant value, so we can save some compuations
         g = zeros(obj.spatial.nTest, 1);
         for jdx = 1:obj.spatial.nTest
-          g(jdx) = obj.spatial.evaluateFunctional(@(x) (gfun{kdx + 1}(x) + gfun{kdx}(x)) / 2, jdx);
+          g(jdx) = obj.spatial.evaluateFunctional(@(x) obj.pd.sourcefun, jdx);
         end
 
-        % calculate the temporal stepsize and save the calculated values
-        delta_t = obj.pd.tgrid(kdx + 1) - obj.pd.tgrid(kdx);
-        pos = (kdx - 1) * obj.spatial.nTest + 1;
-        F(pos:(pos + obj.spatial.nTest - 1)) = delta_t * g;
+        for kdx = 1:obj.temporal.nTest
+          % calculate the temporal stepsize and save the calculated values
+          delta_t = obj.pd.tgrid(kdx + 1) - obj.pd.tgrid(kdx);
+          pos = (kdx - 1) * obj.spatial.nTest + 1;
+          F(pos:(pos + obj.spatial.nTest - 1)) = delta_t * g;
+        end
+      elseif sourceIsSpatial
+        % second case: source is a space only function, so we have the same for
+        % every point in time.
+        g = zeros(obj.spatial.nTest, 1);
+        for jdx = 1:obj.spatial.nTest
+          g(jdx) = obj.spatial.evaluateFunctional(obj.pd.sourcefun, jdx);
+        end
+
+        % calculate the source term part
+        for kdx = 1:obj.temporal.nTest
+          % calculate the temporal stepsize and save the calculated values
+          delta_t = obj.pd.tgrid(kdx + 1) - obj.pd.tgrid(kdx);
+          pos = (kdx - 1) * obj.spatial.nTest + 1;
+          F(pos:(pos + obj.spatial.nTest - 1)) = delta_t * g;
+        end
+      else
+        % third case: source is both time and space dependent, so we use a
+        % trapezoidal rule for the temporal integral and matlabs numerical
+        % quadrature for the spatial integral.
+
+        % precompute the needed functions for the trapezoidal rule
+        gfun = cell(obj.temporal.nTrial, 1);
+        for kdx = 1:obj.temporal.nTrial
+          gfun{kdx} = @(x) obj.pd.sourcefun(obj.pd.tgrid(kdx), x);
+        end
+
+        % calculate the source term part
+        for kdx = 1:obj.temporal.nTest
+          g = zeros(obj.spatial.nTest, 1);
+          for jdx = 1:obj.spatial.nTest
+            g(jdx) = obj.spatial.evaluateFunctional(@(x) (gfun{kdx + 1}(x) + gfun{kdx}(x)) / 2, jdx);
+          end
+
+          % calculate the temporal stepsize and save the calculated values
+          delta_t = obj.pd.tgrid(kdx + 1) - obj.pd.tgrid(kdx);
+          pos = (kdx - 1) * obj.spatial.nTest + 1;
+          F(pos:(pos + obj.spatial.nTest - 1)) = delta_t * g;
+        end
       end
 
-      % set up the initial condition part
-      u0 = zeros(obj.spatial.nTest, 1);
-      for idx = 1:obj.spatial.nTest
-        u0(idx) = obj.spatial.evaluateFunctional(obj.pd.icfun, idx);
+      % and now the same for the initial conditions
+      icIsConst = isnumeric(obj.pd.icfun);
+
+      % the only difference in the computation is the way we forward the initial
+      % conditions to the spatial assembly object.
+      if icIsConst
+        u0 = zeros(obj.spatial.nTest, 1);
+        for idx = 1:obj.spatial.nTest
+          u0(idx) = obj.spatial.evaluateFunctional(@(x) obj.pd.icfun, idx);
+        end
+        F(obj.spatial.nTest * obj.temporal.nTest + 1:end) = u0;
+      else
+        u0 = zeros(obj.spatial.nTest, 1);
+        for idx = 1:obj.spatial.nTest
+          u0(idx) = obj.spatial.evaluateFunctional(obj.pd.icfun, idx);
+        end
+        F(obj.spatial.nTest * obj.temporal.nTest + 1:end) = u0;
       end
-      F(obj.spatial.nTest * obj.temporal.nTest + 1:end) = u0;
 
       % also save the space time vector
       obj.Rhs = F;

@@ -5,7 +5,13 @@ classdef ProblemData < handle
     % Multiplicative constant of the Laplacian. @type double
     laplacian;
     % Added field offset. @type double
-    offset
+    offset;
+
+    % Initial condition given by a double value or a function handle.
+    icfun;
+    % Source term given by a double value, a spatial only function handle or a
+    % space time function.
+    sourcefun;
 
     % Spatial interval span. @type vector
     xspan;
@@ -24,11 +30,6 @@ classdef ProblemData < handle
     seriesIdx;
     % Number of fields @type integer
     nF;
-
-    % Initial condition @type function_handle
-    icfun;
-    % Source term @type function_handle
-    sourcefun;
   end
 
   properties(Dependent)
