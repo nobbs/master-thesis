@@ -53,5 +53,18 @@ classdef SpatialAssemblyAbstract < handle
     % Return values:
     %   Ax: spatial stiffness matrix @type matrix
     Ax = stiffnessMatrix(obj);
+
+    % Evaluate the functional given by a basis function.
+    %
+    % Evaluates the L2 inner product of a fixed basis function for the given
+    % function fun.
+    %
+    % Parameters:
+    %   fun: the argument of the functional @type function_handle
+    %   index: index of the basis function to use @type integer
+    %
+    % Return values:
+    %   val: value of the evaluated functional @type double
+    val = evaluateFunctional(obj, fun, index);
   end % abstract methods
 end % classdef

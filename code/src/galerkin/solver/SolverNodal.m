@@ -222,10 +222,44 @@ classdef SolverNodal < SolverAbstract
 
     function F = spacetimeLoadVector(obj)
       % Assemble the load vector for the space time system.
-      % @todo generalize!
+      %
+      % This is done by using numerical quadrature for the spatial parts of the
+      % source term and the initial condition. Additionaly we use a simple
+      % trapezoidal quadrature for the temporal part of the source term.
+      %
+      % Return values:
+      %   F: space time load vector @type colvec
 
+      % set up the vector
       F = sparse(obj.nTestDim, 1);
-      F(obj.spatial.nTest * obj.temporal.nTest + 1) = obj.pd.xspan(2);
+
+      % precalculate the function handles of the source for fixed time points
+      gfun = cell(obj.temporal.nTrial, 1);
+      for kdx = 1:obj.temporal.nTrial
+        gfun{kdx} = @(x) obj.pd.sourcefun(obj.pd.tgrid(kdx), x);
+      end
+
+      % calculate the source term part
+      for kdx = 1:obj.temporal.nTest
+        g = zeros(obj.spatial.nTest, 1);
+        for jdx = 1:obj.spatial.nTest
+          g(jdx) = obj.spatial.evaluateFunctional(@(x) (gfun{kdx + 1}(x) + gfun{kdx}(x)) / 2, jdx);
+        end
+
+        % calculate the temporal stepsize and save the calculated values
+        delta_t = obj.pd.tgrid(kdx + 1) - obj.pd.tgrid(kdx);
+        pos = (kdx - 1) * obj.spatial.nTest + 1;
+        F(pos:(pos + obj.spatial.nTest - 1)) = delta_t * g;
+      end
+
+      % set up the initial condition part
+      u0 = zeros(obj.spatial.nTest, 1);
+      for idx = 1:obj.spatial.nTest
+        u0(idx) = obj.spatial.evaluateFunctional(obj.pd.icfun, idx);
+      end
+      F(obj.spatial.nTest * obj.temporal.nTest + 1:end) = u0;
+
+      % also save the space time vector
       obj.Rhs = F;
     end
 

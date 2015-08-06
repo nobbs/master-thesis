@@ -24,6 +24,11 @@ classdef ProblemData < handle
     seriesIdx;
     % Number of fields @type integer
     nF;
+
+    % Initial condition @type function_handle
+    icfun;
+    % Source term @type function_handle
+    sourcefun;
   end
 
   properties(Dependent)

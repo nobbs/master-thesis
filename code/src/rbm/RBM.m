@@ -25,6 +25,8 @@ classdef RBM < handle
     nTrialRB = 0;
     % Number of reduced basis test basis vectors @type integer
     nTestRB = 0;
+
+    residuals = [];
   end
 
   properties%(Access = 'protected')
@@ -131,7 +133,8 @@ classdef RBM < handle
       end
 
       % select the first parameter by random
-      curIdx = randi(size(paramTrain, 2), 1, 1);
+      % curIdx = randi(size(paramTrain, 2), 1, 1);
+      curIdx = 1;
       curTrain = paramTrain(:, curIdx);
       paramTrain(:, curIdx) = [];
       obj.params(:, 1) = curTrain;
@@ -144,7 +147,7 @@ classdef RBM < handle
         end
 
         % debugging
-%         keyboard;
+        % keyboard;
 
         % first we compute the truth solution for the current parameter
         solvec = obj.solver.solve(curTrain);
@@ -177,6 +180,7 @@ classdef RBM < handle
         % next step: compute all the error estimates, so let's prepare the
         % computation of the residual
         obj.prepareResidual;
+        obj.residuals = [];
         % and now lets iterate
         errests = zeros(size(paramTrain, 2), 1);
         for idx = 1:size(paramTrain, 2)
@@ -186,7 +190,9 @@ classdef RBM < handle
 
         % get the parameter with the largest error estimate
         [maxerr, maxdx] = max(errests);
-        obj.errors(end + 1) = maxerr;
+        if ~isempty(maxerr)
+          obj.errors(end + 1) = maxerr;
+        end
 
         % check the breaking conditions
         % @todo add more of 'em
@@ -226,7 +232,7 @@ classdef RBM < handle
       res = obj.residual(rbsolvec, param);
       % calculate the bounds of the inf-sup-constant
       [lb, ~] = obj.scm.onlineQuery(param, Malpha, Mplus);
-
+      obj.residuals(end + 1) = res;
       % finally compute the error estimate
       errest = res / lb;
     end
@@ -346,7 +352,7 @@ classdef RBM < handle
       H = zeros(obj.solver.nTestDim, obj.nQr);
 
       % the first column is the rhs of the truth system
-      H(:, 1) = obj.solver.spacetimeLoadVector;;
+      H(:, 1) = obj.solver.spacetimeLoadVector;
 
       % the remaining columns are the products of the affine composition of the
       % truth system matrix and the chosen trial truth space snapshots

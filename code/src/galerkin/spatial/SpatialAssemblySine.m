@@ -43,6 +43,29 @@ classdef SpatialAssemblySine < SpatialAssemblyAbstract
       Ax = spdiags(tmp, 0, obj.nTest, obj.nTrial);
     end
 
+    function val = evaluateFunctional(obj, fun, index)
+      % Evaluate the functional given by a basis function.
+      %
+      % Evaluates the L2 inner product of a fixed basis function for the given
+      % function fun.
+      %
+      % Parameters:
+      %   fun: the argument of the functional @type function_handle
+      %   index: index of the basis function to use @type integer
+      %
+      % Return values:
+      %   val: value of the evaluated functional @type double
+
+      % use one of the standard matlab numerical quadratures
+      val = integral(@(z) fun(z) .* obj.basisFunc(index, z), ...
+                     obj.pd.xspan(1), obj.pd.xspan(2));
+
+      % round to zero if we are near enough to maintain sparsity
+      if abs(val) < sqrt(eps)
+        val = 0;
+      end
+    end
+
     function FDx = fieldDependentSine(obj)
       % Assemble only the field-dependet part of the stiffness matrix based on a
       % sine series expansion of the field.
