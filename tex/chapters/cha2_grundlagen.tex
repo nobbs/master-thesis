@@ -6,7 +6,7 @@
 \chapter{Funktionalanalytische Grundlagen} % (fold)
 \label{chapter:grundlagen}
 
-Um die in der Einleitung beschriebene parabolische partielle Differentialgleichungen theoretisch und numerisch untersuchen zu können, müssen wir zunächst ein robustes Grundgerüst schaffen.
+Um die in der Einleitung beschriebenen parabolischen partiellen Differentialgleichungen theoretisch und numerisch untersuchen zu können, müssen wir zunächst ein robustes Grundgerüst schaffen.
 Dies beginnen wir in diesem Kapitel mit der Einführung respektive der Wiederholung der benötigten Grundlagen aus der Funktionalanalysis.
 Dabei orientieren wir uns maßgeblich an den Arbeiten von \textcite{Dautray:1992by,Schweizer2013}, in welchen die nachfolgenden Ausführungen weit detaillierter zu finden sind.
 
@@ -16,9 +16,11 @@ Dabei orientieren wir uns maßgeblich an den Arbeiten von \textcite{Dautray:1992
 
 Bevor wir uns an die Einführung einer Raum"=Zeit"=Variationsformulierung parabolischer partieller Differentialgleichungen begeben, müssen wir zunächst die zugrundeliegenden Funktionenräume einführen.
 Hierbei konzentrieren wir uns auf die sogenannten \emph{Bochner"=Räume}, welche eine Verallgemeinerungen der bekannten Lebesgue"=Räume $L_{p}$ auf Banachraum"=wertige Funktionen darstellen, schränken uns dabei aber stets auf den für uns relevanten Fall eines endlichen Zeitintervalls ein.
+Weiter beschränken wir uns in dieser Arbeit auf die Betrachtung reeller Räume und Abbildungen, wobei ein Großteil der Aussagen auch für Strukturen über den komplexen Zahlen gilt.
 
 Wir beginnen nun mit der folgenden Definition der Bochner"=Räume nach \cite[Definition XVIII.1.1]{Dautray:1992by}.
 
+% TODO: eventuell nur auf L_2 beschränken.
 \begin{Definition}
 \label{definition:bochner_raum}
     Seien $X$ ein Banachraum, $- \infty < a < b < \infty$ und $1 \leq p < \infty$.
@@ -74,8 +76,8 @@ Wir beschränken uns hier auf den für uns relevanten Raum erster Ordnung, siehe
 \end{Definition}
 
 Ferner gilt eine zu \cref{lemma:bochnerraum_ist_banachraum_bzw_hilbertraum} analoge Aussage auch für Bochner"=Sobolev"=Räume.
-Da wir im Zuge dieser Arbeit ausschließlich mit Hilberträumen arbeiten werden, wird sich das folgende als Gelfand"=Tripel bekannte Konstrukt als grundlegend erweisen.
-Die folgende Definition ist eine leichte Abwandlung von \cite[Abschnitt 10.2]{Schweizer2013}.
+Da wir im Zuge dieser Arbeit ausschließlich mit Hilberträumen arbeiten werden, wird sich das folgende Konstrukt als grundlegend erweisen.
+Die nachfolgende Definition ist eine leichte Abwandlung von \cite[Abschnitt 10.2]{Schweizer2013}.
 
 \begin{Definition}
 \label{definition:gelfand_tripel}
@@ -137,13 +139,13 @@ Dies führt zum sogenannten Spursatz, welchen wir durch die folgende Einbettungs
 \begin{Satz}
 \label{satz:bochner_raum_W_stetige_einbettung_C0}
     Seien $V \denseinclusion H \denseinclusion V'$ ein Gelfand"=Tripel und $a, b \in \mathbb{R}$.
-    Ferner sei $\mathcal C^{0}([a, b]; H)$ die Menge aller stetigen Funktionen $f \colon [a, b] \to H$.
+    Ferner sei $\mathcal C([a, b]; H)$ die Menge aller stetigen Funktionen $f \colon [a, b] \to H$.
     Dann ist die Einbettung
     \begin{equation}
-        W(a, b; V, V') \hookrightarrow \mathcal C^{0}([a, b], H).
+        W(a, b; V, V') \hookrightarrow \mathcal C([a, b], H)
     \end{equation}
     stetig.
-    Insbesondere stimmt jedes $u \in W(a, b; V, V')$ fast überall mit einer stetigen Funktion aus $\mathcal C^{0}([a, b], H)$ überein.
+    Insbesondere stimmt jedes $u \in W(a, b; V, V')$ fast überall mit einer stetigen Funktion aus $\mathcal C([a, b], H)$ überein.
 
     \begin{Beweis}
         Siehe \cites[Theorem XVIII.2.1]{Dautray:1992by}[Theorem 10.9]{Schweizer2013}.
@@ -162,6 +164,7 @@ Dies führt zum sogenannten Spursatz, welchen wir durch die folgende Einbettungs
 
 Ferner erhalten wir aus obiger Einbettungsaussage, \cref{satz:bochner_raum_W_stetige_einbettung_C0}, auch das folgende Ergebnis, welches im Rahmen der Betrachtung linearer Evolutionsgleichungen benötigt wird.
 
+% TODO: Beispiel?
 \begin{Korollar}
 \label{korollar:einbettungskonstante_M_e}
     Seien $a, b \in \mathbb{R}$.
@@ -205,13 +208,13 @@ Abschließen wollen wir diesen Abschnitt mit einer alternativen Charakterisierun
 
 Nach der Einführung der benötigten Funktionenräume wenden wir uns nun den linearen Evolutionsgleichungen, einer bestimmten Unterart parabolischer partieller Differentialgleichungen, zu.
 Wir orientieren uns hierbei an \textcite{Lions:1971wp,Schwab:2009ec,Urban:2014kg},
-definieren den Begriff der linearen Evolutionsgleichungen, leiten eine schwache Formulierung her und weißen abschließend nach, dass diese korrekt gestellt ist.
+definieren den Begriff der linearen Evolutionsgleichungen, leiten eine schwache Formulierung her und weisen abschließend nach, dass diese korrekt gestellt ist.
 
 Um den Begriff der linearen Evolutionsgleichungen definieren zu können, müssen wir zunächst die richtigen Rahmenbedingungen schaffen.
 Sei $V \denseinclusion H \denseinclusion V'$ ein Gelfand-Tripel im Sinne von \cref{definition:gelfand_tripel}, das heißt, $V$ und $H$ seien separable Hilberträume und die Inklusionen seien jeweils dicht und stetig.
-Weiter sei $0 < T < \infty$ und $I = [0, T]$.
+Weiter seien $0 < T < \infty$ und $I := [0, T]$.
 Wir betrachten nun eine Familie $\Set{A(t) \in \mathcal L(V, V')}_{t \in I}$ von stetigen linearen Operatoren.
-Nach dem Rieszschen Darstellungssatz, genauer siehe \cite[Theorem \S{}22.1]{Halmos:1957vd}, können wir diesen Operatoren eine Familie von Bilinearformen $\Set{a(\blank, \blank; t) \in \mathcal L(V \times V)}_{t \in I}$ zuordnen, wobei diese durch
+Nach dem Rieszschen Darstellungssatz, genauer siehe \cite[Theorem \S{}22.1]{Halmos:1957vd}, können wir diesen Operatoren eine Familie von Bilinearformen $\Set{a(\blank, \blank; t) \in \mathcal L(V \times V, \mathbb{R})}_{t \in I}$ zuordnen, wobei diese durch
 \begin{equation}
     \skp{A(t)\eta}{\zeta}{V' \times V} = a(\eta, \zeta; t), \quad \fa \eta, \zeta \in V,
 \end{equation}
@@ -219,14 +222,15 @@ induziert werden.
 
 Wie wir später sehen werden, stellt die nachfolgende Annahme sicher, dass die auf diese Operatoren aufbauenden linearen Evolutionsgleichungen gewisse wünschenswerte Eigenschaften, wie Lösbarkeit und Eindeutigkeit dieser Lösung, besitzen.
 
+% TODO: für fast alle t besser einbauen
 \begin{Annahme}
 \label{annahme:eigenschaften_der_bilinearform_a}
     Die Familie $\Set{a(\blank, \blank; t) \in \mathcal L(V \times V)}_{t \in I}$ von Bilinearformen erfülle die folgenden Eigenschaften:
     \leavevmode
     \begin{thmenumerate}
-        \item \emph{Messbarkeit:} Die Abbildung $I \ni t \mapsto a(\eta, \zeta; t)$ ist messbar für alle $\eta, \zeta \in V$.
+        \item \emph{Messbarkeit:} die Abbildung $I \ni t \mapsto a(\eta, \zeta; t)$ sei messbar für alle $\eta, \zeta \in V$.
         \item \emph{Stetigkeit:}
-        Es existiert ein $0 < \gamma_{a} < \infty$ mit
+        es existiere ein $0 < \gamma_{a} < \infty$ mit
         \begin{equation}
             \label{eq:eigenschaften_der_bilinearform_a:stetigkeit}
             \abs{a(\eta, \zeta; t)} \leq \gamma_{a} \norm{\eta}_{V} \norm{\zeta}_{V}, \quad \fa \eta, \zeta \in V \text{ und fast alle } t \in I.
@@ -248,11 +252,11 @@ Wie wir später sehen werden, stellt die nachfolgende Annahme sicher, dass die a
 }
 
 Für den Rest dieses Abschnitts nehmen wir stets an, dass die Bilinearformen $a(\blank, \blank; t)$ obige Annahme erfüllen.
-Mit dieser Vorarbeit definieren wir nun den Begriff der linearen Evolutionsgleichung.
+Diese Vorarbeit erlaubt uns nun die nachfolgende Definition.
 
 \begin{Definition}
 \label{definition:lineare_evolutionsgleichung}
-    Sei $g \in L_{2}(I; V')$ ein \emph{Quellterm} und $u_{0} \in H$ ein \emph{Anfangswert}.
+    Seien $g \in L_{2}(I; V')$ ein \emph{Quellterm} und $u_{0} \in H$ ein \emph{Anfangswert}.
     Als \emph{lineare Evolutionsgleichung} bezeichnen wir die parabolische partielle Differentialgleichung
     \begin{equation}
         \label{eq:lineare_evolutionsgleichung}
@@ -289,7 +293,7 @@ Dazu benötigen wir geeignete Ansatz- und Testfunktionenräume, wofür die im vo
     mit Skalarprodukt
     \begin{equation}
         \label{eq:testraum_skalarprodukt}
-        \skp{u}{v}{\mathcal Y} := \skp{u_{1}}{v_{1}}{L_{2}(I; V)} + \skp{u_{2}}{v_{2}}{H}.
+        \skp{u}{v}{\mathcal Y} := \skp{u_{1}}{v_{1}}{L_{2}(I; V)} + \skp{u_{2}}{v_{2}}{H} \quad \text{für } u = (u_{1}, u_{2}), v = (v_{1}, v_{2}) \in \mathcal Y.
     \end{equation}
 \end{Definition}
 
@@ -325,13 +329,13 @@ Dazu definieren wir zunächst, was wir darunter verstehen wollen und greifen daz
 
 \begin{Definition}[Hadamard]
 \label{definition:sachgemaess_gestellt_nach_hadamard}
-    Seien $X$ und $Y$ zwei Hilberträume, $a \in \mathcal L(X \times Y)$ eine stetige Bilinearform und $f \in Y'$ ein stetiges lineares Funktional.
+    Seien $X$ und $Y$ zwei Hilberträume, $a \in \mathcal L(X \times Y, \mathbb{R})$ eine stetige Bilinearform und $f \in Y'$ ein stetiges lineares Funktional.
     Sei weiter ein abstraktes Variationsproblem gegeben durch:
     \begin{equation}
     \label{eq:hadamard_variationsproblem}
-        \text{Finde } u \in X \colon \quad a(u, v) = f(v) \quad \fa v \in Y.
+        \text{Finde } u \in X \colon \quad a(u, v) = f(v) \quad \fa v \in Y
     \end{equation}
-    Wir nennen dieses \emph{korrekt gestellt}, wenn eine eindeutige Lösung $u \in X$ existiert und diese eine A-priori-Abschätzung der Form
+    Wir nennen dieses \emph{korrekt gestellt}, wenn eine eindeutige Lösung $u \in X$ existiert und diese eine a priori-Abschätzung der Form
     \begin{equation}
     \label{eq:hadamard_abschaetzung}
         \norm{u}_{X} \leq c \norm{f}_{Y'}, \quad \fa f \in Y',
@@ -345,7 +349,7 @@ Dieser findet sich in dieser oder ähnlicher Form bei \textcites[Theorem 2.1]{Ba
 \begin{Satz}[Banach-Ne{\v c}as-Babu{\v s}ka-Theorem]
 \label{satz:bnb_theorem}
     Seien $X$ und $Y$ zwei Hilberträume.
-    Eine lineare Abbildung $A \colon X \to Y'$ ist genau dann ein Isomorphismus, das heißt stetig invertierbar, wenn die zugehörige Bilinearform $a \colon X \times Y \to \mathbb{R}$ die folgenden Bedingungen erfüllt:
+    Eine beschränkte lineare Abbildung $A \colon X \to Y'$ ist genau dann ein Isomorphismus, das heißt stetig invertierbar, wenn die zugehörige Bilinearform $a \colon X \times Y \to \mathbb{R}$ die folgenden Bedingungen erfüllt:
     \begin{thmenumerate}
         \item \label{satz:bnb_theorem:stetig}
         \emph{Stetigkeit:}
@@ -376,6 +380,7 @@ Dieser findet sich in dieser oder ähnlicher Form bei \textcites[Theorem 2.1]{Ba
     \end{equation}
 \end{Satz}
 
+% TODO: Quelle angeben
 \begin{Bemerkung}
 \label{bemerkung:bnb_theorem_inf_sup_statt_surjektiv}
     Die Surjektivitätsbedingung \cref{satz:bnb_theorem:surjektiv} kann durch eine weitere inf"=sup"=Bedingung ersetzt werden, denn existiert ein $\beta' > 0$ mit
@@ -403,6 +408,8 @@ Wir wiederholen die Kernaussage \cite[Theorem 5.1]{Schwab:2009ec} und verweisen 
 \end{Satz}
 
 Weiter wollen wir im nachfolgenden Korollar die bereits angesprochenen Schranken für die Stetigkeitskonstante $\gamma_{b}$ und die inf"=sup"=Konstante $\beta$ der Bilinearform $b$ angeben.
+
+% TODO: Beispiel?
 
 \begin{Korollar}
 \label{korrolar:ss09:theorem51_abschaetzungen}

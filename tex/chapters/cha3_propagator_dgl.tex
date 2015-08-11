@@ -7,12 +7,12 @@
 \label{chapter:propagator_differentialgleichung}
 
 Wir greifen nun die in \cref{chapter:einleitung} eingeführten parabolischen Differentialgleichungen \cref{eq:forward_propagator,eq:backward_propagator} auf, welche von den beiden Propagatoren $q$ und $q^{\dagger}$ erfüllt werden.
-Im Weiteren Verlauf der Arbeit verwenden wir den Begriff \emph{Propagator"=Differentialgleichung}, den wir noch genauer definieren werden, wenn wir uns
+Im weiteren Verlauf der Arbeit verwenden wir den Begriff \emph{Propagator"=Differentialgleichung}, den wir noch genauer definieren werden, wenn wir uns
 auf die genannten partiellen Differentialgleichungen beziehen.
 
 In diesem Kapitel konkretisieren wir zunächst diese Propagator"=Differentialgleichungen, schaffen geeignete Rahmenbedingungen und leiten eine schwache Raum"=Zeit"=Formulierung her.
 Anschließend werden die in den Propagator"=Differentialgleichungen auftretenden Felder $\omega_{i}$ parametrisiert und als Grundlage für eine parametrische schwache Formulierung verwendet.
-Für diese weisen wir abschließend nach, dass sie korrekt gestellt ist und unter zusätzlichen Bedingungen eine gewisse Regularität bezüglich der Parameter aufweist.
+Für letztere weisen wir abschließend nach, dass sie korrekt gestellt ist und unter zusätzlichen Bedingungen eine gewisse Regularität bezüglich der Parameter aufweist.
 
 
 \section{Eine Raum-Zeit-Variationsformulierung}
@@ -20,7 +20,7 @@ Für diese weisen wir abschließend nach, dass sie korrekt gestellt ist und unte
 
 Wir wollen nun zunächst die Rahmenbedingungen festlegen und die aus der Einführung bekannten Propagator"=Differentialgleichungen in einem allgemeineren Rahmen formulieren.
 Dabei halten wir an dem Fall zweier Felder fest, wobei diese Einschränkung nicht notwendig ist, da die nachfolgenden Ergebnisse in gleicher Weise auch für jede andere endliche Felderanzahl nachgewiesen werden können.
-Weiter sei an dieser Stelle angemerkt, dass es ausreicht sich auf die Betrachtung des Vorwärts"=Propagators \cref{eq:forward_propagator} zu beschränken, da der Rückwärts"=Propagator \cref{eq:backward_propagator} durch die einfache Transformation $s \mapsto 1 - s$ auf die selbe Form, lediglich mit vertauschen Rollen bei den Feldern, gebracht werden kann.
+Weiter sei an dieser Stelle angemerkt, dass es ausreicht, sich auf die Betrachtung des Vorwärts"=Propagators \cref{eq:forward_propagator} zu beschränken, da der Rückwärts"=Propagator \cref{eq:backward_propagator} durch die einfache Transformation $s \mapsto 1 - s$ auf die selbe Form, lediglich mit vertauschen Rollen bei den Feldern, gebracht werden kann.
 
 Seien nun $0 < T_{f} < T < \infty$ reelle Konstanten und $I = [0, T]$ ein reelles Intervall, welches wir in die beiden disjunkten Teilintervalle $I_{1} = [0, T_{f})$ und $I_{2} = [T_{f}, T]$ zerlegen.
 Wir interpretieren die Größe $t \in I$ als Zeit, wobei dies einen rein notationellen und keinen physikalischen Hintergrund hat.
@@ -41,7 +41,7 @@ Dies dient vor allem der einfacheren Notation und Benennung, weswegen wir den de
         =
         \begin{cases}
             w_{1}(\vec{x}), & t < T_{f}, \\
-            w_{2}(\vec{x}), & t \geq T_{f}.
+            w_{2}(\vec{x}), & t \geq T_{f},
         \end{cases}
     \end{equation}
     als \emph{Raum"=Zeit"=Feld}.
@@ -64,10 +64,10 @@ Dies dient vor allem der einfacheren Notation und Benennung, weswegen wir den de
 \end{Definition}
 
 Wie in der Einleitung erwähnt, hat der Mittelwert der Felder keinen Einfluss auf das Ergebnis des dort beschriebenen Iterationsverfahrens, weswegen wir den zusätzlichen Term $\mu u(t, \vec{x})$ einführen können.
-Dieser wird sich bei den folgenden theoretischen Untersuchungen und numerischen Umsetzung als nützlich erweisen.
+Dieser wird sich bei den folgenden theoretischen Untersuchungen und der numerischen Umsetzung als nützlich erweisen.
 
 Unser Ziel ist es nun, eine Raum"=Zeit"=Variationsformulierung der Propagator"=Differentialgleichung aus obiger Definition herzuleiten.
-Diese wird uns als Ausgangspunkt für unsere numerischen Verfahren dienen, weswegen wir uns auch bei der theoretischen Arbeit auf diese konzentrieren werden.
+Diese wird uns als Ausgangspunkt für unsere numerischen Verfahren dienen.
 
 Zunächst führen wir aber eine Einschränkung der möglichen Randbedingungen durch.
 Von größtem Interesse sind für uns, bedingt durch die Motivation der parabolischen Differentialgleichung in \cref{chapter:einleitung}, der Fall homogener Dirichlet"=Randbedingungen, also $u(t, \vec{x}) = 0$ auf $I \times \partial \Omega$, sowie der Fall periodischer Randbedingungen.
@@ -95,7 +95,7 @@ Damit können wir nun die folgende Operatorfamilie und die zugehörigen Bilinear
 \begin{Definition}
 \label{definition:operator_bilinearform_zeit}
     Seien $\omega$ ein Raum"=Zeit"=Feld sowie $c \in \mathbb{R}_{+}$ und $\mu \in \mathbb{R}$ Konstanten.
-    Wir definieren für $t \in I$ eine Familie von Operatoren
+    Wir definieren für fast alle $t \in I$ eine Familie von Operatoren
     \begin{equation}
         \label{eq:operator_zeit}
         A(t) \colon V \to V', \quad  A(t) \eta := - c \Delta \eta + \omega(t, \blank) \eta + \mu \eta
@@ -112,6 +112,7 @@ Damit können wir nun die folgende Operatorfamilie und die zugehörigen Bilinear
     Die Existenz der Bilinearform $a(\blank, \blank; t)$ zum jeweiligen Operator $A(t)$ lässt sich durch den Rieszschen Darstellungssatz begründen, siehe beispielsweise \cite[Theorem \S{}22.1]{Halmos:1957vd}.
 \end{Bemerkung}
 
+% TODO: Definition anhand bemerkung anpassen
 Aufgrund der gewählten Rahmenbedingungen können wir die Bilinearformen $a(\blank, \blank; t)$ für $t \in I$ explizit angeben.
 Dazu greifen wir unter anderem auf die wohlbekannte schwache Formulierung des Laplace"=Operators $- \Delta \colon V \to V'$ zurück.
 Diese lässt sich durch die Wahl von $V$ als eine Bilinearform auf $V \times V$ der Form
@@ -119,6 +120,7 @@ Diese lässt sich durch die Wahl von $V$ als eine Bilinearform auf $V \times V$ 
     (\eta, \zeta) \mapsto \skp{- \Delta \eta}{\zeta}{V' \times V} = \skp{\grad \eta}{\grad \zeta}{H}
 \end{equation}
 schreiben.
+% TODO: Kürzen
 Damit ergibt sich zusammen mit der Linearität der dualen Paarung
 \begin{equation}
 \label{eq:bilinearform_formel}
@@ -134,18 +136,19 @@ wobei bei der Wechsel von dualer Paarung auf $V' \times V$ zum $H$-Skalarprodukt
 
 \begin{Bemerkung}
 \label{bemerkung:raum_zeit_feld_norm_zeitunabhaengig}
-    Nach Definition von $\omega$ in \cref{eq:raum_zeit_feld} gilt offenbar
+    Nach Definition von $\omega$ in \cref{eq:raum_zeit_feld} gilt für fast alle $t \in I$ offenbar
     \begin{equation}
         \norm{\omega(t, \blank)}_{L_{\infty}(\Omega)} = \norm{w_{1}}_{L_{\infty}(\Omega)} \chi_{I_{1}}(t) + \norm{w_{2}}_{L_{\infty}(\Omega)} \chi_{I_{2}}(t),
     \end{equation}
-    damit gilt wegen der Zerlegung $I = I_{1} \cupdot I_{2}$ insbesondere
+    damit gilt wegen der disjunkten Zerlegung $I = I_{1} \cup I_{2}$ insbesondere
     \begin{equation}
         \norm{\omega}_{L_{\infty}(I; L_{\infty}(\Omega))} = \esssup_{t \in I} \norm{\omega(t, \blank)}_{L_{\infty}(\Omega)} = \max\Set{ \norm{w_{1}}_{L_{\infty}(\Omega)}, \norm{w_{2}}_{L_{\infty}(\Omega)} } < \infty.
     \end{equation}
 \end{Bemerkung}
 
-Wir weisen nun zwei Eigenschaften für diesen Operator respektive die zugehörige Bilinearform nach, welche eine wichtige Rolle für die spätere Raum"=Zeit"=Variationsformulierung spielen werden.
+Wir weisen nun zwei Eigenschaften für diesen Operator respektive für die zugehörige Bilinearform nach, welche eine wichtige Rolle für die spätere Raum"=Zeit"=Variationsformulierung spielen werden.
 
+% TODO: für fast alle t besser einbauen
 \begin{Satz}
 \label{satz:bilinearform_messbar_stetig_garding}
     Sei $\Set{a(\blank, \blank; t)}_{t \in I}$ die Familie von Bilinearformen aus \cref{eq:bilinearform_formel}.
@@ -195,7 +198,7 @@ Wir weisen nun zwei Eigenschaften für diesen Operator respektive die zugehörig
             &= c \norm{\grad \eta}^{2}_{H} + \skprod{\omega(t, \blank) \eta}{\eta}_{H} + \mu \skprod{\eta}{\eta}_{H} + \lambda \skprod{\eta}{\eta}_{H}
             \\&= c \norm{\grad \eta}^{2}_{H} + \skprod{(\omega(t, \blank) + \mu + \lambda) \eta}{\eta}_{H}.
         \end{align}
-        Wählen wir nun $\lambda = \max\Set{\norm{\omega}_{L_{\infty}(I; L_{\infty}(\Omega))} - \mu, 0} \geq 0$, dann gilt $\omega + \mu + \lambda \geq 0$ fast überall in $\Omega$ für alle $t \in I$ und wir erhalten die Abschätzung
+        Wählen wir nun $\lambda := \max\Set{\norm{\omega}_{L_{\infty}(I; L_{\infty}(\Omega))} - \mu, 0} \geq 0$, dann gilt $\omega + \mu + \lambda \geq 0$ fast überall in $\Omega$ für alle $t \in I$ und wir erhalten die Abschätzung
         \begin{align}
             a(\eta, \eta; t) + \lambda \norm{\eta}^{2}_{H}
             &\geq c \norm{\grad \eta}^{2}_{H},
@@ -339,11 +342,14 @@ Weiter erhalten wir als Nebenprodukt aus \cref{korrolar:ss09:theorem51_abschaetz
     \end{Beweis}
 \end{Korollar}
 
+% TODO: Beispiel
+
 
 \section{Parametrische Formulierung} % (fold)
 \label{section:parametrische_formulierung}
 
-Nachdem nun eine erste schwache Formulierung der Propagator"=Differentialgleichung eingeführt wurde, welche in dieser Form bereits als Grundlage für eine numerische Umsetzung verwendet werden kann, wollen wir nun als nächsten Schritt eine Parametrisierung dieser vornehmen.
+% TODO: Anmerkung besser umsetzen
+Nachdem nun eine erste schwache Formulierung der Propagator"=Differentialgleichung eingeführt wurde, welche in dieser Form bereits als Grundlage für eine numerische Umsetzung verwendet werden kann, wollen wir nun als nächsten Schritt eine niedrigdimensionale Parametrisierung der relevanten Felder vornehmen.
 Motiviert durch das Iterationsverfahren aus \cref{chapter:einleitung}, in dem die Propagator"=Differentialgleichung immer wieder für leicht variierte Raum-Zeit-Felder $\omega$ berechnet wird, werden wir diese als Ausgangspunkt der Parametrisierung verwenden.
 
 Dazu kehren wir nun zunächst zum Operator $A(t)$ aus \cref{definition:operator_bilinearform_zeit} zurück und betrachten diesen zunächst unabhängig von der Zeit $t \in I$, aber in Abhängigkeit von einem Feld $w \in L_{\infty}(\Omega)$.
@@ -362,21 +368,21 @@ Wie zuvor sei auch eine Familie von zugehörigen Bilinearformen $a(\blank, \blan
 \end{equation}
 
 Um die Abhängigkeit der obigen Operatoren respektive Bilinearformen vom Feld auch für die nachfolgende numerische Umsetzung verwendbar zu machen, wollen wir die Abhängigkeit von einer Abbildung $w \in L_{\infty}(\Omega)$ durch eine Abhängigkeit von einer diskreten Größe, beispielsweise einer Koeffizientenfolge aus dem $\ell_{1}(\mathbb{N})$ oder ähnlichen Folgenräumen, ersetzen.
-Dies erreichen wir durch folgende Einschränkung der verwendeten Felder $w \in L_{\infty}(\Omega)$ auf Abbildungen, die wir als Reihenentwicklung von hier noch nicht näher spezifizierten Abbildungen $\varphi_{i}$ darstellen können.
+Dies erreichen wir durch folgende Einschränkung der verwendeten Felder $w \in L_{\infty}(\Omega)$ auf Funktionen, die wir als Reihenentwicklung von hier noch nicht näher spezifizierten Funktionen $\varphi_{i}$ darstellen können.
 Auf die Wahl dieser $\varphi_{i}$ werden wir bei der numerischen Untersuchung in \cref{chapter:galerkin} erneut eingehen.
 
 \begin{Definition}
 \label{definition:feld_entwickelbar}
-    Sei $\Set{\varphi_{i}}_{i \in \mathbb{N}} \subset L_{\infty}(\Omega)$ ein System von Funktionen und sei weiter ein Parameterraum $\mathcal P \subset \mathbb{R}^{\mathbb{N}}$ gegeben.
+    Sei $\Set{\varphi_{i}}_{i \in \mathbb{N}} \subset L_{\infty}(\Omega)$ ein System von Funktionen und sei weiter ein Parameterraum $\mathcal P \subset \ell_{\infty}(\mathbb{N})$ gegeben.
     Wir nennen ein Feld $w \in L_{\infty}(\Omega)$ \emph{darstellbar} durch $\Set{\varphi_{i}}_{i \in \mathbb{N}}$, wenn ein $\bm{\sigma} \in \mathcal P$ existiert, so dass $w$ mit
     \begin{equation}
-        w(\blank; \bm\sigma) = \sum_{i = 1}^{\infty} \sigma_{i} \varphi_{i}
+        w\bm\sigma) = \sum_{i = 1}^{\infty} \sigma_{i} \varphi_{i}
     \end{equation}
-    übereinstimmt.
+    im Sinne der gleichmäßigen Konvergenz übereinstimmt.
 \end{Definition}
 
 Wir können mit einem festen System $\Set{\varphi_{i}}_{i \in \mathbb{N}}$ im Allgemeinen nicht alle möglichen $L_{\infty}(\Omega)$-Funktionen darstellen.
-Dies ist aber auch nicht nötig, da, wie man in der Einführung bereits gesehen hat, die während des Iterationsverfahrens tatsächlich auftretenden Felder gewisse Eigenschaften, beispielsweise Symmetrien, aufweisen, und wir diese in die Wahl des Systems $\Set{\varphi_{i}}_{i \in \mathbb{N}}$ einfließen lassen können.
+Dies ist aber auch nicht nötig, da, wie man in der Einführung bereits gesehen hat, die während des Iterationsverfahrens tatsächlich auftretenden Felder gewisse Eigenschaften, beispielsweise Symmetrie oder Regularität, aufweisen, und wir diese in die Wahl des Systems $\Set{\varphi_{i}}_{i \in \mathbb{N}}$ einfließen lassen können.
 
 \begin{Bemerkung}
     Für den Rest dieses Kapitels beschränken wir uns bei der Wahl des Parameterraums auf $\mathcal P = [-1, 1]^{\mathbb{N}}$.
@@ -419,10 +425,11 @@ Die bei der Bilinearform vorgenommene Vertauschung von Summe und $H$"=Skalarprod
 Wie auch für den nicht"=parametrischen Fall werden wir nachweisen, dass es sich hierbei um Operatoren beziehungsweise Bilinearformen handelt, welche die für uns wichtigen Eigenschaften der Stetigkeit und die Gültigkeit einer G\aa{}rding"=Ungleichung besitzen.
 Zunächst wollen wir an dieser Stelle noch ein parametrisches Äquivalent der Raum"=Zeit"=Variationsformulierung aus \cref{definition:raum_zeit_variationsformulierung} formulieren.
 
-Dies Bedarf, wie zuvor, einen zeitlichen Wechsel zwischen mehreren Feldern $w_{i}$.
+Dies bedarf, wie zuvor, einen zeitlichen Wechsel zwischen mehreren Feldern $w_{j}$.
 Wir beschränken uns auf den bereits bekannten Fall zweier Felder und erweitern die obige Operator"=Definition um die zeitliche Abhängigkeit.
 Zunächst definieren wir analog zu \cref{eq:raum_zeit_feld} ein parametrisches Raum"=Zeit"=Feld.
-Dies geschieht auf Basis der Darstellung von $w_{i}$ aus \cref{definition:feld_entwickelbar}.
+Dies geschieht auf Basis der Darstellung von $w_{j}$ aus \cref{definition:feld_entwickelbar}.
+Da diese den zeitlichen Wechsel noch nicht enthält, führen wir diesen durch die Aufteilung von $\bm \sigma$ in zwei Teilfolgen ein, um so die Notation möglichst einfach zu halten.
 Sei dazu $\bm\sigma \in \mathcal P$, dann definieren wir die folgenden Teilfolgen der ungeraden respektive geraden Indizes als $\bm\sigma_{\odd} = (\sigma_{2i-1})_{i \in \mathbb{N}}$ und $\bm\sigma_{\even} = (\sigma_{2i})_{i \in \mathbb{N}}$.
 
 \begin{Definition}
@@ -441,7 +448,7 @@ Sei dazu $\bm\sigma \in \mathcal P$, dann definieren wir die folgenden Teilfolge
     gegeben ist.
 \end{Definition}
 
-Wegen der Zerlegung $I = I_{1} \cupdot I_{2}$ ist direkt ersichtlich, dass analog zu \cref{eq:rz_feld_norm_schranke} die Abschätzung
+Wegen der disjunkten Zerlegung $I = I_{1} \cup I_{2}$ ist direkt ersichtlich, dass analog zu \cref{eq:rz_feld_norm_schranke} die Abschätzung
 \begin{equation}
 \label{eq:parametrisches_raum_zeit_feld_schranke}
     \sup_{\bm\sigma \in \mathcal P} \norm{\omega(\bm\sigma)}_{L_{\infty}(I; L_{\infty}(\Omega))}
@@ -530,18 +537,21 @@ Wie zuvor wollen wir \cref{satz:ss09:theorem51} verwenden, müssen also die Bedi
 
 Wir interessieren uns nun für die Regularität der Abhängigkeit der Lösung $u(\bm\sigma)$ der parametrischen schwachen Formulierung vom Parameter $\bm \sigma \in \mathcal P$.
 Konkret werden wir nachweisen, dass die Lösung unter gewissen Annahmen an das Funktionensystem $\Set{\varphi_{i}}_{i \in \mathbb{N}}$ analytisch vom Parameter $\bm \sigma$ abhängt.
-Dabei orientieren wir uns an den Arbeiten von \textcite{Cohen:2010kz,Cohen:2011jp,Kunoth:2013ef}, weisen diese Eigenschaften aber direkt für die Raum"=Zeit"=Variationsformulierung nach, statt wie in den genannten Arbeiten den Umweg über den stationären Fall zu gehen.
+Diese Eigenschaft ist wünschenswert, da hierdurch die Anwendung der Reduzierte-Basis-Methode motiviert werden kann.
+Genauer gehen wir hierauf in der Einführung in diese Methode in \cref{??} ein.
+
+In diesem Abschnitt orientieren wir uns an den Arbeiten von \textcite{Cohen:2010kz,Cohen:2011jp} sowie \textcite{Kunoth:2013ef}, weisen die Regularität aber direkt für die Raum"=Zeit"=Variationsformulierung nach, statt wie in den genannten Arbeiten den Umweg über den stationären Fall zu gehen.
 
 Zunächst folgen einige notationelle Vorbemerkungen.
 \begin{Bemerkung}
     Die Multiindexmenge $\mathcal F$ definieren wir als $\mathcal F := \Set{ \bm\nu \in \mathbb{N}^{\mathbb{N}}_{0} \given \abs{\bm\nu} < \infty }$, wobei
     \begin{equation}
-        \abs{\bm\nu} := \sum_{i = 1}^{\infty} \abs{\nu_{i}}
+        \abs{\bm\nu} := \sum_{i = 1}^{\infty} \nu_{i}
     \end{equation}
     die $\ell_{1}(\mathbb{N})$-Norm sei.
     Anders formuliert, besteht $\mathcal F$ gerade aus denjenigen Folgen in $\mathbb{N}_{0}$, welche nur endliche viele Einträge ungleich Null aufweisen.
 
-    Sei $\bm\nu \in \mathcal F$ und $\vec{b} \in \ell_{p}(\mathbb{N})$, $p > 0$, dann schreiben wir
+    Seien $\bm\nu \in \mathcal F$ und $\vec{b} \in \ell_{p}(\mathbb{N})$, $p > 0$, dann schreiben wir
     \begin{equation}
         \vec{b}^{\bm\nu} := \prod_{i = 1}^{\infty} b_{i}^{\nu_{i}}
     \end{equation}
@@ -679,7 +689,7 @@ Als erster Schritt des Regularitätsnachweises wird zunächst die Existenz belie
             F_{h} \colon \mathcal Y \to \mathbb{R}, \quad F_{h}(v) := - \int_{I} \tilde{\chi}_{j} \skp{\tilde{\varphi}_{j}  u(\bm\sigma_{h})}{v_{1}}{H} \diff t.
         \end{equation}
         Vollkommen analog zum Beweis des vorherigen Lemmas kann gezeigt werden, dass $F_{h}$ ein stetiges lineares Funktional auf $\mathcal Y$ definiert, das heißt, $\theta_{h}$ ist die eindeutige Lösung des Variationsproblems \cref{eq:existenz_partieller_ableitungen:beweis:variationsproblem}.
-        Weiter ist $F_{h}(\blank)$ stetig in $h = 0$, denn für festes $v \in \mathcal Y$ gilt unter Verwendung der Cauchy-Schwarz-Ungleichung die Abschätzung
+        Weiter ist $h \mapsto F_{h}(\blank)$ stetig in $h = 0$, denn für festes $v \in \mathcal Y$ gilt unter Verwendung der Cauchy-Schwarz-Ungleichung die Abschätzung
         \begin{align}
             \abs{F_{h}(v) - F_{0}(v)}
             &= \abs{\int_{I} \tilde{\chi}_{j} \skp{\tilde{\varphi}_{j}  (u(\bm\sigma_{h}) - u(\bm\sigma))}{v_{1}}{H} \diff t }
@@ -775,15 +785,15 @@ Als erster Schritt des Regularitätsnachweises wird zunächst die Existenz belie
         Für die rechte Seite von \cref{eq:abschaetzung_norm_partieller_ableitungen:rekursiv} können wir wie zuvor nachweisen, dass es sich um ein stetiges lineares Funktional auf $\mathcal Y$ handelt.
         Wir können also \cref{satz:raum_zeit_variationsformulierung_sachgemaess_gestellt} verwenden um die Abschätzung
         \begin{equation}
-            \norm{\partial^{\bm\nu}_{\bm\sigma} u(\bm\sigma)}_{\mathcal X} \leq \frac{1}{\beta} \norm{\sum_{\Set{j \given \nu_{j} \neq 0}} \nu_{j} \int_{I} \tilde{\chi}_{j} \skp{\tilde{\varphi}_{j} \partial^{\bm\nu - \vec e_{j}}_{\bm\sigma} u(\bm\sigma)}{v_{1}}{H} \diff t}_{\mathcal Y'}
+            \norm{\partial^{\bm\nu}_{\bm\sigma} u(\bm\sigma)}_{\mathcal X} \leq \frac{1}{\beta} \norm*{\sum_{\Set{j \given \nu_{j} \neq 0}} \nu_{j} \int_{I} \tilde{\chi}_{j} \skp{\tilde{\varphi}_{j} \partial^{\bm\nu - \vec e_{j}}_{\bm\sigma} u(\bm\sigma)}{v_{1}}{H} \diff t}_{\mathcal Y'}
         \end{equation}
         zu erhalten.
         Wir wollen nun die $\mathcal Y'$-Norm der rechten Seite weiter abschätzen.
         Dazu verwenden wir erneut die Cauchy"=Schwarz"=Ungleichung und erhalten wegen
         \begin{align}
-            &\abs{\sum_{\Set{j \given \nu_{j} \neq 0}} \nu_{j} \int_{I} \tilde{\chi}_{j} \skp{\tilde{\varphi}_{j} \partial^{\bm\nu - \vec e_{j}}_{\bm\sigma} u(\bm\sigma)}{v_{1}}{H} \diff t}
+            &\abs*{\sum_{\Set{j \given \nu_{j} \neq 0}} \nu_{j} \int_{I} \tilde{\chi}_{j} \skp{\tilde{\varphi}_{j} \partial^{\bm\nu - \vec e_{j}}_{\bm\sigma} u(\bm\sigma)}{v_{1}}{H} \diff t}
             \\\leq~
-            &\sum_{\Set{j \given \nu_{j} \neq 0}} \nu_{j} \abs {\int_{I} \tilde{\chi}_{j} \skp{\tilde{\varphi}_{j} \partial^{\bm\nu - \vec e_{j}}_{\bm\sigma} u(\bm\sigma)}{v_{1}}{H} \diff t}
+            &\sum_{\Set{j \given \nu_{j} \neq 0}} \nu_{j} \abs*{\int_{I} \tilde{\chi}_{j} \skp{\tilde{\varphi}_{j} \partial^{\bm\nu - \vec e_{j}}_{\bm\sigma} u(\bm\sigma)}{v_{1}}{H} \diff t}
             \\\leq~
             &\sum_{\Set{j \given \nu_{j} \neq 0}} \nu_{j} \norm{\tilde{\varphi}_{j}}_{L_{\infty}(\Omega)} \norm{\partial^{\bm\nu - \vec e_{j}}_{\bm\sigma} u(\bm\sigma)}_{L_{2}(I; H)} \norm{v_{1}}_{L_{2}(I; H)}
             \\\leq~
@@ -796,12 +806,14 @@ Als erster Schritt des Regularitätsnachweises wird zunächst die Existenz belie
         \end{equation}
 
         Um nun die eigentliche Behauptung zu beweisen, verfolgen wir erneut einen Induktionsansatz.
-        Sei zunächst $\abs{\bm\nu} = 0$, dann entspricht
+        Sei zunächst $\abs{\bm\nu} = 0$.
+        Dann entspricht
         \begin{equation}
             \sup_{\bm \sigma \in \mathcal P} \norm{u(\bm\sigma)}_{\mathcal X} \leq \frac{\norm{f}_{\mathcal Y'}}{\beta}
         \end{equation}
         Ungleichung \cref{eq:abschaetzung_norm_partieller_ableitungen} und ist nach \cref{satz:raum_zeit_variationsformulierung_sachgemaess_gestellt} erfüllt.
-        Sei also weiter $\abs{\bm\nu} > 0$, dann gilt für die rekursive Darstellung \cref{eq:abschaetzung_norm_partieller_ableitungen:rekursive_schranke} unter Verwendung der Induktionsvoraussetzung \cref{eq:abschaetzung_norm_partieller_ableitungen} für $\norm{\partial^{\bm\nu - \vec e_{j}}_{\bm\sigma} u(\bm\sigma)}_{\mathcal X}$ die Abschätzung
+        Sei also weiter $\abs{\bm\nu} > 0$.
+        Dann gilt für die rekursive Darstellung \cref{eq:abschaetzung_norm_partieller_ableitungen:rekursive_schranke} unter Verwendung der Induktionsvoraussetzung \cref{eq:abschaetzung_norm_partieller_ableitungen} für $\norm{\partial^{\bm\nu - \vec e_{j}}_{\bm\sigma} u(\bm\sigma)}_{\mathcal X}$ die Abschätzung
         \begin{align}
             \norm{\partial^{\bm\nu}_{\bm\sigma} u(\bm\sigma)}_{\mathcal X}
             &\leq
@@ -867,7 +879,7 @@ Wir geben die Aussage hier ohne Beweis wieder.
     \end{Beweis}
 \end{Satz}
 
-Die Bedingung $\norm{\vec b}_{\ell_{1}(\mathbb{N})} < 1$ kann dabei so interpretiert werden, dass der feld"=abhängige Teil der partiellen Differentialgleichung den feld"=unabhängigen Anteil nicht zu stark stören darf, um analytische Abhängigkeit garantieren zu können.
+Die Bedingung $\norm{\vec b}_{\ell_{1}(\mathbb{N})} < 1$ kann dabei so interpretiert werden, dass der feldabhängige Teil der partiellen Differentialgleichung den feldunabhängigen Anteil nicht zu stark stören darf, um analytische Abhängigkeit garantieren zu können.
 Dies verträgt sich allerdings nur bedingt mit der Motivation der Propagator"=Differentialgleichung, da bei dieser die Felder einen starken Einfluss haben.
 
 In \cref{chapter:galerkin} werden wir auf diesen Punkt noch einmal eingehen und anhand der numerischen Ergebnisse deutlich machen, inwiefern die Bedingung eingehalten wird respektive eingehalten werden kann.
@@ -876,7 +888,7 @@ In \cref{chapter:galerkin} werden wir auf diesen Punkt noch einmal eingehen und 
 \label{section:periodische_randbedingungen}
 
 Da wir in diesem Kapitel bisher ausschließlich mit homogenen Dirichlet"=Randbedingungen gearbeitet haben, wollen wir an dieser Stelle auf den Fall periodischer Randbedingungen eingehen.
-Dabei werden wir feststellen, dass Aufgrund der Struktur der Propagator-Differentialgleichung nur sehr geringe Unterschiede zum betrachteten homogenen Fall bestehen.
+Dabei werden wir feststellen, dass aufgrund der Struktur der Propagator-Differentialgleichung nur sehr geringe Unterschiede zum betrachteten homogenen Fall bestehen.
 
 Zunächst müssen wir die Rahmenbedingungen für die Betrachtung periodischer Randbedingungen festlegen.
 Dazu beschränken wir uns auf den Fall, dass $\Omega = \bigtimes_{i = 1}^{n} (0, l_{i}) \subset \mathbb{R}^{n}$ ein beschränkter offener Quader ist, wobei $l_{i} \in \mathbb{R}_{+}$ für $i = 1 \dots n$ sei.
@@ -887,7 +899,7 @@ Da dies für die diese Arbeit von untergeordneter Bedeutung ist, wird an dieser 
 \label{definition:periodische_sobolev_raeume}
     Sei $\mathcal C_{\text{per}}^{\infty}(\Omega) \subset \mathcal C^{\infty}(\mathbb{R}^{n})$ die Teilmenge der glatten $\Omega$-periodischen Funktionen.
     Als den Lebesgue-Raum $\Omega$-periodischer Funktionen $L_{2,\text{per}}(\Omega)$  definieren wir den Abschluss von $C_{\text{per}}^{\infty}(\Omega)$ bezüglich der $L_{2}$-Norm.
-    Weiter definieren wir den Sobolev-Raum $\Omega$-periodischer Funktionen $H^{1}_{\text{per}}(\Omega)$ als den Abschluss $C_{\text{per}}^{\infty}(\Omega)$ bezüglich der $H^{1}$-Norm.
+    Weiter definieren wir den Sobolev-Raum $\Omega$-periodischer Funktionen $H^{1}_{\text{per}}(\Omega)$ als den Abschluss von $C_{\text{per}}^{\infty}(\Omega)$ bezüglich der $H^{1}$-Norm.
 \end{Definition}
 
 Diese Räume verwenden wir nun, um die Räume $V$ und $H$, vergleiche \cref{bemerkung:raeume_und_gelfand_tripel}, zu definieren.
