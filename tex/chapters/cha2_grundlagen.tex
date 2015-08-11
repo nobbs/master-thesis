@@ -24,9 +24,9 @@ Wir beginnen nun mit der folgenden Definition der Bochner"=Räume nach \cite[Def
 \begin{Definition}
 \label{definition:bochner_raum}
     Seien $X$ ein Banachraum, $- \infty < a < b < \infty$ und $1 \leq p < \infty$.
-    Als \emph{Bochner"=Raum} $L_{p}(a, b; X)$ bezeichnen wir die Menge (der Äquivalenzklassen) $L_{p}$"=integrierbarer Funktionen $f \colon [a, b] \to X$, das heißt aller auf $[a, b]$ messbarer Funktionen mit
+    Als \emph{Bochner"=Raum} $L_{2}(a, b; X)$ bezeichnen wir die Menge (der Äquivalenzklassen) $L_{2}$"=integrierbarer Funktionen $f \colon [a, b] \to X$, das heißt aller auf $[a, b]$ messbarer Funktionen mit
     \begin{equation}
-        \norm{f}_{L_{p}(a, b; X)} := \left( \int_{a}^{b} \norm{f(t)}_{X}^{p} \diff t \right)^{1 / p} < \infty.
+        \norm{f}_{L_{2}(a, b; X)} := \left( \int_{a}^{b} \norm{f(t)}_{X}^{2} \diff t \right)^{1 / 2} < \infty.
     \end{equation}
     Ferner ist der \emph{Bochner"=Raum} $L_{\infty}(a, b; X)$ definiert als die Menge (der Äquivalenzklassen) der für fast alle $t \in [a, b]$ wesentlich beschränkten Funktionen, also aller messbaren Funktionen $f \colon [a, b] \to X$ mit
     \begin{equation}
@@ -36,7 +36,7 @@ Wir beginnen nun mit der folgenden Definition der Bochner"=Räume nach \cite[Def
 
 \begin{Lemma}
 \label{lemma:bochnerraum_ist_banachraum_bzw_hilbertraum}
-    Für alle $1 \leq p \leq \infty$ ist $L_{p}(a, b; X)$ ein Banachraum.
+    Der Bochner-Raum $L_{2}(a, b; X)$ ist ein Banachraum.
     Ist ferner $H$ ein Hilbertraum, so auch $L_{2}(a, b; H)$ mit dem Skalarprodukt
     \begin{equation}
         \skp{u}{v}{L_{2}(a, b; H)} := \int_{a}^{b} \skp{u(t)}{v(t)}{H} \diff t, \quad \text{für}~u,v \in L_{2}(a, b; H).
@@ -380,10 +380,9 @@ Dieser findet sich in dieser oder ähnlicher Form bei \textcites[Theorem 2.1]{Ba
     \end{equation}
 \end{Satz}
 
-% TODO: Quelle angeben
 \begin{Bemerkung}
 \label{bemerkung:bnb_theorem_inf_sup_statt_surjektiv}
-    Die Surjektivitätsbedingung \cref{satz:bnb_theorem:surjektiv} kann durch eine weitere inf"=sup"=Bedingung ersetzt werden, denn existiert ein $\beta' > 0$ mit
+    Nach \cite[Remarks, S. 117]{Aziz:2014wf} kann die Surjektivitätsbedingung \cref{satz:bnb_theorem:surjektiv} durch eine weitere inf"=sup"=Bedingung ersetzt werden, denn existiert ein $\beta' > 0$ mit
     \begin{equation}
         \inf_{v \in Y} \sup_{u \in X} \frac{a(u, v)}{\norm{u}_{X} \norm{v}_{Y}} \geq \beta',
     \end{equation}

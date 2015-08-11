@@ -43,7 +43,7 @@ Da die experimentelle Bestimmung ohne Vorwissen über mögliche stabile Anordnun
 Wir beschränken uns auf die Betrachtung von Diblockcopolymeren, das heißt, Blockcopolymeren, die aus zwei verschiedenen Monomer-Gattungen bestehen, da diese ein vergleichsweise einfaches System darstellen.
 
 Als nützliches und relativ gut handhabbares theoretisches Modell hat sich die sogenannte \ac{scft} herausgestellt, die im Folgenden eingeführt und erläutert wird.
-% TODO: vielleicht erwähnen, dass es sich nicht um ein Modell mit atomistischer Auflösung handelt
+Diese basiert auf einer makroskopischen Darstellung der Polymere und vernachlässigt die Vorgänge, welche auf atomarer Ebene stattfinden.
 
 \begin{figure}[tb]
     \centering
@@ -119,25 +119,25 @@ Wir beschränken uns im Folgenden auf die Beschreibung der \ac{scft} für die in
 % TODO: neue begriffe kenntlich machen
 Erneut wird eine einzelne Volumenzelle betrachtet, beispielsweise ein Würfel, welche selbst Teil eines größeren Systems sein kann.
 Diese Zelle enthalte $n$ AB"=Diblockcopolymere, welche jeweils aus einem A-Block und einem B-Block bestehen, wobei diese wiederum aus $N_{\mathrm{A}}$ Monomeren vom Typ A respektive aus $N_{\mathrm{B}}$ Monomeren vom Typ B zusammengesetzt sind.
-Der Polymerisationsgrad, das heißt die Gesamtanzahl an Monomeren in einem Polymer, ist durch $N = N_{\mathrm{A}} + N_{\mathrm{B}}$ gegeben.
+Der \emph{Polymerisationsgrad}, das heißt die Gesamtanzahl an Monomeren in einem Polymer, ist durch $N = N_{\mathrm{A}} + N_{\mathrm{B}}$ gegeben.
 Weiter bezeichne $f = N_{\mathrm{A}} / N$ den Anteil an A-Monomeren im gesamten Polymer.
 Wie bei der Beschreibung des Gaußschen Modells ist $s \in [0, 1]$ eine normalisierte Distanz entlang der Kontur einer Polymerkette, wobei $s = 0$ und $s = 1$ den beiden Enden entspricht.
 
-Als vereinfachende Annahmen sei die statistische Länge $a$ eines Monomers, auch Kuhn-Länge genannt, der beiden Monomer-Gattungen gleich und ein Monomer beider Gattungen nehme das selbe Volumen $1 / \rho_{0}$ ein.
+Als vereinfachende Annahmen sei die \emph{statistische Länge} $a$ eines Monomers, auch \emph{Kuhn-Länge} genannt, der beiden Monomer-Gattungen gleich und ein Monomer beider Gattungen nehme das selbe Volumen $1 / \rho_{0}$ ein.
 Das Gesamtvolumen der Schmelze in dieser Zelle ist damit durch $V = n N / \rho_{0}$ gegeben.
 
-Die wichtigsten Größen bei der \ac{scft} sind nun die Konzentrationen $\phi_{\mathrm{A}}(\vec{r})$ und $\phi_{\mathrm{B}}(\vec{r})$ der A- und B-Monomere an einer Position $\vec{r}$ in der betrachteten Zelle und die externen Felder $\omega_{\mathrm{A}}(\vec{r})$ und $\omega_{\mathrm{B}}(\vec{r})$, welche auf die jeweiligen Monomer-Gattungen wirken.
+Die wichtigsten Größen bei der \ac{scft} sind nun die \emph{Konzentrationen} $\phi_{\mathrm{A}}(\vec{r})$ und $\phi_{\mathrm{B}}(\vec{r})$ der A- und B-Monomere an einer Position $\vec{r}$ in der betrachteten Zelle und die \emph{externen Felder} $\omega_{\mathrm{A}}(\vec{r})$ und $\omega_{\mathrm{B}}(\vec{r})$, welche auf die jeweiligen Monomer-Gattungen wirken.
 
-Als Ausgangspunkt für die Bestimmungen möglicher stabiler Anordnungen in der Polymerschmelze dient das sogenannte Freie-Energie-Funktional des Systems, genauer siehe \cite{Matsen:2006ud,Fredrickson:2006th}, welches für die freie Energie $F$ eines einzelnen Polymers die Form
+Als Ausgangspunkt für die Bestimmungen möglicher stabiler Anordnungen in der Polymerschmelze dient das sogenannte \emph{Freie-Energie-Funktional} des Systems, genauer siehe \cite{Matsen:2006ud,Fredrickson:2006th}, welches für die freie Energie $F$ eines einzelnen Polymers die Form
 \begin{equation}
 \label{eq:freie_energie_funktional}
     \frac{F}{nk_{\mathrm{B}}T} = - \ln \frac{Q}{V} + \frac{1}{V} \int \left[ \chi N \phi_{\mathrm{A}}(\vec{r}) \phi_{\mathrm{B}}(\vec{r}) - \omega_{\mathrm{A}}(\vec{r}) \phi_{\mathrm{A}}(\vec{r}) - \omega_{\mathrm{B}}(\vec{r}) \phi_{\mathrm{B}}(\vec{r}) \right] \diff \vec{r}
 \end{equation}
-hat, wobei $\chi$ der sogenannte Flory-Huggins-Wechselwirkungsparameter für die Wechselwirkungen zwischen den Monomeren vom Typ A und B und $k_{\mathrm{B}} T$ die thermische Energie ist.
+hat, wobei $\chi$ der sogenannte \emph{Flory-Huggins-Wechselwirkungsparameter} für die Wechselwirkungen zwischen den Monomeren vom Typ A und B und $k_{\mathrm{B}} T$ die \emph{thermische Energie} ist.
 
 Stabile Anordnungen der Polymerketten entsprechen nun stationären Punkten des Freie-Energie-Funktionals bezüglich der Konzentrationen $\phi_{\mathrm{A}}$, $\phi_{\mathrm{B}}$ und der Felder $\omega_{\mathrm{A}}$ und $\omega_{\mathrm{B}}$.
 Betrachtet man die Funktionalableitungen von $F$ bezüglich dieser Größen, dann bilden diese ein System von Gleichungen, kurz \ac{scft}-Gleichungen genannt, anhand derer die gesuchten stationären Punkte bestimmt werden können.
-Diese Gleichungen bestehen aus der Inkompressibilität der Schmelze
+Diese Gleichungen bestehen aus der \emph{Inkompressibilität} der Schmelze
 \begin{equation}
 \label{eq:inkompressibilitaet}
     \phi_{\mathrm{A}}(\vec{r}) + \phi_{\mathrm{B}}(\vec{r}) = 1
@@ -155,20 +155,20 @@ Weiter erhält man eine Darstellung der Konzentrationen in Form von
     \phi_{\mathrm{A}}(\vec{r}) = \frac{V}{Q} \int_{0}^{f} q(\vec{r}, s) q^{\dagger}(\vec{r}, s) \diff s, \qquad
     \phi_{\mathrm{B}}(\vec{r}) = \frac{V}{Q} \int_{f}^{1} q(\vec{r}, s) q^{\dagger}(\vec{r}, s) \diff s,
 \end{equation}%
-wobei $Q = Q[\omega_{\mathrm{A}}, \omega_{\mathrm{B}}]$ die Partitionsfunktion (\foreign{engl.}{partition function}) eines einzelnen Polymers ist und durch
+wobei $Q = Q[\omega_{\mathrm{A}}, \omega_{\mathrm{B}}]$ die \emph{Partitionsfunktion} (\foreign{engl.}{partition function}) eines einzelnen Polymers ist und durch
 \begin{equation}
 \label{eq:partitionsfunktion}
     Q = \int q(\vec{r}, 1) \diff \vec{r}
 \end{equation}%
 bestimmt wird.
 
-Die in den Gleichungen \cref{eq:konzentrationen,eq:partitionsfunktion} auftretende Funktion $q(\vec{r}, s)$ wird als Vorwärts-Propagator bezeichnet und erfüllt die parabolische partielle Differentialgleichung
+Die in den Gleichungen \cref{eq:konzentrationen,eq:partitionsfunktion} auftretende Funktion $q(\vec{r}, s)$ wird als \emph{Vorwärts-Propagator} bezeichnet und erfüllt die parabolische partielle Differentialgleichung
 \begin{equation}
 \label{eq:forward_propagator}
         \frac{\partial}{\partial s} q(\vec{r}, s) = \frac{a^{2}N}{6} \Delta q(\vec{r}, s) - \omega(\vec{r}, s) q(\vec{r}, s), \quad
     q(\vec{r}, 0) = 1.
 \end{equation}
-Analog wird $q^{\dagger}(\vec{r}, s)$ als Rückwärts-Propagator bezeichnet, da dieser eine ähnliche Differentialgleichung der Form
+Analog wird $q^{\dagger}(\vec{r}, s)$ als \emph{Rückwärts-Propagator} bezeichnet, da dieser eine ähnliche Differentialgleichung der Form
 \begin{equation}
 \label{eq:backward_propagator}
         -\frac{\partial}{\partial s}q^{\dagger}(\vec{r}, s) = \frac{a^{2}N}{6} \Delta q^{\dagger}(\vec{r}, s) - \omega(\vec{r}, s) q^{\dagger}(\vec{r}, s), \quad

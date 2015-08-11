@@ -160,14 +160,14 @@ Wir weisen nun zwei Eigenschaften für diesen Operator respektive für die zugeh
         \emph{Stetigkeit:} Es gilt
         \begin{equation}
             \label{eq:bilinearform_messbar_stetig_garding:stetig}
-            \abs{a(\eta, \zeta; t)} \leq \gamma_{a} \norm{\eta}_{V} \norm{\zeta}_{V}, \quad \fa \eta, \zeta \in V,
+            \abs{a(\eta, \zeta; t)} \leq \gamma_{a} \norm{\eta}_{V} \norm{\zeta}_{V}, \quad \fa \eta, \zeta \in V \text{ und fast alle } t \in I,
         \end{equation}
         mit Stetigkeitskonstante $\gamma_{a} = \max\Set{c, \norm{\omega}_{L_{\infty}(I; L_{\infty}(\Omega))} + \abs{\mu}} < \infty$.
         \item\label{satz:bilinearform_messbar_stetig_garding:garding}
         \emph{G\aa{}rding"=Ungleichung:} Es gilt
         \begin{equation}
             \label{eq:bilinearform_messbar_stetig_garding:garding}
-            a(\eta, \eta; t) + \lambda \norm{\eta}_{H}^{2} \geq \alpha \norm{\eta}_{V}^{2}, \quad \fa \eta \in V,
+            a(\eta, \eta; t) + \lambda \norm{\eta}_{H}^{2} \geq \alpha \norm{\eta}_{V}^{2}, \quad \fa \eta \in V \text{ und fast alle } t \in I,
         \end{equation}
         mit $\alpha = c \gamma_{\Omega}^{2} > 0$ und $\lambda = \max\Set{\norm{\omega}_{L_{\infty}(I; L_{\infty}(\Omega))} - \mu, 0} \geq 0$, wobei $\gamma_{\Omega}$ die Poincaré"=Friedrichs"=Konstante ist.
     \end{thmenumerate}
@@ -198,7 +198,7 @@ Wir weisen nun zwei Eigenschaften für diesen Operator respektive für die zugeh
             &= c \norm{\grad \eta}^{2}_{H} + \skprod{\omega(t, \blank) \eta}{\eta}_{H} + \mu \skprod{\eta}{\eta}_{H} + \lambda \skprod{\eta}{\eta}_{H}
             \\&= c \norm{\grad \eta}^{2}_{H} + \skprod{(\omega(t, \blank) + \mu + \lambda) \eta}{\eta}_{H}.
         \end{align}
-        Wählen wir nun $\lambda := \max\Set{\norm{\omega}_{L_{\infty}(I; L_{\infty}(\Omega))} - \mu, 0} \geq 0$, dann gilt $\omega + \mu + \lambda \geq 0$ fast überall in $\Omega$ für alle $t \in I$ und wir erhalten die Abschätzung
+        Wählen wir nun $\lambda := \max\Set{\norm{\omega}_{L_{\infty}(I; L_{\infty}(\Omega))} - \mu, 0} \geq 0$, dann gilt $\omega + \mu + \lambda \geq 0$ fast überall in $\Omega$ für fast alle $t \in I$ und wir erhalten die Abschätzung
         \begin{align}
             a(\eta, \eta; t) + \lambda \norm{\eta}^{2}_{H}
             &\geq c \norm{\grad \eta}^{2}_{H},
@@ -212,7 +212,7 @@ Wir weisen nun zwei Eigenschaften für diesen Operator respektive für die zugeh
 
 \begin{Korollar}
 \label{korollar:bilinearform_elliptisch}
-    Ist $\lambda = 0$, beispielsweise wenn $\mu \geq \norm{\omega}_{L_{\infty}(I; L_{\infty}(\Omega))}$ gilt, dann sind die Bilinearformen $\Set{a(\blank, \blank; t)}_{t \in I}$ elliptisch.
+    Ist $\lambda = 0$, insbesondere wenn $\mu \geq \norm{\omega}_{L_{\infty}(I; L_{\infty}(\Omega))}$ gilt, dann sind die Bilinearformen $\Set{a(\blank, \blank; t)}_{t \in I}$ für fast alle $t \in I$ elliptisch.
 \end{Korollar}
 
 Ferner wollen wir an dieser Stelle eine Aussage nachweisen, welche wir erst in \cref{chapter:galerkin} benötigen werden.
@@ -324,7 +324,7 @@ Weiter erhalten wir als Nebenprodukt aus \cref{korrolar:ss09:theorem51_abschaetz
             \end{equation}
     \end{thmenumerate}
 
-    Erfüllt die Bilinearform $a(\blank, \blank; t)$ die G\aa{}rding"=Ungleichung \cref{eq:bilinearform_messbar_stetig_garding:garding} mit $\lambda = 0$, dann gilt
+    Erfüllt die Bilinearform $a(\blank, \blank; t)$ die G\aa{}rding"=Ungleichung \cref{eq:bilinearform_messbar_stetig_garding:garding} mit $\lambda = 0$ für fast alle $t \in I$, dann gilt
     \begin{align}
         \gamma_{b}  &\leq \sqrt{2 \max\Set{ 1, c, \norm{\omega}_{L_{\infty}(I; L_{\infty}(\Omega))} + \abs{\mu} }^{2} + \gamma_{e}^{2} }, \\
         \beta &\geq \frac{\gamma_{\Omega}^{2} \min\Set{c, c^{-1}, c (\norm{\omega}_{L_{\infty}(I; L_{\infty}(\Omega))} + \abs{\mu})^{-2}}}{\sqrt{2 \max\Set{c^{-2}\gamma_{\Omega}^{-4}, 1} + \gamma_{e}^{2}}}.
@@ -349,8 +349,8 @@ Weiter erhalten wir als Nebenprodukt aus \cref{korrolar:ss09:theorem51_abschaetz
 \label{section:parametrische_formulierung}
 
 % TODO: Anmerkung besser umsetzen
-Nachdem nun eine erste schwache Formulierung der Propagator"=Differentialgleichung eingeführt wurde, welche in dieser Form bereits als Grundlage für eine numerische Umsetzung verwendet werden kann, wollen wir nun als nächsten Schritt eine niedrigdimensionale Parametrisierung der relevanten Felder vornehmen.
-Motiviert durch das Iterationsverfahren aus \cref{chapter:einleitung}, in dem die Propagator"=Differentialgleichung immer wieder für leicht variierte Raum-Zeit-Felder $\omega$ berechnet wird, werden wir diese als Ausgangspunkt der Parametrisierung verwenden.
+Nachdem nun eine erste schwache Formulierung der Propagator"=Differentialgleichung eingeführt wurde, welche in dieser Form bereits als Grundlage für eine numerische Umsetzung verwendet werden kann, wollen wir nun als nächsten Schritt die darin auftretenden Felder möglichst niedrigdimensional parametrisieren.
+Dies wird vor allem durch das Iterationsverfahren aus \cref{chapter:einleitung} motiviert, in dem die Propagator"=Differentialgleichung immer wieder für leicht variierte Raum-Zeit-Felder $\omega$ berechnet wird.
 
 Dazu kehren wir nun zunächst zum Operator $A(t)$ aus \cref{definition:operator_bilinearform_zeit} zurück und betrachten diesen zunächst unabhängig von der Zeit $t \in I$, aber in Abhängigkeit von einem Feld $w \in L_{\infty}(\Omega)$.
 Wir definieren für $w \in L_{\infty}(\Omega)$ eine Familie von Operatoren $A(w)$ als
@@ -376,7 +376,7 @@ Auf die Wahl dieser $\varphi_{i}$ werden wir bei der numerischen Untersuchung in
     Sei $\Set{\varphi_{i}}_{i \in \mathbb{N}} \subset L_{\infty}(\Omega)$ ein System von Funktionen und sei weiter ein Parameterraum $\mathcal P \subset \ell_{\infty}(\mathbb{N})$ gegeben.
     Wir nennen ein Feld $w \in L_{\infty}(\Omega)$ \emph{darstellbar} durch $\Set{\varphi_{i}}_{i \in \mathbb{N}}$, wenn ein $\bm{\sigma} \in \mathcal P$ existiert, so dass $w$ mit
     \begin{equation}
-        w\bm\sigma) = \sum_{i = 1}^{\infty} \sigma_{i} \varphi_{i}
+        w(\bm\sigma) = \sum_{i = 1}^{\infty} \sigma_{i} \varphi_{i}
     \end{equation}
     im Sinne der gleichmäßigen Konvergenz übereinstimmt.
 \end{Definition}
@@ -506,14 +506,14 @@ Wie zuvor wollen wir \cref{satz:ss09:theorem51} verwenden, müssen also die Bedi
         \emph{Stetigkeit:} Es gilt
         \begin{equation}
             \label{eq:parametrische_bilinearform_messbar_stetig_garding:stetig}
-            \abs{a(\eta, \zeta; t; \bm\sigma)} \leq \gamma_{a} \norm{\eta}_{V} \norm{\zeta}_{V}, \quad \fa \eta, \zeta \in V,
+            \abs{a(\eta, \zeta; t; \bm\sigma)} \leq \gamma_{a} \norm{\eta}_{V} \norm{\zeta}_{V}, \quad \fa \eta, \zeta \in V \text{ und fast alle } t \in I,
         \end{equation}
         mit Stetigkeitskonstante $\gamma_{a} = \max\Set{c, c_{\varphi} + \abs{\mu}} < \infty$.
         \item\label{satz:parametrische_bilinearform_messbar_stetig_garding:garding}
         \emph{G\aa{}rding"=Ungleichung:} Es gilt
         \begin{equation}
             \label{eq:parametrische_bilinearform_messbar_stetig_garding:garding}
-            a(\eta, \eta; t; \bm\sigma) + \lambda \norm{\eta}_{H}^{2} \geq \alpha \norm{\eta}_{V}^{2}, \quad \fa \eta \in V,
+            a(\eta, \eta; t; \bm\sigma) + \lambda \norm{\eta}_{H}^{2} \geq \alpha \norm{\eta}_{V}^{2}, \quad \fa \eta \in V \text{ und fast alle } t \in I,
         \end{equation}
         mit $\alpha = c \gamma_{\Omega}^{2} > 0$ und $\lambda = \max\Set{c_{\varphi} - \mu, 0} \geq 0$.
     \end{thmenumerate}
@@ -692,7 +692,7 @@ Als erster Schritt des Regularitätsnachweises wird zunächst die Existenz belie
         Weiter ist $h \mapsto F_{h}(\blank)$ stetig in $h = 0$, denn für festes $v \in \mathcal Y$ gilt unter Verwendung der Cauchy-Schwarz-Ungleichung die Abschätzung
         \begin{align}
             \abs{F_{h}(v) - F_{0}(v)}
-            &= \abs{\int_{I} \tilde{\chi}_{j} \skp{\tilde{\varphi}_{j}  (u(\bm\sigma_{h}) - u(\bm\sigma))}{v_{1}}{H} \diff t }
+            &= \abs[\Big]{\int_{I} \tilde{\chi}_{j} \skp{\tilde{\varphi}_{j}  (u(\bm\sigma_{h}) - u(\bm\sigma))}{v_{1}}{H} \diff t }
             \\&\leq \norm{\tilde{\varphi}_{j}}_{L_{\infty}(\Omega)} \abs{\skp{u(\bm\sigma_{h}) - u(\bm\sigma)}{v_{1}}{L_{2}(I; H)} }
             \\&\leq \norm{\tilde{\varphi}_{j}}_{L_{\infty}(\Omega)} \norm{u(\bm\sigma_{h}) - u(\bm\sigma)}_{L_{2}(I; H)} \norm{v_{1}}_{L_{2}(I; H)}
             \\&\leq \norm{\tilde{\varphi}_{j}}_{L_{\infty}(\Omega)} \norm{u(\bm\sigma_{h}) - u(\bm\sigma)}_{\mathcal X} \norm{v}_{\mathcal Y}.
@@ -785,15 +785,15 @@ Als erster Schritt des Regularitätsnachweises wird zunächst die Existenz belie
         Für die rechte Seite von \cref{eq:abschaetzung_norm_partieller_ableitungen:rekursiv} können wir wie zuvor nachweisen, dass es sich um ein stetiges lineares Funktional auf $\mathcal Y$ handelt.
         Wir können also \cref{satz:raum_zeit_variationsformulierung_sachgemaess_gestellt} verwenden um die Abschätzung
         \begin{equation}
-            \norm{\partial^{\bm\nu}_{\bm\sigma} u(\bm\sigma)}_{\mathcal X} \leq \frac{1}{\beta} \norm*{\sum_{\Set{j \given \nu_{j} \neq 0}} \nu_{j} \int_{I} \tilde{\chi}_{j} \skp{\tilde{\varphi}_{j} \partial^{\bm\nu - \vec e_{j}}_{\bm\sigma} u(\bm\sigma)}{v_{1}}{H} \diff t}_{\mathcal Y'}
+            \norm{\partial^{\bm\nu}_{\bm\sigma} u(\bm\sigma)}_{\mathcal X} \leq \frac{1}{\beta} \norm[\Big]{\sum_{\Set{j \given \nu_{j} \neq 0}} \nu_{j} \int_{I} \tilde{\chi}_{j} \skp{\tilde{\varphi}_{j} \partial^{\bm\nu - \vec e_{j}}_{\bm\sigma} u(\bm\sigma)}{v_{1}}{H} \diff t}_{\mathcal Y'}
         \end{equation}
         zu erhalten.
         Wir wollen nun die $\mathcal Y'$-Norm der rechten Seite weiter abschätzen.
         Dazu verwenden wir erneut die Cauchy"=Schwarz"=Ungleichung und erhalten wegen
         \begin{align}
-            &\abs*{\sum_{\Set{j \given \nu_{j} \neq 0}} \nu_{j} \int_{I} \tilde{\chi}_{j} \skp{\tilde{\varphi}_{j} \partial^{\bm\nu - \vec e_{j}}_{\bm\sigma} u(\bm\sigma)}{v_{1}}{H} \diff t}
+            &\abs[\Big]{\sum_{\Set{j \given \nu_{j} \neq 0}} \nu_{j} \int_{I} \tilde{\chi}_{j} \skp{\tilde{\varphi}_{j} \partial^{\bm\nu - \vec e_{j}}_{\bm\sigma} u(\bm\sigma)}{v_{1}}{H} \diff t}
             \\\leq~
-            &\sum_{\Set{j \given \nu_{j} \neq 0}} \nu_{j} \abs*{\int_{I} \tilde{\chi}_{j} \skp{\tilde{\varphi}_{j} \partial^{\bm\nu - \vec e_{j}}_{\bm\sigma} u(\bm\sigma)}{v_{1}}{H} \diff t}
+            &\sum_{\Set{j \given \nu_{j} \neq 0}} \nu_{j} \abs[\Big]{\int_{I} \tilde{\chi}_{j} \skp{\tilde{\varphi}_{j} \partial^{\bm\nu - \vec e_{j}}_{\bm\sigma} u(\bm\sigma)}{v_{1}}{H} \diff t}
             \\\leq~
             &\sum_{\Set{j \given \nu_{j} \neq 0}} \nu_{j} \norm{\tilde{\varphi}_{j}}_{L_{\infty}(\Omega)} \norm{\partial^{\bm\nu - \vec e_{j}}_{\bm\sigma} u(\bm\sigma)}_{L_{2}(I; H)} \norm{v_{1}}_{L_{2}(I; H)}
             \\\leq~
@@ -849,7 +849,7 @@ gegeben.
 
 Betrachten wir beispielsweise die Taylorreihe von $u(\blank)$ um den Nullpunkt $\vec 0 \in \mathcal P$, dann erhalten wir wegen $\mathcal P = [-1, 1]^{\mathbb{N}}$ die Abschätzung
 \begin{equation}
-    \sup_{\bm\sigma \in \mathcal P} \norm{\sum_{\bm\nu \in \mathcal F} t_{\bm\nu} \bm\sigma^{\bm\nu}}_{\mathcal X}
+    \sup_{\bm\sigma \in \mathcal P} \norm[\Big]{\sum_{\bm\nu \in \mathcal F} t_{\bm\nu} \bm\sigma^{\bm\nu}}_{\mathcal X}
     \leq \sup_{\bm\sigma \in \mathcal P} \sum_{\bm\nu \in \mathcal F} \norm{t_{\bm\nu} \bm\sigma^{\bm\nu}}_{\mathcal X}
     \leq \sum_{\bm\nu \in \mathcal F} \norm{t_{\bm\nu}}_{\mathcal X}
     \leq \sum_{\bm \nu \in \mathcal F} \frac{1}{\bm\nu!} \norm{ \partial^{\bm \nu}_{\bm \sigma} u(\vec 0)}_{\mathcal X},
@@ -904,16 +904,16 @@ Da dies für die diese Arbeit von untergeordneter Bedeutung ist, wird an dieser 
 
 Diese Räume verwenden wir nun, um die Räume $V$ und $H$, vergleiche \cref{bemerkung:raeume_und_gelfand_tripel}, zu definieren.
 Nach Konstruktion handelt es sich bei $H^{1}_{\text{per}}(\Omega)$ und $L_{2,\text{per}}(\Omega)$ um Hilberträume und desweiteren ist $H^{1}_{\text{per}}(\Omega)$ ein dichter Unterraum von $L_{2,\text{per}}(\Omega)$.
-Wählen wir also $V = H^{1}_{\text{per}}(\Omega)$ und $H = L_{2,\text{per}}(\Omega)$, dann erhalten wir nach \cref{definition:gelfand_tripel} wie zuvor ein Gelfand-Tripel der Form
+Wählen wir also $V := H^{1}_{\text{per}}(\Omega)$ und $H := L_{2,\text{per}}(\Omega)$, dann erhalten wir nach \cref{definition:gelfand_tripel} wie zuvor ein Gelfand-Tripel der Form
 \begin{equation}
     V \denseinclusion H \cong H' \denseinclusion V' = (H^{1}_{\text{per}}(\Omega))'.
 \end{equation}
 
-Untersucht man die Ausführungen dieses Kapitels für den Fall homogener Dirichlet-Randbedingungen, dann stellt man fest, dass lediglich die aus \cref{annahme:eigenschaften_der_bilinearform_a} stammenden Bedingungen an die Bilinearform $a(\blank, \blank)$, deren Darstellung durch den Wechsel zu periodischen Randbedingungen unverändert bleibt, nachgewiesen werden müssen.
+Untersucht man die Ausführungen dieses Kapitels für den Fall homogener Dirichlet-Randbedingungen, dann stellt man fest, dass lediglich die aus \cref{annahme:eigenschaften_der_bilinearform_a} stammenden Bedingungen an die Bilinearformen $a(\blank, \blank; t)$, deren Darstellung durch den Wechsel zu periodischen Randbedingungen unverändert bleibt, nachgewiesen werden müssen.
 
 \begin{Lemma}
 \label{lemma:bilinearform_periodisch_messbar_stetig_garding}
-    Sei $a(\blank, \blank; t)$, $t \in I$, die Familie von Bilinearformen aus \cref{definition:operator_bilinearform_zeit}, wobei die Hilberträume als $V = H^{1}_{\text{per}}(\Omega)$ und $H = L_{2,\text{per}}(\Omega)$ gegeben seien.
+    Sei $\Set{a(\blank, \blank; t)}_{t \in I}$ die Familie von Bilinearformen aus \cref{definition:operator_bilinearform_zeit}, wobei die Hilberträume als $V = H^{1}_{\text{per}}(\Omega)$ und $H = L_{2,\text{per}}(\Omega)$ gegeben seien.
     Diese Bilinearformen erfüllen die folgenden Eigenschaften:
     \begin{thmenumerate}
         \item \label{lemma:bilinearform_periodisch_messbar_stetig_garding:messbar}
@@ -922,14 +922,14 @@ Untersucht man die Ausführungen dieses Kapitels für den Fall homogener Dirichl
         \emph{Stetigkeit:} Es gilt
         \begin{equation}
             \label{eq:bilinearform_periodisch_messbar_stetig_garding:stetig}
-            \abs{a(\eta, \zeta; t)} \leq \gamma_{a} \norm{\eta}_{V} \norm{\zeta}_{V}, \quad \fa \eta, \zeta \in V,
+            \abs{a(\eta, \zeta; t)} \leq \gamma_{a} \norm{\eta}_{V} \norm{\zeta}_{V}, \quad \fa \eta, \zeta \in V \text{ und fast alle } t \in I,
         \end{equation}
         mit Stetigkeitskonstante $\gamma_{a} = \max\Set{c, \norm{\omega}_{L_{\infty}(I; L_{\infty}(\Omega))} + \abs{\mu}} < \infty$.
         \item\label{lemma:bilinearform_periodisch_messbar_stetig_garding:garding}
         \emph{G\aa{}rding-Ungleichung:} Es gilt
         \begin{equation}
             \label{eq:bilinearform_periodisch_messbar_stetig_garding:garding}
-            a(\eta, \eta; t) + \lambda \norm{\eta}_{H}^{2} \geq \alpha \norm{\eta}_{V}^{2}, \quad \fa \eta \in V,
+            a(\eta, \eta; t) + \lambda \norm{\eta}_{H}^{2} \geq \alpha \norm{\eta}_{V}^{2}, \quad \fa \eta \in V \text{ und fast alle } t \in I,
         \end{equation}
         mit $\alpha = c > 0$ und $\lambda = \max\Set{\norm{\omega}_{L_{\infty}(I;L_{\infty}(\Omega))} - \mu + c, c} \geq c > 0$.
     \end{thmenumerate}
