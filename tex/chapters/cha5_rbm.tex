@@ -48,6 +48,74 @@ Die Reduzierte-Basis-Lösung $u_{N}(\mu)$ wird dann durch erneute Galerkin-Proje
     \label{fig:figure1}
 \end{figure}
 
+
+\section{Grundlagen pt. II} % (fold)
+\label{sec:grundlagen}
+
+Wir knüpfen an \cref{chapter:galerkin} an und betrachten zunächst ein abstraktes parametrisches Variationsproblem der Form
+\begin{equation}
+    \text{Sei } \bm \sigma \in \mathcal P, \text{ finde } u(\bm \sigma) \in \mathcal X \colon b(u(\bm \sigma), v; \bm \sigma) = f(v) \quad \fa v \in \mathcal Y.
+\end{equation}
+Für den Rest dieses Kapitels fordern wir, dass die Familie von Bilinearformen $b(\blank, \blank; \bm \sigma) \colon \mathcal X \times \mathcal Y \to \mahtbb{R}$ affin vom Parameter $\bm \sigma$ abhängt, genauer die Form
+\begin{equation}
+     b(\blank, \blank; \bm \sigma) = \sum_{q = 1}^{Q_b} \theta_{b}^{q}(\bm \sigma) b_{q}(\blank, \blank)
+ \end{equation}
+ mit parameterunabhängigen Bilinearformen $b_{q} \colon \mathcal X \times \mathcal Y \to \mathbb{R}$ und nicht näher spezifizierten Abbildungen $\theta_{b}^{q} \colon \mathcal P \to \mathbb{R}$ für $q = 1, \dots, Q_{b}$.
+
+\begin{Definition}
+    Seien $\mathcal X^{\mathcal N}$ und $\mathcal Y^{\mathcal N}$ zwei endlichdimensionale Räume einer Petrov-Galerkin-Diskretisierung und diese Diskretisierung sei durch das folgende Variationsproblem gegeben:
+    \begin{equation}
+        \text{Sei } \bm \sigma \in \mathcal P, \text{ finde } u^{\mathcal N}(\bm \sigma) \in \mathcal X^{\mathcal N} \colon \quad b(u^{N}(\bm \sigma), v; \bm \sigma) = f(v) \quad \fa v \in \mathcal Y.
+    \end{equation}
+    Ohne Einschränkung sei dieses Problem korrekt gestellt.
+    Wir nennen die Lösung $u^{\mathcal N}(\bm \sigma)$ dieses diskreten Variationsproblems im folgenden \emph{Truth}-Lösung.
+\end{Definition}
+
+\begin{Definition}
+    Sei $u_{N}(\bm \sigma) \in \mathcal X_{N}$ die Reduzierte-Basis-Lösung und $u^{\mathcal N}(\bm \sigma) \in \mathcal X^{\mathcal N}$ die Truth-Lösung.
+    Wir definieren den \emph{Fehler} $e_{N}(\bm \sigma) \in \mathcal X^{\mathcal N}$ als
+    \begin{equation}
+        e_{N}(\bm \sigma) := u^{\mathcal N}(\bm \sigma) - u_{N}(\bm \sigma).
+    \end{equation}
+    Weiter definieren wir das \emph{Residuum} $r_{N}(\blank; \bm \sigma) \colon \mathcal Y^{\mathcal N} \to \mathbb{R}$ durch
+    \begin{equation}
+    \label{eq:variationsproblem_residuum}
+        r_{N}(v; \bm \sigma) := b(e_{N}(\bm \sigma), v; \bm \sigma), \quad v \in \mathcal Y^{\mathcal N}.
+    \end{equation}
+\end{Definition}
+
+\begin{Lemma}
+    Das Residuum $r_{N}(\blank; \bm \sigma)$ ist für alle $\bm \sigma \in \mathcal P$ ein stetiges lineares Funktional, kurz also $r_{N}(\blank; \bm \sigma) \in \mathcal (\mathcal Y^{\mathcal N})'$.
+
+    \begin{Beweis}
+        Sowohl Linearität als auch Stetigkeit sind direkt ersichtlich, denn das Residuum kann nach Definition von $u^{\mathcal N}(\bm \sigma)$ geschrieben werden als
+        \begin{equation}
+            \begin{aligned}
+            r_{N}(v; \bm \sigma)
+            &= b(e_{N}(\bm \sigma), v; \bm \sigma)
+            = b(u^{\mathcal N}(\bm \sigma), v; \bm \sigma) - b(u_{N}(\bm \sigma), v; \bm \sigma)
+            \\&= f(v) - b(u_{N}(\bm \sigma), v; \bm \sigma).
+            \end{aligned}
+        \end{equation}
+    \end{Beweis}
+\end{Lemma}
+
+Die $(\mathcal Y^{\mathcal N})'$-Norm des Residuums liefert uns nun ein brauchbares Maß für den Fehler zwischen Reduzierte-Basis- und Truth-Lösung.
+
+\begin{Lemma}
+    Sei $u_{N}(\bm \sigma) \in \mathcal X_{N}$ die Reduzierte-Basis-Lösung und $u^{\mathcal N}(\bm \sigma) \in \mathcal X^{\mathcal N}$ die Truth-Lösung.
+    Dann gilt
+    \begin{equation}
+        \norm{u^{\mathcal N}(\bm \sigma) - u_{N}(\bm \sigma)}_{\mathcal X} \leq \frac{\norm{r_{N}(\blank; \bm \sigma)}_{(\mathcal Y^{\mathcal N})'}}{\beta_{\mathcal N}(\bm \sigma)}.
+    \end{equation}
+
+    \begin{Beweis}
+        Da nach \cref{vorheriges Lemma} das Residuum ein Funktional auf $\mathcal Y^{N}$ ist, können wir \cref{eq:variationsproblem_residuum} als Variationsproblem auffassen, dessen eindeutige Lösung gerade $e_{N}(\bm \sigma)$ ist.
+        Die Aussage folgt nun aus dem \acl{bnb}, \cref{satz:bnb_theorem}.
+    \end{Beweis}
+\end{Lemma}
+
+
 \subsection{Bestimmung der inf-sup-Konstante} % (fold)
 \label{sub:bestimmung_der_inf_sup_konstante}
 
