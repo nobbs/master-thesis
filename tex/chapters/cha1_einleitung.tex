@@ -40,6 +40,7 @@ Da die experimentelle Bestimmung ohne Vorwissen über mögliche stabile Anordnun
 Wir beschränken uns auf die Betrachtung von Diblockcopolymeren, das heißt, Blockcopolymeren, die aus zwei verschiedenen Monomer-Gattungen bestehen, da diese ein vergleichsweise einfaches System darstellen.
 
 Als nützliches und relativ gut handhabbares theoretisches Modell hat sich die sogenannte \ac{scft} herausgestellt, auf welche wir nun zuarbeiten.
+% TODO: vielleicht erwähnen, dass es sich nicht um ein Modell mit atomistischer Auflösung handelt
 
 \begin{figure}[tb]
     \centering
@@ -75,7 +76,7 @@ Eine deutlich ausführlichere und vor allem mathematisch begründete Einführung
 Im Folgenden betrachten wir eine nicht näher spezifizierte Volumenzelle und geben mit dem Vektor $\vec{r}$ eine Position in diesem Volumen an.
 
 Das diskrete Modell stellt die Polymerkette als eine diskrete Kette von Partikeln dar, derart, dass aneinanderhängende Monomere ähnlich einem Scharnier frei beweglich sind.
-Dabei werden Wechselwirkung zwischen benachbarten Monomeren berücksichtigt, während auf der Kette weit auseinanderliegende Partikel aber ignoriert werden.
+Dabei werden Wechselwirkungen zwischen benachbarten Monomeren berücksichtigt, während auf der Kette weit auseinanderliegende Partikel aber ignoriert werden.
 Diese Wechselwirkungen können in \cref{figure:kettenmodelle} beispielsweise als Einschränkung des Winkels $\vartheta_9$ durch die gegenseitige Beeinflussung der Partikel $8, 9$ und $10$ auftreten.
 
 Das stetige Gaußsche Kettenmodell, welches man unter anderem auch als stetigen Grenzfall des beschriebenen diskreten Modells erhält, hat sich als besonders nützlich erwiesen, sowohl bei analytischen als auch numerischen Betrachtungen.
@@ -100,7 +101,8 @@ Da die benötigten stochastischen Ausführungen und Herleitungen für diese Arbe
 
 \subsection*{Selbstkonsistente Feldtheorie} % (fold)
 
-Bei der selbstkonsistenten Feldtheorie handelt es sich um ein weit verbreitetes theoretisches Modell der Physik um das Verhalten von Teilchen unter Einwirkung von Kräften, die durch Wechselwirkungen mit weiteren Teilchen auftreten, zu studieren und sie wird nicht nur im Zusammenhang mit Polymeren sondern zum Beispiel auch in der Thermodynamik oder Informatik verwendet.
+Bei der selbstkonsistenten Feldtheorie handelt es sich um ein weit verbreitetes theoretisches Modell der Physik, um das Verhalten von Teilchen unter Einwirkung von Kräften, die durch Wechselwirkungen mit weiteren Teilchen auftreten, zu studieren.
+Sie wird nicht nur im Zusammenhang mit Polymeren, sondern zum Beispiel auch in der Thermodynamik oder Informatik verwendet.
 
 Die Grundidee ist die folgende: in einem System vieler wechselwirkender Objekte kann die auf ein einzelnes Teilchen wirkende Gesamtkraft durch Mittelung aller Wechselwirkungen approximiert werden.
 Diese gemittelten Einwirkungen werden als externes Feld aufgefasst und ignorieren dabei Fluktuationen, das heißt, Veränderungen der wirkenden Kräfte durch das lokale Verhalten, beispielsweise Bewegungen, der einzelnen Teilchen.
@@ -110,8 +112,9 @@ Dieses Prinzip lässt sich auch zur Untersuchung von Polymeren verwenden,
 da eine einzelne Polymerkette oftmals aus einer hohen vierstelligen Zahl von Atomen besteht und dadurch die Wechselwirkungen auf atomarem Level vernachlässigbar sind, weswegen auch die im vorherigen Abschnitt beschriebene Modellierung als Kette sinnvoll erscheint.
 Aufbauend auf den beschriebenen Modellen, in diesem Fall dem stetigen Gaußschen Kettenmodell, kann man so die statistische räumliche Verteilung beziehungsweise Ausrichtung von Polymerketten bestimmen.
 
-Wir beschränken uns im Folgenden auf die Beschreibung der \ac{scft} für die inkompressible Schmelze eines AB-Diblockcopolymers und folgen dabei größtenteils den Ausführungen von \textcite{Matsen:1994bz,Stasiak:2011ba}.
+Wir beschränken uns im Folgenden auf die Beschreibung der \ac{scft} für die inkompressible Schmelze eines AB-Diblockcopolymers und folgen dabei größtenteils den Ausführungen von \textcite{Matsen:1994bz} sowie \textcite{Stasiak:2011ba}.
 
+% TODO: neue begriffe kenntlich machen
 Betrachte erneut eine einzelne Volumenzelle, beispielsweise einen Würfel, welche selbst Teil eines größeren Systems sein kann.
 Diese Zelle enthalte $n$ AB-Diblockcopolymere, welche jeweils aus einem A-Block und einem B-Block bestehen, wobei diese wiederum aus $N_{\mathrm{A}}$ Monomeren vom Typ A respektive aus $N_{\mathrm{B}}$ Monomeren vom Typ B zusammengesetzt sind.
 Der Polymerisationsgrad, das heißt, die Gesamtanzahl an Monomeren in einem Polymer, ergibt sich damit zu $N = N_{\mathrm{A}} + N_{\mathrm{B}}$.
@@ -123,15 +126,15 @@ Das Gesamtvolumen der Schmelze in dieser Zelle ist damit gegeben durch $V = n N 
 
 Die wichtigsten Größen bei der \ac{scft} sind nun die Konzentrationen $\phi_{\mathrm{A}}(\vec{r})$ und $\phi_{\mathrm{B}}(\vec{r})$ der A- und B-Monomere an einer Position $\vec{r}$ in der betrachteten Zelle und die externen Felder $\omega_{\mathrm{A}}(\vec{r})$ und $\omega_{\mathrm{B}}(\vec{r})$, welche auf die jeweiligen Monomer-Gattungen wirken.
 
-Als Ausgangspunkt für die Bestimmungen möglicher stabiler Anordnungen in der Polymerschmelze betrachtet man das sogenannte Freie-Energie-Funktional des Systems, genauer siehe \cite{Matsen:2006ud,Fredrickson:2006th}, welches für für die freie Energie $F$ eines einzelnen Polymers die Form
+Als Ausgangspunkt für die Bestimmungen möglicher stabiler Anordnungen in der Polymerschmelze betrachtet man das sogenannte Freie-Energie-Funktional des Systems, genauer siehe \cite{Matsen:2006ud,Fredrickson:2006th}, welches für die freie Energie $F$ eines einzelnen Polymers die Form
 \begin{equation}
 \label{eq:freie_energie_funktional}
-    \frac{F}{nk_{\mathrm{B}}T} = - \ln \frac{Q}{V} + \frac{1}{V} \int \chi N \phi_{\mathrm{A}}(\vec{r}) \phi_{\mathrm{B}}(\vec{r}) - \omega_{\mathrm{A}}(\vec{r}) \phi_{\mathrm{A}}(\vec{r}) - \omega_{\mathrm{B}}(\vec{r}) \phi_{\mathrm{B}}(\vec{r}) \diff \vec{r}
+    \frac{F}{nk_{\mathrm{B}}T} = - \ln \frac{Q}{V} + \frac{1}{V} \int \left[ \chi N \phi_{\mathrm{A}}(\vec{r}) \phi_{\mathrm{B}}(\vec{r}) - \omega_{\mathrm{A}}(\vec{r}) \phi_{\mathrm{A}}(\vec{r}) - \omega_{\mathrm{B}}(\vec{r}) \phi_{\mathrm{B}}(\vec{r}) \right] \diff \vec{r}
 \end{equation}
 hat, wobei $\chi$ der sogenannte Flory-Huggins-Wechselwirkungsparameter für die Wechselwirkungen zwischen den Monomeren vom Typ A und B und $k_{\mathrm{B}} T$ die thermische Energie ist.
 
-Stabile Anordnungen entsprechen nun Sattelpunkten von $F$ bezüglich der Konzentrationen $\phi_{\mathrm{A}}$, $\phi_{\mathrm{B}}$ und der Felder $\omega_{\mathrm{A}}$ und $\omega_{\mathrm{B}}$.
-Betrachtet man die Funktionalableitungen von $F$ bezüglich dieser Größen, dann erhält man ein System von Gleichungen, kurz \ac{scft}-Gleichungen genannt, anhand derer die gesuchten Sattelpunkte bestimmt werden können.
+Stabile Anordnungen entsprechen nun stationären Punkten von $F$ bezüglich der Konzentrationen $\phi_{\mathrm{A}}$, $\phi_{\mathrm{B}}$ und der Felder $\omega_{\mathrm{A}}$ und $\omega_{\mathrm{B}}$.
+Betrachtet man die Funktionalableitungen von $F$ bezüglich dieser Größen, dann erhält man ein System von Gleichungen, kurz \ac{scft}-Gleichungen genannt, anhand derer die gesuchten stationären Punkte bestimmt werden können.
 Diese Gleichungen bestehen aus der Inkompressibilität der Schmelze
 \begin{equation}
 \label{eq:inkompressibilitaet}
@@ -166,7 +169,7 @@ Die in den Gleichungen \cref{eq:konzentrationen,eq:partitionsfunktion} auftreten
 \label{eq:forward_propagator}
     % \left\{
     % \begin{aligned}
-        \frac{\partial}{\partial s} q(\vec{r}, s) = \frac{a^{2}N}{6} \Delta q(\vec{r}, s) - \omega_{\alpha(s)}(\vec{r}) q(\vec{r}, s), \quad
+        \frac{\partial}{\partial s} q(\vec{r}, s) = \frac{a^{2}N}{6} \Delta q(\vec{r}, s) - \omega(\vec{r}, s) q(\vec{r}, s), \quad
         q(\vec{r}, 0) = 1.
     % \end{aligned}
     % \right.
@@ -176,15 +179,15 @@ Analog bezeichnet man $q^{\dagger}(\vec{r}, s)$ als Rückwärts-Propagator, da d
 \label{eq:backward_propagator}
     % \left\{
     % \begin{aligned}
-        -\frac{\partial}{\partial s}q^{\dagger}(\vec{r}, s) = \frac{a^{2}N}{6} \Delta q^{\dagger}(\vec{r}, s) - \omega_{\alpha(s)}(\vec{r}) q^{\dagger}(\vec{r}, s), \quad
+        -\frac{\partial}{\partial s}q^{\dagger}(\vec{r}, s) = \frac{a^{2}N}{6} \Delta q^{\dagger}(\vec{r}, s) - \omega(\vec{r}, s) q^{\dagger}(\vec{r}, s), \quad
         q^{\dagger}(\vec{r}, 1) = 1
     % \end{aligned}
     % \right.
 \end{equation}%
 erfüllt.
-Die Abbildung $\omega_{\alpha(s)}$ ist dabei definiert als
+Die Abbildung $\omega$ ist dabei definiert als
 \begin{equation}
-    \omega_{\alpha(s)}(\vec{r}) = \begin{cases}
+    \omega(\vec{r}, s) = \begin{cases}
         \omega_{\mathrm{A}}(\vec{r}), & 0 \leq s < f\\
         \omega_{\mathrm{B}}(\vec{r}), & f \leq s \leq 1.
     \end{cases}
@@ -202,16 +205,16 @@ Dies wird sich sowohl in der späteren theoretischen als auch numerischen Unters
 
 
 \subsection*{Einsatz numerischer Methoden} % (fold)
-
+% TODO: besser formulieren
 Es gibt verschiedene Ansätze, die \ac{scft}-Gleichungen zu einem numerischen Verfahren zu verarbeiten, die meisten führen auf das folgende iterative, Newton-artige Schema:
 \begin{enumerate}[label={\itshape\roman*.},ref={\itshape\roman*}]
-    \item Zunächst werden zwei externe Felder $\omega^{(0)}_{\mathrm{A}}$ und $\omega^{(0)}_{\mathrm{B}}$ generiert, typischerweise zufällig, um von vornherein auftretende Verzerrungen zu einem bestimmten Sattelpunkt zu verhindern.
+    \item Zunächst wird $k = 0$ gesetzt und anschließend werden zwei externe Felder $\omega^{(0)}_{\mathrm{A}}$ und $\omega^{(0)}_{\mathrm{B}}$ generiert, typischerweise zufällig, um von vornherein auftretende Verzerrungen zu einem bestimmten stationären Punkt zu verhindern.
     \item\label{enum:iterationsverfahren_punkt_2} Die Differentialgleichungen \cref{eq:forward_propagator,eq:backward_propagator} werden für die Felder $\omega^{(k)}_{\mathrm{A}}$ und $\omega^{(k)}_{\mathrm{B}}$ gelöst.
     \item Die Konzentrationen $\phi^{(k)}_{\mathrm{A}}$ und $\phi^{(k)}_{\mathrm{B}}$ werden durch die Gleichungen \cref{eq:partitionsfunktion,eq:konzentrationen} bestimmt.
-    \item Diese werden nun benutzt um aus den Gleichungen \cref{eq:felder} die zu diesen Konzentrationen zugehörigen Felder zu bestimmen.
+    \item Diese werden nun benutzt, um aus den Gleichungen \cref{eq:felder} die zu diesen Konzentrationen zugehörigen Felder zu bestimmen.
     Aus diesen Feldern werden nun mit einem sogenannten Mixing-Verfahren die neuen Felder $\omega^{(k+1)}_{\mathrm{A}}$ und $\omega^{(k+1)}_{\mathrm{B}}$ für die nächste Iteration erzeugt.
     Das Mixing dient dazu, die Konvergenz des Verfahrens sicherzustellen beziehungsweise zu verbessern, typischerweise gehen hier die Inkompressibilität \cref{eq:inkompressibilitaet} und zurückliegende Iterationen ein.
-    \item Sind die neuen Konzentrationen und Felder noch kein Sattelpunkt von \cref{eq:freie_energie_funktional}, dann gehe zurück zu \cref{enum:iterationsverfahren_punkt_2}.
+    \item Sind die neuen Konzentrationen und Felder noch kein stationärer Punkt von \cref{eq:freie_energie_funktional}, dann gehe zurück zu \cref{enum:iterationsverfahren_punkt_2}.
 \end{enumerate}
 %
 Bei dem beschriebenen Verfahren stellen sich die folgenden beiden Schritte als besonders wichtig heraus, da sie massiv die Laufzeit des Iterationsverfahren beeinflussen:
@@ -228,6 +231,7 @@ Als besonders effektiver Ansatz hat sich das sogenannte Anderson-Mixing erwiesen
 Weiter wurden auch Verfahren ähnlich einer Picard-Iteration in \cite{Drolet:1999bs} betrachtet.
 
 Unser Hauptaugenmerk in dieser Arbeit liegt auf dem ersten Problem, dem wiederholten Lösen der parabolischen partiellen Differentialgleichung \cref{eq:forward_propagator}.
+% TODO: Sattelpunktgleichung ersetzen
 Da es, abhängig vom gewählten Mixing-Verfahren, oftmals eine Iterationsanzahl im dreistelligen Bereich oder höher benötigt, bis eine zufriedenstellende Genauigkeit bei der Sattelpunktgleichung erreicht ist, und damit insbesondere auch die partielle Differentialgleichung so oft gelöst werden muss, ist es wichtig, dass das Lösungsverfahren möglichst effizient ist.
 Weiter darf zu Gunsten der Laufzeit aber auch nicht die Genauigkeit des Lösers vernachlässigt werden, da sich dies im Iterationsverfahren durch Instabilität und zusätzliche Iterationen niederschlagen kann.
 
@@ -263,14 +267,14 @@ Als guter Kompromiss zwischen Laufzeit und Genauigkeit haben sich Spektral- und 
 Erstere wurden von \textcite{Matsen:1994bz} erfolgreich eingesetzt, wobei hier erst das explizite Berücksichtigen der Symmetrien der zu erwartenden resultierenden Anordnung bei der Konstruktion des Spektralverfahrens zu annehmbaren Laufzeiten führt.
 Die damit verwandten Pseudospektralverfahren kommen zwar nicht an die Genauigkeit der Spektralverfahren heran, können aber unter Ausnutzung der Struktur der partiellen Differentialgleichung massiv Laufzeit einsparen.
 Dazu wird in \cite{Rasmussen:2002kt} der Differentialoperator mittels Operator-Splitting so zerlegt, dass man das Lösen der Differentialgleichung mittels schneller Fourier-Transformation im Wesentlichen auf komponentenweise Vektor-Multiplikationen zurückführt.
-Das daraus resultierende Verfahren zweiter Ordnung wurde von \cite{GarciaCervera:2006uu,Ranjan:2007kl} auf unterschiedliche Weisen zu Verfahren vierter Ordnung erweitert, ohne signifikant Laufzeit einzubüßen.
+Das daraus resultierende Verfahren zweiter Ordnung wurde von \cite{GarciaCervera:2006uu,Ranjan:2007kl} auf unterschiedliche Weisen zu Verfahren vierter Ordnung erweitert, ohne signifikant Laufzeit pro Iterationsschritt einzubüßen.
 Eine gute Übersicht über die meisten der hier genannten Methoden findet man bei \textcites[Section 3.6]{Fredrickson:2006th}{Audus:2013ep}.
 
 Obwohl die Literatur zur \ac{scft} für Polymere verschiedenste Verfahren für das Lösen der partiellen Differentialgleichung bietet, ist ein Finite-Elemente-Ansatz basierend auf einer Raum-Zeit-Variationsformulierung unseres Wissens nach bisher nicht verfolgt worden.
 
 Hier knüpfen wir an und betrachten das Problem, eine Lösung für die Differentialgleichung zu finden, losgelöst vom eigentlichen \ac{scft}-Iterationsverfahren, da der Berechnungsaufwand des in dieser Arbeit hergeleiteten Verfahrens eine Integration in das Iterationsverfahren im Rahmen dieser Arbeit unmöglich macht.
 Die Grundidee ist die Verwendung eines Galerkin-Verfahrens für die Differentialgleichung mit anschließendem Aufsetzen eines Reduzierte-Basis-Ansatzes.
-Für diesen ist es notwendig die Differentialgleichung zu parametrisieren, das heißt, von möglichst wenigen Parametern abhängig zu machen.
+Für diesen ist es notwendig, die Differentialgleichung zu parametrisieren, das heißt, von möglichst wenigen Parametern abhängig zu machen.
 Dies erreichen wir, indem wir die in der Differentialgleichung auftretenden Felder in einem geeigneten Funktionensystem entwickeln.
 Dieses sollte so gewählt werden, dass die Entwicklungskoeffizienten möglichst schnell abfallen.
 Hierzu sei auf \cref{figure:felder_nach_iterationsverfahren} verwiesen, welche ein Felder-Paar von einem Iterationsdurchlauf und dessen Fourier-Koeffizienten zeigt.
@@ -278,7 +282,7 @@ Hierzu sei auf \cref{figure:felder_nach_iterationsverfahren} verwiesen, welche e
 
 \subsection*{Aufbau der restlichen Arbeit}
 
-In \cref{chapter:grundlagen} werden zunächst die die funktionalanalytischen Grundlagen eingeführt beziehungsweise wiederholt, welche dann in \cref{chapter:propagator_differentialgleichung} verwendet werden um die parabolische partielle Differentialgleichung, welche im Rahmen dieser Einleitung bereits vorgestellt wurde, unter passenden Rahmenbedingungen zu formalisieren.
+In \cref{chapter:grundlagen} werden zunächst die die funktionalanalytischen Grundlagen eingeführt beziehungsweise wiederholt, welche dann in \cref{chapter:propagator_differentialgleichung} verwendet werden, um die parabolische partielle Differentialgleichung, welche im Rahmen dieser Einleitung bereits vorgestellt wurde, unter passenden Rahmenbedingungen zu formalisieren.
 Weiter paremetrisieren wir die Differentialgleichung und weisen unter bestimmten Bedingungen eine Regularität der Lösungen der Differentialgleichung vom Parameter nach.
 
 Nachfolgend werden in \cref{chapter:galerkin} die ersten numerischen Grundlagen in Form des Petrov-Galerkin-Verfahrens gelegt und an einigen Beispiele analysiert, um dann darauf aufbauend in \cref{chapter:rbm} die Reduzierte-Basis-Methoden einzuführen und diese ebenfalls auf die in dieser Arbeit betrachtete Problemstellung anzuwenden.
