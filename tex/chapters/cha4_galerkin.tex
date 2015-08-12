@@ -30,7 +30,7 @@ erfüllt.
 
 Die \emph{Petrov-Galerkin-Verfahren} stelle eine Unterklasse der Galerkin-Verfahren dar und werden als Bezeichnung für Verfahren, die auf Variationsprobleme, bei denen Ansatz- und Testfunktionenraum nicht identisch sind, zugeschnitten sind, verwendet.
 
-Die grundlegende Idee hinter Galerkin-Verfahren ist die Diskretisierung des Variationsproblems \cref{eq:abstraktes_variationsproblem_galerkin} durch Approximation der im Allgemeinen unendlichdimensionalen Hilberträume $\mathcal X$ und $\mathcal Y$ mittels endlichdimensionaler Unterräume $\mathcal X^{\mathcal N} \subset \mathcal X$ und $\mathcal Y^{\mathcal M} \subset \mathcal Y$ mit Dimension $\mathcal N$ respektive $\mathcal M$.
+Die grundlegende Idee hinter Galerkin-Verfahren ist die Diskretisierung des Variationsproblems \cref{eq:abstraktes_variationsproblem_galerkin} durch Approximation der im Allgemeinen unendlichdimensionalen Hilberträume $\mathcal X$ und $\mathcal Y$ mittels endlichdimensionaler Unterräume $\mathcal X_{\mathcal N} \subset \mathcal X$ und $\mathcal Y_{\mathcal M} \subset \mathcal Y$ mit Dimension $\mathcal N$ respektive $\mathcal M$.
 Wir beschränken uns hier auf den Fall $\mathcal N = \mathcal M$.
 Zwar ist auch für den Fall $\mathcal M > \mathcal N$ eine sinnvolle Anwendung des Galerkin-Verfahrens möglich, allerdings erfolgt diese dann im Sinne einer Residuums-Minimierung, vergleiche \cite{Andreev:2012ep}, und verträgt sich deswegen nicht mit der Anwendung der Reduzierte-Basis-Methoden in \cref{chapter:rbm}.
 
@@ -38,11 +38,11 @@ Wir halten uns hauptsächlich an die Ausführungen von \textcite[Section 3.1]{No
 
 \begin{Definition}
     \label{definition:disrekte_loesung}
-    Seien durch $\mathcal X^{\mathcal N} \subset \mathcal X$ und $\mathcal Y^{\mathcal N} \subset \mathcal Y$ Unterräume der Dimension $\mathcal N \in \mathbb{N}$ gegeben.
-    Als \emph{Petrov"=Galerkin"=Lösung} von \cref{eq:abstraktes_variationsproblem_galerkin} bezeichnen wir eine Lösung $u^{\mathcal N} \in \mathcal X^{\mathcal N}$ des Variationsproblems:
+    Seien durch $\mathcal X_{\mathcal N} \subset \mathcal X$ und $\mathcal Y_{\mathcal N} \subset \mathcal Y$ Unterräume der Dimension $\mathcal N \in \mathbb{N}$ gegeben.
+    Als \emph{Petrov"=Galerkin"=Lösung} von \cref{eq:abstraktes_variationsproblem_galerkin} bezeichnen wir eine Lösung $u_{\mathcal N} \in \mathcal X_{\mathcal N}$ des Variationsproblems:
     \begin{equation}
         \label{eq:diskretes_variationsproblem}
-        \text{Finde}~u \in \mathcal X^{\mathcal N} \colon \quad  b(u, v) = f(v) \quad \fa v \in \mathcal Y^{\mathcal N}.
+        \text{Finde}~u \in \mathcal X_{\mathcal N} \colon \quad  b(u, v) = f(v) \quad \fa v \in \mathcal Y_{\mathcal N}.
     \end{equation}
 \end{Definition}
 
@@ -53,15 +53,15 @@ Zur einfacheren Unterscheidung bezeichnen wir \cref{eq:abstraktes_variationsprob
     Anders als bei den bekannten Galerkin"=Verfahren für elliptische Probleme führt eine solche Diskretisierung eines korrekt gestellten Problems nicht automatisch zu einem korrekt gestellten diskreten Problem.
     Dies wird deutlich durch
     \begin{equation}
-        \sup_{v \in \mathcal Y} \frac{b(u, v)}{\norm{v}_{\mathcal Y}} \geq \sup_{v \in \mathcal Y^{\mathcal N}} \frac{b(u, v)}{\norm{v}_{\mathcal Y}} \quad \fa u \in \mathcal X.
+        \sup_{v \in \mathcal Y} \frac{b(u, v)}{\norm{v}_{\mathcal Y}} \geq \sup_{v \in \mathcal Y_{\mathcal N}} \frac{b(u, v)}{\norm{v}_{\mathcal Y}} \quad \fa u \in \mathcal X.
     \end{equation}
     Dadurch ist, selbst wenn die stetige inf-sup-Bedingung \cref{eq:abstraktes_variationsproblem_galerkin_infsup} gilt, nicht sichergestellt, dass die diskrete inf-sup-Konstante $\beta_{\mathcal N}$ von \cref{eq:diskretes_variationsproblem} die entsprechende Bedingung
     \begin{equation}
         \label{eq:diskrete_inf_sup_kosntante}
-        \beta_{\mathcal N} := \inf_{u \in \mathcal X^{\mathcal N}} \sup_{v \in \mathcal Y^{\mathcal N}} \frac{b(u, v)}{\norm{u}_{\mathcal X} \norm{v}_{\mathcal Y}} = \inf_{v \in \mathcal Y^{\mathcal N}} \sup_{u \in \mathcal X^{\mathcal N}} \frac{b(u, v)}{\norm{u}_{\mathcal X} \norm{v}_{\mathcal Y}} > 0
+        \beta_{\mathcal N} := \inf_{u \in \mathcal X_{\mathcal N}} \sup_{v \in \mathcal Y_{\mathcal N}} \frac{b(u, v)}{\norm{u}_{\mathcal X} \norm{v}_{\mathcal Y}} = \inf_{v \in \mathcal Y_{\mathcal N}} \sup_{u \in \mathcal X_{\mathcal N}} \frac{b(u, v)}{\norm{u}_{\mathcal X} \norm{v}_{\mathcal Y}} > 0
     \end{equation}
     erfüllt.
-   Anders als im stetigen Fall, gilt aufgrund der endlichen Dimension von $\mathcal X^{\mathcal N}$ und $\mathcal Y^{\mathcal N}$ stets die Gleichheit der beiden inf"=sup"=Konstanten in \cref{eq:diskrete_inf_sup_kosntante}.
+   Anders als im stetigen Fall, gilt aufgrund der endlichen Dimension von $\mathcal X_{\mathcal N}$ und $\mathcal Y_{\mathcal N}$ stets die Gleichheit der beiden inf"=sup"=Konstanten in \cref{eq:diskrete_inf_sup_kosntante}.
 
    Lediglich die Stetigkeit muss nicht explizit nachgewiesen werden, da die diskrete Stetigkeitskonstante $\gamma_{\mathcal N}$ stets durch die des stetigen Variationsproblems von oben beschränkt wird.
 \end{Bemerkung}
@@ -70,20 +70,20 @@ Der folgende Satz fasst einige äquivalente Bedingungen zusammen, welche sichers
 
 \begin{Satz}
 \label{satz:galerkin_wohldefiniertheit}
-    Seien $\mathcal X^{\mathcal N}$ und $\mathcal Y^{\mathcal N}$ Unterräume von $\mathcal X$ respektive $\mathcal Y$ mit Dimension $\mathcal N$ und sei weiter $f \in \mathcal (Y^{\mathcal N})'$.
-    Dann besitzt das diskrete Variationsproblem \cref{eq:diskretes_variationsproblem} genau dann eine eindeutige Lösung $u^{\mathcal N} \in \mathcal X^{\mathcal N}$, wenn eine der folgenden äquivalenten Bedingungen erfüllt ist:
+    Seien $\mathcal X_{\mathcal N}$ und $\mathcal Y_{\mathcal N}$ Unterräume von $\mathcal X$ respektive $\mathcal Y$ mit Dimension $\mathcal N$ und sei weiter $f \in \mathcal Y_{\mathcal N}'$.
+    Dann besitzt das diskrete Variationsproblem \cref{eq:diskretes_variationsproblem} genau dann eine eindeutige Lösung $u_{\mathcal N} \in \mathcal X_{\mathcal N}$, wenn eine der folgenden äquivalenten Bedingungen erfüllt ist:
     \begin{thmenumerate}
         \item \label{punkt:gal:tfae_diskrete_inf_sup} Es gilt die diskrete inf-sup-Bedingung \cref{eq:diskrete_inf_sup_kosntante}.
         \item \label{punkt:gal:tfae_infsup_x} Es gilt
             \begin{equation}
-                \inf_{u \in \mathcal X^{\mathcal N}} \sup_{v \in \mathcal Y^{\mathcal N}} \frac{b(u, v)}{\norm{u}_{\mathcal X} \norm{v}_{\mathcal Y}} > 0.
+                \inf_{u \in \mathcal X_{\mathcal N}} \sup_{v \in \mathcal Y_{\mathcal N}} \frac{b(u, v)}{\norm{u}_{\mathcal X} \norm{v}_{\mathcal Y}} > 0.
             \end{equation}
         \item \label{punkt:gal:tfae_infsup_y} Es gilt
             \begin{equation}
-                \inf_{v \in \mathcal Y^{\mathcal N}} \sup_{u \in \mathcal X^{\mathcal N}} \frac{b(u, v)}{\norm{u}_{\mathcal X} \norm{v}_{\mathcal Y}} > 0.
+                \inf_{v \in \mathcal Y_{\mathcal N}} \sup_{u \in \mathcal X_{\mathcal N}} \frac{b(u, v)}{\norm{u}_{\mathcal X} \norm{v}_{\mathcal Y}} > 0.
             \end{equation}
-        \item \label{punkt:gal:tfae_injektiv1} Für jedes $0 \neq u \in \mathcal X^{\mathcal N}$ existiert ein $v \in \mathcal Y^{\mathcal N}$ mit $b(u, v) \neq 0$.
-        \item \label{punkt:gal:tfae_injektiv2} Für jedes $0 \neq v \in \mathcal Y^{\mathcal N}$ existiert ein $u \in \mathcal X^{\mathcal N}$ mit $b(u, v) \neq 0$.
+        \item \label{punkt:gal:tfae_injektiv1} Für jedes $0 \neq u \in \mathcal X_{\mathcal N}$ existiert ein $v \in \mathcal Y_{\mathcal N}$ mit $b(u, v) \neq 0$.
+        \item \label{punkt:gal:tfae_injektiv2} Für jedes $0 \neq v \in \mathcal Y_{\mathcal N}$ existiert ein $u \in \mathcal X_{\mathcal N}$ mit $b(u, v) \neq 0$.
     \end{thmenumerate}
 
     \begin{Beweis}
@@ -95,10 +95,10 @@ Obwohl die Bedingungen \cref{punkt:gal:tfae_infsup_x,punkt:gal:tfae_infsup_y,pun
 
 \begin{Satz}
     \label{satz:galerkin_stabilitaet}
-    Gilt die diskrete inf-sup-Bedingung \cref{eq:diskrete_inf_sup_kosntante}, dann erfüllt die Petrov"=Galerkin"=Lösung $u^{\mathcal N} \in \mathcal X^{\mathcal N}$ die Abschätzung
+    Gilt die diskrete inf-sup-Bedingung \cref{eq:diskrete_inf_sup_kosntante}, dann erfüllt die Petrov"=Galerkin"=Lösung $u_{\mathcal N} \in \mathcal X_{\mathcal N}$ die Abschätzung
     \begin{equation}
         \label{eq:galerkin_statibilitaet}
-        \norm{u^{\mathcal N}}_{\mathcal X} \leq \frac{1}{\beta_{\mathcal N}} \norm{f}_{\mathcal Y'}.
+        \norm{u_{\mathcal N}}_{\mathcal X} \leq \frac{1}{\beta_{\mathcal N}} \norm{f}_{\mathcal Y'}.
     \end{equation}
 
     \begin{Beweis}
@@ -110,31 +110,31 @@ Eine weitere, äußerst nützliche Eigenschaft der Galerkin"=Verfahren ist die s
 
 \begin{Lemma}[Galerkin-Orthogonalität]
     \label{lemma:galerkin_orthogonalitaet}
-    Sei $u \in \mathcal X$ die Lösung des stetigen Variationsproblems \cref{eq:abstraktes_variationsproblem_galerkin} und sei $u^{\mathcal N} \in \mathcal X^{\mathcal N}$ die Lösung eines zugehörigen diskreten Variationsproblems \cref{eq:diskretes_variationsproblem}.
+    Sei $u \in \mathcal X$ die Lösung des stetigen Variationsproblems \cref{eq:abstraktes_variationsproblem_galerkin} und sei $u_{\mathcal N} \in \mathcal X_{\mathcal N}$ die Lösung eines zugehörigen diskreten Variationsproblems \cref{eq:diskretes_variationsproblem}.
     Dann gilt
     \begin{equation}
         \label{eq:galerkin_orthogonalitaet}
-        b(u - u^{\mathcal N}, v) = 0 \quad \fa v \in \mathcal Y^{\mathcal N},
+        b(u - u_{\mathcal N}, v) = 0 \quad \fa v \in \mathcal Y_{\mathcal N},
     \end{equation}
-    das heißt, der Fehler $u - u^{\mathcal N}$ ist orthogonal zu $\mathcal Y^{\mathcal N}$.
+    das heißt, der Fehler $u - u_{\mathcal N}$ ist orthogonal zu $\mathcal Y_{\mathcal N}$.
 
     \begin{Beweis}
-        Ausnutzen der Bilinearität von $b$ liefert für beliebiges $v \in \mathcal Y^{\mathcal N}$ die Gleichung
+        Ausnutzen der Bilinearität von $b$ liefert für beliebiges $v \in \mathcal Y_{\mathcal N}$ die Gleichung
         \begin{equation}
-            b(u - u^{\mathcal N}, v) = b(u, v) - b(u^{\mathcal N}, v) = f(v) - f(v) = 0,
+            b(u - u_{\mathcal N}, v) = b(u, v) - b(u_{\mathcal N}, v) = f(v) - f(v) = 0,
         \end{equation}
-        wobei die zweite Gleichheit durch $\mathcal Y^{\mathcal N} \subset \mathcal Y$ gerechtfertigt ist.
+        wobei die zweite Gleichheit durch $\mathcal Y_{\mathcal N} \subset \mathcal Y$ gerechtfertigt ist.
     \end{Beweis}
 \end{Lemma}
 
 \begin{Satz}[Lemma von Céa]
     \label{satz:lemma_von_cea}
-    Sei $u \in \mathcal X$ die Lösung des stetigen Variationsproblems \cref{eq:abstraktes_variationsproblem_galerkin} und $u^{\mathcal N} \in \mathcal X^{\mathcal N}$ die diskrete Lösung von \cref{eq:diskretes_variationsproblem}.
+    Sei $u \in \mathcal X$ die Lösung des stetigen Variationsproblems \cref{eq:abstraktes_variationsproblem_galerkin} und $u_{\mathcal N} \in \mathcal X_{\mathcal N}$ die diskrete Lösung von \cref{eq:diskretes_variationsproblem}.
     Sei weiter $\gamma$ die Stetigkeitskonstante des stetigen Variationsproblems.
-    Der Fehler $u - u^{\mathcal N}$ erfüllt die Ungleichung
+    Der Fehler $u - u_{\mathcal N}$ erfüllt die Ungleichung
     \begin{equation}
         \label{eq:lemma_von_cea}
-        \norm{u - u^{\mathcal N}}_{\mathcal X} \leq \frac{\gamma}{\beta_{\mathcal N}} \inf_{w \in \mathcal X^{\mathcal N}} \norm{u - w}_{\mathcal X}.
+        \norm{u - u_{\mathcal N}}_{\mathcal X} \leq \frac{\gamma}{\beta_{\mathcal N}} \inf_{w \in \mathcal X_{\mathcal N}} \norm{u - w}_{\mathcal X}.
     \end{equation}
 
     \begin{Beweis}
@@ -147,7 +147,7 @@ Insbesondere motiviert dies die abschließende Forderung der folgenden Stabilit�
 
 \begin{Definition}
 \label{definition:stabile_diskretisierung}
-    Sei $\Set{(\mathcal X^{\mathcal N}, \mathcal Y^{\mathcal N})}_{\mathcal N \geq 1}$ eine Folge von endlichdimensionalen Unterräumen mit zugehörigen diskreten inf-sup-Konstanten $\Set{\beta_{\mathcal N}}_{\mathcal N \geq 1}$.
+    Sei $\Set{(\mathcal X_{\mathcal N}, \mathcal Y_{\mathcal N})}_{\mathcal N \geq 1}$ eine Folge von endlichdimensionalen Unterräumen mit zugehörigen diskreten inf-sup-Konstanten $\Set{\beta_{\mathcal N}}_{\mathcal N \geq 1}$.
     Wir nennen diese Diskretisierungen \emph{stabil}, wenn ein $\beta > 0$ mit
     \begin{equation}
         \inf_{\mathcal N \geq 1} \beta_{\mathcal N} \geq \beta > 0
@@ -160,7 +160,7 @@ Insbesondere motiviert dies die abschließende Forderung der folgenden Stabilit�
 \label{section:raum_zeit_diskretisierung}
 
 Wir kehren zu der Raum"=Zeit"=Variationsformulierung \cref{eq:raum_zeit_variationsformulierung} respektive \cref{eq:parametrisches_rz_variationsproblem} der Propagator"=Differentialgleichung aus \cref{chapter:propagator_differentialgleichung} zurück und wollen an dieser Stelle eine Diskretisierung mit Hilfe eines Petrov"=Galerkin"=Verfahrens durchführen.
-Dazu konstruieren wir nun endlichdimensionale Unterräume $\mathcal X^{\mathcal N}$ und $\mathcal Y^{\mathcal N}$, für welche wir anschließend Bedingungen angeben, die zu einer stabilen Diskretisierung im Sinne von \cref{definition:stabile_diskretisierung} führen.
+Dazu konstruieren wir nun endlichdimensionale Unterräume $\mathcal X_{\mathcal N}$ und $\mathcal Y_{\mathcal N}$, für welche wir anschließend Bedingungen angeben, die zu einer stabilen Diskretisierung im Sinne von \cref{definition:stabile_diskretisierung} führen.
 
 Um dies zu bewerkstelligen, greifen wir auf die Charakterisierung der Bochner"=Sobolev"=Räume als Hilbertraum-Tensorprodukte aus \cref{satz:bochner_sobolev_raum_als_tensorprodukt} zurück und können so die nachfolgende Konstruktion in einen rein-räumlichen und einen rein-zeitlichen Anteil zerlegen.
 
@@ -176,27 +176,27 @@ Um dies zu bewerkstelligen, greifen wir auf die Charakterisierung der Bochner"=S
     \end{equation}
 \end{Korollar}
 
-Die nachfolgende Konstruktion orientiert sich an \cite{Andreev:2012uh}.
-Für die zeitliche Komponente verwenden wir die zwei endlichdimensionalen Räume $E^{\mathcal K} \subset H^{1}(I)$ und $F^{\mathcal K} \subset L_{2}(I)$ konstruieren, wobei die Dimensionen so gewählt werden, dass
+Die nachfolgende Konstruktion orientiert sich an \cite{Andreev:2012uh,Andreev:2012ep}.
+Für die zeitliche Komponente verwenden wir die zwei endlichdimensionalen Räume $E_{\mathcal K} \subset H^{1}(I)$ und $F_{\mathcal K} \subset L_{2}(I)$ konstruieren, wobei die Dimensionen so gewählt werden, dass
 \begin{equation}
     \label{eq:dimensionen_zeitliche_raeume}
-    \dim E^{\mathcal K} = \mathcal K + 1, \qquad \dim F^{\mathcal K} = \mathcal K
+    \dim E_{\mathcal K} = \mathcal K + 1, \qquad \dim F_{\mathcal K} = \mathcal K
 \end{equation}
 gilt.
-Die Räume $V, H$ und $V'$ der räumlichen Komponenten können wir aufgrund der Gelfand-Tripel-Struktur alle durch den selben endlichdimensionalen Raum $V^{\mathcal J} \subset V$ diskretisieren, welcher die Dimension
+Die Räume $V, H$ und $V'$ der räumlichen Komponenten können wir aufgrund der Gelfand-Tripel-Struktur alle durch den selben endlichdimensionalen Raum $V_{\mathcal J} \subset V$ diskretisieren, welcher die Dimension
 \begin{equation}
     \label{eq:dimension_raeumliche_raeume}
-    \dim V^{\mathcal J} = \mathcal J
+    \dim V_{\mathcal J} = \mathcal J
 \end{equation}
 hat.
 Diese Teilräume liefern nun zusammen mit der Tensorprodukt-Darstellung \cref{eq:ansatzraum_testraum_tensor} von Ansatz- und Testraum die Diskretisierungen
 \begin{equation}
 \label{eq:diskrete_tensor_raueme}
-    \mathcal X^{\mathcal N} := E^{\mathcal K} \otimes V^{\mathcal J}, \qquad \mathcal Y^{\mathcal N} := (F^{\mathcal K} \otimes V^{\mathcal J}) \times V^{\mathcal J}
+    \mathcal X_{\mathcal N} := E_{\mathcal K} \otimes V_{\mathcal J}, \qquad \mathcal Y_{\mathcal N} := (F_{\mathcal K} \otimes V_{\mathcal J}) \times V_{\mathcal J}
 \end{equation}
 mit den Dimensionen
 \begin{equation}
-    \mathcal N := \dim \mathcal X^{\mathcal N} = (\mathcal K + 1) \mathcal J = \mathcal K \mathcal J + \mathcal J = \dim \mathcal Y^{\mathcal N}.
+    \mathcal N := \dim \mathcal X_{\mathcal N} = (\mathcal K + 1) \mathcal J = \mathcal K \mathcal J + \mathcal J = \dim \mathcal Y_{\mathcal N}.
 \end{equation}
 An dieser Stelle definieren wir weiter die Größe $\mathcal I := \mathcal K \mathcal J$.
 
@@ -210,19 +210,19 @@ Für die zeitliche Komponente benötigen wir zunächst eine Diskretisierung des 
     \mathcal T_{\mathcal K} := \Set{0 = t_0 < t_1 < \dots < t_{\mathcal K - 1} < t_{\mathcal K} = T} \subset I.
 \end{equation}
 
-Für die Diskretisierung $E^{\mathcal K}$ des Ansatzraumes verwenden wir stetige, stückweise affine Funktionen, genauer die klassischen Hutfunktionen $\theta_{k}$ auf den Gitterpunkten $t_{k} \in \mathcal T_{\mathcal K}$ für $k = 0, \dots, \mathcal K$.
+Für die Diskretisierung $E_{\mathcal K}$ des Ansatzraumes verwenden wir stetige, stückweise affine Funktionen, genauer die klassischen Hutfunktionen $\theta_{k}$ auf den Gitterpunkten $t_{k} \in \mathcal T_{\mathcal K}$ für $k = 0, \dots, \mathcal K$.
 Diese lassen sich alternativ mittels $\theta_{k}(t_{\tilde{k}}) = \delta_{k \tilde k}$ auch durch das bekannte Kronecker-Delta $\delta_{k \tilde k}$ charakterisieren.
 Wir fassen diese Hutfunktionen zu einer Basis $\mathcal B^{E}_{\mathcal K}$ zusammen und definieren damit
 \begin{equation}
     \label{eq:zeitanteil_ansatzraum}
-    E^{\mathcal K} := \spn \mathcal B^{E}_{\mathcal K} = \spn \Set{ \theta_{k} \given k = 0, \dots, \mathcal K }.
+    E_{\mathcal K} := \spn \mathcal B^{E}_{\mathcal K} = \spn \Set{ \theta_{k} \given k = 0, \dots, \mathcal K }.
 \end{equation}
 
-Für den Testraum-Anteil $F^{\mathcal K}$ verwenden wir stattdessen durch charakteristische Funktionen gegebene stückweise konstante Funktionen $\xi_{k} = \chi_{(t_{k-1}, t_{k})}$ auf den Teilintervallen $(t_{k - 1}, t_{k}) \subset I$ mit den Gitterpunkten $t_{k} \in \mathcal T_{\mathcal K}$.
+Für den Testraum-Anteil $F_{\mathcal K}$ verwenden wir stattdessen durch charakteristische Funktionen gegebene stückweise konstante Funktionen $\xi_{k} = \chi_{(t_{k-1}, t_{k})}$ auf den Teilintervallen $(t_{k - 1}, t_{k}) \subset I$ mit den Gitterpunkten $t_{k} \in \mathcal T_{\mathcal K}$.
 Erneut fassen wir diese zu einer Basismenge $\mathcal B^{F}_{\mathcal K}$ zusammen und definieren
 \begin{equation}
     \label{eq:zeitanteil_testraum}
-    F^{\mathcal K} := \spn \mathcal B^{F}_{\mathcal K} = \spn \Set{ \xi_{k} \given k = 1, \dots, \mathcal K}.
+    F_{\mathcal K} := \spn \mathcal B^{F}_{\mathcal K} = \spn \Set{ \xi_{k} \given k = 1, \dots, \mathcal K}.
 \end{equation}
 
 Nach \cite{Andreev:2012ep} führt diese Wahl von Basisfunktionen für Ansatz- und Testraum zu einem Crank-Nicolson-ähnlichen Verfahren, welches auch als Time-Stepping-Verfahren interpretiert werden kann.
@@ -238,7 +238,7 @@ Wir werden bei der Stabilitätsuntersuchung im nachfolgenden Abschnitt feststell
 Für den räumlichen Anteil definieren wir ebenfalls eine Basis, $\mathcal B^{V}_{\mathcal J}$, und den endlichdimensionalen Raum durch
 \begin{equation}
     \label{eq:raeumlicher_anteil}
-    V^{\mathcal J} := \spn \mathcal B^{V}_{\mathcal J} = \spn \Set{ \eta_{j} \given j = 1, \dots, \mathcal J}.
+    V_{\mathcal J} := \spn \mathcal B^{V}_{\mathcal J} = \spn \Set{ \eta_{j} \given j = 1, \dots, \mathcal J}.
 \end{equation}
 
 
@@ -260,14 +260,14 @@ und weiter
 Nach Konstruktion und den Definitionen \cref{eq:diskrete_tensor_raueme} gilt nun
 \begin{equation}
     \label{eq:diskreter_ansatz_und_testraum_als_span}
-    \mathcal X^{\mathcal N} = E^{\mathcal K} \otimes V^{\mathcal J} = \spn \mathcal B^{\mathcal X}_{\mathcal N},
+    \mathcal X_{\mathcal N} = E_{\mathcal K} \otimes V_{\mathcal J} = \spn \mathcal B^{\mathcal X}_{\mathcal N},
     \quad
-    \mathcal Y^{\mathcal N} = (F^{\mathcal K} \otimes V^{\mathcal J}) \times V^{\mathcal J} = \spn \mathcal B^{\mathcal Y}_{\mathcal N}.
+    \mathcal Y_{\mathcal N} = (F_{\mathcal K} \otimes V_{\mathcal J}) \times V_{\mathcal J} = \spn \mathcal B^{\mathcal Y}_{\mathcal N}.
 \end{equation}
 
 \subsection*{Stabilität der Diskretisierung} % (fold)
 
-Wie bereits erwähnt, wollen wir an dieser Stelle Bedingungen angeben, unter denen die diskreten Raum-Zeit-Räume $\mathcal X^{\mathcal N}$ und $\mathcal Y^{\mathcal N}$ aus \cref{eq:diskreter_ansatz_und_testraum_als_span} zu stabilen Diskretisierungen im Sinne von \cref{definition:stabile_diskretisierung} führen.
+Wie bereits erwähnt, wollen wir an dieser Stelle Bedingungen angeben, unter denen die diskreten Raum-Zeit-Räume $\mathcal X_{\mathcal N}$ und $\mathcal Y_{\mathcal N}$ aus \cref{eq:diskreter_ansatz_und_testraum_als_span} zu stabilen Diskretisierungen im Sinne von \cref{definition:stabile_diskretisierung} führen.
 Hierzu verweisen wir erneut auf die Arbeit \cite[Section 5.2]{Andreev:2012ep}, in welcher \citeauthor{Andreev:2012ep} für drei verschiedene Ansätze für die zeitliche Komponente die Stabilität unter gewissen Bedingungen nachweist.
 Da für einen korrekten und verständlichen Nachweis dieser Aussagen eine extensive Vorarbeit notwendig ist, verzichten wir an dieser Stelle darauf und verweisen auf obige Arbeit.
 Stattdessen beschränken wir uns auf die Einführung des Nötigsten um die Bedingungen anzugeben und kehren bei den numerischen Experimenten noch einmal zur Stabilität zurück.
@@ -281,16 +281,16 @@ Dazu definieren wir zunächst die maximale Schrittweite des Zeitgitters $\mathca
 und weiter die sogenannte CFL-Zahl nach \cite[62]{Andreev:2012ep}.
 
 \begin{Definition}
-    Seien $\mathcal T_{\mathcal K}$ ein Gitter des Zeitintervalls $I = [0, T]$ und $V^{\mathcal J} \subset V$ ein endlichdimensionaler Unterraum.
-    Als \emph{Courant-Friedrichs-Levi-Zahl}, kurz \emph{CFL-Zahl}, der Diskretisierung $(\mathcal X^{\mathcal N}, \mathcal Y^{\mathcal N})$ aus \cref{eq:diskreter_ansatz_und_testraum_als_span} bezeichnen wir
+    Seien $\mathcal T_{\mathcal K}$ ein Gitter des Zeitintervalls $I = [0, T]$ und $V_{\mathcal J} \subset V$ ein endlichdimensionaler Unterraum.
+    Als \emph{Courant-Friedrichs-Levi-Zahl}, kurz \emph{CFL-Zahl}, der Diskretisierung $(\mathcal X_{\mathcal N}, \mathcal Y_{\mathcal N})$ aus \cref{eq:diskreter_ansatz_und_testraum_als_span} bezeichnen wir
     \begin{equation}
         \label{eq:cfl_zahl}
-        \mathrm{CFL}_{\mathcal N} := \max \Delta \mathcal T_{\mathcal K} \sup_{\eta \in V^{\mathcal J} \setminus \Set{0} } \frac{\norm{\eta}_{V}}{\norm{\eta}_{V'}}.
+        \mathrm{CFL}_{\mathcal N} := \max \Delta \mathcal T_{\mathcal K} \sup_{\eta \in V_{\mathcal J} \setminus \Set{0} } \frac{\norm{\eta}_{V}}{\norm{\eta}_{V'}}.
     \end{equation}
 \end{Definition}
 
 \begin{Bemerkung}
-    Ist $V^{\mathcal J}$ endlichdimensional, dann gilt insbesondere $\mathrm{CFL}_{\mathcal N} < \infty$.
+    Ist $V_{\mathcal J}$ endlichdimensional, dann gilt insbesondere $\mathrm{CFL}_{\mathcal N} < \infty$.
 \end{Bemerkung}
 
 Weiter werden wir noch eine gewisse inf"=sup"=Konstante benötigen, welche in \cite[57]{Andreev:2012ep} aus der Konstruktion einer äquivalenten Norm auf $\mathcal X$ resultiert, die dann für den Stabilitätsnachweis \cite[Theorem 5.2.6]{Andreev:2012ep} verwendet wird.
@@ -318,23 +318,23 @@ und
 zu definieren.
 Mit Hilfe dieser Normen definieren wir nun die angesprochene inf"=sup"=Konstante nach \cite[57]{Andreev:2012ep} als
 \begin{equation}
-    \beta_{\pm}(\mathcal X^{\mathcal N}, \mathcal Y^{\mathcal N}) := \inf_{u \in \mathcal X^{\mathcal N}} \sup_{v \in \mathcal Y^{\mathcal N}} \frac{\int_{I} \skp{u_t(t)}{v_{1}(t)}{V' \times V} \diff t}{\norm{u_t}_{-} \norm{v_{1}}_{+}},
+    \beta_{\pm}(\mathcal X_{\mathcal N}, \mathcal Y_{\mathcal N}) := \inf_{u \in \mathcal X_{\mathcal N}} \sup_{v \in \mathcal Y_{\mathcal N}} \frac{\int_{I} \skp{u_t(t)}{v_{1}(t)}{V' \times V} \diff t}{\norm{u_t}_{-} \norm{v_{1}}_{+}},
 \end{equation}
 wobei Infimum und Supremum bezüglich aller Elemente gebildet werden, für die der Nenner nicht Null wird.
 
 Unter Verwendung dieser Definitionen lässt sich letztendlich die nachfolgende Stabilitätsaussage nachweisen.
 
 \begin{Satz}
-    Seien $\Set{(\mathcal X^{\mathcal N}, \mathcal Y^{\mathcal N})}_{\mathcal N \geq 1}$ Diskretisierungen der Form \cref{eq:diskreter_ansatz_und_testraum_als_span}.
+    Seien $\Set{(\mathcal X_{\mathcal N}, \mathcal Y_{\mathcal N})}_{\mathcal N \geq 1}$ Diskretisierungen der Form \cref{eq:diskreter_ansatz_und_testraum_als_span}.
     Gelten die Bedingungen
     \begin{equation}
         \sup_{\mathcal N \geq 1} \mathrm{CFL}_{\mathcal N} < \infty
         \quad \text{und} \quad
-        \inf_{\mathcal N \geq 1} \beta_{\pm}(\mathcal X^{\mathcal N}, \mathcal Y^{\mathcal N}) > 0,
+        \inf_{\mathcal N \geq 1} \beta_{\pm}(\mathcal X_{\mathcal N}, \mathcal Y_{\mathcal N}) > 0,
     \end{equation}
     dann existiert eine Konstante $c_{0} > 0$ und es gilt für die diskrete inf"=sup"=Konstante $\beta_{\mathcal N}$ aus \cref{eq:diskrete_inf_sup_kosntante} die Abschätzung
     \begin{equation}
-        \beta_{\mathcal N} \geq c_{0} \min\Set{1, \beta_{\pm}(\mathcal X^{\mathcal N}, \mathcal Y^{\mathcal N})} \min\Set{1, \mathrm{CFL}_{\mathcal N}^{-1}} \quad \fa \mathcal N \geq 1.
+        \beta_{\mathcal N} \geq c_{0} \min\Set{1, \beta_{\pm}(\mathcal X_{\mathcal N}, \mathcal Y_{\mathcal N})} \min\Set{1, \mathrm{CFL}_{\mathcal N}^{-1}} \quad \fa \mathcal N \geq 1.
     \end{equation}
 
     \begin{Beweis}
@@ -410,31 +410,31 @@ Im Nachfolgenden seien $\mathcal X$ und $\mathcal Y$ die aus \cref{eq:ansatzraum
 \end{Lemma}
 
 Als nächsten Schritt wollen wir mit Hilfe obiger affiner Zerlegung das aus der diskreten Raum"=Zeit"=Variationsformulierung resultierende lineare System herleiten.
-Dazu benötigen wir zunächst die allgemeine Darstellung eines Elements aus dem diskreten Ansatzraum $\mathcal X^{\mathcal N}$ und dem diskreten Testraum $\mathcal Y^{\mathcal N}$.
+Dazu benötigen wir zunächst die allgemeine Darstellung eines Elements aus dem diskreten Ansatzraum $\mathcal X_{\mathcal N}$ und dem diskreten Testraum $\mathcal Y_{\mathcal N}$.
 
 \begin{Definition}
 \label{definition:diskrete_ansatz_und_testfunktionen}
-    Als \emph{diskrete Ansatzfunktion} $u^{\mathcal N} \in \mathcal X^{\mathcal N}$ bezeichnen wir eine Linearkombination der Form
+    Als \emph{diskrete Ansatzfunktion} $u_{\mathcal N} \in \mathcal X_{\mathcal N}$ bezeichnen wir eine Linearkombination der Form
     \begin{equation}
     \label{eq:darstellung_diskrete_ansatzfunktion}
-        u^{\mathcal N} := \sum_{k = 0}^{\mathcal K} \sum_{j = 1}^{\mathcal J} u_{j}^{k} (\theta_{k} \otimes \eta_{j})
+        u_{\mathcal N} := \sum_{k = 0}^{\mathcal K} \sum_{j = 1}^{\mathcal J} u_{j}^{k} (\theta_{k} \otimes \eta_{j})
     \end{equation}
-    mit dem zugehörigen Koeffizientenvektor $\vec{u}^{\mathcal N} \in \mathbb{R}^{\mathcal N}$, der durch
+    mit dem zugehörigen Koeffizientenvektor $\vec{u}_{\mathcal N} \in \mathbb{R}^{\mathcal N}$, der durch
     \begin{equation}
-        \vec{u}^{\mathcal N} := [\vec{u}^{k}_{\bullet}]_{k = 0, \dots, \mathcal K} := [ u^{k}_{j} ]_{j = 1, \dots, \mathcal J;k = 0, \dots, \mathcal K}
+        \vec{u}_{\mathcal N} := [\vec{u}^{k}_{\bullet}]_{k = 0, \dots, \mathcal K} := [ u^{k}_{j} ]_{j = 1, \dots, \mathcal J;k = 0, \dots, \mathcal K}
     \end{equation}
     definiert ist.
-    Analog sei eine \emph{diskrete Testfunktion} $v^{\mathcal N} = (y^{\mathcal I}, z^{\mathcal J}) \in \mathcal Y^{\mathcal N}$ als das Paar der Linearkombinationen
+    Analog sei eine \emph{diskrete Testfunktion} $v_{\mathcal N} = (y_{\mathcal I}, z_{\mathcal J}) \in \mathcal Y_{\mathcal N}$ als das Paar der Linearkombinationen
     \begin{equation}
     \label{eq:darstellung_diskrete_testfunktion}
-        y^{\mathcal I} := \sum_{k = 1}^{\mathcal K} \sum_{j = 1}^{\mathcal J} y_{j}^{k} (\xi_{k} \otimes \eta_{j}), \qquad
-        z^{\mathcal J} = \sum_{j = 1}^{\mathcal J} z_{j} \eta_{j}
+        y_{\mathcal I} := \sum_{k = 1}^{\mathcal K} \sum_{j = 1}^{\mathcal J} y_{j}^{k} (\xi_{k} \otimes \eta_{j}), \qquad
+        z_{\mathcal J} = \sum_{j = 1}^{\mathcal J} z_{j} \eta_{j}
     \end{equation}
     definiert,
-    wobei die Koeffizientenvektoren $\vec{y}^{\mathcal I} \in \mathbb{R}^{\mathcal I}$ und $\vec{z}^{\mathcal J} \in \mathbb{R}^{\mathcal J}$ als
+    wobei die Koeffizientenvektoren $\vec{y}_{\mathcal I} \in \mathbb{R}^{\mathcal I}$ und $\vec{z}_{\mathcal J} \in \mathbb{R}^{\mathcal J}$ als
     \begin{equation}
-        \vec{y}^{\mathcal I} := [\vec{y}^{k}_{\bullet}]_{k = 1, \dots, \mathcal K} := [y^{k}_{j}]_{j, = 1, \dots, \mathcal J; k = 1, \dots, \mathcal K}, \qquad
-        \vec{z}^{\mathcal J} := [z_{j}]_{j = 1, \dots, \mathcal J}
+        \vec{y}_{\mathcal I} := [\vec{y}^{k}_{\bullet}]_{k = 1, \dots, \mathcal K} := [y^{k}_{j}]_{j, = 1, \dots, \mathcal J; k = 1, \dots, \mathcal K}, \qquad
+        \vec{z}_{\mathcal J} := [z_{j}]_{j = 1, \dots, \mathcal J}
     \end{equation}
     definiert sind.
 \end{Definition}
@@ -495,9 +495,9 @@ Wir nutzen die affin-parametrische Darstellung der Bilinearform aus und leiten d
 Dazu setzen wir die allgemeine Darstellung einer Ansatz- respektive Testfunktion aus \cref{eq:darstellung_diskrete_ansatzfunktion,eq:darstellung_diskrete_testfunktion} in die Bilinearformen ein und vereinfachen anschließend soweit möglich unter Verwendung der Tensorprodukt-Struktur.
 Im Fall von $b_{0}$ führt dies zu
 \begin{align}
-    b_{0}(u^{\mathcal N}, v^{\mathcal N})
+    b_{0}(u_{\mathcal N}, v_{\mathcal N})
     &=
-    \int_{I} \left[ \skp{u^{\mathcal N}_{t}}{y^{\mathcal J}}{V' \times V} + c \skp{\grad u^{\mathcal N}}{\grad y^{\mathcal J}}{H} + \mu \skp{u^{\mathcal N}}{y^{\mathcal I}}{H} \right] \diff t + \skp{u^{\mathcal N}(0)}{z^{\mathcal J}}{H}
+    \int_{I} \left[ \skp{u_{\mathcal N}'}{y_{\mathcal I}}{V' \times V} + c \skp{\grad u_{\mathcal N}}{\grad y_{\mathcal I}}{H} + \mu \skp{u_{\mathcal N}}{y_{\mathcal I}}{H} \right] \diff t + \skp{u_{\mathcal N}(0)}{z_{\mathcal J}}{H}
     \\&= \begin{multlined}[t][.8\displaywidth]
     \sum_{\subalign{k &= 0\cr m &= 1}}^{\mathcal K} \sum_{\subalign{j &= 1\cr l &= 1}}^{\mathcal J} u^{k}_{j} y^{m}_{l}
     \int_{I} \left[ \skp{\theta_{k}' \eta_{j}}{\xi_{m} \eta_{l}}{V' \times V} + c \skp{\theta_{k} \grad \eta_{j}}{\xi_{m} \grad \eta_{l}}{H} \right.
@@ -511,8 +511,8 @@ Im Fall von $b_{0}$ führt dies zu
 \end{align}
 und analog für $b_{i}$ mit $i = 1, \dots, N_{\mathcal P}$ zu
 \begin{align}
-    b_{i}(u^{\mathcal N}, v^{\mathcal N})
-    &= \int_{I} \chi_{i} \skp{\varphi_{i} u^{\mathcal N}}{y^{\mathcal I}}{H} \diff t
+    b_{i}(u_{\mathcal N}, v_{\mathcal N})
+    &= \int_{I} \chi_{i} \skp{\varphi_{i} u_{\mathcal N}}{y_{\mathcal I}}{H} \diff t
     = \sum_{\subalign{k &= 0 \cr m &= 1}}^{\mathcal K} \sum_{\subalign{j &= 1\cr l &= 1}}^{\mathcal J} u^{k}_{j} y^{m}_{l} \int_{I} \chi_{i} \skp{\varphi_{i} \theta_{k} \eta_{j}}{\xi_{m} \eta_{l}}{H} \diff t
     \\&= \sum_{\subalign{k &= 0 \cr m &= 1}}^{\mathcal K} \sum_{\subalign{j &= 1\cr l &= 1}}^{\mathcal J} u^{k}_{j} y^{m}_{l} \skp{\chi_{i} \theta_{k}}{\xi_{m}}{L_{2}(I)} \skp{\varphi_{i} \eta_{j}}{\eta_{l}}{H}.
 \end{align}
@@ -533,7 +533,7 @@ Diese Darstellungen lassen sich für $i = 0, \dots, N_{\mathcal P}$ mit Hilfe de
 \end{equation}
 schreiben, denn damit gilt
 \begin{equation}
-    (\vec{y}^{\mathcal I}; \vec{z}^{\mathcal J})\tran \mat{B}_{i} \vec{u}^{\mathcal N} = b_{i}(u^{N}, (y^{\mathcal I}, z^{\mathcal J})), \quad \text{für } i = 0, \dots, N_{\mathcal P}.
+    (\vec{y}_{\mathcal I}; \vec{z}_{\mathcal J})\tran \mat{B}_{i} \vec{u}_{\mathcal N} = b_{i}(u_{\mathcal N}, (y_{\mathcal I}, z_{\mathcal J})), \quad \text{für } i = 0, \dots, N_{\mathcal P}.
 \end{equation}
 Die affin-parametrische Darstellung der Bilinearformen überträgt sich auch auf diese Matrizen und wir definieren die diskrete parametrische Systemmatrix $\mat B(\bm \sigma) \in \mathbb{R}^{\mathcal N \times \mathcal N}$ für $\bm \sigma \in \mathcal P$ durch
 \begin{equation}
@@ -551,8 +551,8 @@ Die affin-parametrische Darstellung der Bilinearformen überträgt sich auch auf
 Da der Quellterm $g \in L_{2}(I; V')$ im Allgemeinen nicht in rein zeit- und raumabhängige Funktionen zerlegt werden kann, wenden wir in der zeitlichen Komponente aufgrund der verwendeten zeitlichen Testraumbasisfunktionen eine Trapezformel als numerische Quadratur an.
 Dies führt zu folgender Darstellung des Lastvektors
 \begin{align}
-    f(v^{\mathcal N})
-    &= \int_{I} \skp{g}{y^{\mathcal I}}{V' \times V} \diff t + \skp{u_{0}}{z^{\mathcal J}}{H}
+    f(v_{\mathcal N})
+    &= \int_{I} \skp{g}{y_{\mathcal I}}{V' \times V} \diff t + \skp{u_{0}}{z_{\mathcal J}}{H}
     \\&= \sum_{k = 1}^{\mathcal K} \sum_{j = 1}^{\mathcal J} y^{k}_{j} \int_{I} \skp{g}{\xi_{k} \eta_{j}}{V' \times V} \diff t + \sum_{j = 1}^{\mathcal J} z_{j} \skp{u_{0}}{\eta_{j}}{H}
     \\&= \sum_{k = 1}^{\mathcal K} \sum_{j = 1}^{\mathcal J} \tfrac{1}{2} \Delta t_{k} \skp{g(t_{k}) + g(t_{k - 1})}{\eta_{j}}{V' \times V}
          + \sum_{j = 1}^{\mathcal J} z_{j} \skp{u_{0}}{\eta_{j}}{H},
@@ -575,25 +575,25 @@ und Auswertung dieser Skalarprodukte mittels geeigneter Quadraturformeln, auf we
     \end{pmatrix}.
 \end{equation}
 
-Dieser Lastvektor, zusammen mit obiger Systemmatrix $\mat{B}(\bm \sigma)$ reicht bereits aus, um eine diskrete Lösung des parametrischen Variationsproblems zu bestimmen, denn ist das diskrete Variationsproblem korrekt gestellt, erfüllt es beispielsweise eine der Bedingungen aus \cref{satz:galerkin_wohldefiniertheit}, dann lässt sich der Koeffizientenvektor $\vec{u}^{\mathcal N}(\bm \sigma) \in \mathbb{R}^{\mathcal N}$ der eindeutigen Lösung $u^{\mathcal N}(\bm \sigma)$ als Lösung des Gleichungssystems
+Dieser Lastvektor, zusammen mit obiger Systemmatrix $\mat{B}(\bm \sigma)$ reicht bereits aus, um eine diskrete Lösung des parametrischen Variationsproblems zu bestimmen, denn ist das diskrete Variationsproblem korrekt gestellt, erfüllt es beispielsweise eine der Bedingungen aus \cref{satz:galerkin_wohldefiniertheit}, dann lässt sich der Koeffizientenvektor $\vec{u}_{\mathcal N}(\bm \sigma) \in \mathbb{R}^{\mathcal N}$ der eindeutigen Lösung $u_{\mathcal N}(\bm \sigma)$ als Lösung des Gleichungssystems
 \begin{equation}
-    \mat{B}(\bm \sigma) \vec{u}^{\mathcal N}(\bm \sigma) = \vec f
+    \mat{B}(\bm \sigma) \vec{u}_{\mathcal N}(\bm \sigma) = \vec f
 \end{equation}
 bestimmen.
 
 \subsection*{Normen}
 
-Weiter benötigen wir eine Möglichkeit die Norm einer diskreten Funktion $u^{\mathcal N}$ des Ansatzraumes über den zugehörigen Koeffizientenvektor $\vec{u}^{\mathcal N}$ zu berechnen.
+Weiter benötigen wir eine Möglichkeit die Norm einer diskreten Funktion $u_{\mathcal N}$ des Ansatzraumes über den zugehörigen Koeffizientenvektor $\vec{u}_{\mathcal N}$ zu berechnen.
 Dazu sei zunächst an das norminduzierende $\mathcal X$-Skalaprodukt
 \begin{equation}
     \skp{u}{v}{\mathcal X} = \skp{u}{v}{L_{2}(I; V)} + \skp{u_t}{v_t}{L_2(I; V')}, \quad \text{für } u, v \in \mathcal X, \tag*{\cref{eq:ansatzraum_skalarprodukt}}
 \end{equation}
 erinnert.
-Einsetzen der diskreten Darstellung \cref{eq:darstellung_diskrete_ansatzfunktion} von $u^{\mathcal N}$ für beide Argumente liefert
+Einsetzen der diskreten Darstellung \cref{eq:darstellung_diskrete_ansatzfunktion} von $u_{\mathcal N}$ für beide Argumente liefert
 \begin{align}
-    \norm{u^{\mathcal N}}_{\mathcal X}^{2}
-    &= \int_{I} \norm{u^{\mathcal N}(t)}^2_{V} \diff t
-        + \int_{I} \norm{u^{\mathcal N}_{t}(t)}_{V'}^2 \diff t
+    \norm{u_{\mathcal N}}_{\mathcal X}^{2}
+    &= \int_{I} \norm{u_{\mathcal N}(t)}^2_{V} \diff t
+        + \int_{I} \norm{u_{\mathcal N}'(t)}_{V'}^2 \diff t
     \\&= \sum_{\subalign{k &= 0 \cr m &= 0}}^{\mathcal K} \sum_{\subalign{j &= 1 \cr l &= 1}}^{\mathcal J} u^{k}_{j} u^{m}_{l} \int_{I} \skp{\theta_{k} \eta_{j}}{\theta_{m} \eta_{l}}{V} \diff t
         + \sum_{\subalign{k &= 0 \cr m &= 0}}^{\mathcal K} \sum_{\subalign{j &= 1 \cr l &= 1}}^{\mathcal J} u^{k}_{j} u^{m}_{l} \int_{I} \skp{\theta_{k}' \eta_{j}}{\theta_{m}' \eta_{l}}{V'} \diff t
     \\&= \sum_{\subalign{k &= 0 \cr m &= 0}}^{\mathcal K} \sum_{\subalign{j &= 1 \cr l &= 1}}^{\mathcal J} u^{k}_{j} u^{m}_{l} \left[ \skp{\theta_{k}}{\theta_{m}}{L_{2}(I)} \skp{\eta_{j}}{\eta_{l}}{V} + \skp{\theta_{k}'}{\theta_{m}'}{L_{2}(I)} \skp{\eta_{j}}{\eta_{l}}{V'} \right]
@@ -609,11 +609,11 @@ und die Gramsche Matrix $\mat V_{\mathrm{dual}} \in \mathbb{R}^{\mathcal J \time
 \begin{equation}
     \mat V_{\mathrm{dual}} := [\bm{\eta}_{j}\tran \mat{V}_{x}^{-1} \bm{\eta}_{l}]_{j,l = 1, \dots, \mathcal J} = \mat H_{x}\tran \mat V_{x}^{-1} \mat H_{x}.
 \end{equation}
-Definieren wir nun die Gramsche Matrix $\mat X \in \mathbb{R}^{\mathcal N \times \mathcal N}$ der $\mathcal X$-Norm auf $\mathcal X^{\mathcal N}$ durch
+Definieren wir nun die Gramsche Matrix $\mat X \in \mathbb{R}^{\mathcal N \times \mathcal N}$ der $\mathcal X$-Norm auf $\mathcal X_{\mathcal N}$ durch
 \begin{equation}
     \mat X := \mat M^{E}_{t} \otimes \mat V_{x} + \mat A^{E}_{t} \otimes (\mat H_{x}\tran \mat V_{x}^{-1} \mat H_{x}),
 \end{equation}
-dann können wir für alle $u^{\mathcal N}$ die $\mathcal X$-Norm bestimmen über $\norm{u^{\mathcal N}}_{\mathcal X}^{2} = (\vec{u}^{\mathcal N})\tran \mat X (\vec{u}^{\mathcal N})$.
+dann können wir für alle $u_{\mathcal N}$ die $\mathcal X$-Norm bestimmen über $\norm{u_{\mathcal N}}_{\mathcal X}^{2} = \vec{u}_{\mathcal N}\tran \mat X \vec{u}_{\mathcal N}$.
 
 Auch die Norm des Testraums wird für uns wichtig sein, weswegen wir auch für diese eine diskrete Repräsentation herleiten wollen.
 Auch hier sei an das norminduzierende $\mathcal Y$-Skalarprodukt
@@ -624,8 +624,8 @@ Auch hier sei an das norminduzierende $\mathcal Y$-Skalarprodukt
 erinnert.
 Analog zur vorherigen Betrachtung erhalten wir
 \begin{align}
-    \norm{v^{\mathcal N}}_{\mathcal Y}^{2}
-    &= \int_{I} \norm{y^{\mathcal I}(t)}_{V}^{2} \diff t + \norm{z^{\mathcal J}}_{H}^{2}
+    \norm{v_{\mathcal N}}_{\mathcal Y}^{2}
+    &= \int_{I} \norm{y_{\mathcal I}(t)}_{V}^{2} \diff t + \norm{z_{\mathcal J}}_{H}^{2}
     \\&= \sum_{k,m = 1}^{\mathcal K} \sum_{j, l = 1}^{\mathcal J} y^{k}_{j} y^{m}_{l} \int_{I} \skp{\xi_{k} \eta_{j}}{\xi_{m} \eta_{l}}{V} \diff t + \sum_{j, l = 1}^{\mathcal J} z_{j} z_{l} \skp{\eta_{j}}{\eta_{l}}{H}
     \\&= \sum_{k,m = 1}^{\mathcal K} \sum_{j, l = 1}^{\mathcal J} y^{k}_{j} y^{m}_{l} \skp{\xi_{k}}{\xi_{m}}{L_{2}(I)} \skp{\eta_{j}}{\eta_{l}}{V} \diff t + \sum_{j, l = 1}^{\mathcal J} z_{j} z_{l} \skp{\eta_{j}}{\eta_{l}}{H},
 \end{align}
