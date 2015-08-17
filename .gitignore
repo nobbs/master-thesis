@@ -139,3 +139,4 @@ tex/main.bcf
 tex/main.nls
 tex/main.run.xml
 *.sublime-*
+tex/*.syg

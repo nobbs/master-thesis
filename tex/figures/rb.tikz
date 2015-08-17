@@ -20,23 +20,24 @@
 
   % Achsen
   \draw [->] (0,0,0) -- (2,0,0); % node[right] {};
-  \draw [->] (0,0,0) -- (0,2,0) node[above left, draw=none] {$X^{\mathcal N}$};
+  \draw [->] (0,0,0) -- (0,2,0) node[above left, draw=none] {$\mathcal X_{\mathcal N}$};
   \draw [->] (0,0,0) -- (0,0,2); % node[above] {};
 
   % Kurve
+  \draw ({fx(-2)}, {fy(-2)}, {fz(-2)}) node [draw=none, label=below:$\mathcal M_{\mathcal N}$] {};
   \draw [jgu_rot] ({fx(-2)}, {fy(-2)}, {fz(-2)})
   \foreach \x in {-2,-1.9,...,3}
   { -- ({fx(\x)}, {fy(\x)}, {fz(\x)})
   };
 
   % RB-Punkte
-  \draw ({fx(-1.5)}, {fy(-1.5)}, {fz(-1.5)}) node [label=above left:$u^{\mathcal N}(\mu_{1})$,fill=jgu_hellgrau] {};
-  \draw ({fx(-0.7)}, {fy(-0.7)}, {fz(-0.7)}) node [label=above left:$u^{\mathcal N}(\mu_{2})$,fill=jgu_hellgrau] {};
-  \draw ({fx(0.7)}, {fy(0.7)}, {fz(0.7)}) node [label=above left:$u^{\mathcal N}(\mu_{i})$,fill=jgu_hellgrau] {};
-  \draw ({fx(1.9)}, {fy(1.9)}, {fz(1.9)}) node [label=above right:$u^{\mathcal N}(\mu_{N})$,fill=jgu_hellgrau] {};
+  \draw ({fx(-1.5)}, {fy(-1.5)}, {fz(-1.5)}) node [label=above left:$u_{\mathcal N}(\sigma_{1})$,fill=jgu_hellgrau] {};
+  \draw ({fx(-0.7)}, {fy(-0.7)}, {fz(-0.7)}) node [label=above left:$u_{\mathcal N}(\sigma_{2})$,fill=jgu_hellgrau] {};
+  \draw ({fx(0.7)}, {fy(0.7)}, {fz(0.7)}) node [label=above left:$u_{\mathcal N}(\sigma_{i})$,fill=jgu_hellgrau] {};
+  \draw ({fx(1.9)}, {fy(1.9)}, {fz(1.9)}) node [label=above right:$u_{\mathcal N}(\sigma_{N})$,fill=jgu_hellgrau] {};
 
   % FE-Punkt
-  \draw ({fx(0)}, {fy(0)}, {fz(0)}) node [label=below right:$u_{N}(\mu)$,fill=jgu_dunkelgrau] {};
+  \draw ({fx(0)}, {fy(0)-0.1}, {fz(0)}) node [label=below right:$u_{N}(\sigma)$,fill=jgu_dunkelgrau] {};
 
   % Dots
   \draw ({fx(-0.5)}, {fy(-0.5)}, {fz(-0.5)}) node [draw=none,fill=none,label=above:$\cdot$,outer sep=7pt] {};
