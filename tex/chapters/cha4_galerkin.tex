@@ -494,28 +494,48 @@ Um die Berechnung möglichst knapp zu halten, verzichten wir sowohl auf die Argu
 Wir nutzen die affin-parametrische Darstellung der Bilinearform aus und leiten die Darstellung für die einzelnen parameterunabhängigen Bilinearformen her.
 Dazu setzen wir die allgemeine Darstellung einer Ansatz- respektive Testfunktion aus \cref{eq:darstellung_diskrete_ansatzfunktion,eq:darstellung_diskrete_testfunktion} in die Bilinearformen ein und vereinfachen anschließend soweit möglich unter Verwendung der Tensorprodukt-Struktur.
 Im Fall von $b_{0}$ führt dies zu
+% \begin{align}
+%     b_{0}(u_{\mathcal N}, v_{\mathcal N})
+%     &=
+%     \int_{I} \left[ \skp{u_{\mathcal N}'}{y_{\mathcal I}}{V' \times V} + c \skp{\grad u_{\mathcal N}}{\grad y_{\mathcal I}}{H} + \mu \skp{u_{\mathcal N}}{y_{\mathcal I}}{H} \right] \diff t + \skp{u_{\mathcal N}(0)}{z_{\mathcal J}}{H}
+%     \\&= \begin{multlined}[t][.8\displaywidth]
+%     \sum_{\subalign{k &= 0\cr m &= 1}}^{\mathcal K} \sum_{\subalign{j &= 1\cr l &= 1}}^{\mathcal J} u^{k}_{j} y^{m}_{l}
+%     \int_{I} \left[ \skp{\theta_{k}' \eta_{j}}{\xi_{m} \eta_{l}}{V' \times V} + c \skp{\theta_{k} \grad \eta_{j}}{\xi_{m} \grad \eta_{l}}{H} \right.
+%     \\ \left.+ \mu \skp{\theta_{k} \eta_{j}}{\xi_{m} \eta_{l}}{H} \right] \diff t
+%     + \sum_{k = 0}^{\mathcal K} \sum_{\subalign{j &= 1\cr l &= 1}}^{\mathcal J} u^{k}_{j} z_{l} \skp{\theta_{k}(0) \eta_{j}}{\eta_{l}}{H}
+%     \end{multlined}
+%     \\&=\begin{multlined}[t][.8\displaywidth]
+%     \sum_{\subalign{k &= 0\cr m &= 1}}^{\mathcal K} \sum_{\subalign{j &= 1\cr l &= 1}}^{\mathcal J} u^{k}_{j} y^{m}_{l} \left[ \skp{\theta_{k}'}{\xi_{m}}{L_{2}(I)} \skp{\eta_{j}}{\eta_{l}}{H} + c \skp{\theta_{k}}{\xi_{m}}{L_{2}(I)}\skp{\grad \eta_{j}}{\grad \eta_{l}}{H} \right.
+%     \\\left. + \mu \skp{\theta_{k}}{\xi_{m}}{L_{2}(I)} \skp{\eta_{j}}{\eta_{l}}{H} \right] + \sum_{\subalign{j &= 1\cr l &= 1}}^{\mathcal J} u^{0}_{j}  z_{l} \skp{\eta_{j}}{\eta_{l}}{H}
+%     \end{multlined}
+% \end{align}
+% oder
 \begin{align}
-    b_{0}(u_{\mathcal N}, v_{\mathcal N})
-    &=
-    \int_{I} \left[ \skp{u_{\mathcal N}'}{y_{\mathcal I}}{V' \times V} + c \skp{\grad u_{\mathcal N}}{\grad y_{\mathcal I}}{H} + \mu \skp{u_{\mathcal N}}{y_{\mathcal I}}{H} \right] \diff t + \skp{u_{\mathcal N}(0)}{z_{\mathcal J}}{H}
-    \\&= \begin{multlined}[t][.8\displaywidth]
-    \sum_{\subalign{k &= 0\cr m &= 1}}^{\mathcal K} \sum_{\subalign{j &= 1\cr l &= 1}}^{\mathcal J} u^{k}_{j} y^{m}_{l}
-    \int_{I} \left[ \skp{\theta_{k}' \eta_{j}}{\xi_{m} \eta_{l}}{V' \times V} + c \skp{\theta_{k} \grad \eta_{j}}{\xi_{m} \grad \eta_{l}}{H} \right.
-    \\ \left.+ \mu \skp{\theta_{k} \eta_{j}}{\xi_{m} \eta_{l}}{H} \right] \diff t
-    + \sum_{k = 0}^{\mathcal K} \sum_{\subalign{j &= 1\cr l &= 1}}^{\mathcal J} u^{k}_{j} z_{l} \skp{\theta_{k}(0) \eta_{j}}{\eta_{l}}{H}
+    &b_{0}(\theta_{k} \otimes \eta_{j}, (\xi_{m} \otimes \eta_{l}, \eta_{n}))
+    \\\quad&=
+    \begin{multlined}[t][.7\displaywidth]
+        \int_{I} \left[ \skp{\theta_{k}' \eta_{j}}{\xi_{m} \eta_{l}}{V' \times V} + c \skp{\theta_{k} \grad \eta_{j}}{\xi_{m} \grad \eta_{l}}{H} + \mu \skp{\theta_{k} \eta_{j}}{\xi_{m} \eta_{l}}{H} \right] \diff t
+        \\+ \skp{\theta_{k}(0) \eta_{j}}{\eta_{n}}{H}
     \end{multlined}
-    \\&=\begin{multlined}[t][.8\displaywidth]
-    \sum_{\subalign{k &= 0\cr m &= 1}}^{\mathcal K} \sum_{\subalign{j &= 1\cr l &= 1}}^{\mathcal J} u^{k}_{j} y^{m}_{l} \left[ \skp{\theta_{k}'}{\xi_{m}}{L_{2}(I)} \skp{\eta_{j}}{\eta_{l}}{H} + c \skp{\theta_{k}}{\xi_{m}}{L_{2}(I)}\skp{\grad \eta_{j}}{\grad \eta_{l}}{H} \right.
-    \\\left. + \mu \skp{\theta_{k}}{\xi_{m}}{L_{2}(I)} \skp{\eta_{j}}{\eta_{l}}{H} \right] + \sum_{\subalign{j &= 1\cr l &= 1}}^{\mathcal J} u^{0}_{j}  z_{l} \skp{\eta_{j}}{\eta_{l}}{H}
+    \\\quad&=
+    \begin{multlined}[t][.7\displaywidth]
+        \skp{\theta_{k}'}{\xi_{m}}{L_{2}(I)} \skp{\eta_{j}}{\eta_{l}}{H} + c \skp{\theta_{k}}{\xi_{m}}{L_{2}(I)}\skp{\grad \eta_{j}}{\grad \eta_{l}}{H}
+        \\+ \mu \skp{\theta_{k}}{\xi_{m}}{L_{2}(I)} \skp{\eta_{j}}{\eta_{l}}{H} + \skp{\eta_{j}}{\eta_{n}}{H}
     \end{multlined}
 \end{align}
 und analog für $b_{i}$ mit $i = 1, \dots, N_{\mathcal P}$ zu
 \begin{align}
-    b_{i}(u_{\mathcal N}, v_{\mathcal N})
-    &= \int_{I} \chi_{i} \skp{\varphi_{i} u_{\mathcal N}}{y_{\mathcal I}}{H} \diff t
-    = \sum_{\subalign{k &= 0 \cr m &= 1}}^{\mathcal K} \sum_{\subalign{j &= 1\cr l &= 1}}^{\mathcal J} u^{k}_{j} y^{m}_{l} \int_{I} \chi_{i} \skp{\varphi_{i} \theta_{k} \eta_{j}}{\xi_{m} \eta_{l}}{H} \diff t
-    \\&= \sum_{\subalign{k &= 0 \cr m &= 1}}^{\mathcal K} \sum_{\subalign{j &= 1\cr l &= 1}}^{\mathcal J} u^{k}_{j} y^{m}_{l} \skp{\chi_{i} \theta_{k}}{\xi_{m}}{L_{2}(I)} \skp{\varphi_{i} \eta_{j}}{\eta_{l}}{H}.
+    b_{i}(\theta_{k} \otimes \eta_{j}, (\xi_{m} \otimes \eta_{l}, \eta_{n}))
+    % &= \int_{I} \chi_{i} \skp{\varphi_{i} u_{\mathcal N}}{y_{\mathcal I}}{H} \diff t
+    &= \int_{I} \chi_{i} \skp{\varphi_{i} \theta_{k} \eta_{j}}{\xi_{m} \eta_{l}}{H} \diff t
+    \\&= \skp{\chi_{i} \theta_{k}}{\xi_{m}}{L_{2}(I)} \skp{\varphi_{i} \eta_{j}}{\eta_{l}}{H}.
 \end{align}
+% \begin{align}
+%     b_{i}(u_{\mathcal N}, v_{\mathcal N})
+%     &= \int_{I} \chi_{i} \skp{\varphi_{i} u_{\mathcal N}}{y_{\mathcal I}}{H} \diff t
+%     = \sum_{\subalign{k &= 0 \cr m &= 1}}^{\mathcal K} \sum_{\subalign{j &= 1\cr l &= 1}}^{\mathcal J} u^{k}_{j} y^{m}_{l} \int_{I} \chi_{i} \skp{\varphi_{i} \theta_{k} \eta_{j}}{\xi_{m} \eta_{l}}{H} \diff t
+%     \\&= \sum_{\subalign{k &= 0 \cr m &= 1}}^{\mathcal K} \sum_{\subalign{j &= 1\cr l &= 1}}^{\mathcal J} u^{k}_{j} y^{m}_{l} \skp{\chi_{i} \theta_{k}}{\xi_{m}}{L_{2}(I)} \skp{\varphi_{i} \eta_{j}}{\eta_{l}}{H}.
+% \end{align}
 Diese Darstellungen lassen sich für $i = 0, \dots, N_{\mathcal P}$ mit Hilfe des Kronecker-Produkts in Form von Matrizen $\mat{B}_{i} \in \mathbb{R}^{\mathcal N \times \mathcal N}$ als
 \begin{equation}
     \mat{B}_{0} := \begin{pmatrix}
@@ -551,13 +571,20 @@ Die affin-parametrische Darstellung der Bilinearformen überträgt sich auch auf
 Da der Quellterm $g \in L_{2}(I; V')$ im Allgemeinen nicht in rein zeit- und raumabhängige Funktionen zerlegt werden kann, wenden wir in der zeitlichen Komponente aufgrund der verwendeten zeitlichen Testraumbasisfunktionen eine Trapezformel als numerische Quadratur an.
 Dies führt zu folgender Darstellung des Lastvektors
 \begin{align}
-    f(v_{\mathcal N})
-    &= \int_{I} \skp{g}{y_{\mathcal I}}{V' \times V} \diff t + \skp{u_{0}}{z_{\mathcal J}}{H}
-    \\&= \sum_{k = 1}^{\mathcal K} \sum_{j = 1}^{\mathcal J} y^{k}_{j} \int_{I} \skp{g}{\xi_{k} \eta_{j}}{V' \times V} \diff t + \sum_{j = 1}^{\mathcal J} z_{j} \skp{u_{0}}{\eta_{j}}{H}
-    \\&= \sum_{k = 1}^{\mathcal K} \sum_{j = 1}^{\mathcal J} \tfrac{1}{2} \Delta t_{k} \skp{g(t_{k}) + g(t_{k - 1})}{\eta_{j}}{V' \times V}
-         + \sum_{j = 1}^{\mathcal J} z_{j} \skp{u_{0}}{\eta_{j}}{H},
+    f(\xi_{m} \otimes \eta_{l}, \eta_{n})
+    &= \int_{I} \skp{g}{\xi_{k} \eta_{j}}{V' \times V} \diff t + \skp{u_{0}}{\eta_{n}}{H}
+    \\&= \tfrac{1}{2} \Delta t_{k} \skp{g(t_{k}) + g(t_{k - 1})}{\eta_{j}}{V' \times V}
+         + \skp{u_{0}}{\eta_{n}}{H},
     % \\&= \sum_{k = 1}^{\mathcal K} \sum_{j = 1}^{\mathcal J} \Delta t_{k} (\vec{g}^{k - 1/2})_{j} + \sum_{j = 1}^{\mathcal J} (\vec{u}_{0})_{j}
 \end{align}
+% \begin{align}
+%     f(v_{\mathcal N})
+%     &= \int_{I} \skp{g}{y_{\mathcal I}}{V' \times V} \diff t + \skp{u_{0}}{z_{\mathcal J}}{H}
+%     \\&= \sum_{k = 1}^{\mathcal K} \sum_{j = 1}^{\mathcal J} y^{k}_{j} \int_{I} \skp{g}{\xi_{k} \eta_{j}}{V' \times V} \diff t + \sum_{j = 1}^{\mathcal J} z_{j} \skp{u_{0}}{\eta_{j}}{H}
+%     \\&= \sum_{k = 1}^{\mathcal K} \sum_{j = 1}^{\mathcal J} \tfrac{1}{2} \Delta t_{k} \skp{g(t_{k}) + g(t_{k - 1})}{\eta_{j}}{V' \times V}
+%          + \sum_{j = 1}^{\mathcal J} z_{j} \skp{u_{0}}{\eta_{j}}{H},
+%     % \\&= \sum_{k = 1}^{\mathcal K} \sum_{j = 1}^{\mathcal J} \Delta t_{k} (\vec{g}^{k - 1/2})_{j} + \sum_{j = 1}^{\mathcal J} (\vec{u}_{0})_{j}
+% \end{align}
 wobei $\Delta t_{k} := t_{k} - t_{k - 1}$ die Schrittweite des Zeitgitters sei.
 Nach Definition der Vektoren $\vec{u}_{0}, \vec{g}^{k - 1/2} \in \mathbb{R}^{\mathcal J}$ für $k = 1, \dots, \mathcal K$ durch
 \begin{equation}
@@ -591,13 +618,19 @@ Dazu sei zunächst an das norminduzierende $\mathcal X$-Skalaprodukt
 erinnert.
 Einsetzen der diskreten Darstellung \cref{eq:darstellung_diskrete_ansatzfunktion} von $u_{\mathcal N}$ für beide Argumente liefert
 \begin{align}
-    \norm{u_{\mathcal N}}_{\mathcal X}^{2}
-    &= \int_{I} \norm{u_{\mathcal N}(t)}^2_{V} \diff t
-        + \int_{I} \norm{u_{\mathcal N}'(t)}_{V'}^2 \diff t
-    \\&= \sum_{\subalign{k &= 0 \cr m &= 0}}^{\mathcal K} \sum_{\subalign{j &= 1 \cr l &= 1}}^{\mathcal J} u^{k}_{j} u^{m}_{l} \int_{I} \skp{\theta_{k} \eta_{j}}{\theta_{m} \eta_{l}}{V} \diff t
-        + \sum_{\subalign{k &= 0 \cr m &= 0}}^{\mathcal K} \sum_{\subalign{j &= 1 \cr l &= 1}}^{\mathcal J} u^{k}_{j} u^{m}_{l} \int_{I} \skp{\theta_{k}' \eta_{j}}{\theta_{m}' \eta_{l}}{V'} \diff t
-    \\&= \sum_{\subalign{k &= 0 \cr m &= 0}}^{\mathcal K} \sum_{\subalign{j &= 1 \cr l &= 1}}^{\mathcal J} u^{k}_{j} u^{m}_{l} \left[ \skp{\theta_{k}}{\theta_{m}}{L_{2}(I)} \skp{\eta_{j}}{\eta_{l}}{V} + \skp{\theta_{k}'}{\theta_{m}'}{L_{2}(I)} \skp{\eta_{j}}{\eta_{l}}{V'} \right]
+    \skp{\theta_{k} \otimes \eta_{j}}{\theta_{m} \otimes \eta_{l}}{\mathcal X}
+    &= \int_{I} \skp{\theta_{k} \eta_{j}}{\theta_{m} \eta_{l}}{V} \diff t
+        + \int_{I} \skp{\theta_{k}' \eta_{j}}{\theta_{m}' \eta_{l}}{V'} \diff t
+    \\&= \skp{\theta_{k}}{\theta_{m}}{L_{2}(I)} \skp{\eta_{j}}{\eta_{l}}{V} + \skp{\theta_{k}'}{\theta_{m}'}{L_{2}(I)} \skp{\eta_{j}}{\eta_{l}}{V'}
 \end{align}
+% \begin{align}
+%     \norm{u_{\mathcal N}}_{\mathcal X}^{2}
+%     &= \int_{I} \norm{u_{\mathcal N}(t)}^2_{V} \diff t
+%         + \int_{I} \norm{u_{\mathcal N}'(t)}_{V'}^2 \diff t
+%     \\&= \sum_{\subalign{k &= 0 \cr m &= 0}}^{\mathcal K} \sum_{\subalign{j &= 1 \cr l &= 1}}^{\mathcal J} u^{k}_{j} u^{m}_{l} \int_{I} \skp{\theta_{k} \eta_{j}}{\theta_{m} \eta_{l}}{V} \diff t
+%         + \sum_{\subalign{k &= 0 \cr m &= 0}}^{\mathcal K} \sum_{\subalign{j &= 1 \cr l &= 1}}^{\mathcal J} u^{k}_{j} u^{m}_{l} \int_{I} \skp{\theta_{k}' \eta_{j}}{\theta_{m}' \eta_{l}}{V'} \diff t
+%     \\&= \sum_{\subalign{k &= 0 \cr m &= 0}}^{\mathcal K} \sum_{\subalign{j &= 1 \cr l &= 1}}^{\mathcal J} u^{k}_{j} u^{m}_{l} \left[ \skp{\theta_{k}}{\theta_{m}}{L_{2}(I)} \skp{\eta_{j}}{\eta_{l}}{V} + \skp{\theta_{k}'}{\theta_{m}'}{L_{2}(I)} \skp{\eta_{j}}{\eta_{l}}{V'} \right]
+% \end{align}
 
 Bevor wir diese Darstellung in eine handliche Matrix-Schreibweise umformulieren können, müssen wir klären, wie das diskrete $V'$-Skalarprodukt bestimmt werden kann.
 Wir greifen auf \cref{lemma:berechnung_rieszsche_darstellung} zurück und erhalten für festes $j = 1, \dots, \mathcal J$ für das Funktional $\skp{\eta_{j}}{\blank}{V' \times V}$ und dessen Vektor $\bm \eta_{j} := [\skp{\eta_{j}}{\eta_{l}}{V' \times V}]_{l = 1, \dots, \mathcal J}$ zunächst den Koeffizientenvektor $\vec{h}_{j} = \mat{V}_{x}^{-1} \bm \eta_{j}$.
@@ -624,11 +657,16 @@ Auch hier sei an das norminduzierende $\mathcal Y$-Skalarprodukt
 erinnert.
 Analog zur vorherigen Betrachtung erhalten wir
 \begin{align}
-    \norm{v_{\mathcal N}}_{\mathcal Y}^{2}
-    &= \int_{I} \norm{y_{\mathcal I}(t)}_{V}^{2} \diff t + \norm{z_{\mathcal J}}_{H}^{2}
-    \\&= \sum_{k,m = 1}^{\mathcal K} \sum_{j, l = 1}^{\mathcal J} y^{k}_{j} y^{m}_{l} \int_{I} \skp{\xi_{k} \eta_{j}}{\xi_{m} \eta_{l}}{V} \diff t + \sum_{j, l = 1}^{\mathcal J} z_{j} z_{l} \skp{\eta_{j}}{\eta_{l}}{H}
-    \\&= \sum_{k,m = 1}^{\mathcal K} \sum_{j, l = 1}^{\mathcal J} y^{k}_{j} y^{m}_{l} \skp{\xi_{k}}{\xi_{m}}{L_{2}(I)} \skp{\eta_{j}}{\eta_{l}}{V} \diff t + \sum_{j, l = 1}^{\mathcal J} z_{j} z_{l} \skp{\eta_{j}}{\eta_{l}}{H},
+    \skp{(\xi_{j} \otimes \eta_{k}, \eta_{l})}{(\xi_{m} \otimes \eta_{n}, \eta_{o})}{\mathcal Y}
+    &= \int_{I} \skp{\xi_{j} \eta_{k}}{\xi_{m} \eta_{n}}{V} \diff t + \skp{\eta_{l}}{\eta_{o}}{H}
+    \\&= \skp{\xi_{j}}{\xi_{m}}{L_{2}(I)} \skp{\eta_{k}}{\eta_{n}}{V} + \skp{\eta_{l}}{\eta_{o}}{H},
 \end{align}
+% \begin{align}
+%     \norm{v_{\mathcal N}}_{\mathcal Y}^{2}
+%     &= \int_{I} \norm{y_{\mathcal I}(t)}_{V}^{2} \diff t + \norm{z_{\mathcal J}}_{H}^{2}
+%     \\&= \sum_{k,m = 1}^{\mathcal K} \sum_{j, l = 1}^{\mathcal J} y^{k}_{j} y^{m}_{l} \int_{I} \skp{\xi_{k} \eta_{j}}{\xi_{m} \eta_{l}}{V} \diff t + \sum_{j, l = 1}^{\mathcal J} z_{j} z_{l} \skp{\eta_{j}}{\eta_{l}}{H}
+%     \\&= \sum_{k,m = 1}^{\mathcal K} \sum_{j, l = 1}^{\mathcal J} y^{k}_{j} y^{m}_{l} \skp{\xi_{k}}{\xi_{m}}{L_{2}(I)} \skp{\eta_{j}}{\eta_{l}}{V} \diff t + \sum_{j, l = 1}^{\mathcal J} z_{j} z_{l} \skp{\eta_{j}}{\eta_{l}}{H},
+% \end{align}
 was in Matrixschreibweise zu der durch
 \begin{equation}
     \mat{Y} := \begin{pmatrix}
