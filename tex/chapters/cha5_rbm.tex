@@ -42,7 +42,7 @@ Weiter nehmen wir an, dass diese Diskretisierung für alle $\bm \sigma \in \math
 \label{eq:diskretes_abstraktes_parametrisches_vp}
     \text{Sei } \bm \sigma \in \mathcal P, \text{ finde } u_{\mathcal N}(\bm \sigma) \in \mathcal X_{\mathcal N} \colon \quad b(u_{\mathcal N}(\bm \sigma), v; \bm \sigma) = f(v) \quad \fa v \in \mathcal Y_{\mathcal N}.
 \end{equation}
-Diese Petrov"=Galerkin"=Diskretisierung wird als Grundlage für die Reduzierte"=Basis"=Methode dienen und wird im Folgenden mit dem Präfix \emph{Truth} kenntlich gemacht.
+Diese Petrov"=Galerkin"=Diskretisierung wird als Grundlage für die Reduzierte"=Basis"=Methode dienen und wird im Folgenden mit dem Präfix \emph{Truth} kenntlich gemacht, während wir \emph{RB} als Abkürzung für Reduzierte"=Basis verwenden.
 Obige Diskretisierung erlaubt nun die Definition der Truth-Lösungsmenge durch
 \begin{equation}
 \label{eq:truth_loesungsmenge}
@@ -64,15 +64,15 @@ Dies wird in \cref{figure:rbm_loesungsmenge} noch einmal veranschaulicht.
     \label{figure:rbm_loesungsmenge}
 \end{figure}
 
-Reduzierte"=Basis"=Methoden der beschriebenen Art lassen sich im Allgemeinen als zweistufiges Verfahren auffassen.
+RB"=Methoden der beschriebenen Art lassen sich im Allgemeinen als zweistufiges Verfahren auffassen.
 Die erste Stufe, die sogenannte \emph{Offline-Phase}, dient dazu, die niedrigdimensionalen Systeme zu konstruieren.
-Hierzu gibt es verschiedene Ansätze, die meist die Minimierung des maximal möglichen Fehlers zwischen Truth- und Reduzierte"=Basis"=Lösung verfolgen und dementsprechend einen hohen Aufwand darstellen.
+Hierzu gibt es verschiedene Ansätze, die meist die Minimierung des maximal möglichen Fehlers zwischen Truth- und RB"=Lösung verfolgen und dementsprechend einen hohen Aufwand darstellen.
 In der zweiten Stufe, der \emph{Online-Phase}, wird dieses niedrigdimensionale System verwendet um Lösungen zu gegebenen Parametern zu bestimmen.
 Das Lösen mit diesem System hat, alleine aus dimensionstechnischen Gründen, einen deutlich geringeren Aufwand als das bestimmen der Truth-Lösung.
 
-Dieser zweistufige Aufbau führt schließlich auch zu einem wichtigen Kriterium für respektive gegen die Verwendung der Reduzierte"=Basis"=Methoden, die Anzahl der zu bestimmenden Lösungen in der Online-Phase, da die Laufzeit der aufwändigen Offline-Phase zunächst amortisiert werden muss.
+Dieser zweistufige Aufbau führt schließlich auch zu einem wichtigen Kriterium für respektive gegen die Verwendung der RB"=Methoden, die Anzahl der zu bestimmenden Lösungen in der Online-Phase, da die Laufzeit der aufwändigen Offline-Phase zunächst amortisiert werden muss.
 
-Wir beenden an dieser Stelle die Motivation, widmen uns nun einer rigorosen Einführung der Reduzierte"=Basis"=Methode und beginnen diese mit der Definition der grundlegenden Begriffe.
+Wir beenden an dieser Stelle die Motivation, widmen uns nun einer rigorosen Einführung der RB"=Methode und beginnen diese mit der Definition der grundlegenden Begriffe.
 
 \begin{Definition}
 \label{definition:rb_variationsproblem}
@@ -97,11 +97,11 @@ Betrachten wir die Abschätzung
 \begin{equation}
     \norm{u(\bm \sigma) - u_{N}(\bm \sigma)}_{\mathcal X} \leq \norm{u(\bm \sigma) - u_{\mathcal N}(\bm \sigma)}_{\mathcal X} + \norm{u_{\mathcal N}(\bm \sigma) - u_{N}(\bm \sigma)}_{\mathcal X},
 \end{equation}
-dann sagt dies gerade aus, dass der erste Summand beliebig klein gehalten werden kann, weswegen wir uns in diesem Kapitel lediglich für den zweiten Summanden, also den Fehler zwischen Truth- und Reduzierte"=Basis"=Lösung, interessieren.
+dann sagt dies gerade aus, dass der erste Summand beliebig klein gehalten werden kann, weswegen wir uns in diesem Kapitel lediglich für den zweiten Summanden, also den Fehler zwischen Truth- und RB"=Lösung, interessieren.
 
 Um die notationelle Wiederholung möglichst gering zu halten, seien für den Rest dieses Abschnitts stets durch $u_{N}(\bm \sigma) \in \mathcal X_{N}$ die Reduzierte-Basis-Lösung und durch $u_{\mathcal N}(\bm \sigma) \in \mathcal X_{\mathcal N}$ die Truth-Lösung zu einem Parameter $\bm \sigma \in \mathcal P$ gegeben.
 
-Da es sich bei der Reduzierte"=Basis"=Diskretisierung um ein Galerkin"=Verfahren handelt, erhalten wir Analoga der Aussagen \cref{satz:galerkin_stabilitaet}, \cref{lemma:galerkin_orthogonalitaet} und \cref{satz:lemma_von_cea}, wobei die Truth-Räume $\mathcal X_{\mathcal N}, \mathcal Y_{\mathcal N}$ die Rolle der Räume $\mathcal X, \mathcal Y$ einnehmen.
+Da es sich bei der RB"=Diskretisierung um ein Galerkin"=Verfahren handelt, erhalten wir Analoga der Aussagen \cref{satz:galerkin_stabilitaet}, \cref{lemma:galerkin_orthogonalitaet} und \cref{satz:lemma_von_cea}, wobei die Truth-Räume $\mathcal X_{\mathcal N}, \mathcal Y_{\mathcal N}$ die Rolle der Räume $\mathcal X, \mathcal Y$ einnehmen.
 An dieser Stelle wiederholen wir nur die Galerkin"=Orthogonalität ohne Beweis, da diese nachfolgend verwendet wird.
 
 \begin{Lemma}
@@ -109,7 +109,7 @@ An dieser Stelle wiederholen wir nur die Galerkin"=Orthogonalität ohne Beweis, 
     Es gilt $b(u_{N}(\bm \sigma) - u_{\mathcal N}(\bm \sigma), v) = 0$ für alle $v \in \mathcal Y_{N}$, das heißt, der Fehler $u_{N}(\bm \sigma) - u_{\mathcal N}(\bm \sigma)$ ist orthogonal zu $\mathcal Y_{N}$.
 \end{Lemma}
 
-Den Fehler des vorherigen Lemmas finden wir auch in der nachfolgenden Definition, welche einen weiteren Baustein für die Reduzierte"=Basis"=Methode liefert.
+Den Fehler des vorherigen Lemmas finden wir auch in der nachfolgenden Definition, welche einen weiteren Baustein für die RB"=Methode liefert.
 
 \begin{Definition}
 \label{definition:rbm_fehler_und_residuum}
@@ -141,7 +141,7 @@ Den Fehler des vorherigen Lemmas finden wir auch in der nachfolgenden Definition
     \end{Beweis}
 \end{Lemma}
 
-Das Residuum lässt sich nun verwenden, um eine der wichtigsten Eigenschaften der Reduzierte"=Basis"=Methoden herzuleiten, die Zertifizierung der Lösung durch eine a posteriori-Fehlerabschätzung.
+Das Residuum lässt sich nun verwenden, um eine der wichtigsten Eigenschaften der RB"=Methoden herzuleiten, die Zertifizierung der Lösung durch eine a posteriori-Fehlerabschätzung.
 Dazu benötigen wir eine untere Schranke $\beta_{\mathrm{LB}}(\bm \sigma)$ der inf-sup-Konstante $\beta_{\mathcal N}(\bm \sigma)$, da die exakte Konstante im Allgemeinen nicht bestimmt werden kann.
 
 \begin{Lemma}
@@ -159,7 +159,7 @@ Dazu benötigen wir eine untere Schranke $\beta_{\mathrm{LB}}(\bm \sigma)$ der i
     \end{Beweis}
 \end{Lemma}
 
-Dieser a posteriori-Fehlerschätzer bildet das Herzstück der Reduzierte"=Basis"=Methode, da er sowohl für die Konstruktion der niedrigdimensionalen Räume $\mathcal X_{N}$ und $\mathcal Y_{N}$, als auch für die bereits angesprochene Zertifizierung verwendet wird, welche eine garantierte obere Schranke zwischen Truth- und Reduzierte"=Basis"=Lösung liefert.
+Dieser a posteriori-Fehlerschätzer bildet das Herzstück der RB"=Methode, da er sowohl für die Konstruktion der niedrigdimensionalen Räume $\mathcal X_{N}$ und $\mathcal Y_{N}$, als auch für die bereits angesprochene Zertifizierung verwendet wird, welche eine garantierte obere Schranke zwischen Truth- und RB"=Lösung liefert.
 
 Wir sind bisher nicht darauf eingegangen, wie dieser Fehlerschätzer numerisch bestimmt werden kann.
 Auf den ersten Blick scheint dies schwierig, da sowohl die Norm des Residuums als auch eine untere Schranke für die inf-sup-Konstante im Allgemeinen nur unter hohem Aufwand bestimmt werden können.
@@ -200,15 +200,113 @@ Diesem Punkt widmen wir uns im nächsten Abschnitt, vorher wollen wir aber noch 
     \end{Beweis}
 \end{Lemma}
 
-\clearpage
 
 \section{Numerische Umsetzung} % (fold)
 \label{sub:grb:rb:numerische_umsetzung}
 
-Die numerische Umsetzung besteht aus mehreren Teilen, welche wir im Folgenden beschreiben werden.
+Wir richten unser Augenmerk nun auf die numerische Umsetzung der RB"=Methode und führen an den entsprechenden Stellen weitere, hierfür benötigte Grundlagen ein.
+Im Rahmen dieser Arbeit beschränken wir uns auf die Betrachtung parametrische-affiner Variationsprobleme, so wie sie in \cref{lemma:bilinearform_affin_parametrisch} bereits erwähnt wurden, führen sie an dieser Stelle noch einmal in allgemeinerer Form ein.
+
+\begin{Definition}
+\label{definition:parametrisch_affine_bf_fuer_rbm}
+    Wir nennen eine parametrische Bilinearform $b \colon \mathcal X \times \mathcal Y \times \mathcal P \to \mathbb{R}$ \emph{parametrisch affin}, wenn sie die Form
+    \begin{equation}
+        b(u, v; \bm \sigma) = \sum_{q = 1}^{Q_{b}} \theta_{q}^{b}(\bm \sigma) b_{q}(u, v), \quad \text{für } u \in \mathcal X, v \in \mathcal Y, \bm \sigma \in \mathcal P,
+    \end{equation}
+    hat, wobei für $q = 1, \dots, Q_{b}$ durch $\theta_{q}^{b} \colon \mathcal P \to \mathbb{R}$ Abbildungen und durch $b_{q} \colon \mathcal X \times \mathcal Y \to \mathbb{R}$ parameterunabhängige Bilinearformen gegeben seien.
+\end{Definition}
+
+Weiter abstrahieren wir an dieser Stelle die Notationen aus \cref{section:galerkin_numerische_umsetzung_und_experimente}.
+Die diskreten Räume $\mathcal X_{\mathcal N}$ und $\mathcal Y_{\mathcal N}$ fassen wir als Span entsprechender Basisfunktionen auf und schreiben
+\begin{equation}
+    \mathcal X_{\mathcal N} = \spn \Set{ \phi_{i} \given i = 1, \dots, \mathcal N },
+    \quad
+    \mathcal Y_{\mathcal N} = \spn \Set{ \psi_{j} \given j = 1, \dots, \mathcal N }.
+\end{equation}
+Ebenso schreiben wir die Reduzierte"=Basis"=Räume $\mathcal X_{N}$ und $\mathcal Y_{N}$ als Span der Form
+\begin{equation}
+    \mathcal X_{N} = \spn \Set{ \zeta_{i} \given i = 1, \dots, N},
+    \quad
+    \mathcal Y_{N} = \spn \Set{ \eta_{j} \given j = 1, \dots, N},
+\end{equation}
+wobei $\zeta_{i} \in \mathcal X_{\mathcal N}$ und $\eta_{j} \in \mathcal Y_{\mathcal N}$ für $i, j = 1, \dots, N$ Basisfunktionen seien.
+Die zur Bestimmung der Petrov"=Galerkin"=Lösung verwendeten Strukturen schreiben wir ferner als
+\begin{equation}
+    \begin{aligned}
+        \mat{X} &= \left[ \skp{\phi_{i}}{\phi_{j}}{\mathcal X} \right]_{i,j = 1, \dots, \mathcal N},
+        &\qquad
+        \mat{Y} &= \left[ \skp{\psi_{i}}{\psi_{j}}{\mathcal Y} \right]_{i,j = 1, \dots, \mathcal N},
+        \\
+        \vec{f} &= \left[ f(\psi_{j}) \right]_{j = 1, \dots, \mathcal N},
+        &\qquad
+        \mat{B}_{q} &= \left[ b_{q}(\phi_{i}, \psi_{j}) \right]_{j,i = 1, \dots, \mathcal N}, \quad q = 1, \dots, Q_{b}.
+    \end{aligned}
+\end{equation}
+
+Zunächst wollen wir eine einfaches Verfahren angeben, mit dem wir aus den zugrundeliegenden Petrov"=Galerkin"=Strukturen die für die RB"=Methode benötigten berechnen können.
+
+\begin{Definition}
+    Als \emph{Reduzierte"=Basis"=Ansatzfunktion} $u_{N} \in \mathcal X_{N}$ respektive \emph{Testfunktion} $v_{N} \in \mathcal Y_{N}$ bezeichnen wir
+    \begin{equation}
+        u_{N} := \sum_{i = 1}^{N} u_{N i} \zeta_{i},
+        \quad
+        v_{N} := \sum_{j = 1}^{N} v_{N j} \eta_{j},
+    \end{equation}
+    mit den Koeffizientenvektoren $\vec{u}_{N} := [u_{Ni}]_{i = 1, \dots, N} \in \mathbb{R}^{N}$ und $\vec{v}_{N} := [v_{Nj}]_{j = 1, \dots, N} \in \mathbb{R}^{N}$.
+\end{Definition}
+
+Schreiben wir für $i,j = 1, \dots, N$ die Koeffizientenvektoren der Basisfunktionen $\zeta_{i} \in \mathcal X_{N}$ und $\eta_{j} \in \mathcal Y_{N}$ bezüglich der Basen von $\mathcal X_{\mathcal N}$ und $\mathcal Y_{\mathcal N}$  als $\bm \zeta_{i}, \bm \eta_{j} \in \mathbb{R}^{\mathcal N}$, dann können wir ferner die Matrizen
+\begin{equation}
+  \mat{Z} := [\bm \zeta_{i}]_{i = 1, \dots, N} \in \mathbb{R}^{\mathcal N \times N}, \quad \mat{H} := [\bm \eta_{i}]_{i = 1, \dots, N} \in \mathbb{R}^{\mathcal N \times N}
+\end{equation}
+definieren.
+Mit Hilfe dieser beiden Matrizen definieren wir nun die Reduzierte"=Basis"=Matrizen $\mat{B}_{N, q} \in \mathbb{R}^{N \times N}$, $q = 1, \dots, Q_{b}$, und den Reduzierte"=Basis"=Lastvektor $\vec{f}_{N} \in \mathbb{R}^{N}$ definieren via
+\begin{equation}
+    \begin{aligned}
+        \mat{B}_{N,q} &:= \left[ b_{q}(\zeta_{i}, \eta_{j}) \right]_{j, i = 1, \dots, N} = \mat{H}\tran \mat{B}_{q} \mat{Z}, \quad q = 1, \dots, Q_{b}, \\
+        \vec{f}_{N} &:= \left[ f(\eta_{j}) \right]_{j = 1, \dots, N} = \mat{H}\tran \vec{f}
+    \end{aligned}
+\end{equation}
+und analog auch die entsprechenden Norminduzierenden Matrizen $\mat{X}_{N}, \mat{Y}_{N} \in \mathbb{R}^{N \times N}$ durch
+\begin{equation}
+    \begin{aligned}
+    \mat{X}_{N} &:= \left[ \skp{\zeta_{i}}{\zeta_{j}}{\mathcal X} \right]_{i,j = 1, \dots, N} = \mat{Z}\tran \mat{X} \mat{Z}, \\
+    \mat{Y}_{N} &:= \left[ \skp{\eta_{i}}{\eta_{j}}{\mathcal Y} \right]_{i,j = 1, \dots, N} = \mat{H}\tran \mat{Y} \mat{H}.
+    \end{aligned}
+\end{equation}
+
+Um nun die RB"=Lösung $u_{N}(\bm \sigma)$ zu einem Parameter $\bm \sigma \in \mathcal P$ zu bestimmen, reicht es, das lineare Gleichungssystem
+\begin{equation}
+\label{eq:rbm_gleichungssystem}
+    \mat{B}_{N}(\bm \sigma) \vec{u}_{N}(\bm \sigma) = \vec{f}_{N}
+\end{equation}
+zu lösen, wobei
+\begin{equation}
+\label{eq:affine_rbm_systemmatrix}
+    \mat{B}_{N}(\bm \sigma) = \sum_{q = 1}^{Q_b} \theta_{q}^{b}(\bm \sigma) \mat{B}_{N, q}
+\end{equation}
+die Systemmatrix und $\vec{u}_{N}(\bm \sigma)$ der Koeffizientenvektor der Lösung ist.
 
 \subsection{Zerlegung in Offline- und Online-Phase} % (fold)
 \label{sub:zerlegung_in_offline_und_online_phase}
+
+Wir gehen nun detailliert auf die beiden Phasen der Reduzierte"=Basis"=Methode ein und beginnen mit der einfacheren Online-Phase, bevor wir zur aufwendigeren Offline-Phase übergehen.
+
+\subsubsection{Online-Phase} % (fold)
+\label{ssub:online_phase}
+
+In der Online-Phase muss zu einem gegebenen Parameter $\bm \sigma \in \mathcal P$ lediglich die Systemmatrix $\mat{B}_{N}(\bm \sigma)$ anhand der parametrisch-affinen Darstellung \cref{eq:affine_rbm_systemmatrix} berechnet werden, um anschließend die RB"=Lösung $u_{N}(\bm \sigma)$ über das Gleichungssystem \cref{eq:rbm_gleichungssystem} bestimmen zu können.
+
+Ferner bestimmen wir den a posteriori-Fehlerschätzer $\Delta_{N}(\bm \sigma)$ zur Zertifizierung des Fehlers.
+
+% subsubsection online_phase (end)
+
+\subsubsection{Offline-Phase} % (fold)
+\label{ssub:offline_phase}
+
+
+
+% subsubsection offline_phase (end)
 
 \begin{algorithm}[tb]
     \DontPrintSemicolon
