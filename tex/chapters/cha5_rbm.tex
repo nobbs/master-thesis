@@ -64,6 +64,14 @@ Dies wird in \cref{figure:rbm_loesungsmenge} noch einmal veranschaulicht.
     \label{figure:rbm_loesungsmenge}
 \end{figure}
 
+Reduzierte"=Basis"=Methoden der beschriebenen Art lassen sich im Allgemeinen als zweistufiges Verfahren auffassen.
+Die erste Stufe, die sogenannte \emph{Offline-Phase}, dient dazu, die niedrigdimensionalen Systeme zu konstruieren.
+Hierzu gibt es verschiedene Ansätze, die meist die Minimierung des maximal möglichen Fehlers zwischen Truth- und Reduzierte"=Basis"=Lösung verfolgen und dementsprechend einen hohen Aufwand darstellen.
+In der zweiten Stufe, der \emph{Online-Phase}, wird dieses niedrigdimensionale System verwendet um Lösungen zu gegebenen Parametern zu bestimmen.
+Das Lösen mit diesem System hat, alleine aus dimensionstechnischen Gründen, einen deutlich geringeren Aufwand als das bestimmen der Truth-Lösung.
+
+Dieser zweistufige Aufbau führt schließlich auch zu einem wichtigen Kriterium für respektive gegen die Verwendung der Reduzierte"=Basis"=Methoden, die Anzahl der zu bestimmenden Lösungen in der Online-Phase, da die Laufzeit der aufwändigen Offline-Phase zunächst amortisiert werden muss.
+
 Wir beenden an dieser Stelle die Motivation, widmen uns nun einer rigorosen Einführung der Reduzierte"=Basis"=Methode und beginnen diese mit der Definition der grundlegenden Begriffe.
 
 \begin{Definition}
@@ -93,7 +101,7 @@ dann sagt dies gerade aus, dass der erste Summand beliebig klein gehalten werden
 
 Um die notationelle Wiederholung möglichst gering zu halten, seien für den Rest dieses Abschnitts stets durch $u_{N}(\bm \sigma) \in \mathcal X_{N}$ die Reduzierte-Basis-Lösung und durch $u_{\mathcal N}(\bm \sigma) \in \mathcal X_{\mathcal N}$ die Truth-Lösung zu einem Parameter $\bm \sigma \in \mathcal P$ gegeben.
 
-Da es sich bei der Reduzierte"=Basis"=Diskretisierung um ein Galerkin"=Verfahren handelt, erhalten wir Analoga der Aussagen \cref{satz:galerkin_stabilitaet}, \cref{lemma:galerkin_orthogonalitaet} und \cref{satz:lemma_von_cea}, wobei die Truth-Räume die Rolle der stetigen Räume einnehmen.
+Da es sich bei der Reduzierte"=Basis"=Diskretisierung um ein Galerkin"=Verfahren handelt, erhalten wir Analoga der Aussagen \cref{satz:galerkin_stabilitaet}, \cref{lemma:galerkin_orthogonalitaet} und \cref{satz:lemma_von_cea}, wobei die Truth-Räume $\mathcal X_{\mathcal N}, \mathcal Y_{\mathcal N}$ die Rolle der Räume $\mathcal X, \mathcal Y$ einnehmen.
 An dieser Stelle wiederholen wir nur die Galerkin"=Orthogonalität ohne Beweis, da diese nachfolgend verwendet wird.
 
 \begin{Lemma}
@@ -152,27 +160,47 @@ Dazu benötigen wir eine untere Schranke $\beta_{\mathrm{LB}}(\bm \sigma)$ der i
 \end{Lemma}
 
 Dieser a posteriori-Fehlerschätzer bildet das Herzstück der Reduzierte"=Basis"=Methode, da er sowohl für die Konstruktion der niedrigdimensionalen Räume $\mathcal X_{N}$ und $\mathcal Y_{N}$, als auch für die bereits angesprochene Zertifizierung verwendet wird, welche eine garantierte obere Schranke zwischen Truth- und Reduzierte"=Basis"=Lösung liefert.
+
 Wir sind bisher nicht darauf eingegangen, wie dieser Fehlerschätzer numerisch bestimmt werden kann.
 Auf den ersten Blick scheint dies schwierig, da sowohl die Norm des Residuums als auch eine untere Schranke für die inf-sup-Konstante im Allgemeinen nur unter hohem Aufwand bestimmt werden können.
-Diesem Punkt widmen wir uns im nächsten Abschnitt.
+Diesem Punkt widmen wir uns im nächsten Abschnitt, vorher wollen wir aber noch ein Maß für die Güte des Fehlerschätzers einführen.
 
-% TODO: eventuell was zur Effektivität sagen?
-% Weiter wollen wir an dieser Stelle einen weiteren, auf den a posteriori-Fehlerschätzer aufbauenden, Begriff einführen.
-% Dieser liefert ein Maß für die Güte des Fehlerschätzers.
+\begin{Lemma}
+\label{lemma:effektivitaet}
+    Die \emph{Effektivität} $\eta_{N}(\bm \sigma)$ des a posteriori-Fehlerschätzers ist beschränkt durch
+    \begin{equation}
+        1 \leq \eta_{N}(\bm \sigma) := \frac{\Delta_{N}(\bm \sigma)}{\norm{u_{\mathcal N}(\bm \sigma) - u_{N}(\bm \sigma)}_{\mathcal X}} \leq \frac{\gamma_{b}(\bm \sigma)}{\beta_{\mathrm{LB}}(\bm \sigma)},
+    \end{equation}
+    wobei $\gamma_{b}(\bm \sigma)$ die Stetigkeitskonstante der Bilinearform $b(\blank, \blank; \bm \sigma)$ sei.
 
-% \begin{Lemma}
-%     Die \emph{Effektivität} $\eta_{N}(\bm \sigma)$ des a posteriori-Fehlerschätzers ist beschränkt durch
-%     \begin{equation}
-%         h_{N}(\bm \sigma) := \frac{\Delta_{N}(\bm \sigma)}{\norm{u_{N}(\bm \sigma) - u_{\mathcal N}(\bm \sigma)}} \leq \frac{\gamma_{b}(\bm \sigma)}{\beta_{\mathrm{LB}}(\bm \sigma)}.
-%     \end{equation}
+    \begin{Beweis}
+        Die Abschätzung nach unten ergibt sich direkt aus \cref{lemma:rbm_fehler_schranke}.
 
-%     \begin{Beweis}
-%         TODO
-%     \end{Beweis}
-% \end{Lemma}
+        Für die andere Abschätzung sei $\bm \sigma \in \mathcal P$ beliebig.
+        Anwendung des Rieszschen Darstellungssatz auf das Residuum $r_{N}(\blank; \bm \sigma)$ liefert ein $v_{r} \in \mathcal Y_{\mathcal N}$ mit $r_{N}(v; \bm \sigma) = \skp{v_{r}}{v}{\mathcal Y_{\mathcal N}}$, für alle $v \in \mathcal Y_{\mathcal N}$, und $\norm{r_{N}(\blank; \bm \sigma)}_{\mathcal Y_{\mathcal N}'} = \norm{v_{r}}_{\mathcal Y_{\mathcal N}}$.
+        Damit erhalten wir mit der Stetigkeit der Bilinearform $b$ die Abschätzung
+        \begin{equation}
+            \norm{v_{r}}_{\mathcal Y}^{2}
+            = \skp{v_{r}}{v_{r}}{\mathcal Y}
+            = r_{N}(v_{r}; \bm \sigma)
+            = b(e_{N}(\bm \sigma), v_{r}; \bm \sigma)
+            \leq \gamma_{b}(\bm \sigma) \norm{e_{N}(\bm \sigma)}_{\mathcal X} \norm{v_{r}}_{\mathcal Y},
+        \end{equation}
+        oder auch kurz
+        \begin{equation}
+            \norm{v_{r}}_{\mathcal Y} \leq \gamma_{b}(\bm \sigma) \norm{e_{N}(\bm \sigma)}_{\mathcal X}.
+        \end{equation}
+        Zusammen mit der Definition des a posteriori-Fehlerschätzers $\Delta_{N}(\bm \sigma)$ liefert dies nun
+        \begin{equation}
+            \eta_{N}(\bm \sigma)
+            = \frac{\Delta_{N}(\bm \sigma)}{\norm{u_{\mathcal N}(\bm \sigma) - u_{N}(\bm \sigma)}_{\mathcal X}}
+            \leq \frac{\gamma_{b}(\bm \sigma) \norm{e_{N}(\bm \sigma)}_{\mathcal X}}{\beta_{\mathrm{LB}}(\bm \sigma)\norm{u_{\mathcal N}(\bm \sigma) - u_{N}(\bm \sigma)}_{\mathcal X}}
+            = \frac{\gamma_{b}(\bm \sigma)}{\beta_{\mathrm{LB}}(\bm \sigma)}.
+        \end{equation}
+    \end{Beweis}
+\end{Lemma}
 
-
-
+\clearpage
 
 \section{Numerische Umsetzung} % (fold)
 \label{sub:grb:rb:numerische_umsetzung}
