@@ -216,7 +216,7 @@ Im Rahmen dieser Arbeit beschränken wir uns auf die Betrachtung parametrische-a
     hat, wobei für $q = 1, \dots, Q_{b}$ durch $\theta_{q}^{b} \colon \mathcal P \to \mathbb{R}$ Abbildungen und durch $b_{q} \colon \mathcal X \times \mathcal Y \to \mathbb{R}$ parameterunabhängige Bilinearformen gegeben seien.
 \end{Definition}
 
-Weiter abstrahieren wir an dieser Stelle die Notationen aus \cref{section:galerkin_numerische_umsetzung_und_experimente}.
+Weiter abstrahieren wir an dieser Stelle die Notationen aus \cref{section:galerkin_numerische_umsetzung}.
 Die diskreten Räume $\mathcal X_{\mathcal N}$ und $\mathcal Y_{\mathcal N}$ fassen wir als Span entsprechender Basisfunktionen auf und schreiben
 \begin{equation}
     \mathcal X_{\mathcal N} = \spn \Set{ \phi_{i} \given i = 1, \dots, \mathcal N },
@@ -304,9 +304,192 @@ Ferner bestimmen wir den a posteriori-Fehlerschätzer $\Delta_{N}(\bm \sigma)$ z
 \subsubsection{Offline-Phase} % (fold)
 \label{ssub:offline_phase}
 
+Ziel der Offline-Phase ist die Bestimmung der für die Online-Phase benötigten Strukturen unter dem Gesichtspunkt den maximalen Fehler möglichst zu minimieren.
+Dies wird oft auf Basis heuristisch motivierter Strategien getan, da die theoretisch optimale Auswahl der Snapshot-Parameter numerisch nicht umsetzbar ist.
+Weiterführend findet man hierzu bei \cite{??} eine umfassende Einführung in die sogenannten \emph{Kolmogorow-N-Weiten}.
 
+Als praktisch umsetzbare Verfahren erfreuen vor allem \emph{Greedy}-Strategien und auf die \emph{Proper Orthogonal Decomposition} aufbauende Algorithmen großer Beliebtheit.
+Da wir uns auf einen Greedy-Ansatz beschränken werden, sei zu letzterem an dieser Stelle \cite{} als weitereführende Literatur erwähnt.
+
+Der hier zum Einsatz kommende Ansatz ist unter dem Namen \emph{Greedy Sampling Scheme} bekannt, und lässt sich wie folgt zusammenfassen.
+Iterativ wird der Parameter $\bm \sigma^{*} \in \mathcal P$ bestimmt, welcher in der aktuellen reduzierten Basis den Fehler $\norm{e_{N}(\bm \sigma)}_{\mathcal X}$ maximiert.
+Durch Hinzunahme der zugehörigen Truth"=Lösung $u_{\mathcal N}(\bm \sigma^{*})$ zur reduzierten Basis erreichen wir somit in jedem Schritt eine maximale Fehlerreduktion.
+Da die Auswertung des exakten Fehlers $\norm{e_{N}(\bm \sigma)}_{\mathcal X}$ einen zu hohen Aufwand mit sich liefert, kommt hier der a posteriori-Fehlerschätzer $\Delta_{N}(\bm \sigma)$ aus \cref{lemma:rbm_fehler_schranke} zum Einsatz.
+Das daraus resultierende Verfahren findet sich formal genauer in \cref{algorithm:greedy_training}.
+
+Ein offenbar kritischer Punkt des Algorithmus ist die Auswertung des a posteriori-Fehlerschätzers.
+Diese setzt sich zum einen aus der Berechnung der Norm des Residuums und aus der Bestimmung einer Schranke für die inf-sup-Konstante.
+Wir gehen zunächst auf das einfacher zu handhabende Residuum ein.
+
+\paragraph{Berechnung der Norm des Residuums.} % (fold)
+\label{par:berechnung_der_norm_des_residuum}
+
+Um diese zu bestimmen, greifen wir erneut auf den Rieszschen Darstellungssatz zurück und erhalten damit für jedes $\bm \sigma \in \mathcal P$ ein $\hat{e}_{N}(\bm \sigma) \in \mathcal Y_{\mathcal N}$ mit
+\begin{equation}
+    \norm{\hat{e}_{N}(\bm \sigma)}_{\mathcal Y} = \norm{r_{N}(\blank; \bm \sigma)}_{\mathcal Y_{\mathcal N}'}, \qquad
+    r_{N}(v; \bm \sigma) = \skp{\hat{e}_{N}(\bm \sigma)}{v}{\mathcal Y_{\mathcal N}}, \quad \fa v \in \mathcal Y.
+\end{equation}
+Aufgrund der Definition des Residuums \cref{eq:variationsproblem_residuum} und der parametrisch-affinen Darstellung \cref{definition:parametrisch_affine_bf_fuer_rbm} der Bilinearform $b$ können wir dies verwursten zu
+\begin{equation}
+    \skp{\hat{e}_{N}(\bm \sigma)}{v}{\mathcal Y}
+    = r_{N}(v; \bm \sigma)
+    % = f(v) - \sum_{q = 1}^{Q_b} \theta_{q}^{b}(\bm \sigma) b_{q}(u_{N}(\bm \sigma), v)
+    = f(v) - \sum_{q = 1}^{Q_b} \sum_{n = 1}^{N} \theta_{q}^{b}(\bm \sigma) u^{(n)}_{N}(\bm \sigma) b_{q}(\zeta_{n}, v).
+\end{equation}
+Fassen wir nun weiter die Abbildungen $b_{q}(\zeta_{n}, \blank) \colon \mathcal Y_{\mathcal N} \to \mathbb{R}$ als Funktionale auf, dann sind diese stetig und linear und wir können erneut den Rieszschen Darstellungssatz anwenden.
+Dies liefert die Existenz von $\hat{f}, \hat{b}^{n}_{q} \in \mathcal Y_{\mathcal N}$, $n = 1, \dots, N,$, $q = 1, \dots, Q_b$, mit
+\begin{equation}
+    \begin{aligned}
+        f(v) &= \skp{\hat{f}}{v}{\mathcal Y}, \quad \fa v \in \mathcal Y_{\mathcal N},
+        \\
+        b_{q}(\zeta_{n}, v) &= \skp{\hat{b}^{n}_{q}}{v}{\mathcal Y_{\mathcal N}}, \quad \fa v \in \mathcal \mathcal Y_{\mathcal N}.
+    \end{aligned}
+\end{equation}
+Zusammen mit obiger Darstellung erhalten wir damit
+\begin{equation}
+    \hat{r}_{N}(\bm \sigma) = \hat{f} - \sum_{q = 1}^{Q_b} \sum_{n = 1}^{N} \theta_{q}^{b}(\bm \sigma) u_{N}^{(n)}(\bm \sigma) \hat{b}^{n}_{q}.
+\end{equation}
+Die Norm des Residuums kann damit über
+\begin{equation}
+    \begin{aligned}
+        \norm{\hat{r}_{N}(\bm \sigma)}_{\mathcal Y}^{2}
+        &= \skp{\hat{r}_{N}(\bm \sigma)}{\hat{r}_{N}(\bm \sigma)}{\mathcal Y}
+        \\&= \begin{multlined}[t]
+            \skp{\hat{f}}{\hat{f}}{\mathcal Y}
+                - 2 \sum_{q = 1}^{Q_b} \sum_{n = 1}^{N} \theta_{q}^{b}(\bm \sigma) u_{N}^{(n)}(\bm \sigma) \skp{\hat{b}^{n}_{q}}{\hat{f}}{\mathcal Y}
+                \\+ \sum_{q, p = 1}^{Q_b} \sum_{n, m = 1}^{N} \theta_{q}^{b}(\bm \sigma) \theta_{p}^{b}(\bm \sigma) u_{N}^{(n)}(\bm \sigma) u_{N}^{(m)}(\bm \sigma) \skp{\hat{b}^{n}_{q}}{\hat{b}^{m}_{p}}{\mathcal Y}.
+        \end{multlined}
+    \end{aligned}
+\end{equation}
+
+Diese Berechnung kann nun effizient in eine Offline- und eine Online-Phase zerlegt werden.
+In der Offline-Phase werden die Größen $\skp{\hat{f}}{\hat{f}}{\mathcal Y}$, $\skp{\hat{b}^{n}_{q}}{\hat{f}}{\mathcal Y}$ und $\skp{\hat{b}^{n}_{q}}{\hat{b}^{m}_{p}}{\mathcal Y}$ vorberechnet, so dass in der Online-Phase lediglich obige affine Darstellung ausgewertet werden muss.
+
+TODO: Alternative Berechnung über Matrixschreibweise?
+
+% paragraph berechnung_der_norm_des_residuum (end)
+
+\paragraph{Berechnung der unteren Schranke für die inf-sup-Konstante.} % (fold)
+\label{par:berechnung_der_unteren_schranke_f_r_die_inf_sup_konstante_}
+
+Da die exakte Bestimmung der inf-sup-Konstante $\beta_{\mathcal N}(\bm \sigma)$ für jeden Parameter $\bm \sigma \in \Xi_{\mathrm{train}}$ laufzeittechnisch nicht vertretbar ist, wird ein Verfahren benötigt, welches auf effiziente Weise eine möglichst genaue untere Schranke $\beta_{\mathrm{LB}}(\bm \sigma)$ liefert.
+Hierfür verwenden wir die zu diesem Zweck entwickelte \ac{scm} und orientieren uns an der Originalarbeit von \textcite{Huynh2007}, wobei wir an dieser Stelle nur die Idee des Verfahrens wiederholen wollen.
+Weiter wurden bei der Implementierung die Verbesserungen von \textcite{Chen2009} berücksichtigt, die wir aber nicht weiter ausführen werden.
+
+Da die \ac{scm} auf die Berechnung der Koerzivitätskonstante einer symmetrischen parametrischen Bilinearform ausgelegt ist, müssen wir zunächst die nötigen Rahmenbedingungen schaffen.
+Wir werden später darauf eingehen, wie wir mit der \ac{scm} die gewünschte inf-sup-Schranke bestimmen können.
+
+Es sei eine abstrakte symmetrische, parametrisch-affine Bilinearform $a \colon \mathcal X \times \mathcal X \times \mathcal P \to \mathbb{R}$ durch
+\begin{equation}
+    a(u, v; \bm \sigma) = \sum_{q = 1}^{Q_a} \theta_{q}^{a} a_{q}(u, v), \quad u,v \in \mathcal X,
+\end{equation}
+gegeben, wobei $\theta_{q}^{a} \colon \mathcal P \to \mathbb{R}$ stetige Funktionen und $a_{q} \colon \mathcal X \times \mathcal X \to \mathbb{R}$ symmetrische, stetige und parameterunabhängige Bilinearformen seien.
+Wie zuvor sei $\mathcal X_{\mathcal N} \subset \mathcal X$ eine Diskretisierung eines Galerkin"=Verfahrens.
+Wir wollen nun eine Schranke $\alpha_{\mathrm{LB}}(\bm \sigma)$ für die \emph{Koerzivitätskonstante} $\alpha_{\mathcal N}(\bm \sigma)$ bestimmen, welche als
+\begin{equation}
+    \alpha_{\mathcal N}(\bm \sigma) := \inf_{u \in \mathcal X_{\mathcal N}} \frac{a(u, u; \bm \sigma)}{\norm{u}_{\mathcal X}^{2}}
+\end{equation}
+definiert ist.
+
+Die Idee hinter der \ac{scm} ist nun, die Bestimmung der obigen Koerzivitätskonstante als lineares Programm aufzufassen.
+Dazu sei zunächst die tatsächliche zulässige Menge $\mathcal Z$ definiert als
+\begin{equation}
+    \mathcal Z := \Set[\bigg]{ \vec{z} = (z_{1}, \dots, z_{Q_a}) \in \mathbb{R}^{Q_a} \given \exists u_{z} \in \mathcal X_{\mathcal N} \colon z_{q} = \frac{a_{q}(u_{z}, u_{z})}{\norm{u_{z}}_{\mathcal X}^{2}}, q = 1, \dots, Q_a}.
+\end{equation}
+Weiter definieren wir die Zielfunktion
+\begin{equation}
+    \mathcal J \colon \mathbb{R}^{Q_a} \times \mathcal P \to \mathbb{R}, \quad \mathcal J(\vec{z} ;\bm \sigma) := \sum_{q = 1}^{Q_a} \theta_{q}^{a}(\bm \sigma) z_{q}.
+\end{equation}
+Mit dieser Konstruktion gilt nun $\alpha_{\mathcal N}(\bm \sigma) = \min_{\vec{z} \in \mathcal Z} \mathcal J(\vec{z}; \bm \sigma)$, es handelt sich aber noch nicht um ein lineares Programm.
+
+Hierfür beschränken wir zunächst die einzelnen Variablen $z_{q}$ von oben und unten durch die Wahl von
+\begin{equation}
+    \alpha_{q}^{-} := \inf_{u \in \mathcal X_{\mathcal{N}}} \frac{a_{q}(u, u)}{\norm{u}^{2}_{\mathcal X}},
+    \quad
+    \alpha_{q}^{+} := \sup_{u \in \mathcal X_{\mathcal{N}}} \frac{a_{q}(u, u)}{\norm{u}^{2}_{\mathcal X}},
+    \qquad \fa q = 1, \dots, Q_a,
+\end{equation}
+und des Quaders $B_{Q_a} := \prod_{q = 1}^{Q_a} [\alpha^{-}_{q}, \alpha^{+}_{q}] \subset \mathbb{R}^{Q_a}$.
+
+Weiter benötigen wir eine endliche Teilmenge $\Xi_{\mathrm{train}} \subset \mathcal P$ als Trainingsparameter und definieren hier bereits die Notation $\mathcal C_{K} := \Set{ \bm \sigma_{1}, \dots, \bm \sigma_{K} } \subset \mathcal P$ für eine weitere, noch zu konstruierende Parameterteilmenge.
+Ferner sei durch $P_{M}(\bm \sigma; E)$ eine Abbildung gegeben, welche für ein $M \in \mathbb{N}_{0}$ und eine Teilmenge $E \subset \mathcal P$ die bezüglich der euklidischen Norm $M$ nächsten Punkte zu $\bm \sigma$ aus $E$ liefert.
+Schließlich seien durch $M_{\alpha}, M_{+} \in \mathbb{N}$ die Anzahl der Stabilitätsbedingungen respektive Positivitätsbedingungen festgelegt.
+
+Mit dieser Vorarbeit lassen sich nun eine Untermenge $\mathcal Z_{\mathrm{LB}}(\bm \sigma; \mathcal C_{K}) \subset \mathcal Z$ und eine Obermenge $\mathcal Z_{\mathrm{UB}}(\mathcal C_{K}) \supset \mathcal Z$ durch
+\begin{equation}
+    \begin{aligned}
+        \mathcal Z_{\mathrm{LB}}(\bm \sigma; \mathcal C_{K}) &:=
+        \begin{multlined}[t]
+        \Set*{\vec{z} \in B_{Q_a} \given
+        \textstyle\sum_{q = 1}^{Q_a} \theta_{q}^{a}(\hat{\bm \sigma})z_{q} \geq \alpha_{\mathcal N}(\bm \sigma)~\fa \hat{\bm \sigma} \in P_{M_{\alpha}}(\bm \sigma; \mathcal C_{K})
+        }
+        \\ \cap
+        \Set*{\vec{z} \in B_{Q_a} \given
+        \textstyle\sum_{q = 1}^{Q_a} \theta_{q}^{a}(\hat{\bm \sigma}) z_{q} \geq 0~\fa \hat{\bm \sigma} \in P_{M_{+}}(\bm \sigma; \Xi_{\mathrm{train}})
+        },
+        \end{multlined}\\
+        \mathcal Z_{\mathrm{UB}}(\mathcal C_{K}) &:= \Set[\Big]{ \vec{z}^{*}(\bm \sigma_{k}) := \arg \min_{\vec z \in \mathcal Z} \mathcal J(\vec{z}; \bm \sigma_{k}) \given k = 1, \dots, K}.
+    \end{aligned}
+\end{equation}
+Nach Konstruktion handelt es sich dabei um konvexe Polyeder, sodass wir nun die beiden linearen Programme
+\begin{equation}
+    \alpha_{\mathrm{LB}}(\bm \sigma; \mathcal C_{K}) := \min_{\vec{z} \in \mathcal Z_{\mathrm{LB}}(\bm \sigma; \mathcal C_{K})} \mathcal J(\vec{z}; \bm \sigma),
+    \quad
+    \alpha_{\mathrm{UB}}(\bm \sigma; \mathcal C_{K}) := \min_{\vec{z} \in \mathcal Z_{\mathrm{UB}}(\mathcal C_{K})} \mathcal J(\vec{z}; \bm \sigma)
+\end{equation}
+definieren können.
+Es lässt sich nachweisen \cite[Proposition 1]{Huynh2007}, dass diese für beliebige $\mathcal C_{K}, M_{\alpha}$ und $M_{+}$ die Abschätzung
+\begin{equation}
+    \alpha_{\mathrm{LB}}(\bm \sigma; \mathcal C_{K}) \leq \alpha_{\mathcal N}(\bm \sigma) \leq \alpha_{\mathrm{UB}}(\bm \sigma; \mathcal C_{K}), \quad \fa \bm \sigma \in \mathcal P,
+\end{equation}
+erfüllen.
+
+Es bleibt lediglich die Konstruktion der Teilmengen $\mathcal C_{K} \subset \mathcal P$ zu klären.
+Dazu wird erneut ein Greedy-Verfahren eingesetzt, siehe \cref{algorithm:scm_greedy}.
+Dieses wird in der Offline-Phase der \ac{scm} ausgeführt, während in der Online-Phase zur Bestimmung der gesuchten Schranke $\alpha_{\mathrm{LB}}(\bm \sigma)$ ein relativ kleines lineares Programm gelöst werden muss.
+
+\begin{algorithm}[tb]
+    \DontPrintSemicolon
+    \SetKwInOut{Input}{Eingabe}\SetKwInOut{Output}{Ausgabe}
+    \SetKwProg{Proc}{Prozedur}{}{}
+    %
+    \Input{Menge $\Xi_{\mathrm{train}} \subset \mathcal P$ der Trainingsparameter und Fehlertoleranz $\epsilon_{\mathrm{tol}} > 0$}
+    \Output{Reduzierte-Basis-Ansatzraum $\mathcal X_{N}$}
+    \BlankLine
+    Setze $K = 1$, $\mathcal C_{1} = \Set{\bm \sigma_{1}}$ mit zufälligem $\bm \sigma_{1} \in \Xi_{\mathrm{train}}$\;
+    \While{$\max_{\bm \sigma \in \Xi_{\mathrm{train}}} [(\alpha_{\mathrm{UB}}(\bm \sigma; \mathcal C_{K}) - \alpha_{\mathrm{LB}}(\bm \sigma; \mathcal C_{K})) / {\alpha_{\mathrm{UB}}(\bm \sigma; \mathcal C_{K})}] > \epsilon_{\mathrm{tol}}$}{
+        $\bm \sigma_{K + 1} \leftarrow \arg \max_{\bm \sigma \in \Xi_{\mathrm{train}}} [(\alpha_{\mathrm{UB}}(\bm \sigma; \mathcal C_{K}) - \alpha_{\mathrm{LB}}(\bm \sigma; \mathcal C_{K})) / {\alpha_{\mathrm{UB}}(\bm \sigma; \mathcal C_{K})}]$\;
+        $\mathcal C_{K + 1} \leftarrow \mathcal C_{K} \cup \Set{\bm \sigma_{K + 1}}$\;
+        $K \leftarrow K + 1$\;
+    }
+    \caption{Successive Constraint Method}
+    \label{algorithm:scm_greedy}
+\end{algorithm}
+
+Das selbe Verfahren lässt schlussendlich auch für die Bestimmung einer inf-sup-Konstante verwenden.
+Dazu betrachten wir die bekannte Bilinearform $b$ aus \cref{definition:parametrisch_affine_bf_fuer_rbm} und definieren für jedes $q = 1, \dots, Q_{b}$ mittels Rieszschen Darstellungssatzes einen Operator $T_{q} \colon \mathcal X_{\mathcal N} \to \mathcal Y_{\mathcal N}$ mittels
+\begin{equation}
+    \skp{T_{q} u}{v}{\mathcal Y} = b_{q}(u, v), \quad u \in \mathcal X_{\mathcal N}, v \in \mathcal Y_{\mathcal N},
+\end{equation}
+sowie den Operator $T(\bm \sigma) \colon \mathcal X_{\mathcal N} \to \mathcal Y_{\mathcal N}$ mittels
+\begin{equation}
+    T(\bm \sigma) := \sum_{q = 1}^{Q_b} \theta_{q}^{b}(\bm \sigma) T_{q}.
+\end{equation}
+Es lässt sich zeigen \cite[476]{Huynh2007}, dass für die inf-sup-Konstante $\beta_{\mathcal N}(\bm \sigma)$ nun die Beziehung
+\begin{equation}
+    (\beta_{\mathcal N}(\bm \sigma))^{2}
+    = \left( \inf_{u \in \mathcal X_{\mathcal N}} \sup_{v \in \mathcal Y_{\mathcal N}} \frac{b(u, v; \bm \sigma)}{\norm{u}_{\mathcal X} \norm{v}_{\mathcal Y}} \right)^{2}
+    = \inf_{u \in \mathcal X_{\mathcal N}} \frac{\skp{T(\bm \sigma)u}{T(\bm \sigma)u}{\mathcal Y}}{\norm{u}_{\mathcal X}^{2}}
+\end{equation}
+gilt, wobei $\skp{T(\bm \sigma)\blank}{T(\bm \sigma)\blank}{\mathcal Y} \colon \mathcal X_{\mathcal N} \times \mathcal X_{\mathcal N} \to \mathbb{R}$ eine symmetrische, parametrische, stetige Bilinearform definiert.
+Auf diese kann nun die beschriebene \acl{scm} angewandt werden, um die inf-sup-Konstante abzuschätzen.
+
+
+% paragraph berechnung_der_unteren_schranke_f_r_die_inf_sup_konstante_ (end)
 
 % subsubsection offline_phase (end)
+
+\clearpage
 
 \begin{algorithm}[tb]
     \DontPrintSemicolon
@@ -329,30 +512,11 @@ Ferner bestimmen wir den a posteriori-Fehlerschätzer $\Delta_{N}(\bm \sigma)$ z
     \label{algorithm:greedy_training}
 \end{algorithm}
 
-% subsection zerlegung_in_offline_und_online_phase (end)
 
-\subsection{Bestimmung des Fehlerschätzers} % (fold)
-\label{sub:bestimmung_des_fehlersch_tzers}
+\section{Experimente} % (fold)
+\label{sec:experimente}
 
-\begin{algorithm}[tb]
-    \DontPrintSemicolon
-    \SetKwInOut{Input}{Eingabe}\SetKwInOut{Output}{Ausgabe}
-    \SetKwProg{Proc}{Prozedur}{}{}
-    %
-    \Input{Menge $\Xi_{\mathrm{train}} \subset \mathcal P$ der Trainingsparameter und Fehlertoleranz $\epsilon_{\mathrm{tol}} > 0$}
-    \Output{Reduzierte-Basis-Ansatzraum $\mathcal X_{N}$}
-    \BlankLine
-    Setze $K = 1$, $\mathcal C_{1} = \Set{\bm \sigma_{1}}$ mit zufälligem $\bm \sigma_{1} \in \Xi_{\mathrm{train}}$\;
-    \While{$\max_{\bm \sigma \in \Xi_{\mathrm{train}}} [(\beta_{\mathrm{UB}}(\bm \sigma; \mathcal C_{K}) - \beta_{\mathrm{LB}}(\bm \sigma; \mathcal C_{K})) / {\beta_{\mathrm{UB}}(\bm \sigma; \mathcal C_{K})}] > \epsilon_{\mathrm{tol}}$}{
-        $\bm \sigma_{K + 1} \leftarrow \arg \max_{\bm \sigma \in \Xi_{\mathrm{train}}} [(\beta_{\mathrm{UB}}(\bm \sigma; \mathcal C_{K}) - \beta_{\mathrm{LB}}(\bm \sigma; \mathcal C_{K})) / {\beta_{\mathrm{UB}}(\bm \sigma; \mathcal C_{K})}]$\;
-        $\mathcal C_{K + 1} \leftarrow \mathcal C_{K} \cup \Set{\bm \sigma_{K + 1}}$\;
-        $K \leftarrow K + 1$\;
-    }
-    %
-    \caption{Successive Constraint Method}
-    \label{algorithm:scm_greedy}
-\end{algorithm}
 
-% subsection bestimmung_des_fehlersch_tzers (end)
+% section experimente (end)
 
 \end{document}
