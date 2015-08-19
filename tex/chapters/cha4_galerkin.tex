@@ -148,12 +148,61 @@ Insbesondere motiviert dies die abschließende Forderung der folgenden Stabilit�
 \begin{Definition}
 \label{definition:stabile_diskretisierung}
     Sei $\Set{(\mathcal X_{\mathcal N}, \mathcal Y_{\mathcal N})}_{\mathcal N \geq 1}$ eine Folge von endlichdimensionalen Unterräumen mit zugehörigen diskreten inf-sup-Konstanten $\Set{\beta_{\mathcal N}}_{\mathcal N \geq 1}$.
-    Wir nennen diese Diskretisierungen \emph{stabil}, wenn ein $\beta > 0$ mit
+    Wir nennen diese Diskretisierungen \emph{stabil}, wenn ein $\hat\beta > 0$ mit
     \begin{equation}
-        \inf_{\mathcal N \geq 1} \beta_{\mathcal N} \geq \beta > 0
+        \inf_{\mathcal N \geq 1} \beta_{\mathcal N} \geq \hat\beta > 0
     \end{equation}
     existiert.
 \end{Definition}
+
+Abschließen wollen wir diesen Abschnitt mit einer alternativen Darstellung der inf-sup-Konstante $\beta$, welche uns insbesondere die Berechnung von $\beta_{\mathcal N}$ ermöglichen wird.
+Dazu benötigen wir folgendes Konstrukt.
+
+\begin{Definition}
+\label{definition:supremizing_operator}
+    Der \emph{Supremizing-Operator} $T \colon \mathcal X \to \mathcal Y$ der Bilinearform $b$ aus \cref{eq:abstraktes_variationsproblem_galerkin} ist definiert als
+    \begin{equation}
+        \skp{Tu}{v}{\mathcal Y} := b(u, v), \quad \fa u \in \mathcal X, v \in \mathcal Y.
+    \end{equation}
+\end{Definition}
+
+\begin{Lemma}
+\label{lemma:supremizing_operator}
+    Der Supremizing-Operator $T$ ist wohldefiniert, linear und stetig.
+    Ferner gelten die Gleichungen
+    \begin{equation}
+        \label{eq:supremizing_operator_ist_argsup}
+        Tu = \argsup_{v \in \mathcal Y} \frac{b(u, v)}{\norm{v}_{\mathcal Y}}
+        \qquad\text{und}\qquad
+        \beta = \inf_{u \in \mathcal X} \frac{\norm{Tu}_{\mathcal Y}}{\norm{u}_{\mathcal X}}.
+    \end{equation}
+
+    \begin{Beweis}
+        Wohldefiniertheit, Linearität und Stetigkeit ergeben sich aus der Definition und dem Rieszschen Darstellungssatz.
+        Die erste Gleichung folgt mit der Anwendung der Cauchy-Schwarz-Ungleichung auf
+        \begin{equation}
+            \frac{b(u, v)}{\norm{v}_{\mathcal Y}}
+            = \frac{\skp{Tu}{v}{\mathcal Y}}{\norm{v}_{\mathcal Y}}
+            \leq \frac{\norm{Tu}_{\mathcal Y} \norm{v}_{\mathcal Y}}{\norm{v}_{\mathcal Y}}
+            = \norm{Tu}_{\mathcal Y}
+        \end{equation}
+        und der Gleichung
+        \begin{equation}
+            \frac{b(u, Tu)}{\norm{Tu}_{\mathcal Y}}
+            = \frac{\skp{Tu}{Tu}{\mathcal Y}}{\norm{Tu}_{\mathcal Y}}
+            = \norm{Tu}_{\mathcal Y},
+        \end{equation}
+        das heißt, das Supremum von $b$ bezüglich des zweiten Arguments wird gerade von $v = Tu$ angenommen.
+        Daraus folgt auch die zweite Gleichung, denn es gilt
+        \begin{equation}
+            \beta
+            = \inf_{u \in \mathcal X} \sup_{v \in \mathcal Y} \frac{b(u, v)}{\norm{u}_{\mathcal X} \norm{v}_{\mathcal Y}}
+            = \inf_{u \in \mathcal X} \frac{b(u, Tu)}{\norm{u}_{\mathcal X} \norm{Tu}_{\mathcal Y}}
+            = \inf_{u \in \mathcal X} \frac{\skp{Tu}{Tu}{\mathcal Y}}{\norm{u}_{\mathcal X}\norm{Tu}_{\mathcal Y}}
+            = \inf_{u \in \mathcal X} \frac{\norm{Tu}_{\mathcal Y}}{\norm{u}_{\mathcal Y}}.
+        \end{equation}
+    \end{Beweis}
+\end{Lemma}
 
 
 \section{Raum-Zeit-Diskretisierung} % (fold)
