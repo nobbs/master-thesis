@@ -204,6 +204,10 @@ Dazu benötigen wir folgendes Konstrukt.
     \end{Beweis}
 \end{Lemma}
 
+Aus diesem Lemma folgt ferner auch die Darstellung
+\begin{equation}
+    \beta^{2} = \inf_{u \in \mathcal X} \frac{\skp{Tu}{Tu}{\mathcal Y}}{\norm{u}_{\mathcal X}^{2}}.
+\end{equation}
 
 \section{Raum-Zeit-Diskretisierung} % (fold)
 \label{section:raum_zeit_diskretisierung}
@@ -724,6 +728,31 @@ was in Matrixschreibweise zu der durch
     \end{pmatrix}
 \end{equation}
 definierten Gramschen Matrix $\mat Y \in \mathbb{R}^{\mathcal N \times \mathcal N}$ führt.
+
+\paragraph{Berechnung der inf-sup-Konstante} % (fold)
+\label{par:berechnung_der_inf_sup_konstante}
+
+Um die inf-sup-Konstante $\beta_{\mathcal N}(\bm \sigma)$ zu berechnen, greifen wir auf den Supremizing-Operator aus \cref{definition:supremizing_operator} zurück.
+Seien $\bm \sigma \in \mathcal P$ und $T_{\bm \sigma}$ der Supremizing-Operator von $\restr{b(\blank, \blank; \bm \sigma)}{\mathcal X_{\mathcal N} \times \mathcal Y_{\mathcal N}}$.
+Die Matrixdarstellung von $T_{\bm \sigma}$ ergibt sich nach Rieszschem Darstellungssatz durch
+\begin{equation}
+    \mat{T}_{\bm \sigma} = \mat{Y}^{-1} \mat{B}(\bm \sigma).
+\end{equation}
+Wir verwenden die alternative Darstellung der inf-sup-Konstante aus \cref{lemma:supremizing_operator} und schreiben diese weiter unter Ausnutzung der eingeführten Matrizen um zu
+\begin{equation}
+    \beta_{\mathcal N}^{2}(\bm \sigma)
+    = \inf_{u \in \mathcal X_{\mathcal N}} \frac{\skp{T_{\bm \sigma} u}{T_{\bm \sigma} u}{\mathcal Y}}{\norm{u}_{\mathcal X}^{2}}
+    = \inf_{u \in \mathbb{R}^{\mathcal N}} \frac{\vec{u}\tran \mat{T}_{\bm \sigma}\tran \mat{Y} \mat{T}_{\bm \sigma} \vec{u}}{\vec{u}\tran \mat{X} \vec{u}}
+    = \inf_{u \in \mathbb{R}^{\mathcal N}} \frac{\vec{u}\tran \mat{B}(\bm \sigma)\tran \mat{Y}^{-1} \mat{B}(\bm \sigma) \vec{u}}{\vec{u}\tran \mat{X} \vec{u}}.
+\end{equation}
+Es ist bekannt, vergleiche \cite[Subsection 1.3.5]{Patera:2007un}, dass der Ausdruck auf der rechten Seite mit Hilfe des verallgemeinerten Eigenwertproblems
+\begin{equation}
+    \mat{B}(\bm \sigma)\tran \mat{Y}^{-1} \mat{B}(\bm \sigma) \vec{v} = \lambda \mat{X} \vec{v}
+\end{equation}
+gelöst werden kann, da das gesuchte Infimum gerade dem minimalen Eigenwert $\lambda_{\min}$ entspricht.
+Insbesondere gilt damit $\beta_{\mathcal N}(\bm \sigma) = \sqrt{\lambda_{\min}}$.
+
+% paragraph berechnung_der_inf_sup_konstante (end)
 
 
 \section{Experimente} % (fold)

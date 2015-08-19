@@ -363,7 +363,11 @@ Die Norm des Residuums kann damit über
 \end{equation}
 
 Diese Berechnung kann nun effizient in eine Offline- und eine Online-Phase zerlegt werden.
-In der Offline-Phase werden die Größen $\skp{\hat{f}}{\hat{f}}{\mathcal Y}$, $\skp{\hat{b}^{n}_{q}}{\hat{f}}{\mathcal Y}$ und $\skp{\hat{b}^{n}_{q}}{\hat{b}^{m}_{p}}{\mathcal Y}$ vorberechnet, so dass in der Online-Phase lediglich obige affine Darstellung ausgewertet werden muss.
+
+\begin{description}[font=\normalfont\itshape]
+    \item[Offline:] Berechne und speichere $\skp{\hat{f}}{\hat{f}}{\mathcal Y}$, $\skp{\hat{b}^{n}_{q}}{\hat{f}}{\mathcal Y}$ und $\skp{\hat{b}^{n}_{q}}{\hat{b}^{m}_{p}}{\mathcal Y}$.
+    \item[Online:] Werte obige Darstellung aus.
+\end{description}
 
 TODO: Alternative Berechnung über Matrixschreibweise?
 
@@ -475,6 +479,7 @@ sowie den Operator $T(\bm \sigma) \colon \mathcal X_{\mathcal N} \to \mathcal Y_
 \begin{equation}
     T(\bm \sigma) := \sum_{q = 1}^{Q_b} \theta_{q}^{b}(\bm \sigma) T_{q}.
 \end{equation}
+Analog zu \cref{par:berechnung_der_inf_sup_konstante} geht ab
 Es lässt sich zeigen \cite[476]{Huynh2007}, dass für die inf-sup-Konstante $\beta_{\mathcal N}(\bm \sigma)$ nun die Beziehung
 \begin{equation}
     (\beta_{\mathcal N}(\bm \sigma))^{2}
@@ -512,6 +517,54 @@ Auf diese kann nun die beschriebene \acl{scm} angewandt werden, um die inf-sup-K
     \label{algorithm:greedy_training}
 \end{algorithm}
 
+
+\paragraph{Konstruktion des Testraumes.} % (fold)
+\label{par:konstruktion_des_testraumes_}
+
+Wir haben bisher nicht geklärt, wie der Reduzierte"=Basis"=Testraum $\mathcal Y_{N} \subset \mathcal Y_{\mathcal N}$ bestimmt wird.
+Hierzu greifen wir erneut auf den Supremizing-Operator aus \cref{definition:supremizing_operator} zurück und definieren damit einen parameterabhängigen Testraum $\mathcal Y_{N}^{\bm \sigma}$ via
+\begin{equation}
+    \label{eq:rb_testraum_parameterabhaengig}
+    \mathcal Y_{N}^{\bm \sigma} := \Set{ T_{\bm \sigma} u_{\mathcal N}(\bm \sigma_{n}) \given n = 1, \dots, N },
+\end{equation}
+wobei $T_{\bm \sigma}$ der Supremizing-Operator der Bilinearform $b(\blank, \blank; \bm \sigma) \colon \mathcal X_{\mathcal N} \times \mathcal Y_{\mathcal N} \to \mathbb{R}$ ist.
+Diese Wahl des Testraumes ist vorteilhaft, wie die folgende Aussage nachweist.
+
+\begin{Satz}
+\label{satz:rb_testraum_liefert_korrekt_gestelltes_problem}
+    Das RB"=Variationsproblem \cref{eq:rb_abstraktes_parametriches_vp} mit den Räumen $\mathcal X_{N}$ und $\mathcal Y_{N}^{\bm \sigma}$ ist für alle $\bm \sigma \in \mathcal P$ korrekt gestellt.
+
+    \begin{Beweis}
+        Wir weisen die Bedingungen des \acl{bnb}s nach, wobei hier nur die inf"=sup"=Bedingung von Interesse ist.
+        Nach Annahme gilt für die Truth"=inf"=sup"=Konstante $\beta_{\mathcal N}(\bm \sigma) > 0$.
+        Da nach Definition ferner für $u \in \mathcal X_{N}$ auch $T_{\bm \sigma}u \in \mathcal Y_{N}^{\bm \sigma}$ gilt, erhalten wir damit
+        \begin{equation}
+            \begin{aligned}
+                \beta_{N}(\bm \sigma)
+                &= \inf_{u \in \mathcal X_{N}} \sup_{v \in \mathcal Y_{N}^{\bm \sigma}} \frac{b(u, v; \bm \sigma)}{\norm{u}_{\mathcal X} \norm{v}_{\mathcal Y}}
+                = \inf_{u \in \mathcal X_{N}} \frac{b(u, T_{\bm \sigma}u; \bm \sigma)}{\norm{u}_{\mathcal X} \norm{T_{\bm \sigma} u}_{\mathcal Y}}
+                \\&= \inf_{u \in \mathcal X_{N}} \frac{\norm{T_{\bm \sigma}u}_{\mathcal Y}}{\norm{u}_{\mathcal X}}
+                \geq \inf_{u \in \mathcal X_{\mathcal N}} \frac{\norm{T_{\bm \sigma}u}_{\mathcal Y}}{\norm{u}_{\mathcal X}}
+                \\&= \beta_{\mathcal N}(\bm \sigma) > 0.
+            \end{aligned}
+        \end{equation}
+    \end{Beweis}
+\end{Satz}
+
+Da $\mathcal Y_{N}^{\bm \sigma}$ für jeden Parameter neu aufgebaut werden muss, ist auch hierfür eine Zerlegung in Offline- und Online-Phase erwünscht.
+Dazu nutzen wir die parametrisch-affine Darstellung der Bilinearform und definieren für jede Bilinearform $b_{q}$, $q = 1, \dots, Q_b$, den zugehörigen Supremizing-Operatoren als $T_{q}$ und es gilt
+\begin{equation}
+    T_{\bm \sigma} = \sum_{q = 1}^{Q_b} \theta_{q}^{b}(\bm \sigma) T_{q}.
+\end{equation}
+Die diskrete Darstellung $\mat{T}_{q} \in \mathbb{R}^{\mathcal N \times \mathcal N}$ der Operatoren $T_q$ ist nach Rieszschem Darstellungssatzes durch $\mat{T}_{q} = \mat{Y}^{-1} \mat{B}_{q}$ gegeben.
+Dies erlaubt die folgende Zerlegung:
+
+\begin{description}[font=\normalfont\itshape]
+    \item[Offline:]Berechne und speichere für jedes $u_{\mathcal N}(\bm \sigma_{n}) \in \mathcal X_{N}$ die Vektoren $\vec{v}_{q}^{n} := \mat{T}_{q} \vec{u}_{\mathcal N}(\bm \sigma_{n}) = \mat{Y}^{-1} \mat{B}_{q} \vec{u}_{\mathcal N}(\bm \sigma_{n})$.
+    \item[Online:] Bestimme $\mathcal Y_{N}^{\bm \sigma}$ durch Auswertung von $\mat{T}_{\bm \sigma} \vec{u}_{\mathcal N}(\bm \sigma_{n}) = \sum_{q = 1}^{Q_b} \theta_{q}^{b}(\bm \sigma) \vec{v}_{q}^{n}$.
+\end{description}
+
+% paragraph konstruktion_des_testraumes_ (end)
 
 \section{Experimente} % (fold)
 \label{sec:experimente}
