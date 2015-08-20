@@ -10,7 +10,7 @@ Der Begriff \emph{Polymer} bezeichnet einen aus Makromolekülen bestehenden Stof
 Diese Makromoleküle setzen sich wiederum aus vielen kleineren, sich wiederholenden Molekülen, in diesem Zusammenhang Monomere genannt, zusammen.
 Besteht ein Polymer aus nur einer Monomer-Gattung, dann spricht man von einem Homopolymer, sonst von einem Heteropolymer oder auch Copolymer.
 Obwohl Polymere in vielen verschiedenen Konfigurationen, beispielsweise ring- oder sternförmig, auftreten können, beschränken wir uns hier auf den Fall eines kettenförmigen Aufbaus.
-Weiter interessieren wir uns hier nur für Copolymere, vor allem die sogenannten Blockcopolymere, welche aus mehreren Monomer-Gattungen, die homogene zusammenhängende Blöcke bilden, aufgebaut sind; siehe \cref{figure:polymerketten}.
+Weiter interessieren wir uns nur für Copolymere, vor allem die sogenannten Blockcopolymere, welche aus mehreren Monomer-Gattungen, die homogene zusammenhängende Blöcke bilden, aufgebaut sind (siehe \cref{figure:polymerketten}).
 
 \begin{figure}[tb]
     \centering
@@ -37,12 +37,13 @@ Weiter interessieren wir uns hier nur für Copolymere, vor allem die sogenannten
 
 Von besonderem Interesse ist nun das Verhalten von Polymerschmelzen (\foreign{engl.}{polymer melt}), das heißt des flüssigen Aggregatzustands eines Polymers, sowie das Verhalten von Gemischen verschiedener polymerer Stoffe.
 So neigen die Gemische vieler Paare von Homopolymeren zu makroskopischer Phasenseparation, wie man es beispielsweise auch von Öl und Essig kennt.
-Eine ähnliche Tendenz zur Separation findet man auch bei Schmelzen von Blockcopolymeren, hierbei ist aber aufgrund der Verbindung zwischen den verschiedenen Monomer-Blöcken keine makroskopische Phasenseparation möglich, stattdessen kommt es zu einer periodischen mikroskopischen Separation, vergleiche \cref{figure:phasen}.
+Eine ähnliche Tendenz zur Separation findet man auch bei Schmelzen von Blockcopolymeren.
+Hierbei ist aber aufgrund der Verbindung zwischen den verschiedenen Monomer-Blöcken keine makroskopische Phasenseparation möglich, stattdessen kommt es zu einer periodischen mikroskopischen Separation (vergleiche \cref{figure:phasen}).
 
-Da die experimentelle Bestimmung ohne Vorwissen über mögliche stabile Anordnungen nur wenig erfolgversprechend ist, wird ein theoretisches Fundament benötigt, auf Basis dessen Vorhersagen getroffen werden können, die vorzugsweise auch zu experimentell belegbaren Anordnungen führen.
-Wir beschränken uns auf die Betrachtung von Diblockcopolymeren, das heißt, Blockcopolymeren, die aus zwei verschiedenen Monomer-Gattungen bestehen, da diese ein vergleichsweise einfaches System darstellen.
+Da die experimentelle Bestimmung dieser Separationen ohne Vorwissen über mögliche stabile Anordnungen nur wenig erfolgversprechend ist, wird ein theoretisches Fundament benötigt, auf Basis dessen Vorhersagen getroffen werden können, die vorzugsweise auch zu experimentell belegbaren Anordnungen führen.
+Wir beschränken uns auf die Betrachtung des vergleichsweise einfachen Systems von Diblockcopolymeren, das heißt Blockcopolymeren, die aus zwei verschiedenen Monomer-Gattungen bestehen.
 
-Als nützliches und relativ gut handhabbares theoretisches Modell hat sich die sogenannte \ac{scft} herausgestellt, die im Folgenden eingeführt und erläutert wird.
+Als nützliches und relativ gut untersuchbares theoretisches Modell hat sich die sogenannte \ac{scft} herausgestellt, die im Folgenden eingeführt und erläutert wird.
 
 \begin{figure}[tb]
     \centering
@@ -62,7 +63,7 @@ Als nützliches und relativ gut handhabbares theoretisches Modell hat sich die s
         \includegraphics[width=\textwidth]{figures/einleitung/phase5}
     \end{subfigure}
     \caption[Verschiedene Phasen bei Diblockcopolymeren]{%
-        Verschiedene Phasen bei Diblockcopolymeren, welche experimentell beobachtet wurden, wobei hierbei nur eine der beiden Monomer-Gattungen dargestellt wird.
+        Verschiedene Phasen bei Diblockcopolymeren, welche experimentell beobachtet wurden, wobei hier nur eine der beiden Monomer-Gattungen dargestellt wird.
         Diese heißen von links nach rechts: lamellar, perforiert-lamellar, sphärisch, zylindrisch, gyroid.
         Diese Abbildung wurde \cite[Figure 1.18]{Matsen:2006ud} entnommen.
     }
@@ -73,15 +74,15 @@ Als nützliches und relativ gut handhabbares theoretisches Modell hat sich die s
 
 Als Grundlage für die \acl{scft} dient eine Modellierung der Polymere als frei bewegliche Ketten (\foreign{engl.}{ideal chain}).
 Im Rahmen dieser Arbeit betrachten wir zwar nur die aus dem sogenannten stetigen Gaußschen Kettenmodell resultierende Theorie, erläutern aber zunächst ein diskretes Kettenmodell, welches eine Vorstufe des stetigen darstellt und die Idee dahinter verdeutlicht.
-Eine deutlich ausführlichere und vor allem mathematisch begründete Einführung in diese Thematik findet man bei \textcites[Chapter 2]{Fredrickson:2006th}{rubinstein2003polymer}.
+Eine deutlich ausführlichere und vor allem mathematisch begründete Einführung in diese Thematik findet man bei \textcites[Chapter 2]{Fredrickson:2006th} sowie \textcite{rubinstein2003polymer}.
 
 Im Folgenden betrachten wir eine nicht näher spezifizierte Volumenzelle und geben mit dem Vektor $\vec{r}$ eine Position in diesem Volumen an.
 
-Das diskrete Modell stellt die Polymerkette als eine diskrete Kette von Partikeln dar, derart, dass aneinanderhängende Monomere ähnlich einem Scharnier frei beweglich sind.
-Dabei werden Wechselwirkung zwischen benachbarten Monomeren berücksichtigt, während auf der Kette weit auseinanderliegende Partikel aber ignoriert werden.
+Das diskrete Modell stellt die Polymerkette als eine diskrete Kette von Partikeln derart dar, dass aneinanderhängende Monomere ähnlich einem Scharnier frei beweglich sind.
+Dabei werden Wechselwirkungen zwischen benachbarten Monomeren berücksichtigt, während auf der Kette weit auseinanderliegende Partikel ignoriert werden.
 Diese Wechselwirkungen können in \cref{figure:kettenmodelle} beispielsweise als Einschränkung des Winkels $\vartheta_9$ durch die gegenseitige Beeinflussung der Partikel $8, 9$ und $10$ auftreten.
 
-Das stetige Gaußsche Kettenmodell, welches man unter anderem auch als stetigen Grenzfall des beschriebenen diskreten Modells erhält, hat sich als besonders nützlich erwiesen, sowohl bei analytischen als auch numerischen Betrachtungen.
+Das stetige Gaußsche Kettenmodell, welches man unter anderem auch als stetigen Grenzfall des beschriebenen diskreten Modells erhält, hat sich sowohl bei analytischen als auch numerischen Betrachtungen als besonders nützlich erwiesen.
 Dabei wird die Polymerkette als stetige, linear elastische Faser aufgefasst und durch eine Kurve $\vec{r}(s)$ parametrisiert, wobei $s \in [0, 1]$ eine entlang der normalisierten Kontur der Kette verlaufende Variable ist.
 
 \begin{figure}[tb]
@@ -98,12 +99,12 @@ Dabei wird die Polymerkette als stetige, linear elastische Faser aufgefasst und 
 
 Sowohl das diskrete als auch das stetige Kettenmodell haben einen starken Bezug zur Stochastik, da sie sich auch als Random Walks beziehungsweise stochastische Prozesse auffassen lassen.
 Dies stellt einen umfangreichen \enquote{Werkzeugkasten} zur Untersuchung dieser zur Verfügung.
-Da die benötigten stochastischen Ausführungen und Herleitungen für diese Arbeit jedoch nebensächlich sind, belassen wir es bei diesen informalen Beschreibungen und widmen uns nun der darauf aufbauenden \ac{scft}.
+Da die benötigten stochastischen Ausführungen und Herleitungen für diese Arbeit jedoch nebensächlich sind, belassen wir es bei diesen informalen Beschreibungen und widmen uns nun der darauf aufbauenden selbstkonsistenten Feldtheorie.
 
 
 \subsection*{Selbstkonsistente Feldtheorie} % (fold)
 
-Bei der selbstkonsistenten Feldtheorie handelt es sich um ein weit verbreitetes theoretisches Modell der Physik um das Verhalten von Teilchen unter Einwirkung von Kräften, die durch Wechselwirkungen mit weiteren Teilchen auftreten, zu studieren.
+Bei der selbstkonsistenten Feldtheorie handelt es sich um ein weit verbreitetes theoretisches Modell der Physik, um das Verhalten von Teilchen unter Einwirkung von Kräften, die durch Wechselwirkungen mit weiteren Teilchen auftreten, zu studieren.
 Sie wird nicht nur im Zusammenhang mit Polymeren sondern zum Beispiel auch in der Thermodynamik oder Informatik verwendet.
 
 Die Grundidee ist folgende: in einem System vieler wechselwirkender Objekte kann die auf ein einzelnes Teilchen wirkende Gesamtkraft durch Mittelung aller Wechselwirkungen approximiert werden.
@@ -113,10 +114,10 @@ Damit erreicht man effektiv die Reduktion eines Mehrkörperproblems auf ein Eink
 Dieses Prinzip lässt sich auch zur Untersuchung von Polymeren verwenden, da eine einzelne Polymerkette oftmals aus einer hohen vierstelligen Zahl von Atomen besteht und dadurch die Wechselwirkungen auf atomarem Level vernachlässigbar sind.
 Aufbauend auf den beschriebenen Modellen, in diesem Fall dem stetigen Gaußschen Kettenmodell, kann so die statistische räumliche Ausrichtung von Polymerketten bestimmt werden.
 
-Wir beschränken uns im Folgenden auf die Beschreibung der \ac{scft} für die inkompressible Schmelze eines AB-Diblockcopolymers und folgen dabei größtenteils den Ausführungen von \textcite{Matsen:1994bz,Stasiak:2011ba}.
+Wir beschränken uns im Folgenden auf die Beschreibung der \ac{scft} für die inkompressible Schmelze eines AB-Diblockcopolymers und folgen dabei größtenteils den Ausführungen von \textcite{Matsen:1994bz} sowie \textcite{Stasiak:2011ba}.
 
 Erneut wird eine einzelne Volumenzelle betrachtet, beispielsweise ein Würfel, welche selbst Teil eines größeren Systems sein kann.
-Diese Zelle enthalte $n$ AB"=Diblockcopolymere, welche jeweils aus einem A-Block und einem B-Block bestehen, wobei diese wiederum aus $N_{\mathrm{A}}$ Monomeren vom Typ A respektive aus $N_{\mathrm{B}}$ Monomeren vom Typ B zusammengesetzt sind.
+Diese Zelle enthalte $n$ AB"=Diblockcopolymere, welche jeweils aus einem A-Block und einem B-Block bestehen, wobei diese wiederum aus $N_{\mathrm{A}}$ Monomeren vom Typ A und aus $N_{\mathrm{B}}$ Monomeren vom Typ B zusammengesetzt sind.
 Der Polymerisationsgrad, das heißt die Gesamtanzahl an Monomeren in einem Polymer, ist durch $N = N_{\mathrm{A}} + N_{\mathrm{B}}$ gegeben.
 Weiter bezeichne $f = N_{\mathrm{A}} / N$ den Anteil an A-Monomeren im gesamten Polymer.
 Wie bei der Beschreibung des Gaußschen Modells ist $s \in [0, 1]$ eine normalisierte Distanz entlang der Kontur einer Polymerkette, wobei $s = 0$ und $s = 1$ den beiden Enden entspricht.
@@ -126,14 +127,14 @@ Das Gesamtvolumen der Schmelze in dieser Zelle ist damit durch $V = n N / \rho_{
 
 Die wichtigsten Größen bei der \ac{scft} sind nun die Konzentrationen $\phi_{\mathrm{A}}(\vec{r})$ und $\phi_{\mathrm{B}}(\vec{r})$ der A- und B-Monomere an einer Position $\vec{r}$ in der betrachteten Zelle und die externen Felder $\omega_{\mathrm{A}}(\vec{r})$ und $\omega_{\mathrm{B}}(\vec{r})$, welche auf die jeweiligen Monomer-Gattungen wirken.
 
-Als Ausgangspunkt für die Bestimmungen möglicher stabiler Anordnungen in der Polymerschmelze dient das sogenannte Freie-Energie-Funktional des Systems, genauer siehe \cite{Matsen:2006ud,Fredrickson:2006th}, welches für die freie Energie $F$ eines einzelnen Polymers die Form
+Als Ausgangspunkt für die Bestimmungen möglicher stabiler Anordnungen in der Polymerschmelze dient das sogenannte Freie-Energie-Funktional des Systems, genauer ausgeführt in \cite{Matsen:2006ud,Fredrickson:2006th}, welches für die freie Energie $F$ eines einzelnen Polymers die Form
 \begin{equation}
 \label{eq:freie_energie_funktional}
     \frac{F}{nk_{\mathrm{B}}T} = - \ln \frac{Q}{V} + \frac{1}{V} \int \chi N \phi_{\mathrm{A}}(\vec{r}) \phi_{\mathrm{B}}(\vec{r}) - \omega_{\mathrm{A}}(\vec{r}) \phi_{\mathrm{A}}(\vec{r}) - \omega_{\mathrm{B}}(\vec{r}) \phi_{\mathrm{B}}(\vec{r}) \diff \vec{r}
 \end{equation}
 hat, wobei $\chi$ der sogenannte Flory-Huggins-Wechselwirkungsparameter für die Wechselwirkungen zwischen den Monomeren vom Typ A und B und $k_{\mathrm{B}} T$ die thermische Energie ist.
 
-Stabile Anordnungen der Polymerketten entsprechen Sattelpunkten des Freie-Energie-Funktionals bezüglich der Konzentrationen $\phi_{\mathrm{A}}$, $\phi_{\mathrm{B}}$ und der Felder $\omega_{\mathrm{A}}$ und $\omega_{\mathrm{B}}$.
+Stabile Anordnungen der Polymerketten entsprechen Sattelpunkten des Freie-Energie-Funktionals bezüglich der Konzentrationen $\phi_{\mathrm{A}}$ und $\phi_{\mathrm{B}}$ sowie der Felder $\omega_{\mathrm{A}}$ und $\omega_{\mathrm{B}}$.
 Betrachtet man die Funktionalableitungen von $F$ bezüglich dieser Größen, dann bilden diese ein System von Gleichungen, kurz \ac{scft}-Gleichungen genannt, anhand derer die gesuchten Sattelpunkte bestimmt werden können.
 Diese Gleichungen bestehen aus der Inkompressibilität der Schmelze
 \begin{equation}
@@ -185,23 +186,23 @@ Die Abbildung $\omega_{\alpha(s)}$ ist dabei definiert als
 % Damit lässt sich die Anfangsbedingung $q(\vec r, 0) = 1$ so interpretieren, dass ein Polymer der Länge Null von den externen Feldern nicht beeinflusst wird.
 % Der Rückwärts-Propagator hat die selbe Bedeutung, allerdings wird hierbei das andere Ende des Polymers festgehalten.
 
-Je nachdem, welches Szenario betrachtet wird, entweder eine Volumenzelle innerhalb eines größeren Systems, oder eine Zelle, welche durch feste Wände begrenzt wird, erhält man verschiedene Randbedingungen an die beiden Differentialgleichungen.
+Je nachdem, welches Szenario betrachtet wird, entweder eine Volumenzelle innerhalb eines größeren Systems oder eine Zelle, welche durch feste Wände begrenzt wird, erhält man verschiedene Randbedingungen an die beiden Differentialgleichungen.
 Ersteres entspricht dabei periodischen Randbedingungen.
 
 Ferner ist an dieser Stelle erwähnenswert, dass das Funktional der freien Energie \cref{eq:freie_energie_funktional} invariant ist bezüglich konstanter Verschiebungen der Felder $\omega_{\mathrm{A}}$ und $\omega_{\mathrm{B}}$, wie beispielsweise \cite{Ceniceros:2006is} entnommen werden kann.
-Dies wird sich sowohl in der späteren theoretischen als auch numerischen Untersuchung als äußerst nützlich erweisen.
+Dies wird sich später sowohl in der theoretischen als auch numerischen Untersuchung als äußerst nützlich erweisen.
 
 
 \subsection*{Einsatz numerischer Methoden} % (fold)
 
-Es gibt verschiedene Ansätze, um die \ac{scft}-Gleichungen zu einem numerischen Verfahren zu verarbeiten.
-Oftmals führen diese zu einem, dem nachfolgenden ähnlichen, iterativen Schema, welches Ähnlichkeiten mit einem Newton-Verfahren aufweist:
+Es gibt verschiedene Ansätze, um die \ac{scft}-Gleichungen in einem numerischen Verfahren zu verarbeiten.
+Oftmals führen diese zu einem dem nachfolgenden ähnlichen, iterativen Schema, welches Ähnlichkeiten mit einem Newton-Verfahren aufweist:
 
 \begin{enumerate}[label={\itshape\roman*.},ref={\itshape\roman*}]
     \item Zunächst werden zufällig zwei externe Felder $\omega^{(0)}_{\mathrm{A}}$ und $\omega^{(0)}_{\mathrm{B}}$ generiert, um von vornherein auftretende Verzerrungen zu einem bestimmten Sattelpunkt zu verhindern.
     \item\label{enum:iterationsverfahren_punkt_2} Die Differentialgleichungen \cref{eq:forward_propagator,eq:backward_propagator} werden für die Felder $\omega^{(k)}_{\mathrm{A}}$ und $\omega^{(k)}_{\mathrm{B}}$ gelöst.
     \item Die Konzentrationen $\phi^{(k)}_{\mathrm{A}}$ und $\phi^{(k)}_{\mathrm{B}}$ werden durch die Gleichungen \cref{eq:partitionsfunktion,eq:konzentrationen} bestimmt.
-    \item Diese Konzentrationen werden nun benutzt, um mittels den Gleichungen \cref{eq:felder} die zugehörigen Felder zu bestimmen.
+    \item Diese Konzentrationen werden nun benutzt, um mit Hilfe der Gleichungen \cref{eq:felder} die zugehörigen Felder zu bestimmen.
     Aus diesen Feldern werden mit einem Mixing-Verfahren die neuen Felder $\omega^{(k+1)}_{\mathrm{A}}$ und $\omega^{(k+1)}_{\mathrm{B}}$ für die nächste Iteration erzeugt.
     Das Mixing dient dazu, die Konvergenz des Verfahrens sicherzustellen beziehungsweise zu verbessern.
     Typischerweise gehen hier die Inkompressibilität \cref{eq:inkompressibilitaet} und zurückliegende Iterationen ein.
@@ -215,15 +216,15 @@ Bei dem beschriebenen Verfahren stellen sich die folgenden beiden Schritte als b
 \end{enumerate}
 %
 Auf den zweiten Punkt, das Mixing-Verfahren, werden wir im Verlauf dieser Arbeit nicht weiter eingehen und stattdessen hier einige der verwendeten Ansätze erwähnen.
-Da der Mixing-Schritt im Wesentlich als Konvergenzbeschleuniger des Iterationsverfahrens angedacht ist, lassen sich hierfür viele bekannte Verfahren der nichtlinearen Optimierung, aber auch aus anderen Bereichen, anwenden.
-Dies reicht von einem Quasi-Newton-Verfahren \cite{Matsen:1994bz} bis zu Integrationsverfahren, wie zum Beispiel Runge-Kutta-Verfahren oder Mehrschrittverfahren.
+Da der Mixing-Schritt im Wesentlichen als Konvergenzbeschleuniger des Iterationsverfahrens angedacht ist, lassen sich hierfür viele bekannte Verfahren der nichtlinearen Optimierung, aber auch aus anderen Bereichen, anwenden.
+Dies reicht von einem Quasi-Newton-Verfahren \cite{Matsen:1994bz} bis zu Integrationsverfahren wie zum Beispiel Runge-Kutta-Verfahren oder Mehrschrittverfahren.
 Ein auf einem solchen Integrationsverfahren basierendes Mixing findet sich in \cite{Ceniceros:2006is}, ferner findet man darin auch ein auf einem CG-Verfahren aufbauendes Mixing.
 Als besonders effektiver Ansatz hat sich das sogenannte Anderson-Mixing erwiesen, siehe die Arbeiten \cite{Thompson:2004um,Stasiak:2011ba}.
 Dabei werden neue Felder durch Kombination der Felder vieler zurückliegender Iterationen gewonnen.
 Weiter wurden in \cite{Drolet:1999bs} Verfahren ähnlich einer Picard-Iteration betrachtet.
 
 Unser Hauptaugenmerk in dieser Arbeit liegt auf dem ersten Problem, dem wiederholten Lösen der parabolischen partiellen Differentialgleichung \cref{eq:forward_propagator}.
-Da es, abhängig vom gewählten Mixing-Verfahren, oftmals eine Iterationsanzahl im dreistelligen Bereich oder höher benötigt, bis eine zufriedenstellende Genauigkeit bei der Sattelpunktgleichung erreicht ist, und damit insbesondere auch die partielle Differentialgleichung so oft gelöst werden muss, ist es wichtig, dass das Lösungsverfahren möglichst effizient ist.
+Da es abhängig vom gewählten Mixing-Verfahren oftmals eine Iterationsanzahl im mindestens dreistelligen Bereich benötigt, bis eine zufriedenstellende Genauigkeit bei der Sattelpunktgleichung erreicht ist, und damit insbesondere auch die partielle Differentialgleichung so oft gelöst werden muss, ist es wichtig, dass das Lösungsverfahren möglichst effizient ist.
 Weiter darf zu Gunsten der Laufzeit aber auch nicht die Genauigkeit des Lösers vernachlässigt werden, da sich dies im Iterationsverfahren durch Instabilität und zusätzliche Iterationen niederschlagen kann.
 
 Ähnlich wie beim Mixing-Schritt wurden bereits viele verschiedene Ansätze mit mehr oder weniger zufriedenstellenden Ergebnissen verfolgt.
@@ -261,21 +262,21 @@ Dazu wird in \cite{Rasmussen:2002kt} der Differentialoperator mittels Operator-S
 Das daraus resultierende Verfahren zweiter Ordnung wurde von \cite{GarciaCervera:2006uu,Ranjan:2007kl} auf unterschiedliche Weisen zu Verfahren vierter Ordnung erweitert, ohne signifikant Laufzeit einzubüßen.
 Eine gute Übersicht über die meisten der hier genannten Methoden findet man bei \textcites[Section 3.6]{Fredrickson:2006th}{Audus:2013ep}.
 
-Obwohl die Literatur zur \ac{scft} für Polymere verschiedenste Verfahren für das Lösen der partiellen Differentialgleichung bietet, ist ein Finite-Elemente-Ansatz basierend auf einer Raum-Zeit-Variationsformulierung unseres Wissens nach bisher nicht verfolgt worden.
+Obwohl die Literatur zur \ac{scft} für Polymere verschiedenste Verfahren für das Lösen der partiellen Differentialgleichung bietet, ist ein Galerkin"=Ansatz basierend auf einer Raum-Zeit-Variationsformulierung unseres Wissens bisher nicht verfolgt worden.
 
-Hier knüpfen wir an und betrachten das Problem, eine Lösung für die Differentialgleichung zu finden, losgelöst vom eigentlichen \ac{scft}-Iterationsverfahren, da der Berechnungsaufwand des in dieser Arbeit hergeleiteten Verfahrens eine Integration in das Iterationsverfahren im Rahmen dieser Arbeit unmöglich macht.
+Hier knüpfen wir an und betrachten das Problem, losgelöst vom eigentlichen \ac{scft}"=Iterationsverfahren eine Lösung für die Differentialgleichung zu finden, da der Berechnungsaufwand des im Folgenden hergeleiteten Verfahrens eine Integration in das Iterationsverfahren im Rahmen dieser Arbeit unmöglich macht.
 Die Grundidee ist die Verwendung eines Galerkin-Verfahrens für die Differentialgleichung mit anschließendem Aufsetzen eines Reduzierte-Basis-Ansatzes.
-Für diesen ist es notwendig die Differentialgleichung zu parametrisieren, indem die in der Differentialgleichung auftretenden Felder in einem geeigneten Funktionensystem entwickelt werden.
+Für diesen ist es notwendig, die Differentialgleichung zu parametrisieren, indem die in der Differentialgleichung auftretenden Felder in einem geeigneten Funktionensystem entwickelt werden.
 Dieses sollte so gewählt werden, dass die Entwicklungskoeffizienten möglichst schnell abfallen.
 Hierzu sei auf \cref{figure:felder_nach_iterationsverfahren} verwiesen, welche ein Felder-Paar von einem Iterationsdurchlauf und dessen Fourier-Koeffizienten zeigt.
 
 
 \subsection*{Inhaltlicher Aufbau}
 
-In \cref{chapter:grundlagen} werden zunächst die die funktionalanalytischen Grundlagen eingeführt beziehungsweise wiederholt, welche dann in \cref{chapter:propagator_differentialgleichung} verwendet werden um die parabolische partielle Differentialgleichung, welche im Rahmen dieser Einleitung bereits vorgestellt wurde, unter passenden Rahmenbedingungen zu formalisieren.
+In \cref{chapter:grundlagen} werden zunächst die funktionalanalytischen Grundlagen eingeführt beziehungsweise wiederholt, welche dann in \cref{chapter:propagator_differentialgleichung} verwendet werden, um die parabolische partielle Differentialgleichung, welche im Rahmen dieser Einleitung bereits vorgestellt wurde, unter passenden Rahmenbedingungen zu formalisieren.
 Weiter parametrisieren wir die Differentialgleichung und weisen unter bestimmten Bedingungen eine Regularität der Lösungen der Differentialgleichung vom Parameter nach.
 
-Nachfolgend werden in \cref{chapter:galerkin} die ersten numerischen Grundlagen in Form des Petrov-Galerkin-Verfahrens gelegt und an einigen Beispiele analysiert, um dann darauf aufbauend in \cref{chapter:rbm} die Reduzierte-Basis-Methoden einzuführen und diese ebenfalls auf die in dieser Arbeit betrachtete Problemstellung anzuwenden.
+Nachfolgend werden in \cref{chapter:galerkin} die ersten numerischen Grundlagen in Form des Petrov-Galerkin-Verfahrens gelegt und an Beispielen analysiert, um dann darauf aufbauend in \cref{chapter:rbm} die Reduzierte-Basis-Methode einzuführen und diese ebenfalls auf die in dieser Arbeit betrachtete Problemstellung anzuwenden.
 
 Abschließend wird in \cref{chapter:ausblick} ein Résumé der Arbeit und daran anknüpfend ein Ausblick, welcher mögliche Ansatzpunkte für Verbesserungen und Weiterentwicklungen erläutert, gegeben.
 
