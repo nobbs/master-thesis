@@ -29,7 +29,7 @@ erfüllt.
 
 Als \emph{Petrov"=Galerkin"=Verfahren} werden diejenigen Galerkin"=Verfahren bezeichnet, die auf Variationsprobleme mit nicht-übereinstimmendem Ansatz- und Testraum $\mathcal X$ respektive $\mathcal Y$ zugeschnitten sind.
 
-Wie es bei Galerkin"=Verfahren üblich ist, wird eine Diskretisierung des Variationsproblems \cref{eq:galerkin_abstraktes_variationsproblem} durch Approximation der im Allgemeinen unendlichdimensionalen Hilberträume mittels $\mathcal N$- beziehungsweise $\mathcal M$-dimensionaler Unterräume $\mathcal X_{\mathcal N} \subset \mathcal X$, $\mathcal Y_{\mathcal M} \subset \mathcal Y$ erreicht.
+Wie es bei Galerkin"=Verfahren üblich ist, wird eine Diskretisierung des Variationsproblems \cref{eq:galerkin_abstraktes_variationsproblem} durch Approximation der im Allgemeinen unendlichdimensionalen Hilberträume mittels $\mathcal N$- beziehungsweise $\mathcal M$-dimensionaler Unterräume $\mathcal X_{\mathcal N} \subset \mathcal X$ und $\mathcal Y_{\mathcal M} \subset \mathcal Y$ erreicht.
 Zwar ist auch für den Fall $\mathcal M > \mathcal N$ eine sinnvolle Formulierung einer Diskretisierung möglich, diese erfolgt dann allerdings im Sinne einer Residuums-Minimierung, wie beispielsweise bei \cite{Andreev:2012ep}.
 Da sich dies nicht ohne Weiteres mit der beabsichtigten Verwendung als Grundlage für eine Reduzierte"=Basis"=Methode verträgt, beschränken wir uns auf den Fall $\mathcal N = \mathcal M$.
 
@@ -49,15 +49,15 @@ Zur einfacheren Unterscheidung bezeichnen wir \cref{eq:galerkin_abstraktes_varia
     Anders als bei den Galerkin"=Verfahren für elliptische Probleme führt eine solche Diskretisierung eines korrekt gestellten Problems nicht automatisch zu einem korrekt gestellten diskreten Problem.
     Wegen der Ungleichung
     \begin{equation}
-        \sup_{v \in \mathcal Y} \frac{b(u, v)}{\norm{v}_{\mathcal Y}} \geq \sup_{v \in \mathcal Y_{\mathcal N}} \frac{b(u, v)}{\norm{v}_{\mathcal Y}}, \quad \fa u \in \mathcal X,
+        \sup_{v \in \mathcal Y} \frac{b(u, v)}{\norm{v}_{\mathcal Y}} \geq \sup_{v \in \mathcal Y_{\mathcal N}} \frac{b(u, v)}{\norm{v}_{\mathcal Y}} \quad \fa u \in \mathcal X
     \end{equation}
     ist die stetige inf-sup-Bedingung \cref{eq:galerkin_abstraktes_variationsproblem_infsup_bedingung} kein hinreichendes Kriterium für die Gültigkeit der diskreten inf-sup-Bedingung
     \begin{equation}\label{eq:diskrete_inf_sup_kosntante}
-        \beta_{\mathcal N} := \inf_{u \in \mathcal X_{\mathcal N}} \sup_{v \in \mathcal Y_{\mathcal N}} \frac{b(u, v)}{\norm{u}_{\mathcal X} \norm{v}_{\mathcal Y}} > 0.
+        \beta_{\mathcal N} := \infsup{u \in \mathcal X_{\mathcal N}}{v \in \mathcal Y_{\mathcal N}} \frac{b(u, v)}{\norm{u}_{\mathcal X} \norm{v}_{\mathcal Y}} > 0.
     \end{equation}
     Allerdings gilt aufgrund der endlichen Dimension $\mathcal N$ von $\mathcal X_{\mathcal N}$ und $\mathcal Y_{\mathcal N}$ stets die Gleichheit
     \begin{equation}
-        \inf_{u \in \mathcal X_{\mathcal N}} \sup_{v \in \mathcal Y_{\mathcal N}} \frac{b(u, v)}{\norm{u}_{\mathcal X} \norm{v}_{\mathcal Y}} = \inf_{v \in \mathcal Y_{\mathcal N}} \sup_{u \in \mathcal X_{\mathcal N}} \frac{b(u, v)}{\norm{u}_{\mathcal X} \norm{v}_{\mathcal Y}}.
+        \infsup{u \in \mathcal X_{\mathcal N}}{v \in \mathcal Y_{\mathcal N}} \frac{b(u, v)}{\norm{u}_{\mathcal X} \norm{v}_{\mathcal Y}} = \infsup{v \in \mathcal Y_{\mathcal N}}{u \in \mathcal X_{\mathcal N}} \frac{b(u, v)}{\norm{u}_{\mathcal X} \norm{v}_{\mathcal Y}}.
     \end{equation}
     Die Stetigkeit dagegen muss nicht explizit nachgewiesen werden, da die diskreten Stetigkeitskonstanten stets durch die des stetigen Variationsproblems von oben beschränkt werden.
 \end{Bemerkung}
@@ -88,7 +88,7 @@ Das die diskrete inf-sup-Konstante bei den Petrov"=Galerkin"=Verfahren eine wich
     \end{Beweis}
 \end{Satz}
 
-Verfeinert man die Diskretisierungen, dann will man üblicherweise erreichen, dass die Abweichung zwischen stetiger und diskreter Lösung gegen Null konvergiert.
+Verfeinert man die Diskretisierungen, dann will man üblicherweise erreichen, dass die Abweichung zwischen stetiger und diskreter Lösung kleiner wird.
 Um dies aus dem Lemma von Céa zu erhalten, wird der folgende Stabilitätsbegriff notwendig.
 
 \begin{Definition}\label{definition:stabile_diskretisierung}
@@ -105,7 +105,7 @@ Abschließend führen wir eine alternative Darstellung der inf-sup-Konstante $\b
 \begin{Definition}\label{definition:supremizing_operator}
     Der \emph{Supremizing-Operator} $T \colon \mathcal X \to \mathcal Y$ der Bilinearform $b$ aus \cref{eq:galerkin_abstraktes_variationsproblem} sei definiert als
     \begin{equation}
-        \skp{Tu}{v}{\mathcal Y} := b(u, v), \quad \fa u \in \mathcal X, v \in \mathcal Y.
+        \skp{Tu}{v}{\mathcal Y} := b(u, v) \quad \fa u \in \mathcal X, v \in \mathcal Y.
     \end{equation}
 \end{Definition}
 
@@ -138,111 +138,89 @@ Abschließend führen wir eine alternative Darstellung der inf-sup-Konstante $\b
         Daraus folgt auch die zweite Gleichung, denn es gilt
         \begin{equation}
             \beta
-            = \inf_{u \in \mathcal X} \sup_{v \in \mathcal Y} \frac{b(u, v)}{\norm{u}_{\mathcal X} \norm{v}_{\mathcal Y}}
+            = \infsup{u \in \mathcal X}{v \in \mathcal Y} \frac{b(u, v)}{\norm{u}_{\mathcal X} \norm{v}_{\mathcal Y}}
             = \inf_{u \in \mathcal X} \frac{b(u, Tu)}{\norm{u}_{\mathcal X} \norm{Tu}_{\mathcal Y}}
             = \inf_{u \in \mathcal X} \frac{\skp{Tu}{Tu}{\mathcal Y}}{\norm{u}_{\mathcal X}\norm{Tu}_{\mathcal Y}}
             = \inf_{u \in \mathcal X} \frac{\norm{Tu}_{\mathcal Y}}{\norm{u}_{\mathcal X}}.
         \end{equation}
     \end{Beweis}
 \end{Lemma}
-Ferner erhalten wir damit auch $\beta^{2} = \inf_{u \in \mathcal X} \left[{\skp{Tu}{Tu}{\mathcal Y}}/{\norm{u}_{\mathcal X}^{2}}\right]$.
+Ferner erhalten wir damit auch
+\begin{equation}
+    \beta^{2} = \inf_{u \in \mathcal X} \frac{\skp{Tu}{Tu}{\mathcal Y}}{\norm{u}_{\mathcal X}^{2}}.
+\end{equation}
 
 
-% TODO: hier gehts weiter
 \section{Raum-Zeit-Diskretisierung} % (fold)
 \label{section:raum_zeit_diskretisierung}
 
-Wir kehren zu der Raum"=Zeit"=Variationsformulierung \cref{eq:raum_zeit_variationsformulierung} respektive \cref{eq:parametrisches_rz_variationsproblem} der Propagator"=Differentialgleichung aus \cref{chapter:propagator_differentialgleichung} zurück und wollen an dieser Stelle eine Diskretisierung mit Hilfe eines Petrov"=Galerkin"=Verfahrens durchführen.
-Dazu konstruieren wir nun endlichdimensionale Unterräume $\mathcal X_{\mathcal N}$ und $\mathcal Y_{\mathcal N}$, für welche wir anschließend Bedingungen angeben, die zu einer stabilen Diskretisierung im Sinne von \cref{definition:stabile_diskretisierung} führen.
+Wir kehren nun zu der Raum"=Zeit"=Variationsformulierungen \cref{eq:raum_zeit_variationsformulierung} und \cref{eq:parametrisches_rz_variationsproblem} der Propagator"=Differentialgleichung aus \cref{chapter:propagator_differentialgleichung} zurück und wollen diese mit Hilfe eines Petrov"=Galerkin"=Verfahrens diskretisieren.
+Dies erfordert die Konstruktion endlichdimensionaler Unterräume $\mathcal X_{\mathcal N}$ und $\mathcal Y_{\mathcal N}$.
+Anschließend werden für diese eine hinreichende Bedingung für die Stabilität im Sinne von \cref{definition:stabile_diskretisierung} angeben.
 
-Um dies zu bewerkstelligen, greifen wir auf die Charakterisierung der Bochner"=Sobolev"=Räume als Hilbertraum-Tensorprodukte aus \cref{satz:bochner_sobolev_raum_als_tensorprodukt} zurück und können so die nachfolgende Konstruktion in einen rein-räumlichen und einen rein-zeitlichen Anteil zerlegen.
+Dieser Abschnitt orientiert sich an den Ausführungen von \textcite{Andreev:2012uh,Andreev:2012ep} und nutzt die Charakterisierung der Bochner"=Sobolev"=Räume als Hilbertraum"=Tensorprodukte aus \cref{satz:bochner_sobolev_raum_als_tensorprodukt}, um die Konstruktion so in einen rein"=zeitlichen und einen rein"=räumlichen Anteil zu zerlegen.
 
-\begin{Korollar}
-    Der verwendete Ansatz- und Testraum \cref{eq:ansatzraum_X,eq:testraum_Y} lassen sich auch schreiben als
-    \begin{equation}
-        \label{eq:ansatzraum_testraum_tensor}
-        \begin{aligned}
-        \mathcal X &= L_{2}(I; V) \cap H^{1}(I; V')
-            = (L_2(I) \otimes V) \cap (H^{1}(I) \otimes V'),\\
-        \mathcal Y &= L_{2}(I; V) \times H = (L_{2}(I) \otimes V) \times H.
-        \end{aligned}
+\begin{Korollar}\label{korollar:ansatz_und_testraum_als_tensorprodukt}
+    Die Hilberträume $\mathcal X$ und $\mathcal Y$ aus \cref{eq:ansatzraum_X,eq:testraum_Y} lassen sich schreiben als
+    \begin{equation}\label{eq:ansatzraum_testraum_tensor}
+        \mathcal X \cong (L_2(I) \otimes V) \cap (H^{1}(I) \otimes V'),
+        \qquad
+        \mathcal Y \cong (L_{2}(I) \otimes V) \times H.
     \end{equation}
 \end{Korollar}
 
-Die nachfolgende Konstruktion orientiert sich an \cite{Andreev:2012uh,Andreev:2012ep}.
-Für die zeitliche Komponente verwenden wir die zwei endlichdimensionalen Räume $E_{\mathcal K} \subset H^{1}(I)$ und $F_{\mathcal K} \subset L_{2}(I)$ konstruieren, wobei die Dimensionen so gewählt werden, dass
-\begin{equation}
-    \label{eq:dimensionen_zeitliche_raeume}
-    \dim E_{\mathcal K} = \mathcal K + 1, \qquad \dim F_{\mathcal K} = \mathcal K
-\end{equation}
-gilt.
-Die Räume $V, H$ und $V'$ der räumlichen Komponenten können wir aufgrund der Gelfand-Tripel-Struktur alle durch den selben endlichdimensionalen Raum $V_{\mathcal J} \subset V$ diskretisieren, welcher die Dimension
-\begin{equation}
-    \label{eq:dimension_raeumliche_raeume}
-    \dim V_{\mathcal J} = \mathcal J
-\end{equation}
-hat.
-Diese Teilräume liefern nun zusammen mit der Tensorprodukt-Darstellung \cref{eq:ansatzraum_testraum_tensor} von Ansatz- und Testraum die Diskretisierungen
+Für den zeitlichen Anteil werden wir die beiden endlichdimensionalen Unterräume $E_{\mathcal K} \subset H^{1}(I)$ und $F_{\mathcal K} \subset L_{2}(I)$ mit den Dimensionen $\dim E_{\mathcal K} = \mathcal K + 1$ und $\dim F_{\mathcal K} = \mathcal K$ verwenden.
+Die Räume $V, H$ und $V'$ der räumlichen Komponente können aufgrund der Gelfand"=Tripel"=Struktur
+durch den selben endlichdimensionalen Raum $V_{\mathcal J} \subset V$ diskretisiert werden.
+Dieser wird die Dimension $\dim V_{\mathcal J} = \mathcal J$ haben.
+
+Diese Teilräume liefern dann zusammen mit der Tensorprodukt-Darstellung \cref{eq:ansatzraum_testraum_tensor} die Diskretisierungen
 \begin{equation}
 \label{eq:diskrete_tensor_raueme}
     \mathcal X_{\mathcal N} := E_{\mathcal K} \otimes V_{\mathcal J}, \qquad \mathcal Y_{\mathcal N} := (F_{\mathcal K} \otimes V_{\mathcal J}) \times V_{\mathcal J}
 \end{equation}
-mit den Dimensionen
+mit der Dimension
 \begin{equation}
     \mathcal N := \dim \mathcal X_{\mathcal N} = (\mathcal K + 1) \mathcal J = \mathcal K \mathcal J + \mathcal J = \dim \mathcal Y_{\mathcal N}.
 \end{equation}
-An dieser Stelle definieren wir weiter die Größe $\mathcal I := \mathcal K \mathcal J$.
+Ferner definieren wir an dieser Stelle die Größe $\mathcal I := \mathcal K \mathcal J$.
 
-Nachdem nun geklärt ist, wie die Raum-Zeit-Räume zusammengesetzt werden können, konstruieren wir nun die einzelnen Bauteile.
 
-\subsection*{Zeitliche Komponente}
+\paragraph{Zeitliche Komponente.} % (fold)
+\label{par:zeitliche_komponente}
 
-Für die zeitliche Komponente benötigen wir zunächst eine Diskretisierung des Zeitintervalls $I = [0, T]$ in Form eines nicht notwendigerweise äquidistanten Gitters
-\begin{equation}
-\label{eq:zeitgitter}
+Hierfür benötigen wir zunächst eine Diskretisierung des Zeitintervalls $I = [0, T]$ in Form eines nicht notwendigerweise äquidistanten Gitters
+\begin{equation}\label{eq:zeitgitter}
     \mathcal T_{\mathcal K} := \Set{0 = t_0 < t_1 < \dots < t_{\mathcal K - 1} < t_{\mathcal K} = T} \subset I.
 \end{equation}
+Die Diskretisierung $E_{\mathcal K}$ des Ansatzraumes basiert auf stetigen, stückweise affinen Funktionen, genauer den klassischen Hutfunktionen $\theta_{k}$ auf den Gitterpunkten $t_{k} \in \mathcal T_{\mathcal K}$ für $k = 0, \dots, \mathcal K$.
+Diese erfüllen $\theta_{k}(t_{\tilde{k}}) = \delta_{k \tilde k}$, wobei $\delta_{k \tilde k}$ das bekannte Kronecker-Delta sei.
+Wir fassen diese Hutfunktionen zu einer Basis $\mathcal B^{E}_{\mathcal K} := \Set{ \theta_{k} \given k = 0, \dots, \mathcal K }$ zusammen und definieren $E_{\mathcal K} := \spn \mathcal B^{E}_{\mathcal K}$.
 
-Für die Diskretisierung $E_{\mathcal K}$ des Ansatzraumes verwenden wir stetige, stückweise affine Funktionen, genauer die klassischen Hutfunktionen $\theta_{k}$ auf den Gitterpunkten $t_{k} \in \mathcal T_{\mathcal K}$ für $k = 0, \dots, \mathcal K$.
-Diese lassen sich alternativ mittels $\theta_{k}(t_{\tilde{k}}) = \delta_{k \tilde k}$ auch durch das bekannte Kronecker-Delta $\delta_{k \tilde k}$ charakterisieren.
-Wir fassen diese Hutfunktionen zu einer Basis $\mathcal B^{E}_{\mathcal K}$ zusammen und definieren damit
-\begin{equation}
-    \label{eq:zeitanteil_ansatzraum}
-    E_{\mathcal K} := \spn \mathcal B^{E}_{\mathcal K} = \spn \Set{ \theta_{k} \given k = 0, \dots, \mathcal K }.
-\end{equation}
+Für den Testraum-Anteil $F_{\mathcal K}$ verwenden wir stattdessen stückweise konstante Funktionen, die als charakteristische Funktionen $\xi_{k} := \chi_{(t_{k-1}, t_{k})}$ der Teilintervalle $(t_{k - 1}, t_{k}) \subset I$ mit $k = 1, \dots, \mathcal K$ gegeben sind.
+Diese seien zu der Basismenge $\mathcal B^{F}_{\mathcal K} := \Set{ \xi_{k} \given k = 1, \dots, \mathcal K}$ zusammengefasst und weiter definieren wir $F_{\mathcal K} := \spn \mathcal B^{F}_{\mathcal K}$.
 
-Für den Testraum-Anteil $F_{\mathcal K}$ verwenden wir stattdessen durch charakteristische Funktionen gegebene stückweise konstante Funktionen $\xi_{k} = \chi_{(t_{k-1}, t_{k})}$ auf den Teilintervallen $(t_{k - 1}, t_{k}) \subset I$ mit den Gitterpunkten $t_{k} \in \mathcal T_{\mathcal K}$.
-Erneut fassen wir diese zu einer Basismenge $\mathcal B^{F}_{\mathcal K}$ zusammen und definieren
-\begin{equation}
-    \label{eq:zeitanteil_testraum}
-    F_{\mathcal K} := \spn \mathcal B^{F}_{\mathcal K} = \spn \Set{ \xi_{k} \given k = 1, \dots, \mathcal K}.
-\end{equation}
-
-Nach \cite{Andreev:2012ep} führt diese Wahl von Basisfunktionen für Ansatz- und Testraum zu einem Crank-Nicolson-ähnlichen Verfahren, welches auch als Time-Stepping-Verfahren interpretiert werden kann.
-Darauf wollen wir an dieser Stelle nicht weiter eingehen, da wir die resultierenden diskreten Raum-Zeit-Variationsprobleme direkt lösen werden.
+Diese Wahl von Ansatz- und Testraum-Anteil führt nach \cite{Andreev:2012ep} zu einem Crank"=Nicolson"=ähnlichen Verfahren, welches dementsprechend auch als Time"=Stepping"=Verfahren aufgefasst werden kann.
 
 
-\subsection*{Räumliche Komponente} % (fold)
+\paragraph{Räumliche Komponente.} % (fold)
+\label{par:raeumliche_komponente}
 
-Auf die räumliche Diskretisierung im Allgemeinen Fall wollen wir hier nur kurz eingehen.
-Hierzu können die meisten von Galerkin-Verfahren bekannten Ansätze verwendet werden, beispielsweise die Bestimmung einer Triangulation von $\Omega$ und anschließende Verwendung von Finiten-Elementen, aber auch globale Basisfunktionen sind denkbar.
-Wir werden bei der Stabilitätsuntersuchung im nachfolgenden Abschnitt feststellen, dass das resultierende Raum-Zeit-Verfahren in gewisser Weise modular bezüglich der räumlichen Komponente ist, weswegen wir an dieser Stelle nur eine notationelle Definition tätigen wollen.
+Hier wollen wir nur die verwendeten Notationen festlegen, da für den räumlichen Anteil die meisten von Galerkin"=Verfahren bekannten Ansätze, beispielsweise Finiten"=Elemente oder globale Basisfunktionen, verwendet werden können.
 
-Für den räumlichen Anteil definieren wir ebenfalls eine Basis, $\mathcal B^{V}_{\mathcal J}$, und den endlichdimensionalen Raum durch
-\begin{equation}
-    \label{eq:raeumlicher_anteil}
-    V_{\mathcal J} := \spn \mathcal B^{V}_{\mathcal J} = \spn \Set{ \eta_{j} \given j = 1, \dots, \mathcal J}.
-\end{equation}
+Wir definieren erneut eine endliche Basismenge $\mathcal B^{V}_{\mathcal J} := \Set{ \eta_{j} \given j = 1, \dots, \mathcal J}$ und darauf aufbauend den endlichdimensionalen Raum $V_{\mathcal J} := \spn \mathcal B^{V}_{\mathcal J}$.
 
 
-\subsection*{Raum-Zeit-Diskretisierung} % (fold)
+\paragraph{Raum-Zeit-Diskretisierung.} % (fold)
+\label{par:raum_zeit_diskretisierung}
 
 Unter Verwendung der Tensorprodukt-Darstellung \cref{eq:ansatzraum_testraum_tensor} können wir nun die beiden einzeln betrachteten Komponenten zu den endlichdimensionalen Raum"=Zeit"=Unterräumen zusammensetzen.
-Dazu definieren wir mittels Tensorprodukt zunächst die Basen
+Dazu definieren wir zunächst die Basen
 \begin{equation}
 \label{eq:diskreter_ansatzraum_basis_phi}
 \label{eq:diskreter_testraum_basis_psi1}
-    \mathcal B^{\mathcal X}_{\mathcal N} := \Set{\theta \otimes \eta \given \theta \in \mathcal B^{E}_{\mathcal K}, \eta \in \mathcal B^{V}_{\mathcal J}}, \quad
+    \mathcal B^{\mathcal X}_{\mathcal N} := \Set{\theta \otimes \eta \given \theta \in \mathcal B^{E}_{\mathcal K}, \eta \in \mathcal B^{V}_{\mathcal J}},
+    \qquad
     \mathcal B^{\mathcal Y_{1}}_{\mathcal I} := \Set{\xi \otimes \eta \given \xi \in \mathcal B^{F}_{\mathcal K}, \eta \in \mathcal B^{V}_{\mathcal J}}.
 \end{equation}
 und weiter
@@ -258,64 +236,57 @@ Nach Konstruktion und den Definitionen \cref{eq:diskrete_tensor_raueme} gilt nun
     \mathcal Y_{\mathcal N} = (F_{\mathcal K} \otimes V_{\mathcal J}) \times V_{\mathcal J} = \spn \mathcal B^{\mathcal Y}_{\mathcal N}.
 \end{equation}
 
-\subsection*{Stabilität der Diskretisierung} % (fold)
 
-Wie bereits erwähnt, wollen wir an dieser Stelle Bedingungen angeben, unter denen die diskreten Raum-Zeit-Räume $\mathcal X_{\mathcal N}$ und $\mathcal Y_{\mathcal N}$ aus \cref{eq:diskreter_ansatz_und_testraum_als_span} zu stabilen Diskretisierungen im Sinne von \cref{definition:stabile_diskretisierung} führen.
-Hierzu verweisen wir erneut auf die Arbeit \cite[Section 5.2]{Andreev:2012ep}, in welcher \citeauthor{Andreev:2012ep} für drei verschiedene Ansätze für die zeitliche Komponente die Stabilität unter gewissen Bedingungen nachweist.
-Da für einen korrekten und verständlichen Nachweis dieser Aussagen eine extensive Vorarbeit notwendig ist, verzichten wir an dieser Stelle darauf und verweisen auf obige Arbeit.
-Stattdessen beschränken wir uns auf die Einführung des Nötigsten um die Bedingungen anzugeben und kehren bei den numerischen Experimenten noch einmal zur Stabilität zurück.
+\paragraph{Stabilität der Diskretisierung.} % (fold)
+\label{par:stabilit_t_der_diskretisierung}
 
-Für den hier konstruierten Fall führen die Ausführungen in \cite{Andreev:2012ep} zu einer Courant-Friedrichs-Levi-Bedingung, kurz CFL-Bedingung, wie man sie üblicherweise bei der Diskretisierung von hyperbolischen partiellen Differentialgleichung antrifft.
-Dazu definieren wir zunächst die maximale Schrittweite des Zeitgitters $\mathcal T_{\mathcal K}$ als
-\begin{equation}
-    \label{eq:maximale_zeitschrittweite}
-    \max \Delta \mathcal T_{\mathcal K} := \max_{k = 1, \dots, \mathcal K} \abs{t_{k} - t_{k - 1}}
-\end{equation}
-und weiter die sogenannte CFL-Zahl nach \cite[62]{Andreev:2012ep}.
+Wie bereits angesprochen, wollen wir eine hinreichende Bedingungen für die Stabilität der beschriebenen Diskretisierung im Sinne von \cref{definition:stabile_diskretisierung} angeben.
+Dies können wir an dieser Stelle nur für die nicht"=parametrische Variationsformulierung \cref{eq:raum_zeit_variationsformulierung} ausführen.
+Ferner können wir nur eine knappe Übersicht ohne Beweise und tiefergehende Motivation bringen, weswegen auf die zugrundeliegende Arbeit \cite[Section 5.2]{Andreev:2012ep} verwiesen sei.
 
-\begin{Definition}
-    Seien $\mathcal T_{\mathcal K}$ ein Gitter des Zeitintervalls $I = [0, T]$ und $V_{\mathcal J} \subset V$ ein endlichdimensionaler Unterraum.
-    Als \emph{Courant-Friedrichs-Levi-Zahl}, kurz \emph{CFL-Zahl}, der Diskretisierung $(\mathcal X_{\mathcal N}, \mathcal Y_{\mathcal N})$ aus \cref{eq:diskreter_ansatz_und_testraum_als_span} bezeichnen wir
+Die hier konstruierte Diskretisierung führt hauptsächlich zu einer Bedingung an die räumliche Diskretisierung $V_{\mathcal J}$.
+Bevor wir diese angeben können, benötigen wir die nachfolgende Definition nach \cite[62]{Andreev:2012ep}, die in ähnlicher Form oft bei der Behandlung von hyperbolischen partiellen Differentialgleichung auftritt.
+
+\begin{Definition}\label{definiton:cfl_zahl}
+    Es seien $V_{\mathcal J} \subset V$ ein endlichdimensionaler Unterraum, $\mathcal T_{\mathcal K}$ ein Gitter des Zeitintervalls $I$ und weiter sei durch $\max \Delta \mathcal T_{\mathcal K} := \max_{k = 1, \dots, \mathcal K} \abs{t_{k} - t_{k - 1}}$ die maximale Schrittweite des Zeitgitters gegeben.
+    Wir bezeichnen die Größe
     \begin{equation}
         \label{eq:cfl_zahl}
-        \mathrm{CFL}_{\mathcal N} := \max \Delta \mathcal T_{\mathcal K} \sup_{\eta \in V_{\mathcal J} \setminus \Set{0} } \frac{\norm{\eta}_{V}}{\norm{\eta}_{V'}}.
+        \mathrm{CFL}_{\mathcal N} := \max \Delta \mathcal T_{\mathcal K} \sup_{\eta \in V_{\mathcal J} \setminus \Set{0} } \frac{\norm{\eta}_{V}}{\norm{\eta}_{V'}}
     \end{equation}
+    als \emph{Courant-Friedrichs-Levi-Zahl}, kurz \emph{CFL-Zahl}, der Diskretisierung $(\mathcal X_{\mathcal N}, \mathcal Y_{\mathcal N})$ aus \cref{eq:diskreter_ansatz_und_testraum_als_span}.
 \end{Definition}
 
 \begin{Bemerkung}
     Ist $V_{\mathcal J}$ endlichdimensional, dann gilt insbesondere $\mathrm{CFL}_{\mathcal N} < \infty$.
 \end{Bemerkung}
 
-Weiter werden wir noch eine gewisse inf"=sup"=Konstante benötigen, welche in \cite[57]{Andreev:2012ep} aus der Konstruktion einer äquivalenten Norm auf $\mathcal X$ resultiert, die dann für den Stabilitätsnachweis \cite[Theorem 5.2.6]{Andreev:2012ep} verwendet wird.
-
-An dieser Stelle benötigen wir die Operatorfamilie $\Set{A(t)}_{t \in I}$ aus \cref{eq:operator_zeit}.
-Ohne Einschränkung nehmen wir nach \cref{lemma:transformation_zu_elliptischem_operator} an, dass diese eine G\aa{}rding-Ungleichung mit $\lambda = 0$ erfüllen.
-Dadurch sind diese Operatoren nach \cref{korollar:bilinearform_elliptisch} elliptisch und nach dem Satz von Lax-Milgram \cite[Section 6.2.1]{evans2010partial} stetig invertierbar.
-Weiter wird die Selbstadjungiertheit aus \cref{lemma:operator_selbstadjungiert} benötigt.
-Dies erlaubt es uns aufbauend auf diese Operatoren zwei Skalarprodukte respektive Normen durch
+Weiter führen wir eine gewisse inf"=sup"=Konstante ein, welche in \cite[57]{Andreev:2012ep} aus der Konstruktion einer äquivalenten Norm auf $\mathcal X$ resultiert, die dann für den Stabilitätsnachweis \cite[Theorem 5.2.6]{Andreev:2012ep} verwendet wird.
+Dazu benötigen wir die Operatorfamilie $\Set{A(t)}_{t \in I}$ aus \cref{eq:operator_zeit}, von welcher wir weiter fordern, dass sie selbstadjungiert ist und die G\aa{}rding"=Ungleichung mit $\lambda = 0$ erfüllt.
+Ersteres gilt nach \cref{lemma:operator_selbstadjungiert}, während letzteres durch \cref{lemma:transformation_zu_elliptischem_operator} erreicht werden kann.
+Unter diesen Voraussetzungen garantiert der Satz von Lax-Milgram \cite[Section 6.2.1]{evans2010partial} die stetige Invertierbarkeit von $A(t)$.
+Ferner erlaubt es uns die Definition zweier Skalarprodukte beziehungsweise Normen durch
 \begin{equation}
     \begin{aligned}
-        \skp{v_{1}}{\tilde{v}_{1}}{+} &:= \int_{I} \skp{A(t)v_{1}(t)}{\tilde{v}_{1}(t)}{V' \times V} \diff t, \\
-         \norm{v_{1}}^{2}_{+} &:= \skp{v_{1}}{v_{1}}{+},
-    \end{aligned}
-    \qquad \text{für } v_{1}, \tilde{v}_{1} \in \mathcal Y_{1} := L_{2}(I; V),
-\end{equation}
-und
-\begin{equation}
-    \begin{aligned}
-        \skp{z}{\tilde{z}}{-} &:= \int_{I} \skp{A(t)^{-1} z}{\tilde z}{V \times V'} \diff t, \\
+        \skp{v}{\tilde{v}}{+} &:= \int_{I} \skp{A(t)v(t)}{\tilde{v}(t)}{V' \times V} \diff t,
+        \quad&
+        \norm{v}^{2}_{+} &:= \skp{v}{v}{+},
+        \qquad
+        v, \tilde{v} \in L_{2}(I; V), \\
+        \skp{z}{\tilde{z}}{-} &:= \int_{I} \skp{A(t)^{-1} z(t)}{\tilde z(t)}{V \times V'} \diff t,
+        \quad&
         \norm{z}_{-}^{2} &:= \skp{z}{z}{-},
+        \qquad z, \tilde z \in L_{2}(I; V').
     \end{aligned}
-    \qquad \text{für } z, \tilde z \in \mathcal Y_{1}' = L_{2}(I; V'),
 \end{equation}
-zu definieren.
-Mit Hilfe dieser Normen definieren wir nun die angesprochene inf"=sup"=Konstante nach \cite[57]{Andreev:2012ep} als
-\begin{equation}
-    \beta_{\pm}(\mathcal X_{\mathcal N}, \mathcal Y_{\mathcal N}) := \inf_{u \in \mathcal X_{\mathcal N}} \sup_{v \in \mathcal Y_{\mathcal N}} \frac{\int_{I} \skp{u_t(t)}{v_{1}(t)}{V' \times V} \diff t}{\norm{u_t}_{-} \norm{v_{1}}_{+}},
-\end{equation}
-wobei Infimum und Supremum bezüglich aller Elemente gebildet werden, für die der Nenner nicht Null wird.
 
-Unter Verwendung dieser Definitionen lässt sich letztendlich die nachfolgende Stabilitätsaussage nachweisen.
+Mit dieser Vorarbeit können wir nun die angesprochene inf"=sup"=Konstante nach \cite[57]{Andreev:2012ep} als
+\begin{equation}
+    \beta_{\pm}(\mathcal X_{\mathcal N}, \mathcal Y_{\mathcal N}) := \infsup{u \in \mathcal X_{\mathcal N}}{v \in \mathcal Y_{\mathcal N}} \frac{\int_{I} \skp{u_t(t)}{v_{1}(t)}{V' \times V} \diff t}{\norm{u_t}_{-} \norm{v_{1}}_{+}}
+\end{equation}
+definieren, wobei Infimum und Supremum bezüglich aller Elemente gebildet werden, für die der Nenner nicht Null wird.
+
+Unter Verwendung der CFL"=Zahl und dieser inf"=sup"=Konstante lässt sich letztendlich die folgende Stabilitätsaussage nachweisen.
 
 \begin{Satz}
     Seien $\Set{(\mathcal X_{\mathcal N}, \mathcal Y_{\mathcal N})}_{\mathcal N \geq 1}$ Diskretisierungen der Form \cref{eq:diskreter_ansatz_und_testraum_als_span}.
@@ -325,9 +296,9 @@ Unter Verwendung dieser Definitionen lässt sich letztendlich die nachfolgende S
         \quad \text{und} \quad
         \inf_{\mathcal N \geq 1} \beta_{\pm}(\mathcal X_{\mathcal N}, \mathcal Y_{\mathcal N}) > 0,
     \end{equation}
-    dann existiert eine Konstante $c_{0} > 0$ und es gilt für die diskrete inf"=sup"=Konstante $\beta_{\mathcal N}$ aus \cref{eq:diskrete_inf_sup_kosntante} die Abschätzung
+    dann existiert eine Konstante $c_{0} > 0$ und für die diskrete inf"=sup"=Konstante $\beta_{\mathcal N}$ aus \cref{eq:diskrete_inf_sup_kosntante} gilt die Abschätzung
     \begin{equation}
-        \beta_{\mathcal N} \geq c_{0} \min\Set{1, \beta_{\pm}(\mathcal X_{\mathcal N}, \mathcal Y_{\mathcal N})} \min\Set{1, \mathrm{CFL}_{\mathcal N}^{-1}} \quad \fa \mathcal N \geq 1.
+        \beta_{\mathcal N} \geq c_{0} \min\Set{1, \beta_{\pm}(\mathcal X_{\mathcal N}, \mathcal Y_{\mathcal N})} \min\Set{1, \mathrm{CFL}_{\mathcal N}^{-1}} \quad \text{für } \mathcal N \geq 1.
     \end{equation}
 
     \begin{Beweis}
@@ -335,14 +306,15 @@ Unter Verwendung dieser Definitionen lässt sich letztendlich die nachfolgende S
     \end{Beweis}
 \end{Satz}
 
+Da eine ausführlichere Bearbeitung der Stabilität respektive obiger Stabilitätsaussage den Rahmen dieser Arbeit übersteigt, werden wir erst am Ende dieses Kapitels dazu zurückkehren und die Stabilität anhand von Beispielen numerisch überprüfen.
+
 
 \section{Numerische Umsetzung} % (fold)
 \label{section:galerkin_numerische_umsetzung}
 
-Nachdem nun die benötigten Grundlagen in einem möglichst allgemeinen Rahmen gelegt wurden, widmen wir uns nun der Anwendung dieser auf die schwache parametrische Formulierung der Propagator-Differentialgleichung.
-
-Um diese Parametrisierung numerisch umsetzen zu können, müssen wir zunächst den in \cref{chapter:propagator_differentialgleichung} noch unendlichdimensionalen Parameterraum $\mathcal P$ auf einen endlichdimensionalen einschränken.
-Da wir weiter in Einklang mit den Bedingungen aus \cref{section:parametrische_formulierung} bleiben wollen, werden wir dies im Folgenden durch die Wahl einer Dimension $N_{\mathcal P} \in \mathbb{N}$ und der Entwicklungsfunktionen $\varphi_{i} = 0$ für alle $i > N_{\mathcal P}$ motivieren.
+Nachdem das theoretische Fundament für die Diskretisierung gelegt ist, widmen wir uns nun der tatsächlichen Anwendung auf die Raum"=Zeit"=Variationsformulierung der Propagator"=Differentialgleichung.
+Um die in \cref{section:parametrische_formulierung} durchgeführte Parametrisierung dieser numerisch umsetzen zu können, müssen wir zunächst den dort noch unendlichdimensionalen Parameterraum $\mathcal P$ auf einen endlichdimensionalen einschränken.
+Da wir weiter in Einklang mit den Bedingungen aus \cref{section:parametrische_formulierung} bleiben wollen, erreichen wir dies durch die Wahl einer Dimension $N_{\mathcal P} \in \mathbb{N}$ und der Entwicklungsfunktionen $\varphi_{i} = 0$ für alle $i > N_{\mathcal P}$.
 
 Wir wiederholen an dieser Stelle das parametrische Raum"=Zeit"=Variationsproblem und führen die benötigten Definitionen noch einmal in Kurzform durch.
 Im Nachfolgenden seien $\mathcal X$ und $\mathcal Y$ die aus \cref{eq:ansatzraum_X,eq:testraum_Y} bekannten Ansatz- respektive Testräume.
