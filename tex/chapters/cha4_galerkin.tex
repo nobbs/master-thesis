@@ -15,11 +15,11 @@ Wir beginnen nun, indem wir die Rahmenbedingungen in Form eines abstrakten Varia
 Seien $\mathcal X$ und $\mathcal Y$ zwei reelle Hilberträume und seien weiter $b \colon \mathcal X \times \mathcal Y \to \mathbb{R}$ eine stetige Bilinearform und $f \colon \mathcal Y \to \mathbb{R}$ ein stetiges lineares Funktional.
 Das abstrakte Variationsproblem sei gegeben durch:
 \begin{equation}\label{eq:galerkin_abstraktes_variationsproblem}
-    \text{Finde}~u \in \mathcal X \colon \quad  b(u, v) = f(v) \quad \fa v \in \mathcal Y.
+    \text{Finde}~u \in \mathcal X \text{ mit} \quad  b(u, v) = f(v) \quad \fa v \in \mathcal Y.
 \end{equation}
 Bedingungen, welche hinreichend für die Existenz und Eindeutigkeit einer Lösung sind, haben wir bereits in \cref{chapter:grundlagen} gesehen, weswegen wir für den Rest dieses Kapitels annehmen, dass es sich dabei um ein korrekt gestelltes Problem handelt, und dass insbesondere die inf-sup-Konstante $\beta$ die Bedingung
 \begin{equation}\label{eq:galerkin_abstraktes_variationsproblem_infsup_bedingung}
-    \beta := \inf_{u \in \mathcal X} \sup_{v \in \mathcal Y} \frac{b(u, v)}{\norm{u}_{\mathcal X} \norm{v}_{\mathcal Y}} > 0
+    \beta := \infsup{u \in \mathcal X}{v \in \mathcal Y} \frac{b(u, v)}{\norm{u}_{\mathcal X} \norm{v}_{\mathcal Y}} > 0
 \end{equation}
 erfüllt.
 
@@ -39,7 +39,7 @@ Wir orientieren uns an \cite[Section 3.1]{Nochetto:2009il}, beschränken uns abe
     Seien $\mathcal X_{\mathcal N} \subset \mathcal X$ und $\mathcal Y_{\mathcal N} \subset \mathcal Y$ Unterräume der Dimension $\mathcal N \in \mathbb{N}$.
     Als \emph{Petrov"=Galerkin"=Lösung} von \cref{eq:galerkin_abstraktes_variationsproblem} bezeichnen wir eine Lösung $u_{\mathcal N} \in \mathcal X_{\mathcal N}$ des Variationsproblems:
     \begin{equation}\label{eq:diskretes_variationsproblem}
-        \text{Finde}~u_{\mathcal N} \in \mathcal X_{\mathcal N} \colon \quad  b(u_{\mathcal N}, v) = f(v) \quad \fa v \in \mathcal Y_{\mathcal N}.
+        \text{Finde}~u_{\mathcal N} \in \mathcal X_{\mathcal N} \text{ mit} \quad  b(u_{\mathcal N}, v) = f(v) \quad \fa v \in \mathcal Y_{\mathcal N}.
     \end{equation}
 \end{Definition}
 
@@ -360,7 +360,7 @@ Im Nachfolgenden seien $\mathcal X$ und $\mathcal Y$ die aus \cref{eq:ansatzraum
     Das parametrische Raum"=Zeit"=Variationsproblem lautet
     \begin{equation}
     \label{eq:wiederholung_variationsproblem}
-        \text{Sei }\bm \sigma \in \mathcal P, \text{ finde } u(\sigma) \in \mathcal X \colon \quad b(u(\bm \sigma), v; \bm \sigma) = f(v) \quad \fa v \in \mathcal Y,
+        \text{Sei }\bm \sigma \in \mathcal P, \text{ finde } u(\sigma) \in \mathcal X \text{ mit} \quad b(u(\bm \sigma), v; \bm \sigma) = f(v) \quad \fa v \in \mathcal Y,
     \end{equation}
     wobei $b$ und $f$ wie in \cref{definition:parametrische_rz_variationsformulierung} gegeben seien.
 \end{Bemerkung}

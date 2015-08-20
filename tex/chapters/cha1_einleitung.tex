@@ -156,7 +156,7 @@ Weiter erhält man eine Darstellung der Konzentrationen in Form von
     \phi_{\mathrm{A}}(\vec{r}) = \frac{V}{Q} \int_{0}^{f} q(\vec{r}, s) q^{\dagger}(\vec{r}, s) \diff s, \qquad
     \phi_{\mathrm{B}}(\vec{r}) = \frac{V}{Q} \int_{f}^{1} q(\vec{r}, s) q^{\dagger}(\vec{r}, s) \diff s,
 \end{equation}%
-wobei $Q = Q[\omega_{\mathrm{A}}, \omega_{\mathrm{B}}]$ die \emph{Partitionsfunktion} (\foreign{engl.}{partition function}) eines einzelnen Polymers ist und durch
+wobei $Q = Q[\omega_{\mathrm{A}}, \omega_{\mathrm{B}}]$ die \emph{Partitionsfunktion} eines einzelnen Polymers ist und durch
 \begin{equation}
 \label{eq:partitionsfunktion}
     Q = \int q(\vec{r}, 1) \diff \vec{r}
@@ -226,8 +226,7 @@ Dabei werden neue Felder durch Kombination der Felder vieler zurückliegender It
 Weiter wurden in \cite{Drolet:1999bs} Verfahren ähnlich einer Picard-Iteration betrachtet.
 
 Unser Hauptaugenmerk in dieser Arbeit liegt auf dem ersten Problem, dem wiederholten Lösen der parabolischen partiellen Differentialgleichung \cref{eq:forward_propagator}.
-% TODO: Sattelpunktgleichung ersetzen
-Da es abhängig vom gewählten Mixing-Verfahren oftmals eine Iterationsanzahl im mindestens dreistelligen Bereich benötigt, bis eine zufriedenstellende Genauigkeit bei der Sattelpunktgleichung erreicht ist, und damit insbesondere auch die partielle Differentialgleichung so oft gelöst werden muss, ist es wichtig, dass das Lösungsverfahren möglichst effizient ist.
+Da es abhängig vom gewählten Mixing-Verfahren oftmals eine Iterationsanzahl im mindestens dreistelligen Bereich benötigt, bis eine zufriedenstellende Genauigkeit bei den \ac{scft}-Gleichungen erreicht ist, und damit insbesondere auch die partielle Differentialgleichung so oft gelöst werden muss, ist es wichtig, dass das Lösungsverfahren möglichst effizient ist.
 Weiter darf zu Gunsten der Laufzeit aber auch nicht die Genauigkeit des Lösers vernachlässigt werden, da sich dies im Iterationsverfahren durch Instabilität und zusätzliche Iterationen niederschlagen kann.
 
 Ähnlich wie beim Mixing-Schritt wurden bereits viele verschiedene Ansätze mit mehr oder weniger zufriedenstellenden Ergebnissen verfolgt.

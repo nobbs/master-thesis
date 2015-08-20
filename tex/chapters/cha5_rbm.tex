@@ -22,7 +22,7 @@ Weiter seien $b \colon \mathcal X \times \mathcal Y \times \mathcal P \to \mathb
 Wir betrachten das abstrakte parametrische Variationsproblem:
 \begin{equation}
 \label{eq:abstraktes_parametrische_vp}
-    \text{Sei } \bm \sigma \in \mathcal P, \text{ finde } u(\bm \sigma) \in \mathcal X \colon \quad b(u(\bm \sigma), v; \bm \sigma) = f(v) \quad \fa v \in \mathcal Y.
+    \text{Sei } \bm \sigma \in \mathcal P, \text{ finde } u(\bm \sigma) \in \mathcal X \text{ mit} \quad b(u(\bm \sigma), v; \bm \sigma) = f(v) \quad \fa v \in \mathcal Y.
 \end{equation}
 
 Reduzierte"=Basis"=Methoden bieten sich vor allem dann an, wenn das obige Variationsproblem in Echtzeit für einen gegebenen Parameter oder immer wieder für viele verschiedene Parameter gelöst werden muss.
@@ -40,7 +40,7 @@ Seien dazu $\mathcal X_{\mathcal N} \subset \mathcal N$ und $\mathcal Y_{\mathca
 Weiter nehmen wir an, dass diese Diskretisierung für alle $\bm \sigma \in \mathcal P$ zu einem korrekt gestellten Variationsproblem führt, welches gegeben sei durch:
 \begin{equation}
 \label{eq:diskretes_abstraktes_parametrisches_vp}
-    \text{Sei } \bm \sigma \in \mathcal P, \text{ finde } u_{\mathcal N}(\bm \sigma) \in \mathcal X_{\mathcal N} \colon \quad b(u_{\mathcal N}(\bm \sigma), v; \bm \sigma) = f(v) \quad \fa v \in \mathcal Y_{\mathcal N}.
+    \text{Sei } \bm \sigma \in \mathcal P, \text{ finde } u_{\mathcal N}(\bm \sigma) \in \mathcal X_{\mathcal N} \text{ mit} \quad b(u_{\mathcal N}(\bm \sigma), v; \bm \sigma) = f(v) \quad \fa v \in \mathcal Y_{\mathcal N}.
 \end{equation}
 Diese Petrov"=Galerkin"=Diskretisierung wird als Grundlage für die Reduzierte"=Basis"=Methode dienen und wird im Folgenden mit dem Präfix \emph{Truth} kenntlich gemacht, während wir \emph{RB} als Abkürzung für Reduzierte"=Basis verwenden.
 Obige Diskretisierung erlaubt nun die Definition der Truth-Lösungsmenge durch
@@ -81,7 +81,7 @@ Wir beenden an dieser Stelle die Motivation, widmen uns nun einer rigorosen Einf
     Als \emph{Reduzierte"=Basis"=Variationsformulierung} von \cref{eq:diskretes_abstraktes_parametrisches_vp} bezeichnen wir das folgende Variationsproblem:
     \begin{equation}
     \label{eq:rb_abstraktes_parametriches_vp}
-        \text{Sei } \bm \sigma \in \mathcal P, \text{ finde } u_{N}(\bm \sigma) \in \mathcal X_{N} \colon \quad b(u_{N}(\bm \sigma), v; \bm \sigma) = f(v) \quad \fa v \in \mathcal Y_{N}.
+        \text{Sei } \bm \sigma \in \mathcal P, \text{ finde } u_{N}(\bm \sigma) \in \mathcal X_{N} \text{ mit} \quad b(u_{N}(\bm \sigma), v; \bm \sigma) = f(v) \quad \fa v \in \mathcal Y_{N}.
     \end{equation}
     Fernen nennen wir $u_{N}(\bm \sigma)$ \emph{Reduzierte"=Basis"=Lösung}.
 \end{Definition}

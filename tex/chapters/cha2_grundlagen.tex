@@ -23,7 +23,7 @@ Wir beginnen nun mit der folgenden Definition der Bochner"=Räume nach \cite[Def
 % TODO: eventuell nur auf L_2 beschränken.
 \begin{Definition}
 \label{definition:bochner_raum}
-    Seien $X$ ein Banachraum, $- \infty < a < b < \infty$ und $1 \leq p < \infty$.
+    Seien $X$ ein Banachraum und $- \infty < a < b < \infty$.
     Als \emph{Bochner"=Raum} $L_{2}(a, b; X)$ bezeichnen wir die Menge (der Äquivalenzklassen) $L_{2}$"=integrierbarer Funktionen $f \colon [a, b] \to X$, das heißt aller auf $[a, b]$ messbaren Funktionen mit
     \begin{equation}
         \norm{f}_{L_{2}(a, b; X)} := \left( \int_{a}^{b} \norm{f(t)}_{X}^{2} \diff t \right)^{1 / 2} < \infty.
@@ -60,7 +60,7 @@ Weiter können wir für Funktionen aus einem Bochner"=Raum eine Zeitableitung de
 \end{Definition}
 
 \begin{Bemerkung}
-    Je nach Situation werden wir eine der beiden Notationen $u_{t}$ oder $u'$ verwenden um
+    Der einfacheren Notation wegen werden wir die beiden Schreibweisen $u_{t}$ und $u'$ für die Zeitableitung verwenden.
 \end{Bemerkung}
 
 Obige Definition einer Zeitableitung ermöglicht die Definition der Bochner"=Sobolev"=Räume.
@@ -225,7 +225,7 @@ Wie wir später sehen werden, stellt die nachfolgende Annahme sicher, dass die a
 % TODO: für fast alle t besser einbauen
 \begin{Annahme}
 \label{annahme:eigenschaften_der_bilinearform_a}
-    Die Familie $\Set{a(\blank, \blank; t) \in \mathcal L(V \times V)}_{t \in I}$ von Bilinearformen erfülle die folgenden Eigenschaften:
+    Die Familie $\Set{a(\blank, \blank; t) \in \mathcal L(V \times V, \mathbb{R})}_{t \in I}$ von Bilinearformen erfülle die folgenden Eigenschaften:
     \leavevmode
     \begin{thmenumerate}
         \item \emph{Messbarkeit:} die Abbildung $I \ni t \mapsto a(\eta, \zeta; t)$ sei messbar für alle $\eta, \zeta \in V$.
@@ -285,15 +285,15 @@ Dazu benötigen wir geeignete Ansatz- und Testfunktionenräume, wofür die im vo
     \label{eq:ansatzraum_skalarprodukt}
         \skp{u}{v}{\mathcal X} := \skp{u}{v}{L_{2}(I; V)} + \skp{u'}{v'}{L_{2}(I; V')}.
     \end{equation}
-    Der \emph{Testfunktionenraum} $\mathcal Y$ sei der Hilbertraum
+    Der \emph{Testfunktionenraum} $\mathcal Y$ sei als Produkt der beiden Hilberträume $\mathcal Y_{1} := L_{2}(I; V)$ und $\mathcal Y_{2} := H$ definiert als
     \begin{equation}
     \label{eq:testraum_Y}
-        \mathcal Y := \mathcal Y_{1} \times \mathcal Y_{2} := L_{2}(I; V) \times H
+        \mathcal Y := \mathcal Y_{1} \times \mathcal Y_{2} = L_{2}(I; V) \times H
     \end{equation}
     mit Skalarprodukt
     \begin{equation}
         \label{eq:testraum_skalarprodukt}
-        \skp{u}{v}{\mathcal Y} := \skp{u_{1}}{v_{1}}{L_{2}(I; V)} + \skp{u_{2}}{v_{2}}{H} \quad \text{für } u = (u_{1}, u_{2}), v = (v_{1}, v_{2}) \in \mathcal Y.
+        \skp{u}{v}{\mathcal Y} := \skp{u_{1}}{v_{1}}{L_{2}(I; V)} + \skp{u_{2}}{v_{2}}{H}, \quad  u = (u_{1}, u_{2}), v = (v_{1}, v_{2}) \in \mathcal Y.
     \end{equation}
 \end{Definition}
 
@@ -384,7 +384,7 @@ Dieser findet sich in dieser oder ähnlicher Form bei \textcites[Theorem 2.1]{Ba
 \label{bemerkung:bnb_theorem_inf_sup_statt_surjektiv}
     Nach \cite[Remarks, S. 117]{Aziz:1972wf} kann die Surjektivitätsbedingung \cref{satz:bnb_theorem:surjektiv} durch eine weitere inf"=sup"=Bedingung ersetzt werden, denn existiert ein $\beta' > 0$ mit
     \begin{equation}
-        \inf_{v \in Y} \sup_{u \in X} \frac{a(u, v)}{\norm{u}_{X} \norm{v}_{Y}} \geq \beta',
+        \infsup{v \in Y}{u \in X} \frac{a(u, v)}{\norm{u}_{X} \norm{v}_{Y}} \geq \beta',
     \end{equation}
     dann gilt insbesondere auch \cref{satz:bnb_theorem:surjektiv}.
 \end{Bemerkung}

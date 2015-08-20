@@ -91,49 +91,40 @@ Die folgende Bemerkung führt die notwendigen Notationen in diesem Zusammenhang 
     Motiviert durch \cref{bemerkung:skalarprodukte_und_duality_pairing} verwenden wir die Schreibweise $\skp{\blank}{\blank}{V' \times V}$ auch für die duale Paarung auf $V' \times V$.
 \end{Bemerkung}
 
-Damit können wir nun die folgende Operatorfamilie und die zugehörigen Bilinearformen definieren.
+Damit können wir nun die folgende Familie von Bilinearformen und die zugehörigen Operatoren definieren.
 
 \begin{Definition}
 \label{definition:operator_bilinearform_zeit}
     Seien $\omega$ ein Raum"=Zeit"=Feld sowie $c \in \mathbb{R}_{+}$ und $\mu \in \mathbb{R}$ Konstanten.
-    Wir definieren für fast alle $t \in I$ eine Familie von Operatoren
-    \begin{equation}
-        \label{eq:operator_zeit}
-        A(t) \colon V \to V', \quad  A(t) \eta := - c \Delta \eta + \omega(t, \blank) \eta + \mu \eta
-    \end{equation}
-    und eine zugehörige Familie von Bilinearformen
+    Wir definieren für fast alle $t \in I$ eine Familie von Bilinearformen
     \begin{equation}
         \label{eq:bilinearform_zeit}
-        a(\blank, \blank; t) \colon V \times V \to \mathbb{R}, \quad  a(\eta, \zeta; t) := \skp{A(t)\eta}{\zeta}{V' \times V}.
+        a(\blank, \blank; t) \colon V \times V \to \mathbb{R}, \quad  a(\eta, \zeta; t) := c\skp{\grad \eta}{\grad \zeta}{H} + \skp{\omega(t, \blank) \eta}{\zeta}{H} + \mu \skp{\eta}{\zeta}{H}
+    \end{equation}
+    und eine zugehörige Familie von Operatoren $A(t) \colon V \to V'$ via
+    \begin{equation}
+        \label{eq:operator_zeit}
+        \skp{A(t)\eta}{\zeta}{V' \times V} := a(\eta, \zeta; t), \quad \eta, \zeta \in V.
     \end{equation}
 \end{Definition}
 
 \begin{Bemerkung}
 \label{bemerkung:operator_bilinearform_riesz}
-    Die Existenz der Bilinearform $a(\blank, \blank; t)$ zum jeweiligen Operator $A(t)$ lässt sich durch den Rieszschen Darstellungssatz begründen, siehe beispielsweise \cite[Theorem \S{}22.1]{Halmos:1957vd}.
+    Die Existenz des Operators $A(t)$ zur jeweiligen Bilinearform $a(\blank, \blank; t)$ lässt sich durch den Rieszschen Darstellungssatz begründen, siehe beispielsweise \cite[Theorem \S{}22.1]{Halmos:1957vd}.
 \end{Bemerkung}
 
-% TODO: Definition anhand bemerkung anpassen
-Aufgrund der gewählten Rahmenbedingungen können wir die Bilinearformen $a(\blank, \blank; t)$ für $t \in I$ explizit angeben.
-Dazu greifen wir unter anderem auf die wohlbekannte schwache Formulierung des Laplace"=Operators $- \Delta \colon V \to V'$ zurück.
-Diese lässt sich durch die Wahl von $V$ als eine Bilinearform auf $V \times V$ der Form
+Wir wollen nun motivieren, warum die Bilinearformen so gewählt werden.
+Hierzu greifen wir auf die bekannte schwache Formulierung des Laplace-Operators $- \Delta \colon V \to V'$ zurück.
+Diese lässt sich für die vorliegende Wahl von $V$ gerade durch die Bilinearform
 \begin{equation}
-    (\eta, \zeta) \mapsto \skp{- \Delta \eta}{\zeta}{V' \times V} = \skp{\grad \eta}{\grad \zeta}{H}
+    V \times V \to \mathbb{R}, \quad (\eta, \zeta) \mapsto \skp{\grad \eta}{\grad \zeta}{H}
 \end{equation}
-schreiben.
-% TODO: Kürzen
-Damit ergibt sich zusammen mit der Linearität der dualen Paarung
+beschreiben.
+Unter Verwendung dieser ergibt sich, dass die Bilinearform $a(\blank, \blank; t)$ für fast alle $t \in I$ gerade die schwache Formulierung des Operators
 \begin{equation}
-\label{eq:bilinearform_formel}
-    \begin{aligned}
-        a(\eta, \zeta; t)
-            &= \skp{A(t) \eta}{\zeta}{V' \times V}
-          \\&= \skp{-c\Delta \eta + \omega(t, \blank) \eta + \mu \eta}{\zeta}{V' \times V}
-          \\&= - c\skp{\Delta \eta}{\zeta}{V' \times V} + \skp{\omega(t, \blank) \eta}{\zeta}{V' \times V} + \mu \skp{\eta}{\zeta}{V' \times V}
-          \\&= c\skp{\grad \eta}{\grad \zeta}{H} + \skp{\omega(t, \blank) \eta}{\zeta}{H} + \mu \skp{\eta}{\zeta}{H},
-    \end{aligned}
+    A(t) \colon V \to V', \quad A(t)\eta = - \Delta \eta + \omega(t, \blank) \eta + \mu \eta
 \end{equation}
-wobei bei der Wechsel von dualer Paarung auf $V' \times V$ zum $H$-Skalarprodukt beim zweiten und dritten Summanden durch \cref{bemerkung:skalarprodukte_und_duality_pairing} und die Tatsache, dass mit $\eta \in V \subset H$ und der \cref{definition:feld_raum_zeit_feld} von $\omega$ auch $\omega(t, \blank) \eta \in H$ gilt, gerechtfertigt ist.
+ist, was gerade dem räumlichen Differentialoperator der Propagator"=Differentialgleichung \cref{eq:propagator_differentialgleichung} entspricht.
 
 \begin{Bemerkung}
 \label{bemerkung:raum_zeit_feld_norm_zeitunabhaengig}
@@ -260,7 +251,7 @@ zu verwenden.
     Als \emph{schwache Formulierung} oder \emph{Raum"=Zeit"=Variationsformulierung} der Propagator"=Differentialgleichung \cref{eq:propagator_differentialgleichung} bezeichnen wir das folgende Variationsproblem:
     \begin{equation}
     \label{eq:raum_zeit_variationsformulierung}
-        \text{Finde}~u \in \mathcal X \colon \quad  b(u, v) = f(v) \quad \fa v = (v_{1}, v_{2}) \in \mathcal Y.
+        \text{Finde}~u \in \mathcal X \text{ mit} \quad  b(u, v) = f(v) \quad \fa v = (v_{1}, v_{2}) \in \mathcal Y.
     \end{equation}
     Dabei sei die Bilinearform $b(\blank, \blank) \colon \mathcal X \times \mathcal Y \to \mathbb{R}$ durch
     \begin{equation}
@@ -317,11 +308,11 @@ Weiter erhalten wir als Nebenprodukt aus \cref{korrolar:ss09:theorem51_abschaetz
     \begin{thmenumerate}
         \item \emph{Stetigkeit:} Es gilt
             \begin{equation}
-                \gamma_{b} := \sup_{u \in \mathcal X} \sup_{v \in \mathcal Y} \frac{b(u, v)}{\norm{u}_{\mathcal X} \norm{v}_{\mathcal Y}} < \infty.
+                \gamma_{b} := \supsup{u \in \mathcal X}{v \in \mathcal Y} \frac{b(u, v)}{\norm{u}_{\mathcal X} \norm{v}_{\mathcal Y}} < \infty.
             \end{equation}
         \item \emph{inf-sup-Bedingung:} Es gilt
             \begin{equation}
-                \beta := \inf_{u \in \mathcal X} \sup_{v \in \mathcal Y} \frac{b(u, v)}{\norm{u}_{\mathcal X} \norm{v}_{\mathcal Y}} > 0.
+                \beta := \infsup{u \in \mathcal X}{v \in \mathcal Y} \frac{b(u, v)}{\norm{u}_{\mathcal X} \norm{v}_{\mathcal Y}} > 0.
             \end{equation}
     \end{thmenumerate}
     Erfüllt die Bilinearform $a(\blank, \blank; t)$ die G\aa{}rding"=Ungleichung \cref{eq:bilinearform_messbar_stetig_garding:garding} mit $\lambda = 0$ für fast alle $t \in I$, dann gilt
@@ -477,7 +468,7 @@ Mit dieser Vorarbeit können wir analog zu \cref{definition:raum_zeit_variations
     Als \emph{parametrische schwache Formulierung} oder \emph{parametrische Raum"=Zeit"=Variationsformulierung} der Propagator"=Differentialgleichung \cref{eq:propagator_differentialgleichung} bezeichnen wir das folgende Variationsproblem:
     \begin{equation}
     \label{eq:parametrisches_rz_variationsproblem}
-        \text{Sei}~\bm\sigma \in \mathcal P,~\text{finde}~u(\bm\sigma) \in \mathcal X \colon \quad b(u(\bm\sigma), v; \bm\sigma) = f(v) \quad \fa v \in \mathcal Y.
+        \text{Sei}~\bm\sigma \in \mathcal P,~\text{finde}~u(\bm\sigma) \in \mathcal X \text{ mit} \quad b(u(\bm\sigma), v; \bm\sigma) = f(v) \quad \fa v \in \mathcal Y.
     \end{equation}
     Dabei sei die Familie von Bilinearformen $b(\blank, \blank; \bm\sigma) \colon \mathcal X \times \mathcal Y \to \mathbb{R}$ gegeben durch
      \begin{equation}
@@ -717,7 +708,7 @@ Als erster Schritt des Regularitätsnachweises wird zunächst die Existenz belie
         Ferner ist durch $\partial^{\bm\nu}_{\bm\sigma} u(\bm\sigma) = \theta_{0}$ als Lösung von
         \begin{equation}
             \label{eq:existenz_partieller_ableitungen:beweis:variationsproblem_ableitung}
-            \text{Finde}~\theta_{0} \in \mathcal X \colon \quad b(\theta_{0}, v; \bm\sigma) = - \int_{I} \tilde{\chi}_{j} \skp{\tilde{\varphi}_{j}  u(\bm\sigma)}{v_{1}}{H} \diff t \quad \fa v \in \mathcal Y;
+            \text{Finde}~\theta_{0} \in \mathcal X \text{ mit} \quad b(\theta_{0}, v; \bm\sigma) = - \int_{I} \tilde{\chi}_{j} \skp{\tilde{\varphi}_{j}  u(\bm\sigma)}{v_{1}}{H} \diff t \quad \fa v \in \mathcal Y;
         \end{equation}
         die Existenz und Wohldefiniertheit der gesuchten partiellen Ableitung gegeben.
 
@@ -900,23 +891,23 @@ Genauere Ausführungen findet man beispielsweise bei \textcite{Han2009}.
 
 \begin{Definition}
 \label{definition:periodische_sobolev_raeume}
-    Sei $\mathcal C_{\text{per}}^{\infty}(\Omega) \subset \mathcal C^{\infty}(\mathbb{R}^{n})$ die Teilmenge der glatten $\Omega$-periodischen Funktionen.
-    Als den Lebesgue-Raum $\Omega$-periodischer Funktionen $L_{2,\text{per}}(\Omega)$  definieren wir den Abschluss von $C_{\text{per}}^{\infty}(\Omega)$ bezüglich der $L_{2}$-Norm.
-    Weiter definieren wir den Sobolev-Raum $\Omega$-periodischer Funktionen $H^{1}_{\text{per}}(\Omega)$ als den Abschluss von $C_{\text{per}}^{\infty}(\Omega)$ bezüglich der $H^{1}$-Norm.
+    Sei $\mathcal C_{\mathrm{per}}^{\infty}(\Omega) \subset \mathcal C^{\infty}(\mathbb{R}^{n})$ die Teilmenge der glatten $\Omega$-periodischen Funktionen.
+    Als den Lebesgue-Raum $\Omega$-periodischer Funktionen $L_{2,\mathrm{per}}(\Omega)$  definieren wir den Abschluss von $C_{\mathrm{per}}^{\infty}(\Omega)$ bezüglich der $L_{2}$-Norm.
+    Weiter definieren wir den Sobolev-Raum $\Omega$-periodischer Funktionen $H^{1}_{\mathrm{per}}(\Omega)$ als den Abschluss von $C_{\mathrm{per}}^{\infty}(\Omega)$ bezüglich der $H^{1}$-Norm.
 \end{Definition}
 
 Diese Räume verwenden wir nun, um die Räume $V$ und $H$ (vergleiche \cref{bemerkung:raeume_und_gelfand_tripel}) zu definieren.
-Nach Konstruktion handelt es sich bei $H^{1}_{\text{per}}(\Omega)$ und $L_{2,\text{per}}(\Omega)$ um Hilberträume und desweiteren ist $H^{1}_{\text{per}}(\Omega)$ ein dichter Unterraum von $L_{2,\text{per}}(\Omega)$.
-Wählen wir also $V := H^{1}_{\text{per}}(\Omega)$ und $H := L_{2,\text{per}}(\Omega)$, dann erhalten wir nach \cref{definition:gelfand_tripel} wie zuvor ein Gelfand-Tripel der Form
+Nach Konstruktion handelt es sich bei $H^{1}_{\mathrm{per}}(\Omega)$ und $L_{2,\mathrm{per}}(\Omega)$ um Hilberträume und desweiteren ist $H^{1}_{\mathrm{per}}(\Omega)$ ein dichter Unterraum von $L_{2,\mathrm{per}}(\Omega)$.
+Wählen wir also $V := H^{1}_{\mathrm{per}}(\Omega)$ und $H := L_{2,\mathrm{per}}(\Omega)$, dann erhalten wir nach \cref{definition:gelfand_tripel} wie zuvor ein Gelfand-Tripel der Form
 \begin{equation}
-    V \denseinclusion H \cong H' \denseinclusion V' = (H^{1}_{\text{per}}(\Omega))'.
+    V \denseinclusion H \cong H' \denseinclusion V' = (H^{1}_{\mathrm{per}}(\Omega))'.
 \end{equation}
 
 Untersucht man die Ausführungen dieses Kapitels für den Fall homogener Dirichlet-Randbedingungen, dann stellt man fest, dass lediglich die aus \cref{annahme:eigenschaften_der_bilinearform_a} stammenden Bedingungen an die Bilinearformen $a(\blank, \blank; t)$, deren Darstellung durch den Wechsel zu periodischen Randbedingungen unverändert bleibt, nachgewiesen werden müssen.
 
 \begin{Lemma}
 \label{lemma:bilinearform_periodisch_messbar_stetig_garding}
-    Sei $\Set{a(\blank, \blank; t)}_{t \in I}$ die Familie von Bilinearformen aus \cref{definition:operator_bilinearform_zeit}, wobei die Hilberträume als $V = H^{1}_{\text{per}}(\Omega)$ und $H = L_{2,\text{per}}(\Omega)$ gegeben seien.
+    Sei $\Set{a(\blank, \blank; t)}_{t \in I}$ die Familie von Bilinearformen aus \cref{definition:operator_bilinearform_zeit}, wobei die Hilberträume als $V = H^{1}_{\mathrm{per}}(\Omega)$ und $H = L_{2,\mathrm{per}}(\Omega)$ gegeben seien.
     Diese Bilinearformen erfüllen die folgenden Eigenschaften:
     \begin{thmenumerate}
         \item \label{lemma:bilinearform_periodisch_messbar_stetig_garding:messbar}
