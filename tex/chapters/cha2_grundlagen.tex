@@ -7,15 +7,15 @@
 \label{chapter:grundlagen}
 
 Um die in der Einleitung beschriebenen parabolischen partiellen Differentialgleichungen theoretisch und numerisch untersuchen zu können, müssen wir zunächst ein robustes Grundgerüst schaffen.
-Dies beginnen wir in diesem Kapitel mit der Einführung respektive der Wiederholung der benötigten Grundlagen aus der Funktionalanalysis.
+Dies beginnen wir in diesem Kapitel mit der Einführung respektive Wiederholung der benötigten Grundlagen aus der Funktionalanalysis.
 Dabei orientieren wir uns maßgeblich an den Arbeiten von \textcite{Dautray:1992by,Schweizer2013}, in welchen die nachfolgenden Ausführungen weit detaillierter zu finden sind.
 
 
 \section{Bochner"=Räume} % (fold)
 \label{section:bochner_raeume}
 
-Bevor wir uns an die Einführung einer Raum"=Zeit"=Variationsformulierung parabolischer partieller Differentialgleichungen begeben, müssen wir zunächst die zugrundeliegenden Funktionenräume einführen.
-Hierbei konzentrieren wir uns auf die sogenannten \emph{Bochner"=Räume}, welche eine Verallgemeinerungen der bekannten Lebesgue"=Räume $L_{p}$ auf Banachraum"=wertige Funktionen darstellen, schränken uns dabei aber stets auf den für uns relevanten Fall eines endlichen Zeitintervalls ein.
+Bevor wir uns an die Herleitung einer Raum"=Zeit"=Variationsformulierung parabolischer partieller Differentialgleichungen begeben, müssen wir zunächst die zugrundeliegenden Funktionenräume einführen.
+Hierbei konzentrieren wir uns auf die sogenannten \emph{Bochner"=Räume}, welche eine Verallgemeinerung der bekannten Lebesgue"=Räume $L_{p}$ auf Banachraum"=wertige Funktionen darstellen, schränken uns dabei aber stets auf den für uns relevanten Fall eines endlichen Zeitintervalls ein.
 Weiter beschränken wir uns in dieser Arbeit auf die Betrachtung reeller Räume und Abbildungen, wobei ein Großteil der Aussagen auch für Strukturen über den komplexen Zahlen gilt.
 
 Wir beginnen nun mit der folgenden Definition der Bochner"=Räume nach \cite[Definition XVIII.1.1]{Dautray:1992by}.
@@ -24,7 +24,7 @@ Wir beginnen nun mit der folgenden Definition der Bochner"=Räume nach \cite[Def
 \begin{Definition}
 \label{definition:bochner_raum}
     Seien $X$ ein Banachraum, $- \infty < a < b < \infty$ und $1 \leq p < \infty$.
-    Als \emph{Bochner"=Raum} $L_{2}(a, b; X)$ bezeichnen wir die Menge (der Äquivalenzklassen) $L_{2}$"=integrierbarer Funktionen $f \colon [a, b] \to X$, das heißt aller auf $[a, b]$ messbarer Funktionen mit
+    Als \emph{Bochner"=Raum} $L_{2}(a, b; X)$ bezeichnen wir die Menge (der Äquivalenzklassen) $L_{2}$"=integrierbarer Funktionen $f \colon [a, b] \to X$, das heißt aller auf $[a, b]$ messbaren Funktionen mit
     \begin{equation}
         \norm{f}_{L_{2}(a, b; X)} := \left( \int_{a}^{b} \norm{f(t)}_{X}^{2} \diff t \right)^{1 / 2} < \infty.
     \end{equation}
@@ -52,15 +52,15 @@ Weiter können wir für Funktionen aus einem Bochner"=Raum eine Zeitableitung de
 \begin{Definition}%[Zeitableitung]
 \label{definition:zeitableitung}
     Seien $X$ und $Y$ Banachräume mit stetiger Einbettung $X \hookrightarrow Y$ und sei $u \in L_{2}(a, b; X)$.
-    Als \emph{Zeitableitung} bezeichnen wir die distributionelle Ableitung $u_{t} \in L_{2}(a, b; Y)$, welche als das $v \in L_{2}(a, b; Y)$ definiert ist, welches
+    Existiert ein $v \in L_{2}(a, b; Y)$ mit
     \begin{equation}
         \int_{a}^{b} v(t) \varphi(t) \diff t = - \int_{a}^{b} u(t) \varphi'(t) \diff t, \quad \fa \varphi \in \mathcal C^{\infty}_{0}((a, b), \mathbb{R}),
     \end{equation}
-    erfüllt, falls ein solches $v$ existiert.
+    so bezeichnen wir diese distributionelle Ableitung $u_{t} := v$ als \emph{Zeitableitung} von $u$.
 \end{Definition}
 
 \begin{Bemerkung}
-    Je nach Situation werden wir eine der beiden Notationen $u_{t}$ oder $u'$ verwenden.
+    Je nach Situation werden wir eine der beiden Notationen $u_{t}$ oder $u'$ verwenden um
 \end{Bemerkung}
 
 Obige Definition einer Zeitableitung ermöglicht die Definition der Bochner"=Sobolev"=Räume.
@@ -83,13 +83,13 @@ Die nachfolgende Definition ist eine leichte Abwandlung von \cite[Abschnitt 10.2
 \label{definition:gelfand_tripel}
     Seien $V$ und $H$ separable Hilberträume mit den Dualräumen $V'$ und $H'$.
     Weiter sei die Einbettung $V \denseinclusion H$ dicht und stetig.
-    Durch die Identifikation $H \cong H'$ erhalten wir das sogenannte \emph{Gelfand"=Tripel} $V \denseinclusion H \denseinclusion V'$, wobei die Inklusionen jeweils dichte stetige Einbettungen sind.
+    Durch die Identifikation $H \cong H'$ erhalten wir das sogenannte \emph{Gelfand"=Tripel} $V \denseinclusion H \denseinclusion V'$, wobei die zweite Inklusionen ebenfalls eine dichte stetige Einbettung ist.
 \end{Definition}
 
 \begin{Bemerkung}
 \label{bemerkung:skalarprodukte_und_duality_pairing}
-    Bezeichne mit $\skp{\blank}{\blank}{V}$ und $\skp{\blank}{\blank}{H}$ die Skalarprodukte auf $V$ respektive $H$.
-    Weiter verwenden wir $\skp{\blank}{\blank}{V' \times V}$ auch für die duale Paarung auf $V' \times V$, welche die eindeutige stetige Fortsetzung von $\skp{\blank}{\blank}{H}$ ist.
+    Es seien $\skp{\blank}{\blank}{V}$ und $\skp{\blank}{\blank}{H}$ die Skalarprodukte auf $V$ respektive $H$.
+    Weiter verwenden wir die Schreibweise $\skp{\blank}{\blank}{V' \times V}$ auch für die duale Paarung auf $V' \times V$, welche die eindeutige stetige Fortsetzung von $\skp{\blank}{\blank}{H}$ ist.
     Dadurch gilt insbesondere
     \begin{equation}
         \skp{u}{v}{V' \times V} = \skp{u}{v}{H}, \quad \fa u \in H, v \in V.
@@ -162,7 +162,7 @@ Dies führt zum sogenannten Spursatz, welchen wir durch die folgende Einbettungs
     \end{Beweis}
 \end{Korollar}
 
-Ferner erhalten wir aus obiger Einbettungsaussage, \cref{satz:bochner_raum_W_stetige_einbettung_C0}, auch das folgende Ergebnis, welches im Rahmen der Betrachtung linearer Evolutionsgleichungen benötigt wird.
+Ferner erhalten wir aus obiger Einbettungsaussage auch das folgende Ergebnis, welches im Rahmen der Betrachtung linearer Evolutionsgleichungen benötigt wird.
 
 % TODO: Beispiel?
 \begin{Korollar}
@@ -192,7 +192,7 @@ Abschließen wollen wir diesen Abschnitt mit einer alternativen Charakterisierun
 \begin{Satz}
 \label{satz:bochner_sobolev_raum_als_tensorprodukt}
     Seien $V$ ein Hilbertraum und $a, b \in \mathbb{R}$ mit $a < b$.
-    Dann ist der Bochner"=Sobolev"=Raum $H^{m}(a, b; V)$, $m \geq 0$, isometrisch isomorph zum Hilbertraum"=Tensorprodukt $H^{m}([a, b]) \otimes V$, kurz
+    Dann ist der Bochner"=Sobolev"=Raum $H^{m}(a, b; V)$, $m \in \Set{0, 1}$, isometrisch isomorph zum Hilbertraum"=Tensorprodukt $H^{m}([a, b]) \otimes V$, kurz
     \begin{equation}
         H^{m}(a, b; V) \cong H^{m}([a, b]) \otimes V.
     \end{equation}
@@ -207,7 +207,7 @@ Abschließen wollen wir diesen Abschnitt mit einer alternativen Charakterisierun
 \label{section:lineare_evolutionsgleichungen}
 
 Nach der Einführung der benötigten Funktionenräume wenden wir uns nun den linearen Evolutionsgleichungen, einer bestimmten Unterart parabolischer partieller Differentialgleichungen, zu.
-Wir orientieren uns hierbei an \textcite{Lions:1971wp,Schwab:2009ec,Urban:2014kg},
+Wir orientieren uns hierbei an \textcite{Lions:1971wp}, \textcite{Schwab:2009ec} sowie \textcite{Urban:2014kg},
 definieren den Begriff der linearen Evolutionsgleichungen, leiten eine schwache Formulierung her und weisen abschließend nach, dass diese korrekt gestellt ist.
 
 Um den Begriff der linearen Evolutionsgleichungen definieren zu können, müssen wir zunächst die richtigen Rahmenbedingungen schaffen.
@@ -220,7 +220,7 @@ Nach dem Rieszschen Darstellungssatz, genauer siehe \cite[Theorem \S{}22.1]{Halm
 \end{equation}
 induziert werden.
 
-Wie wir später sehen werden, stellt die nachfolgende Annahme sicher, dass die auf diese Operatoren aufbauenden linearen Evolutionsgleichungen gewisse wünschenswerte Eigenschaften, wie Lösbarkeit und Eindeutigkeit dieser Lösung, besitzen.
+Wie wir später sehen werden, stellt die nachfolgende Annahme sicher, dass die auf diesen Operatoren aufbauenden linearen Evolutionsgleichungen gewisse wünschenswerte Eigenschaften wie Lösbarkeit und Eindeutigkeit dieser Lösung besitzen.
 
 % TODO: für fast alle t besser einbauen
 \begin{Annahme}
@@ -233,13 +233,13 @@ Wie wir später sehen werden, stellt die nachfolgende Annahme sicher, dass die a
         es existiere ein $0 < \gamma_{a} < \infty$ mit
         \begin{equation}
             \label{eq:eigenschaften_der_bilinearform_a:stetigkeit}
-            \abs{a(\eta, \zeta; t)} \leq \gamma_{a} \norm{\eta}_{V} \norm{\zeta}_{V}, \quad \fa \eta, \zeta \in V \text{ und fast alle } t \in I.
+            \abs{a(\eta, \zeta; t)} \leq \gamma_{a} \norm{\eta}_{V} \norm{\zeta}_{V} \quad \fa \eta, \zeta \in V \text{ und fast alle } t \in I.
         \end{equation}
         \item \emph{G\r{a}rding-Ungleichung:}
         Es existieren $\alpha > 0$ und $\lambda \geq 0$ mit
         \begin{equation}
             \label{eq:eigenschaften_der_bilinearform_a:garding}
-            a(\eta, \eta; t) + \lambda \norm{\eta}_{H}^{2} \geq \alpha \norm{\eta}_{V}^{2}, \quad \fa \eta \in V \text{ und fast alle } t \in I.
+            a(\eta, \eta; t) + \lambda \norm{\eta}_{H}^{2} \geq \alpha \norm{\eta}_{V}^{2} \quad \fa \eta \in V \text{ und fast alle } t \in I.
         \end{equation}
     \end{thmenumerate}
 \end{Annahme}
@@ -251,7 +251,7 @@ Wie wir später sehen werden, stellt die nachfolgende Annahme sicher, dass die a
     type=symbolslist
 }
 
-Für den Rest dieses Abschnitts nehmen wir stets an, dass die Bilinearformen $a(\blank, \blank; t)$ obige Annahme erfüllen.
+Für den Rest dieses Abschnitts nehmen wir stets an, dass die obige Annahme erfüllt ist.
 Diese Vorarbeit erlaubt uns nun die nachfolgende Definition.
 
 \begin{Definition}
@@ -263,11 +263,11 @@ Diese Vorarbeit erlaubt uns nun die nachfolgende Definition.
         \left\{
         \begin{aligned}
             u_{t}(t) + A(t) u(t) &= g(t)     \quad&&\text{in}~V', \quad \text{für fast alle}~t \in I, \\
-            u(0) &= u_{0}                    \quad&&\text{in}~H,
+            u(0) &= u_{0}                    \quad&&\text{in}~H.
         \end{aligned}
         \right.
     \end{equation}
-    wobei die  Operatorfamilie $\Set{A(t) \in \mathcal L(V, V')}_{t \in I}$ wie oben gegeben sei.
+    % wobei die  Operatorfamilie $\Set{A(t) \in \mathcal L(V, V')}_{t \in I}$ wie oben gegeben sei.
 \end{Definition}
 
 Darauf aufbauend leiten wir als nächstes eine Raum-Zeit-Variationsformulierung für \cref{eq:lineare_evolutionsgleichung} her.
@@ -288,7 +288,7 @@ Dazu benötigen wir geeignete Ansatz- und Testfunktionenräume, wofür die im vo
     Der \emph{Testfunktionenraum} $\mathcal Y$ sei der Hilbertraum
     \begin{equation}
     \label{eq:testraum_Y}
-        \mathcal Y := \mathcal Y_{1} \times \mathcal Y_{2} := L_{2}(0, T; V) \times H
+        \mathcal Y := \mathcal Y_{1} \times \mathcal Y_{2} := L_{2}(I; V) \times H
     \end{equation}
     mit Skalarprodukt
     \begin{equation}
@@ -297,8 +297,8 @@ Dazu benötigen wir geeignete Ansatz- und Testfunktionenräume, wofür die im vo
     \end{equation}
 \end{Definition}
 
-Um nun aus~\cref{eq:lineare_evolutionsgleichung} eine schwache Formulierung zu erhalten, \enquote{multiplizieren} wir die lineare Evolutionsgleichung mit $v = (v_{1}, v_{2}) \in \mathcal Y$ und integrieren anschließend über das Zeitintervall $I = [0, T]$.
-Dadurch erhalten wir die nachfolgende Raum"=Zeit"=Variationsformulierung.
+Um nun aus~\cref{eq:lineare_evolutionsgleichung} eine schwache Formulierung zu erhalten, \enquote{multiplizieren} wir die lineare Evolutionsgleichung mit $v = (v_{1}, v_{2}) \in \mathcal Y$ und integrieren anschließend im Ort als auch über das Zeitintervall $I = [0, T]$.
+% Dadurch erhalten wir die nachfolgende Raum"=Zeit"=Variationsformulierung.
 
 \begin{Definition}
 \label{definition:absktrakte_raum_zeit_formulierung}
@@ -306,7 +306,7 @@ Dadurch erhalten wir die nachfolgende Raum"=Zeit"=Variationsformulierung.
     Als \emph{Raum"=Zeit"=Variationsformulierung} der linearen Evolutionsgleichung~\cref{eq:lineare_evolutionsgleichung} bezeichnen wir das folgende Problem:
     \begin{equation}
         \label{eq:absktrakte_raum_zeit_formulierung}
-        \text{Finde } u \in \mathcal X \colon \quad b(u, v) = f(v) \quad \fa v \in \mathcal Y.
+        \text{Finde } u \in \mathcal X \text{ mit} \quad b(u, v) = f(v) \quad \fa v \in \mathcal Y.
     \end{equation}
     Dabei sei die Bilinearform $b \colon \mathcal X \times \mathcal Y \to \mathbb{R}$ durch
     \begin{equation}
@@ -333,12 +333,12 @@ Dazu definieren wir zunächst, was wir darunter verstehen wollen und greifen daz
     Sei weiter ein abstraktes Variationsproblem gegeben durch:
     \begin{equation}
     \label{eq:hadamard_variationsproblem}
-        \text{Finde } u \in X \colon \quad a(u, v) = f(v) \quad \fa v \in Y
+        \text{Finde } u \in X \text{ mit} \quad a(u, v) = f(v) \quad \fa v \in Y.
     \end{equation}
     Wir nennen dieses \emph{korrekt gestellt}, wenn eine eindeutige Lösung $u \in X$ existiert und diese eine a priori-Abschätzung der Form
     \begin{equation}
     \label{eq:hadamard_abschaetzung}
-        \norm{u}_{X} \leq c \norm{f}_{Y'}, \quad \fa f \in Y',
+        \norm{u}_{X} \leq c \norm{f}_{Y'} \quad \fa f \in Y'
     \end{equation}
     mit einer von $f$ unabhängigen Konstante $c > 0$ erfüllt.
 \end{Definition}
@@ -355,13 +355,13 @@ Dieser findet sich in dieser oder ähnlicher Form bei \textcites[Theorem 2.1]{Ba
         \emph{Stetigkeit:}
         Es existiert eine Konstante $0 < \gamma < \infty$ mit
         \begin{equation}
-            \abs{a(u, v)} \leq \gamma \norm{u}_{X} \norm{v}_{Y}, \quad \fa u \in X,~v\in Y.
+            \abs{a(u, v)} \leq \gamma \norm{u}_{X} \norm{v}_{Y} \quad \fa u \in X,~v\in Y.
         \end{equation}
         \item \label{satz:bnb_theorem:inf_sup_bedingung}
         \emph{Inf-sup-Bedingung:}
         Es existiert eine Konstante $\beta > 0$ mit
         \begin{equation}
-            \inf_{u \in X} \sup_{v \in Y} \frac{a(u, v)}{\norm{u}_{X} \norm{v}_{Y}} \geq \beta.
+            \infsup{u \in X}{v \in Y} \frac{a(u, v)}{\norm{u}_{X} \norm{v}_{Y}} \geq \beta.
         \end{equation}
         \item \label{satz:bnb_theorem:surjektiv}
         \emph{Surjektivität:}
@@ -372,7 +372,7 @@ Dieser findet sich in dieser oder ähnlicher Form bei \textcites[Theorem 2.1]{Ba
     \end{thmenumerate}
     Gelten die drei Bedingungen und ist weiter ein Funktional $f \in Y'$ gegeben, dann existiert eine eindeutige Lösung $\hat u \in X$ mit
     \begin{equation}
-        a(\hat u, v) = f(v), \quad \fa v \in Y,
+        a(\hat u, v) = f(v) \quad \fa v \in Y
     \end{equation}
     und es gilt
     \begin{equation}
@@ -390,17 +390,18 @@ Dieser findet sich in dieser oder ähnlicher Form bei \textcites[Theorem 2.1]{Ba
 \end{Bemerkung}
 
 Für das abstrakte Raum"=Zeit"=Variationsproblem \cref{eq:absktrakte_raum_zeit_formulierung} wurde für die hier vorliegenden Rahmenbedingungen bereits von \textcite[Section XVIII.3]{Dautray:1992by} nachgewiesen, dass es sich um ein korrekt gestelltes Problem handelt.
-Ein alternativer Beweis, welcher die Bedingungen des \acl{bnb}s nachweist und weiter explizite Schranken für die Stetigkeitskonstante $\gamma_{b}$ und die Inf"=sup"=Konstante $\beta$ der Bilinearform $b$ aus \cref{eq:absktrakte_raum_zeit_formulierung:lhs} liefert, wurde von \textcite{Schwab:2009ec} geführt.
+Ein alternativer Beweis, welcher die Bedingungen des \acl{bnb}s nachweist und weiter explizite Schranken für die Stetigkeitskonstante $\gamma_{b}$ und die inf"=sup"=Konstante $\beta$ der Bilinearform $b$ aus \cref{eq:absktrakte_raum_zeit_formulierung:lhs} liefert, wurde von \textcite{Schwab:2009ec} geführt.
 Wir wiederholen die Kernaussage \cite[Theorem 5.1]{Schwab:2009ec} und verweisen für einen ausführlichen Beweis auf \cite[Appendix A]{Schwab:2009ec}.
 
 \begin{Satz}
 \label{satz:ss09:theorem51}
     Seien $\mathcal X$ und $\mathcal Y$ wie in \cref{eq:ansatzraum_X,eq:testraum_Y} und sei $\Set{a(\blank, \blank; t) \in \mathcal L (V \times V)}_{t \in I}$ eine Familie von Bilinearformen, welche \cref{annahme:eigenschaften_der_bilinearform_a} erfüllt.
-    Dann ist das Raum"=Zeit"=Variationsproblem \cref{eq:absktrakte_raum_zeit_formulierung} korrekt gestellt, das heißt, für alle $f \in \mathcal Y'$ existiert eine eindeutige Lösung $u \in \mathcal X$, so dass
+    Dann ist das Raum"=Zeit"=Variationsproblem \cref{eq:absktrakte_raum_zeit_formulierung} korrekt gestellt, das heißt, für alle $f \in \mathcal Y'$ existiert eine eindeutige Lösung $u \in \mathcal X$ so, dass
     \begin{equation}
         b(u, v) = f(v) \quad \fa v \in \mathcal Y
     \end{equation}
-    gilt und ferner existiert eine von $f$ unabhängige Konstante $\beta > 0$ mit
+    gilt.
+    Ferner existiert eine von $f$ unabhängige Konstante $\beta > 0$ mit
     \begin{equation}
         \norm{u}_{\mathcal X} \leq \frac{1}{\beta} \norm{f}_{\mathcal Y'}.
     \end{equation}
@@ -446,7 +447,7 @@ Weiter wollen wir im nachfolgenden Korollar die bereits angesprochenen Schranken
     \end{Beweis}
 \end{Korollar}
 
-Abschließen wollen wir mit einer Möglichkeit, das Raum"=Zeit"=Variationsproblem \cref{eq:raum_zeit_variationsformulierung} zu einem äquivalenten Problem mit $\lambda = 0$ zu transformieren.
+Abschließen wollen wir dieses Kapitel mit einer Möglichkeit, das Raum"=Zeit"=Variationsproblem \cref{eq:raum_zeit_variationsformulierung} zu einem äquivalenten Problem mit $\lambda = 0$ zu transformieren.
 Dazu seien erneut eine Familie von Bilinearformen $\Set{a(\blank, \blank; t)}_{t \in I}$, welche \cref{annahme:eigenschaften_der_bilinearform_a} mit $\lambda \geq 0$ erfüllen, und weiter $u \in \mathcal X$, $v = (v_{1}, v_{2}) \in \mathcal Y$ sowie $g \in L_{2}(I; V')$ und $u_{0} \in H$ gegeben.
 Wir definieren
 \begin{equation}
@@ -455,7 +456,7 @@ Wir definieren
 Weiter definieren wir das transformierte Variationsproblem
 \begin{equation}
 \label{eq:transformiertes_raum_zeit_variationsproblem}
-    \text{Finde } \hat{u} \in \mathcal X \colon \quad \hat{b}(\hat{u}, \check{v}) = \hat{f}(\check{v}) \quad \fa \check{v} = (\check{v}_{1}, v) \in \mathcal Y,
+    \text{Finde } \hat{u} \in \mathcal X \text{ mit} \quad \hat{b}(\hat{u}, \check{v}) = \hat{f}(\check{v}) \quad \fa \check{v} = (\check{v}_{1}, v_{2}) \in \mathcal Y,
 \end{equation}
 wobei die Bilinearform $\hat{b} \colon \mathcal X \times \mathcal Y \to \mathbb{R}$ durch
 \begin{equation}
@@ -469,7 +470,7 @@ gegeben seien.
 
 \begin{Proposition}
 \label{lemma:transformation_zu_elliptischem_operator}
-    Sei $\Set{a(\blank, \blank; t) \in \mathcal L(V \times V)}_{t \in I}$ eine Familie von Bilinearformen, die \cref{annahme:eigenschaften_der_bilinearform_a} mit $\lambda \neq 0$ erfüllt.
+    Sei $\Set{a(\blank, \blank; t) \in \mathcal L(V \times V)}_{t \in I}$ eine Familie von Bilinearformen, die die \cref{annahme:eigenschaften_der_bilinearform_a} mit $\lambda \neq 0$ erfüllt.
     Dann ist $u$ genau dann die Lösung des Raum"=Zeit"=Variationsproblems \cref{eq:absktrakte_raum_zeit_formulierung}, wenn $\hat{u}$ die Lösung von  \cref{eq:transformiertes_raum_zeit_variationsproblem} ist.
     Insbesondere erfüllt die Familie $\Set{a(\blank, \blank; t) + \lambda \skp{\blank}{\blank}{H} \in \mathcal L(V \times V)}_{t \in I}$ \cref{annahme:eigenschaften_der_bilinearform_a} mit $\lambda = 0$.
 
@@ -478,7 +479,7 @@ gegeben seien.
         Die Messbarkeit der neuen Familie von Bilinearformen ist direkt ersichtlich, ebenso die Stetigkeit, da $\lambda < \infty$ gilt.
         Auch die behauptete G\aa{}rding-Ungleichung mit $\lambda = 0$ folgt direkt aus der Konstruktion.
 
-        Die Äquivalenzaussage lässt sich unter Verwendung der Bilinearität der Skalarprodukte, der Dualen Paarung und der Bilinearformen sowie \cref{bemerkung:skalarprodukte_und_duality_pairing} durch direktes nachrechnen nachweisen; betrachte dazu die Gleichungskette
+        Die Äquivalenzaussage lässt sich unter Verwendung der Bilinearität der Skalarprodukte, der dualen Paarung und der Bilinearformen sowie \cref{bemerkung:skalarprodukte_und_duality_pairing} durch direktes nachrechnen nachweisen:
         \begin{equation}
             \begin{aligned}
                 \hat{b}(\hat{u}, \check{v})
