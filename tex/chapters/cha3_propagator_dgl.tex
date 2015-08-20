@@ -154,7 +154,7 @@ Wir weisen nun zwei Eigenschaften für diesen Operator beziehungsweise die zugeh
             \label{eq:bilinearform_messbar_stetig_garding:stetig}
             \abs{a(\eta, \zeta; t)} \leq \gamma_{a} \norm{\eta}_{V} \norm{\zeta}_{V} \quad \fa \eta, \zeta \in V \text{ und fast alle } t \in I
         \end{equation}
-        mit Stetigkeitskonstante $\gamma_{a} = \max\Set{c, \norm{\omega}_{L_{\infty}(I; L_{\infty}(\Omega))} + \abs{\mu}} < \infty$.
+        mit Stetigkeitskonstante $\gamma_{a} = 2\max\Set{c, \norm{\omega}_{L_{\infty}(I; L_{\infty}(\Omega))} + \abs{\mu}} < \infty$.
         \item\label{satz:bilinearform_messbar_stetig_garding:garding}
         \emph{G\aa{}rding"=Ungleichung:} Es gilt
         \begin{equation}
@@ -180,7 +180,7 @@ Wir weisen nun zwei Eigenschaften für diesen Operator beziehungsweise die zugeh
             &= \abs{c \skp{\grad \eta}{\grad \zeta}{H} + \skp{\omega(t, \blank) \eta}{\zeta}{H} + \mu \skp{\eta}{\zeta}{H} }
             \\&\leq c \abs{\skp{\grad \eta}{\grad \zeta}{H}} + \abs{\skp{\omega(t, \blank) \eta}{\zeta}{H}} + \abs{\mu} \abs{\skp{\eta}{\zeta}{H}}
             \\&\leq c \norm{\grad \eta}_{H} \norm{\grad \zeta}_{H} + \left( \norm{\omega}_{L_{\infty}(I; L_{\infty}(\Omega))} + \abs{\mu} \right) \norm{\eta}_{H} \norm{\zeta}_{H}
-            \\&\leq \max \Set{ c, \norm{\omega}_{L_{\infty}(I; L_{\infty}(\Omega))} + \abs{\mu}} \norm{\eta}_{V} \norm{\zeta}_{V}.
+            \\&\leq 2\max \Set{ c, \norm{\omega}_{L_{\infty}(I; L_{\infty}(\Omega))} + \abs{\mu}} \norm{\eta}_{V} \norm{\zeta}_{V}.
         \end{align}
 
         Für die G\aa{}rding"=Ungleichung seien nun $\eta \in V$ und $\lambda \in \mathbb{R}$.
@@ -214,20 +214,17 @@ Ferner wollen wir an dieser Stelle eine Aussage nachweisen, welche wir erst in \
     Die Operatoren $\Set{A(t)}_{t \in I}$ aus \cref{definition:operator_bilinearform_zeit} bilden eine Familie von selbstadjungierten Operatoren.
 
     \begin{Beweis}
-        Diese Aussage kann mit Hilfe der zu den Operatoren $A(t)$ zugehörigen Bilinearformen $a(\blank, \blank; t)$ gefolgert werden, da diese analog zu \cref{eq:bilinearform_formel} umgeschrieben werden können zu
+        Dies kann aus der Selbstadjungiertheit des Laplace-Operators $- \Delta \colon V \to V'$ unter den gegebenen Bedingungen abgeleitet werden.
+        Es ergibt sich
         \begin{equation}
-        \begin{aligned}
             a(\eta, \zeta; t)
-            &= c\skp{\grad \eta}{\grad \zeta}{H} + \skp{\omega(t, \blank) \eta}{\zeta}{H} + \mu \skp{\eta}{\zeta}{H},
-            \\&= - c\skp{\eta}{\Delta \zeta}{V \times V'} + \skp{\eta}{\omega(t, \blank) \zeta}{V \times V'} + \mu \skp{\eta}{\zeta}{V \times V'}
-            \\&= \skp{\eta}{A(t) \zeta}{V \times V'},
-        \end{aligned}
+            = c\skp{\grad \eta}{\grad \zeta}{H} + \skp{\omega(t, \blank) \eta}{\zeta}{H} + \mu \skp{\eta}{\zeta}{H}= \skp{\eta}{A(t) \zeta}{V \times V'},
         \end{equation}
-        damit insbesondere also
+        insbesondere also
         \begin{equation}
             \skp{A(t)\eta}{\zeta}{V' \times V} = a(\eta, \zeta; t) = \skp{\eta}{A(t) \zeta}{V \times V'} \quad \fa \eta, \zeta \in V.
         \end{equation}
-        Dies zeigt gerade die Selbstadjungiertheit.
+        Dies zeigt gerade die Behauptung.
     \end{Beweis}
 \end{Lemma}
 
@@ -279,8 +276,8 @@ zu verwenden.
             \\&\leq \left( \int_{I} \norm{g(t)}^{2}_{V'} \diff t \right)^{1/2} \left( \int_{I} \norm{v_{1}(t)}^{2}_{V} \diff t \right)^{1/2} + \norm{u_{0}}_{H} \norm{v_{2}}_{H}
             \\&= \norm{g}_{L_{2}(I; V')} \norm{v_{1}}_{L_{2}(I; V)} + \norm{u_{0}}_{H} \norm{v_{2}}_{H}
             \\&\leq \max\Set*{\norm{g}_{L_{2}(I; V')}, \norm{u_{0}}_{H}} \left( \norm{v_{1}}_{L_{2}(I; V)} + \norm{v_{2}}_{H} \right)
-            \\&\leq \sqrt{2} \max\Set*{\norm{g}_{L_{2}(I; V')}, \norm{u_{0}}_{H}} \left( \norm{v_{1}}_{L_{2}(I; V)}^{2} + \norm{v_{2}}_{H}^{2} \right)^{1/2}
-            \\&= \sqrt{2} \max\Set*{\norm{g}_{L_{2}(I; V')}, \norm{u_{0}}_{H}} \norm{v}_{\mathcal Y}
+            % \\&\leq \sqrt{2} \max\Set*{\norm{g}_{L_{2}(I; V')}, \norm{u_{0}}_{H}} \left( \norm{v_{1}}_{L_{2}(I; V)}^{2} + \norm{v_{2}}_{H}^{2} \right)^{1/2}
+            \\&\leq \sqrt{2} \max\Set*{\norm{g}_{L_{2}(I; V')}, \norm{u_{0}}_{H}} \norm{v}_{\mathcal Y}
         \end{aligned}
     \end{equation}
     und damit die Stetigkeit, wobei die Ungleichung $x + y \leq \sqrt{2} \sqrt{x^2 + y^2}$, welche für alle $x, y \in \mathbb{R}$ gilt, für die letzte Abschätzung verwendet wurde.
@@ -317,8 +314,8 @@ Weiter erhalten wir als Nebenprodukt aus \cref{korrolar:ss09:theorem51_abschaetz
     \end{thmenumerate}
     Erfüllt die Bilinearform $a(\blank, \blank; t)$ die G\aa{}rding"=Ungleichung \cref{eq:bilinearform_messbar_stetig_garding:garding} mit $\lambda = 0$ für fast alle $t \in I$, dann gilt
     \begin{align}
-        \gamma_{b}  &\leq \sqrt{2 \max\Set{ 1, c, \norm{\omega}_{L_{\infty}(I; L_{\infty}(\Omega))} + \abs{\mu} }^{2} + \gamma_{e}^{2} }, \\
-        \beta &\geq \frac{\gamma_{\Omega}^{2} \min\Set{c, c^{-1}, c (\norm{\omega}_{L_{\infty}(I; L_{\infty}(\Omega))} + \abs{\mu})^{-2}}}{\sqrt{2 \max\Set{c^{-2}\gamma_{\Omega}^{-4}, 1} + \gamma_{e}^{2}}}.
+        \gamma_{b}  &\leq \sqrt{2 \max\Set{ 1, 2c, 2(\norm{\omega}_{L_{\infty}(I; L_{\infty}(\Omega))} + \abs{\mu}) }^{2} + \gamma_{e}^{2} }, \\
+        \beta &\geq \frac{\gamma_{\Omega}^{2} \min\Set{c, \tfrac{1}{4}c^{-1}, \tfrac{1}{4} c(\norm{\omega}_{L_{\infty}(I; L_{\infty}(\Omega))} + \abs{\mu})^{-2}}}{\sqrt{2 \max\Set{c^{-2}\gamma_{\Omega}^{-4}, 1} + \gamma_{e}^{2}}}.
     \end{align}
     Ist dagegen $\lambda > 0$, dann erhalten wir stattdessen die erweiterten Abschätzungen
     \begin{align}
