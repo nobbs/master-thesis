@@ -379,13 +379,13 @@ Wir beginnen die Herleitung der diskreten Darstellung des Variationsproblems \cr
     \begin{equation}
     \label{eq:darstellung_diskrete_testfunktion}
         y_{\mathcal I} := \sum_{k = 1}^{\mathcal K} \sum_{j = 1}^{\mathcal J} y_{j}^{k} (\xi_{k} \otimes \eta_{j}), \qquad
-        z_{\mathcal J} = \sum_{j = 1}^{\mathcal J} z_{j} \eta_{j}
+        z_{\mathcal J} := \sum_{l = 1}^{\mathcal J} z_{l} \eta_{l}
     \end{equation}
     definiert,
     wobei die Koeffizientenvektoren $\vec{y}_{\mathcal I} \in \mathbb{R}^{\mathcal I}$ und $\vec{z}_{\mathcal J} \in \mathbb{R}^{\mathcal J}$ durch
     \begin{equation}
         \vec{y}_{\mathcal I} := [\vec{y}^{k}_{\bullet}]_{k = 1, \dots, \mathcal K} := [y^{k}_{j}]_{j, = 1, \dots, \mathcal J; k = 1, \dots, \mathcal K}, \qquad
-        \vec{z}_{\mathcal J} := [z_{j}]_{j = 1, \dots, \mathcal J}
+        \vec{z}_{\mathcal J} := [z_{l}]_{l = 1, \dots, \mathcal J}
     \end{equation}
     gegeben sind.
 \end{Definition}
@@ -397,19 +397,19 @@ Diese werden uns später als Bausteine zur Berechnung der Raum"=Zeit"=Systeme di
 \label{definition:zeitliche_bausteine}
     Die zeitlichen Gramschen Matrizen $\mat{M}_{t}^{FE}, \mat{C}_{t}^{FE}, \mat{M}_{t,i}^{FE} \in \mathbb{R}^{\mathcal K \times \mathcal K + 1}$ des $L_{2}$"=Skalarprodukts von Ansatz- und Testraumbasisfunktionen seien definiert als
     \begin{align}
-        \mat{M}_{t}^{FE} &:= \big[ \skp{\theta_{k}}{\xi_{m}}{L_{2}(I)} \big]_{\subalign{m &= 1, \dots, \mathcal K \cr k &= 0, \dots, \mathcal K}},
+        \mat{M}_{t}^{FE} &:= \big[ \skp{\theta_{k}}{\xi_{l}}{L_{2}(I)} \big]_{\subalign{l &= 1, \dots, \mathcal K \cr k &= 0, \dots, \mathcal K}},
         \qquad
-        \mat{C}_{t}^{FE} := \big[ \skp{\theta_{k}'}{\xi_{m}}{L_{2}(I)} \big]_{\subalign{m &= 1, \dots, \mathcal K \cr k &= 0, \dots, \mathcal K}},
+        \mat{C}_{t}^{FE} := \big[ \skp{\theta_{k}'}{\xi_{l}}{L_{2}(I)} \big]_{\subalign{l &= 1, \dots, \mathcal K \cr k &= 0, \dots, \mathcal K}},
         \\
-        \mat{M}_{t,i}^{FE} &:= \big[ \skp{\chi_{i}\theta_{k}}{\xi_{m}}{L_{2}(I)} \big]_{\subalign{m &= 1, \dots, \mathcal K \cr k &= 0, \dots, \mathcal K}} \quad \text{für } i = 1, \dots, N_{\mathcal P}.
+        \mat{M}_{t,i}^{FE} &:= \big[ \skp{\chi_{i}\theta_{k}}{\xi_{l}}{L_{2}(I)} \big]_{\subalign{l &= 1, \dots, \mathcal K \cr k &= 0, \dots, \mathcal K}} \quad \text{für } i = 1, \dots, N_{\mathcal P}.
     \end{align}
     Weiter seien durch $\mat{M}_{t}^{E}, \mat{A}_{t}^{E} \in \mathbb{R}^{\mathcal K + 1\times \mathcal K + 1}$ und $\mat{M}_{t}^{F} \in \mathbb{R}^{\mathcal K \times \mathcal K}$ die Gramschen Matrizen
     \begin{align}
-        \mat{M}_{t}^{E} &:= \big[ \skp{\theta_{k}}{\theta_{m}}{L_{2}(I)}\big]_{k,m = 0, \dots, \mathcal K},
+        \mat{M}_{t}^{E} &:= \big[ \skp{\theta_{k}}{\theta_{l}}{L_{2}(I)}\big]_{k,l = 0, \dots, \mathcal K},
         \qquad
-        \mat{A}_{t}^{E} := \big[ \skp{\theta_{k}'}{\theta_{m}'}{L_{2}(I)}\big]_{k,m = 0, \dots, \mathcal K},
+        \mat{A}_{t}^{E} := \big[ \skp{\theta_{k}'}{\theta_{l}'}{L_{2}(I)}\big]_{k,l = 0, \dots, \mathcal K},
         \\
-        \mat{M}_{t}^{F} &:= \big[ \skp{\xi_{k}}{\xi_{m}}{L_{2}(I)}\big]_{k,m = 1, \dots, \mathcal K}
+        \mat{M}_{t}^{F} &:= \big[ \skp{\xi_{k}}{\xi_{l}}{L_{2}(I)}\big]_{k,l = 1, \dots, \mathcal K}
     \end{align}
     definiert sowie ein Zeilenvektor $\vec{e}^{E}_{t} \in \mathbb{R}^{1 \times \mathcal K + 1}$ durch
     $\vec{e}^{E}_{t} := \big[ \theta_{k}(0) \big]_{k = 0, \dots, \mathcal K}$.
@@ -420,13 +420,13 @@ Diese werden uns später als Bausteine zur Berechnung der Raum"=Zeit"=Systeme di
     Die räumlichen Gramschen Matrizen $\mat{H}_{x}, \mat{A}_{x}, \mat{V}_{x}, \mat{W}_{x,i} \in \mathbb{R}^{\mathcal J \times \mathcal J}$ seien als
     \begin{equation}
     \begin{aligned}
-        \mat{H}_{x} &:= \left[ \skp{\eta_{j}}{\eta_{l}}{H} \right]_{j,l=1, \dots, \mathcal J},&
+        \mat{H}_{x} &:= \left[ \skp{\eta_{k}}{\eta_{l}}{H} \right]_{k,l=1, \dots, \mathcal J},&
         \quad
-        \mat{A}_{x} &:= \left[ \skp{\grad \eta_{j}}{\grad \eta_{l}}{H} \right]_{j,l=1, \dots, \mathcal J},
+        \mat{A}_{x} &:= \left[ \skp{\grad \eta_{k}}{\grad \eta_{l}}{H} \right]_{k,l=1, \dots, \mathcal J},
         \\
-        \mat{V}_{x} &:= \left[ \skp{\eta_{j}}{\eta_{l}}{V} \right]_{j,l = 1, \dots, \mathcal J},&
+        \mat{V}_{x} &:= \left[ \skp{\eta_{k}}{\eta_{l}}{V} \right]_{k,l = 1, \dots, \mathcal J},&
         \quad
-        \mat{W}_{x,i} &:= \left[ \skp{\varphi_{i} \eta_{j}}{\eta_{l}}{H} \right]_{j, l = 1, \dots, \mathcal J} \quad \text{für } i = 1, \dots, N_{\mathcal P},
+        \mat{W}_{x,i} &:= \left[ \skp{\varphi_{i} \eta_{k}}{\eta_{l}}{H} \right]_{k, l = 1, \dots, \mathcal J} \quad \text{für } i = 1, \dots, N_{\mathcal P},
     \end{aligned}
     \end{equation}
     definiert.
@@ -478,7 +478,7 @@ und
 \begin{equation}
     b_{0}(\theta_{k} \otimes \eta_{j}, (0, \eta_{n}))
     = \skp{\theta_{k}(0) \eta_{j}}{\eta_{n}}{H}
-    = \skp{\eta_{j}}{\eta_{n}}{H}.
+    = \delta_{k, 0} \skp{\eta_{j}}{\eta_{n}}{H}.
 \end{equation}
 Für die restlichen $b_{i}$ mit $i = 1, \dots, N_{\mathcal P}$ ergibt sich
 \begin{equation}
@@ -522,18 +522,18 @@ Diese hat nach Definition die Form
 \begin{equation}
     f(v) = \int_{I} \skp{g}{v_{1}}{V' \times V} \diff t + \skp{u_{0}}{v_{2}}{H}.
 \end{equation}
-Da der Quellterm $g \in L_{2}(I; V')$ im Allgemeinen nicht in rein zeit- und raumabhängige Funktionen zerlegt werden kann, wenden wir aufgrund der verwendeten zeitlichen Basisfunktionen für den Testraum in der zeitlichen Komponente eine Trapezformel als numerische Quadratur an.
-Dies führt zu folgender Darstellung
+Da der Quellterm $g \in L_{2}(I; V')$ im Allgemeinen nicht in rein zeit- und raumabhängige Funktionen zerlegt werden kann, wenden wir aufgrund der verwendeten stückweise konstanten Basisfunktionen für den Testraum in der zeitlichen Komponente eine Trapezformel als numerische Quadratur an.
+Dies führt für das Tupel $(\xi_{k} \otimes \eta_{j}, \eta_{l}) \in \mathcal Y_{\mathcal N}$ zu folgender Darstellung
 \begin{align}
-    f(\xi_{m} \otimes \eta_{l}, \eta_{n})
-    &= \int_{I} \skp{g}{\xi_{k} \eta_{j}}{V' \times V} \diff t + \skp{u_{0}}{\eta_{n}}{H}
+    f((\xi_{k} \otimes \eta_{j}, \eta_{l}))
+    &= \int_{I} \skp{g}{\xi_{k} \eta_{j}}{V' \times V} \diff t + \skp{u_{0}}{\eta_{l}}{H}
     \\&= \tfrac{1}{2} \Delta t_{k} \skp{g(t_{k}) + g(t_{k - 1})}{\eta_{j}}{V' \times V}
-         + \skp{u_{0}}{\eta_{n}}{H},
+         + \skp{u_{0}}{\eta_{l}}{H},
 \end{align}
 wobei $\Delta t_{k} := t_{k} - t_{k - 1}$ die Schrittweite des Zeitgitters sei.
 Wir definieren die Vektoren $\vec{u}_{0}, \vec{g}^{k - 1/2} \in \mathbb{R}^{\mathcal J}$ für $k = 1, \dots, \mathcal K$ als
 \begin{equation}
-    \vec{u}_{0} := \left[ \skp{u_{0}}{\eta_{j}}{H} \right]_{j = 1, \dots, \mathcal J },
+    \vec{u}_{0} := \left[ \skp{u_{0}}{\eta_{l}}{H} \right]_{l = 1, \dots, \mathcal J },
     \qquad
     \vec{g}^{k - 1/2} := \left[ \tfrac{1}{2} \skp{g(t_{k}) + g(t_{k - 1})}{\eta_{j}}{V' \times V}  \right]_{j = 1, \dots, \mathcal J}.
 \end{equation}
@@ -599,12 +599,10 @@ Auch hier sei an das norminduzierende $\mathcal Y$-Skalarprodukt
     \tag*{\cref{eq:testraum_skalarprodukt}}
 \end{equation}
 erinnert.
-Die Auswertung dieses Skalarprodukts für die Basisfunktionen von $\mathcal Y_{\mathcal N}$ liefert
-analog zur vorherigen Betrachtung
+Die Auswertung dieses Skalarprodukts für die Funktionen aus $\mathcal Y_{\mathcal N}$ liefert analog zur vorherigen Betrachtung
 \begin{align}
-    \skp{(\xi_{j} \otimes \eta_{k}, \eta_{l})}{(\xi_{m} \otimes \eta_{n}, \eta_{o})}{\mathcal Y}
-    % &= \int_{I} \skp{\xi_{j} \eta_{k}}{\xi_{m} \eta_{n}}{V} \diff t + \skp{\eta_{l}}{\eta_{o}}{H}
-    = \skp{\xi_{j}}{\xi_{m}}{L_{2}(I)} \skp{\eta_{k}}{\eta_{n}}{V} + \skp{\eta_{l}}{\eta_{o}}{H}.
+    \skp{(\xi_{k} \otimes \eta_{j}, \eta_{l})}{(\xi_{n} \otimes \eta_{m}, \eta_{o})}{\mathcal Y}
+    = \skp{\xi_{k}}{\xi_{n}}{L_{2}(I)} \skp{\eta_{j}}{\eta_{m}}{V} + \skp{\eta_{l}}{\eta_{o}}{H}.
 \end{align}
 Zusammengefasst führt dies zu der Gramschen Matrix $\mat Y \in \mathbb{R}^{\mathcal N \times \mathcal N}$, gegeben durch
 \begin{equation}
