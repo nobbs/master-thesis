@@ -434,10 +434,34 @@ Diese werden uns später als Bausteine zur Berechnung der Raum"=Zeit"=Systeme di
 
 Da nach \cref{bemerkung:raeume_und_gelfand_tripel} das $V$-Skalarprodukt durch $\skp{\blank}{\blank}{V} = \skp{\blank}{\blank}{H} + \skp{\grad\blank}{\grad\blank}{H}$ gegeben ist, gilt insbesondere $\mat V_{x} = \mat H_{x} + \mat A_{x}$.
 
+Als letzten Teil der Vorbereitung führen wir das folgende allgemein gehalten Lemma, welches eine Möglichkeit liefert die Rieszsche Darstellung eines Funktionals zu bestimmen.
+
+\begin{Lemma}\label{lemma:berechnung_der_rieszschen_darstellung}
+    Sei $X$ ein endlichdimensionaler Hilbertraum mit Basis $\Set{ \phi_{i} }_{i = 1, \dots, N }$.
+    Weiter seien $g \in X'$ ein stetiges lineares Funktional und $v \in X$ dessen Rieszsche Darstellung, es gilt also $\skp{g}{w}{X' \times X} = \skp{v}{w}{X}$ für alle $w \in X$.
+    Dann ist der Koeffizientenvektor $\vec{v} \in \mathbb{R}^{N}$ von $v$ gegeben durch das lineare Gleichungssystem
+    \begin{equation}
+        \mat{X} \vec{v} = \vec{g},
+    \end{equation}
+    wobei $\mat{X} := [\skp{\phi_{i}}{\phi_{j}}{X}]_{i,j = 1, \dots, N} \in \mathbb{R}^{N \times N}$ und $\vec{g} := [\skp{g}{\phi_{i}}{X' \times X}]_{i = 1, \dots N}$ seien.
+
+    \begin{Beweis}
+        Einsetzen einer beliebigen Testfunktion $w = \sum_{i = 1}^{N} w_{i} \phi_{i}$ liefert
+        \begin{equation}
+            \skp{g}{w}{X' \times X}
+            = \sum_{i = 1}^{N} w_i \skp{g}{\phi_{i}}{X' \times X}
+            = \vec{w}\tran \vec{g}
+            = \vec{w}\tran \mat{X} \vec{v}
+            = \skp{\sum_{i = 1}^{N} w_i \phi_{i}}{\sum_{j = 1}^{N} v_j \phi_{j}}{X}
+            = \skp{v}{w}{X}.
+        \end{equation}
+    \end{Beweis}
+\end{Lemma}
+
 Mit Hilfe dieser Vorarbeit können nun alle benötigten Raum"=Zeit"=Objekte für die Diskretisierung hergeleitet werden.
 Wir beginnen mit dem Hauptanteil, der durch die Bilinearform erzeugten Systemmatrix, fahren danach mit dem Lastvektor fort und schließen mit der diskreten Darstellung der Normen und einer Möglichkeit zur Berechnung der diskreten inf"=sup"=Konstante ab.
 
-Um die Berechnung möglichst knapp zu halten, verzichten wir sowohl auf die Argumente der Funktionen als auch auf das Symbol $\otimes$ für das Tensorprodukt.
+Um die Notation möglichst knapp zu halten, verzichten wir sowohl auf die Argumente der Funktionen als auch auf das Symbol $\otimes$ für das Tensorprodukt.
 
 \paragraph{Systemmatrix.} % (fold)
 \label{par:systemmatrix}
@@ -528,17 +552,16 @@ definieren können.
 \label{par:bestimmung_der_diskreten_l_sung_}
 
 Die beschriebene Systemmatrix $\mat{B}(\bm \sigma)$ und der Lastvektor $\vec f$ reichen bereits aus, um die Petrov"=Galerkin"=Lösung $u_{\mathcal N}(\bm \sigma)$ des Variationsproblems \cref{eq:wiederholung_variationsproblem} zu bestimmen.
-Dazu muss lediglich das Gleichungssystem
+Dazu muss lediglich der Koeffizientenvektor $\vec{u}_{\mathcal N}(\bm \sigma)$ von der Lösung $u_{\mathcal N}(\bm \sigma)$ durch das Gleichungssystem
 \begin{equation}
     \mat{B}(\bm \sigma) \vec{u}_{\mathcal N}(\bm \sigma) = \vec f
 \end{equation}
-gelöst werden, da der Vektor $\vec{u}_{\mathcal N}(\bm \sigma)$ gerade der Koeffizientenvektor der diskreten Lösung ist.
+bestimmt werden.
 
 \paragraph{Normen.} % (fold)
 \label{par:normen}
 
 Weiter benötigen wir eine Möglichkeit die Norm einer diskreten Ansatzfunktion beziehungsweise Testfunktion mit Hilfe des entsprechenden Koeffizientenvektors zu bestimmen.
-
 Dazu sei zunächst an das norminduzierende $\mathcal X$-Skalaprodukt
 \begin{equation}
     \skp{u}{v}{\mathcal X} = \skp{u}{v}{L_{2}(I; V)} + \skp{u_t}{v_t}{L_2(I; V')}, \quad \text{für } u, v \in \mathcal X, \tag*{\cref{eq:ansatzraum_skalarprodukt}}
@@ -552,71 +575,56 @@ Einsetzen der Basisfunktionen des Ansatzraumes liefert
     \\&= \skp{\theta_{k}}{\theta_{m}}{L_{2}(I)} \skp{\eta_{j}}{\eta_{l}}{V} + \skp{\theta_{k}'}{\theta_{m}'}{L_{2}(I)} \skp{\eta_{j}}{\eta_{l}}{V'}
 \end{align}
 
-Bevor wir diese Darstellung in eine handliche Matrix-Schreibweise umformulieren können, müssen wir klären, wie das diskrete $V'$-Skalarprodukt bestimmt werden kann.
-Dazu greifen wir auf das folgende, allgemein gehaltene Lemma über die Berechnung der Rieszschen Darstellung eines stetigen linearen Funktionals zurück.
-
-% TODO: hier gehts weiter.
-
-\begin{Lemma}\label{lemma:berechnung_rieszsche_darstellung}
-    Sei $X$ ein endlichdimensionaler Hilbertraum mit Basis ${\phi_i}_{i=1}^{N}$.
-    Sei weiter $g \in X'$.
-    Der Koeffizientenvektor $\vec{v} \in \mathbb{R}^{N}$ der Rieszschen Darstellung $v_g = \sum_{i=1}^{N} v_{i} \phi_{i} \in X$ von $g$, das heißt, es gilt $\skp{v_g}{w}{X} = \skp{g}{w}{X' \times X}$ für alle $w \in X$, lässt sich durch das Gleichungssystem $\mat{K}\vec{v} = \vec{g}$ berechnen, wobei $\mat{K} = [\skp{\phi_{i}}{\phi_{j}}{X}]_{i,j}$ die Massematrix zum inneren Produkt auf $X$ sei und weiter $\vec{g} = [\skp{g}{\phi_{i}}{X' \times X}]_{i}$ sei.
-\end{Lemma}
-
-
-Wir greifen auf \cref{lemma:berechnung_rieszsche_darstellung} zurück und erhalten für festes $j = 1, \dots, \mathcal J$ für das Funktional $\skp{\eta_{j}}{\blank}{V' \times V}$ und dessen Vektor $\bm \eta_{j} := [\skp{\eta_{j}}{\eta_{l}}{V' \times V}]_{l = 1, \dots, \mathcal J}$ zunächst den Koeffizientenvektor $\vec{h}_{j} = \mat{V}_{x}^{-1} \bm \eta_{j}$.
-Die durch diese Funktionen definierten Funktionen $h_{j} = \sum_{l = 1}^{\mathcal J} (\vec{h}_{j})_{l} \eta_{l}$ können wir nun verwenden um die $V'$-Norm zu bestimmen, denn es gilt nach dem Rieszschen Darstellungssatz
+Bevor wir diese Darstellung in eine handliche Matrix-Schreibweise umformulieren können, müssen wir zunächst klären, wie das diskrete $V'$-Skalarprodukt bestimmt werden kann.
+Dazu verweisen wir auf \cref{lemma:berechnung_der_rieszschen_darstellung} und erhalten für alle $n = 1, \dots, \mathcal J$ für das Funktional $\skp{\eta_{n}}{\blank}{V' \times V}$ den Koeffizientenvektor $\vec{h}_{n} = \mat{V}_{x}^{-1} \bm \eta_{n}$ mit $\bm \eta_{n} := [\skp{\eta_{n}}{\eta_{j}}{V' \times V}]_{j = 1, \dots, \mathcal J}$.
+Nach dem Rieszschen Darstellungssatz gilt nun unter Verwendung der durch $\vec{h}_{n} \in \mathbb{R}^{\mathcal J}$, $n = 1, \dots, \mathcal J$, definierten $h_n \in V$ die Gleichung
 \begin{equation}
-    \skp{\eta_{j}}{\eta_{l}}{V'} = \skp{h_{j}}{h_{l}}{V} = (\mat V_{x}^{-1} \bm \eta_{j})\tran \mat V_{x} (\mat V_{x}^{-1} \bm \eta_{j}) = \bm{\eta}_{j}\tran \mat{V}_{x}^{-1} \bm{\eta}_{l},
+    \skp{\eta_{j}}{\eta_{l}}{V'} = \skp{h_{j}}{h_{l}}{V} = (\mat V_{x}^{-1} \bm \eta_{j})\tran \mat V_{x} (\mat V_{x}^{-1} \bm \eta_{l}) = \bm{\eta}_{j}\tran \mat{V}_{x}^{-1} \bm{\eta}_{l}.
 \end{equation}
-und die Gramsche Matrix $\mat V_{\mathrm{dual}} \in \mathbb{R}^{\mathcal J \times \mathcal J}$ ist dementsprechend
+Die Gramsche Matrix $\mat V_{\mathrm{dual}} \in \mathbb{R}^{\mathcal J \times \mathcal J}$ des $V'$-Skalarprodukts ist dementsprechend
 \begin{equation}
     \mat V_{\mathrm{dual}} := [\bm{\eta}_{j}\tran \mat{V}_{x}^{-1} \bm{\eta}_{l}]_{j,l = 1, \dots, \mathcal J} = \mat H_{x}\tran \mat V_{x}^{-1} \mat H_{x}.
 \end{equation}
-Definieren wir nun die Gramsche Matrix $\mat X \in \mathbb{R}^{\mathcal N \times \mathcal N}$ der $\mathcal X$-Norm auf $\mathcal X_{\mathcal N}$ durch
-\begin{equation}
-    \mat X := \mat M^{E}_{t} \otimes \mat V_{x} + \mat A^{E}_{t} \otimes (\mat H_{x}\tran \mat V_{x}^{-1} \mat H_{x}),
-\end{equation}
-dann können wir für alle $u_{\mathcal N}$ die $\mathcal X$-Norm bestimmen über $\norm{u_{\mathcal N}}_{\mathcal X}^{2} = \vec{u}_{\mathcal N}\tran \mat X \vec{u}_{\mathcal N}$.
 
-Auch die Norm des Testraums wird für uns wichtig sein, weswegen wir auch für diese eine diskrete Repräsentation herleiten wollen.
+Weiter können wir damit die Gramsche Matrix $\mat X \in \mathbb{R}^{\mathcal N \times \mathcal N}$ des $\mathcal X$-Skalarprodukts auf $\mathcal X_{\mathcal N}$ durch
+\begin{equation}
+    \mat X := \mat M^{E}_{t} \otimes \mat V_{x} + \mat A^{E}_{t} \otimes (\mat H_{x}\tran \mat V_{x}^{-1} \mat H_{x})
+\end{equation}
+definieren und können nun für alle $u \in \mathcal X_{\mathcal N}$ die $\mathcal X$-Norm über $\norm{u}_{\mathcal X}^{2} = \vec{u}\tran \mat X \vec{u}$ bestimmen.
+
+Analog leiten wir auch eine diskrete Darstellung der Testraumnorm her.
 Auch hier sei an das norminduzierende $\mathcal Y$-Skalarprodukt
 \begin{equation}
     \skp{u}{v}{\mathcal Y} = \skp{u_{1}}{v_{1}}{L_2(I; V)} + \skp{u_{2}}{v_{2}}{H}, \quad \text{für } u, v \in \mathcal Y,
     \tag*{\cref{eq:testraum_skalarprodukt}}
 \end{equation}
 erinnert.
-Analog zur vorherigen Betrachtung erhalten wir
+Die Auswertung dieses Skalarprodukts für die Basisfunktionen von $\mathcal Y_{\mathcal N}$ liefert
+analog zur vorherigen Betrachtung
 \begin{align}
     \skp{(\xi_{j} \otimes \eta_{k}, \eta_{l})}{(\xi_{m} \otimes \eta_{n}, \eta_{o})}{\mathcal Y}
-    &= \int_{I} \skp{\xi_{j} \eta_{k}}{\xi_{m} \eta_{n}}{V} \diff t + \skp{\eta_{l}}{\eta_{o}}{H}
-    \\&= \skp{\xi_{j}}{\xi_{m}}{L_{2}(I)} \skp{\eta_{k}}{\eta_{n}}{V} + \skp{\eta_{l}}{\eta_{o}}{H},
+    % &= \int_{I} \skp{\xi_{j} \eta_{k}}{\xi_{m} \eta_{n}}{V} \diff t + \skp{\eta_{l}}{\eta_{o}}{H}
+    = \skp{\xi_{j}}{\xi_{m}}{L_{2}(I)} \skp{\eta_{k}}{\eta_{n}}{V} + \skp{\eta_{l}}{\eta_{o}}{H}.
 \end{align}
-% \begin{align}
-%     \norm{v_{\mathcal N}}_{\mathcal Y}^{2}
-%     &= \int_{I} \norm{y_{\mathcal I}(t)}_{V}^{2} \diff t + \norm{z_{\mathcal J}}_{H}^{2}
-%     \\&= \sum_{k,m = 1}^{\mathcal K} \sum_{j, l = 1}^{\mathcal J} y^{k}_{j} y^{m}_{l} \int_{I} \skp{\xi_{k} \eta_{j}}{\xi_{m} \eta_{l}}{V} \diff t + \sum_{j, l = 1}^{\mathcal J} z_{j} z_{l} \skp{\eta_{j}}{\eta_{l}}{H}
-%     \\&= \sum_{k,m = 1}^{\mathcal K} \sum_{j, l = 1}^{\mathcal J} y^{k}_{j} y^{m}_{l} \skp{\xi_{k}}{\xi_{m}}{L_{2}(I)} \skp{\eta_{j}}{\eta_{l}}{V} \diff t + \sum_{j, l = 1}^{\mathcal J} z_{j} z_{l} \skp{\eta_{j}}{\eta_{l}}{H},
-% \end{align}
-was in Matrixschreibweise zu der durch
+Zusammengefasst führt dies zu der Gramschen Matrix $\mat Y \in \mathbb{R}^{\mathcal N \times \mathcal N}$, gegeben durch
 \begin{equation}
-    \mat{Y} := \begin{pmatrix}
+    \mat{Y} := \begin{bmatrix}
     \mat{M}_{t}^{F} \otimes \mat{V}_{x} & \mat 0\\
     \mat 0 & \mat H_{x}
-    \end{pmatrix}
+    \end{bmatrix}.
 \end{equation}
-definierten Gramschen Matrix $\mat Y \in \mathbb{R}^{\mathcal N \times \mathcal N}$ führt.
 
 \paragraph{Berechnung der inf-sup-Konstante} % (fold)
 \label{par:berechnung_der_inf_sup_konstante}
 
-Um die inf-sup-Konstante $\beta_{\mathcal N}(\bm \sigma)$ zu berechnen, greifen wir auf den Supremizing-Operator aus \cref{definition:supremizing_operator} zurück.
+Um die inf-sup-Konstante $\beta_{\mathcal N}(\bm \sigma)$ zu berechnen, greifen wir auf den Supremizing-Operator aus \cref{definition:supremizing_operator} zurück und nutzen die in \cref{lemma:supremizing_operator} hergeleitete alternative Darstellung von $\beta_{\mathcal N}(\bm \sigma)$.
+
 Seien $\bm \sigma \in \mathcal P$ und $T_{\bm \sigma}$ der Supremizing-Operator von $\restr{b(\blank, \blank; \bm \sigma)}{\mathcal X_{\mathcal N} \times \mathcal Y_{\mathcal N}}$.
-Die Matrixdarstellung von $T_{\bm \sigma}$ ergibt sich nach Rieszschem Darstellungssatz durch
+Die Matrixdarstellung von $T_{\bm \sigma}$ ergibt sich nach dem Rieszschem Darstellungssatz durch
 \begin{equation}
-    \mat{T}_{\bm \sigma} = \mat{Y}^{-1} \mat{B}(\bm \sigma).
+    \mat{T}_{\bm \sigma} = \mat{Y}^{-1} \mat{B}(\bm \sigma) \in \mathbb{R}^{\mathcal N \times \mathcal N}.
 \end{equation}
-Wir verwenden die alternative Darstellung der inf-sup-Konstante aus \cref{lemma:supremizing_operator} und schreiben diese weiter unter Ausnutzung der eingeführten Matrizen um zu
+Dies führt weiter zu
 \begin{equation}
     \beta_{\mathcal N}^{2}(\bm \sigma)
     = \inf_{u \in \mathcal X_{\mathcal N}} \frac{\skp{T_{\bm \sigma} u}{T_{\bm \sigma} u}{\mathcal Y}}{\norm{u}_{\mathcal X}^{2}}
@@ -632,20 +640,8 @@ Insbesondere gilt damit $\beta_{\mathcal N}(\bm \sigma) = \sqrt{\lambda_{\min}}$
 
 % paragraph berechnung_der_inf_sup_konstante (end)
 
-
 \section{Experimente} % (fold)
 \label{sec:experimente}
 
-\subsection{Beispiel I - Homogene Randbedingungen} % (fold)
-\label{sub:beispiel}
-
-% subsection beispiel (end)
-
-\subsection{Beispiel II - Periodische Randbedingungen} % (fold)
-\label{sub:beispiel_ii_periodische_randbedingungen}
-
-% subsection beispiel_ii_periodische_randbedingungen (end)
-
-% section experimente (end)
 
 \end{document}
