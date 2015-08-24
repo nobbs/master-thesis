@@ -4,10 +4,16 @@
 % matrices to save the calculated data
 bounds = zeros(nt, ns);
 exact  = zeros(nt, ns);
+cfls   = zeros(nt, ns);
+
+% progress indicator
+textprogressbar('calculating: ');
 
 % iterate!
 for tdx = 1:nt
   for sdx = 1:ns
+    textprogressbar(((tdx - 1) * ns + sdx) / (nt * ns) * 100);
+      
     % set the remaining settings for this iteration
     pd.tgrid = linspace(pd.tspan(1), pd.tspan(2), tvalues(tdx));
     % create the assembly objects
@@ -90,7 +96,9 @@ for tdx = 1:nt
     % ignoring the eigenvector of the zero eigenvalue and multiplying AtE with
     % the remaining eigenvectors. This removes the zero eigenvalue and allows us
     % to calculate the inf-sup-constant as a generalized eigenvalue problem.
-    [V, d] = eigs(AtE, size(AtE, 1) - 1);
+    [v, d] = eig(full(AtE));
+    V = v(:, 2:end);
+%     [V, d] = eigs(AtE, size(AtE, 1) - 1);
     seye   = speye(size(Ac{1}));
     Mminus = kron(V.' * AtEc{1} * V, Ac{1} \ seye);
     for fdx = 2:pd.nF
@@ -106,12 +114,13 @@ for tdx = 1:nt
     Yl         = Cl.' * (Mplus \ Cl);
     Yl         = (Yl + Yl.') / 2;
     [mi, ~, ~] = computeMinMaxEv(Yl, Mminus);
-    betapm     = sqrt(mi)
+    betapm     = sqrt(mi);
 
     % calculate the CFL number
     maxTk      = max(diff(pd.tgrid));
-    [~, ma, ~] = computeMinMaxEv(Vx, Hx.' * (Vx \ Hx));
-    cfl        = maxTk * sqrt(ma)
+%     [~, ma, ~] = computeMinMaxEv(Vx, Hx.' * (Vx \ Hx));
+    ma         = eigs(Vx, Hx.' * (Vx \ Hx), 1, 'lm');
+    cfl        = maxTk * sqrt(ma);
 
     % calculate the bound for the inf-sup-constant
     infsup_bound = min(1, betapm) * min(1, 1 / cfl);
@@ -127,5 +136,8 @@ for tdx = 1:nt
     % save the data
     bounds(tdx, sdx) = infsup_bound;
     exact(tdx, sdx)  = infsup_exact;
+    cfls(tdx, sdx)   = cfl;
   end
 end
+
+textprogressbar(' done!');
