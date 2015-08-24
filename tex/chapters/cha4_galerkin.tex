@@ -288,7 +288,7 @@ definieren, wobei Infimum und Supremum bezüglich aller Elemente gebildet werden
 
 Unter Verwendung der CFL"=Zahl und dieser inf"=sup"=Konstante lässt sich letztendlich die folgende Stabilitätsaussage nachweisen.
 
-\begin{Satz}
+\begin{Satz}\label{satz:untere_schranke_fuer_infsup_nach_andreev}
     Seien $\Set{(\mathcal X_{\mathcal N}, \mathcal Y_{\mathcal N})}_{\mathcal N \geq 1}$ Diskretisierungen der Form \cref{eq:diskreter_ansatz_und_testraum_als_span}.
     Gelten die Bedingungen
     \begin{equation}
@@ -641,5 +641,132 @@ Insbesondere gilt damit $\beta_{\mathcal N}(\bm \sigma) = \sqrt{\lambda_{\min}}$
 \section{Experimente} % (fold)
 \label{sec:experimente}
 
+Wir wollen uns nun einigen Beispielen widmen.
+Dabei müssen wir uns im Rahmen dieser Arbeit aus laufzeittechnischen Gründen auf den Fall einer Raumdimension einschränken.
+
+Wir erinnern an dieser Stelle an einige Modellgrößen.
+Das Zeitintervall sei durch $I := [0, T]$ für ein $0 < T < \infty$ gegeben.
+Ferner sei durch $T_{f} \in \mathbb{R}$ mit $0 < T_{f} < T$ der Zeitpunkt des Feldwechsels gegeben.
+Für den räumlichen Anteil sei ohne Einschränkung $\Omega := [0, L] \subset \mathbb{R}$ mit einem $L > 0$ gegeben.
+
+An dieser Stelle werden wir uns hauptsächlich auf die Stabilität der in diesem Kapitel beschriebenen Diskretisierung konzentrieren und den parametrischen Aspekt der betrachteten Raum"=Zeit"=Variationsformulierung erst im nächsten Kapitel weiterverfolgen.
+
+\paragraph{Homogene Randbedingungen.} % (fold)
+\label{par:homogene_randbedingungen_}
+
+In \cref{section:raum_zeit_diskretisierung} wurde bisher nur die zeitliche Diskretisierung festgelegt, es bleibt an dieser Stelle also zu klären, wie die räumliche Diskretisierung $V_{\mathcal J}$ gewählt wird.
+Da, wie in dieser Arbeit bereits mehrfach angeführt, die Lösungen der Propagator"=Differentialgleichung aus \cref{chapter:propagator_differentialgleichung} oftmals Symmetrien und Regularität aufweisen, verfolgen wir hierfür keinen Finite-Elemente-Ansatz, sondern einen Fourier-Ansatz mit global definierten Funktionen.
+Um die homogene Randbedingung direkt in die Basisfunktionen einzubauen, wählen wir
+\begin{equation}
+    V_{\mathcal J} := \spn \Set{ \sin(\pi j \blank / L) \given j = 1, \dots, \mathcal J}.
+\end{equation}
+
+Als erstes einfaches Modell betrachten wir die Propagator"=Differentialgleichung ohne zeitlichen Wechsel der Felder.
+Konkret wählen wir $I = [0, 1]$ sowie $\Omega = [0, 1]$ und ferner den Differentialoperator $A(t) \equiv A \colon V \to V'$ als
+\begin{equation}
+    A \eta = - \Delta \eta + \eta + \sin(\pi \blank) \eta.
+\end{equation}
+Dies entspricht einer Verschiebung um $\mu = 1$ und einem zeitlich konstanten Feld $\omega \colon \Omega \to \mathbb{R}$, $\omega = \sin(\pi \blank)$ mit $\norm{\omega}_{L_{\infty}(I; L_{\infty}(\Omega))} = 1 = \mu$.
+Damit wird in \cref{satz:bilinearform_messbar_stetig_garding} die G\aa{}rding-Ungleichung mit $\lambda = 0$ erfüllt und wir können die in \cref{satz:untere_schranke_fuer_infsup_nach_andreev} beschriebene untere Schranke für die inf-sup-Konstante $\beta_{\mathcal N}$ auswerten.
+
+\begin{figure}[tb]
+    \centering
+    \centering
+    \begin{subfigure}[b]{0.485\textwidth}
+        \centering
+        \includegraphics[width=1\textwidth]{figures/chapter4/infsup_homogen_ein_feld_a.pdf}
+        \caption{Exakte inf-sup-Konstante $\beta_{\mathcal N}$.}
+    \end{subfigure}
+    ~
+    \begin{subfigure}[b]{0.485\textwidth}
+        \centering
+        \includegraphics[width=1\textwidth]{figures/chapter4/infsup_homogen_ein_feld_b.pdf}
+        \caption{Untere Schranke nach \cref{satz:untere_schranke_fuer_infsup_nach_andreev}.}
+    \end{subfigure}
+    \caption[Stabilität der Diskretisierung mit homogenen Randbedingungen, erstes Beispiel.]{%
+        Zur Stabilität der Diskretisierung.
+        Die Farben repräsentieren dabei die verschiedenen Werte für die Dimension $\mathcal J$ der räumlichen Diskretisierung $V_{\mathcal J}$.
+        }
+    \label{figure:infsup_homogen_ein_feld}
+\end{figure}
+
+\cref{figure:infsup_homogen_ein_feld} zeigt sowohl die exakt bestimmte diskrete inf-sup-Konstante $\beta_{\mathcal N}$ als auch die untere Schranke für verschiedene Werte von $\mathcal J$ und $\mathcal K$.
+Zwar kann an dieser Stelle die Konstante $c_{0}$ aus \cref{satz:untere_schranke_fuer_infsup_nach_andreev} nicht näher bestimmt werden, aber es ist auf den ersten Blick ersichtlich, dass die Schranke das tatsächliche Verhalten der inf-sup-Konstante relativ gut widerspiegelt.
+Ferner wird die CFL"=Bedingung bekräftigt, da für festes $\mathcal J$ und wachsende Anzahl $\mathcal K$ an Zeitgitterpunkten die inf"=sup"=Konstante sich dem Wert $1$ von unten annähert.
+
+Das zweite, etwas komplexere Beispiel enthält nun einen zeitlichen Wechsel bei $T_{f} = 0.5$.
+Der Differentialoperator $A(t) \colon V \to V'$ sei nun gegeben durch
+\begin{equation}
+    \begin{aligned}
+        A(t)\eta =
+        &- \Delta \eta + 3 \eta + \chi_{[0, 0.5)}(t) \left[ \sin(\pi \blank) - \sin(3 \pi \blank) \right] \eta
+        \\&+ \chi_{[0.5, 1]}(t) \left[ \sin(2 \pi \blank ) + \sin(3 \pi \blank) \right] \eta.
+    \end{aligned}
+\end{equation}
+Erneut ist mit $\mu = 3$ sichergestellt, dass die G\aa{}rding"=Ungleichung mit $\lambda = 0$ erfüllt wird.
+\cref{figure:infsup_homogen_zwei_felder} zeigt die Ergebnisse für diese Modelldaten.
+Auffallend ist, das die resultierenden Werte nahezu identisch sind mit denen des einfachen Beispiels, obwohl dies für die Modelldaten nur bedingt gilt.
+Dies ist dadurch bedingt, dass in beiden Beispielen die Verschiebung $\mu$ so gewählt wurde, dass der Differentialoperator $A(t)$ elliptisch ist.
+
+\begin{figure}[tb]
+    \centering
+    \centering
+    \begin{subfigure}[b]{0.495\textwidth}
+        \centering
+        \includegraphics[width=1\textwidth]{figures/chapter4/infsup_homogen_zwei_felder_a.pdf}
+        \caption{Exakte inf-sup-Konstante $\beta_{\mathcal N}$.}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.495\textwidth}
+        \centering
+        \includegraphics[width=1\textwidth]{figures/chapter4/infsup_homogen_zwei_felder_b.pdf}
+        \caption{Untere Schranke nach \cref{satz:untere_schranke_fuer_infsup_nach_andreev}.}
+    \end{subfigure}
+    \caption[Stabilität der Diskretisierung mit homogenen Randbedingungen, zweites Beispiel.]{%
+        Ergebnisse des zweiten Beispiels mit homogenen Randbedingungen.
+        Erneut repräsentieren die Farben die verschiedenen Werte für $\mathcal J$.
+        }
+    \label{figure:infsup_homogen_zwei_felder}
+\end{figure}
+
+\paragraph{Periodische Randbedingungen.} % (fold)
+\label{par:periodische_randbedingungen_}
+
+Auch auf die periodischen Randbedingungen wollen an dieser Stelle kurz eingehen und das zweite Beispiel der homogenen Randbedingungen hier noch einmal betrachten.
+Dabei übernehmen wir die dortigen Gegebenheiten und passen lediglich die verwendete Diskretisierung $V_{\mathcal J}$ an.
+Diese wählen wir erneut in Form von Fourierfunktionen, diesmal als
+\begin{equation}
+    V_{\mathcal J} = \spn \Set{ v_{j} \given j = 1, \dots, \mathcal J}
+\end{equation}
+mit den Basisfunktionen
+\begin{equation}
+    v_{j} := \begin{cases}
+        \cos(\pi (j - 1) \blank / L), & \text{falls } j \text{ ungerade},\\
+        \sin(\pi j \blank / L), & \text{falls } j \text{ gerade}.
+    \end{cases}
+\end{equation}
+Zwar können wir im Fall periodischer Randbedingungen mit den Aussagen in \cref{section:periodische_randbedingungen} nicht ohne Weiteres folgern, dass die G\aa{}rding-Ungleichung mit $\lambda = 0$ erfüllt wird, ... irgendwas?
+Zwar können wir im periodischen Fall nicht ohne Weiteres die G\aa{}rding-Ungleichung mit $\lambda = 0$
+
+\begin{figure}[tb]
+    \centering
+    \centering
+    \begin{subfigure}[b]{0.495\textwidth}
+        \centering
+        \includegraphics[width=1\textwidth]{figures/chapter4/infsup_homogen_zwei_felder_a.pdf}
+        \caption{Exakte inf-sup-Konstante $\beta_{\mathcal N}$.}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.495\textwidth}
+        \centering
+        \includegraphics[width=1\textwidth]{figures/chapter4/infsup_homogen_zwei_felder_b.pdf}
+        \caption{Untere Schranke nach \cref{satz:untere_schranke_fuer_infsup_nach_andreev}.}
+    \end{subfigure}
+    \caption[Stabilität der Diskretisierung mit homogenen Randbedingungen, zweites Beispiel.]{%
+        Ergebnisse des zweiten Beispiels mit homogenen Randbedingungen.
+        Erneut repräsentieren die Farben die verschiedenen Werte für $\mathcal J$.
+        }
+    \label{figure:infsup_periodisch_zwei_felder}
+\end{figure}
+
+% paragraph periodische_randbedingungen_ (end)
 
 \end{document}

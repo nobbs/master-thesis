@@ -1,0 +1,122 @@
+% This file was created by matlab2tikz.
+%
+%The latest updates can be retrieved from
+%  http://www.mathworks.com/matlabcentral/fileexchange/22022-matlab2tikz-matlab2tikz
+%where you can also make suggestions and rate matlab2tikz.
+%
+\definecolor{mycolor1}{rgb}{0.00000,0.44700,0.74100}%
+\definecolor{mycolor2}{rgb}{0.85000,0.32500,0.09800}%
+\definecolor{mycolor3}{rgb}{0.92900,0.69400,0.12500}%
+\definecolor{mycolor4}{rgb}{0.49400,0.18400,0.55600}%
+\definecolor{mycolor5}{rgb}{0.46600,0.67400,0.18800}%
+%
+\begin{tikzpicture}
+
+\begin{axis}[%
+width=7.715cm,
+height=6cm,
+at={(1.011in,0.642in)},
+scale only axis,
+xmin=0,
+xmax=310,
+xlabel={Anzahl Zeitgitterpunkte},
+ymode=log,
+ymin=0.0005,
+ymax=1,
+yminorticks=true,
+axis background/.style={fill=white},
+legend style={at={(0.97,0.03)},anchor=south east,legend cell align=left,align=left,fill=none,draw=none}
+]
+\addplot [color=mycolor1,solid,mark=*,mark options={solid}, thick]
+  table[row sep=crcr]{%
+11	0.233421378418231\\
+26	0.480187590401578\\
+51	0.736955547524529\\
+76	0.853087796754008\\
+101	0.908926108169929\\
+126	0.937500079847647\\
+151	0.937511048970401\\
+176	0.937515794853077\\
+201	0.937518797768511\\
+226	0.937520834823792\\
+251	0.937522283264048\\
+276	0.937523350858231\\
+301	0.937524160704984\\
+};
+\addlegendentry{5};
+
+\addplot [color=mycolor2,solid,mark=*,mark options={solid}, thick]
+  table[row sep=crcr]{%
+11	0.0623853643709726\\
+26	0.0958199631886211\\
+51	0.174355155154234\\
+76	0.254848168988959\\
+101	0.331093587286678\\
+126	0.401526769228403\\
+151	0.465544385981177\\
+176	0.523027129154646\\
+201	0.574174224797179\\
+226	0.619388150022385\\
+251	0.659184009150172\\
+276	0.694122089882594\\
+301	0.724761774472232\\
+};
+\addlegendentry{10};
+
+\addplot [color=mycolor3,solid,mark=*,mark options={solid}, thick]
+  table[row sep=crcr]{%
+11	0.0420567197913549\\
+26	0.0552993433542409\\
+51	0.0919840172597657\\
+76	0.134054579342816\\
+101	0.176632025847164\\
+126	0.218562512987216\\
+151	0.259424152666413\\
+176	0.298981659828056\\
+201	0.337075430207608\\
+226	0.373592722708088\\
+251	0.408457532181458\\
+276	0.44162520003118\\
+301	0.473078215801968\\
+};
+\addlegendentry{15};
+
+\addplot [color=mycolor4,solid,mark=*,mark options={solid}, thick]
+  table[row sep=crcr]{%
+11	0.0284899948399524\\
+26	0.0332225608393992\\
+51	0.0480928297384599\\
+76	0.0674364257995731\\
+101	0.0882504824962959\\
+126	0.109471283226196\\
+151	0.130741741180128\\
+176	0.151918713461312\\
+201	0.17292953174888\\
+226	0.193728306879168\\
+251	0.21428107656847\\
+276	0.234560195934544\\
+301	0.254542022750844\\
+};
+\addlegendentry{20};
+
+\addplot [color=mycolor5,solid,mark=*,mark options={solid}, thick]
+  table[row sep=crcr]{%
+11	0.0235074270367452\\
+26	0.0262761919617961\\
+51	0.0353511900746422\\
+76	0.0479079208209968\\
+101	0.0619631661560606\\
+126	0.0765818533096412\\
+151	0.0914003394976603\\
+176	0.106271437004659\\
+201	0.121127621017655\\
+226	0.135932815618674\\
+251	0.150664549640931\\
+276	0.165306816486452\\
+301	0.17984698908919\\
+};
+\addlegendentry{25};
+
+\end{axis}
+\end{tikzpicture}
+
