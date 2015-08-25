@@ -13,12 +13,12 @@ textprogressbar('calculating: ');
 for tdx = 1:nt
   for sdx = 1:ns
     textprogressbar(((tdx - 1) * ns + sdx) / (nt * ns) * 100);
-      
+
     % set the remaining settings for this iteration
     pd.tgrid = linspace(pd.tspan(1), pd.tspan(2), tvalues(tdx));
     % create the assembly objects
     temporal = TemporalAssemblyNodal(pd, 0);
-    spatial  = SpatialAssemblyFourier(pd, svalues(sdx));
+    spatial  = SpatialAssembly(pd, svalues(sdx));
     solver   = SolverNodal(pd, spatial, temporal);
 
     % if we have more than one field, then we have to decompose the temporal
@@ -70,7 +70,11 @@ for tdx = 1:nt
     Ax = spatial.stiffnessMatrix();
     Hx = spatial.massMatrix();
     Vx = Hx + Ax;
-    Wx = spatial.fieldDependentSine();
+    if useSineExpansion
+      Wx = spatial.fieldDependentSine();
+    else
+      Wx = spatial.fieldDependentFourier();
+    end
     % and the spatial field dependent part
     Ac = cell(pd.nF, 1);
     for fdx = 1:pd.nF
@@ -96,9 +100,7 @@ for tdx = 1:nt
     % ignoring the eigenvector of the zero eigenvalue and multiplying AtE with
     % the remaining eigenvectors. This removes the zero eigenvalue and allows us
     % to calculate the inf-sup-constant as a generalized eigenvalue problem.
-    [v, d] = eig(full(AtE));
-    V = v(:, 2:end);
-%     [V, d] = eigs(AtE, size(AtE, 1) - 1);
+    [V, d] = eigs(AtE, size(AtE, 1) - 1);
     seye   = speye(size(Ac{1}));
     Mminus = kron(V.' * AtEc{1} * V, Ac{1} \ seye);
     for fdx = 2:pd.nF
@@ -118,7 +120,6 @@ for tdx = 1:nt
 
     % calculate the CFL number
     maxTk      = max(diff(pd.tgrid));
-%     [~, ma, ~] = computeMinMaxEv(Vx, Hx.' * (Vx \ Hx));
     ma         = eigs(Vx, Hx.' * (Vx \ Hx), 1, 'lm');
     cfl        = maxTk * sqrt(ma);
 
