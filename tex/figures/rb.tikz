@@ -1,5 +1,11 @@
 % -*- root: ../main.tex -*-
 
+\definecolor{mycolor1}{rgb}{0.00000,0.44700,0.74100}%
+\definecolor{mycolor2}{rgb}{0.85000,0.32500,0.09800}%
+\definecolor{mycolor3}{rgb}{0.92900,0.69400,0.12500}%
+\definecolor{mycolor4}{rgb}{0.49400,0.18400,0.55600}%
+\definecolor{mycolor5}{rgb}{0.46600,0.67400,0.18800}%
+
 \begin{tikzpicture}[
   declare function={
     fx(\x) = \x;
@@ -25,19 +31,19 @@
 
   % Kurve
   \draw ({fx(-2)}, {fy(-2)}, {fz(-2)}) node [draw=none, label=below:$\mathcal M_{\mathcal N}$] {};
-  \draw [jgu_rot] ({fx(-2)}, {fy(-2)}, {fz(-2)})
+  \draw [mycolor2, thick] ({fx(-2)}, {fy(-2)}, {fz(-2)})
   \foreach \x in {-2,-1.9,...,3}
   { -- ({fx(\x)}, {fy(\x)}, {fz(\x)})
   };
 
   % RB-Punkte
-  \draw ({fx(-1.5)}, {fy(-1.5)}, {fz(-1.5)}) node [label=above left:$u_{\mathcal N}(\sigma_{1})$,fill=jgu_hellgrau] {};
-  \draw ({fx(-0.7)}, {fy(-0.7)}, {fz(-0.7)}) node [label=above left:$u_{\mathcal N}(\sigma_{2})$,fill=jgu_hellgrau] {};
-  \draw ({fx(0.7)}, {fy(0.7)}, {fz(0.7)}) node [label=above left:$u_{\mathcal N}(\sigma_{i})$,fill=jgu_hellgrau] {};
-  \draw ({fx(1.9)}, {fy(1.9)}, {fz(1.9)}) node [label=above right:$u_{\mathcal N}(\sigma_{N})$,fill=jgu_hellgrau] {};
+  \draw ({fx(-1.5)}, {fy(-1.5)}, {fz(-1.5)}) node [label=above left:$u_{\mathcal N}(\sigma_{1})$,fill=mycolor2] {};
+  \draw ({fx(-0.7)}, {fy(-0.7)}, {fz(-0.7)}) node [label=above left:$u_{\mathcal N}(\sigma_{2})$,fill=mycolor2] {};
+  \draw ({fx(0.7)}, {fy(0.7)}, {fz(0.7)}) node [label=above left:$u_{\mathcal N}(\sigma_{i})$,fill=mycolor2] {};
+  \draw ({fx(1.9)}, {fy(1.9)}, {fz(1.9)}) node [label=above right:$u_{\mathcal N}(\sigma_{N})$,fill=mycolor2] {};
 
   % FE-Punkt
-  \draw ({fx(0)}, {fy(0)-0.1}, {fz(0)}) node [label=below right:$u_{N}(\sigma)$,fill=jgu_dunkelgrau] {};
+  \draw ({fx(0)+0.1}, {fy(0)-0.1}, {fz(0)}) node [label=below right:$u_{N}(\sigma)$,fill=mycolor3] {};
 
   % Dots
   \draw ({fx(-0.5)}, {fy(-0.5)}, {fz(-0.5)}) node [draw=none,fill=none,label=above:$\cdot$,outer sep=7pt] {};

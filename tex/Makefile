@@ -16,3 +16,5 @@ continuous:
 clean:
 	latexmk -silent -CA
 
+clean-biber:
+	rm -rf `biber --cache`

@@ -6,18 +6,17 @@
 \chapter{Reduzierte-Basis-Methode} % (fold)
 \label{chapter:rbm}
 
-Nun wird aufbauend auf das Petrov"=Galerkin"=Verfahren des vorherigen Kapitels die Reduzierte"=Basis"=Methode eingeführt und auf die vorliegenden Gegebenheiten angepasst.
-Diese Methode wird anschließend numerisch umgesetzt, exemplarisch auf unsere Problemstellung angewandt und die resultierenden Ergebnisse werden diskutiert.
+Aufbauend auf das Petrov"=Galerkin"=Verfahren des vorherigen Kapitels führen wir nun die Reduzierte"=Basis"=Methode (kurz RB"=Methode) ein.
+Zunächst folgen einige theoretische Grundlagen und Ausführungen zur numerischen Umsetzung dieser Methode, bevor wir mit einigen beispielhaften Anwendungen auf die betrachtete Problemstellung abschließen.
 
 \section{Grundlagen} % (fold)
 \label{sub:grb:rb:grundlagen}
 
-Wir beginnen mit einer kurz gehaltenen Motivation und einer Einführung in die Reduzierte"=Basis"=Methoden.
-Dabei handelt es sich um ein relativ junges Verfahren, welches besondere in den letzten zehn Jahren viel Aufmerksamkeit und Weiterentwicklung erfahren hat.
-Wir orientieren uns hierbei an den Arbeiten von \textcite{Rozza2008,Patera:2007un}, welche auch eine deutlich umfassendere Einführung bieten.
+Wir beginnen mit einer kurzen Motivation und orientieren uns in diesem Abschnitt an den Arbeiten von \textcite{Rozza2008} sowie \textcite{Patera:2007un}, welche einen weit tieferen Einblick bieten.
+Bei der Reduzierte"=Basis"=Methode handelt es sich um ein relativ junges Verfahren, welches vor allem in den letzten zehn Jahren viel Aufmerksamkeit und Weiterentwicklung erfahren hat.
 
-Bevor wir die Idee hinter der Reduzierte"=Basis"=Methode angehen, wollen wir erneut die Rahmenbedingungen in Form eines abstrakten Variationsproblems festlegen.
-Seien dazu zwei Hilberträume $\mathcal X$ und $\mathcal Y$ und eine abgeschlossene, konvexe Parametermenge $\mathcal P \subset \mathbb{R}^{p}$, für ein $p \in \mathbb{N}$, gegeben.
+Zunächst wollen wir erneut geeignete Rahmenbedingungen in Form eines abstrakten Variationsproblems schaffen.
+Seien dazu zwei Hilberträume $\mathcal X$ und $\mathcal Y$ und eine abgeschlossene, konvexe Parametermenge $\mathcal P \subset \mathbb{R}^{p}$ für ein $p \in \mathbb{N}$ gegeben.
 Weiter seien $b \colon \mathcal X \times \mathcal Y \times \mathcal P \to \mathbb{R}$ eine parametrische stetige Bilinearform und $f \colon \mathcal Y \to \mathbb{R}$ ein stetiges lineares Funktional.
 Wir betrachten das abstrakte parametrische Variationsproblem:
 \begin{equation}
@@ -25,32 +24,31 @@ Wir betrachten das abstrakte parametrische Variationsproblem:
     \text{Sei } \bm \sigma \in \mathcal P, \text{ finde } u(\bm \sigma) \in \mathcal X \text{ mit} \quad b(u(\bm \sigma), v; \bm \sigma) = f(v) \quad \fa v \in \mathcal Y.
 \end{equation}
 
-Reduzierte"=Basis"=Methoden bieten sich vor allem dann an, wenn das obige Variationsproblem in Echtzeit für einen gegebenen Parameter oder immer wieder für viele verschiedene Parameter gelöst werden muss.
-Um dies auf eine effiziente Weise bewerkstelligen zu können, konzentriert man sich auf die Lösungsmenge
+Reduzierte"=Basis"=Methoden bieten sich dann an, wenn das Variationsproblem für einen gegebenen Parameter in Echtzeit oder immer wieder für viele verschiedene Parameter gelöst werden muss.
+Um dies mit zufriedenstellender Genauigkeit effizient bewerkstelligen zu können, konzentriert man sich auf die Lösungsmenge
 \begin{equation}
 \label{eq:stetige_loesungsmenge}
     \mathcal M := \Set{u(\bm \sigma) \in \mathcal X \given \bm \sigma \in \mathcal P}.
 \end{equation}
-Diese bildet oftmals, je nachdem welche Regularität die Abbildung $\mathcal P \ni \bm \sigma \mapsto u(\bm \sigma) \in \mathcal X$ aufweist, eine Mannigfaltigkeit mit gewissen Regularitätseigenschaften und vergleichsweise niedriger Dimension.
+Erfüllt die Bilinearform aus \cref{eq:abstraktes_parametrische_vp} gewisse Regularitätseigenschaften bezüglich des Parameters, dann bildet $\mathcal M$ oftmals eine Mannigfaltigkeit mit vergleichsweise niedriger Dimension.
 
-Um diese Eigenschaften ausnutzen zu können, muss diese Lösungsmenge zunächst durch eine diskretes Analogon ersetzt werden.
-Hierzu kann beispielsweise das im vorherigen Kapitel beschriebene Galerkin"=Verfahren verwendet werden.
-Auf diesen Fall beschränken wir uns im Folgenden und führen daher das diskrete abstrakte parametrische, durch eine Petrov"=Galerkin"=Diskretisierung erhaltene, Variationsproblem ein.
-Seien dazu $\mathcal X_{\mathcal N} \subset \mathcal N$ und $\mathcal Y_{\mathcal N} \subset \mathcal Y$ Unterräume der Dimension $\mathcal N \in \mathbb{N}$.
+Um diese Tatsache ausnutzen zu können, müssen wir $\mathcal M$ zunächst durch ein diskretes Analogon ersetzen.
+Dazu werden meist Galerkin"=Verfahren verwendet, weswegen wir an dieser Stelle das Petrov"=Galerkin"=Verfahren des vorherigen Kapitels nutzen um eine abstrakte Diskretisierung durchzuführen.
+Seien $\mathcal X_{\mathcal N} \subset \mathcal N$ und $\mathcal Y_{\mathcal N} \subset \mathcal Y$ Unterräume der Dimension $\mathcal N \in \mathbb{N}$.
 Weiter nehmen wir an, dass diese Diskretisierung für alle $\bm \sigma \in \mathcal P$ zu einem korrekt gestellten Variationsproblem führt, welches gegeben sei durch:
 \begin{equation}
 \label{eq:diskretes_abstraktes_parametrisches_vp}
     \text{Sei } \bm \sigma \in \mathcal P, \text{ finde } u_{\mathcal N}(\bm \sigma) \in \mathcal X_{\mathcal N} \text{ mit} \quad b(u_{\mathcal N}(\bm \sigma), v; \bm \sigma) = f(v) \quad \fa v \in \mathcal Y_{\mathcal N}.
 \end{equation}
-Diese Petrov"=Galerkin"=Diskretisierung wird als Grundlage für die Reduzierte"=Basis"=Methode dienen und wird im Folgenden mit dem Präfix \emph{Truth} kenntlich gemacht, während wir \emph{RB} als Abkürzung für Reduzierte"=Basis verwenden.
-Obige Diskretisierung erlaubt nun die Definition der Truth-Lösungsmenge durch
+Da die RB"=Methode maßgeblich auf diese Petrov"=Galerkin"=Diskretisierung und nicht das eigentliche Variationsproblem \cref{eq:abstraktes_parametrische_vp} aufbaut, werden wir \cref{eq:diskretes_abstraktes_parametrisches_vp} mit dem Präfix \emph{Truth} kenntlich machen.
+Die Truth"=Lösungsmenge sei nun definiert als
 \begin{equation}
 \label{eq:truth_loesungsmenge}
     \mathcal M_{\mathcal N} := \Set{u_{\mathcal N}(\bm \sigma) \in \mathcal X_{\mathcal N} \given \bm \sigma \in \mathcal P}.
 \end{equation}
-Aufbauend auf diese kann nun eine endlichdimensionale Teilmenge $\mathcal X_{N} \subset \mathcal M_{\mathcal N} \subset \mathcal X_{\mathcal N}$ konstruiert werden, welche wiederum als Ansatzraum eines weiteren Galerkin"=Verfahrens verwendet werden kann,
-wobei dieses zu deutlich niedrigdimensionaleren Systemen führt.
-Dies wird in \cref{figure:rbm_loesungsmenge} noch einmal veranschaulicht.
+Dies erlaubt die Konstruktion eines niedrigdimensionalen Unterraums $\mathcal X_{N} \subset \mathcal M_{\mathcal N} \subset \mathcal X_{\mathcal N}$, welcher als Ansatzraum eines weiteren Galerkin"=Verfahrens dienen wird.
+Dies ist die Grundidee der RB"=Methoden.
+\cref{figure:rbm_loesungsmenge} veranschaulicht dies skizzenhaft.
 
 \begin{figure}[tb]
     \centering
@@ -64,21 +62,25 @@ Dies wird in \cref{figure:rbm_loesungsmenge} noch einmal veranschaulicht.
     \label{figure:rbm_loesungsmenge}
 \end{figure}
 
-RB"=Methoden der beschriebenen Art lassen sich im Allgemeinen als zweistufiges Verfahren auffassen.
-Die erste Stufe, die sogenannte \emph{Offline-Phase}, dient dazu, die niedrigdimensionalen Systeme zu konstruieren.
-Hierzu gibt es verschiedene Ansätze, die meist die Minimierung des maximal möglichen Fehlers zwischen Truth- und RB"=Lösung verfolgen und dementsprechend einen hohen Aufwand darstellen.
-In der zweiten Stufe, der \emph{Online-Phase}, wird dieses niedrigdimensionale System verwendet um Lösungen zu gegebenen Parametern zu bestimmen.
-Das Lösen mit diesem System hat, alleine aus dimensionstechnischen Gründen, einen deutlich geringeren Aufwand als das bestimmen der Truth-Lösung.
+Die Konstruktion des niedrigdimensionalen Ansatzraumes $\mathcal X_{N}$ erfolgt unter dem Aspekt, den durch das zweite Galerkin"=Verfahren zusätzlich eingeführten Fehler für alle Parameter des Parameterraums $\mathcal P$ zu minimieren, was in einem hohen Rechenaufwand resultiert.
+Dies motiviert die bei RB"=Methoden übliche Zerlegung in ein zwei Stufen.
+Die erste Stufe, die sogenannte \emph{Offline-Phase}, dient dazu den Ansatzraum $\mathcal X_{N}$ unter dem genannten Gesichtspunkt zu konstruieren und muss nur einmal ausgeführt werden.
+In der zweiten Stufe, der \emph{Online-Phase}, kann dieses niedrigdimensionale System verwendet werden, um Lösungen für gegebene Parameter auszuwerten und eine garantierte Fehlerschranke zu berechnen.
+Da im Allgemeinen $N \ll \mathcal N$ gilt, wird hierbei als weiteres Ziel die Unabhängigkeit der Berechnungen in der Online-Phase von der Dimension $\mathcal N$ verfolgt.
 
-Dieser zweistufige Aufbau führt schließlich auch zu einem wichtigen Kriterium für respektive gegen die Verwendung der RB"=Methoden, die Anzahl der zu bestimmenden Lösungen in der Online-Phase, da die Laufzeit der aufwändigen Offline-Phase zunächst amortisiert werden muss.
+Weiter führt diese Zerlegung zu einem wichtigen Kriterium für respektive gegen die Anwendung der RB"=Methode, da der benötigte Aufwand für die Offline-Phase meist erst ab einer hohen Anzahl an zu bestimmenden Lösungen in der Online-Phase amortisiert wird.
 
-Wir beenden an dieser Stelle die Motivation, widmen uns nun einer rigorosen Einführung der RB"=Methode und beginnen diese mit der Definition der grundlegenden Begriffe.
+Wir widmen uns nun den formalen Grundlagen der RB"=Methode und beginnen mit einer grundlegenden Definition.
 
 \begin{Definition}
 \label{definition:rb_variationsproblem}
-    Seien $N \in \mathbb{N}$ sowie $\mathcal S_{N} := \Set{ \bm \sigma_{1}, \dots, \bm \sigma_{N} } \subset \mathcal P$ eine Teilmenge der Parameter und $\Phi_{N} := \Set{ u_{\mathcal N}(\bm \sigma_{1}), \dots, u_{\mathcal N}(\bm \sigma_{N})} \subset \mathcal X_{\mathcal N}$ eine Basis, die durch die zugehörigen Truth-Lösungen gegeben sei.
-    Seien weiter $\mathcal X_{N} := \spn \Phi_{N}$ und $\mathcal Y_{N} \subset \mathcal Y_{\mathcal N}$ ein $N$-dimensionaler Unterraum.
-    Als \emph{Reduzierte"=Basis"=Variationsformulierung} von \cref{eq:diskretes_abstraktes_parametrisches_vp} bezeichnen wir das folgende Variationsproblem:
+    Es seien $N \in \mathbb{N}$ und $\mathcal S_{N} := \Set{ \bm \sigma_{i} \given i = 1, \dots, N } \subset \mathcal P$ die sogenannte \emph{Sample-Menge}.
+    Wir bezeichnen die Truth-Lösungen $u_{\mathcal N}(\bm \sigma_{i})$ als \emph{Snapshots} und definieren den RB"=Ansatzraum $\mathcal X_{N}$ als
+    \begin{equation}
+        \mathcal X_{N} := \spn \Set{ u_{\mathcal N}(\bm \sigma_{i}) \given i = 1, \dots, N} = \spn \Set{ \phi_{i} \given i = 1, \dots, N},
+    \end{equation}
+    wobei $\Phi_{N} := \Set{ \phi_{i} \given i = 1, \dots, N}$ eine geeignete Orthonormalbasis ist, sowie einen $N$-dimensionalen Unterraum  $\mathcal Y_{N} \subset \mathcal Y_{\mathcal N}$.
+    Als RB"=Variationsproblem von \cref{eq:diskretes_abstraktes_parametrisches_vp} bezeichnen wir das  Variationsproblem:
     \begin{equation}
     \label{eq:rb_abstraktes_parametriches_vp}
         \text{Sei } \bm \sigma \in \mathcal P, \text{ finde } u_{N}(\bm \sigma) \in \mathcal X_{N} \text{ mit} \quad b(u_{N}(\bm \sigma), v; \bm \sigma) = f(v) \quad \fa v \in \mathcal Y_{N}.
@@ -86,67 +88,52 @@ Wir beenden an dieser Stelle die Motivation, widmen uns nun einer rigorosen Einf
     Fernen nennen wir $u_{N}(\bm \sigma)$ \emph{Reduzierte"=Basis"=Lösung}.
 \end{Definition}
 
-Wie auch bei den Petrov"=Galerkin"=Verfahren muss sichergestellt werden, dass es sich bei dieser Diskretisierung tatsächlich um ein korrekt gestelltes Problem handelt.
-Dies kann hauptsächlich durch die Wahl des Testraumes $\mathcal Y_{N}$ gesteuert werden.
-An dieser Stelle nehmen wir an, dass dies stets bewerkstelligt werden kann.
-Ein konkretes Verfahren, um diese zu wählen, geben wir an späterer Stelle an, wobei die Korrektheit im Rahmen dieser Arbeit nicht bewiesen werden kann und nur numerisch bekräftigt werden wird.
+Um die notationelle Wiederholung gering zu halten, seien für den Rest dieses Abschnitts stets durch $u_{N}(\bm \sigma) \in \mathcal X_{N}$ die Reduzierte-Basis-Lösung und durch $u_{\mathcal N}(\bm \sigma) \in \mathcal X_{\mathcal N}$ die Truth-Lösung zu einem Parameter $\bm \sigma \in \mathcal P$ gegeben.
 
-Weiter wollen wir begründen, warum wir eine Galerkin"=Diskretisierung als Grundlage verwenden und nicht das stetige Variationsproblem \cref{eq:abstraktes_parametrische_vp}.
-Die zugrundeliegende Prämisse ist, neben der Berechenbarkeit, dass nach \cref{satz:lemma_von_cea}, unter gewissen Annahmen, die Petrov"=Galerkin"=Lösung $u_{\mathcal N}(\bm \sigma)$ die exakte Lösung $u(\bm \sigma)$ durch Verfeinerung der Diskretisierung beliebig gut approximieren kann.
-Betrachten wir die Abschätzung
+Wie zuvor bei den Petrov"=Galerkin"=Verfahren muss auch bei \cref{eq:rb_abstraktes_parametriches_vp} sichergestellt werden, dass es sich dabei um ein korrekt gestelltes Problem handelt.
+Wir werden später sehen, dass diese Eigenschaft bei geschickter Wahl des Testraumes $\mathcal Y_{N}$ vom Truth"=Variationsproblem vererbt wird, und nehmen deswegen an dieser Stelle an, dass dies stets erfüllt ist.
+
+Da es sich bei der RB"=Diskretisierung ebenfalls um ein Galerkin"=Verfahren handelt, erhalten wir Analoga der Aussagen \cref{satz:galerkin_stabilitaet} sowie \cref{satz:lemma_von_cea}, welche hier nicht wiederholt werden, wobei die Truth-Räume $\mathcal X_{\mathcal N}$ und $\mathcal Y_{\mathcal N}$ die Rolle der Hilberträume $\mathcal X$ und $\mathcal Y$ einnehmen.
+
+Weiter soll an dieser Stelle angemerkt werden, warum wir eine Galerkin"=Diskretisierung \cref{eq:diskretes_abstraktes_parametrisches_vp} als Grundlage und nicht das eigentliche Variationsproblem \cref{eq:abstraktes_parametrische_vp} verwenden.
+Neben dem offensichtlichen Grund, der Berechenbarkeit der Lösung, ist die zugrundeliegende Prämisse die Folgende:
+Nach \cref{satz:lemma_von_cea} kann mit der Petrov"=Galerkin"=Lösung $u_{\mathcal N}(\bm \sigma)$ die exakte Lösung $u(\bm \sigma)$ unter gewissen Annahmen beliebig gut approximiert werden.
+Betrachten wir weiter die einfache Abschätzung
 \begin{equation}
     \norm{u(\bm \sigma) - u_{N}(\bm \sigma)}_{\mathcal X} \leq \norm{u(\bm \sigma) - u_{\mathcal N}(\bm \sigma)}_{\mathcal X} + \norm{u_{\mathcal N}(\bm \sigma) - u_{N}(\bm \sigma)}_{\mathcal X},
 \end{equation}
-dann sagt dies gerade aus, dass der erste Summand beliebig klein gehalten werden kann, weswegen wir uns in diesem Kapitel lediglich für den zweiten Summanden, also den Fehler zwischen Truth- und RB"=Lösung, interessieren.
+dann entspricht dies gerade der Tatsache, das der erste Summand beliebig klein gehalten werden kann.
+Dies erlaubt uns, lediglich den Fehler zwischen Truth- und RB"=Lösung zu berücksichtigen, und führt weiter zu folgender Definition.
 
-Um die notationelle Wiederholung möglichst gering zu halten, seien für den Rest dieses Abschnitts stets durch $u_{N}(\bm \sigma) \in \mathcal X_{N}$ die Reduzierte-Basis-Lösung und durch $u_{\mathcal N}(\bm \sigma) \in \mathcal X_{\mathcal N}$ die Truth-Lösung zu einem Parameter $\bm \sigma \in \mathcal P$ gegeben.
-
-Da es sich bei der RB"=Diskretisierung um ein Galerkin"=Verfahren handelt, erhalten wir Analoga der Aussagen \cref{satz:galerkin_stabilitaet}, \cref{lemma:galerkin_orthogonalitaet} und \cref{satz:lemma_von_cea}, wobei die Truth-Räume $\mathcal X_{\mathcal N}, \mathcal Y_{\mathcal N}$ die Rolle der Räume $\mathcal X, \mathcal Y$ einnehmen.
-An dieser Stelle wiederholen wir nur die Galerkin"=Orthogonalität ohne Beweis, da diese nachfolgend verwendet wird.
-
-\begin{Lemma}
-    \label{lemma:rb_galerkin_orthogonalitaet}
-    Es gilt $b(u_{N}(\bm \sigma) - u_{\mathcal N}(\bm \sigma), v) = 0$ für alle $v \in \mathcal Y_{N}$, das heißt, der Fehler $u_{N}(\bm \sigma) - u_{\mathcal N}(\bm \sigma)$ ist orthogonal zu $\mathcal Y_{N}$.
-\end{Lemma}
-
-Den Fehler des vorherigen Lemmas finden wir auch in der nachfolgenden Definition, welche einen weiteren Baustein für die RB"=Methode liefert.
-
-\begin{Definition}
-\label{definition:rbm_fehler_und_residuum}
-    Als \emph{Fehler} $e_{N}(\bm \sigma) \in \mathcal X_{\mathcal N}$ bezeichnen wir
-    \begin{equation}
-        e_{N}(\bm \sigma) := u_{\mathcal N}(\bm \sigma) - u_{N}(\bm \sigma).
-    \end{equation}
-    Weiter sei das \emph{Residuum} $r_{N}(\blank; \bm \sigma) \colon \mathcal Y_{\mathcal N} \to \mathbb{R}$ festgelegt als
-    \begin{equation}
-    \label{eq:variationsproblem_residuum}
+\begin{Definition}\label{definition:rbm_fehler_und_residuum}
+    Als \emph{Fehler} $e_{N}(\bm \sigma) \in \mathcal X_{\mathcal N}$ bezeichnen wir $e_{N}(\bm \sigma) := u_{\mathcal N}(\bm \sigma) - u_{N}(\bm \sigma)$.
+    Weiter definieren wir das \emph{Residuum} $r_{N}(\blank; \bm \sigma) \colon \mathcal Y_{\mathcal N} \to \mathbb{R}$ als
+    \begin{equation}\label{eq:variationsproblem_residuum}
         r_{N}(v; \bm \sigma) := b(e_{N}(\bm \sigma), v; \bm \sigma), \quad v \in \mathcal Y_{\mathcal N}.
     \end{equation}
 \end{Definition}
 
-\begin{Lemma}
-\label{lemma:rbm_residuum_ist_funktional}
+\begin{Lemma}\label{lemma:rbm_residuum_ist_funktional}
     Das Residuum $r_{N}(\blank; \bm \sigma)$ ist für alle $\bm \sigma \in \mathcal P$ ein stetiges lineares Funktional, kurz also $r_{N}(\blank; \bm \sigma) \in \mathcal Y_{\mathcal N}'$.
 
     \begin{Beweis}
-        Sowohl Linearität als auch Stetigkeit sind direkt ersichtlich, denn das Residuum kann nach Definition geschrieben werden als
+        Sowohl Linearität als auch Stetigkeit sind direkt ersichtlich, denn nach Definition erhalten wir
         \begin{equation}
             \begin{aligned}
             r_{N}(v; \bm \sigma)
             &= b(e_{N}(\bm \sigma), v; \bm \sigma)
             = b(u_{\mathcal N}(\bm \sigma), v; \bm \sigma) - b(u_{N}(\bm \sigma), v; \bm \sigma)
-            \\&= f(v) - b(u_{N}(\bm \sigma), v; \bm \sigma).
+            \\&= f(v) - b(u_{N}(\bm \sigma), v; \bm \sigma)
             \end{aligned}
         \end{equation}
+        und diese Eigenschaften damit von $f$ und $b$.
     \end{Beweis}
 \end{Lemma}
 
-Das Residuum lässt sich nun verwenden, um eine der wichtigsten Eigenschaften der RB"=Methoden herzuleiten, die Zertifizierung der Lösung durch eine a posteriori-Fehlerabschätzung.
-Dazu benötigen wir eine untere Schranke $\beta_{\mathrm{LB}}(\bm \sigma)$ der inf-sup-Konstante $\beta_{\mathcal N}(\bm \sigma)$, da die exakte Konstante im Allgemeinen nicht bestimmt werden kann.
+Das Residuum kann nun verwendet werden, um eines der wichtigsten Konstrukte der RB-Methoden zu definieren.
 
-\begin{Lemma}
-\label{lemma:rbm_fehler_schranke}
-    Sei $\beta_{\mathrm{LB}}(\bm \sigma) > 0$ eine berechenbare untere Schranke für $\beta_{\mathcal N}(\bm \sigma)$.
+\begin{Lemma}\label{lemma:rbm_fehler_schranke}
+    Sei $\beta_{\mathrm{LB}}(\bm \sigma) > 0$ eine untere Schranke für $\beta_{\mathcal N}(\bm \sigma)$.
     Dann gilt
     \begin{equation}
         \norm{u_{\mathcal N}(\bm \sigma) - u_{N}(\bm \sigma)}_{\mathcal X} \leq \Delta_{N}(\bm \sigma) := \frac{\norm{r_{N}(\blank; \bm \sigma)}_{\mathcal Y_{\mathcal N}'}}{\beta_{\mathrm{LB}}(\bm \sigma)},
@@ -159,47 +146,50 @@ Dazu benötigen wir eine untere Schranke $\beta_{\mathrm{LB}}(\bm \sigma)$ der i
     \end{Beweis}
 \end{Lemma}
 
-Dieser a posteriori-Fehlerschätzer bildet das Herzstück der RB"=Methode, da er sowohl für die Konstruktion der niedrigdimensionalen Räume $\mathcal X_{N}$ und $\mathcal Y_{N}$, als auch für die bereits angesprochene Zertifizierung verwendet wird, welche eine garantierte obere Schranke zwischen Truth- und RB"=Lösung liefert.
+Dieser a posteriori-Fehlerschätzer bildet das Herzstück der RB"=Methode, da mit ihm in der Offline-Phase eine möglichst optimale Wahl der Parameter-Samples erreicht werden kann, während er in der Online-Phase zur Berechnung einer garantierten Fehlerschranke zwischen Truth- und RB-Lösung verwendet wird.
+Dazu setzt man weiter woraus, dass die untere Schranke $\beta_{\mathrm{LB}}(\bm \sigma)$ berechenbar ist.
+Wir werden bei der nachfolgenden numerischen Umsetzung darauf eingehen, wie dies bewerkstelligt werden kann.
 
-Wir sind bisher nicht darauf eingegangen, wie dieser Fehlerschätzer numerisch bestimmt werden kann.
-Auf den ersten Blick scheint dies schwierig, da sowohl die Norm des Residuums als auch eine untere Schranke für die inf-sup-Konstante im Allgemeinen nur unter hohem Aufwand bestimmt werden können.
-Diesem Punkt widmen wir uns im nächsten Abschnitt, vorher wollen wir aber noch ein Maß für die Güte des Fehlerschätzers einführen.
+Bevor wir uns dieser widmen, wollen wir an dieser Stelle noch ein Maß für die Güte des Fehlerschätzers einführen.
 
 \begin{Lemma}
 \label{lemma:effektivitaet}
     Die \emph{Effektivität} $\eta_{N}(\bm \sigma)$ des a posteriori-Fehlerschätzers ist beschränkt durch
     \begin{equation}
-        1 \leq \eta_{N}(\bm \sigma) := \frac{\Delta_{N}(\bm \sigma)}{\norm{u_{\mathcal N}(\bm \sigma) - u_{N}(\bm \sigma)}_{\mathcal X}} \leq \frac{\gamma_{b}(\bm \sigma)}{\beta_{\mathrm{LB}}(\bm \sigma)},
+        1 \leq \eta_{N}(\bm \sigma) := \frac{\Delta_{N}(\bm \sigma)}{\norm{u_{\mathcal N}(\bm \sigma) - u_{N}(\bm \sigma)}_{\mathcal X}} \leq \frac{\gamma_{\mathcal N}(\bm \sigma)}{\beta_{\mathrm{LB}}(\bm \sigma)},
     \end{equation}
-    wobei $\gamma_{b}(\bm \sigma)$ die Stetigkeitskonstante der Bilinearform $b(\blank, \blank; \bm \sigma)$ sei.
+    wobei $\gamma_{\mathcal N}(\bm \sigma)$ die Stetigkeitskonstante der Bilinearform $\restr{b(\blank, \blank; \bm \sigma)}{\mathcal X_{\mathcal N} \times \mathcal Y_{\mathcal N}}$ sei.
 
     \begin{Beweis}
         Die Abschätzung nach unten ergibt sich direkt aus \cref{lemma:rbm_fehler_schranke}.
-
-        Für die andere Abschätzung sei $\bm \sigma \in \mathcal P$ beliebig.
-        Anwendung des Rieszschen Darstellungssatz auf das Residuum $r_{N}(\blank; \bm \sigma)$ liefert ein $v_{r} \in \mathcal Y_{\mathcal N}$ mit $r_{N}(v; \bm \sigma) = \skp{v_{r}}{v}{\mathcal Y_{\mathcal N}}$, für alle $v \in \mathcal Y_{\mathcal N}$, und $\norm{r_{N}(\blank; \bm \sigma)}_{\mathcal Y_{\mathcal N}'} = \norm{v_{r}}_{\mathcal Y_{\mathcal N}}$.
-        Damit erhalten wir mit der Stetigkeit der Bilinearform $b$ die Abschätzung
+        Sei nun $\bm \sigma \in \mathcal P$ beliebig.
+        Eine Anwendung des Rieszschen Darstellungssatz liefert für $r_{N}(\blank; \bm \sigma)$ ein $\hat{e}_{N} \in \mathcal Y_{\mathcal N}$ mit $r_{N}(v; \bm \sigma) = \skp{\hat{e}_{N}}{v}{\mathcal Y}$ für alle $v \in \mathcal Y_{\mathcal N}$ und $\norm{r_{N}(\blank; \bm \sigma)}_{\mathcal Y_{\mathcal N}'} = \norm{\hat{e}_{N}}_{\mathcal Y}$.
+        Mit der Stetigkeit der Bilinearform erhalten wir damit die Abschätzung
         \begin{equation}
-            \norm{v_{r}}_{\mathcal Y}^{2}
-            = \skp{v_{r}}{v_{r}}{\mathcal Y}
-            = r_{N}(v_{r}; \bm \sigma)
-            = b(e_{N}(\bm \sigma), v_{r}; \bm \sigma)
-            \leq \gamma_{b}(\bm \sigma) \norm{e_{N}(\bm \sigma)}_{\mathcal X} \norm{v_{r}}_{\mathcal Y},
+            \norm{\hat{e}_{N}}_{\mathcal Y}^{2}
+            = \skp{\hat{e}_{N}}{\hat{e}_{N}}{\mathcal Y}
+            = r_{N}(\hat{e}_{N}; \bm \sigma)
+            = b(e_{N}(\bm \sigma), \hat{e}_{N}; \bm \sigma)
+            \leq \gamma_{\mathcal N}(\bm \sigma) \norm{e_{N}(\bm \sigma)}_{\mathcal X} \norm{\hat{e}_{N}}_{\mathcal Y},
         \end{equation}
-        oder auch kurz
+        oder kurz
         \begin{equation}
-            \norm{v_{r}}_{\mathcal Y} \leq \gamma_{b}(\bm \sigma) \norm{e_{N}(\bm \sigma)}_{\mathcal X}.
+            \norm{\hat{e}_{N}}_{\mathcal Y} \leq \gamma_{\mathcal N}(\bm \sigma) \norm{e_{N}(\bm \sigma)}_{\mathcal X}.
         \end{equation}
         Zusammen mit der Definition des a posteriori-Fehlerschätzers $\Delta_{N}(\bm \sigma)$ liefert dies nun
         \begin{equation}
             \eta_{N}(\bm \sigma)
             = \frac{\Delta_{N}(\bm \sigma)}{\norm{u_{\mathcal N}(\bm \sigma) - u_{N}(\bm \sigma)}_{\mathcal X}}
-            \leq \frac{\gamma_{b}(\bm \sigma) \norm{e_{N}(\bm \sigma)}_{\mathcal X}}{\beta_{\mathrm{LB}}(\bm \sigma)\norm{u_{\mathcal N}(\bm \sigma) - u_{N}(\bm \sigma)}_{\mathcal X}}
-            = \frac{\gamma_{b}(\bm \sigma)}{\beta_{\mathrm{LB}}(\bm \sigma)}.
+            \leq \frac{\gamma_{\mathcal N}(\bm \sigma) \norm{e_{N}(\bm \sigma)}_{\mathcal X}}{\beta_{\mathrm{LB}}(\bm \sigma)\norm{u_{\mathcal N}(\bm \sigma) - u_{N}(\bm \sigma)}_{\mathcal X}}
+            = \frac{\gamma_{\mathcal N}(\bm \sigma)}{\beta_{\mathrm{LB}}(\bm \sigma)}.
         \end{equation}
     \end{Beweis}
 \end{Lemma}
 
+Dieses Ergebnis ist wichtig, denn es garantiert, dass der a posteriori-Fehlerschätzer weder zu pessimistisch noch zu optimistisch ist.
+Insbesondere garantiert es, dass der tatsächliche Fehler durch den a posteriori-Fehlerschätzer stets korrekt nach oben abgeschätzt wird.
+
+% TODO: noch etwas zur Konvergenz sagen?
 
 \section{Numerische Umsetzung} % (fold)
 \label{sub:grb:rb:numerische_umsetzung}
@@ -566,9 +556,8 @@ Dies erlaubt die folgende Zerlegung:
 
 % paragraph konstruktion_des_testraumes_ (end)
 
-\section{Experimente} % (fold)
-\label{sec:experimente}
-
+\section{Beispiele} % (fold)
+\label{sec:cha5_rbm:beispiele}
 
 % section experimente (end)
 
