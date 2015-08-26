@@ -18,3 +18,6 @@ clean:
 
 clean-biber:
 	rm -rf `biber --cache`
+
+clean-all: clean clean-biber
+
