@@ -287,6 +287,21 @@
 \makeglossaries
 
 % Algorithm
-\usepackage[german,algochapter,ruled,vlined]{algorithm2e}
+\usepackage[german,algochapter,ruled,linesnumbered,vlined]{algorithm2e}
 \crefname{algocf}{Algorithmus}{Algorithmen}
 \Crefname{algocf}{Algorithmus}{Algorithmen}
+
+
+\newlist{inlinelist}{enumerate*}{1}
+\setlist*[inlinelist,1]{%
+  label=(\roman*),
+}
+
+
+\newlist{onoffdescription}{description}{1}
+\setlist[onoffdescription, 1]{
+  % labelindent=25pt,
+  % style=multiline,
+  leftmargin=2em,
+  font={\normalfont\bfseries}
+}

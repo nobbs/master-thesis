@@ -77,9 +77,9 @@ Wir widmen uns nun den formalen Grundlagen der RB"=Methode und beginnen mit eine
     Es seien $N \in \mathbb{N}$ und $\mathcal S_{N} := \Set{ \bm \sigma_{i} \given i = 1, \dots, N } \subset \mathcal P$ die sogenannte \emph{Sample-Menge}.
     Wir bezeichnen die Truth-Lösungen $u_{\mathcal N}(\bm \sigma_{i})$ als \emph{Snapshots} und definieren den RB"=Ansatzraum $\mathcal X_{N}$ als
     \begin{equation}
-        \mathcal X_{N} := \spn \Set{ u_{\mathcal N}(\bm \sigma_{i}) \given i = 1, \dots, N} = \spn \Set{ \phi_{i} \given i = 1, \dots, N},
+        \mathcal X_{N} := \spn \Set{ u_{\mathcal N}(\bm \sigma_{i}) \given i = 1, \dots, N} = \spn \Set{ \xi_{i} \given i = 1, \dots, N},
     \end{equation}
-    wobei $\Phi_{N} := \Set{ \phi_{i} \given i = 1, \dots, N}$ eine geeignete Orthonormalbasis ist, sowie einen $N$-dimensionalen Unterraum  $\mathcal Y_{N} \subset \mathcal Y_{\mathcal N}$.
+    wobei $\Xi_{N} := \Set{ \xi_{i} \given i = 1, \dots, N}$ eine geeignete Orthonormalbasis ist, sowie einen $N$-dimensionalen Unterraum  $\mathcal Y_{N} \subset \mathcal Y_{\mathcal N}$.
     Als RB"=Variationsproblem von \cref{eq:diskretes_abstraktes_parametrisches_vp} bezeichnen wir das  Variationsproblem:
     \begin{equation}
     \label{eq:rb_abstraktes_parametriches_vp}
@@ -118,7 +118,7 @@ Dies erlaubt uns, lediglich den Fehler zwischen Truth- und RB"=Lösung zu berüc
 
     \begin{Beweis}
         Sowohl Linearität als auch Stetigkeit sind direkt ersichtlich, denn nach Definition erhalten wir
-        \begin{equation}
+        \begin{equation}\label{eq:residuum_durch_funktional_und_bilinearform}
             \begin{aligned}
             r_{N}(v; \bm \sigma)
             &= b(e_{N}(\bm \sigma), v; \bm \sigma)
@@ -154,7 +154,7 @@ Bevor wir uns dieser widmen, wollen wir an dieser Stelle noch ein Maß für die 
 
 \begin{Lemma}
 \label{lemma:effektivitaet}
-    Die \emph{Effektivität} $\eta_{N}(\bm \sigma)$ des a posteriori-Fehlerschätzers ist beschränkt durch
+    Die \emph{Effektivität} $\eta_{N}(\bm \sigma)$ des a posteriori"=Fehlerschätzers ist beschränkt durch
     \begin{equation}
         1 \leq \eta_{N}(\bm \sigma) := \frac{\Delta_{N}(\bm \sigma)}{\norm{u_{\mathcal N}(\bm \sigma) - u_{N}(\bm \sigma)}_{\mathcal X}} \leq \frac{\gamma_{\mathcal N}(\bm \sigma)}{\beta_{\mathrm{LB}}(\bm \sigma)},
     \end{equation}
@@ -176,7 +176,7 @@ Bevor wir uns dieser widmen, wollen wir an dieser Stelle noch ein Maß für die 
         \begin{equation}
             \norm{\hat{e}_{N}}_{\mathcal Y} \leq \gamma_{\mathcal N}(\bm \sigma) \norm{e_{N}(\bm \sigma)}_{\mathcal X}.
         \end{equation}
-        Zusammen mit der Definition des a posteriori-Fehlerschätzers $\Delta_{N}(\bm \sigma)$ liefert dies nun
+        Zusammen mit der Definition des a posteriori"=Fehlerschätzers $\Delta_{N}(\bm \sigma)$ liefert dies nun
         \begin{equation}
             \eta_{N}(\bm \sigma)
             = \frac{\Delta_{N}(\bm \sigma)}{\norm{u_{\mathcal N}(\bm \sigma) - u_{N}(\bm \sigma)}_{\mathcal X}}
@@ -192,35 +192,34 @@ Insbesondere garantiert es, dass der tatsächliche Fehler durch den a posteriori
 % TODO: noch etwas zur Konvergenz sagen?
 
 \section{Numerische Umsetzung} % (fold)
-\label{sub:grb:rb:numerische_umsetzung}
+\label{section:cha5_rbm:numerische_umsetzung}
 
-Wir richten unser Augenmerk nun auf die numerische Umsetzung der RB"=Methode und führen an den entsprechenden Stellen weitere, hierfür benötigte Grundlagen ein.
-Im Rahmen dieser Arbeit beschränken wir uns auf die Betrachtung parametrische-affiner Variationsprobleme, so wie sie in \cref{lemma:bilinearform_affin_parametrisch} bereits erwähnt wurden, führen sie an dieser Stelle noch einmal in allgemeinerer Form ein.
+Wir richten unsere Aufmerksamkeit nun auf die numerische Umsetzung der RB"=Methode und orientieren uns dabei weiterhin an \cite{Rozza2008,Patera:2007un}.
+Zunächst abstrahieren wir die aus \cref{lemma:bilinearform_affin_parametrisch} bekannte affine Abhängigkeit der parametrischen Bilinearform des Variationsproblems \cref{eq:abstraktes_parametrische_vp}.
 
 \begin{Definition}
 \label{definition:parametrisch_affine_bf_fuer_rbm}
     Wir nennen eine parametrische Bilinearform $b \colon \mathcal X \times \mathcal Y \times \mathcal P \to \mathbb{R}$ \emph{parametrisch affin}, wenn sie die Form
-    \begin{equation}
-        b(u, v; \bm \sigma) = \sum_{q = 1}^{Q_{b}} \theta_{q}^{b}(\bm \sigma) b_{q}(u, v), \quad \text{für } u \in \mathcal X, v \in \mathcal Y, \bm \sigma \in \mathcal P,
+    \begin{equation}\label{eq:bilinearform_parametrisch_affin}
+        b(u, v; \bm \sigma) = \sum_{q = 1}^{Q_{b}} \theta_{q}^{b}(\bm \sigma) b_{q}(u, v), \quad \text{für } u \in \mathcal X,~v \in \mathcal Y,~\bm \sigma \in \mathcal P,
     \end{equation}
-    hat, wobei für $q = 1, \dots, Q_{b}$ durch $\theta_{q}^{b} \colon \mathcal P \to \mathbb{R}$ Abbildungen und durch $b_{q} \colon \mathcal X \times \mathcal Y \to \mathbb{R}$ parameterunabhängige Bilinearformen gegeben seien.
+    hat, wobei für $q = 1, \dots, Q_{b}$ durch $\theta_{q}^{b} \colon \mathcal P \to \mathbb{R}$ Funktionen und durch $b_{q} \colon \mathcal X \times \mathcal Y \to \mathbb{R}$ parameterunabhängige Bilinearformen gegeben seien.
 \end{Definition}
 
-Weiter abstrahieren wir an dieser Stelle die Notationen aus \cref{section:galerkin_numerische_umsetzung}.
-Die diskreten Räume $\mathcal X_{\mathcal N}$ und $\mathcal Y_{\mathcal N}$ fassen wir als Span entsprechender Basisfunktionen auf und schreiben
+Weiter vereinfachen wir an dieser Stelle die Notation aus \cref{section:galerkin_numerische_umsetzung}.
+Die endlichdimensionalen Räume $\mathcal X_{\mathcal N}$ und $\mathcal Y_{\mathcal N}$ der Truth"=Diskretisierung fassen wir als Span entsprechender Basen auf und schreiben
 \begin{equation}
-    \mathcal X_{\mathcal N} = \spn \Set{ \phi_{i} \given i = 1, \dots, \mathcal N },
-    \quad
-    \mathcal Y_{\mathcal N} = \spn \Set{ \psi_{j} \given j = 1, \dots, \mathcal N }.
+    \mathcal X_{\mathcal N} = \spn \Set{ \phi_{i} }_{ i = 1, \dots, \mathcal N },
+    \qquad
+    \mathcal Y_{\mathcal N} = \spn \Set{ \psi_{j} }_{ j = 1, \dots, \mathcal N }.
 \end{equation}
-Ebenso schreiben wir die Reduzierte"=Basis"=Räume $\mathcal X_{N}$ und $\mathcal Y_{N}$ als Span der Form
+Analog verfahren wir für die $N$-dimensionalen RB"=Räume $\mathcal X_{N}$ und $\mathcal Y_{N}$ mit der Notation
 \begin{equation}
-    \mathcal X_{N} = \spn \Set{ \zeta_{i} \given i = 1, \dots, N},
-    \quad
-    \mathcal Y_{N} = \spn \Set{ \eta_{j} \given j = 1, \dots, N},
+    \mathcal X_{N} = \spn \Set{ \xi_{i} }_{ i = 1, \dots, N},
+    \qquad
+    \mathcal Y_{N} = \spn \Set{ \eta_{j} }_{ j = 1, \dots, N}.
 \end{equation}
-wobei $\zeta_{i} \in \mathcal X_{\mathcal N}$ und $\eta_{j} \in \mathcal Y_{\mathcal N}$ für $i, j = 1, \dots, N$ Basisfunktionen seien.
-Die zur Bestimmung der Petrov"=Galerkin"=Lösung verwendeten Strukturen schreiben wir ferner als
+Die bei der Petrov"=Galerkin"=Diskretisierung hergeleiteten Strukturen $\mat{X}, \mat{Y}, \mat{B}_q \in \mathbb{R}^{\mathcal N \times \mathcal N}$ mit $q = 1, \dots, Q_b$ und $\vec{f} \in \mathbb{R}^{\mathcal N}$ lassen sich damit kurz schreiben als
 \begin{equation}
     \begin{aligned}
         \mat{X} &= \left[ \skp{\phi_{i}}{\phi_{j}}{\mathcal X} \right]_{i,j = 1, \dots, \mathcal N},
@@ -229,221 +228,283 @@ Die zur Bestimmung der Petrov"=Galerkin"=Lösung verwendeten Strukturen schreibe
         \\
         \vec{f} &= \left[ f(\psi_{j}) \right]_{j = 1, \dots, \mathcal N},
         &\qquad
-        \mat{B}_{q} &= \left[ b_{q}(\phi_{i}, \psi_{j}) \right]_{j,i = 1, \dots, \mathcal N}, \quad q = 1, \dots, Q_{b}.
+        \mat{B}_{q} &= \left[ b_{q}(\phi_{i}, \psi_{j}) \right]_{j,i = 1, \dots, \mathcal N}.
     \end{aligned}
 \end{equation}
+Nach diesen Vorbemerkungen geben wir nun als ersten Schritt eine Möglichkeit zur Bestimmung der Reduzierte"=Basis"=Äquivalente dieser Strukturen an.
 
-Zunächst wollen wir eine einfaches Verfahren angeben, mit dem wir aus den zugrundeliegenden Petrov"=Galerkin"=Strukturen die für die RB"=Methode benötigten berechnen können.
-
-\begin{Definition}
-    Als \emph{Reduzierte"=Basis"=Ansatzfunktion} $u_{N} \in \mathcal X_{N}$ respektive \emph{Testfunktion} $v_{N} \in \mathcal Y_{N}$ bezeichnen wir
+\begin{Definition}\label{definition:rb_ansatz_und_testfunktionen}
+    Als \emph{Reduzierte"=Basis"=Ansatzfunktion} $u_{N} \in \mathcal X_{N}$ respektive \emph{Testfunktion} $v_{N} \in \mathcal Y_{N}$ bezeichnen wir die Linearkombinationen
     \begin{equation}
-        u_{N} := \sum_{i = 1}^{N} u_{N i} \zeta_{i},
-        \quad
-        v_{N} := \sum_{j = 1}^{N} v_{N j} \eta_{j},
+        u_{N} := \sum_{i = 1}^{N} u_{i, N} \xi_{i},
+        \qquad
+        v_{N} := \sum_{j = 1}^{N} v_{j, N} \eta_{j}
     \end{equation}
-    mit den Koeffizientenvektoren $\vec{u}_{N} := [u_{Ni}]_{i = 1, \dots, N} \in \mathbb{R}^{N}$ und $\vec{v}_{N} := [v_{Nj}]_{j = 1, \dots, N} \in \mathbb{R}^{N}$.
+    mit den Koeffizientenvektoren $\vec{u}_{N} := [u_{i, N}]_{i = 1, \dots, N} \in \mathbb{R}^{N}$ und $\vec{v}_{N} := [v_{j,N}]_{j = 1, \dots, N} \in \mathbb{R}^{N}$.
 \end{Definition}
 
-Schreiben wir für $i,j = 1, \dots, N$ die Koeffizientenvektoren der Basisfunktionen $\zeta_{i} \in \mathcal X_{N}$ und $\eta_{j} \in \mathcal Y_{N}$ bezüglich der Basen von $\mathcal X_{\mathcal N}$ und $\mathcal Y_{\mathcal N}$  als $\bm \zeta_{i}, \bm \eta_{j} \in \mathbb{R}^{\mathcal N}$, dann können wir ferner die Matrizen
+Nach Konstruktion können die Basisfunktionen $\Set{ \xi_{i} }_{ i = 1, \dots, N}$ und $\Set{ \eta_{j} }_{ j = 1, \dots, N}$ jeweils als Linearkombination von $\Set{ \phi_{i} }_{ i = 1, \dots, \mathcal N}$ beziehungsweise $\Set{ \psi_{j} }_{ j = 1, \dots, \mathcal N}$ geschrieben werden.
+Bezeichnen wir nun für $i,j = 1, \dots, N$ die entsprechenden Koeffizientenvektoren mit $\bm \xi_{i}, \bm \eta_{j} \in \mathbb{R}^{\mathcal N}$, dann können wir damit weiter die Matrizen
 \begin{equation}
-  \mat{Z} := [\bm \zeta_{i}]_{i = 1, \dots, N} \in \mathbb{R}^{\mathcal N \times N}, \quad \mat{H} := [\bm \eta_{i}]_{i = 1, \dots, N} \in \mathbb{R}^{\mathcal N \times N}
+  \mat{\Xi} := [\bm \xi_{i}]_{i = 1, \dots, N} \in \mathbb{R}^{\mathcal N \times N},
+  \qquad
+  \mat{H}   := [\bm \eta_{j}]_{j = 1, \dots, N} \in \mathbb{R}^{\mathcal N \times N}
 \end{equation}
 definieren.
-Mit Hilfe dieser beiden Matrizen definieren wir nun die Reduzierte"=Basis"=Matrizen $\mat{B}_{N, q} \in \mathbb{R}^{N \times N}$, $q = 1, \dots, Q_{b}$, und den Reduzierte"=Basis"=Lastvektor $\vec{f}_{N} \in \mathbb{R}^{N}$ definieren via
+Diese ermöglichen nun die Berechnung der RB"=Matrizen $\mat{B}_{q,N} \in \mathbb{R}^{N \times N}$ für $q = 1, \dots, Q_{b}$ und des RB"=Lastvektors $\vec{f}_{N} \in \mathbb{R}^{N}$ als
 \begin{equation}
     \begin{aligned}
-        \mat{B}_{N,q} &:= \left[ b_{q}(\zeta_{i}, \eta_{j}) \right]_{j, i = 1, \dots, N} = \mat{H}\tran \mat{B}_{q} \mat{Z}, \quad q = 1, \dots, Q_{b}, \\
-        \vec{f}_{N} &:= \left[ f(\eta_{j}) \right]_{j = 1, \dots, N} = \mat{H}\tran \vec{f}
+        \mat{B}_{q,N} &:= \left[ b_{q}(\xi_{i}, \eta_{j}) \right]_{j, i = 1, \dots, N}
+            &&= \mat{H}\tran \mat{B}_{q} \mat{\Xi}, \quad q = 1, \dots, Q_{b},
+        \\
+        \vec{f}_{N} &:= \left[ f(\eta_{j}) \right]_{j = 1, \dots, N}
+            &&= \mat{H}\tran \vec{f}.
     \end{aligned}
 \end{equation}
-und analog auch die entsprechenden Norminduzierenden Matrizen $\mat{X}_{N}, \mat{Y}_{N} \in \mathbb{R}^{N \times N}$ durch
+Analog können auch die norminduzierenden Matrizen $\mat{X}_{N}, \mat{Y}_{N} \in \mathbb{R}^{N \times N}$ definiert werden als
 \begin{equation}
     \begin{aligned}
-    \mat{X}_{N} &:= \left[ \skp{\zeta_{i}}{\zeta_{j}}{\mathcal X} \right]_{i,j = 1, \dots, N} = \mat{Z}\tran \mat{X} \mat{Z}, \\
-    \mat{Y}_{N} &:= \left[ \skp{\eta_{i}}{\eta_{j}}{\mathcal Y} \right]_{i,j = 1, \dots, N} = \mat{H}\tran \mat{Y} \mat{H}.
+    \mat{X}_{N} &:= \left[ \skp{\xi_{i}}{\xi_{j}}{\mathcal X} \right]_{i,j = 1, \dots, N}
+        &&= \mat{\Xi}\tran \mat{X} \mat{\Xi},
+    \\
+    \mat{Y}_{N} &:= \left[ \skp{\eta_{i}}{\eta_{j}}{\mathcal Y} \right]_{i,j = 1, \dots, N}
+        &&= \mat{H}\tran \mat{Y} \mat{H}.
     \end{aligned}
 \end{equation}
 
-Um nun die RB"=Lösung $u_{N}(\bm \sigma)$ zu einem Parameter $\bm \sigma \in \mathcal P$ zu bestimmen, reicht es, das lineare Gleichungssystem
+Die Bestimmung der RB"=Lösung $u_{N}(\bm \sigma)$ zu einem Parameter $\bm \sigma \in \mathcal P$ erfolgt, wie bereits vom Petrov"=Galerkin"=Verfahren bekannt, über ein lineares Gleichungssystem
 \begin{equation}
 \label{eq:rbm_gleichungssystem}
-    \mat{B}_{N}(\bm \sigma) \vec{u}_{N}(\bm \sigma) = \vec{f}_{N}
+    \mat{B}_{N}(\bm \sigma) \vec{u}_{N}(\bm \sigma) = \vec{f}_{N},
 \end{equation}
-zu lösen, wobei
+wobei $\vec{u}_{N}(\bm \sigma)$ der Koeffizientenvektor der Lösung ist und die Systemmatrix $\mat{B}_{N}(\bm \sigma)$ durch die affine Darstellung
 \begin{equation}
 \label{eq:affine_rbm_systemmatrix}
-    \mat{B}_{N}(\bm \sigma) = \sum_{q = 1}^{Q_b} \theta_{q}^{b}(\bm \sigma) \mat{B}_{N, q}
+    \mat{B}_{N}(\bm \sigma) = \sum_{q = 1}^{Q_b} \theta_{q}^{b}(\bm \sigma) \mat{B}_{q, N}
 \end{equation}
-die Systemmatrix und $\vec{u}_{N}(\bm \sigma)$ der Koeffizientenvektor der Lösung ist.
+ausgewertet werden kann.
 
-\subsection{Zerlegung in Offline- und Online-Phase} % (fold)
-\label{sub:zerlegung_in_offline_und_online_phase}
+Es bleibt zu klären, wie die RB"=Räume $\mathcal X_{N}$ und $\mathcal Y_{N}$ konstruiert werden.
+Dieses Problem werden wir in mehrere Schritte aufteilen.
+Zunächst geben wir einen Algorithmus zur Konstruktion des Ansatzraums $\mathcal X_{N}$ an, fahren danach mit dem Testraum $\mathcal Y_{N}$ fort und klären anschließend die dabei auftretenden problematischen Punkte.
 
-Wir gehen nun detailliert auf die beiden Phasen der Reduzierte"=Basis"=Methode ein und beginnen mit der einfacheren Online-Phase, bevor wir zur aufwendigeren Offline-Phase übergehen.
+\paragraph{Konstruktion des RB"=Ansatzraumes mittels Greedy-Algorithmus.} % (fold)
+\label{par:konstruktion_des_reduzierte_basis_ansatzraumes_mittels_greedy_algorithmus}
 
-\subsubsection{Online-Phase} % (fold)
-\label{ssub:online_phase}
+Wie bereits angeführt wurde, wird der RB"=Ansatzraum unter dem Aspekt, den Fehler zwischen Truth- und RB"=Lösung für alle Parameter des Parameterraums $\mathcal P$ zu minimieren, konstruiert.
+Unter einem rein theoretischen Blick kann dies durch die sogenannten \emph{Kolmogorow $N$-Weiten} optimal gelöst werden, wie beispielsweise \cite[Section 3.4]{Patera:2007un} entnommen werden kann.
+Da diese praktisch aber nicht umgesetzt werden können, wird hierfür oftmals auf einen \emph{Greedy}-Ansatz zurückgegriffen.
+Dieser ist als \cref{algorithm:greedy_training} in Kurzform gegeben und wird im Folgenden erklärt.
 
-In der Online-Phase muss zu einem gegebenen Parameter $\bm \sigma \in \mathcal P$ lediglich die Systemmatrix $\mat{B}_{N}(\bm \sigma)$ anhand der parametrisch-affinen Darstellung \cref{eq:affine_rbm_systemmatrix} berechnet werden, um anschließend die RB"=Lösung $u_{N}(\bm \sigma)$ über das Gleichungssystem \cref{eq:rbm_gleichungssystem} bestimmen zu können.
+\begin{algorithm}[tb]
+    % \DontPrintSemicolon
+    \SetKwInOut{Input}{Eingabe}\SetKwInOut{Output}{Ausgabe}
+    \SetKwProg{Proc}{Prozedur}{}{}
+    \SetKwFunction{Orthonormalisiere}{Orthonormalisiere}
+    %
+    \Input{Menge der Trainingsparameter $\mathcal P_{\mathrm{train}} \subset \mathcal P$, Fehlertoleranz $\epsilon_{\mathrm{tol}} > 0$}
+    \Output{RB-Ansatzraum $\mathcal X_{N}$ mit Basis $\Xi_{N}$, Sample-Menge $\mathcal S_{N}$}
+    \BlankLine
+    Setze $N = 0$, $\mathcal S_{0} = \Set{}$, $\Xi_{0} = \Set{}$, $\mathcal X_{0} = \Set{0}$\;
+    \While{$\max_{\bm \sigma \in \Xi_{\mathrm{train}}} \Delta_{N}(\bm \sigma) > \epsilon_{\mathrm{tol}}$}{
+        $\bm \sigma_{N + 1} \leftarrow \arg \max_{\bm \sigma \in \Xi_{\mathrm{train}}} \Delta_{N}(\bm \sigma)$\;
+        $\mathcal S_{N + 1} \leftarrow \mathcal S_{N} \cup \Set{\bm \sigma_{N + 1}}$\;
+        $\Xi_{N + 1} \leftarrow $ \Orthonormalisiere{$\Xi_{N} \cup \Set{u_{\mathcal N}(\bm \sigma_{N + 1})}$}\;
+        $\mathcal X_{N + 1} \leftarrow \spn \Xi_{N + 1}$\;
+        $N \leftarrow N + 1$\;
+    }
+    %
+    \caption{Greedy Training}
+    \label{algorithm:greedy_training}
+\end{algorithm}
 
-Ferner bestimmen wir den a posteriori-Fehlerschätzer $\Delta_{N}(\bm \sigma)$ zur Zertifizierung des Fehlers.
+Zunächst wird eine Diskretisierung $\mathcal P_{\mathrm{train}} \subset \mathcal P$ des Parameterraums benötigt.
+Diese sollte \enquote{fein genug} sein, um den Parameterraum mit dem beschriebenen Verfahren ausreichend auszuschöpfen.
+Es gibt verschiedene Strategien, wie diese gewählt werden kann, beispielsweise zufällig oder in Form eines äquidistanten Gitters.
 
-% subsubsection online_phase (end)
+Sei $\mathcal X_{N}$ ein $N$-dimensionaler RB"=Ansatzraum mit Basis $\Xi_{N}$.
+Um daraus einen $N+1$-dimensionalen Raum $\mathcal X_{N + 1}$ zu gewinnen, verfahren wir wie folgt:
+\begin{enumerate}[label={\itshape\roman*.},ref={\itshape\roman*}]
+    \item\label{enum:greedy_schritt_eins} Bestimme den Parameter $\bm \sigma_{N+1} \in \mathcal P_{\mathrm{train}}$ der den a posteriori-Fehlerschätzer $\Delta_{N}$ maximiert, also $\bm \sigma_{N+1} := \arg \max_{\bm \sigma \in \mathcal P_{\mathrm{train}}} \Delta_{N}(\bm \sigma)$,
+    \item berechne die Truth-Lösung $u_{\mathcal N}(\bm \sigma_{N+1})$,
+    \item definiere mit dieser nach einer Orthonomalisierung $\Xi_{N + 1} := \Xi_{N} \cup \Set{u_{\mathcal N}(\bm \sigma_{N+1})}$ und $\mathcal X_{N + 1} := \spn \Xi_{N + 1}$.
+\end{enumerate}
+Der beschriebene Ablauf wird nun iterativ ausgeführt, bis der maximale Fehler in \cref{enum:greedy_schritt_eins} unter einer gewünschten Toleranz liegt.
+Um das Verfahren zu starten, kann das erste Parameter"=Sample beliebig, beispielsweise zufällig, gewählt werden.
 
-\subsubsection{Offline-Phase} % (fold)
-\label{ssub:offline_phase}
+Diese Heuristik hat zwar offensichtlich nur eine lokale Sicht auf die Wahl der optimalen Parameter, liefert dadurch aber ein Verfahren, welches nach \cite[Subsection 3.4.3]{Patera:2007un} zufriedenstellende Ergebnisse unter einem vertretbaren Aufwand liefert.
+Dazu wird allerdings eine effiziente Möglichkeit benötigt, um den a posteriori-Fehlerschätzer auszuwerten.
+Bevor wir uns dieser Aufgabe widmen, wollen wir auf die Konstruktion des zugehörigen RB"=Testraumes eingehen.
 
-Ziel der Offline-Phase ist die Bestimmung der für die Online-Phase benötigten Strukturen unter dem Gesichtspunkt den maximalen Fehler möglichst zu minimieren.
-Dies wird oft auf Basis heuristisch motivierter Strategien getan, da die theoretisch optimale Auswahl der Snapshot-Parameter numerisch nicht umsetzbar ist.
-Weiterführend findet man hierzu bei \cite{??} eine umfassende Einführung in die sogenannten \emph{Kolmogorow-N-Weiten}.
+% paragraph konstruktion_des_reduzierte_basis_ansatzraumes_mittels_greedy_algorithmus (end)
 
-Als praktisch umsetzbare Verfahren erfreuen vor allem \emph{Greedy}-Strategien und auf die \emph{Proper Orthogonal Decomposition} aufbauende Algorithmen großer Beliebtheit.
-Da wir uns auf einen Greedy-Ansatz beschränken werden, sei zu letzterem an dieser Stelle \cite{} als weitereführende Literatur erwähnt.
+\paragraph{Konstruktion des RB"=Testraumes.} % (fold)
+\label{par:konstruktion_des_testraumes_}
 
-Der hier zum Einsatz kommende Ansatz ist unter dem Namen \emph{Greedy Sampling Scheme} bekannt, und lässt sich wie folgt zusammenfassen.
-Iterativ wird der Parameter $\bm \sigma^{*} \in \mathcal P$ bestimmt, welcher in der aktuellen reduzierten Basis den Fehler $\norm{e_{N}(\bm \sigma)}_{\mathcal X}$ maximiert.
-Durch Hinzunahme der zugehörigen Truth"=Lösung $u_{\mathcal N}(\bm \sigma^{*})$ zur reduzierten Basis erreichen wir somit in jedem Schritt eine maximale Fehlerreduktion.
-Da die Auswertung des exakten Fehlers $\norm{e_{N}(\bm \sigma)}_{\mathcal X}$ einen zu hohen Aufwand mit sich liefert, kommt hier der a posteriori-Fehlerschätzer $\Delta_{N}(\bm \sigma)$ aus \cref{lemma:rbm_fehler_schranke} zum Einsatz.
-Das daraus resultierende Verfahren findet sich formal genauer in \cref{algorithm:greedy_training}.
+Hierbei erweist sich der bereits bekannte Supremizing"=Operator aus \cref{definition:supremizing_operator} als nützlich.
+Seien $\bm \sigma \in \mathcal P$ ein Parameter und $T_{\bm \sigma} \colon \mathcal X_{\mathcal N} \to \mathcal Y_{\mathcal N}$ der Supremizing-Operator der Bilinearform $\restr{b(\blank, \blank; \bm \sigma)}{\mathcal X_{\mathcal N} \times \mathcal Y_{\mathcal N}}$, dann definieren wir den parameterabhängigen Testraum
+\begin{equation}\label{eq:rb_testraum_parameterabhaengig}
+    \mathcal Y_{N}^{\bm \sigma} := \Set{ T_{\bm \sigma} u_{\mathcal N}(\bm \sigma_{i}) \given \bm \sigma_{i} \in \mathcal S_{N},~ i = 1, \dots, N }.
+\end{equation}
 
-Ein offenbar kritischer Punkt des Algorithmus ist die Auswertung des a posteriori-Fehlerschätzers.
-Diese setzt sich zum einen aus der Berechnung der Norm des Residuums und aus der Bestimmung einer Schranke für die inf-sup-Konstante.
-Wir gehen zunächst auf das einfacher zu handhabende Residuum ein.
+\begin{Satz}\label{satz:rb_testraum_liefert_korrekt_gestelltes_problem}
+    Das RB"=Variationsproblem \cref{eq:rb_abstraktes_parametriches_vp} mit $\mathcal X_{N}$ und $\mathcal Y_{N}^{\bm \sigma}$ als Ansatz- beziehungsweise Testraum ist für alle $\bm \sigma \in \mathcal P$ korrekt gestellt.
+
+    \begin{Beweis}
+        Wir weisen die Bedingungen des \acl{bnb}s nach, wobei wir uns auf die inf"=sup"=Bedingung beschränken.
+        Nach Annahme erfüllt die Truth"=inf"=sup"=Konstante $\beta_{\mathcal N}(\bm \sigma) > 0$.
+        Ferner gilt nach Definition für $u \in \mathcal X_{N}$ auch $T_{\bm \sigma}u \in \mathcal Y_{N}^{\bm \sigma}$, was zu der Abschätzung
+        \begin{equation}
+            \begin{aligned}
+                \beta_{N}(\bm \sigma)
+                &= \infsup{u \in \mathcal X_{N}}{v \in \mathcal Y_{N}^{\bm \sigma}} \frac{b(u, v; \bm \sigma)}{\norm{u}_{\mathcal X} \norm{v}_{\mathcal Y}}
+                = \inf_{u \in \mathcal X_{N}} \frac{b(u, T_{\bm \sigma}u; \bm \sigma)}{\norm{u}_{\mathcal X} \norm{T_{\bm \sigma} u}_{\mathcal Y}}
+                \\&= \inf_{u \in \mathcal X_{N}} \frac{\norm{T_{\bm \sigma}u}_{\mathcal Y}}{\norm{u}_{\mathcal X}}
+                \geq \inf_{u \in \mathcal X_{\mathcal N}} \frac{\norm{T_{\bm \sigma}u}_{\mathcal Y}}{\norm{u}_{\mathcal X}}
+                \\&= \beta_{\mathcal N}(\bm \sigma) > 0
+            \end{aligned}
+        \end{equation}
+        führt.
+    \end{Beweis}
+\end{Satz}
+
+Da der Testraum $\mathcal Y_{N}^{\bm \sigma}$ für jeden Parameter neu aufgebaut werden muss, ist eine sinnvolle Zerlegung der Berechnung in Offline- und Online-Phase wünschenswert.
+Dazu nutzen wir die parametrisch-affine Darstellung \cref{eq:bilinearform_parametrisch_affin} und definieren für jedes $\restr{b_{q}}{\mathcal X_{\mathcal N} \times \mathcal Y_{\mathcal N}}$, $q = 1, \dots, Q_b$, den zugehörigen Supremizing-Operatoren $T_{q}$.
+Dann gilt
+\begin{equation}
+    T_{\bm \sigma} = \sum_{q = 1}^{Q_b} \theta_{q}^{b}(\bm \sigma) T_{q}.
+\end{equation}
+Erneut kann die diskrete Darstellung $\mat{T}_{q} \in \mathbb{R}^{\mathcal N \times \mathcal N}$ der Operatoren $T_q$ nach dem Rieszschem Darstellungssatz durch $\mat{T}_{q} = \mat{Y}^{-1} \mat{B}_{q}$ bestimmt werden.
+Diese müssen nur einmal vorberechnet werden, während die restlichen Berechnungen folgendermaßen zerlegt werden können:
+
+\begin{onoffdescription}
+    \item[Offline:]
+    Berechne und speichere die Vektoren $\vec{v}_{q}^{n} := \mat{T}_{q} \vec{u}_{\mathcal N}(\bm \sigma_{n})$ für jedes $q = 1, \dots, Q_{b}$ und $n = 1, \dots, N$.
+
+    \item[Online:]
+    Bestimme $\mathcal Y_{N}^{\bm \sigma}$ durch $\mat{T}_{\bm \sigma} \vec{u}_{\mathcal N}(\bm \sigma_{n}) = \sum_{q = 1}^{Q_b} \theta_{q}^{b}(\bm \sigma) \vec{v}_{q}^{n}$ für $n = 1, \dots, N$.
+\end{onoffdescription}
+
+% paragraph konstruktion_des_testraumes_ (end)
 
 \paragraph{Berechnung der Norm des Residuums.} % (fold)
 \label{par:berechnung_der_norm_des_residuum}
 
-Um diese zu bestimmen, greifen wir erneut auf den Rieszschen Darstellungssatz zurück und erhalten damit für jedes $\bm \sigma \in \mathcal P$ ein $\hat{e}_{N}(\bm \sigma) \in \mathcal Y_{\mathcal N}$ mit
+Diese stellt eine Hälfte des a posteriori"=Fehlerschätzers dar und kann unter Verwendung des Rieszschen Darstellungssatzes effizient umgesetzt werden.
+Wir erhalten dadurch liefert für jedes $\bm \sigma \in \mathcal P$ ein $\hat{e}_{N}(\bm \sigma) \in \mathcal Y_{\mathcal N}$ mit
 \begin{equation}
     \norm{\hat{e}_{N}(\bm \sigma)}_{\mathcal Y} = \norm{r_{N}(\blank; \bm \sigma)}_{\mathcal Y_{\mathcal N}'}, \qquad
     r_{N}(v; \bm \sigma) = \skp{\hat{e}_{N}(\bm \sigma)}{v}{\mathcal Y_{\mathcal N}}, \quad \fa v \in \mathcal Y.
 \end{equation}
-Aufgrund der Definition des Residuums \cref{eq:variationsproblem_residuum} und der parametrisch-affinen Darstellung \cref{definition:parametrisch_affine_bf_fuer_rbm} der Bilinearform $b$ können wir dies verwursten zu
+Aufgrund der Darstellung \cref{eq:residuum_durch_funktional_und_bilinearform} des Residuums und der parametrisch-affinen Darstellung \cref{eq:bilinearform_parametrisch_affin} der Bilinearform gilt für alle $v \in \mathcal Y_{\mathcal N}$ die Gleichung
 \begin{equation}
     \skp{\hat{e}_{N}(\bm \sigma)}{v}{\mathcal Y}
     = r_{N}(v; \bm \sigma)
-    % = f(v) - \sum_{q = 1}^{Q_b} \theta_{q}^{b}(\bm \sigma) b_{q}(u_{N}(\bm \sigma), v)
-    = f(v) - \sum_{q = 1}^{Q_b} \sum_{n = 1}^{N} \theta_{q}^{b}(\bm \sigma) u^{(n)}_{N}(\bm \sigma) b_{q}(\zeta_{n}, v).
+    = f(v) - \sum_{q = 1}^{Q_b} \sum_{n = 1}^{N} \theta_{q}^{b}(\bm \sigma) u_{n,N}(\bm \sigma) b_{q}(\xi_{n}, v).
 \end{equation}
-Fassen wir nun weiter die Abbildungen $b_{q}(\zeta_{n}, \blank) \colon \mathcal Y_{\mathcal N} \to \mathbb{R}$ als Funktionale auf, dann sind diese stetig und linear und wir können erneut den Rieszschen Darstellungssatz anwenden.
-Dies liefert die Existenz von $\hat{f}, \hat{b}^{n}_{q} \in \mathcal Y_{\mathcal N}$, $n = 1, \dots, N,$, $q = 1, \dots, Q_b$, mit
+Weiter sind durch $b_{q}(\xi_{n}, \blank) \colon \mathcal Y_{\mathcal N} \to \mathbb{R}$ für alle $n = 1, \dots, N$ und $q = 1, \dots, Q_b$ stetige lineare Funktionale gegeben, so dass eine erneute Anwendung des Rieszschen Darstellungssatzes die Existenz von $\hat{f}, \hat{b}^{n}_{q} \in \mathcal Y_{\mathcal N}$ mit
+\begin{equation}
+    f(v) = \skp{\hat{f}}{v}{\mathcal Y},
+    \qquad
+    b_{q}(\xi_{n}, v) = \skp{\hat{b}^{n}_{q}}{v}{\mathcal Y},
+    \quad \fa v \in \mathcal Y_{\mathcal N},
+\end{equation}
+liefert.
+Insgesamt ergibt dies die Darstellung
+\begin{equation}
+    \hat{e}_{N}(\bm \sigma) = \hat{f} - \sum_{q = 1}^{Q_b} \sum_{n = 1}^{N} \theta_{q}^{b}(\bm \sigma) u_{n,N}(\bm \sigma) \hat{b}^{n}_{q}.
+\end{equation}
+Darüber kann nun die Norm des Residuums als
 \begin{equation}
     \begin{aligned}
-        f(v) &= \skp{\hat{f}}{v}{\mathcal Y}, \quad \fa v \in \mathcal Y_{\mathcal N},
-        \\
-        b_{q}(\zeta_{n}, v) &= \skp{\hat{b}^{n}_{q}}{v}{\mathcal Y_{\mathcal N}}, \quad \fa v \in \mathcal \mathcal Y_{\mathcal N}.
-    \end{aligned}
-\end{equation}
-Zusammen mit obiger Darstellung erhalten wir damit
-\begin{equation}
-    \hat{r}_{N}(\bm \sigma) = \hat{f} - \sum_{q = 1}^{Q_b} \sum_{n = 1}^{N} \theta_{q}^{b}(\bm \sigma) u_{N}^{(n)}(\bm \sigma) \hat{b}^{n}_{q}.
-\end{equation}
-Die Norm des Residuums kann damit über
-\begin{equation}
-    \begin{aligned}
-        \norm{\hat{r}_{N}(\bm \sigma)}_{\mathcal Y}^{2}
-        &= \skp{\hat{r}_{N}(\bm \sigma)}{\hat{r}_{N}(\bm \sigma)}{\mathcal Y}
+        \norm{r_{N}(\blank; \bm \sigma)}_{\mathcal Y_{\mathcal N}'}^{2}
+        &= \norm{\hat{e}_{N}(\bm \sigma)}_{\mathcal Y}^{2}
+        = \skp{\hat{e}_{N}(\bm \sigma)}{\hat{e}_{N}(\bm \sigma)}{\mathcal Y}
         \\&= \begin{multlined}[t]
             \skp{\hat{f}}{\hat{f}}{\mathcal Y}
-                - 2 \sum_{q = 1}^{Q_b} \sum_{n = 1}^{N} \theta_{q}^{b}(\bm \sigma) u_{N}^{(n)}(\bm \sigma) \skp{\hat{b}^{n}_{q}}{\hat{f}}{\mathcal Y}
-                \\+ \sum_{q, p = 1}^{Q_b} \sum_{n, m = 1}^{N} \theta_{q}^{b}(\bm \sigma) \theta_{p}^{b}(\bm \sigma) u_{N}^{(n)}(\bm \sigma) u_{N}^{(m)}(\bm \sigma) \skp{\hat{b}^{n}_{q}}{\hat{b}^{m}_{p}}{\mathcal Y}.
+                - 2 \sum_{q = 1}^{Q_b} \sum_{n = 1}^{N} \theta_{q}^{b}(\bm \sigma) u_{n,N}(\bm \sigma) \skp{\hat{b}^{n}_{q}}{\hat{f}}{\mathcal Y}
+                \\+ \sum_{q, p = 1}^{Q_b} \sum_{n, m = 1}^{N} \theta_{q}^{b}(\bm \sigma) \theta_{p}^{b}(\bm \sigma) u_{n,N}(\bm \sigma) u_{m,N}(\bm \sigma) \skp{\hat{b}^{n}_{q}}{\hat{b}^{m}_{p}}{\mathcal Y}
+        \end{multlined}
+    \end{aligned}
+\end{equation}
+bestimmt werden.
+Weiter bestimmen wir die Koeffizientenvektoren $\hat{\vec{f}}, \hat{\vec{b}}^{n}_{q} \in \mathbb{R}^{\mathcal N}$ der Rieszschen Darstellungen $\hat{f}$ und $\hat{b}^{n}_{q}$ über
+\begin{equation}
+    \mat{Y} \hat{\vec{f}} = \vec{f},
+    \qquad
+    \mat{Y} \hat{\vec{b}}^{n}_{q} = [b_{q}(\xi_{n}, \psi_{j})]_{j = 1, \dots, \mathcal N} = \mat{B}_{q} \bm \xi_{n}.
+\end{equation}
+Verwenden wir diese, dann wird obige Gleichung zur Berechnung der Norm des Residuums nach Auswerten der $\mathcal Y$-Skalarprodukte zu
+\begin{equation}\label{eq:residuum_finale_darstellung}
+    \begin{aligned}
+        \norm{r_{N}(\blank; \bm \sigma)}_{\mathcal Y_{\mathcal N}'}^{2}
+        = \begin{multlined}[t]
+            \vec{f}\tran \mat{Y}^{-1} \vec{f}
+                - 2 \sum_{q = 1}^{Q_b} \sum_{n = 1}^{N} \theta_{q}^{b}(\bm \sigma) u_{n,N}(\bm \sigma) \vec{f}\tran \mat{Y}^{-1} \mat{B}_{q} \bm \xi_{n}
+                \\+ \sum_{q, p = 1}^{Q_b} \sum_{n, m = 1}^{N} \theta_{q}^{b}(\bm \sigma) \theta_{p}^{b}(\bm \sigma) u_{n,N}(\bm \sigma) u_{m,N}(\bm \sigma) \bm \xi_{n}\tran \mat{B}_{q}\tran \mat{Y}^{-1} \mat{B}_{p} \bm \xi_{m}.
         \end{multlined}
     \end{aligned}
 \end{equation}
 
-Diese Berechnung kann nun effizient in eine Offline- und eine Online-Phase zerlegt werden.
+Mit Hilfe dieses Ausdrucks können wir nun wie folgt eine Zerlegung in Offline- und Online-Phase vornehmen:
 
-\begin{description}[font=\normalfont\itshape]
-    \item[Offline:] Berechne und speichere $\skp{\hat{f}}{\hat{f}}{\mathcal Y}$, $\skp{\hat{b}^{n}_{q}}{\hat{f}}{\mathcal Y}$ und $\skp{\hat{b}^{n}_{q}}{\hat{b}^{m}_{p}}{\mathcal Y}$.
-    \item[Online:] Werte obige Darstellung aus.
-\end{description}
+\begin{onoffdescription}
+    \item[Offline:] Berechne die Größen $\vec{f}\tran \mat{Y}^{-1} \vec{f}$, $\vec{f}\tran \mat{Y}^{-1} \mat{B}_{q} \bm \xi_{n}$ und $\bm \xi_{n}\tran \mat{B}_{q}\tran \mat{Y}^{-1} \mat{B}_{p} \bm \xi_{m}$ für alle $n, m = 1, \dots, N$ und $q, p = 1, \dots, Q_b$ vor.
 
-TODO: Alternative Berechnung über Matrixschreibweise?
+    \item[Online:] Für einen gegebenen Parameter $\bm \sigma \in \mathcal P$ und dessen RB"=Lösung $u_{N}(\bm \sigma)$ muss nur die Formel \cref{eq:residuum_finale_darstellung} ausgewertet werden.
+\end{onoffdescription}
 
-% paragraph berechnung_der_norm_des_residuum (end)
+Bei der praktischen Umsetzung wird \cref{eq:residuum_finale_darstellung} nicht direkt in der gegebenen Form implementiert, sondern in einen parameterabhängigen und einen parameterunabhängigen Teil zerlegt, zu einem Vektor beziehungsweise einer Matrix zusammengefasst und mittels einer Matrix"=Vektor"=Multiplikation ausgewertet.
 
-\paragraph{Berechnung der unteren Schranke für die inf-sup-Konstante.} % (fold)
+
+\paragraph{Berechnung einer unteren Schranke für die inf-sup-Konstante.} % (fold)
 \label{par:berechnung_der_unteren_schranke_f_r_die_inf_sup_konstante_}
 
-Da die exakte Bestimmung der inf-sup-Konstante $\beta_{\mathcal N}(\bm \sigma)$ für jeden Parameter $\bm \sigma \in \Xi_{\mathrm{train}}$ laufzeittechnisch nicht vertretbar ist, wird ein Verfahren benötigt, welches auf effiziente Weise eine möglichst genaue untere Schranke $\beta_{\mathrm{LB}}(\bm \sigma)$ liefert.
-Hierfür verwenden wir die zu diesem Zweck entwickelte \ac{scm} und orientieren uns an der Originalarbeit von \textcite{Huynh2007}, wobei wir an dieser Stelle nur die Idee des Verfahrens wiederholen wollen.
-Weiter wurden bei der Implementierung die Verbesserungen von \textcite{Chen2009} berücksichtigt, die wir aber nicht weiter ausführen werden.
+Da die exakte Bestimmung der inf-sup-Konstante $\beta_{\mathcal N}(\bm \sigma)$ für jeden Parameter $\bm \sigma \in \mathcal P_{\mathrm{train}}$ mittels des in \cref{section:galerkin_numerische_umsetzung} beschriebenen verallgemeinerten Eigenwertproblems laufzeittechnisch nicht vertretbar ist, wird ein effizienteres Verfahren benötigt, welches eine möglichst genaue untere Schranke $\beta_{\mathrm{LB}}(\bm \sigma)$ liefert.
+Im Rahmen dieser Arbeit stützen wir uns hierfür auf die zu diesem Zweck entwickelte \ac{scm} und orientieren uns an der Originalarbeit von \textcite{Huynh2007}, wobei hier nur die Idee des Verfahrens wiederholt werden soll.
+Weiter wurden bei der Implementierung die Verbesserungen von \textcite{Chen2009} berücksichtigt, die hier nicht weiter ausgeführt werden.
 
-Da die \ac{scm} auf die Berechnung der Koerzivitätskonstante einer symmetrischen parametrischen Bilinearform ausgelegt ist, müssen wir zunächst die nötigen Rahmenbedingungen schaffen.
-Wir werden später darauf eingehen, wie wir mit der \ac{scm} die gewünschte inf-sup-Schranke bestimmen können.
+Da die \ac{scm} auf die Berechnung der Koerzivitätskonstante einer symmetrischen parametrischen Bilinearform ausgelegt, müssen wir zunächst die nötigen Rahmenbedingungen schaffen.
+Wir werden später darauf eingehen, wie wir mit der \ac{scm} stattdessen die gewünschte inf-sup-Schranke bestimmen können.
 
-Es sei eine abstrakte symmetrische, parametrisch-affine Bilinearform $a \colon \mathcal X \times \mathcal X \times \mathcal P \to \mathbb{R}$ durch
+Es sei also durch
 \begin{equation}
     a(u, v; \bm \sigma) = \sum_{q = 1}^{Q_a} \theta_{q}^{a} a_{q}(u, v), \quad u,v \in \mathcal X,
 \end{equation}
-gegeben, wobei $\theta_{q}^{a} \colon \mathcal P \to \mathbb{R}$ stetige Funktionen und $a_{q} \colon \mathcal X \times \mathcal X \to \mathbb{R}$ symmetrische, stetige und parameterunabhängige Bilinearformen seien.
+eine abstrakte symmetrische, parametrisch-affine Bilinearform $a \colon \mathcal X \times \mathcal X \times \mathcal P \to \mathbb{R}$ gegeben, wobei $\theta_{q}^{a} \colon \mathcal P \to \mathbb{R}$ stetige Funktionen und $a_{q} \colon \mathcal X \times \mathcal X \to \mathbb{R}$ symmetrische, stetige und parameterunabhängige Bilinearformen seien.
 Wie zuvor sei $\mathcal X_{\mathcal N} \subset \mathcal X$ eine Diskretisierung eines Galerkin"=Verfahrens.
-Wir wollen nun eine Schranke $\alpha_{\mathrm{LB}}(\bm \sigma)$ für die \emph{Koerzivitätskonstante} $\alpha_{\mathcal N}(\bm \sigma)$ bestimmen, welche als
+Wir wollen nun eine untere Schranke $\alpha_{\mathrm{LB}}(\bm \sigma)$ für die \emph{Koerzivitätskonstante} $\alpha_{\mathcal N}(\bm \sigma)$ bestimmen, welche als
 \begin{equation}
     \alpha_{\mathcal N}(\bm \sigma) := \inf_{u \in \mathcal X_{\mathcal N}} \frac{a(u, u; \bm \sigma)}{\norm{u}_{\mathcal X}^{2}}
 \end{equation}
 definiert ist.
 
-Die Idee hinter der \ac{scm} ist nun, die Bestimmung der obigen Koerzivitätskonstante als lineares Programm aufzufassen.
+Das Kernstück der \ac{scm} ist, die Bestimmung der Koerzivitätskonstante als lineares Optimierungsproblem aufzufassen.
 Dazu sei zunächst die tatsächliche zulässige Menge $\mathcal Z$ definiert als
 \begin{equation}
-    \mathcal Z := \Set[\bigg]{ \vec{z} = (z_{1}, \dots, z_{Q_a}) \in \mathbb{R}^{Q_a} \given \exists u_{z} \in \mathcal X_{\mathcal N} \colon z_{q} = \frac{a_{q}(u_{z}, u_{z})}{\norm{u_{z}}_{\mathcal X}^{2}}, q = 1, \dots, Q_a}.
+    \mathcal Z := \Set[\bigg]{ \vec{z} = (z_{1}, \dots, z_{Q_a}) \in \mathbb{R}^{Q_a} \given \exists u_{z} \in \mathcal X_{\mathcal N} \colon z_{q} = \frac{a_{q}(u_{z}, u_{z})}{\norm{u_{z}}_{\mathcal X}^{2}}, q = 1, \dots, Q_a}
 \end{equation}
-Weiter definieren wir die Zielfunktion
+und die lineare Zielfunktion als
 \begin{equation}
     \mathcal J \colon \mathbb{R}^{Q_a} \times \mathcal P \to \mathbb{R}, \quad \mathcal J(\vec{z} ;\bm \sigma) := \sum_{q = 1}^{Q_a} \theta_{q}^{a}(\bm \sigma) z_{q}.
 \end{equation}
-Mit dieser Konstruktion gilt nun $\alpha_{\mathcal N}(\bm \sigma) = \min_{\vec{z} \in \mathcal Z} \mathcal J(\vec{z}; \bm \sigma)$, es handelt sich aber noch nicht um ein lineares Programm.
+Mit dieser Konstruktion gilt nun $\alpha_{\mathcal N}(\bm \sigma) = \min_{\vec{z} \in \mathcal Z} \mathcal J(\vec{z}; \bm \sigma)$, es handelt sich hierbei aufgrund der zulässigen Menge $\mathcal Z$ aber noch nicht um ein lineares Programm.
+Um dies zu ändern, werden wir eine Unter- und eine Obermenge von $\mathcal Z$ konstruieren, die dann zu einem linearen Optimierungsproblem für eine untere Schranke von $\alpha_{\mathcal N}(\bm \sigma)$ verarbeitet werden können.
 
-Hierfür beschränken wir zunächst die einzelnen Variablen $z_{q}$ von oben und unten durch die Wahl von
+Als ersten Schritt schränken wir die Komponenten $z_{q}$ durch die Wahl von
 \begin{equation}
     \alpha_{q}^{-} := \inf_{u \in \mathcal X_{\mathcal{N}}} \frac{a_{q}(u, u)}{\norm{u}^{2}_{\mathcal X}},
     \quad
     \alpha_{q}^{+} := \sup_{u \in \mathcal X_{\mathcal{N}}} \frac{a_{q}(u, u)}{\norm{u}^{2}_{\mathcal X}},
     \qquad \fa q = 1, \dots, Q_a,
 \end{equation}
-und des Quaders $B_{Q_a} := \prod_{q = 1}^{Q_a} [\alpha^{-}_{q}, \alpha^{+}_{q}] \subset \mathbb{R}^{Q_a}$.
-
-Weiter benötigen wir eine endliche Teilmenge $\Xi_{\mathrm{train}} \subset \mathcal P$ als Trainingsparameter und definieren hier bereits die Notation $\mathcal C_{K} := \Set{ \bm \sigma_{1}, \dots, \bm \sigma_{K} } \subset \mathcal P$ für eine weitere, noch zu konstruierende Parameterteilmenge.
-Ferner sei durch $P_{M}(\bm \sigma; E)$ eine Abbildung gegeben, welche für ein $M \in \mathbb{N}_{0}$ und eine Teilmenge $E \subset \mathcal P$ die bezüglich der euklidischen Norm $M$ nächsten Punkte zu $\bm \sigma$ aus $E$ liefert.
+und des Quaders $B_{Q_a} := \prod_{q = 1}^{Q_a} [\alpha^{-}_{q}, \alpha^{+}_{q}] \subset \mathbb{R}^{Q_a}$ ein.
+Wir benötigen erneut eine endliche Teilmenge $\mathcal P_{\mathrm{train}} \subset \mathcal P$ als Trainingsparameter und ferner definieren wir hier die Notation $\mathcal C_{K} := \Set{ \bm \sigma_{1}, \dots, \bm \sigma_{K} } \subset \mathcal P_{\mathrm{train}}$ für eine weitere, noch zu konstruierende Parameterteilmenge.
+Weiter sei durch $P_{M}(\bm \sigma; E)$ eine Abbildung gegeben, welche für ein $M \in \mathbb{N}_{0}$ und eine Teilmenge $E \subset \mathcal P$ die bezüglich der euklidischen Norm $M$ nächsten Punkte zu $\bm \sigma$ aus $E$ liefert.
 Schließlich seien durch $M_{\alpha}, M_{+} \in \mathbb{N}$ die Anzahl der Stabilitätsbedingungen respektive Positivitätsbedingungen festgelegt.
 
-Mit dieser Vorarbeit lassen sich nun eine Untermenge $\mathcal Z_{\mathrm{LB}}(\bm \sigma; \mathcal C_{K}) \subset \mathcal Z$ und eine Obermenge $\mathcal Z_{\mathrm{UB}}(\mathcal C_{K}) \supset \mathcal Z$ durch
-\begin{equation}
-    \begin{aligned}
-        \mathcal Z_{\mathrm{LB}}(\bm \sigma; \mathcal C_{K}) &:=
-        \begin{multlined}[t]
-        \Set*{\vec{z} \in B_{Q_a} \given
-        \textstyle\sum_{q = 1}^{Q_a} \theta_{q}^{a}(\hat{\bm \sigma})z_{q} \geq \alpha_{\mathcal N}(\bm \sigma)~\fa \hat{\bm \sigma} \in P_{M_{\alpha}}(\bm \sigma; \mathcal C_{K})
-        }
-        \\ \cap
-        \Set*{\vec{z} \in B_{Q_a} \given
-        \textstyle\sum_{q = 1}^{Q_a} \theta_{q}^{a}(\hat{\bm \sigma}) z_{q} \geq 0~\fa \hat{\bm \sigma} \in P_{M_{+}}(\bm \sigma; \Xi_{\mathrm{train}})
-        },
-        \end{multlined}\\
-        \mathcal Z_{\mathrm{UB}}(\mathcal C_{K}) &:= \Set[\Big]{ \vec{z}^{*}(\bm \sigma_{k}) := \arg \min_{\vec z \in \mathcal Z} \mathcal J(\vec{z}; \bm \sigma_{k}) \given k = 1, \dots, K}.
-    \end{aligned}
-\end{equation}
-Nach Konstruktion handelt es sich dabei um konvexe Polyeder, sodass wir nun die beiden linearen Programme
-\begin{equation}
-    \alpha_{\mathrm{LB}}(\bm \sigma; \mathcal C_{K}) := \min_{\vec{z} \in \mathcal Z_{\mathrm{LB}}(\bm \sigma; \mathcal C_{K})} \mathcal J(\vec{z}; \bm \sigma),
-    \quad
-    \alpha_{\mathrm{UB}}(\bm \sigma; \mathcal C_{K}) := \min_{\vec{z} \in \mathcal Z_{\mathrm{UB}}(\mathcal C_{K})} \mathcal J(\vec{z}; \bm \sigma)
-\end{equation}
-definieren können.
-Es lässt sich nachweisen \cite[Proposition 1]{Huynh2007}, dass diese für beliebige $\mathcal C_{K}, M_{\alpha}$ und $M_{+}$ die Abschätzung
-\begin{equation}
-    \alpha_{\mathrm{LB}}(\bm \sigma; \mathcal C_{K}) \leq \alpha_{\mathcal N}(\bm \sigma) \leq \alpha_{\mathrm{UB}}(\bm \sigma; \mathcal C_{K}), \quad \fa \bm \sigma \in \mathcal P,
-\end{equation}
-erfüllen.
-
-Es bleibt lediglich die Konstruktion der Teilmengen $\mathcal C_{K} \subset \mathcal P$ zu klären.
-Dazu wird erneut ein Greedy-Verfahren eingesetzt, siehe \cref{algorithm:scm_greedy}.
-Dieses wird in der Offline-Phase der \ac{scm} ausgeführt, während in der Online-Phase zur Bestimmung der gesuchten Schranke $\alpha_{\mathrm{LB}}(\bm \sigma)$ ein relativ kleines lineares Programm gelöst werden muss.
-
 \begin{algorithm}[tb]
-    \DontPrintSemicolon
+    % \DontPrintSemicolon
     \SetKwInOut{Input}{Eingabe}\SetKwInOut{Output}{Ausgabe}
     \SetKwProg{Proc}{Prozedur}{}{}
     %
@@ -460,101 +521,73 @@ Dieses wird in der Offline-Phase der \ac{scm} ausgeführt, während in der Onlin
     \label{algorithm:scm_greedy}
 \end{algorithm}
 
-Das selbe Verfahren lässt schlussendlich auch für die Bestimmung einer inf-sup-Konstante verwenden.
-Dazu betrachten wir die bekannte Bilinearform $b$ aus \cref{definition:parametrisch_affine_bf_fuer_rbm} und definieren für jedes $q = 1, \dots, Q_{b}$ mittels Rieszschen Darstellungssatzes einen Operator $T_{q} \colon \mathcal X_{\mathcal N} \to \mathcal Y_{\mathcal N}$ mittels
+Mit dieser Vorarbeit können wir nun eine Untermenge $\mathcal Z_{\mathrm{LB}}(\bm \sigma; \mathcal C_{K}) \subset \mathcal Z$ und eine Obermenge $\mathcal Z_{\mathrm{UB}}(\mathcal C_{K}) \supset \mathcal Z$ definieren durch
 \begin{equation}
-    \skp{T_{q} u}{v}{\mathcal Y} = b_{q}(u, v), \quad u \in \mathcal X_{\mathcal N}, v \in \mathcal Y_{\mathcal N},
+    \begin{aligned}
+        \mathcal Z_{\mathrm{LB}}(\bm \sigma; \mathcal C_{K}) &:=
+        \begin{multlined}[t]
+        \Set*{\vec{z} \in B_{Q_a} \given
+        \textstyle\sum_{q = 1}^{Q_a} \theta_{q}^{a}(\tilde{\bm \sigma})z_{q} \geq \alpha_{\mathcal N}(\bm \sigma)~\fa \tilde{\bm \sigma} \in P_{M_{\alpha}}(\bm \sigma; \mathcal C_{K})
+        }
+        \\ \cap
+        \Set*{\vec{z} \in B_{Q_a} \given
+        \textstyle\sum_{q = 1}^{Q_a} \theta_{q}^{a}(\tilde{\bm \sigma}) z_{q} \geq 0~\fa \tilde{\bm \sigma} \in P_{M_{+}}(\bm \sigma; \mathcal P_{\mathrm{train}})
+        },
+        \end{multlined}\\
+        \mathcal Z_{\mathrm{UB}}(\mathcal C_{K}) &:= \Set[\Big]{ \vec{z}^{*}(\bm \sigma_{k}) := \arg \min_{\vec z \in \mathcal Z} \mathcal J(\vec{z}; \bm \sigma_{k}) \given k = 1, \dots, K}.
+    \end{aligned}
 \end{equation}
-sowie den Operator $T(\bm \sigma) \colon \mathcal X_{\mathcal N} \to \mathcal Y_{\mathcal N}$ mittels
+Mit Hilfe dieser Mengen lassen sich nun die linearen Probleme
 \begin{equation}
-    T(\bm \sigma) := \sum_{q = 1}^{Q_b} \theta_{q}^{b}(\bm \sigma) T_{q}.
+    \alpha_{\mathrm{LB}}(\bm \sigma; \mathcal C_{K}) := \min_{\vec{z} \in \mathcal Z_{\mathrm{LB}}(\bm \sigma; \mathcal C_{K})} \mathcal J(\vec{z}; \bm \sigma),
+    \quad
+    \alpha_{\mathrm{UB}}(\bm \sigma; \mathcal C_{K}) := \min_{\vec{z} \in \mathcal Z_{\mathrm{UB}}(\mathcal C_{K})} \mathcal J(\vec{z}; \bm \sigma)
 \end{equation}
-Analog zu \cref{par:berechnung_der_inf_sup_konstante} geht ab
-Es lässt sich zeigen \cite[476]{Huynh2007}, dass für die inf-sup-Konstante $\beta_{\mathcal N}(\bm \sigma)$ nun die Beziehung
+auswerten, für die nach \cite[Proposition 1]{Huynh2007} nachgewiesen werden kann, das diese für beliebige $\mathcal C_{K}, M_{\alpha}$ und $M_{+}$ die Abschätzung
 \begin{equation}
-    (\beta_{\mathcal N}(\bm \sigma))^{2}
-    = \left( \inf_{u \in \mathcal X_{\mathcal N}} \sup_{v \in \mathcal Y_{\mathcal N}} \frac{b(u, v; \bm \sigma)}{\norm{u}_{\mathcal X} \norm{v}_{\mathcal Y}} \right)^{2}
-    = \inf_{u \in \mathcal X_{\mathcal N}} \frac{\skp{T(\bm \sigma)u}{T(\bm \sigma)u}{\mathcal Y}}{\norm{u}_{\mathcal X}^{2}}
+    \alpha_{\mathrm{LB}}(\bm \sigma; \mathcal C_{K}) \leq \alpha_{\mathcal N}(\bm \sigma) \leq \alpha_{\mathrm{UB}}(\bm \sigma; \mathcal C_{K}) \quad \fa \bm \sigma \in \mathcal P
 \end{equation}
-gilt, wobei $\skp{T(\bm \sigma)\blank}{T(\bm \sigma)\blank}{\mathcal Y} \colon \mathcal X_{\mathcal N} \times \mathcal X_{\mathcal N} \to \mathbb{R}$ eine symmetrische, parametrische, stetige Bilinearform definiert.
-Auf diese kann nun die beschriebene \acl{scm} angewandt werden, um die inf-sup-Konstante abzuschätzen.
+erfüllen.
+\cref{algorithm:scm_greedy} zeigt auf, wie die noch fehlenden Teilmengen $\mathcal C_{K} \subset \mathcal P$ mittels eines Greedy-Ansatzes möglichst optimal konstruiert werden können.
+
+Um mit diesem Vorgehen eine Schranke für die inf-sup-Konstante $\beta_{\mathcal N}(\bm \sigma)$ zu bestimmen, müssen wir lediglich erneut auf den zugehörigen Supremizing-Operator aus \cref{definition:supremizing_operator} zurückgreifen.
+Gleichung \cref{eq:quadrat_der_inf_sup_konstante_ueber_supremizer} erlaubt uns dann, $\beta_{\mathcal N}^{2}(\bm \sigma)$ als Koerzivitätskonstante einer entsprechenden Bilinearform aufzufassen.
+
+Abschließend wollen wir auf den Laufzeit-Aspekt dieses Verfahrens eingehen.
+Dazu erfolgt erneut eine Zerlegung in Offline- und Online-Phase.
+
+\begin{onoffdescription}
+    \item[Offline:]
+    Hierfür muss die beschriebene Konstruktion mittels des \cref{algorithm:scm_greedy} durchgeführt werden.
+    Ist $K_{\max}$ die finale Größe, dann entspricht der Aufwand maßgeblich
+    \begin{inlinelist}
+        \item $2 Q_a$ Eigenwertproblemen für $B_{Q_a}$ sowie $K_{\max}$ Eigenwertproblemen für $\alpha_{\mathcal N}(\bm \sigma_{k})$ und $\vec{z}^{*}(\bm \sigma_{k})$,
+        \item $\#\mathcal P_{\mathrm{train}} \cdot K_{\max}$ linearen Programmen der Größe $\mathcal O(Q_a + M_{\alpha} + M_{+})$.
+    \end{inlinelist}
+
+    \item[Online:]
+    Es muss lediglich ein lineares Programme der Größe $\mathcal O(Q_a + M_{\alpha} + M_{+})$ gelöst werden.
+    Insbesondere ist die Berechnung von $\bm \sigma \mapsto \alpha_{\mathrm{LB}}(\bm \sigma)$ unabhängig von $\mathcal N$.
+\end{onoffdescription}
 
 
-% paragraph berechnung_der_unteren_schranke_f_r_die_inf_sup_konstante_ (end)
+\paragraph{Zerlegung der Reduzierte"=Basis"=Methode in Offline- und Online-Phase.} % (fold)
+\label{sub:zerlegung_in_offline_und_online_phase}
 
-% subsubsection offline_phase (end)
+Es bleibt nur noch zu klären, wie die Reduzierte"=Basis"=Methode als ganzes in eine Offline- und eine Online-Phase zerlegt werden kann.
+Dies ist mit den bisher gegebenen Ausführungen für die einzelnen Bausteine schnell abgehandelt.
+Der Aufwand der jeweiligen Berechnungen wurde an den entsprechenden Stellen angegeben.
 
-\clearpage
+\begin{onoffdescription}
+    \item[Offline:]
+    Zunächst muss die Offline-Phase der \ac{scm} durchgeführt werden.
+    Dies ermöglicht nun die Ausführung des Greedy-\cref{algorithm:scm_greedy} zur Konstruktion der RB"=Ansatz- und Testräume.
 
-\begin{algorithm}[tb]
-    \DontPrintSemicolon
-    \SetKwInOut{Input}{Eingabe}\SetKwInOut{Output}{Ausgabe}
-    \SetKwProg{Proc}{Prozedur}{}{}
-    %
-    \Input{Menge $\Xi_{\mathrm{train}} \subset \mathcal P$ der Trainingsparameter und Fehlertoleranz $\epsilon_{\mathrm{tol}} > 0$}
-    \Output{Reduzierte-Basis-Ansatzraum $\mathcal X_{N}$ der Dimension $N$}
-    \BlankLine
-    Setze $N = 0$, $\mathcal P_{0} = \Set{}$, $\Phi_{0} = \Set{}$, $\mathcal X_{0} = \Set{0}$\;
-    \While{$\max_{\bm \sigma \in \Xi_{\mathrm{train}}} \Delta_{N}(\bm \sigma) > \epsilon_{\mathrm{tol}}$}{
-        $\bm \sigma_{N + 1} \leftarrow \arg \max_{\bm \sigma \in \Xi_{\mathrm{train}}} \Delta_{N}(\bm \sigma)$\;
-        $\mathcal P_{N + 1} \leftarrow \mathcal P_{N} \cup \Set{\bm \sigma_{N + 1}}$\;
-        $\Phi_{N + 1} \leftarrow \Phi_{N} \cup \Set{u_{\mathcal N}(\bm \sigma_{N + 1})}$\;
-        $\mathcal X_{N + 1} \leftarrow \spn \Phi_{N + 1}$\;
-        $N \leftarrow N + 1$\;
-    }
-    %
-    \caption{Greedy Training}
-    \label{algorithm:greedy_training}
-\end{algorithm}
+    \item[Online:]
+    Hier wird zu einem gegebenen Parameter $\bm \sigma \in \mathcal P$ die Reduzierte"=Basis"=Lösung $u_{N}(\bm \sigma)$ bestimmt und anschließend der a posteriori"=Fehlerschätzer $\Delta_{N}(\bm \sigma)$ ausgewertet.
+    Der Aufwand dieser Berechnungen ist insbesondere unabhängig von der Dimension $\mathcal N$ der zugrundeliegenden Truth-Diskretisierung.
+\end{onoffdescription}
 
-
-\paragraph{Konstruktion des Testraumes.} % (fold)
-\label{par:konstruktion_des_testraumes_}
-
-Wir haben bisher nicht geklärt, wie der Reduzierte"=Basis"=Testraum $\mathcal Y_{N} \subset \mathcal Y_{\mathcal N}$ bestimmt wird.
-Hierzu greifen wir erneut auf den Supremizing-Operator aus \cref{definition:supremizing_operator} zurück und definieren damit einen parameterabhängigen Testraum $\mathcal Y_{N}^{\bm \sigma}$ via
-\begin{equation}
-    \label{eq:rb_testraum_parameterabhaengig}
-    \mathcal Y_{N}^{\bm \sigma} := \Set{ T_{\bm \sigma} u_{\mathcal N}(\bm \sigma_{n}) \given n = 1, \dots, N },
-\end{equation}
-wobei $T_{\bm \sigma}$ der Supremizing-Operator der Bilinearform $b(\blank, \blank; \bm \sigma) \colon \mathcal X_{\mathcal N} \times \mathcal Y_{\mathcal N} \to \mathbb{R}$ ist.
-Diese Wahl des Testraumes ist vorteilhaft, wie die folgende Aussage nachweist.
-
-\begin{Satz}
-\label{satz:rb_testraum_liefert_korrekt_gestelltes_problem}
-    Das RB"=Variationsproblem \cref{eq:rb_abstraktes_parametriches_vp} mit den Räumen $\mathcal X_{N}$ und $\mathcal Y_{N}^{\bm \sigma}$ ist für alle $\bm \sigma \in \mathcal P$ korrekt gestellt.
-
-    \begin{Beweis}
-        Wir weisen die Bedingungen des \acl{bnb}s nach, wobei hier nur die inf"=sup"=Bedingung von Interesse ist.
-        Nach Annahme gilt für die Truth"=inf"=sup"=Konstante $\beta_{\mathcal N}(\bm \sigma) > 0$.
-        Da nach Definition ferner für $u \in \mathcal X_{N}$ auch $T_{\bm \sigma}u \in \mathcal Y_{N}^{\bm \sigma}$ gilt, erhalten wir damit
-        \begin{equation}
-            \begin{aligned}
-                \beta_{N}(\bm \sigma)
-                &= \inf_{u \in \mathcal X_{N}} \sup_{v \in \mathcal Y_{N}^{\bm \sigma}} \frac{b(u, v; \bm \sigma)}{\norm{u}_{\mathcal X} \norm{v}_{\mathcal Y}}
-                = \inf_{u \in \mathcal X_{N}} \frac{b(u, T_{\bm \sigma}u; \bm \sigma)}{\norm{u}_{\mathcal X} \norm{T_{\bm \sigma} u}_{\mathcal Y}}
-                \\&= \inf_{u \in \mathcal X_{N}} \frac{\norm{T_{\bm \sigma}u}_{\mathcal Y}}{\norm{u}_{\mathcal X}}
-                \geq \inf_{u \in \mathcal X_{\mathcal N}} \frac{\norm{T_{\bm \sigma}u}_{\mathcal Y}}{\norm{u}_{\mathcal X}}
-                \\&= \beta_{\mathcal N}(\bm \sigma) > 0.
-            \end{aligned}
-        \end{equation}
-    \end{Beweis}
-\end{Satz}
-
-Da $\mathcal Y_{N}^{\bm \sigma}$ für jeden Parameter neu aufgebaut werden muss, ist auch hierfür eine Zerlegung in Offline- und Online-Phase erwünscht.
-Dazu nutzen wir die parametrisch-affine Darstellung der Bilinearform und definieren für jede Bilinearform $b_{q}$, $q = 1, \dots, Q_b$, den zugehörigen Supremizing-Operatoren als $T_{q}$ und es gilt
-\begin{equation}
-    T_{\bm \sigma} = \sum_{q = 1}^{Q_b} \theta_{q}^{b}(\bm \sigma) T_{q}.
-\end{equation}
-Die diskrete Darstellung $\mat{T}_{q} \in \mathbb{R}^{\mathcal N \times \mathcal N}$ der Operatoren $T_q$ ist nach Rieszschem Darstellungssatzes durch $\mat{T}_{q} = \mat{Y}^{-1} \mat{B}_{q}$ gegeben.
-Dies erlaubt die folgende Zerlegung:
-
-\begin{description}[font=\normalfont\itshape]
-    \item[Offline:]Berechne und speichere für jedes $u_{\mathcal N}(\bm \sigma_{n}) \in \mathcal X_{N}$ die Vektoren $\vec{v}_{q}^{n} := \mat{T}_{q} \vec{u}_{\mathcal N}(\bm \sigma_{n}) = \mat{Y}^{-1} \mat{B}_{q} \vec{u}_{\mathcal N}(\bm \sigma_{n})$.
-    \item[Online:] Bestimme $\mathcal Y_{N}^{\bm \sigma}$ durch Auswertung von $\mat{T}_{\bm \sigma} \vec{u}_{\mathcal N}(\bm \sigma_{n}) = \sum_{q = 1}^{Q_b} \theta_{q}^{b}(\bm \sigma) \vec{v}_{q}^{n}$.
-\end{description}
-
-% paragraph konstruktion_des_testraumes_ (end)
 
 \section{Beispiele} % (fold)
 \label{sec:cha5_rbm:beispiele}
