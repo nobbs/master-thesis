@@ -33,7 +33,7 @@ Um dies mit zufriedenstellender Genauigkeit effizient bewerkstelligen zu können
 Erfüllt die Bilinearform aus \cref{eq:abstraktes_parametrische_vp} gewisse Regularitätseigenschaften bezüglich des Parameters, dann bildet $\mathcal M$ oftmals eine Mannigfaltigkeit mit vergleichsweise niedriger Dimension.
 
 Um diese Tatsache ausnutzen zu können, müssen wir $\mathcal M$ zunächst durch ein diskretes Analogon ersetzen.
-Dazu werden meist Galerkin"=Verfahren verwendet, weswegen wir an dieser Stelle das Petrov"=Galerkin"=Verfahren des vorherigen Kapitels nutzen um eine abstrakte Diskretisierung durchzuführen.
+Dazu werden bei den klassischen Reduzierte"=Basis"=Methoden Galerkin"=Verfahren verwendet, weswegen wir an dieser Stelle das Petrov"=Galerkin"=Verfahren des vorherigen Kapitels nutzen um eine abstrakte Diskretisierung durchzuführen.
 Seien $\mathcal X_{\mathcal N} \subset \mathcal N$ und $\mathcal Y_{\mathcal N} \subset \mathcal Y$ Unterräume der Dimension $\mathcal N \in \mathbb{N}$.
 Weiter nehmen wir an, dass diese Diskretisierung für alle $\bm \sigma \in \mathcal P$ zu einem korrekt gestellten Variationsproblem führt, welches gegeben sei durch:
 \begin{equation}
@@ -47,16 +47,15 @@ Die Truth"=Lösungsmenge sei nun definiert als
     \mathcal M_{\mathcal N} := \Set{u_{\mathcal N}(\bm \sigma) \in \mathcal X_{\mathcal N} \given \bm \sigma \in \mathcal P}.
 \end{equation}
 Dies erlaubt die Konstruktion eines niedrigdimensionalen Unterraums $\mathcal X_{N} \subset \mathcal M_{\mathcal N} \subset \mathcal X_{\mathcal N}$, welcher als Ansatzraum eines weiteren Galerkin"=Verfahrens dienen wird.
-Dies ist die Grundidee der RB"=Methoden.
-\cref{figure:rbm_loesungsmenge} veranschaulicht dies skizzenhaft.
+Dies ist die Grundidee der RB"=Methoden, die in \cref{figure:rbm_loesungsmenge} noch einmal skizzenhaft veranschaulicht wird.
 
 \begin{figure}[tb]
     \centering
-    \includegraphics[width=0.6\textwidth]{figures/rb.pdf}
+    \includegraphics[width=0.5\textwidth]{figures/rb.pdf}
     \caption[%
     Skizze zur Motivation der Reduzierte-Basis-Methode.
     ]{
-        Beispiel der Funktionsweise der Reduzierte"=Basis"=Methode im Falle eines eindimensionalen Parameters $\sigma$.
+        Skizze der Funktionsweise der Reduzierte"=Basis"=Methode im Falle eines eindimensionalen Parameters $\sigma$.
         Die Reduzierte"=Basis"=Lösungen $u_{N}(\sigma)$ ergeben sich als Linearkombinationen der Truth"=Lösungen $u_{\mathcal N}(\sigma_{i})$ für gewisse $\sigma_{i} \in \mathcal P$.
         }
     \label{figure:rbm_loesungsmenge}
@@ -74,13 +73,13 @@ Wir widmen uns nun den formalen Grundlagen der RB"=Methode und beginnen mit eine
 
 \begin{Definition}
 \label{definition:rb_variationsproblem}
-    Es seien $N \in \mathbb{N}$ und $\mathcal S_{N} := \Set{ \bm \sigma_{i} \given i = 1, \dots, N } \subset \mathcal P$ die sogenannte \emph{Sample-Menge}.
-    Wir bezeichnen die Truth-Lösungen $u_{\mathcal N}(\bm \sigma_{i})$ als \emph{Snapshots} und definieren den RB"=Ansatzraum $\mathcal X_{N}$ als
-    \begin{equation}
-        \mathcal X_{N} := \spn \Set{ u_{\mathcal N}(\bm \sigma_{i}) \given i = 1, \dots, N} = \spn \Set{ \xi_{i} \given i = 1, \dots, N},
+    Es seien $N \in \mathbb{N}$ und $\mathcal S_{N} := \Set{ \bm \sigma_{n} \given n = 1, \dots, N } \subset \mathcal P$ die sogenannte \emph{Sample-Menge}.
+    Wir bezeichnen die Truth-Lösungen $u_{\mathcal N}(\bm \sigma_{n})$ als \emph{Snapshots} und definieren den \emph{RB"=Ansatzraum} $\mathcal X_{N}$ als
+    \begin{equation}\label{eq:def_rb_ansatzraum}
+        \mathcal X_{N} := \spn \Set{ u_{\mathcal N}(\bm \sigma_{n}) \given n = 1, \dots, N} = \spn \Set{ \xi_{n} \given n = 1, \dots, N},
     \end{equation}
-    wobei $\Xi_{N} := \Set{ \xi_{i} \given i = 1, \dots, N}$ eine geeignete Orthonormalbasis ist, sowie einen $N$-dimensionalen Unterraum  $\mathcal Y_{N} \subset \mathcal Y_{\mathcal N}$.
-    Als RB"=Variationsproblem von \cref{eq:diskretes_abstraktes_parametrisches_vp} bezeichnen wir das  Variationsproblem:
+    wobei $\Xi_{N} := \Set{ \xi_{n} \given n = 1, \dots, N}$ eine geeignete Orthonormalbasis ist, sowie einen $N$-dimensionalen \emph{RB"=Testraum}  $\mathcal Y_{N} \subset \mathcal Y_{\mathcal N}$.
+    Als \emph{RB"=Variationsproblem} von \cref{eq:diskretes_abstraktes_parametrisches_vp} bezeichnen wir das  Variationsproblem:
     \begin{equation}
     \label{eq:rb_abstraktes_parametriches_vp}
         \text{Sei } \bm \sigma \in \mathcal P, \text{ finde } u_{N}(\bm \sigma) \in \mathcal X_{N} \text{ mit} \quad b(u_{N}(\bm \sigma), v; \bm \sigma) = f(v) \quad \fa v \in \mathcal Y_{N}.
@@ -88,7 +87,9 @@ Wir widmen uns nun den formalen Grundlagen der RB"=Methode und beginnen mit eine
     Fernen nennen wir $u_{N}(\bm \sigma)$ \emph{Reduzierte"=Basis"=Lösung}.
 \end{Definition}
 
-Um die notationelle Wiederholung gering zu halten, seien für den Rest dieses Abschnitts stets durch $u_{N}(\bm \sigma) \in \mathcal X_{N}$ die Reduzierte-Basis-Lösung und durch $u_{\mathcal N}(\bm \sigma) \in \mathcal X_{\mathcal N}$ die Truth-Lösung zu einem Parameter $\bm \sigma \in \mathcal P$ gegeben.
+RB-Ansatzräume der Art \cref{eq:def_rb_ansatzraum} werden in der Literatur zu RB-Methoden auch als \emph{Lagrangeräume} bezeichnet, um sie damit von komplexeren Räumen, wie beispielsweise \emph{Taylor-} und \emph{Hermiteräumen} abzugrenzen.
+Bei diesen werden neben den Truth-Lösungen auch deren partielle Ableitungen bezüglich der Parameter berücksichtigt.
+Eine Übersicht darüber findet sich in \cite[Chapter 3]{Patera:2007un}.
 
 Wie zuvor bei den Petrov"=Galerkin"=Verfahren muss auch bei \cref{eq:rb_abstraktes_parametriches_vp} sichergestellt werden, dass es sich dabei um ein korrekt gestelltes Problem handelt.
 Wir werden später sehen, dass diese Eigenschaft bei geschickter Wahl des Testraumes $\mathcal Y_{N}$ vom Truth"=Variationsproblem vererbt wird, und nehmen deswegen an dieser Stelle an, dass dies stets erfüllt ist.
@@ -103,7 +104,7 @@ Betrachten wir weiter die einfache Abschätzung
     \norm{u(\bm \sigma) - u_{N}(\bm \sigma)}_{\mathcal X} \leq \norm{u(\bm \sigma) - u_{\mathcal N}(\bm \sigma)}_{\mathcal X} + \norm{u_{\mathcal N}(\bm \sigma) - u_{N}(\bm \sigma)}_{\mathcal X},
 \end{equation}
 dann entspricht dies gerade der Tatsache, das der erste Summand beliebig klein gehalten werden kann.
-Dies erlaubt uns, lediglich den Fehler zwischen Truth- und RB"=Lösung zu berücksichtigen, und führt weiter zu folgender Definition.
+Dies erlaubt uns lediglich den Fehler zwischen Truth- und RB"=Lösung zu berücksichtigen und führt weiter zu folgender Definition.
 
 \begin{Definition}\label{definition:rbm_fehler_und_residuum}
     Als \emph{Fehler} $e_{N}(\bm \sigma) \in \mathcal X_{\mathcal N}$ bezeichnen wir $e_{N}(\bm \sigma) := u_{\mathcal N}(\bm \sigma) - u_{N}(\bm \sigma)$.
@@ -206,6 +207,7 @@ Zunächst abstrahieren wir die aus \cref{lemma:bilinearform_affin_parametrisch} 
     hat, wobei für $q = 1, \dots, Q_{b}$ durch $\theta_{q}^{b} \colon \mathcal P \to \mathbb{R}$ Funktionen und durch $b_{q} \colon \mathcal X \times \mathcal Y \to \mathbb{R}$ parameterunabhängige Bilinearformen gegeben seien.
 \end{Definition}
 
+Für dieses Kapitel nehmen wir ferner an, dass die Funktionen $\theta_{q}^{b}$ effizient ausgewertet werden können.
 Weiter vereinfachen wir an dieser Stelle die Notation aus \cref{section:galerkin_numerische_umsetzung}.
 Die endlichdimensionalen Räume $\mathcal X_{\mathcal N}$ und $\mathcal Y_{\mathcal N}$ der Truth"=Diskretisierung fassen wir als Span entsprechender Basen auf und schreiben
 \begin{equation}
@@ -215,9 +217,9 @@ Die endlichdimensionalen Räume $\mathcal X_{\mathcal N}$ und $\mathcal Y_{\math
 \end{equation}
 Analog verfahren wir für die $N$-dimensionalen RB"=Räume $\mathcal X_{N}$ und $\mathcal Y_{N}$ mit der Notation
 \begin{equation}
-    \mathcal X_{N} = \spn \Set{ \xi_{i} }_{ i = 1, \dots, N},
+    \mathcal X_{N} = \spn \Set{ \xi_{n} }_{ n = 1, \dots, N},
     \qquad
-    \mathcal Y_{N} = \spn \Set{ \eta_{j} }_{ j = 1, \dots, N}.
+    \mathcal Y_{N} = \spn \Set{ \eta_{m} }_{ m = 1, \dots, N}.
 \end{equation}
 Die bei der Petrov"=Galerkin"=Diskretisierung hergeleiteten Strukturen $\mat{X}, \mat{Y}, \mat{B}_q \in \mathbb{R}^{\mathcal N \times \mathcal N}$ mit $q = 1, \dots, Q_b$ und $\vec{f} \in \mathbb{R}^{\mathcal N}$ lassen sich damit kurz schreiben als
 \begin{equation}
@@ -236,38 +238,38 @@ Nach diesen Vorbemerkungen geben wir nun als ersten Schritt eine Möglichkeit zu
 \begin{Definition}\label{definition:rb_ansatz_und_testfunktionen}
     Als \emph{Reduzierte"=Basis"=Ansatzfunktion} $u_{N} \in \mathcal X_{N}$ respektive \emph{Testfunktion} $v_{N} \in \mathcal Y_{N}$ bezeichnen wir die Linearkombinationen
     \begin{equation}
-        u_{N} := \sum_{i = 1}^{N} u_{i, N} \xi_{i},
+        u_{N} := \sum_{n = 1}^{N} u_{n, N} \xi_{n},
         \qquad
-        v_{N} := \sum_{j = 1}^{N} v_{j, N} \eta_{j}
+        v_{N} := \sum_{m = 1}^{N} v_{m, N} \eta_{m}
     \end{equation}
-    mit den Koeffizientenvektoren $\vec{u}_{N} := [u_{i, N}]_{i = 1, \dots, N} \in \mathbb{R}^{N}$ und $\vec{v}_{N} := [v_{j,N}]_{j = 1, \dots, N} \in \mathbb{R}^{N}$.
+    mit den Koeffizientenvektoren $\vec{u}_{N} := [u_{n, N}]_{n = 1, \dots, N}, \vec{v}_{N} := [v_{m,N}]_{m = 1, \dots, N} \in \mathbb{R}^{N}$.
 \end{Definition}
 
-Nach Konstruktion können die Basisfunktionen $\Set{ \xi_{i} }_{ i = 1, \dots, N}$ und $\Set{ \eta_{j} }_{ j = 1, \dots, N}$ jeweils als Linearkombination von $\Set{ \phi_{i} }_{ i = 1, \dots, \mathcal N}$ beziehungsweise $\Set{ \psi_{j} }_{ j = 1, \dots, \mathcal N}$ geschrieben werden.
-Bezeichnen wir nun für $i,j = 1, \dots, N$ die entsprechenden Koeffizientenvektoren mit $\bm \xi_{i}, \bm \eta_{j} \in \mathbb{R}^{\mathcal N}$, dann können wir damit weiter die Matrizen
+Nach Konstruktion können die Basisfunktionen $\Set{ \xi_{n} }_{ n = 1, \dots, N}$ und $\Set{ \eta_{m} }_{ m = 1, \dots, N}$ jeweils als Linearkombination von $\Set{ \phi_{i} }_{ i = 1, \dots, \mathcal N}$ beziehungsweise $\Set{ \psi_{j} }_{ j = 1, \dots, \mathcal N}$ geschrieben werden.
+Bezeichnen wir nun für $n,m = 1, \dots, N$ die entsprechenden Koeffizientenvektoren mit $\bm \xi_{n}, \bm \eta_{m} \in \mathbb{R}^{\mathcal N}$, dann können wir damit weiter die Matrizen
 \begin{equation}
-  \mat{\Xi} := [\bm \xi_{i}]_{i = 1, \dots, N} \in \mathbb{R}^{\mathcal N \times N},
+  \mat{\Xi} := [\bm \xi_{n}]_{n = 1, \dots, N} \in \mathbb{R}^{\mathcal N \times N},
   \qquad
-  \mat{H}   := [\bm \eta_{j}]_{j = 1, \dots, N} \in \mathbb{R}^{\mathcal N \times N}
+  \mat{H}   := [\bm \eta_{m}]_{m = 1, \dots, N} \in \mathbb{R}^{\mathcal N \times N}
 \end{equation}
 definieren.
 Diese ermöglichen nun die Berechnung der RB"=Matrizen $\mat{B}_{q,N} \in \mathbb{R}^{N \times N}$ für $q = 1, \dots, Q_{b}$ und des RB"=Lastvektors $\vec{f}_{N} \in \mathbb{R}^{N}$ als
-\begin{equation}
+\begin{equation}\label{eq:rb_systemmatrix_und_lastvektor}
     \begin{aligned}
-        \mat{B}_{q,N} &:= \left[ b_{q}(\xi_{i}, \eta_{j}) \right]_{j, i = 1, \dots, N}
+        \mat{B}_{q,N} &:= \left[ b_{q}(\xi_{n}, \eta_{m}) \right]_{m, n = 1, \dots, N}
             &&= \mat{H}\tran \mat{B}_{q} \mat{\Xi}, \quad q = 1, \dots, Q_{b},
         \\
-        \vec{f}_{N} &:= \left[ f(\eta_{j}) \right]_{j = 1, \dots, N}
+        \vec{f}_{N} &:= \left[ f(\eta_{m}) \right]_{m = 1, \dots, N}
             &&= \mat{H}\tran \vec{f}.
     \end{aligned}
 \end{equation}
 Analog können auch die norminduzierenden Matrizen $\mat{X}_{N}, \mat{Y}_{N} \in \mathbb{R}^{N \times N}$ definiert werden als
-\begin{equation}
+\begin{equation}\label{eq:rb_normmatrizen}
     \begin{aligned}
-    \mat{X}_{N} &:= \left[ \skp{\xi_{i}}{\xi_{j}}{\mathcal X} \right]_{i,j = 1, \dots, N}
+    \mat{X}_{N} &:= \left[ \skp{\xi_{n}}{\xi_{m}}{\mathcal X} \right]_{n,m = 1, \dots, N}
         &&= \mat{\Xi}\tran \mat{X} \mat{\Xi},
     \\
-    \mat{Y}_{N} &:= \left[ \skp{\eta_{i}}{\eta_{j}}{\mathcal Y} \right]_{i,j = 1, \dots, N}
+    \mat{Y}_{N} &:= \left[ \skp{\eta_{n}}{\eta_{m}}{\mathcal Y} \right]_{n,m = 1, \dots, N}
         &&= \mat{H}\tran \mat{Y} \mat{H}.
     \end{aligned}
 \end{equation}
@@ -283,6 +285,15 @@ wobei $\vec{u}_{N}(\bm \sigma)$ der Koeffizientenvektor der Lösung ist und die 
     \mat{B}_{N}(\bm \sigma) = \sum_{q = 1}^{Q_b} \theta_{q}^{b}(\bm \sigma) \mat{B}_{q, N}
 \end{equation}
 ausgewertet werden kann.
+Damit wird die folgende Zerlegung möglich:
+\begin{onoffdescription}
+    \item[Offline:]
+    Berechne und speichere die Strukturen \cref{eq:rb_systemmatrix_und_lastvektor,eq:rb_normmatrizen}.
+
+    \item[Online:]
+    Werte für gegebenes $\bm \sigma$ die Darstellung \cref{eq:affine_rbm_systemmatrix} aus und berechne die Lösung $u_{N}(\bm \sigma)$ durch \cref{eq:rbm_gleichungssystem}.
+    Dies erfolgt unabhängig von der Größe $\mathcal N$.
+\end{onoffdescription}
 
 Es bleibt zu klären, wie die RB"=Räume $\mathcal X_{N}$ und $\mathcal Y_{N}$ konstruiert werden.
 Dieses Problem werden wir in mehrere Schritte aufteilen.
@@ -302,19 +313,24 @@ Dieser ist als \cref{algorithm:greedy_training} in Kurzform gegeben und wird im 
     \SetKwProg{Proc}{Prozedur}{}{}
     \SetKwFunction{Orthonormalisiere}{Orthonormalisiere}
     %
-    \Input{Menge der Trainingsparameter $\mathcal P_{\mathrm{train}} \subset \mathcal P$, Fehlertoleranz $\epsilon_{\mathrm{tol}} > 0$}
-    \Output{RB-Ansatzraum $\mathcal X_{N}$ mit Basis $\Xi_{N}$, Sample-Menge $\mathcal S_{N}$}
+    \Input{%
+        endliche Menge der Trainingsparameter $\mathcal P_{\mathrm{train}} \subset \mathcal P$, \newline
+        Fehlertoleranz $\epsilon_{\mathrm{tol}} > 0$}
+    \Output{%
+        RB-Ansatzraum $\mathcal X_{N}$ mit Basis $\Xi_{N}$, \newline
+        Sample-Menge $\mathcal S_{N}$}
     \BlankLine
-    Setze $N = 0$, $\mathcal S_{0} = \Set{}$, $\Xi_{0} = \Set{}$, $\mathcal X_{0} = \Set{0}$\;
-    \While{$\max_{\bm \sigma \in \Xi_{\mathrm{train}}} \Delta_{N}(\bm \sigma) > \epsilon_{\mathrm{tol}}$}{
-        $\bm \sigma_{N + 1} \leftarrow \arg \max_{\bm \sigma \in \Xi_{\mathrm{train}}} \Delta_{N}(\bm \sigma)$\;
-        $\mathcal S_{N + 1} \leftarrow \mathcal S_{N} \cup \Set{\bm \sigma_{N + 1}}$\;
-        $\Xi_{N + 1} \leftarrow $ \Orthonormalisiere{$\Xi_{N} \cup \Set{u_{\mathcal N}(\bm \sigma_{N + 1})}$}\;
-        $\mathcal X_{N + 1} \leftarrow \spn \Xi_{N + 1}$\;
-        $N \leftarrow N + 1$\;
+    Setze $N = 0$, $\mathcal S_{0} = \emptyset$, $\Xi_{0} = \emptyset$, $\mathcal X_{0} = \Set{0}$\;
+    \While{$\max_{\bm \sigma \in \mathcal P_{\mathrm{train}}} \Delta_{N}(\bm \sigma) > \epsilon_{\mathrm{tol}}$}{
+        $\bm \sigma_{N + 1} \gets \arg \max_{\bm \sigma \in \mathcal P_{\mathrm{train}}} \Delta_{N}(\bm \sigma)$\;
+        $\mathcal S_{N + 1} \gets \mathcal S_{N} \cup \Set{\bm \sigma_{N + 1}}$\;
+        $\Xi_{N + 1} \gets $ \Orthonormalisiere{$\Xi_{N} \cup \Set{u_{\mathcal N}(\bm \sigma_{N + 1})}$}\;
+        $\mathcal X_{N + 1} \gets \spn \Xi_{N + 1}$\;
+        Berechne die neuen benötigten diskreten Objekte\;
+        $N \gets N + 1$\;
     }
     %
-    \caption{Greedy Training}
+    \caption{Greedy-Konstruktion der RB"=Räume.}
     \label{algorithm:greedy_training}
 \end{algorithm}
 
@@ -327,13 +343,20 @@ Um daraus einen $N+1$-dimensionalen Raum $\mathcal X_{N + 1}$ zu gewinnen, verfa
 \begin{enumerate}[label={\itshape\roman*.},ref={\itshape\roman*}]
     \item\label{enum:greedy_schritt_eins} Bestimme den Parameter $\bm \sigma_{N+1} \in \mathcal P_{\mathrm{train}}$ der den a posteriori-Fehlerschätzer $\Delta_{N}$ maximiert, also $\bm \sigma_{N+1} := \arg \max_{\bm \sigma \in \mathcal P_{\mathrm{train}}} \Delta_{N}(\bm \sigma)$,
     \item berechne die Truth-Lösung $u_{\mathcal N}(\bm \sigma_{N+1})$,
-    \item definiere mit dieser nach einer Orthonomalisierung $\Xi_{N + 1} := \Xi_{N} \cup \Set{u_{\mathcal N}(\bm \sigma_{N+1})}$ und $\mathcal X_{N + 1} := \spn \Xi_{N + 1}$.
+    \item definiere mit dieser nach einer Orthonomalisierung $\Xi_{N + 1} := \Xi_{N} \cup \Set{u_{\mathcal N}(\bm \sigma_{N+1})}$, $\mathcal X_{N + 1} := \spn \Xi_{N + 1}$ und berechne die neuen benötigten Matrizen und Vektoren für das RB-System und den a posteriori-Fehlerschätzer.
 \end{enumerate}
 Der beschriebene Ablauf wird nun iterativ ausgeführt, bis der maximale Fehler in \cref{enum:greedy_schritt_eins} unter einer gewünschten Toleranz liegt.
 Um das Verfahren zu starten, kann das erste Parameter"=Sample beliebig, beispielsweise zufällig, gewählt werden.
 
 Diese Heuristik hat zwar offensichtlich nur eine lokale Sicht auf die Wahl der optimalen Parameter, liefert dadurch aber ein Verfahren, welches nach \cite[Subsection 3.4.3]{Patera:2007un} zufriedenstellende Ergebnisse unter einem vertretbaren Aufwand liefert.
-Dazu wird allerdings eine effiziente Möglichkeit benötigt, um den a posteriori-Fehlerschätzer auszuwerten.
+Letzterer lässt sich wie folgt angeben: Sei $N_{\max}$ die Anzahl insgesamt durchgeführter Iterationen, dann entspricht der Aufwand
+\begin{inlinelist}
+    \item $N_{\max} \cdot \# \mathcal P_{\mathrm{train}}$ Auswertungen des a posteriori-Fehlerschätzers,
+    \item $N_{\max}$ Aufrufen der Truth-Lösers und
+    \item einem vollständigen Durchlauf eines Orthonomalisierungsverfahrens, beispielsweise der Gram-Schmidt-Orthonormalisierung.
+\end{inlinelist}
+
+Wie direkt ersichtlich ist, wird vor allem eine effiziente Möglichkeit zur Berechnung des a posteriori-Fehlerschätzer benötigt.
 Bevor wir uns dieser Aufgabe widmen, wollen wir auf die Konstruktion des zugehörigen RB"=Testraumes eingehen.
 
 % paragraph konstruktion_des_reduzierte_basis_ansatzraumes_mittels_greedy_algorithmus (end)
@@ -379,10 +402,12 @@ Diese müssen nur einmal vorberechnet werden, während die restlichen Berechnung
 
 \begin{onoffdescription}
     \item[Offline:]
-    Berechne und speichere die Vektoren $\vec{v}_{q}^{n} := \mat{T}_{q} \vec{u}_{\mathcal N}(\bm \sigma_{n})$ für jedes $q = 1, \dots, Q_{b}$ und $n = 1, \dots, N$.
+    Bei jeder Iteration des Greedy-Verfahrens werden die Vektoren $\vec{v}_{q}^{n} := \mat{T}_{q} \vec{u}_{\mathcal N}(\bm \sigma_{n})$ für jedes $q = 1, \dots, Q_{b}$ und $n = 1, \dots, N$ berechnet.
+    Dies entspricht $N \cdot Q_b$ Matrix-Matrix-Multiplikation der Größe $\mathcal N \times \mathcal N$ pro Iteration.
 
     \item[Online:]
     Bestimme $\mathcal Y_{N}^{\bm \sigma}$ durch $\mat{T}_{\bm \sigma} \vec{u}_{\mathcal N}(\bm \sigma_{n}) = \sum_{q = 1}^{Q_b} \theta_{q}^{b}(\bm \sigma) \vec{v}_{q}^{n}$ für $n = 1, \dots, N$.
+    Der Aufwand ist vernachlässigbar, da die Auswertung der $\theta_{q}^{b}(\bm \sigma)$ nach Annahme effizient durchführbar ist.
 \end{onoffdescription}
 
 % paragraph konstruktion_des_testraumes_ (end)
@@ -391,10 +416,10 @@ Diese müssen nur einmal vorberechnet werden, während die restlichen Berechnung
 \label{par:berechnung_der_norm_des_residuum}
 
 Diese stellt eine Hälfte des a posteriori"=Fehlerschätzers dar und kann unter Verwendung des Rieszschen Darstellungssatzes effizient umgesetzt werden.
-Wir erhalten dadurch liefert für jedes $\bm \sigma \in \mathcal P$ ein $\hat{e}_{N}(\bm \sigma) \in \mathcal Y_{\mathcal N}$ mit
+Wir erhalten dadurch für jedes $\bm \sigma \in \mathcal P$ ein $\hat{e}_{N}(\bm \sigma) \in \mathcal Y_{\mathcal N}$ mit
 \begin{equation}
     \norm{\hat{e}_{N}(\bm \sigma)}_{\mathcal Y} = \norm{r_{N}(\blank; \bm \sigma)}_{\mathcal Y_{\mathcal N}'}, \qquad
-    r_{N}(v; \bm \sigma) = \skp{\hat{e}_{N}(\bm \sigma)}{v}{\mathcal Y_{\mathcal N}}, \quad \fa v \in \mathcal Y.
+    r_{N}(v; \bm \sigma) = \skp{\hat{e}_{N}(\bm \sigma)}{v}{\mathcal Y_{\mathcal N}} \quad \fa v \in \mathcal Y.
 \end{equation}
 Aufgrund der Darstellung \cref{eq:residuum_durch_funktional_und_bilinearform} des Residuums und der parametrisch-affinen Darstellung \cref{eq:bilinearform_parametrisch_affin} der Bilinearform gilt für alle $v \in \mathcal Y_{\mathcal N}$ die Gleichung
 \begin{equation}
@@ -450,8 +475,10 @@ Mit Hilfe dieses Ausdrucks können wir nun wie folgt eine Zerlegung in Offline- 
 
 \begin{onoffdescription}
     \item[Offline:] Berechne die Größen $\vec{f}\tran \mat{Y}^{-1} \vec{f}$, $\vec{f}\tran \mat{Y}^{-1} \mat{B}_{q} \bm \xi_{n}$ und $\bm \xi_{n}\tran \mat{B}_{q}\tran \mat{Y}^{-1} \mat{B}_{p} \bm \xi_{m}$ für alle $n, m = 1, \dots, N$ und $q, p = 1, \dots, Q_b$ vor.
+    Ist $N_{\max}$ die Anzahl insgesamt ausgeführter Iterationen, dann müssen $N_{\max}^2 Q_{b}^{2} + N_{\max} Q_{b} + 1$ der obigen Terme berechnet werden.
 
     \item[Online:] Für einen gegebenen Parameter $\bm \sigma \in \mathcal P$ und dessen RB"=Lösung $u_{N}(\bm \sigma)$ muss nur die Formel \cref{eq:residuum_finale_darstellung} ausgewertet werden.
+    Dies kann mit einer von $\mathcal N$ unabhängigen Laufzeit erreicht werden.
 \end{onoffdescription}
 
 Bei der praktischen Umsetzung wird \cref{eq:residuum_finale_darstellung} nicht direkt in der gegebenen Form implementiert, sondern in einen parameterabhängigen und einen parameterunabhängigen Teil zerlegt, zu einem Vektor beziehungsweise einer Matrix zusammengefasst und mittels einer Matrix"=Vektor"=Multiplikation ausgewertet.
@@ -504,20 +531,21 @@ Weiter sei durch $P_{M}(\bm \sigma; E)$ eine Abbildung gegeben, welche für ein 
 Schließlich seien durch $M_{\alpha}, M_{+} \in \mathbb{N}$ die Anzahl der Stabilitätsbedingungen respektive Positivitätsbedingungen festgelegt.
 
 \begin{algorithm}[tb]
-    % \DontPrintSemicolon
     \SetKwInOut{Input}{Eingabe}\SetKwInOut{Output}{Ausgabe}
     \SetKwProg{Proc}{Prozedur}{}{}
-    %
-    \Input{Menge $\Xi_{\mathrm{train}} \subset \mathcal P$ der Trainingsparameter und Fehlertoleranz $\epsilon_{\mathrm{tol}} > 0$}
-    \Output{Reduzierte-Basis-Ansatzraum $\mathcal X_{N}$}
+
+    \Input{%
+            endliche Menge der Trainingsparameter $\mathcal P_{\mathrm{train}} \subset \mathcal P$,\newline
+            Fehlertoleranz $\epsilon_{\mathrm{tol}} > 0$}
+    \Output{endliche Parametermenge $\mathcal C_{K} \subset \mathcal P_{\mathrm{train}}$}
     \BlankLine
-    Setze $K = 1$, $\mathcal C_{1} = \Set{\bm \sigma_{1}}$ mit zufälligem $\bm \sigma_{1} \in \Xi_{\mathrm{train}}$\;
-    \While{$\max_{\bm \sigma \in \Xi_{\mathrm{train}}} [(\alpha_{\mathrm{UB}}(\bm \sigma; \mathcal C_{K}) - \alpha_{\mathrm{LB}}(\bm \sigma; \mathcal C_{K})) / {\alpha_{\mathrm{UB}}(\bm \sigma; \mathcal C_{K})}] > \epsilon_{\mathrm{tol}}$}{
-        $\bm \sigma_{K + 1} \leftarrow \arg \max_{\bm \sigma \in \Xi_{\mathrm{train}}} [(\alpha_{\mathrm{UB}}(\bm \sigma; \mathcal C_{K}) - \alpha_{\mathrm{LB}}(\bm \sigma; \mathcal C_{K})) / {\alpha_{\mathrm{UB}}(\bm \sigma; \mathcal C_{K})}]$\;
-        $\mathcal C_{K + 1} \leftarrow \mathcal C_{K} \cup \Set{\bm \sigma_{K + 1}}$\;
-        $K \leftarrow K + 1$\;
+    Setze $K = 1$, $\mathcal C_{1} = \Set{\bm \sigma_{1}}$ mit zufälligem $\bm \sigma_{1} \in \mathcal P_{\mathrm{train}}$\;
+    \While{$\max_{\bm \sigma \in \mathcal P_{\mathrm{train}}} [(\alpha_{\mathrm{UB}}(\bm \sigma; \mathcal C_{K}) - \alpha_{\mathrm{LB}}(\bm \sigma; \mathcal C_{K})) / {\alpha_{\mathrm{UB}}(\bm \sigma; \mathcal C_{K})}] > \epsilon_{\mathrm{tol}}$}{
+        $\bm \sigma_{K + 1} \gets \arg \max_{\bm \sigma \in \mathcal P_{\mathrm{train}}} [(\alpha_{\mathrm{UB}}(\bm \sigma; \mathcal C_{K}) - \alpha_{\mathrm{LB}}(\bm \sigma; \mathcal C_{K})) / {\alpha_{\mathrm{UB}}(\bm \sigma; \mathcal C_{K})}]$\;
+        $\mathcal C_{K + 1} \gets \mathcal C_{K} \cup \Set{\bm \sigma_{K + 1}}$\;
+        $K \gets K + 1$\;
     }
-    \caption{Successive Constraint Method}
+    \caption{Successive Constraint Method, Greedy-Konstruktion der $\mathcal C_{K}$.}
     \label{algorithm:scm_greedy}
 \end{algorithm}
 
@@ -558,12 +586,13 @@ Dazu erfolgt erneut eine Zerlegung in Offline- und Online-Phase.
 
 \begin{onoffdescription}
     \item[Offline:]
-    Hierfür muss die beschriebene Konstruktion mittels des \cref{algorithm:scm_greedy} durchgeführt werden.
-    Ist $K_{\max}$ die finale Größe, dann entspricht der Aufwand maßgeblich
+    Hier wird die in \cref{algorithm:scm_greedy} beschriebene Konstruktion durchgeführt.
+    Ist $K_{\max}$ die finale Größe, dann wird der Aufwand maßgeblich durch
     \begin{inlinelist}
-        \item $2 Q_a$ Eigenwertproblemen für $B_{Q_a}$ sowie $K_{\max}$ Eigenwertproblemen für $\alpha_{\mathcal N}(\bm \sigma_{k})$ und $\vec{z}^{*}(\bm \sigma_{k})$,
-        \item $\#\mathcal P_{\mathrm{train}} \cdot K_{\max}$ linearen Programmen der Größe $\mathcal O(Q_a + M_{\alpha} + M_{+})$.
+        \item $2 Q_a$ Eigenwertprobleme für $B_{Q_a}$ sowie $K_{\max}$ Eigenwertprobleme für $\alpha_{\mathcal N}(\bm \sigma_{k})$ und $\vec{z}^{*}(\bm \sigma_{k})$ sowie
+        \item $\#\mathcal P_{\mathrm{train}} \cdot K_{\max}$ lineare Programme der Größe $\mathcal O(Q_a + M_{\alpha} + M_{+})$
     \end{inlinelist}
+    festgelegt.
 
     \item[Online:]
     Es muss lediglich ein lineares Programme der Größe $\mathcal O(Q_a + M_{\alpha} + M_{+})$ gelöst werden.
@@ -574,18 +603,17 @@ Dazu erfolgt erneut eine Zerlegung in Offline- und Online-Phase.
 \paragraph{Zerlegung der Reduzierte"=Basis"=Methode in Offline- und Online-Phase.} % (fold)
 \label{sub:zerlegung_in_offline_und_online_phase}
 
-Es bleibt nur noch zu klären, wie die Reduzierte"=Basis"=Methode als ganzes in eine Offline- und eine Online-Phase zerlegt werden kann.
-Dies ist mit den bisher gegebenen Ausführungen für die einzelnen Bausteine schnell abgehandelt.
+Um die RB"=Methode als ganzes in eine Offline- und eine Online-Phase zu zerlegen, müssen wir lediglich die bereits behandelten Bausteine zusammensetzen.
 Der Aufwand der jeweiligen Berechnungen wurde an den entsprechenden Stellen angegeben.
 
 \begin{onoffdescription}
     \item[Offline:]
-    Zunächst muss die Offline-Phase der \ac{scm} durchgeführt werden.
-    Dies ermöglicht nun die Ausführung des Greedy-\cref{algorithm:scm_greedy} zur Konstruktion der RB"=Ansatz- und Testräume.
+    Zunächst muss die Offline-Phase der \acl{scm} durchgeführt werden.
+    Nach Beendigung dieser kann der Greedy-Algorithmus \ref{algorithm:scm_greedy} zur Konstruktion der RB"=Ansatz- und Testräume ausgeführt werden.
 
     \item[Online:]
     Hier wird zu einem gegebenen Parameter $\bm \sigma \in \mathcal P$ die Reduzierte"=Basis"=Lösung $u_{N}(\bm \sigma)$ bestimmt und anschließend der a posteriori"=Fehlerschätzer $\Delta_{N}(\bm \sigma)$ ausgewertet.
-    Der Aufwand dieser Berechnungen ist insbesondere unabhängig von der Dimension $\mathcal N$ der zugrundeliegenden Truth-Diskretisierung.
+    Der Aufwand dieser Berechnungen ist unabhängig von der Dimension $\mathcal N$ der zugrundeliegenden Truth-Diskretisierung.
 \end{onoffdescription}
 
 

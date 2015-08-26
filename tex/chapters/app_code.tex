@@ -6,31 +6,32 @@
 \chapter{Inhalt der Begleit-DVD} % (fold)
 \label{cha:inhalt_der_begleit_dvd}
 
-Dieser Arbeit liegt eine DVD bei, welche die Implementierungen der beschriebenen Verfahren, sowie die in \cref{cha:Beispiele} angeführten Beispiele enthält.
-Weiterhin findet man den Inhalt der DVD identisch auch als Git-Repository unter \url{https://github.com/nobbs/thesis}.
+Dieser Arbeit liegt eine DVD bei, welche die Implementierungen der beschriebenen Verfahren sowie die in den \cref{sec:cha4_galerkin:beispiele,sec:cha5_rbm:beispiele} aufgeführten Beispiele enthält.
+Ferner findet sich der Inhalt der DVD auch als Git"=Repository unter \url{https://github.com/nobbs/thesis}.
 
-Die Implementierungen sind vollständig in \textcite{Matlab} gehalten und daher plattformunabhängig.
-Neben dem eigentlichen MATLAB-Softwarepaket wird nur die \emph{Optimization Toolbox} benötigt für die in \cref{scm} beschrieben Successive Constraint Method benötigt.
+Die relevanten Implementierungen und Skripte sind vollständig in \textcite{Matlab} gehalten.
+Weiter sind diese bis mindestens Version 2013a abwärtskompatibel und plattformunabhängig ausführbar.
+Neben dem eigentlichen MATLAB-Softwarepaket wird die \emph{Optimization Toolbox} für die linearen Programme der \acl{scm} benötigt.
 
-\begin{figure}[tb]
-    \dirtree{%
-    .1 /.
-    .2 code.
-    .3 examples.
-    .4 datasets.
-    .3 lib.
-    .3 src.
-    .3 test.
-    .2 config.
-    .2 doc.
-    .3 index.html.
-    .2 tex.
-    .2 README.md.
-    }
-    \caption{Ausschnitt der Verzeichnisstruktur}
-    \label{fig:dvd}
-\end{figure}
+Als Hardware für die durchgeführten Simulationen diente vor allem ein MacBook Pro aus dem Jahre 2010 mit dem Betriebssystem Mac OS X 10.11 Beta.
+Die hier nennenswerte Hardware sind eine Intel Core 2 Duo CPU mit 2.4 GHz und 8 GB Arbeitsspeicher.
 
-Ein Ausschnitt der wichtigsten Elemente der Verzeichnisstruktur findet sich in \cref{fig:dvd}.
+Bevor der Inhalt der DVD genauer beleuchtet wird, soll an dieser Stelle durch ein Überblick über die wichtigsten Verzeichnisse geboten werden.
+
+\dirtree{%
+.1 /.
+.2 code.
+.3 examples\DTcomment{Beispiele}.
+.4 chapter4.
+.4 chapter5.
+.3 lib\DTcomment{Externe MatLab-Skripte und Libraries}.
+.3 src\DTcomment{Hauptteil der Implementierung}.
+.3 test.
+.2 config.
+.2 doc\DTcomment{Automatisch generierte Dokumentation der Implementierung}.
+.3 index.html.
+.2 tex\DTcomment{\LaTeX-Dateien dieser Thesis}.
+.2 README.md.
+}
 
 \end{document}

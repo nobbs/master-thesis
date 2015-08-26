@@ -7,6 +7,7 @@
 \definecolor{mycolor5}{rgb}{0.46600,0.67400,0.18800}%
 
 \begin{tikzpicture}[
+  scale = 0.8,
   declare function={
     fx(\x) = \x;
     fy(\x) = 1 + sin(\x*50);
@@ -26,8 +27,10 @@
 
   % Achsen
   \draw [->] (0,0,0) -- (2,0,0); % node[right] {};
-  \draw [->] (0,0,0) -- (0,2,0) node[above left, draw=none] {$\mathcal X_{\mathcal N}$};
+  \draw [->] (0,0,0) -- (0,2,0); % node[above left, draw=none] {$\mathcal X_{\mathcal N}$};
   \draw [->] (0,0,0) -- (0,0,2); % node[above] {};
+
+  \draw (0.125,-0.125,0) node[below right, draw=none] {$\mathcal X_{\mathcal N}$};
 
   % Kurve
   \draw ({fx(-2)}, {fy(-2)}, {fz(-2)}) node [draw=none, label=below:$\mathcal M_{\mathcal N}$] {};

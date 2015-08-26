@@ -71,7 +71,7 @@ Diese basiert auf einer makroskopischen Darstellung der Polymere und vernachläs
     \label{figure:phasen}
 \end{figure}
 
-\subsection*{Mathematische Modellierung} % (fold)
+\paragraph{Mathematische Modellierung.} % (fold)
 
 Als Grundlage für die \acl{scft} dient eine Modellierung der Polymere als frei bewegliche Ketten (\foreign{engl.}{ideal chain}).
 Im Rahmen dieser Arbeit betrachten wir zwar nur die aus dem sogenannten stetigen Gaußschen Kettenmodell resultierende Theorie, erläutern aber zunächst ein diskretes Kettenmodell, welches eine Vorstufe des stetigen darstellt und die Idee dahinter verdeutlicht.
@@ -103,7 +103,7 @@ Dies stellt einen umfangreichen \enquote{Werkzeugkasten} zur Untersuchung dieser
 Da die benötigten stochastischen Ausführungen und Herleitungen für diese Arbeit jedoch nebensächlich sind, belassen wir es bei diesen informalen Beschreibungen und widmen uns nun der darauf aufbauenden selbstkonsistenten Feldtheorie.
 
 
-\subsection*{Selbstkonsistente Feldtheorie} % (fold)
+\paragraph{Selbstkonsistente Feldtheorie.} % (fold)
 
 Bei der selbstkonsistenten Feldtheorie handelt es sich um ein weit verbreitetes theoretisches Modell der Physik, um das Verhalten von Teilchen unter Einwirkung von Kräften, die durch Wechselwirkungen mit weiteren Teilchen auftreten, zu studieren.
 Sie wird nicht nur im Zusammenhang mit Polymeren, sondern zum Beispiel auch in der Thermodynamik oder Informatik verwendet.
@@ -195,7 +195,7 @@ Ferner ist an dieser Stelle erwähnenswert, dass das Funktional der freien Energ
 Dies wird sich später sowohl in der theoretischen als auch numerischen Untersuchung als äußerst nützlich erweisen.
 
 
-\subsection*{Einsatz numerischer Methoden} % (fold)
+\paragraph{Einsatz numerischer Methoden.} % (fold)
 
 Es gibt verschiedene Ansätze, um die \ac{scft}-Gleichungen in einem numerischen Verfahren zu verarbeiten.
 Oftmals führen diese zu einem dem nachfolgenden ähnlichen, iterativen Schema, welches Ähnlichkeiten mit einem Newton-Verfahren aufweist:
@@ -235,13 +235,13 @@ So wird in \cite{Drolet:1999bs} ein Crank-Nicolson-Verfahren eingesetzt, wobei h
 
 \begin{figure}[tb]
     \centering
-    \begin{subfigure}[b]{0.475\textwidth}
+    \begin{subfigure}[b]{0.495\textwidth}
         \centering
         \includegraphics[width=1\textwidth]{figures/einleitung/scft1.pdf}
         \caption{Felder}
     \end{subfigure}
-    ~
-    \begin{subfigure}[b]{0.475\textwidth}
+    % ~
+    \begin{subfigure}[b]{0.495\textwidth}
         \centering
         \includegraphics[width=1\textwidth]{figures/einleitung/scft2.pdf}
         \caption{Fourier-Koeffizienten}
@@ -273,7 +273,7 @@ Dieses sollte so gewählt werden, dass die Entwicklungskoeffizienten möglichst 
 Hierzu sei auf \cref{figure:felder_nach_iterationsverfahren} verwiesen, welche ein Felder-Paar von einem Iterationsdurchlauf und dessen Fourier-Koeffizienten zeigt.
 
 
-\subsection*{Inhaltlicher Aufbau}
+\paragraph{Inhaltlicher Aufbau.}
 
 In \cref{chapter:grundlagen} werden zunächst die funktionalanalytischen Grundlagen eingeführt beziehungsweise wiederholt, welche dann in \cref{chapter:propagator_differentialgleichung} verwendet werden, um die parabolische partielle Differentialgleichung, welche im Rahmen dieser Einleitung bereits vorgestellt wurde, unter passenden Rahmenbedingungen zu formalisieren.
 Weiter parametrisieren wir die Differentialgleichung und weisen unter bestimmten Bedingungen eine Regularität der Lösungen der Differentialgleichung vom Parameter nach.

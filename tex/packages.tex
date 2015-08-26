@@ -273,7 +273,7 @@
 % \newcommand{\mwarn}[1]{\todo[color=blue!50]{#1}}
 
 % Blindtext
-% \usepackage{blindtext}
+\usepackage{blindtext}
 % \blindmathtrue{}
 
 % \usepackage{showframe}
@@ -287,9 +287,13 @@
 \makeglossaries
 
 % Algorithm
-\usepackage[german,algochapter,ruled,linesnumbered,vlined]{algorithm2e}
+\usepackage[ngerman,algochapter,ruled,linesnumbered,vlined]{algorithm2e}
 \crefname{algocf}{Algorithmus}{Algorithmen}
 \Crefname{algocf}{Algorithmus}{Algorithmen}
+\SetAlgoCaptionSeparator{.}
+\makeatletter
+\renewcommand{\algocf@typo}{}%
+\makeatother
 
 
 \newlist{inlinelist}{enumerate*}{1}
