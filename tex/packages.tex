@@ -24,8 +24,6 @@
 \usepackage{lmodern}
 % Typographische Kleinigkeiten
 \usepackage[final]{microtype}
-% Fraktur-Schriftsatz
-% \usepackage{eufrak}
 % Fette Griechische
 \usepackage{bm}
 
@@ -35,14 +33,6 @@
 \usepackage[ngerman]{babel}
 % Deutsche Anführungszeichen
 \usepackage[babel,german=quotes]{csquotes}
-
-% Zeilenabstand anpassen (MUST NOT USE!)
-% \usepackage{setspace}
-% \setstretch{1.1}
-
-% Textsatzbereich nach unten vergrößern
-% TODO: richtig konfigurieren
-% \usepackage[a4paper,twoside,bottom=4cm]{geometry}
 
 %%% Graphiken und Farben
 
@@ -64,8 +54,7 @@
 \usetikzlibrary{patterns}
 
 % Standalone-Paket, damit die Tikz Bilder extern auch funktionieren
-\usepackage{standalone}
-
+% \usepackage{standalone}
 
 %%% Bibliographie
 
@@ -96,17 +85,6 @@
   \printfield{number}%
   \setunit{\addcomma\space}%
   \printfield{eid}}
-
-
-% \renewbibmacro*{volume+number+eid}{%
-%   \printfield{volume}%
-% %  \setunit*{\adddot}% DELETED
-%   \setunit*{\addnbspace}% NEW (optional); there's also \addnbthinspace
-%   \printfield{number}%
-%   \setunit{\addcomma\space}%
-%   \printfield{eid}}
-% % \DeclareFieldFormat[article]{number}{\mkbibparens{#1}}
-
 
 
 %%% Grundlegende Mathematik-Pakete
@@ -194,7 +172,7 @@
 % \addtokomafont{pagenumber}{\color{jgu_dunkelgrau}\normalfont\altfont\selectfont}
 
 % Kapitel-Stil
-\renewcommand*{\chapterheadstartvskip}{\vspace*{3\baselineskip}}
+\renewcommand*{\chapterheadstartvskip}{\vspace*{2\baselineskip}}
 \renewcommand*{\chapterheadendvskip}{\vspace*{2\baselineskip}}
 \renewcommand*{\chapterformat}{%
                 \raggedright

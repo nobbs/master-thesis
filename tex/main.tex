@@ -6,14 +6,15 @@
   % final,
   a4paper,
   % BCOR=1cm,
-  % twoside,
-  twoside=semi,
+  twoside,
+  % twoside=semi,
   % oneside,
   toc=bibliography,
   toc=listof,
   chapterprefix=true,
   version=last,
   cleardoublepage=empty,
+  pagesize=auto,
 ]{scrbook}
 
 \input{packages}
@@ -24,7 +25,7 @@
 \input{glossar}
 
 \addbibresource{literature.bib}
-\addbibresource{literature_old.bib}
+% \addbibresource{literature_old.bib}
 
 \begin{document}
     %%% Frontmatter-Teil
@@ -34,16 +35,10 @@
     \include{misc/deckblatt}
 
     % Danksagung
-    % \include{misc/danksagung}
-
-    % Abstrakt
-    % \include{chapters/zusammenfassung}
+    \include{misc/danksagung}
 
     % Inhaltsverzeichnis
     \tableofcontents
-
-    % TODO-Liste
-    % \listoftodos
 
     %%% Hauptteil
     \mainmatter{}
@@ -56,18 +51,11 @@
     \subfile{chapters/cha5_rbm}
     \subfile{chapters/cha6_ausblick}
 
-    % % \input{chapters/cha5_eindim}
-    % Alles, was noch unbedingt rein muss
-    % \input{chapters/app1_funktionalanalytische_grundlagen}
-    % \input{chapters/app2_sammlung}
-    % \input{temp/onedim}
-
     %%% Anhang
     \appendix{}
 
     % DVD Inhalt
-    % \subfile{chapters/app_misc}
-    \subfile{chapters/app_code}
+    \subfile{chapters/chaA_dvd.tex}
 
     %% Los geht's mit den Verzeichnissen
 
@@ -85,5 +73,6 @@
     \printbibliography
 
     % Eidesstattliche Erklärung
-    % \include{misc/eidesstattliche_erklaerung}
+    \cleardoublepage
+    \include{misc/eidesstattliche_erklaerung}
 \end{document}
