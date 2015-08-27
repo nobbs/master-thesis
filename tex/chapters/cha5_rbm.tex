@@ -13,7 +13,7 @@ Zunächst folgen einige theoretische Grundlagen und Ausführungen zur numerische
 \label{sub:grb:rb:grundlagen}
 
 Wir beginnen mit einer kurzen Motivation und orientieren uns in diesem Abschnitt an den Arbeiten von \textcite{Rozza2008} sowie \textcite{Patera:2007un}, welche einen weit tieferen Einblick bieten.
-Bei der Reduzierte"=Basis"=Methode handelt es sich um ein relativ junges Verfahren, welches vor allem in den letzten zehn Jahren viel Aufmerksamkeit und Weiterentwicklung erfahren hat.
+Bei den Reduzierte"=Basis"=Methoden handelt es sich um Modellreduktionsverfahren, welche zwar bereits seit etwas mehr als 50 Jahren untersucht werden, aber vor allem in den letzten zehn Jahren viel Aufmerksamkeit und Weiterentwicklung erfahren haben.
 
 Zunächst wollen wir erneut geeignete Rahmenbedingungen in Form eines abstrakten Variationsproblems schaffen.
 Seien dazu zwei Hilberträume $\mathcal X$ und $\mathcal Y$ und eine abgeschlossene, konvexe Parametermenge $\mathcal P \subset \mathbb{R}^{p}$ für ein $p \in \mathbb{N}$ gegeben.
@@ -32,7 +32,7 @@ Um dies mit zufriedenstellender Genauigkeit effizient bewerkstelligen zu können
 \end{equation}
 Erfüllt die Bilinearform aus \cref{eq:abstraktes_parametrische_vp} gewisse Regularitätseigenschaften bezüglich des Parameters, dann bildet $\mathcal M$ oftmals eine Mannigfaltigkeit mit vergleichsweise niedriger Dimension.
 
-Um diese Tatsache ausnutzen zu können, müssen wir $\mathcal M$ zunächst durch ein diskretes Analogon ersetzen.
+Um diese Tatsache für eine Modellreduktion nutzen zu können, müssen wir $\mathcal M$ zunächst durch ein diskretes Analogon ersetzen.
 Dazu werden bei den klassischen Reduzierte"=Basis"=Methoden Galerkin"=Verfahren verwendet, weswegen wir an dieser Stelle das Petrov"=Galerkin"=Verfahren des vorherigen Kapitels nutzen um eine abstrakte Diskretisierung durchzuführen.
 Seien $\mathcal X_{\mathcal N} \subset \mathcal N$ und $\mathcal Y_{\mathcal N} \subset \mathcal Y$ Unterräume der Dimension $\mathcal N \in \mathbb{N}$.
 Weiter nehmen wir an, dass diese Diskretisierung für alle $\bm \sigma \in \mathcal P$ zu einem korrekt gestellten Variationsproblem führt, welches gegeben sei durch:
@@ -155,16 +155,16 @@ Bevor wir uns dieser widmen, wollen wir an dieser Stelle noch ein Maß für die 
 
 \begin{Lemma}
 \label{lemma:effektivitaet}
+    Sei $\gamma_{\mathcal N}(\bm \sigma)$ die Stetigkeitskonstante der Bilinearform $\restr{b(\blank, \blank; \bm \sigma)}{\mathcal X_{\mathcal N} \times \mathcal Y_{\mathcal N}}$.
     Die \emph{Effektivität} $\eta_{N}(\bm \sigma)$ des a posteriori"=Fehlerschätzers ist beschränkt durch
     \begin{equation}
-        1 \leq \eta_{N}(\bm \sigma) := \frac{\Delta_{N}(\bm \sigma)}{\norm{u_{\mathcal N}(\bm \sigma) - u_{N}(\bm \sigma)}_{\mathcal X}} \leq \frac{\gamma_{\mathcal N}(\bm \sigma)}{\beta_{\mathrm{LB}}(\bm \sigma)},
+        1 \leq \eta_{N}(\bm \sigma) := \frac{\Delta_{N}(\bm \sigma)}{\norm{u_{\mathcal N}(\bm \sigma) - u_{N}(\bm \sigma)}_{\mathcal X}} \leq \frac{\gamma_{\mathcal N}(\bm \sigma)}{\beta_{\mathrm{LB}}(\bm \sigma)}.
     \end{equation}
-    wobei $\gamma_{\mathcal N}(\bm \sigma)$ die Stetigkeitskonstante der Bilinearform $\restr{b(\blank, \blank; \bm \sigma)}{\mathcal X_{\mathcal N} \times \mathcal Y_{\mathcal N}}$ sei.
 
     \begin{Beweis}
         Die Abschätzung nach unten ergibt sich direkt aus \cref{lemma:rbm_fehler_schranke}.
         Sei nun $\bm \sigma \in \mathcal P$ beliebig.
-        Eine Anwendung des Rieszschen Darstellungssatz liefert für $r_{N}(\blank; \bm \sigma)$ ein $\hat{e}_{N} \in \mathcal Y_{\mathcal N}$ mit $r_{N}(v; \bm \sigma) = \skp{\hat{e}_{N}}{v}{\mathcal Y}$ für alle $v \in \mathcal Y_{\mathcal N}$ und $\norm{r_{N}(\blank; \bm \sigma)}_{\mathcal Y_{\mathcal N}'} = \norm{\hat{e}_{N}}_{\mathcal Y}$.
+        Eine Anwendung des Rieszschen Darstellungssatzes liefert für $r_{N}(\blank; \bm \sigma)$ ein $\hat{e}_{N} \in \mathcal Y_{\mathcal N}$ mit $r_{N}(v; \bm \sigma) = \skp{\hat{e}_{N}}{v}{\mathcal Y}$ für alle $v \in \mathcal Y_{\mathcal N}$ und $\norm{r_{N}(\blank; \bm \sigma)}_{\mathcal Y_{\mathcal N}'} = \norm{\hat{e}_{N}}_{\mathcal Y}$.
         Mit der Stetigkeit der Bilinearform erhalten wir damit die Abschätzung
         \begin{equation}
             \norm{\hat{e}_{N}}_{\mathcal Y}^{2}
@@ -196,7 +196,7 @@ Insbesondere garantiert es, dass der tatsächliche Fehler durch den a posteriori
 \label{section:cha5_rbm:numerische_umsetzung}
 
 Wir richten unsere Aufmerksamkeit nun auf die numerische Umsetzung der RB"=Methode und orientieren uns dabei weiterhin an \cite{Rozza2008,Patera:2007un}.
-Zunächst abstrahieren wir die aus \cref{lemma:bilinearform_affin_parametrisch} bekannte affine Abhängigkeit der parametrischen Bilinearform des Variationsproblems \cref{eq:abstraktes_parametrische_vp}.
+Zunächst führen wir eine praktische Einschränkung der parametrischen Bilinearform des Variationsproblems \cref{eq:abstraktes_parametrische_vp} durch und abstrahieren die aus \cref{lemma:bilinearform_affin_parametrisch} bekannte affine Abhängigkeit.
 
 \begin{Definition}
 \label{definition:parametrisch_affine_bf_fuer_rbm}
@@ -211,15 +211,15 @@ Für dieses Kapitel nehmen wir ferner an, dass die Funktionen $\theta_{q}^{b}$ e
 Weiter vereinfachen wir an dieser Stelle die Notation aus \cref{section:galerkin_numerische_umsetzung}.
 Die endlichdimensionalen Räume $\mathcal X_{\mathcal N}$ und $\mathcal Y_{\mathcal N}$ der Truth"=Diskretisierung fassen wir als Span entsprechender Basen auf und schreiben
 \begin{equation}
-    \mathcal X_{\mathcal N} = \spn \Set{ \phi_{i} }_{ i = 1, \dots, \mathcal N },
+    \mathcal X_{\mathcal N} = \spn \Set{ \phi_{i} \given i = 1, \dots, \mathcal N },
     \qquad
-    \mathcal Y_{\mathcal N} = \spn \Set{ \psi_{j} }_{ j = 1, \dots, \mathcal N }.
+    \mathcal Y_{\mathcal N} = \spn \Set{ \psi_{i} \given i = 1, \dots, \mathcal N }.
 \end{equation}
 Analog verfahren wir für die $N$-dimensionalen RB"=Räume $\mathcal X_{N}$ und $\mathcal Y_{N}$ mit der Notation
 \begin{equation}
-    \mathcal X_{N} = \spn \Set{ \xi_{n} }_{ n = 1, \dots, N},
+    \mathcal X_{N} = \spn \Set{ \xi_{n} \given n = 1, \dots, N},
     \qquad
-    \mathcal Y_{N} = \spn \Set{ \eta_{m} }_{ m = 1, \dots, N}.
+    \mathcal Y_{N} = \spn \Set{ \eta_{n} \given n = 1, \dots, N}.
 \end{equation}
 Die bei der Petrov"=Galerkin"=Diskretisierung hergeleiteten Strukturen $\mat{X}, \mat{Y}, \mat{B}_q \in \mathbb{R}^{\mathcal N \times \mathcal N}$ mit $q = 1, \dots, Q_b$ und $\vec{f} \in \mathbb{R}^{\mathcal N}$ lassen sich damit kurz schreiben als
 \begin{equation}
@@ -240,17 +240,17 @@ Nach diesen Vorbemerkungen geben wir nun als ersten Schritt eine Möglichkeit zu
     \begin{equation}
         u_{N} := \sum_{n = 1}^{N} u_{n, N} \xi_{n},
         \qquad
-        v_{N} := \sum_{m = 1}^{N} v_{m, N} \eta_{m}
+        v_{N} := \sum_{n = 1}^{N} v_{n, N} \eta_{n}
     \end{equation}
-    mit den Koeffizientenvektoren $\vec{u}_{N} := [u_{n, N}]_{n = 1, \dots, N}, \vec{v}_{N} := [v_{m,N}]_{m = 1, \dots, N} \in \mathbb{R}^{N}$.
+    mit den Koeffizientenvektoren $\vec{u}_{N} := [u_{n, N}]_{n = 1, \dots, N}, \vec{v}_{N} := [v_{n,N}]_{n = 1, \dots, N} \in \mathbb{R}^{N}$.
 \end{Definition}
 
-Nach Konstruktion können die Basisfunktionen $\Set{ \xi_{n} }_{ n = 1, \dots, N}$ und $\Set{ \eta_{m} }_{ m = 1, \dots, N}$ jeweils als Linearkombination von $\Set{ \phi_{i} }_{ i = 1, \dots, \mathcal N}$ beziehungsweise $\Set{ \psi_{j} }_{ j = 1, \dots, \mathcal N}$ geschrieben werden.
-Bezeichnen wir nun für $n,m = 1, \dots, N$ die entsprechenden Koeffizientenvektoren mit $\bm \xi_{n}, \bm \eta_{m} \in \mathbb{R}^{\mathcal N}$, dann können wir damit weiter die Matrizen
+Nach Konstruktion können die Basisfunktionen $\xi_{n}, \eta_{n}$ für alle $n = 1, \dots, N$ jeweils als Linearkombination von $\Set{ \phi_{i} \given i = 1, \dots, \mathcal N}$ beziehungsweise $\Set{ \psi_{i} \given i = 1, \dots, \mathcal N}$ geschrieben werden.
+Bezeichnen wir nun für jedes $n = 1, \dots, N$ die entsprechenden Koeffizientenvektoren mit $\bm \xi_{n}, \bm \eta_{n} \in \mathbb{R}^{\mathcal N}$, dann können wir damit weiter die Matrizen
 \begin{equation}
   \mat{\Xi} := [\bm \xi_{n}]_{n = 1, \dots, N} \in \mathbb{R}^{\mathcal N \times N},
   \qquad
-  \mat{H}   := [\bm \eta_{m}]_{m = 1, \dots, N} \in \mathbb{R}^{\mathcal N \times N}
+  \mat{H}   := [\bm \eta_{n}]_{n = 1, \dots, N} \in \mathbb{R}^{\mathcal N \times N}
 \end{equation}
 definieren.
 Diese ermöglichen nun die Berechnung der RB"=Matrizen $\mat{B}_{q,N} \in \mathbb{R}^{N \times N}$ für $q = 1, \dots, Q_{b}$ und des RB"=Lastvektors $\vec{f}_{N} \in \mathbb{R}^{N}$ als
@@ -274,7 +274,7 @@ Analog können auch die norminduzierenden Matrizen $\mat{X}_{N}, \mat{Y}_{N} \in
     \end{aligned}
 \end{equation}
 
-Die Bestimmung der RB"=Lösung $u_{N}(\bm \sigma)$ zu einem Parameter $\bm \sigma \in \mathcal P$ erfolgt, wie bereits vom Petrov"=Galerkin"=Verfahren bekannt, über ein lineares Gleichungssystem
+Die Bestimmung der RB"=Lösung $u_{N}(\bm \sigma)$ zu einem Parameter $\bm \sigma \in \mathcal P$ erfolgt, wie bereits vom Petrov"=Galerkin"=Verfahren bekannt, über das lineare Gleichungssystem
 \begin{equation}
 \label{eq:rbm_gleichungssystem}
     \mat{B}_{N}(\bm \sigma) \vec{u}_{N}(\bm \sigma) = \vec{f}_{N},
@@ -348,15 +348,19 @@ Um daraus einen $N+1$-dimensionalen Raum $\mathcal X_{N + 1}$ zu gewinnen, verfa
 Der beschriebene Ablauf wird nun iterativ ausgeführt, bis der maximale Fehler in \cref{enum:greedy_schritt_eins} unter einer gewünschten Toleranz liegt.
 Um das Verfahren zu starten, kann das erste Parameter"=Sample beliebig, beispielsweise zufällig, gewählt werden.
 
-Diese Heuristik hat zwar offensichtlich nur eine lokale Sicht auf die Wahl der optimalen Parameter, liefert dadurch aber ein Verfahren, welches nach \cite[Subsection 3.4.3]{Patera:2007un} zufriedenstellende Ergebnisse unter einem vertretbaren Aufwand liefert.
+Die Orthonomalisierung wird durchgeführt, da a priori nicht sichergestellt werden kann, dass die Snapshots $u_{\mathcal N}(\bm \sigma_n)$ nicht nahezu linear abhängig sind.
+Dies würde in einer schlechten Kondition für die Systemmatrix \cref{eq:affine_rbm_systemmatrix} resultieren.
+Da diese Matrix nach Konstruktion ohnehin dicht besetzt ist, wird im Allgemeinen eine Gram"=Schmidt"=Orthonormalisierung durchgeführt, um so dem genannten Problem zu entgehen.
+
+Diese Greedy"=Heuristik hat zwar offensichtlich nur eine lokale Sicht auf die Wahl der optimalen Parameter, liefert dadurch aber ein Verfahren, welches nach \cite[Subsection 3.4.3]{Patera:2007un} zufriedenstellende Ergebnisse unter einem vertretbaren Aufwand liefert.
 Letzterer lässt sich wie folgt angeben: Sei $N_{\max}$ die Anzahl insgesamt durchgeführter Iterationen, dann entspricht der Aufwand
 \begin{inlinelist}
     \item $N_{\max} \cdot \# \mathcal P_{\mathrm{train}}$ Auswertungen des a posteriori-Fehlerschätzers,
     \item $N_{\max}$ Aufrufen der Truth-Lösers und
-    \item einem vollständigen Durchlauf eines Orthonomalisierungsverfahrens, beispielsweise der Gram-Schmidt-Orthonormalisierung.
+    \item einem vollständigen Durchlauf der Gram"=Schmidt"=Orthonormalisierung.
 \end{inlinelist}
 
-Wie direkt ersichtlich ist, wird vor allem eine effiziente Möglichkeit zur Berechnung des a posteriori-Fehlerschätzer benötigt.
+Wie direkt ersichtlich ist, wird vor allem eine effiziente Möglichkeit zur Berechnung des a posteriori-Fehlerschätzers benötigt.
 Bevor wir uns dieser Aufgabe widmen, wollen wir auf die Konstruktion des zugehörigen RB"=Testraumes eingehen.
 
 % paragraph konstruktion_des_reduzierte_basis_ansatzraumes_mittels_greedy_algorithmus (end)
@@ -391,7 +395,7 @@ Seien $\bm \sigma \in \mathcal P$ ein Parameter und $T_{\bm \sigma} \colon \math
     \end{Beweis}
 \end{Satz}
 
-Da der Testraum $\mathcal Y_{N}^{\bm \sigma}$ für jeden Parameter neu aufgebaut werden muss, ist eine sinnvolle Zerlegung der Berechnung in Offline- und Online-Phase wünschenswert.
+Da der Testraum $\mathcal Y_{N}^{\bm \sigma}$ für jeden Parameter neu aufgebaut werden muss, ist eine sinnvolle Zerlegung in Offline- und Online-Phase wünschenswert.
 Dazu nutzen wir die parametrisch-affine Darstellung \cref{eq:bilinearform_parametrisch_affin} und definieren für jedes $\restr{b_{q}}{\mathcal X_{\mathcal N} \times \mathcal Y_{\mathcal N}}$, $q = 1, \dots, Q_b$, den zugehörigen Supremizing-Operatoren $T_{q}$.
 Dann gilt
 \begin{equation}
@@ -402,8 +406,8 @@ Diese müssen nur einmal vorberechnet werden, während die restlichen Berechnung
 
 \begin{onoffdescription}
     \item[Offline:]
-    Bei jeder Iteration des Greedy-Verfahrens werden die Vektoren $\vec{v}_{q}^{n} := \mat{T}_{q} \vec{u}_{\mathcal N}(\bm \sigma_{n})$ für jedes $q = 1, \dots, Q_{b}$ und $n = 1, \dots, N$ berechnet.
-    Dies entspricht $N \cdot Q_b$ Matrix-Matrix-Multiplikation der Größe $\mathcal N \times \mathcal N$ pro Iteration.
+    Während des Greedy-Verfahrens werden die Vektoren $\vec{v}_{q}^{n} := \mat{T}_{q} \vec{u}_{\mathcal N}(\bm \sigma_{n})$ für jedes $q = 1, \dots, Q_{b}$ und $n = 1, \dots, N$ berechnet.
+    Dies entspricht $N \cdot Q_b$ Matrix-Matrix-Multiplikation der Größe $\mathcal N \times \mathcal N$.
 
     \item[Online:]
     Bestimme $\mathcal Y_{N}^{\bm \sigma}$ durch $\mat{T}_{\bm \sigma} \vec{u}_{\mathcal N}(\bm \sigma_{n}) = \sum_{q = 1}^{Q_b} \theta_{q}^{b}(\bm \sigma) \vec{v}_{q}^{n}$ für $n = 1, \dots, N$.
@@ -491,7 +495,7 @@ Da die exakte Bestimmung der inf-sup-Konstante $\beta_{\mathcal N}(\bm \sigma)$ 
 Im Rahmen dieser Arbeit stützen wir uns hierfür auf die zu diesem Zweck entwickelte \ac{scm} und orientieren uns an der Originalarbeit von \textcite{Huynh2007}, wobei hier nur die Idee des Verfahrens wiederholt werden soll.
 Weiter wurden bei der Implementierung die Verbesserungen von \textcite{Chen2009} berücksichtigt, die hier nicht weiter ausgeführt werden.
 
-Da die \ac{scm} auf die Berechnung der Koerzivitätskonstante einer symmetrischen parametrischen Bilinearform ausgelegt, müssen wir zunächst die nötigen Rahmenbedingungen schaffen.
+Da die \ac{scm} auf die Berechnung der Koerzivitätskonstante einer symmetrischen parametrischen Bilinearform ausgelegt ist, müssen wir zunächst die nötigen Rahmenbedingungen schaffen.
 Wir werden später darauf eingehen, wie wir mit der \ac{scm} stattdessen die gewünschte inf-sup-Schranke bestimmen können.
 
 Es sei also durch
