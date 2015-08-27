@@ -7,7 +7,7 @@
 \label{chapter:ausblick}
 
 In diesem abschließenden Kapitel wollen wir die Ergebnisse dieser Arbeit noch einmal diskutieren.
-Dabei betrachten wir diese hauptsächlich unter dem Aspekt der Anwendbarkeit auf die selbstkonsistente Feldtheorie aus der \nameref{chapter:einleitung}.
+Dabei betrachten wir diese hauptsächlich unter dem Aspekt der Anwendbarkeit auf die aus der \nameref{chapter:einleitung} bekannte selbstkonsistente Feldtheorie.
 
 Analog zum Aufbau der Arbeit beginnen wir mit den funktionalanalytischen Ergebnissen aus \cref{chapter:propagator_differentialgleichung}, bevor wir weiter auf die zugrundeliegende Diskretisierung mittels \nameref{chapter:galerkin} und zuletzt auf die darauf aufbauende \nameref{chapter:rbm} eingehen.
 
@@ -43,7 +43,7 @@ Auch hier bietet sich weiteres Verbesserungspotenzial.
 Als erste, einfache Verbesserung bietet es sich an, bei der numerischen Umsetzung die Raum"=Zeit"=Struktur stärker zu nutzen.
 So müssen die Kronecker"=Produkte nicht zu $\mathcal N$-dimensionalen Objekten ausgewertet werden, da die Berechnungen, die auf diesen Objekte basieren, durch Äquivalenzaussagen zu Berechnungen in den Dimensionen $\mathcal K$ und $\mathcal J$ überführt werden können.
 
-Eine deutlich weiter ausholende Option ist es, ein bedingungslos stabiles Verfahren zu konstruieren.
+Eine deutlich weiter ausholende Option ist, ein bedingungslos stabiles Verfahren zu konstruieren.
 \textcite[Section 5.2]{Andreev:2012ep} hat gezeigt, dass die CFL"=Bedingung für das verwendete Verfahren möglicherweise verbessert, aber im Allgemeinen nicht entfernt werden kann.
 Eine einfache Variante, um aus dem vorliegenden Verfahren ein bedingungslos stabiles zu erhalten, ist es, für den Testraum eine verfeinerte Zeitdiskretisierung zu verwenden.
 Teilt man die Zeitgitterintervalle des Ansatzraumes für den Testraum jeweils in der Mitte auf, dann führt dies zu bedingungsloser Stabilität.
@@ -81,6 +81,6 @@ Weiter muss hierfür bei Änderung der Modellparameter vor dem iterativen Verfah
 Um auf solches a priori-Wissen verzichten zu können, ist eine dynamische Reduzierte"=Basis"=Methode gefragt, die nicht einfach nur als Löser"=Ersatz für die Propagator"=Differentialgleichungen verwendet wird.
 Diese sollte nach Möglichkeit direkt mit dem iterativen Verfahren gekoppelt sein und während der Ausführung \enquote{lernen}, welche Funktionen ein zur Modellreduktion der Felder geeignetes System darstellen.
 
-Unseres Wissens nach wurden dynamische Reduzierte"=Basis"=Methoden dieser Art bisher nicht untersucht und stellen damit einen großen für weitere Forschungen zur Verfügung stehenden Bereich dar.
+Unseres Wissens nach wurden dynamische Reduzierte"=Basis"=Methoden dieser Art bisher nicht untersucht und stellen damit einen für weitere Forschungen zur Verfügung stehenden Bereich dar.
 
 \end{document}
