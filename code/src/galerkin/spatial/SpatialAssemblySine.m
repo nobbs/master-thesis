@@ -33,8 +33,6 @@ classdef SpatialAssemblySine < SpatialAssemblyAbstract
       %
       % Return values:
       %   Ax: spatial stiffness matrix @type matrix
-      %
-      % @todo optimize
 
       tmp = zeros(min(obj.nTrial, obj.nTest), 1);
       for jdx = 1:min(obj.nTrial, obj.nTest)
@@ -93,7 +91,6 @@ classdef SpatialAssemblySine < SpatialAssemblyAbstract
         for jdx = 1:obj.nTrial
           for ldx = 1:obj.nTest
             % evaluate spatial integral
-            % @todo explain optimization and cases
             intval = 0;
             % derived condition, if it's not satisfied, the value of the
             % integral is null

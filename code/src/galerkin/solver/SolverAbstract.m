@@ -22,7 +22,6 @@ classdef SolverAbstract < handle
     Lhs;
     % As the right hand side of our system is the same every time, let's save
     % it. @type vector
-    % @deprecated
     Rhs;
     % Norm of the trial space X. @type matrix
     TrNorm;

@@ -33,7 +33,7 @@ classdef RBM < handle
     % Holds the truth solution vectors which form the basis of the reduced basis
     % trial space. @type matrix
     trialSnapshots;
-    % @todo Holds the affine decompositon of somethign @type cell
+    % Holds the affine decompositon of somethign @type cell
     affineTestshotBase;
     % Needed for the computation of the residual @type matrix
     G;
@@ -195,7 +195,6 @@ classdef RBM < handle
         end
 
         % check the breaking conditions
-        % @todo add more of 'em
         if maxerr < tol
           % if the maximum error is smaller than the given tolerance, then we
           % are done here!
@@ -224,14 +223,10 @@ classdef RBM < handle
       % Return values:
       %   errest: estimated error @type double
 
-      % @todo move this somewhere else
-      Malpha = 10;
-      Mplus = 100;
-
       % calculate the residual norm
       res = obj.residual(rbsolvec, param);
       % calculate the bounds of the inf-sup-constant
-      [lb, ~] = obj.scm.onlineQuery(param, Malpha, Mplus);
+      [lb, ~] = obj.scm.onlineQuery(param);
       obj.residuals(end + 1) = res;
       % finally compute the error estimate
       errest = res / lb;
@@ -281,8 +276,6 @@ classdef RBM < handle
       %
       % Return values:
       %   snapshots: reduced basis test space @type matrix
-      %
-      % @todo describe it
 
       % prepad with 1 for the field independent part
       param = [1; shiftdim(param)];
@@ -345,8 +338,6 @@ classdef RBM < handle
       % This assembles the solution and field independent part of the
       % computation of the Y'-norm of the residual through it's riesz
       % representation.
-      %
-      % @todo describe it more!
 
       % create the matrix
       H = zeros(obj.solver.nTestDim, obj.nQr);
@@ -376,8 +367,6 @@ classdef RBM < handle
       % Return values:
       %   beta: discrete inf-sup-constant @type double
       %   gamma: discrete continuity constant @type double
-      %
-      % @todo eventuell affine zerlegbarkeit ausnutzen!
 
       testshots = obj.assembleTestSnapshots(param);
 
@@ -406,9 +395,7 @@ classdef RBM < handle
       %
       % Return values:
       %   beta: discrete inf-sup-constant @type double
-      %   gamma: discrete continuity constant @type double
-      %
-      % @todo eventuell affine zerlegbarkeit ausnutzen!
+      %   gamma: discrete continuity constant @type doubl
 
       % get all the needed matrices from the truth solver
       Lhs   = obj.solver.spacetimeSystemMatrix(param);

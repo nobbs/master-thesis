@@ -58,34 +58,18 @@ classdef SolverNodal < SolverAbstract
       %     @type vector
 
       if ~obj.temporal.useRefinement
-        % first we set up the preconditioners.
-        % attention: the inverse of these matrices will be multiplied with the
-        % system matrix, not the matrices itself!
-        %| @todo use preconditioners?
-        % left side:
-        % Pl = obj.TeNorm;
-        Pl = speye(obj.nTestDim);
-        % right side:
-        % Pr = obj.TrNorm;
-        Pr = speye(obj.nTrialDim);
+        % normally one should apply a preconditioner, but since it's working
+        % quite good without one for the examples of this thesis, we're going to
+        % skip this part.
 
         % assemble the system matrix for the given field
         Lhs = obj.spacetimeSystemMatrix(param);
 
-        % apply the preconditioners to the system matrix
-        LhsPre = (Pl \ Lhs) / Pr;
-
         % compute the right hand side load vector
         Rhs = obj.spacetimeLoadVector();
 
-        % apply the left preconditioner
-        RhsPre = Pl \ Rhs;
-
         % now solve the linear system
-        solvecPre = LhsPre \ RhsPre;
-
-        % and revert the preconditioning
-        solvec = Pr \ solvecPre;
+        solvec = Lhs \ Rhs;
       elseif obj.temporal.useRefinement
         % if we are using refinement, then we need to solve the system in a
         % least-squares way. this is done by the standard matlab \ operator or
@@ -94,10 +78,12 @@ classdef SolverNodal < SolverAbstract
         %    concise Matlab implementation. arXiv 2012.
 
         if true
+          % default matlab solver.
           Lhs = obj.spacetimeSystemMatrix(param);
           Rhs = obj.spacetimeLoadVector();
           solvec = Lhs \ Rhs;
         else
+          % Andreev's lsqr algorithm.
           % works, but it's really sensitive and often won't even fulfil the
           % initial conditions
           Lhs = obj.spacetimeSystemMatrix(param);
@@ -387,7 +373,7 @@ classdef SolverNodal < SolverAbstract
       M(iB, iB) = B;
     end
 
-    function x = lsqr(A, b)
+    function x = lsqr(obj, A, b)
       % LSQR implementation.
       %
       % Taken from

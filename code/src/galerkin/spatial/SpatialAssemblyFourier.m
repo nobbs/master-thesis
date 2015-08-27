@@ -33,8 +33,6 @@ classdef SpatialAssemblyFourier < SpatialAssemblyAbstract
       %
       % Return values:
       %   Ax: spatial stiffness matrix @type matrix
-      %
-      % @todo optimize
 
       tmp = zeros(min(obj.nTrial, obj.nTest), 1);
       for jdx = 2:min(obj.nTrial, obj.nTest)
@@ -97,7 +95,6 @@ classdef SpatialAssemblyFourier < SpatialAssemblyAbstract
         for jdx = 1:obj.nTrial
           for ldx = 1:obj.nTest
             % evaluate spatial integral
-            % @todo explain optimization and cases
             intval = 0;
             if mod(jdx, 2) == 1 && mod(ldx, 2) == 1 && mod(bdx, 2) == 1
               intval = (obj.pd.xspan(2) - obj.pd.xspan(1)) * ...

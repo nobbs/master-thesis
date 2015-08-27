@@ -157,9 +157,6 @@ classdef SCM < handle
       [~, IdxplusXi]       = obj.getNeighbors(obj.Mplus, param, obj.offMuTrain(:, paramsNotInCk));
       Idxplus              = paramsNotInCkIndexes(IdxplusXi);
 
-      %| @todo as we are starting with the upper bounds as our initial value
-      %|   it's maybe a good idea to perform a feasibility check
-
       % set up the linear problem:
       % start value are the upper bounds
       x0 = obj.offUpperBounds;
@@ -176,7 +173,6 @@ classdef SCM < handle
         -obj.offMuTrainMapped(:, Idxplus).'];
 
       % set some options for linprog
-      % @todo clean them up; matlab doesn't like the active-set algorithm
       opts = struct('LargeScale','off', ...
         'Algorithm', 'active-set', ...
         'Display', 'off');
@@ -677,8 +673,6 @@ classdef SCM < handle
       % Return values:
       %   lm: largest eigenvalue @type double
       %   lmvec: eigenvector of the largest eigenvalue @type colvec
-      %
-      % @todo improve the error handling / accuracy decrease options
 
       retries = 0;
 
