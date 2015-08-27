@@ -14,16 +14,73 @@ Analog zum Aufbau der Arbeit beginnen wir mit den funktionalanalytischen Ergebni
 \paragraph{Funktionalanalytische Ergebnisse.} % (fold)
 \label{par:funktionalanalytische_ergebnisse}
 
-\blindtext
+\cref{chapter:propagator_differentialgleichung} lässt sich, neben der Herleitung der parametrischen Raum"=Zeit"=Variationsformulierung für die Propagator"=Differentialgleichung, zu den folgenden beiden Hauptergebnissen zusammenfassen:
+
+\begin{enumerate}[label={\itshape\roman*.},ref={\itshape\roman*}]
+    \item
+    Der Nachweis, dass die hergeleitete Raum"=Zeit"=Variationsformulierung ein im Sinne von Hadamard korrekt gestelltes Problem darstellt.
+    \item
+    Die Untersuchung der Regularität der Lösungen der parametrischen Raum"=Zeit"=Variationsformulierung bezüglich der Parameter.
+    Dabei wurde insbesondere eine hinreichende Bedingung dafür angegeben, unter welcher diese Abhängigkeit analytisch ist.
+\end{enumerate}
+
+Vor allem der zweite Punkt bietet noch Potenzial für weitere Untersuchungen.
+Die im Rahmen dieser Arbeit hergeleitete hinreichende Bedingung (siehe \cref{satz:loesungen_analytisch}) erweist sich als äußerst restriktiv, da sie maßgeblich festlegt, wie groß die Amplitude der verwendeten Felder sein darf, und die zu erfüllende Schranke relativ niedrig ist.
+
+Inwiefern dieses Ergebnis mit dem Ziel der analytischen Regularität verbessert werden kann, ist an dieser Stelle unklar.
+Im Rahmen der Forschungsphase für das erzielte Ergebnis wurden verschiedene Ansätze verfolgt, die im Endeffekt alle zu einer ähnlich einschränkenden hinreichenden Bedingung führten.
+
+Alternativ kann der Anspruch an die Regularität verringert werden, da Analytizität für die Anwendung der Reduzierte"=Basis"=Methode zwar gut, aber nicht notwendig ist.
+Aufgrund der erzielten Ergebnisse liegt es nahe, dass schwächere Regularitätsergebnisse unter deutlich angenehmeren Bedingungen erreicht werden können.
 
 \paragraph{Petrov-Galerkin-Diskretisierung.} % (fold)
 \label{par:petrov_galerkin_diskretisierung}
 
-\blindtext
+In \cref{chapter:galerkin} wurde eine Diskretisierung durchgeführt, die als Grundlage für die Reduzierte"=Basis"=Methode verwendbar ist.
+Weiter wurde eine hinreichende CFL"=Bedingungen angegeben, unter welcher diese Diskretisierung stabil ist.
 
-\paragraph{Reduzierte-Basis-Methode.} % (fold)
+Auch hier bietet sich weiteres Verbesserungspotenzial.
+Als erste, einfache Verbesserung bietet es sich an, bei der numerischen Umsetzung die Raum"=Zeit"=Struktur stärker zu nutzen.
+So müssen die Kronecker"=Produkte nicht zu $\mathcal N$-dimensionalen Objekten ausgewertet werden, da die Berechnungen, die auf diesen Objekte basieren, durch Äquivalenzaussagen zu Berechnungen in den Dimensionen $\mathcal K$ und $\mathcal J$ überführt werden können.
+
+Eine deutlich weiter ausholende Option ist es, ein bedingungslos stabiles Verfahren zu konstruieren.
+\textcite[Section 5.2]{Andreev:2012ep} hat gezeigt, dass die CFL"=Bedingung für das verwendete Verfahren möglicherweise verbessert, aber im Allgemeinen nicht entfernt werden kann.
+Eine einfache Variante, um aus dem vorliegenden Verfahren ein bedingungslos stabiles zu erhalten, ist es, für den Testraum eine verfeinerte Zeitdiskretisierung zu verwenden.
+Teilt man die Zeitgitterintervalle des Ansatzraumes für den Testraum jeweils in der Mitte auf, dann führt dies zu bedingungsloser Stabilität.
+Als Problem erweist sich nun aber, dass das resultierende System in Ansatz- und Testraum nicht mehr die gleiche Dimension besitzt und dementsprechend nur noch als Residuum"=minimierendes Variationsproblem aufgefasst werden kann.
+Dieses kann aber nicht mehr als Grundlage für die Reduzierte"=Basis"=Methode verwendet werden.
+
+Es bleibt zu untersuchen, ob und wie das verwendete Verfahren optimiert, oder möglicherweise durch ein besseres Petrov"=Galerkin"=Verfahren ersetzt werden kann.
+
+\paragraph{Reduzierte"=Basis"=Methode.} % (fold)
 \label{par:reduzierte_basis_methode}
 
-\blindtext
+Als nächster Schritt wurde in \cref{chapter:rbm} die Reduzierte"=Basis"=Methode eingeführt.
+Die theoretischen Grundlagen können zwar kurz gefasst werden, nichtsdestotrotz weist dieses Verfahren verschiedene verbesserungswürdige Punkte auf.
+
+Wir beschränken uns auf den nach den Beispielen in \cref{sec:cha5_rbm:beispiele} offensichtlichen Ansatzpunkt, die Berechnung einer unteren Schranke für die parameterabhängige inf"=sup"=Konstante.
+Dies stellt ein Kernstück der Reduzierte"=Basis"=Methode dar und wurde hier mit der \acl{scm} angegangen.
+Dabei hat sich herausgestellt, dass diese stark unter dem Fluch der Dimensionalität leidet.
+War die \ac{scm} bei den Beispielen für einen oder zwei Parameter noch in wenigen Minuten ausführbar,
+so benötigt sie bereits bei einer Parameterzahl im höheren einstelligen Bereich mehrere Stunden.
+
+Um dies zu verbessern, bietet sich zum einen die Verwendung einer optimierten \ac{scm}-Variante an -- beispielsweise \cite{Huynh2010} -- zum anderen können möglicherweise die Schranken nach \cite{Schwab:2009ec} -- siehe \cref{korrolar:ss09:theorem51_abschaetzungen} -- als Ersatz zur \ac{scm} verwendet werden.
+Für letzteres bleibt aber zunächst die Exaktheit dieser Schranken zu untersuchen.
+Spiegelt die Abschätzung das Verhalten der exakten inf"=sup"=Konstante nur unzureichend wieder, dann verfälscht dies insbesondere die Resultate des verwendeten Greedy"=Verfahrens.
+
+
+\paragraph{Selbstkonsistente Feldtheorie.} % (fold)
+\label{par:selbstkonsistente_feldtheorie}
+
+Als größter offener Punkt verbleibt die Frage, wie die in dieser Arbeit vorgestellte Modellreduktion verwendet werden kann, um die Berechnungen im Rahmen der selbstkonsistenten Feldtheorie zu beschleunigen.
+
+Die vergleichsweise einfachste Option stellt die Substitution des Differentialgleichung"=Lösers im iterativen Verfahren  -- siehe \nameref{chapter:einleitung} -- durch die konstruierte Reduzierte"=Basis"=Methode dar.
+Diese erfordert in der aktuellen Umsetzung a priori relativ tiefgehende Informationen, beispielsweise Symmetrien, über die resultierenden stabilen Felder, da sonst die Dimension des verwendeten Parameterraumes unpraktikabel groß wird.
+Weiter muss hierbei bei Änderung der Modellparameter vor dem iterativen Verfahren stets zunächst der Offline-Anteil der Reduzierte"=Basis"=Methode ausgeführt werden, was bei aktueller Umsetzung jegliche Zeiteinsparung durch die Modellreduktion zerstört.
+
+Um auf solches a priori-Wissen verzichten zu können, ist eine dynamische Reduzierte"=Basis"=Methode gefragt, die nicht einfach nur als Löser"=Ersatz für die Propagator"=Differentialgleichungen verwendet wird.
+Diese sollte nach Möglichkeit direkt mit dem iterativen Verfahren gekoppelt sein und während der Ausführung \enquote{lernen}, welche Funktionen ein zur Modellreduktion der Felder geeignetes System darstellen.
+
+Unseres Wissens nach wurden dynamische Reduzierte"=Basis"=Methoden dieser Art bisher nicht untersucht und stellen damit einen großen für weitere Forschungen zur Verfügung stehenden Bereich dar.
 
 \end{document}
