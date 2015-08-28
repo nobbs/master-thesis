@@ -627,6 +627,67 @@ Der Aufwand der jeweiligen Berechnungen wurde an den entsprechenden Stellen ange
 \section{Beispiele} % (fold)
 \label{sec:cha5_rbm:beispiele}
 
-% section experimente (end)
+Erneut wollen wir die numerische Umsetzung mit verschiedenen Beispielen abschließen.
+Hierbei werden wir uns vor allem auf ein einfaches Beispiel mit einem eindimensionalen Parameterraum konzentrieren, da dies die beste Möglichkeit bietet, das Verhalten der Reduzierte"=Basis"=Methode zu veranschaulichen.
+Ferner werden wir auch auf ein etwas komplexeres Beispiel eingehen, die Untersuchung dessen aber vor allem aus Gründen der Laufzeit nur einfach gestalten.
+
+\paragraph{Eindimensionaler Parameterraum.} % (fold)
+
+\blindtext
+
+\begin{figure}[htbp]
+    \centering
+    \begin{subfigure}[b]{0.495\textwidth}
+        \centering
+        \includegraphics[width=1\textwidth]{figures/chapter5/ch5ex1_scm_plot_1.pdf}
+        \caption{Nach einem Iterationsschritt.}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.495\textwidth}
+        \centering
+        \includegraphics[width=1\textwidth]{figures/chapter5/ch5ex1_scm_plot_2.pdf}
+        \caption{Nach zwei Iterationsschritten.}
+    \end{subfigure}\\
+    \begin{subfigure}[b]{0.495\textwidth}
+        \centering
+        \includegraphics[width=1\textwidth]{figures/chapter5/ch5ex1_scm_plot_3.pdf}
+        \caption{Nach drei Iterationsschritten.}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.495\textwidth}
+        \centering
+        \includegraphics[width=1\textwidth]{figures/chapter5/ch5ex1_scm_plot_10.pdf}
+        \caption{Nach zehn Iterationsschritten.}
+    \end{subfigure}
+    \caption[Vergleich der SCM-Schranke über mehrere Iterationsschritte.]{%\tabularnewline
+        Vergleich zwischen exakt bestimmter inf-sup-Konstante $\beta_{\mathcal N}(\sigma)$ (blau), der unteren Schranke $\beta_{\mathrm{LB}}(\sigma)$ (orange gepunktet) sowie der oberen Schranke $\beta_{\mathrm{UB}}(\sigma)$ (gelb gestrichelt) der \ac{scm}.
+        Die horizontale Achse stellt den Parameterraum dar, wobei die Markierungen die vom Greedy-Verfahren ausgewählten Parameter anzeigen.
+    }
+    \label{figure:vergleich_scm_iterationen}
+\end{figure}
+
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{|c|c|}\hline
+      N &            err            \\ \hline
+      1 &          1                \\ \hline
+      2 & $1.538670{\times}10^{-1}$ \\ \hline
+      3 & $4.409297{\times}10^{-2}$ \\ \hline
+      4 & $3.830918{\times}10^{-2}$ \\ \hline
+      5 & $3.709809{\times}10^{-2}$ \\ \hline
+      6 & $3.392907{\times}10^{-2}$ \\ \hline
+      7 & $1.137720{\times}10^{-2}$ \\ \hline
+      8 & $1.058958{\times}10^{-2}$ \\ \hline
+      9 & $1.032910{\times}10^{-2}$ \\ \hline
+     10 & $9.670423{\times}10^{-3}$ \\ \hline
+    \end{tabular}
+    \caption{caption}
+    \label{tbl:label}
+\end{table}
+
+\blindtext
+
+
+\paragraph{Mehrdimensionaler Parameterraum.} % (fold)
+
+\blindtext
 
 \end{document}
