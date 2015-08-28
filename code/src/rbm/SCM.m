@@ -8,13 +8,17 @@ classdef SCM < handle
   % described in @cite Huynh2007 for the computation of lower and upper bounds
   % of the inf-sup-constant for a given parameter in an efficient offline /
   % online decomposition with some improvements from @cite Chen2009.
+  %
+  % Warning:
+  %   The Access tags are commented so that it's easier to check the data the
+  %   scm generated, but you still shouldn't mess with them.
 
   properties
     % Max error in each iteration @type vector
     errors;
   end
 
-  properties(Access = 'protected')
+  properties%(Access = 'protected')
     % Reference to the "truth" solver object @type SolverAbstract
     solver;
     % Holds the affine representation of the Y-norm of the supremizers @type
@@ -38,7 +42,7 @@ classdef SCM < handle
     L;
   end
 
-  properties(Access = 'protected') % stop and go support
+  properties%(Access = 'protected') % stop and go support
     % Holds the current upper bounds for every parameter in the training set.
     % @type vector
     muTrainUB;
@@ -54,7 +58,7 @@ classdef SCM < handle
     totalLoopCtr;
   end
 
-  properties(Access = 'protected') % Offline Data
+  properties%(Access = 'protected') % Offline Data
     % Lower bounds for the linear program @type colvec
     offLowerBounds;
     % Upper bounds for the linear program @type colvec
@@ -80,6 +84,12 @@ classdef SCM < handle
     offMuLB;
     % boolean that marks parameters of the training set in Ck @type vector
     offMuChosen;
+  end
+
+  properties % for debugging and analysis of the scm
+    save_scm_bounds = false;
+    scm_lower_bounds;
+    scm_upper_bounds;
   end
 
   methods
@@ -116,6 +126,11 @@ classdef SCM < handle
 
       % save the training set
       obj.offMuTrain = muTrain;
+
+      if obj.save_scm_bounds
+        obj.scm_lower_bounds = {};
+        obj.scm_upper_bounds = {};
+      end
     end
 
     % Main methods of the successive constraint method algorithm
@@ -220,8 +235,8 @@ classdef SCM < handle
       % Parameters:
       %   tol: tolerance for the largest gap between certified upper and lower
       %     bound over all parameters in the training set @type double
-      %     @default 1e-10
-      %   maxIter: max number of greedy iterations @type integer @default 1000
+      %     @default 1e-3
+      %   maxIter: max number of greedy iterations @type integer @default 1e5
       %
       % Return values:
       %   exflag: exit flag of the greedy algorithm. can be used to determine
@@ -231,8 +246,8 @@ classdef SCM < handle
       if nargin < 1
         error('');
       else
-        if ~exist('tol', 'var'),     tol     = 1e-3; end;
-        if ~exist('maxIter', 'var'), maxIter = 1e6; end;
+        if ~exist('tol', 'var'),     tol     = 1e-2; end;
+        if ~exist('maxIter', 'var'), maxIter = 1e5; end;
       end
 
       % logging
@@ -489,6 +504,11 @@ classdef SCM < handle
         % save the newly calculated lower bounds for online use
         obj.offMuLB = obj.muTrainLB;
 
+        if obj.save_scm_bounds
+          obj.scm_lower_bounds{obj.totalLoopCtr + 1} = sqrt(obj.muTrainLB);
+          obj.scm_upper_bounds{obj.totalLoopCtr + 1} = sqrt(obj.muTrainUB);
+        end
+
         % Look for the parameter with the greatest gap / error
         obj.muPrevIdx          = obj.muCurIdx;
         [maxGap, obj.muCurIdx] = max((obj.muTrainUB - obj.muTrainLB) ./ obj.muTrainUB);
@@ -540,8 +560,9 @@ classdef SCM < handle
         obj.L.info('SCM', sprintf(' cycle %7.d of max %7.d done. max gap %g', ...
                    curLoopCtr, maxIter, maxGap));
 
-        % update the current loop count
-        curLoopCtr = curLoopCtr + 1;
+        % update the current and total loop count
+        curLoopCtr       = curLoopCtr + 1;
+        obj.totalLoopCtr = obj.totalLoopCtr + 1;
 
         % and now we check some more breaking conditions
         if curLoopCtr > maxIter
@@ -550,7 +571,6 @@ classdef SCM < handle
           % offline stage should be restarted with a larger maxIter
           exflag = 2;
           isDone = true;
-          obj.totalLoopCtr = obj.totalLoopCtr + curLoopCtr;
           obj.L.info('SCM', sprintf(' stopped greedy loop, number of max iterations %d reached!', maxIter));
           break;
         elseif size(obj.offMuCk, 2) == obj.nMuTrain
@@ -558,7 +578,6 @@ classdef SCM < handle
           % happen if we want good bounds...
           exflag = 3;
           isDone = true;
-          obj.totalLoopCtr = obj.totalLoopCtr + curLoopCtr;
           obj.L.info('SCM', ' stopped greedy loop, training set is already empty!');
           break;
         end

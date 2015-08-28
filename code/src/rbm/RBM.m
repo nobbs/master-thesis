@@ -6,9 +6,6 @@ classdef RBM < handle
   % all the needed properties and methods defined in SolverAbstract.
 
   properties
-    % Toggle verbosity of the solver. @type logical
-    verbose = true;
-
     % Reference to the given problem data object. @type ProblemData
     pd;
     % Reference to the galerkin truth solver @type SolverAbstract
@@ -39,6 +36,9 @@ classdef RBM < handle
     G;
     % Toggle, whether the offline data was reset recently @type logical
     % isFreshStart = true;
+
+    % Logger handle @type log4m
+    L;
   end
 
   properties(Dependent)
@@ -77,6 +77,9 @@ classdef RBM < handle
 
       % reset all variables to default values
       obj.resetTraining;
+
+      % get a logger reference
+      obj.L = log4m.getLogger('scftrbm.log');
     end
 
     function [rbsolvec, errest] = onlineQuery(obj, param)
@@ -117,20 +120,17 @@ classdef RBM < handle
       % Parameters:
       %   paramTrain: parameter training set. @type matrix
 
-      if obj.verbose
-        fprintf('# RBM: starting offline stage.\n');
-      end
+      obj.L.info('RBM', ' starting offline stage.');
 
       % we are ready to start the greedy loop! first some more preparation
       isDone = false;
       exflag = 0;
       tol = 1e-6;
+      curLoopCtr = 1;
 
       maxerr = 0;
 
-      if obj.verbose
-        fprintf('# RBM: starting greedy loop ');
-      end
+      obj.L.info('RBM', ' starting greedy loop.');
 
       % select the first parameter by random
       % curIdx = randi(size(paramTrain, 2), 1, 1);
@@ -141,10 +141,8 @@ classdef RBM < handle
 
       % and now lets move!
       while ~isDone
-        if obj.verbose
-          fprintf('.');
-          maxerr
-        end
+        obj.L.info('RBM', sprintf(' cycle %5.d done. max error %3.4e', ...
+                   curLoopCtr, maxerr));
 
         % debugging
         % keyboard;
@@ -206,11 +204,11 @@ classdef RBM < handle
           paramTrain(:, maxdx) = [];
           obj.params(:, end + 1) = curTrain;
         end
+
+        curLoopCtr = curLoopCtr + 1;
       end
 
-      if obj.verbose
-        fprintf(' done!\n');
-      end
+      obj.L.info('RBM', ' greedy lope done!');
     end
 
     function errest = estimateError(obj, param, rbsolvec)

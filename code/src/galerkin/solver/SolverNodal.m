@@ -181,7 +181,45 @@ classdef SolverNodal < SolverAbstract
       %     index @type cellarray
 
       % spatial field dependent stuff
-      FDx  = obj.spatial.fieldDependentFourier;
+      if obj.pd.useSineExpansion
+        FDx  = obj.spatial.fieldDependentSine;
+      else
+        FDx  = obj.spatial.fieldDependentFourier;
+      end
+
+      % set up the needed cell array
+      FD = cell(obj.pd.nP, 1);
+
+      % get start and end points of the time interval parts
+      tpoints = [obj.pd.tspan(1), obj.pd.f, obj.pd.tspan(2)];
+
+      % iterate over the fields
+      for fdx = 1:obj.pd.nF
+        % temporal mass matrices for the given interval part
+        %| @todo add back the field support!
+        MtAT = obj.temporal.massMatrix('both', [tpoints(fdx), tpoints(fdx + 1)]);
+
+        % and iterate over the coefficients
+        for cdx = 1:obj.pd.nC
+          pos = (fdx - 1) * obj.pd.nC + cdx;
+          % assemble
+          FD{pos} = kron(MtAT, FDx{cdx});
+          % and resize
+          FD{pos}(obj.nTestDim, obj.nTrialDim) = 0;
+        end
+      end
+    end
+
+    function FD = spacetimeFieldDependentSine(obj)
+      % Assemble the field independent part of the space time system matrix.
+      %
+      % Return values:
+      %   FD: cell array containing the part of the space time system matrix
+      %     which corresponds to the (basis func + field * num of basis func)
+      %     index @type cellarray
+
+      % spatial field dependent stuff
+      FDx  = obj.spatial.fieldDependentSine;
 
       % set up the needed cell array
       FD = cell(obj.pd.nP, 1);

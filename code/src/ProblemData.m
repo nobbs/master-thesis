@@ -30,6 +30,9 @@ classdef ProblemData < handle
     seriesIdx;
     % Number of fields @type integer
     nF;
+    % Toggle between sine and fourier series expansion for the fields (defaults
+    % to fourier). @type logical
+    useSineExpansion = false;
   end
 
   properties(Dependent)
