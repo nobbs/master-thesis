@@ -12,28 +12,16 @@ Besteht ein Polymer aus nur einer Monomer-Gattung, dann spricht man von einem Ho
 Obwohl Polymere in vielen verschiedenen Konfigurationen, beispielsweise ring- oder sternförmig, auftreten können, beschränken wir uns hier auf den Fall eines kettenförmigen Aufbaus.
 Weiter interessieren wir uns nur für Copolymere, vor allem die sogenannten Blockcopolymere, welche aus mehreren Monomer-Gattungen, die homogene zusammenhängende Blöcke bilden, aufgebaut sind (siehe \cref{figure:polymerketten}).
 
-\begin{figure}[tb]
+% TODO: zu einer Graphik mit Sidecap machen
+\begin{SCfigure}[][tb]
     \centering
-    \begin{subfigure}[b]{\textwidth}
-        \centering
-        \includegraphics[width=0.7\textwidth]{figures/einleitung/copoly1.pdf}
-    \end{subfigure}
-    \\[-0.75em]
-    \begin{subfigure}[b]{\textwidth}
-        \centering
-        \includegraphics[width=0.7\textwidth]{figures/einleitung/copoly2.pdf}
-    \end{subfigure}
-    \\[-0.75em]
-    \begin{subfigure}[b]{\textwidth}
-        \centering
-        \includegraphics[width=0.7\textwidth]{figures/einleitung/copoly3.pdf}
-    \end{subfigure}
-    \caption[Skizzenhafte Darstellung verschiedener Polymerarten]{%
+    \includegraphics[width=0.5\textwidth]{figures/einleitung/copoly1.pdf}
+    \caption[Skizzenhafte Darstellung verschiedener Polymerarten.]{%
         Skizzenhafte Darstellung verschiedener Polymerarten.
         Von oben nach unten: Homopolymer, ein AB-Diblockcopolymer und ein sogenanntes statistisches AB-Copolymer, bei dem die beiden Monomer-Arten zufällig verteilt sind.
     }
     \label{figure:polymerketten}
-\end{figure}
+\end{SCfigure}
 
 Von besonderem Interesse ist nun das Verhalten von Polymerschmelzen (\foreign{engl.}{polymer melt}), das heißt des flüssigen Aggregatzustands eines Polymers, sowie das Verhalten von Gemischen verschiedener polymerer Stoffe.
 So neigen die Gemische vieler Paare von Homopolymeren zu makroskopischer Phasenseparation, wie man es beispielsweise auch von Öl und Essig kennt.
@@ -63,7 +51,7 @@ Diese basiert auf einer makroskopischen Darstellung der Polymere und vernachläs
     \begin{subfigure}[b]{0.15\textwidth}
         \includegraphics[width=\textwidth]{figures/einleitung/phase5}
     \end{subfigure}
-    \caption[Verschiedene Phasen bei Diblockcopolymeren]{%
+    \caption[Verschiedene Phasen bei Diblockcopolymeren.]{%
         Verschiedene Phasen bei Diblockcopolymeren, welche experimentell beobachtet wurden, wobei hier nur eine der beiden Monomer-Gattungen dargestellt wird.
         Diese heißen von links nach rechts: lamellar, perforiert-lamellar, sphärisch, zylindrisch, gyroid.
         Diese Abbildung wurde \cite[Figure 1.18]{Matsen:2006ud} entnommen.
@@ -86,17 +74,17 @@ Diese Wechselwirkungen können in \cref{figure:kettenmodelle} beispielsweise als
 Das stetige Gaußsche Kettenmodell, welches man unter anderem auch als stetigen Grenzfall des beschriebenen diskreten Modells erhält, hat sich sowohl bei analytischen als auch numerischen Betrachtungen als besonders nützlich erwiesen.
 Dabei wird die Polymerkette als stetige, linear elastische Faser aufgefasst und durch eine Kurve $\vec{r}(s)$ parametrisiert, wobei $s \in [0, 1]$ eine entlang der normalisierten Kontur der Kette verlaufende Variable ist.
 
-\begin{figure}[tb]
+\begin{SCfigure}[][tb]
     \centering
-        \includegraphics[width=0.6\textwidth]{figures/einleitung/chainmodell.pdf}
+        \includegraphics[width=0.55\textwidth]{figures/einleitung/chainmodell.pdf}
     \caption[%
-        Polymerkette in diskretem und Gaußschen Kettenmodell
+        Polymerkette in diskretem und Gaußschen Kettenmodell.
     ]{%
         Schematische Darstellung einer Polymerkette im diskreten Kettenmodell (links) und im stetigen Gaußschen Kettenmodell (rechts).
         Abbildung reproduziert nach \cite[Figure 2.1 und 2.5]{Fredrickson:2006th}.
     }
     \label{figure:kettenmodelle}
-\end{figure}
+\end{SCfigure}
 
 Sowohl das diskrete als auch das stetige Kettenmodell haben einen starken Bezug zur Stochastik, da sie sich auch als Random Walks beziehungsweise stochastische Prozesse auffassen lassen.
 Dies stellt einen umfangreichen \enquote{Werkzeugkasten} zur Untersuchung dieser zur Verfügung.
@@ -247,7 +235,7 @@ So wird in \cite{Drolet:1999bs} ein Crank-Nicolson-Verfahren eingesetzt, wobei h
         \caption{Fourier-Koeffizienten}
     \end{subfigure}
     \caption[%
-    Eindimensionales Beispiel einer stabilen Anordnung eines Diblockcopolymers
+    Eindimensionales Beispiel einer stabilen Anordnung eines Diblockcopolymers.
     ]{%
         Eindimensionales Beispiel einer stabilen Anordnung eines Diblockcopolymers, welche mittels \ac{scft} und Pseudospektralverfahren bestimmt wurde.
         Simuliert wurde auf einem Intervall der Länge $L = 10$ mit den relevanten Größen $f = 1/2$, $\chi N = 25$ und $a^{2} N / 6 = 10 / 3$.

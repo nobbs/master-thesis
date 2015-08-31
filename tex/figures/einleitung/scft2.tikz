@@ -19,7 +19,7 @@ yminorticks=true,
 axis background/.style={fill=white},
 thick
 ]
-\addplot [color=mycolor1,only marks,mark=x,mark options={solid},forget plot, ultra thick]
+\addplot [color=matlab1,only marks,mark=x,mark options={solid},forget plot, ultra thick]
   table[row sep=crcr]{%
 1	5.8920310890666e-09\\
 2	1.63027147683058e-08\\
@@ -86,7 +86,7 @@ thick
 63	9.70263755802614e-05\\
 64	0.000243171961220867\\
 };
-\addplot [color=mycolor2,only marks,mark=o,mark options={solid},forget plot, ultra thick]
+\addplot [color=matlab2,only marks,mark=o,mark options={solid},forget plot, ultra thick]
   table[row sep=crcr]{%
 1	1.20044210328027e-08\\
 2	2.85364413497041e-08\\

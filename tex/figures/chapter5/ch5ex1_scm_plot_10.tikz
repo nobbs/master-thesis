@@ -328,7 +328,7 @@ yticklabel style={/pgf/number format/.cd,fixed,precision=3}
 0.97979797979798	0.101498397452872\\
 1	0.101509101798856\\
 };
-\addplot [color=matlab4,only marks,mark=o,mark options={solid},forget plot, very thick]
+\addplot [color=matlab4,only marks,mark=*,mark options={solid},forget plot, very thick]
   table[row sep=crcr]{%
 -0.535353535353535	0.100549110993976\\
 -1	0.10005974402505\\

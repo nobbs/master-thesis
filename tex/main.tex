@@ -7,8 +7,8 @@
   a4paper,
   % BCOR=1cm,
   % twoside,
-  % twoside=semi,
-  oneside,
+  twoside=semi,
+  % oneside,
   toc=bibliography,
   toc=listof,
   chapterprefix=true,
@@ -55,7 +55,7 @@
     \appendix{}
 
     % DVD Inhalt
-    \subfile{chapters/chaA_dvd.tex}
+    % \subfile{chapters/chaA_dvd.tex}
 
     %% Los geht's mit den Verzeichnissen
 
@@ -63,16 +63,16 @@
     \listoffigures
 
     % Tabellenverzeichnis
-    % \listoftables
+    \listoftables
 
     % Symbolverzeichnis
     % \glsaddall[]
-    \printglossary[type=symbolslist, nonumberlist, style=long]
+    % \printglossary[type=symbolslist, nonumberlist, style=long]
 
     % Literaturverzeichnis
     \printbibliography
 
     % Eidesstattliche Erklärung
-    \cleardoublepage
+    % \cleardoublepage
     % \include{misc/eidesstattliche_erklaerung}
 \end{document}

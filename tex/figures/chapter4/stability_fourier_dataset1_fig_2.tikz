@@ -4,10 +4,7 @@
 %  http://www.mathworks.com/matlabcentral/fileexchange/22022-matlab2tikz-matlab2tikz
 %where you can also make suggestions and rate matlab2tikz.
 %
-\definecolor{mycolor1}{rgb}{0.00000,0.44700,0.74100}%
-\definecolor{mycolor2}{rgb}{0.85000,0.32500,0.09800}%
-\definecolor{mycolor3}{rgb}{0.92900,0.69400,0.12500}%
-\definecolor{mycolor4}{rgb}{0.49400,0.18400,0.55600}%
+
 \definecolor{mycolor5}{rgb}{0.46600,0.67400,0.18800}%
 %
 \begin{tikzpicture}
@@ -27,7 +24,7 @@ yminorticks=true,
 axis background/.style={fill=white},
 legend style={at={(0.97,0.03)},anchor=south east,legend cell align=left,align=left,fill=none,draw=none}
 ]
-\addplot [color=mycolor1,solid,mark=*,mark options={solid}, thick]
+\addplot [color=matlab1,solid,mark=*,mark options={solid}, thick]
   table[row sep=crcr]{%
 11	0.0314508333602164\\
 25	0.0754820000645193\\
@@ -45,7 +42,7 @@ legend style={at={(0.97,0.03)},anchor=south east,legend cell align=left,align=le
 };
 \addlegendentry{5};
 
-\addplot [color=mycolor2,solid,mark=*,mark options={solid}, thick]
+\addplot [color=matlab2,solid,mark=*,mark options={solid}, thick]
   table[row sep=crcr]{%
 11	0.0050584988455422\\
 25	0.0121403972293013\\
@@ -63,7 +60,7 @@ legend style={at={(0.97,0.03)},anchor=south east,legend cell align=left,align=le
 };
 \addlegendentry{10};
 
-\addplot [color=mycolor3,solid,mark=*,mark options={solid}, thick]
+\addplot [color=matlab3,solid,mark=*,mark options={solid}, thick]
   table[row sep=crcr]{%
 11	0.00258214673107169\\
 25	0.00619715215457204\\
@@ -81,7 +78,7 @@ legend style={at={(0.97,0.03)},anchor=south east,legend cell align=left,align=le
 };
 \addlegendentry{15};
 
-\addplot [color=mycolor4,solid,mark=*,mark options={solid}, thick]
+\addplot [color=matlab4,solid,mark=*,mark options={solid}, thick]
   table[row sep=crcr]{%
 11	0.00126558538260417\\
 25	0.00303740491825001\\
@@ -99,7 +96,7 @@ legend style={at={(0.97,0.03)},anchor=south east,legend cell align=left,align=le
 };
 \addlegendentry{20};
 
-\addplot [color=mycolor5,solid,mark=*,mark options={solid}, thick]
+\addplot [color=matlab5,solid,mark=*,mark options={solid}, thick]
   table[row sep=crcr]{%
 11	0.000878946748506771\\
 25	0.00210947219641625\\

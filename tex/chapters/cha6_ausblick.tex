@@ -41,7 +41,7 @@ Weiter wurde eine hinreichende CFL"=Bedingungen angegeben, unter welcher diese D
 
 Auch hier bietet sich weiteres Verbesserungspotenzial.
 Als erste, einfache Verbesserung bietet es sich an, bei der numerischen Umsetzung die Raum"=Zeit"=Struktur stärker zu nutzen.
-So müssen die Kronecker"=Produkte nicht zu $\mathcal N$-dimensionalen Objekten ausgewertet werden, da die Berechnungen, die auf diesen Objekte basieren, durch Äquivalenzaussagen zu Berechnungen in den Dimensionen $\mathcal K$ und $\mathcal J$ überführt werden können.
+So müssen die Kronecker"=Produkte nicht zu $\mathcal N$-dimensionalen Objekten ausgewertet werden, da viele Berechnungen, die auf diesen Objekte basieren, durch Äquivalenzaussagen zu Berechnungen in den Dimensionen $\mathcal K$ und $\mathcal J$ überführt werden können.
 
 Eine deutlich weiter ausholende Option ist, ein bedingungslos stabiles Verfahren zu konstruieren.
 \textcite[Section 5.2]{Andreev:2012ep} hat gezeigt, dass die CFL"=Bedingung für das verwendete Verfahren möglicherweise verbessert, aber im Allgemeinen nicht entfernt werden kann.
@@ -50,7 +50,7 @@ Teilt man die Zeitgitterintervalle des Ansatzraumes für den Testraum jeweils in
 Als Problem erweist sich nun aber, dass das resultierende System in Ansatz- und Testraum nicht mehr die gleiche Dimension besitzt und dementsprechend nur noch als Residuum"=minimierendes Variationsproblem aufgefasst werden kann.
 Dieses kann aber nicht mehr als Grundlage für die Reduzierte"=Basis"=Methode verwendet werden.
 
-Es bleibt zu untersuchen, ob und wie das verwendete Verfahren optimiert, oder möglicherweise durch ein besseres Petrov"=Galerkin"=Verfahren ersetzt werden kann.
+Es bleibt zu untersuchen, ob und wie das verwendete Verfahren optimiert, oder möglicherweise durch ein \enquote{besseres} Petrov"=Galerkin"=Verfahren ersetzt werden kann.
 
 \paragraph{Reduzierte"=Basis"=Methode.} % (fold)
 \label{par:reduzierte_basis_methode}
@@ -61,13 +61,13 @@ Die theoretischen Grundlagen können zwar kurz gefasst werden, nichtsdestotrotz 
 Wir beschränken uns auf den nach den Beispielen in \cref{sec:cha5_rbm:beispiele} offensichtlichen Ansatzpunkt, die Berechnung einer unteren Schranke für die parameterabhängige inf"=sup"=Konstante.
 Dies stellt ein Kernstück der Reduzierte"=Basis"=Methode dar und wurde hier mit der \acl{scm} angegangen.
 Dabei hat sich herausgestellt, dass diese stark unter dem Fluch der Dimensionalität leidet.
-War die \ac{scm} bei den Beispielen für einen oder zwei Parameter noch in wenigen Minuten ausführbar,
-so benötigt sie bereits bei einer Parameterzahl im höheren einstelligen Bereich mehrere Stunden.
+Ist die \ac{scm} bei einem Parameter noch in wenigen Minuten ausführbar, so benötigt sie bereits bei einer Parameterzahl im mittleren einstelligen Bereich mehrere Stunden.
 
 Um dies zu verbessern, bietet sich zum einen die Verwendung einer optimierten \ac{scm}-Variante an -- beispielsweise \cite{Huynh2010} -- zum anderen können möglicherweise die Schranken nach \cite{Schwab:2009ec} -- siehe \cref{korrolar:ss09:theorem51_abschaetzungen} -- als Ersatz zur \ac{scm} verwendet werden.
 Für letzteres bleibt aber zunächst die Exaktheit dieser Schranken zu untersuchen.
 Spiegelt die Abschätzung das Verhalten der exakten inf"=sup"=Konstante nur unzureichend wieder, dann verfälscht dies insbesondere die Resultate des verwendeten Greedy"=Verfahrens.
 
+Auch das Greedy-Iterationsverfahren der Reduzierte"=Basis"=Methode scheint stark unter der Erhöhung der Parameterdimension zu leiden, liefert hier aber nur bedingt aussagekräftige Ergebnisse, da die Bestimmung der inf-sup-Konstante die weitere Analyse für höhere Dimensionen erschwert.
 
 \paragraph{Selbstkonsistente Feldtheorie.} % (fold)
 \label{par:selbstkonsistente_feldtheorie}
@@ -76,11 +76,11 @@ Als größter offener Punkt verbleibt die Frage, wie die in dieser Arbeit vorges
 
 Die vergleichsweise einfachste Option stellt die Substitution des Differentialgleichung"=Lösers im iterativen Verfahren  -- siehe \nameref{chapter:einleitung} -- durch die konstruierte Reduzierte"=Basis"=Methode dar.
 Diese erfordert in der aktuellen Umsetzung a priori relativ tiefgehende Informationen, beispielsweise Symmetrien, über die resultierenden stabilen Felder, da sonst die Dimension des verwendeten Parameterraumes unpraktikabel groß wird.
-Weiter muss hierfür bei Änderung der Modellparameter vor dem iterativen Verfahren stets zunächst der Offline-Anteil der Reduzierte"=Basis"=Methode ausgeführt werden, was bei aktueller Umsetzung jegliche Zeiteinsparung durch die Modellreduktion zerstört.
+Weiter muss hierfür bei Änderung der Modellparameter vor dem iterativen Verfahren stets zunächst der Offline-Anteil der Reduzierte"=Basis"=Methode ausgeführt werden, was bei aktueller Umsetzung jegliche mögliche Zeiteinsparung durch die Modellreduktion zerstört.
 
 Um auf solches a priori-Wissen verzichten zu können, ist eine dynamische Reduzierte"=Basis"=Methode gefragt, die nicht einfach nur als Löser"=Ersatz für die Propagator"=Differentialgleichungen verwendet wird.
 Diese sollte nach Möglichkeit direkt mit dem iterativen Verfahren gekoppelt sein und während der Ausführung \enquote{lernen}, welche Funktionen ein zur Modellreduktion der Felder geeignetes System darstellen.
 
-Unseres Wissens nach wurden dynamische Reduzierte"=Basis"=Methoden dieser Art bisher nicht untersucht und stellen damit einen für weitere Forschungen zur Verfügung stehenden Bereich dar.
+Unseres Wissens nach wurden dynamische Reduzierte"=Basis"=Methoden dieser Art bisher nicht untersucht und stellen damit einen größeren, noch unerforschten Bereich dar.
 
 \end{document}

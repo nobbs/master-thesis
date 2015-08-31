@@ -17,7 +17,7 @@ ymax=20,
 axis background/.style={fill=white},
 thick
 ]
-\addplot [color=mycolor1,solid,forget plot, ultra thick]
+\addplot [color=matlab1,solid,forget plot, ultra thick]
   table[row sep=crcr]{%
 0	10.3873731356779\\
 0.078125	11.9414138339447\\
@@ -148,7 +148,7 @@ thick
 9.84375	5.92795703889506\\
 9.921875	8.3896721680962\\
 };
-\addplot [color=mycolor2,solid,forget plot, ultra thick]
+\addplot [color=matlab2,solid,forget plot, ultra thick]
   table[row sep=crcr]{%
 0	-9.09029485991952\\
 0.078125	-8.71482661388416\\

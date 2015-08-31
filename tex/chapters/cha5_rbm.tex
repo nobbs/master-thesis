@@ -49,7 +49,7 @@ Die Truth"=Lösungsmenge sei nun definiert als
 Dies erlaubt die Konstruktion eines niedrigdimensionalen Unterraums $\mathcal X_{N} \subset \mathcal M_{\mathcal N} \subset \mathcal X_{\mathcal N}$ der Dimension $N$, welcher als Ansatzraum eines weiteren Galerkin"=Verfahrens dienen wird.
 Dies ist die Grundidee der RB"=Methoden, die in \cref{figure:rbm_loesungsmenge} noch einmal skizzenhaft veranschaulicht wird.
 
-\begin{figure}[tb]
+\begin{SCfigure}[][tb]
     \centering
     \includegraphics[width=0.5\textwidth]{figures/rb.pdf}
     \caption[%
@@ -59,7 +59,7 @@ Dies ist die Grundidee der RB"=Methoden, die in \cref{figure:rbm_loesungsmenge} 
         Die Reduzierte"=Basis"=Lösung $u_{N}(\sigma)$ ergibt sich als Linearkombinationen der Truth"=Lösungen $u_{\mathcal N}(\sigma_{i})$ für gewisse $\sigma_{i} \in \mathcal P$.
         }
     \label{figure:rbm_loesungsmenge}
-\end{figure}
+\end{SCfigure}
 
 Die Konstruktion des niedrigdimensionalen Ansatzraumes $\mathcal X_{N}$ erfolgt unter dem Aspekt, den durch das zweite Galerkin"=Verfahren zusätzlich eingeführten Fehler für alle Parameter des Parameterraums $\mathcal P$ zu minimieren, was in einem hohen Rechenaufwand resultiert.
 Dies motiviert die bei RB"=Methoden übliche Zerlegung in zwei Stufen.
@@ -627,15 +627,36 @@ Der Aufwand der jeweiligen Berechnungen wurde an den entsprechenden Stellen ange
 \section{Beispiele} % (fold)
 \label{sec:cha5_rbm:beispiele}
 
-Erneut wollen wir die numerische Umsetzung mit verschiedenen Beispielen abschließen.
-Hierbei werden wir uns vor allem auf ein einfaches Beispiel mit einem eindimensionalen Parameterraum konzentrieren, da dies die beste Möglichkeit bietet, das Verhalten der Reduzierte"=Basis"=Methode zu veranschaulichen.
-Ferner werden wir auch auf ein etwas komplexeres Beispiel eingehen, die Untersuchung dessen aber vor allem aus Gründen der Laufzeit nur einfach gestalten.
+Erneut wollen wir die numerische Umsetzung mittels verschiedener Beispiele abschließen.
+Wir konzentrieren uns dabei hauptsächlich auf ein einfaches Beispiel mit einem eindimensionalen Parameterraum, da dies dies beste Möglichkeit bietet, das Verhalten der Reduzierte"=Basis"=Methode zu veranschaulichen.
+Weiter gehen wir auch auf ein komplexeres Beispiel ein, halten die Untersuchung dessen vor allem aus Gründen der Laufzeit jedoch sehr simpel.
+
+Der Einfachheit halber nehmen wir bei beiden Beispielen homogene Randbedingungen an.
+Weiter wählen wir die Truth"=Diskretisierung wie im ersten Beispiel in \cref{sec:cha4_galerkin:beispiele}.
+Um die Parametrisierung der Felder durchzuführen, verwenden wir Sinusfunktionen der Form $\Set{\sin(k \pi x) \given k \in \mathbb{N}}$, wobei bei den betrachteten Beispielen lediglich $\sin(\pi x)$ und $\sin(2 \pi x)$ auftreten werden.
 
 \paragraph{Eindimensionaler Parameterraum.} % (fold)
 
-\blindtext
+Um einen eindimensionalen Parameterraum zu erhalten, verzichten wir erneut auf den zeitlichen Wechsel der Felder.
+Es seien $I = [0, 1]$ und $\Omega = [0, 1]$.
+Der parametrische Differentialoperator $A(t; \sigma) \equiv A(\sigma) \colon V \to V'$ sei ferner gegeben durch
+\begin{equation}
+    A(\sigma) \eta = - \tfrac{1}{10} \Delta \eta + \eta + \sigma \sin(\pi \blank) \eta
+\end{equation}
+mit dem Parameter $\sigma \in \mathcal P := [-1, 1]$.
+Wir verzichten auf einen Quellterm und verwenden als Anfangswert $u_{0} = \tfrac{1}{2} \sin(\pi \blank)$.
 
-\begin{figure}[htbp]
+Als Dimensionen für die Truth"=Diskretisierung nach \cref{chapter:galerkin} verwenden wir für die zeitliche Komponente $\mathcal K = 250$ und für die räumliche $\mathcal J = 20$.
+Die Diskretisierung $\mathcal P_{\mathrm{train}}$ des Parameterraums für die Greedy-Algorithmen wählen wir als äquidistantes Gitter auf $\mathcal P$ mit $1000$ Punkten.
+Dies stellt eine relativ geringe Anzahl dar und ist hauptsächlich der Laufzeit der Analyse-Prozeduren geschuldet.
+
+Wir wollen nun auf die verschiedenen numerischen Ergebnisse der Reduzierte"=Basis"=Methode und der \acl{scm} eingehen.
+Die benötigte Laufzeit für die Durchführung setzt sich zusammen aus $9\,\mathrm{min}~43\,\mathrm{s}$ für die Durchführung der Offline-Phase der \ac{scm} und $6\,\mathrm{min}~13\,\mathrm{s}$ für die RB-Offline-Phase.
+Vergleicht man dies mit den Laufzeiten für einen Aufruf des Truth- beziehungsweise RB-Lösers, die gemittelt die Werte $0.0817\,\mathrm{s}$ respektive $0.0637\,\mathrm{s}$ haben, dann wird deutlich, dass die Dauer der Offline-Phase unpraktikabel lange dauert, da circa $53000$ Löser-Aufrufe nötig sind, um diese zu amortisieren.
+Zwar können diese Laufzeiten durch Optimierung der Implementierung zweifelsfrei deutlich verbessert werden, allerdings handelt es sich hierbei um das denkbar einfachste Beispiel.
+Dies lässt bereits vermuten, dass die Laufzeiten für realitätsnähere Beispiele unhandlich groß werden könnten.
+
+\begin{figure}[tb]
     \centering
     \begin{subfigure}[b]{0.495\textwidth}
         \centering
@@ -649,45 +670,173 @@ Ferner werden wir auch auf ein etwas komplexeres Beispiel eingehen, die Untersuc
     \end{subfigure}\\
     \begin{subfigure}[b]{0.495\textwidth}
         \centering
-        \includegraphics[width=1\textwidth]{figures/chapter5/ch5ex1_scm_plot_3.pdf}
-        \caption{Nach drei Iterationsschritten.}
+        \includegraphics[width=1\textwidth]{figures/chapter5/ch5ex1_scm_plot_4.pdf}
+        \caption{Nach vier Iterationsschritten.}
     \end{subfigure}
     \begin{subfigure}[b]{0.495\textwidth}
         \centering
-        \includegraphics[width=1\textwidth]{figures/chapter5/ch5ex1_scm_plot_10.pdf}
-        \caption{Nach zehn Iterationsschritten.}
+        \includegraphics[width=1\textwidth]{figures/chapter5/ch5ex1_scm_plot_8.pdf}
+        \caption{Nach acht Iterationsschritten.}
     \end{subfigure}
-    \caption[Vergleich der SCM-Schranke über mehrere Iterationsschritte.]{%\tabularnewline
-        Vergleich zwischen exakt bestimmter inf-sup-Konstante $\beta_{\mathcal N}(\sigma)$ (blau), der unteren Schranke $\beta_{\mathrm{LB}}(\sigma)$ (orange gepunktet) sowie der oberen Schranke $\beta_{\mathrm{UB}}(\sigma)$ (gelb gestrichelt) der \ac{scm}.
+    \caption[Vergleich der SCM-Schranke über mehrere Iterationsschritte, erstes Beispiel.]{%
+        Vergleich zwischen exakt bestimmter inf-sup-Konstante $\beta_{\mathcal N}(\sigma)$ (blau), der unteren Schranke $\beta_{\mathrm{LB}}(\sigma)$ (orange gestrichelt) sowie der oberen Schranke $\beta_{\mathrm{UB}}(\sigma)$ (gelb gestrichelt) der \ac{scm} beim ersten Beispiel.
         Die horizontale Achse stellt den Parameterraum dar, wobei die Markierungen die vom Greedy-Verfahren ausgewählten Parameter anzeigen.
     }
     \label{figure:vergleich_scm_iterationen}
 \end{figure}
 
-\begin{table}[htbp]
+\begin{table}[tb]
     \centering
     \begin{tabular}{|c|c|}\hline
-      N &            err            \\ \hline
-      1 &          1                \\ \hline
-      2 & $1.538670{\times}10^{-1}$ \\ \hline
-      3 & $4.409297{\times}10^{-2}$ \\ \hline
-      4 & $3.830918{\times}10^{-2}$ \\ \hline
-      5 & $3.709809{\times}10^{-2}$ \\ \hline
-      6 & $3.392907{\times}10^{-2}$ \\ \hline
-      7 & $1.137720{\times}10^{-2}$ \\ \hline
-      8 & $1.058958{\times}10^{-2}$ \\ \hline
-      9 & $1.032910{\times}10^{-2}$ \\ \hline
-     10 & $9.670423{\times}10^{-3}$ \\ \hline
+     $K$ &      max. rel. Spanne \\ \hline
+     $1$ &          $1$              \\ %\hline
+     $2$ & $1.553973{\times}10^{-1}$ \\ %\hline
+     $3$ & $9.525370{\times}10^{-2}$ \\ %\hline
+     $4$ & $3.911659{\times}10^{-2}$ \\ %\hline
+     $5$ & $3.834086{\times}10^{-2}$ \\ %\hline
+     $6$ & $2.385319{\times}10^{-2}$ \\ %\hline
+     $7$ & $2.378906{\times}10^{-2}$ \\ %\hline
+     $8$ & $9.824040{\times}10^{-3}$ \\ \hline
     \end{tabular}
-    \caption{caption}
-    \label{tbl:label}
+    \caption[Entwicklung der maximalen relativen Spanne bei der \ac{scm}, erstes Beispiel.]{%
+        Entwicklung der maximalen relativen Spanne \cref{eq:max_rel_spanne_scm} während der Greedy-Iteration der \ac{scm} beim ersten Beispiel.
+    }
+    \label{table:entwicklung_scm_abweichung}
 \end{table}
 
-\blindtext
+Neben der Laufzeit sind natürlich auch die Ergebnisse der \ac{scm} und der RB"=Methode interessant.
+Anhand von \cref{figure:vergleich_scm_iterationen} wird die Funktionsweise der Greedy-Iteration der \ac{scm} deutlich.
+Diese hat bereits nach $8$ Iterationsschritten die Fehlertoleranz von $10^{-2}$ unterschritten.
+Die Entwicklung der maximalen relativen Spanne (vergleiche \cref{algorithm:scm_greedy})
+\begin{equation}\label{eq:max_rel_spanne_scm}
+    \max_{\bm \sigma \in \mathcal P_{\mathrm{train}}}
+    \frac{\alpha_{\mathrm{UB}}(\bm \sigma; \mathcal C_{K}) - \alpha_{\mathrm{LB}}(\bm \sigma; \mathcal C_{K})}{\alpha_{\mathrm{UB}}(\bm \sigma; \mathcal C_{K})}
+\end{equation}
+für $\alpha = \beta^{2}$ kann in \cref{table:entwicklung_scm_abweichung} abgelesen werden.
 
+Da für diese Veranschaulichung die exakte diskrete inf"=sup"=Konstante $\beta_{\mathcal N}(\sigma)$ bereits berechnet wurde, können wir dies auch nutzen, um auf die hinreichende Bedingung für die parametrische Abhängigkeit aus \cref{section:regularitaet_bezueglich_der_parameter} einzugehen.
+Verwenden wir die hier gegebenen Größen und nehmen wir weiter als grobe parameterunabhängige Näherung für $\beta_{\mathcal N}$ den Wert $0.1$ an, dann reduziert sich die Bedingung zu $\norm{C \sin(\pi \blank)}_{L_{\infty}([0, 1])} < 0.1$, wobei $C > 0$ an dieser Stelle eine Skalierungsvariable sei.
+Konkret lässt sich dies so interpretieren, dass die hinreichende Bedingung nur für den Parameterteilraum $[-0.1, 0.1] \subset \mathcal P$ die analytische Regularität der Lösung garantiert.
+Dies ist offensichtlich ein äußerst kleiner Spielraum für den Parameter, welcher bei Hinzunahme weiterer Parameter noch weiter eingeschränkt wird.
+
+In ähnlicher Weise zur \ac{scm} kann auch die Greedy-Iteration der RB"=Methode dargestellt werden.
+Diese terminiert bereits nach $6$ Iterationsschritten nach Unterschreiten der Fehlertoleranz $10^{-6}$.
+\cref{figure:vergleich_rbm_iterationen} zeigt, wie sich der a posteriori-Fehlerschätzer und der tatsächliche Fehler zwischen Truth- und RB-Lösung für wachsende Sample-Anzahl $N$ verändern.
+Weiter ist in \cref{table:entwicklung_rbm} die Entwicklung des Maximums des a posteriori-Fehlerschätzers sowie des Durchschnitts, des Medians und des Maximums der Effektivität $\eta_{N}$ über $\mathcal P_{\mathrm{train}}$ verzeichnet.
+Die für die Ausreißer der Effektivität verantwortlichen Spitzen treten bei den gewählten Parameter-Samples auf und sind vermutlich durch numerische Ungenauigkeiten bedingt, da sie für wachsendes $N$ abgeschwächt werden.
+
+\begin{figure}[tb]
+    \centering
+    \begin{subfigure}[b]{0.495\textwidth}
+        \centering
+        \includegraphics[width=1\textwidth]{figures/chapter5/ch5ex1_rbmerr_plot_1.pdf}
+        \caption{Nach einem Iterationsschritt.}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.495\textwidth}
+        \centering
+        \includegraphics[width=1\textwidth]{figures/chapter5/ch5ex1_rbmerr_plot_2.pdf}
+        \caption{Nach zwei Iterationsschritten.}
+    \end{subfigure}\\
+    \begin{subfigure}[b]{0.495\textwidth}
+        \centering
+        \includegraphics[width=1\textwidth]{figures/chapter5/ch5ex1_rbmerr_plot_3.pdf}
+        \caption{Nach drei Iterationsschritten.}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.495\textwidth}
+        \centering
+        \includegraphics[width=1\textwidth]{figures/chapter5/ch5ex1_rbmerr_plot_6.pdf}
+        \caption{Nach sechs Iterationsschritten.}
+    \end{subfigure}
+    \caption[Entwicklung des Fehlers zwischen Truth- und RB-Lösung für verschiedene RB-Dimensionen $N$, erstes Beispiel.]{%
+    Entwicklung des Fehlers zwischen Truth- und RB-Lösung für verschiedene Sample-Anzahlen $N$ beim ersten Beispiel.
+    Sowohl der exakt bestimmte Fehler (blau), als auch der a posteriori-Fehlerschätzer (orange) sind abgebildet.}
+    \label{figure:vergleich_rbm_iterationen}
+\end{figure}
+
+\begin{table}[tb]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|}\hline
+     $N$ & $\Delta_{N}^{\mathrm{max}}$ & $\eta_{N}^{\mathrm{ave}}$ & $\eta_{N}^{\mathrm{med}}$ & $\eta_{N}^{\mathrm{max}}$\\ \hline
+     1 & $4.808368{\times}10^{-1}$ & $3.484555{\times}10^{4}$ &  2.848653  & $3.484268{\times}10^{7}$ \\ % \hline
+     2 & $1.606581{\times}10^{-1}$ & $1.271701{\times}10^{4}$ &  4.053004  & $8.790271{\times}10^{6}$ \\ % \hline
+     3 & $3.836088{\times}10^{-3}$ & $1.830208{\times}10^{3}$ &  5.742329  & $1.129403{\times}10^{6}$ \\ % \hline
+     4 & $2.843523{\times}10^{-4}$ & $3.783277{\times}10^{2}$ &  6.341930  & $1.679813{\times}10^{5}$ \\ % \hline
+     5 & $3.604637{\times}10^{-6}$ & $2.737704{\times}10^{1}$ &  7.006419  & $9.870312{\times}10^{3}$ \\ % \hline
+     6 & $1.892436{\times}10^{-7}$ & $1.136721{\times}10^{1}$ &  8.233159  & $2.421902{\times}10^{2}$ \\ \hline
+    \end{tabular}
+    \caption[Entwicklung der relevanten Größen der RB"=Methode, erstes Beispiel.]{%
+        Entwicklung des Maximums $\Delta_{N}^{\mathrm{max}}$ des a posteriori-Fehlerschätzers sowie des Durchschnitts $\eta_{N}^{\mathrm{ave}}$, des Medians $\eta_{N}^{\mathrm{med}}$ und des Maximums $\eta_{N}^{\mathrm{max}}$ der Effektivität $\eta_{N}$ über $\mathcal P_{\mathrm{train}}$ beim ersten Beispiel.
+    }
+    \label{table:entwicklung_rbm}
+\end{table}
 
 \paragraph{Mehrdimensionaler Parameterraum.} % (fold)
 
-\blindtext
+Das zweite und komplexere Beispiel beinhaltet einen zeitlichen Wechsel bei $T_f = 0.5$.
+Größen, die an dieser Stelle nicht explizit angegeben sind, entsprechen dem vorherigen Beispiel.
+Wir ändern die Dimension der zeitlichen Diskretisierung zu $\mathcal K = 200$ und belassen $\mathcal J = 20$.
+Der nun zeit- und parameterabhängige Differentialoperator $A(t, \bm \sigma) \colon V \to V'$ sei definiert als
+\begin{equation}
+    \begin{aligned}
+    A(t, \bm \sigma) \eta &=
+        \tfrac{1}{10} \Delta \eta + 2 \eta + \chi_{[0, 0.5)}(t) [\sigma_1 \sin(\pi \blank) + \sigma_2 \sin(2 \pi \blank)] \eta \\
+        &\qquad + \chi_{[0.5, 1]}(t) [\sigma_3 \sin(\pi \blank) + \sigma_4 \sin(2 \pi \blank)] \eta
+    \end{aligned}
+\end{equation}
+mit dem Parameter $\bm \sigma \in \mathcal P := [-1, 1]^{4}$.
+Die Diskretisierung $\mathcal P_{\mathrm{train}}$ konstruieren wir mittels $5000$ zufällig gleichverteilt gewählter Punkte aus $\mathcal P$.
+
+Die benötigte Laufzeit für dieses Modell ist um ein Vielfaches höher als beim einfachen Beispiel.
+So benötigt die Offline-Phase der \ac{scm} $7\,\mathrm{h}~12\,\mathrm{min}$, um nach der gewählten maximalen Iterationsanzahl von $500$ zu terminieren, ohne die Fehlertoleranz von $10^{-2}$ zu unterschreiten.
+Weiter wird hier deutlich, dass die Trainingsparametermenge die tatsächliche Parametermenge nur unzureichend ausschöpft, da für viele Parameter die gelieferte untere Schranke $\alpha_{\mathrm{LB}}$ einen negativen Wert annimmt und daher in einem imaginären Wert für $\beta_{\mathrm{LB}} = \sqrt{\alpha_{\mathrm{LB}}}$ resultiert.
+Dies verfälscht natürlich die Wahl der Parameter-Samples sowohl bei der \ac{scm} als auch bei der RB"=Methode.
+
+Auch die Offline-Phase der RB"=Methode benötigt mit $5\,\mathrm{h}~58\,\mathrm{min}$ deutlich länger.
+Weiter können wir hier nicht angeben, ab wie vielen Auswertungen diese Laufzeit amortisiert werden würde.
+Bei dieser relativ niedrigen Dimension der Truth-Diskretisierung benötigt diese gemittelt $0.0849\,\mathrm{s}$ für eine Lösung, während die RB-Methode $0.1311\,\mathrm{s}$ für die Lösung inklusive der Auswertung des a posteriori-Fehlerschätzers benötigt.
+Letzterer sorgt für den Großteil dieser Laufzeit und würde bei einer höheren Dimension der Truth-Diskretisierung vermutlich weit weniger ins Gewicht fallen.
+Dies kann hier aber nicht weiter untersucht werden, da dies natürlich eine weitere Steigerung der Laufzeiten für die Offline-Phasen bedeutet.
+
+\cref{figure:entwicklung_rbm_fehler} und \cref{table:entwicklung_rbm_2} zeigen die Entwicklung des a posteriori-Fehlerschätzers.
+Es fällt auf, das bei lediglich vier Parametern bereits eine deutlich höhere Anzahl an Samples benötigt wird um eine Fehlertoleranz von $10^{-6}$ zu unterschreiten, der maximale a posteriori-Fehlerschätzer aber weiterhin monoton fällt.
+
+\begin{figure}[tb!]
+    \centering
+    \includegraphics[width=1\textwidth]{figures/chapter5/ch5ex2_rbm_error.pdf}
+    \caption[Entwicklung des Maximums des a posteriori-Fehlerschätzers für steigendes $N$, zweites Beispiel.]{%
+        Entwicklung des Maximums des a posteriori-Fehlerschätzers für steigendes $N$ beim zweiten Beispiel.
+        Die geforderte Toleranz $10^{-6}$ wird beim $41.$ Iterationsschritt unterschritten.
+        Siehe auch \cref{table:entwicklung_rbm_2}.
+        }
+    \label{figure:entwicklung_rbm_fehler}
+\end{figure}
+
+\begin{SCtable}[][tb!]
+    \centering
+    \begin{tabular}{|c|c|}\hline
+      $N$ & $\Delta_{N}^{\mathrm{max}}$ \\ \hline
+      1 & $5.335096{\times}10^{-1}$ \\ %\hline
+      5 & $8.204675{\times}10^{-2}$ \\ %\hline
+     10 & $8.472017{\times}10^{-3}$ \\ %\hline
+     15 & $1.249758{\times}10^{-3}$ \\ %\hline
+     20 & $1.637375{\times}10^{-4}$ \\ %\hline
+     25 & $4.508788{\times}10^{-5}$ \\ %\hline
+     30 & $1.337444{\times}10^{-5}$ \\ %\hline
+     35 & $4.012193{\times}10^{-6}$ \\ %\hline
+     40 & $1.417054{\times}10^{-6}$ \\ %\hline
+     41 & $9.452339{\times}10^{-7}$ \\ \hline
+    \end{tabular}
+    \caption[Entwicklung des Maximums des a posteriori-Fehlerschätzers für einige $N$, zweites Beispiel.]{%
+        Entwicklung des Maximums des a posteriori-Fehlerschätzers für steigendes $N$ beim zweiten Beispiel.
+        Siehe auch \cref{figure:entwicklung_rbm_fehler}.
+    }
+    \label{table:entwicklung_rbm_2}
+\end{SCtable}
+
+\paragraph{}
+Die Ergebnisse beider Beispiele sind unbefriedigend, zeigen sie doch, dass die in der Theorie auf diese Problemstellung durchaus gut anwendbare Reduzierte"=Basis"=Methode in der Praxis mit übermäßig hohen Laufzeiten einhergeht.
+Diese können zu Teilen auf die nicht optimierte Implementierung zurückgeführt werden.
+Vergleicht man aber beispielsweise die Laufzeit der in \cref{chapter:einleitung} erwähnten Pseudospektralmethoden, welche bei ähnlichen Rahmenbedingungen im einstelligen Minutenbereich für das gesamte Iterationsverfahren liegt, so wird deutlich, dass eine direkte Anwendung der Reduzierte"=Basis"=Methode unter diesen Umständen nicht die sinnvollste Herangehensweise zu sein scheint.
+Weitere, über diese Arbeit hinausgehende, Untersuchungen sind von Nöten, um zu klären, ob der hier vorliegende Ansatz zu einem praktikablen Verfahren verarbeitet werden kann.
 
 \end{document}
