@@ -346,6 +346,14 @@ classdef SCM < handle
       %   exflag: exit flag of the greedy algorithm. can be used to determine
       %     why the algorithm stopped. @type integer
 
+      % default values
+      if nargin < 1
+        error('');
+      else
+        if ~exist('tol', 'var'),     tol     = 1e-2; end;
+        if ~exist('maxIter', 'var'), maxIter = 1e5; end;
+      end
+
       % logging
       obj.L.info('SCM', ...
         sprintf(' Continuation of offline stage with %d max iterations and tolerance %.2e (already %d cycles done)', ...
@@ -464,12 +472,16 @@ classdef SCM < handle
 
       % Now we can finally start the greedy loop
       while ~isDone
+        scmtic = tic;
         % now we compute the relative gaps of upper and lower bound for all the
         % parameters given in the training set to find the best choice for the
         % next loop cycle
         reLBStability  = zeros(obj.nMuTrain, 1);
         reLBPositivity = zeros(obj.nMuTrain, 1);
+
+        textprogressbar('checking parameters: ');
         for idx = 1:obj.nMuTrain
+          textprogressbar(idx * 100 / obj.nMuTrain);
           if ~obj.offMuChosen(idx)
             param = obj.offMuTrain(:, idx);
 
@@ -500,6 +512,7 @@ classdef SCM < handle
             end
           end
         end
+        textprogressbar(' done!');
 
         % save the newly calculated lower bounds for online use
         obj.offMuLB = obj.muTrainLB;
@@ -581,6 +594,7 @@ classdef SCM < handle
           obj.L.info('SCM', ' stopped greedy loop, training set is already empty!');
           break;
         end
+        toc(scmtic)
       end
     end
 

@@ -16,17 +16,18 @@ ptrain = linspace(pspan(1), pspan(2), paramNum);
 % ptrain = rand(1, paramNum) * (pspan(2) - pspan(1)) - (pspan(2) - pspan(1)) / 2;
 
 %% and now the real stuff: first let's execute the scm offline part
-tic;
+t = tic;
 scm = SCM(solver, ptrain);
-scm.save_scm_bounds = true;
+scm.save_scm_bounds = false;
 scm.startOfflineStage();
-runTimes.scm = toc;
+runTimes.scm = toc(t);
 
 %% and now the reduced basis offline part
-tic;
+t = tic;
 rbm = RBM(pd, solver, scm);
+rbm.rbm_save_error_bounds = false;
 rbm.resetTraining;
-rbm.offlineStage(ptrain);
-runTimes.rbm = toc;
+rbm.offlineStage(ptrain, 1e-6);
+runTimes.rbm = toc(t);
 
 % now we are ready to use the rbm solver in the online stage!

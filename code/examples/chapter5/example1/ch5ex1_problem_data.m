@@ -1,20 +1,21 @@
 % Chapter 5 - First example.
 %
-% This example corresponds to the first example given in chapter 4. We use
-% homogeneous boundary conditions in space and the remaining model data is given
-% by:
+% This example has some analogies to the first example given in chapter 4. We
+% use homogeneous boundary conditions in space and the remaining model data is
+% given by:
 %   * `\Omega = [0, 1]`, `I = [0, 1]`,
-%   * the parametrich differential operator `A(\sigma)` is given by
-%       `A \eta = - \frac{1}{10} \Delta \eta + \eta + \frac{1}{2} \sigma \sin(\pi \blank) \eta.`,
+%   * the parametrical differential operator `A(\sigma)` is given by
+%       `A \eta = - \frac{1}{10} \Delta \eta + \eta
+%        + \sigma \sin(\pi \blank) \eta.`,
 %   * where the parameter domain is given by `\mathcal P = [-1, 1]`,
 %   * the source term is `g = 0` and the initial conditions are given by
-%       `u_0 = sin(\pi \blank)`.
+%       `u_0 = 0.5 sin(\pi \blank)`.
 
 % dimensions of the discrete subspaces
-temporalDim = 50;
-spatialDim  = 10;
+temporalDim = 250;
+spatialDim  = 20;
 % number of training parameters to use
-paramNum    = 100;
+paramNum    = 1000;
 % parameter domain span
 pspan = [-1, 1];
 

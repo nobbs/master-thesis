@@ -47,6 +47,12 @@ classdef RBM < handle
     nQr;
   end
 
+  properties % debugging and analysis
+    rbm_save_error_bounds = false;
+    rbm_exact_error       = {};
+    rbm_error_bounds      = {};
+  end
+
   methods
     function val = get.nQf(~)
       val = 1;
@@ -104,7 +110,7 @@ classdef RBM < handle
       errest = obj.estimateError(param, rbsolvec);
     end
 
-    function offlineStage(obj, paramTrain)
+    function offlineStage(obj, paramTrain, tol)
       % Offline stage of the reduced basis method.
       %
       % This performs a greedy style algorithm to "train" the reduced basis
@@ -120,12 +126,21 @@ classdef RBM < handle
       % Parameters:
       %   paramTrain: parameter training set. @type matrix
 
+      % default values
+      if nargin < 2
+        error('');
+      else
+        if ~exist('tol', 'var'), tol = 1e-6; end;
+      end
+
       obj.L.info('RBM', ' starting offline stage.');
+
+      % copy the parameter trainig set because we will edit it
+      paramTrainFull = paramTrain;
 
       % we are ready to start the greedy loop! first some more preparation
       isDone = false;
       exflag = 0;
-      tol = 1e-6;
       curLoopCtr = 1;
 
       maxerr = 0;
@@ -133,8 +148,8 @@ classdef RBM < handle
       obj.L.info('RBM', ' starting greedy loop.');
 
       % select the first parameter by random
-      % curIdx = randi(size(paramTrain, 2), 1, 1);
-      curIdx = 1;
+      curIdx = randi(size(paramTrain, 2), 1, 1);
+      % curIdx = 1;
       curTrain = paramTrain(:, curIdx);
       paramTrain(:, curIdx) = [];
       obj.params(:, 1) = curTrain;
@@ -181,9 +196,31 @@ classdef RBM < handle
         obj.residuals = [];
         % and now lets iterate
         errests = zeros(size(paramTrain, 2), 1);
+
+        textprogressbar('checking parameters: ');
         for idx = 1:size(paramTrain, 2)
+          textprogressbar(idx * 100 / size(paramTrain, 2));
           [rbsolvec, errest] = obj.onlineQuery(paramTrain(:, idx));
           errests(idx) = errest;
+        end
+        textprogressbar(' done!');
+
+        if obj.rbm_save_error_bounds
+          textprogressbar('computing truth solutions: ');
+          esterr = zeros(size(paramTrainFull, 2), 1);
+          realerr = zeros(size(paramTrainFull, 2), 1);
+          % calculate real error
+          for pdx = 1:size(paramTrainFull, 2)
+            textprogressbar(pdx / size(paramTrainFull, 2) * 100);
+            [rbsolvec, rberrest] = obj.onlineQuery(paramTrainFull(:, pdx));
+            errest(pdx)          = rberrest;
+            truthsolvec          = obj.solver.solve(paramTrainFull(:, pdx));
+            errvec               = (obj.trialSnapshots * rbsolvec - truthsolvec);
+            realerr(pdx)         = sqrt(errvec .' * obj.solver.TrNorm * errvec);
+          end
+          obj.rbm_exact_error{curLoopCtr} = realerr;
+          obj.rbm_error_bounds{curLoopCtr} = errest;
+          textprogressbar(' done!');
         end
 
         % get the parameter with the largest error estimate
