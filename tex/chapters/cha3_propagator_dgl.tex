@@ -154,7 +154,7 @@ Wir weisen nun zwei Eigenschaften für diesen Operator beziehungsweise die zugeh
             \label{eq:bilinearform_messbar_stetig_garding:stetig}
             \abs{a(\eta, \zeta; t)} \leq \gamma_{a} \norm{\eta}_{V} \norm{\zeta}_{V} \quad \fa \eta, \zeta \in V \text{ und fast alle } t \in I
         \end{equation}
-        mit Stetigkeitskonstante $\gamma_{a} = 2\max\Set{c, \norm{\omega}_{L_{\infty}(I; L_{\infty}(\Omega))} + \abs{\mu}} < \infty$.
+        mit Stetigkeitskonstante $\gamma_{a} = \max\Set{c, \norm{\omega}_{L_{\infty}(I; L_{\infty}(\Omega))} + \abs{\mu}} < \infty$.
         \item\label{satz:bilinearform_messbar_stetig_garding:garding}
         \emph{G\aa{}rding"=Ungleichung:} Es gilt
         \begin{equation}
@@ -180,7 +180,7 @@ Wir weisen nun zwei Eigenschaften für diesen Operator beziehungsweise die zugeh
             &= \abs{c \skp{\grad \eta}{\grad \zeta}{H} + \skp{\omega(t, \blank) \eta}{\zeta}{H} + \mu \skp{\eta}{\zeta}{H} }
             \\&\leq c \abs{\skp{\grad \eta}{\grad \zeta}{H}} + \abs{\skp{\omega(t, \blank) \eta}{\zeta}{H}} + \abs{\mu} \abs{\skp{\eta}{\zeta}{H}}
             \\&\leq c \norm{\grad \eta}_{H} \norm{\grad \zeta}_{H} + \left( \norm{\omega}_{L_{\infty}(I; L_{\infty}(\Omega))} + \abs{\mu} \right) \norm{\eta}_{H} \norm{\zeta}_{H}
-            \\&\leq 2\max \Set{ c, \norm{\omega}_{L_{\infty}(I; L_{\infty}(\Omega))} + \abs{\mu}} \norm{\eta}_{V} \norm{\zeta}_{V}.
+            \\&\leq \max \Set{ c, \norm{\omega}_{L_{\infty}(I; L_{\infty}(\Omega))} + \abs{\mu}} \norm{\eta}_{V} \norm{\zeta}_{V}.
         \end{align}
 
         Für die G\aa{}rding"=Ungleichung seien nun $\eta \in V$ und $\lambda \in \mathbb{R}$.
@@ -314,8 +314,8 @@ Weiter erhalten wir als Nebenprodukt aus \cref{korrolar:ss09:theorem51_abschaetz
     \end{thmenumerate}
     Erfüllt die Bilinearform $a(\blank, \blank; t)$ die G\aa{}rding"=Ungleichung \cref{eq:bilinearform_messbar_stetig_garding:garding} mit $\lambda = 0$ für fast alle $t \in I$, dann gilt
     \begin{align}
-        \gamma_{b}  &\leq \sqrt{2 \max\Set{ 1, 2c, 2(\norm{\omega}_{L_{\infty}(I; L_{\infty}(\Omega))} + \abs{\mu}) }^{2} + \gamma_{e}^{2} }, \\
-        \beta &\geq \frac{\gamma_{\Omega}^{2} \min\Set{c, \tfrac{1}{4}c^{-1}, \tfrac{1}{4} c(\norm{\omega}_{L_{\infty}(I; L_{\infty}(\Omega))} + \abs{\mu})^{-2}}}{\sqrt{2 \max\Set{c^{-2}\gamma_{\Omega}^{-4}, 1} + \gamma_{e}^{2}}}.
+        \gamma_{b}  &\leq \sqrt{2 \max\Set{ 1, c, (\norm{\omega}_{L_{\infty}(I; L_{\infty}(\Omega))} + \abs{\mu}) }^{2} + \gamma_{e}^{2} }, \\
+        \beta &\geq \frac{\gamma_{\Omega}^{2} \min\Set{c, c^{-1}, c(\norm{\omega}_{L_{\infty}(I; L_{\infty}(\Omega))} + \abs{\mu})^{-2}}}{\sqrt{2 \max\Set{c^{-2}\gamma_{\Omega}^{-4}, 1} + \gamma_{e}^{2}}}.
     \end{align}
     Ist dagegen $\lambda > 0$, dann erhalten wir stattdessen die erweiterten Abschätzungen
     \begin{align}
