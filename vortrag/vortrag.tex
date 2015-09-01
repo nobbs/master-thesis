@@ -1,0 +1,154 @@
+\documentclass[10pt]{beamer}
+
+% Verwende etex als zugrundeliegende Implementierung (-> mehr Speicher für Tex!)
+\usepackage{etex}
+% Encoding
+\usepackage[utf8]{inputenc}
+
+%%% Schriften, Lokalisierung und Typographie
+
+% T1 Schriftsystem verwenden
+\usepackage[T1]{fontenc}
+% LModern als Standard-Schrift
+\usepackage{lmodern}
+% Typographische Kleinigkeiten
+\usepackage[final]{microtype}
+% Fette Griechische
+\usepackage{bm}
+
+%% Lokalisierung
+
+% Deutsche Silbentrennung
+\usepackage[english]{babel}
+% Deutsche Anführungszeichen
+\usepackage[babel,german=quotes]{csquotes}
+
+% Graphiken und Farben
+\usepackage{xcolor}
+\usepackage{graphicx}
+
+% Vordefinierte Farben laden
+\input{../tex/misc/colors}
+
+% Tikz ist kein Zeichenprogramm!
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.12}
+\usetikzlibrary{patterns}
+
+% Standalone-Paket, damit die Tikz Bilder extern auch funktionieren
+% \usepackage{standalone}
+
+%%% Bibliographie
+
+\usepackage[%
+    backend=biber,
+    style=alphabetic,
+    firstinits=true
+]{biblatex}
+
+
+% Fix für doi2bib generierte Bibliography-Einträge
+\newcommand\mathplus{+}
+
+% et al statt u.a.
+\DefineBibliographyStrings{ngerman}{
+   andothers = {{et~al\adddot}},
+}
+
+% kein In bei article
+\renewbibmacro{in:}{%
+  \ifentrytype{article}{}{\printtext{\bibstring{in}\intitlepunct}}}
+
+% Volume und Issue no. angeben
+\DeclareFieldFormat[article]{volume}{\bibstring{volume}\addnbspace #1}
+\DeclareFieldFormat[article]{number}{\bibstring{number}\addnbspace #1}
+\renewbibmacro*{volume+number+eid}{%
+\printfield{volume}%
+\setunit{\addcomma\space}%<---- was \setunit*{\adddot}%
+\printfield{number}%
+\setunit{\addcomma\space}%
+\printfield{eid}}
+
+
+%%% Grundlegende Mathematik-Pakete
+
+% Standardpackages
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{stmaryrd}
+\usepackage{mathtools}
+
+% Bessere Ausrichtung von : vor =
+\mathtoolsset{centercolon}
+
+
+%%% Hyperref
+
+\usepackage[
+colorlinks=true,
+hypertexnames=false,
+]{hyperref}
+
+
+%%% Clevere Referenzen
+
+\usepackage[german,noabbrev,nameinlink,capitalise]{cleveref}
+\crefname{equation}{}{}
+
+% Nummern nur für referenzierte Gleichungen
+\usepackage{autonum}
+
+% Enumerates anpassen
+\usepackage{enumitem}
+% Numerierte Umgebung für Theoreme definieren
+\newlist{thmenumerate}{enumerate}{1}
+\setlist[thmenumerate]{label={\upshape(\roman*)}, align=left, widest=iii, leftmargin=*}
+\crefname{thmenumeratei}{}{}
+
+
+%% Beamer Template
+\usetheme{Luebeck}
+
+%% Navigationssymbole ausblenden
+\setbeamertemplate{navigation symbols}{}
+
+%% Seitenzahl und Gesamtanzahl in Fußleiste
+\setbeamertemplate{footline}[frame number]
+
+%% Metadaten des Dokuments
+\title{First Steps towards a Reduced Basis Method for Self-Consistent Field Theory Models}
+% \subtitle{Modellierungspraktikum}
+% \subtitle{}
+\author{Alexej Disterhoft}
+\institute[Johannes Gutenberg Universität] % (optional)
+{
+  Institut für Mathematik\\
+  Johannes Gutenberg Universität Mainz
+}
+\date{SoSe 2015}
+
+%% Einzug nach Absatz und Zwischenraum
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{8pt}
+
+%%% Eigene Packages
+%% Algorithm-Packages für Pseudocode
+%% siehe ftp://ftp.fu-berlin.de/tex/CTAN/macros/latex/contrib/algorithms/algorithms.pdf
+\usepackage{algorithm2e}
+%\usepackage[noend]{algpseudocode}
+
+%% Mathtools
+\usepackage{mathtools}
+\DeclarePairedDelimiter\abs{\lvert}{\rvert}%
+\DeclareMathOperator\val{w}
+%% NatBib / BibTex
+% \usepackage{natbib}
+% \renewcommand*{\newblock}{}
+%% Formelsatz in Serifen-Schrift
+\usefonttheme[onlymath]{serif}
+\usepackage[font={footnotesize,it}]{caption}
+
+\begin{document}
+\input{content.tex}
+\end{document}
