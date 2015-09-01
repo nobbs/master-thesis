@@ -267,20 +267,18 @@ zu verwenden.
 \begin{Bemerkung}
 \label{bemerkung:raum_zeit_variationsformulierung_rhs_stetig}
     Die Linearität von $f$ ist direkt ersichtlich; die Stetigkeit aber wollen wir an dieser Stelle nachweisen.
-    Durch Anwendung der Cauchy"=Schwarz- und der Hölder"=Ungleichung erhalten wir
+    Durch mehrfache Anwendung der Cauchy"=Schwarz"=Ungleichung erhalten wir
     \begin{equation}
         \begin{aligned}
             f(v)
-            % &= \int_{I} \skprod{g(t)}{v_{1}(t)}_{V' \times V} \diff t + \skprod{u_{0}}{v_{2}}_{H}
             &\leq \int_{I} \norm{g(t)}_{V'} \norm{v_{1}(t)}_{V} \diff t + \norm{u_{0}}_{H} \norm{v_{2}}_{H}
             \\&\leq \left( \int_{I} \norm{g(t)}^{2}_{V'} \diff t \right)^{1/2} \left( \int_{I} \norm{v_{1}(t)}^{2}_{V} \diff t \right)^{1/2} + \norm{u_{0}}_{H} \norm{v_{2}}_{H}
             \\&= \norm{g}_{L_{2}(I; V')} \norm{v_{1}}_{L_{2}(I; V)} + \norm{u_{0}}_{H} \norm{v_{2}}_{H}
             \\&\leq \max\Set*{\norm{g}_{L_{2}(I; V')}, \norm{u_{0}}_{H}} \left( \norm{v_{1}}_{L_{2}(I; V)} + \norm{v_{2}}_{H} \right)
-            % \\&\leq \sqrt{2} \max\Set*{\norm{g}_{L_{2}(I; V')}, \norm{u_{0}}_{H}} \left( \norm{v_{1}}_{L_{2}(I; V)}^{2} + \norm{v_{2}}_{H}^{2} \right)^{1/2}
-            \\&\leq \sqrt{2} \max\Set*{\norm{g}_{L_{2}(I; V')}, \norm{u_{0}}_{H}} \norm{v}_{\mathcal Y}
+            \\&\leq \max\Set*{\norm{g}_{L_{2}(I; V')}, \norm{u_{0}}_{H}} \norm{v}_{\mathcal Y}
         \end{aligned}
     \end{equation}
-    und damit die Stetigkeit, wobei die Ungleichung $x + y \leq \sqrt{2} \sqrt{x^2 + y^2}$, welche für alle $x, y \in \mathbb{R}$ gilt, für die letzte Abschätzung verwendet wurde.
+    und damit die Stetigkeit.
 \end{Bemerkung}
 
 Der nächste Schritt ist nun, nachzuweisen, dass obige Raum"=Zeit"=Variationsformulierung im Sinne von \cref{definition:sachgemaess_gestellt_nach_hadamard} korrekt gestellt ist, also eine eindeutige Lösung besitzt, welche stetig von dem Funktional $f \in \mathcal Y'$ abhängt.
