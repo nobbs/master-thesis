@@ -21,7 +21,7 @@
 % Deutsche Silbentrennung
 \usepackage[english]{babel}
 % Deutsche Anführungszeichen
-\usepackage[babel,german=quotes]{csquotes}
+\usepackage[babel]{csquotes}
 
 % Graphiken und Farben
 \usepackage{xcolor}
@@ -51,11 +51,6 @@
 % Fix für doi2bib generierte Bibliography-Einträge
 \newcommand\mathplus{+}
 
-% et al statt u.a.
-\DefineBibliographyStrings{ngerman}{
-   andothers = {{et~al\adddot}},
-}
-
 % kein In bei article
 \renewbibmacro{in:}{%
   \ifentrytype{article}{}{\printtext{\bibstring{in}\intitlepunct}}}
@@ -83,32 +78,25 @@
 \mathtoolsset{centercolon}
 
 
-%%% Hyperref
-
-\usepackage[
-colorlinks=true,
-hypertexnames=false,
-]{hyperref}
-
-
 %%% Clevere Referenzen
 
-\usepackage[german,noabbrev,nameinlink,capitalise]{cleveref}
+\usepackage[english,noabbrev,nameinlink,capitalise]{cleveref}
 \crefname{equation}{}{}
 
 % Nummern nur für referenzierte Gleichungen
 \usepackage{autonum}
 
 % Enumerates anpassen
-\usepackage{enumitem}
+% \usepackage{enumitem}
 % Numerierte Umgebung für Theoreme definieren
-\newlist{thmenumerate}{enumerate}{1}
-\setlist[thmenumerate]{label={\upshape(\roman*)}, align=left, widest=iii, leftmargin=*}
-\crefname{thmenumeratei}{}{}
-
+% \newlist{thmenumerate}{enumerate}{1}
+% \setlist[thmenumerate]{label={\upshape(\roman*)}, align=left, widest=iii, leftmargin=*}
+% \crefname{thmenumeratei}{}{}
 
 %% Beamer Template
 \usetheme{Luebeck}
+\usecolortheme{beaver}
+
 
 %% Navigationssymbole ausblenden
 \setbeamertemplate{navigation symbols}{}
@@ -118,8 +106,6 @@ hypertexnames=false,
 
 %% Metadaten des Dokuments
 \title{First Steps towards a Reduced Basis Method for Self-Consistent Field Theory Models}
-% \subtitle{Modellierungspraktikum}
-% \subtitle{}
 \author{Alexej Disterhoft}
 \institute[Johannes Gutenberg Universität] % (optional)
 {
@@ -132,25 +118,13 @@ hypertexnames=false,
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{8pt}
 
-%%% Eigene Packages
-%% Algorithm-Packages für Pseudocode
-%% siehe ftp://ftp.fu-berlin.de/tex/CTAN/macros/latex/contrib/algorithms/algorithms.pdf
-\usepackage{algorithm2e}
-%\usepackage[noend]{algpseudocode}
-
 %% Mathtools
-\usepackage{mathtools}
-\DeclarePairedDelimiter\abs{\lvert}{\rvert}%
-\DeclareMathOperator\val{w}
-%% NatBib / BibTex
-% \usepackage{natbib}
-% \renewcommand*{\newblock}{}
-%% Formelsatz in Serifen-Schrift
 \usefonttheme[onlymath]{serif}
-\usepackage[font={footnotesize,it}]{caption}
 
 % restlicher Mathe-Kram
-\input{../tex/commands.tex}
+\input{commands.tex}
+
+\addbibresource{literature.bib}
 
 \begin{document}
 \input{content.tex}
