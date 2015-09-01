@@ -223,22 +223,35 @@ So wird in \cite{Drolet:1999bs} ein Crank-Nicolson-Verfahren eingesetzt, wobei h
 
 \begin{figure}[tb]
     \centering
-    \begin{subfigure}[b]{0.495\textwidth}
+    \begin{subfigure}[b]{0.485\textwidth}
         \centering
         \includegraphics[width=1\textwidth]{figures/einleitung/scft1.pdf}
         \caption{Felder}
     \end{subfigure}
     % ~
-    \begin{subfigure}[b]{0.495\textwidth}
+    \begin{subfigure}[b]{0.485\textwidth}
         \centering
         \includegraphics[width=1\textwidth]{figures/einleitung/scft2.pdf}
         \caption{Fourier-Koeffizienten}
     \end{subfigure}
+    \\
+    \begin{subfigure}[b]{0.485\textwidth}
+        \centering
+        \includegraphics[width=1\textwidth]{figures/einleitung/scft_example2_fields.pdf}
+        \caption{Felder}
+    \end{subfigure}
+    % ~
+    \begin{subfigure}[b]{0.485\textwidth}
+        \centering
+        \includegraphics[width=1\textwidth]{figures/einleitung/scft_example2_fourier_coeffs.pdf}
+        \caption{Fourier-Koeffizienten}
+    \end{subfigure}
     \caption[%
-    Eindimensionales Beispiel einer stabilen Anordnung eines Diblockcopolymers.
+    Eindimensionale Beispiele einer stabilen Anordnung eines Diblockcopolymers.
     ]{%
-        Eindimensionales Beispiel einer stabilen Anordnung eines Diblockcopolymers, welche mittels \ac{scft} und Pseudospektralverfahren bestimmt wurde.
-        Simuliert wurde auf einem Intervall der Länge $L = 10$ mit den relevanten Größen $f = 1/2$, $\chi N = 25$ und $a^{2} N / 6 = 10 / 3$.
+        Eindimensionale Beispiele einer stabilen Anordnung eines Diblockcopolymers, welche mittels \ac{scft} und Pseudospektralverfahren bestimmt wurden.
+        Das obere Beispiel wurde auf einem Intervall der Länge $L = 10$ mit den relevanten Größen $f = 1/2$, $\chi N = 25$ und $a^{2} N / 6 = 10 / 3$ simuliert.
+        Für das untere Beispiel wurde lediglich $f$ auf den Wert $1/3$ geändert.
         Monomer-Typ A entspricht den blauen und B dementsprechend den orangen Graphen.
         Die Fourier-Koeffizienten haben die Reihenfolge $\cos(2 \pi x), \sin(2 \pi x), \cos(4 \pi x), \dots$ und der konstante Anteil wurde vernachlässigt.
     }
@@ -259,7 +272,6 @@ Die Grundidee ist die Verwendung eines Galerkin-Verfahrens für die Differential
 Für diesen ist es notwendig, die Differentialgleichung zu parametrisieren, indem die in der Differentialgleichung auftretenden Felder in einem geeigneten Funktionensystem entwickelt werden.
 Dieses sollte so gewählt werden, dass die Entwicklungskoeffizienten möglichst schnell abfallen.
 Hierzu sei auf \cref{figure:felder_nach_iterationsverfahren} verwiesen, welche ein Felder-Paar von einem Iterationsdurchlauf und dessen Fourier-Koeffizienten zeigt.
-
 
 \paragraph{Inhaltlicher Aufbau.}
 
