@@ -3,39 +3,59 @@
 \documentclass[../main.tex]{subfiles}
 \begin{document}
 
-\chapter{Inhalt der Begleit-DVD} % (fold)
+\chapter{Begleit-DVD} % (fold)
 \label{cha:inhalt_der_begleit_dvd}
 
-Dieser Arbeit liegt eine DVD bei, welche die Implementierungen der beschriebenen Verfahren sowie die in den \cref{sec:cha4_galerkin:beispiele,sec:cha5_rbm:beispiele} aufgeführten Beispiele enthält.
-Ferner findet sich der Inhalt der DVD auch als Git"=Repository unter \url{https://github.com/nobbs/thesis}.
+Dieser Arbeit liegt eine DVD bei, welche die Implementierungen der beschriebenen Verfahren sowie die in den Abschnitten \ref{sec:cha4_galerkin:beispiele} und \ref{sec:cha5_rbm:beispiele} aufgeführten Beispiele enthält.
+Ebenso findet sich der Inhalt der DVD auch als Git"=Repository unter \url{https://github.com/nobbs/master-thesis}.
 
-Die relevanten Implementierungen und Skripte sind vollständig in \textcite{Matlab} gehalten.
-Weiter sind diese bis mindestens Version 2013a abwärtskompatibel und plattformunabhängig ausführbar.
+Die Implementierungen und Skripte sind vollständig in \textcite{Matlab} gehalten, bis mindestens Version 2013a abwärtskompatibel und plattformunabhängig ausführbar.
 Neben dem eigentlichen MATLAB-Softwarepaket wird die \emph{Optimization Toolbox} für die linearen Programme der \acl{scm} benötigt.
 
-Als Hardware für die durchgeführten Simulationen diente vor allem ein MacBook Pro aus dem Jahre 2010 mit dem Betriebssystem Mac OS X 10.11 Beta.
-Die hier nennenswerte Hardware sind eine Intel Core 2 Duo CPU mit 2.4 GHz und 8 GB Arbeitsspeicher.
+Der Vollständigkeit halber sei hier auch die für die Simulationen verwendete und relevante Hardware genannt:
+zum Einsatz kam eine Intel Core 2 Duo CPU mit 3.0\,GHz und 4\,GB Arbeitsspeicher.
+Als Betriebssystem diente ferner SUSE Linux, Kernel 2.6.34.
 
-Bevor der Inhalt der DVD genauer beleuchtet wird, soll ein Überblick über die wichtigsten Verzeichnisse geboten werden.
+Bevor der Aufbau der Implementierung genauer beleuchtet wird, soll ein kurzer Überblick über die wichtigsten Verzeichnisse geboten werden.
 
 \bigbreak
 \dirtree{%
 .1 /.
-.2 code.
-.3 examples.
-.4 chapter4\DTcomment{Beispiele aus \cref{sec:cha4_galerkin:beispiele}}.
-.4 chapter5\DTcomment{Beispiele aus \cref{sec:cha5_rbm:beispiele}}.
+.2 README.md.
+.2 code\DTcomment{Enthält jeglichen Quellcode}.
+.3 examples\DTcomment{Beispiele der einzelnen Kapitel}.
+.4 chapter1.
+.4 chapter4.
+.4 chapter5.
 .3 lib\DTcomment{Externe MatLab-Skripte und Libraries}.
 .3 src\DTcomment{Hauptteil der Implementierung}.
-.3 test.
+.4 galerkin.
+.4 rbm.
+.3 test\DTcomment{Einige UnitTests für das Galerkin-Verfahren}.
 .2 doc\DTcomment{Automatisch generierte Dokumentation der Implementierung}.
 .3 index.html.
 .2 tex\DTcomment{\LaTeX-Dateien dieser Thesis}.
-.2 README.md.
 }
 \bigbreak
 
-\blindtext
+Die automatisch generierte Dokumentation im Verzeichnis \verb!/doc! ist gut geeignet, um einen schnellen Überblick über die Implementierung zu bekommen, erspart den Blick in den Quellcode im Allgemeinen aber nicht.
+Um einen Einblick zu bekommen, wie die vorliegende Implementierung ausgeführt werden kann, empfiehlt sich ein Blick in die Beispiele in den Verzeichnissen \verb!/code/examples/chapter{4,5}!.
+In diesen findet sich jeweils eine \verb!README.md!, die diese Beispiele erklärt.
 
+An dieser Stelle wollen wir in aller Kürze die wichtigen Dateien der Implementierung erwähnen.
+\begin{itemize}[leftmargin=1.5em]
+    \item \verb!/code/src/ProblemData.m! enthält eine Klasse, deren einziger Zweck ist, eine übersichtliche Definition der Modelldaten zu ermöglichen.
+    \item \verb!/code/src/rbm! enthält die beiden Dateien \verb!RBM.m! und \verb!SCM.m!, welche die Implementierung der Reduzierte"=Basis"=Methode beziehungsweise der \acl{scm} enthalten.
+    Beide sind als Klassen implementiert und zu großen Teilen unabhängig von der zugrundeliegenden Petrov"=Galerkin"=Implementierung.
+    \item \verb!/code/src/galerkin! enthält die Bausteine des verwendeten Petrov"=Galerkin"=Verfahrens, die in folgende die Verzeichnisse aufgeteilt sind:
+    \begin{itemize}[leftmargin=1.5em]
+        \item \verb!./spatial! enthält die abstrakte Klasse \verb!SpatialAssemblyAbstract.m! sowie die beiden abgeleiteten Implementierungen \verb!SpatialAssemblyFourier.m! und \verb!SpatialAssemblySine.m!.
+        Letztere unterscheiden sich theoretisch zwar nur in der Wahl der Basisfunktionen, da die benötigten Gramschen Matrizen aber nicht durch numerische Quadratur sondern anhand äquivalenter Ausdrücke ausgewertet werden, ergeben sich größere Unterschiede im Quellcode.
+        \item \verb!./temporal! umfasst die abstrakte Klasse \verb!TemporalAssemblyAbstract.m! und die Implementierung \verb!TemporalAssemblyNodal.m! sowie ferner eine weitere Implementierung \verb!TemporalAssemblyLegendre.m!, welche ein Überbleibsel aus den Anfängen dieser Arbeit ist.
+        Da letztere Legendre"=Polynome für die zeitliche Diskretisierung verwendet und dementsprechend den zeitlichen Wechsel der Felder nur schlecht abbildet, wurde stattdessen zu dem aus \cref{chapter:galerkin} bekannten Finite-Elemente-Ansatz in \verb!TemporalAssemblyNodal.m! gewechselt.
+        \item \verb!./solver! beinhaltet die abstrakte Klasse \verb!SolverAbstract.m! und deren einzige Implementierung \verb!SolverNodal.m!, welche die Klassen aus \verb!./spatial! und \verb!./temporal! zu dem Petrov"=Galerkin"=Verfahren kombiniert.
+    \end{itemize}
+    \item \verb!/code/test! enthält schließlich einige UnitTests zur Kontrolle der Diskretisierungen in \verb!../src/galerkin/spatial! und \verb!../src/galerkin/temporal!, da diese wie bereits erwähnt, nicht mittels numerischer Quadratur umgesetzt wurden.
+\end{itemize}
 
 \end{document}
