@@ -5,8 +5,9 @@
   % draft,
   % final,
   a4paper,
-  BCOR=1cm,
+  % BCOR=1cm,
   twoside,
+  headinclude=true,
   % twoside=semi,
   % oneside,
   toc=bibliography,
@@ -16,6 +17,9 @@
   cleardoublepage=empty,
   pagesize=auto,
 ]{scrbook}
+
+% Satzspiegel anpassen (Fußbereich etwas verkleinern...)
+\areaset[1cm]{\textwidth}{1.2\textheight}
 
 \input{packages}
 \input{commands}
@@ -28,7 +32,7 @@
 % \addbibresource{literature_old.bib}
 
 % Zeige overfull boxes in nicht-Draft Mode
-% \overfullrule=1mm
+\overfullrule=1mm
 
 \begin{document}
     %%% Frontmatter-Teil

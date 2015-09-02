@@ -3,7 +3,7 @@
 \documentclass[../main.tex]{subfiles}
 \begin{document}
 
-\chapter{Reduzierte-Basis-Methode} % (fold)
+\chapter{Reduzierte"=Basis"=Methode} % (fold)
 \label{chapter:rbm}
 
 Aufbauend auf dem Petrov"=Galerkin"=Verfahren des vorherigen Kapitels führen wir nun die Reduzierte"=Basis"=Methode (kurz RB"=Methode) ein.
@@ -53,7 +53,7 @@ Dies ist die Grundidee der RB"=Methoden, die in \cref{figure:rbm_loesungsmenge} 
     \centering
     \includegraphics[width=0.5\textwidth]{figures/rb.pdf}
     \caption[%
-    Skizze zur Motivation der Reduzierte-Basis-Methode.
+    Skizze zur Motivation der Reduzierte"=Basis"=Methode.
     ]{
         Skizze der Funktionsweise der Reduzierte"=Basis"=Methode im Falle eines eindimensionalen Parameters $\sigma$.
         Die Reduzierte"=Basis"=Lösung $u_{N}(\sigma)$ ergibt sich als Linearkombinationen der Truth"=Lösungen $u_{\mathcal N}(\sigma_{i})$ für gewisse $\sigma_{i} \in \mathcal P$.
@@ -63,23 +63,23 @@ Dies ist die Grundidee der RB"=Methoden, die in \cref{figure:rbm_loesungsmenge} 
 
 Die Konstruktion des niedrigdimensionalen Ansatzraumes $\mathcal X_{N}$ erfolgt unter dem Aspekt, den durch das zweite Galerkin"=Verfahren zusätzlich eingeführten Fehler für alle Parameter des Parameterraums $\mathcal P$ zu minimieren, was in einem hohen Rechenaufwand resultiert.
 Dies motiviert die bei RB"=Methoden übliche Zerlegung in zwei Stufen.
-Die erste Stufe, die sogenannte \emph{Offline-Phase}, dient dazu, den Ansatzraum $\mathcal X_{N}$ unter dem genannten Gesichtspunkt zu konstruieren und muss nur einmal ausgeführt werden.
-In der zweiten Stufe, der \emph{Online-Phase}, kann dieses niedrigdimensionale System verwendet werden, um Lösungen für gegebene Parameter auszuwerten und eine garantierte Fehlerschranke zu berechnen.
-Da im Allgemeinen $N \ll \mathcal N$ gilt, wird hierbei als weiteres Ziel die Unabhängigkeit der Berechnungen in der Online-Phase von der Dimension $\mathcal N$ verfolgt.
+Die erste Stufe, die sogenannte \emph{Offline"=Phase}, dient dazu, den Ansatzraum $\mathcal X_{N}$ unter dem genannten Gesichtspunkt zu konstruieren und muss nur einmal ausgeführt werden.
+In der zweiten Stufe, der \emph{Online"=Phase}, kann dieses niedrigdimensionale System verwendet werden, um Lösungen für gegebene Parameter auszuwerten und eine garantierte Fehlerschranke zu berechnen.
+Da im Allgemeinen $N \ll \mathcal N$ gilt, wird hierbei als weiteres Ziel die Unabhängigkeit der Berechnungen in der Online"=Phase von der Dimension $\mathcal N$ verfolgt.
 
-Weiter führt diese Zerlegung zu einem wichtigen Kriterium für beziehungsweise gegen die Anwendung der RB"=Methode, da der benötigte Aufwand für die Offline-Phase meist erst ab einer hohen Anzahl an zu bestimmenden Lösungen in der Online-Phase amortisiert wird.
+Weiter führt diese Zerlegung zu einem wichtigen Kriterium für beziehungsweise gegen die Anwendung der RB"=Methode, da der benötigte Aufwand für die Offline"=Phase meist erst ab einer hohen Anzahl an zu bestimmenden Lösungen in der Online"=Phase amortisiert wird.
 
 Wir widmen uns nun den formalen Grundlagen der RB"=Methode und beginnen mit einer grundlegenden Definition.
 
 \begin{Definition}
 \label{definition:rb_variationsproblem}
-    Es seien $N \in \mathbb{N}$ und $\mathcal S_{N} := \Set{ \bm \sigma_{n} \given n = 1, \dots, N } \subset \mathcal P$ die sogenannte \emph{Sample-Menge}.
-    Wir bezeichnen die Truth-Lösungen $u_{\mathcal N}(\bm \sigma_{n})$ als \emph{Snapshots} und definieren den \emph{Reduzierte"=Basis"=Ansatzraum} $\mathcal X_{N}$ als
+    Es seien $N \in \mathbb{N}$ und $\mathcal S_{N} := \Set{ \bm \sigma_{n} \given n = 1, \dots, N } \subset \mathcal P$ die sogenannte \emph{Sample"=Menge}.
+    Wir bezeichnen die Truth"=Lösungen $u_{\mathcal N}(\bm \sigma_{n})$ als \emph{Snapshots} und definieren den \emph{Reduzierte"=Basis"=Ansatzraum} $\mathcal X_{N}$ als
     \begin{equation}\label{eq:def_rb_ansatzraum}
         \mathcal X_{N} := \spn \Set{ u_{\mathcal N}(\bm \sigma_{n}) \given n = 1, \dots, N} = \spn \Set{ \xi_{n} \given n = 1, \dots, N},
     \end{equation}
     wobei $\Xi_{N} := \Set{ \xi_{n} \given n = 1, \dots, N}$ eine geeignete Orthonormalbasis ist.
-    Außerdem definieren wir einen $N$-dimensionalen \emph{Reduzierte"=Basis"=Testraum} $\mathcal Y_{N} \subset \mathcal Y_{\mathcal N}$.
+    Außerdem definieren wir einen $N$"=dimensionalen \emph{Reduzierte"=Basis"=Testraum} $\mathcal Y_{N} \subset \mathcal Y_{\mathcal N}$.
     Als \emph{Reduzierte"=Basis"=Variationsproblem} von \cref{eq:diskretes_abstraktes_parametrisches_vp} bezeichnen wir:
     \begin{equation}
     \label{eq:rb_abstraktes_parametriches_vp}
@@ -88,14 +88,14 @@ Wir widmen uns nun den formalen Grundlagen der RB"=Methode und beginnen mit eine
     Fernen nennen wir $u_{N}(\bm \sigma)$ \emph{Reduzierte"=Basis"=Lösung}.
 \end{Definition}
 
-RB-Ansatzräume der Art \cref{eq:def_rb_ansatzraum} werden in der Literatur zu RB-Methoden auch als \emph{Lagrangeräume} bezeichnet, um sie damit von komplexeren Räumen, wie beispielsweise \emph{Taylor-} und \emph{Hermiteräumen} abzugrenzen.
-Bei diesen werden neben den Truth-Lösungen auch deren partielle Ableitungen bezüglich der Parameter berücksichtigt.
+RB"=Ansatzräume der Art \cref{eq:def_rb_ansatzraum} werden in der Literatur zu RB"=Methoden auch als \emph{Lagrangeräume} bezeichnet, um sie damit von komplexeren Räumen, wie beispielsweise \emph{Taylor-} und \emph{Hermiteräumen} abzugrenzen.
+Bei diesen werden neben den Truth"=Lösungen auch deren partielle Ableitungen bezüglich der Parameter berücksichtigt.
 Eine Übersicht darüber findet sich in \cite[Chapter 3]{Patera:2007un}.
 
 Wie zuvor bei den Petrov"=Galerkin"=Verfahren muss auch bei \cref{eq:rb_abstraktes_parametriches_vp} sichergestellt werden, dass es sich dabei um ein korrekt gestelltes Problem handelt.
 Wir werden später sehen, dass diese Eigenschaft bei geschickter Wahl des Testraumes $\mathcal Y_{N}$ vom Truth"=Variationsproblem vererbt wird, und nehmen deswegen an dieser Stelle an, dass dies stets erfüllt ist.
 
-Da es sich bei der RB"=Diskretisierung ebenfalls um ein Galerkin"=Verfahren handelt, erhalten wir Analoga der Aussagen aus \cref{satz:galerkin_stabilitaet} sowie \cref{satz:lemma_von_cea}, welche hier nicht wiederholt werden, wobei die Truth-Räume $\mathcal X_{\mathcal N}$ und $\mathcal Y_{\mathcal N}$ die Rolle der Hilberträume $\mathcal X$ und $\mathcal Y$ einnehmen.
+Da es sich bei der RB"=Diskretisierung ebenfalls um ein Galerkin"=Verfahren handelt, erhalten wir Analoga der Aussagen aus \cref{satz:galerkin_stabilitaet} sowie \cref{satz:lemma_von_cea}, welche hier nicht wiederholt werden, wobei die Truth"=Räume $\mathcal X_{\mathcal N}$ und $\mathcal Y_{\mathcal N}$ die Rolle der Hilberträume $\mathcal X$ und $\mathcal Y$ einnehmen.
 
 Weiter soll an dieser Stelle angemerkt werden, warum wir eine Galerkin"=Diskretisierung \cref{eq:diskretes_abstraktes_parametrisches_vp} als Grundlage und nicht das eigentliche Variationsproblem \cref{eq:abstraktes_parametrische_vp} verwenden.
 Neben dem offensichtlichen Grund, der Berechenbarkeit der Lösung, ist die zugrundeliegende Prämisse die Folgende:
@@ -132,7 +132,7 @@ Dies erlaubt uns, lediglich den Fehler zwischen Truth- und RB"=Lösung zu berüc
     \end{Beweis}
 \end{Lemma}
 
-Das Residuum kann nun verwendet werden, um eines der wichtigsten Konstrukte der RB-Methoden zu definieren.
+Das Residuum kann nun verwendet werden, um eines der wichtigsten Konstrukte der RB"=Methoden zu definieren.
 
 \begin{Lemma}\label{lemma:rbm_fehler_schranke}
     Sei $\beta_{\mathrm{LB}}(\bm \sigma) > 0$ eine untere Schranke für $\beta_{\mathcal N}(\bm \sigma)$.
@@ -140,7 +140,7 @@ Das Residuum kann nun verwendet werden, um eines der wichtigsten Konstrukte der 
     \begin{equation}
         \norm{u_{\mathcal N}(\bm \sigma) - u_{N}(\bm \sigma)}_{\mathcal X} \leq \frac{\norm{r_{N}(\blank; \bm \sigma)}_{\mathcal Y_{\mathcal N}'}}{\beta_{\mathrm{LB}}(\bm \sigma)} =: \Delta_{N}(\bm \sigma),
     \end{equation}
-    wobei wir $\Delta_{N}(\bm \sigma)$ als \emph{a posteriori-Fehlerschätzer} bezeichnen.
+    wobei wir $\Delta_{N}(\bm \sigma)$ als \emph{a posteriori"=Fehlerschätzer} bezeichnen.
 
     \begin{Beweis}
         Wir können \cref{eq:variationsproblem_residuum} als Variationsproblem \cref{eq:diskretes_abstraktes_parametrisches_vp} auffassen, welches unter den getroffenen Annahmen die eindeutige Lösung $e_{N}(\bm \sigma)$ besitzt.
@@ -148,7 +148,7 @@ Das Residuum kann nun verwendet werden, um eines der wichtigsten Konstrukte der 
     \end{Beweis}
 \end{Lemma}
 
-Dieser a posteriori-Fehlerschätzer bildet das Herzstück der RB"=Methode, da mit ihm in der Offline-Phase eine möglichst optimale Wahl der Parameter-Samples erreicht werden kann, während er in der Online-Phase zur Berechnung einer garantierten Fehlerschranke zwischen Truth- und RB-Lösung verwendet wird.
+Dieser a posteriori"=Fehlerschätzer bildet das Herzstück der RB"=Methode, da mit ihm in der Offline"=Phase eine möglichst optimale Wahl der Parameter"=Samples erreicht werden kann, während er in der Online"=Phase zur Berechnung einer garantierten Fehlerschranke zwischen Truth- und RB"=Lösung verwendet wird.
 Dazu setzt man weiter woraus, dass die untere Schranke $\beta_{\mathrm{LB}}(\bm \sigma)$ berechenbar ist.
 Wir werden bei der nachfolgenden numerischen Umsetzung darauf eingehen, wie dies bewerkstelligt werden kann.
 
@@ -188,8 +188,8 @@ Bevor wir uns dieser widmen, wollen wir noch ein Maß für die Güte des Fehlers
     \end{Beweis}
 \end{Lemma}
 
-Dieses Ergebnis ist wichtig, denn es garantiert, dass der a posteriori-Fehlerschätzer weder zu pessimistisch noch zu optimistisch ist.
-Insbesondere garantiert es, dass der tatsächliche Fehler durch den a posteriori-Fehlerschätzer stets korrekt nach oben abgeschätzt wird.
+Dieses Ergebnis ist wichtig, denn es garantiert, dass der a posteriori"=Fehlerschätzer weder zu pessimistisch noch zu optimistisch ist.
+Insbesondere garantiert es, dass der tatsächliche Fehler durch den a posteriori"=Fehlerschätzer stets korrekt nach oben abgeschätzt wird.
 
 % TODO: noch etwas zur Konvergenz sagen?
 
@@ -216,7 +216,7 @@ Die endlichdimensionalen Räume $\mathcal X_{\mathcal N}$ und $\mathcal Y_{\math
     \qquad
     \mathcal Y_{\mathcal N} = \spn \Set{ \psi_{i} \given i = 1, \dots, \mathcal N }.
 \end{equation}
-Analog verfahren wir für die $N$-dimensionalen RB"=Räume $\mathcal X_{N}$ und $\mathcal Y_{N}$ mit der Notation
+Analog verfahren wir für die $N$"=dimensionalen RB"=Räume $\mathcal X_{N}$ und $\mathcal Y_{N}$ mit der Notation
 \begin{equation}
     \mathcal X_{N} = \spn \Set{ \xi_{n} \given n = 1, \dots, N},
     \qquad
@@ -300,12 +300,12 @@ Es bleibt zu klären, wie die RB"=Räume $\mathcal X_{N}$ und $\mathcal Y_{N}$ k
 Dieses Problem werden wir in mehrere Schritte aufteilen.
 Zunächst geben wir einen Algorithmus zur Konstruktion des Ansatzraums $\mathcal X_{N}$ an, fahren danach mit dem Testraum $\mathcal Y_{N}$ fort und klären anschließend die dabei auftretenden problematischen Punkte.
 
-\paragraph{Konstruktion des RB"=Ansatzraumes mittels Greedy-Algorithmus.} % (fold)
+\paragraph{Konstruktion des RB"=Ansatzraumes mittels Greedy"=Algorithmus.} % (fold)
 \label{par:konstruktion_des_reduzierte_basis_ansatzraumes_mittels_greedy_algorithmus}
 
 Wie bereits angeführt wurde, wird der RB"=Ansatzraum unter dem Aspekt, den Fehler zwischen Truth- und RB"=Lösung für alle Parameter des Parameterraums $\mathcal P$ zu minimieren, konstruiert.
-Unter einem rein theoretischen Blick kann dies durch die sogenannten \emph{Kolmogorow $N$-Weiten} optimal gelöst werden, wie beispielsweise \cite[Section 3.4]{Patera:2007un} entnommen werden kann.
-Da diese praktisch aber nicht umgesetzt werden können, wird hierfür oftmals auf einen \emph{Greedy}-Ansatz zurückgegriffen.
+Unter einem rein theoretischen Blick kann dies durch die sogenannten \emph{Kolmogorow $N$"=Weiten} optimal gelöst werden, wie beispielsweise \cite[Section 3.4]{Patera:2007un} entnommen werden kann.
+Da diese praktisch aber nicht umgesetzt werden können, wird hierfür oftmals auf einen \emph{Greedy}"=Ansatz zurückgegriffen.
 Dieser ist als \cref{algorithm:greedy_training} in Kurzform gegeben und wird im Folgenden erklärt.
 
 \begin{algorithm}[tb]
@@ -318,8 +318,8 @@ Dieser ist als \cref{algorithm:greedy_training} in Kurzform gegeben und wird im 
         endliche Menge der Trainingsparameter $\mathcal P_{\mathrm{train}} \subset \mathcal P$, \newline
         Fehlertoleranz $\epsilon_{\mathrm{tol}} > 0$}
     \Output{%
-        RB-Ansatzraum $\mathcal X_{N}$ mit Basis $\Xi_{N}$, \newline
-        Sample-Menge $\mathcal S_{N}$}
+        RB"=Ansatzraum $\mathcal X_{N}$ mit Basis $\Xi_{N}$, \newline
+        Sample"=Menge $\mathcal S_{N}$}
     \BlankLine
     Setze $N = 0$, $\mathcal S_{0} = \emptyset$, $\Xi_{0} = \emptyset$, $\mathcal X_{0} = \Set{0}$\;
     \While{$\max_{\bm \sigma \in \mathcal P_{\mathrm{train}}} \Delta_{N}(\bm \sigma) > \epsilon_{\mathrm{tol}}$}{
@@ -331,7 +331,7 @@ Dieser ist als \cref{algorithm:greedy_training} in Kurzform gegeben und wird im 
         $N \gets N + 1$\;
     }
     %
-    \caption{Greedy-Konstruktion der RB"=Räume.}
+    \caption{Greedy"=Konstruktion der RB"=Räume.}
     \label{algorithm:greedy_training}
 \end{algorithm}
 
@@ -339,12 +339,12 @@ Zunächst wird eine Diskretisierung $\mathcal P_{\mathrm{train}} \subset \mathca
 Diese sollte \enquote{fein genug} sein, um den Parameterraum mit dem beschriebenen Verfahren ausreichend auszuschöpfen.
 Es gibt verschiedene Strategien, wie diese gewählt werden kann, beispielsweise zufällig oder in Form eines äquidistanten Gitters.
 
-Sei $\mathcal X_{N}$ ein $N$-dimensionaler RB"=Ansatzraum mit Basis $\Xi_{N}$.
-Um daraus einen $N+1$-dimensionalen Raum $\mathcal X_{N + 1}$ zu gewinnen, verfahren wir wie folgt:
+Sei $\mathcal X_{N}$ ein $N$"=dimensionaler RB"=Ansatzraum mit Basis $\Xi_{N}$.
+Um daraus einen $N+1$"=dimensionalen Raum $\mathcal X_{N + 1}$ zu gewinnen, verfahren wir wie folgt:
 \begin{enumerate}[label={\itshape\roman*.},ref={\itshape\roman*}]
-    \item\label{enum:greedy_schritt_eins} Bestimme den Parameter $\bm \sigma_{N+1} \in \mathcal P_{\mathrm{train}}$, der den a posteriori-Fehlerschätzer $\Delta_{N}$ maximiert, also $\bm \sigma_{N+1} := \arg \max_{\bm \sigma \in \mathcal P_{\mathrm{train}}} \Delta_{N}(\bm \sigma)$,
-    \item berechne die Truth-Lösung $u_{\mathcal N}(\bm \sigma_{N+1})$,
-    \item definiere mit dieser nach einer Orthonormalisierung $\Xi_{N + 1} := \Xi_{N} \cup \Set{u_{\mathcal N}(\bm \sigma_{N+1})}$, $\mathcal X_{N + 1} := \spn \Xi_{N + 1}$ und berechne die neuen benötigten Matrizen und Vektoren für das RB-System und den a posteriori-Fehlerschätzer.
+    \item\label{enum:greedy_schritt_eins} Bestimme den Parameter $\bm \sigma_{N+1} \in \mathcal P_{\mathrm{train}}$, der den a posteriori"=Fehlerschätzer $\Delta_{N}$ maximiert, also $\bm \sigma_{N+1} := \arg \max_{\bm \sigma \in \mathcal P_{\mathrm{train}}} \Delta_{N}(\bm \sigma)$,
+    \item berechne die Truth"=Lösung $u_{\mathcal N}(\bm \sigma_{N+1})$,
+    \item definiere mit dieser nach einer Orthonormalisierung $\Xi_{N + 1} := \Xi_{N} \cup \Set{u_{\mathcal N}(\bm \sigma_{N+1})}$, $\mathcal X_{N + 1} := \spn \Xi_{N + 1}$ und berechne die neuen benötigten Matrizen und Vektoren für das RB"=System und den a posteriori"=Fehlerschätzer.
 \end{enumerate}
 Der beschriebene Ablauf wird nun iterativ ausgeführt, bis der maximale Fehler in \cref{enum:greedy_schritt_eins} unter einer gewünschten Toleranz liegt.
 Um das Verfahren zu starten, kann das erste Parameter"=Sample beliebig, beispielsweise zufällig, gewählt werden.
@@ -357,12 +357,12 @@ Diese Greedy"=Heuristik hat zwar offensichtlich nur eine lokale Sicht auf die Wa
 Letzterer lässt sich wie folgt angeben: Sei $N_{\max}$ die Anzahl insgesamt durchgeführter Iterationen.
 Dann entspricht der Aufwand
 \begin{inlinelist}
-    \item $N_{\max} \cdot \# \mathcal P_{\mathrm{train}}$ Auswertungen des a posteriori-Fehlerschätzers,
-    \item $N_{\max}$ Aufrufen des Truth-Lösers und
+    \item $N_{\max} \cdot \# \mathcal P_{\mathrm{train}}$ Auswertungen des a posteriori"=Fehlerschätzers,
+    \item $N_{\max}$ Aufrufen des Truth"=Lösers und
     \item einem vollständigen Durchlauf der Gram"=Schmidt"=Orthonormalisierung.
 \end{inlinelist}
 
-Wie direkt ersichtlich ist, wird vor allem eine effiziente Möglichkeit zur Berechnung des a posteriori-Fehlerschätzers benötigt.
+Wie direkt ersichtlich ist, wird vor allem eine effiziente Möglichkeit zur Berechnung des a posteriori"=Fehlerschätzers benötigt.
 Bevor wir uns dieser Aufgabe widmen, wollen wir auf die Konstruktion des zugehörigen RB"=Testraumes eingehen.
 
 % paragraph konstruktion_des_reduzierte_basis_ansatzraumes_mittels_greedy_algorithmus (end)
@@ -371,7 +371,7 @@ Bevor wir uns dieser Aufgabe widmen, wollen wir auf die Konstruktion des zugehö
 \label{par:konstruktion_des_testraumes_}
 
 Motiviert durch \cite{2014arXiv1408.2709M} erweist sich der bereits bekannte Supremizing"=Operator aus \cref{definition:supremizing_operator} als nützlich.
-Seien $\bm \sigma \in \mathcal P$ ein Parameter und $T_{\bm \sigma} \colon \mathcal X_{\mathcal N} \to \mathcal Y_{\mathcal N}$ der Supremizing-Operator der Bilinearform $\restr{b(\blank, \blank; \bm \sigma)}{\mathcal X_{\mathcal N} \times \mathcal Y_{\mathcal N}}$, dann definieren wir den parameterabhängigen Testraum
+Seien $\bm \sigma \in \mathcal P$ ein Parameter und $T_{\bm \sigma} \colon \mathcal X_{\mathcal N} \to \mathcal Y_{\mathcal N}$ der Supremizing"=Operator der Bilinearform $\restr{b(\blank, \blank; \bm \sigma)}{\mathcal X_{\mathcal N} \times \mathcal Y_{\mathcal N}}$, dann definieren wir den parameterabhängigen Testraum
 \begin{equation}\label{eq:rb_testraum_parameterabhaengig}
     \mathcal Y_{N}^{\bm \sigma} := \Set{ T_{\bm \sigma} u_{\mathcal N}(\bm \sigma_{i}) \given \bm \sigma_{i} \in \mathcal S_{N},~ i = 1, \dots, N }.
 \end{equation}
@@ -397,8 +397,8 @@ Seien $\bm \sigma \in \mathcal P$ ein Parameter und $T_{\bm \sigma} \colon \math
     \end{Beweis}
 \end{Satz}
 
-Da der Testraum $\mathcal Y_{N}^{\bm \sigma}$ für jeden Parameter neu aufgebaut werden muss, ist eine sinnvolle Zerlegung in Offline- und Online-Phase wünschenswert.
-Dazu nutzen wir die parametrisch-affine Darstellung \cref{eq:bilinearform_parametrisch_affin} und definieren für jedes $\restr{b_{q}}{\mathcal X_{\mathcal N} \times \mathcal Y_{\mathcal N}}$, $q = 1, \dots, Q_b$, den zugehörigen Supremizing-Operator $T_{q}$.
+Da der Testraum $\mathcal Y_{N}^{\bm \sigma}$ für jeden Parameter neu aufgebaut werden muss, ist eine sinnvolle Zerlegung in Offline- und Online"=Phase wünschenswert.
+Dazu nutzen wir die parametrisch"=affine Darstellung \cref{eq:bilinearform_parametrisch_affin} und definieren für jedes $\restr{b_{q}}{\mathcal X_{\mathcal N} \times \mathcal Y_{\mathcal N}}$, $q = 1, \dots, Q_b$, den zugehörigen Supremizing"=Operator $T_{q}$.
 Dann gilt
 \begin{equation}
     T_{\bm \sigma} = \sum_{q = 1}^{Q_b} \theta_{q}^{b}(\bm \sigma) T_{q}.
@@ -408,8 +408,8 @@ Diese müssen nur einmal vorberechnet werden, während die restlichen Berechnung
 
 \begin{onoffdescription}
     \item[Offline:]
-    Während des Greedy-Verfahrens werden die Vektoren $\vec{v}_{q}^{n} := \mat{T}_{q} \vec{u}_{\mathcal N}(\bm \sigma_{n})$ für jedes $q = 1, \dots, Q_{b}$ und $n = 1, \dots, N$ berechnet.
-    Dies entspricht $N \cdot Q_b$ Matrix-Matrix-Multiplikationen der Größe $\mathcal N \times \mathcal N$.
+    Während des Greedy"=Verfahrens werden die Vektoren $\vec{v}_{q}^{n} := \mat{T}_{q} \vec{u}_{\mathcal N}(\bm \sigma_{n})$ für jedes $q = 1, \dots, Q_{b}$ und $n = 1, \dots, N$ berechnet.
+    Dies entspricht $N \cdot Q_b$ Matrix"=Matrix"=Multiplikationen der Größe $\mathcal N \times \mathcal N$.
 
     \item[Online:]
     Bestimme $\mathcal Y_{N}^{\bm \sigma}$ durch $\mat{T}_{\bm \sigma} \vec{u}_{\mathcal N}(\bm \sigma_{n}) = \sum_{q = 1}^{Q_b} \theta_{q}^{b}(\bm \sigma) \vec{v}_{q}^{n}$ für $n = 1, \dots, N$.
@@ -427,7 +427,7 @@ Wir erhalten dadurch für jedes $\bm \sigma \in \mathcal P$ ein $\hat{e}_{N}(\bm
     \norm{\hat{e}_{N}(\bm \sigma)}_{\mathcal Y} = \norm{r_{N}(\blank; \bm \sigma)}_{\mathcal Y_{\mathcal N}'}, \qquad
     r_{N}(v; \bm \sigma) = \skp{\hat{e}_{N}(\bm \sigma)}{v}{\mathcal Y_{\mathcal N}} \quad \fa v \in \mathcal Y.
 \end{equation}
-Aufgrund der Darstellung \cref{eq:residuum_durch_funktional_und_bilinearform} des Residuums und der parametrisch-affinen Darstellung \cref{eq:bilinearform_parametrisch_affin} der Bilinearform gilt für alle $v \in \mathcal Y_{\mathcal N}$ die Gleichung
+Aufgrund der Darstellung \cref{eq:residuum_durch_funktional_und_bilinearform} des Residuums und der parametrisch"=affinen Darstellung \cref{eq:bilinearform_parametrisch_affin} der Bilinearform gilt für alle $v \in \mathcal Y_{\mathcal N}$ die Gleichung
 \begin{equation}
     \skp{\hat{e}_{N}(\bm \sigma)}{v}{\mathcal Y}
     = r_{N}(v; \bm \sigma)
@@ -465,7 +465,7 @@ Weiter bestimmen wir die Koeffizientenvektoren $\hat{\vec{f}}, \hat{\vec{b}}^{n}
     \qquad
     \mat{Y} \hat{\vec{b}}^{n}_{q} = [b_{q}(\xi_{n}, \psi_{j})]_{j = 1, \dots, \mathcal N} = \mat{B}_{q} \bm \xi_{n}.
 \end{equation}
-Verwenden wir diese, so wird obige Gleichung zur Berechnung der Norm des Residuums nach Auswerten der $\mathcal Y$-Skalarprodukte zu
+Verwenden wir diese, so wird obige Gleichung zur Berechnung der Norm des Residuums nach Auswerten der $\mathcal Y$"=Skalarprodukte zu
 \begin{equation}\label{eq:residuum_finale_darstellung}
     \begin{aligned}
         \norm{r_{N}(\blank; \bm \sigma)}_{\mathcal Y_{\mathcal N}'}^{2}
@@ -477,7 +477,7 @@ Verwenden wir diese, so wird obige Gleichung zur Berechnung der Norm des Residuu
     \end{aligned}
 \end{equation}
 
-Mit Hilfe dieses Ausdrucks können wir nun wie folgt eine Zerlegung in Offline- und Online-Phase vornehmen:
+Mit Hilfe dieses Ausdrucks können wir nun wie folgt eine Zerlegung in Offline- und Online"=Phase vornehmen:
 
 \begin{onoffdescription}
     \item[Offline:] Berechne die Größen $\vec{f}\tran \mat{Y}^{-1} \vec{f}$, $\vec{f}\tran \mat{Y}^{-1} \mat{B}_{q} \bm \xi_{n}$ und $\bm \xi_{n}\tran \mat{B}_{q}\tran \mat{Y}^{-1} \mat{B}_{p} \bm \xi_{m}$ für alle $n, m = 1, \dots, N$ und $q, p = 1, \dots, Q_b$.
@@ -490,21 +490,21 @@ Mit Hilfe dieses Ausdrucks können wir nun wie folgt eine Zerlegung in Offline- 
 Bei der praktischen Umsetzung wird \cref{eq:residuum_finale_darstellung} nicht direkt in der gegebenen Form implementiert, sondern in einen parameterabhängigen und einen parameterunabhängigen Teil zerlegt, zu einem Vektor beziehungsweise einer Matrix zusammengefasst und mittels einer Matrix"=Vektor"=Multiplikation ausgewertet.
 
 
-\paragraph{Berechnung einer unteren Schranke für die inf-sup-Konstante.} % (fold)
+\paragraph{Berechnung einer unteren Schranke für die inf"=sup"=Konstante.} % (fold)
 \label{par:berechnung_der_unteren_schranke_f_r_die_inf_sup_konstante_}
 
-Da die exakte Bestimmung der inf-sup-Konstante $\beta_{\mathcal N}(\bm \sigma)$ für jeden Parameter $\bm \sigma \in \mathcal P_{\mathrm{train}}$ mittels des in \cref{section:galerkin_numerische_umsetzung} beschriebenen verallgemeinerten Eigenwertproblems laufzeittechnisch nicht vertretbar ist, wird ein effizienteres Verfahren benötigt, welches eine möglichst genaue untere Schranke $\beta_{\mathrm{LB}}(\bm \sigma)$ liefert.
+Da die exakte Bestimmung der inf"=sup"=Konstante $\beta_{\mathcal N}(\bm \sigma)$ für jeden Parameter $\bm \sigma \in \mathcal P_{\mathrm{train}}$ mittels des in \cref{section:galerkin_numerische_umsetzung} beschriebenen verallgemeinerten Eigenwertproblems laufzeittechnisch nicht vertretbar ist, wird ein effizienteres Verfahren benötigt, welches eine möglichst genaue untere Schranke $\beta_{\mathrm{LB}}(\bm \sigma)$ liefert.
 Im Rahmen dieser Arbeit stützen wir uns hierfür auf die zu diesem Zweck entwickelte \ac{scm} und orientieren uns an der Originalarbeit von \textcite{Huynh2007}, wobei hier nur die Idee des Verfahrens wiederholt werden soll.
 Weiter wurden bei der Implementierung die Verbesserungen von \textcite{Chen2009} berücksichtigt, die hier nicht weiter ausgeführt werden.
 
 Da die \ac{scm} auf die Berechnung der Koerzivitätskonstanten einer symmetrischen parametrischen Bilinearform ausgelegt ist, müssen wir zunächst die nötigen Rahmenbedingungen schaffen.
-Wir werden später darauf eingehen, wie wir mit der \ac{scm} stattdessen die gewünschte inf-sup-Schranke bestimmen können.
+Wir werden später darauf eingehen, wie wir mit der \ac{scm} stattdessen die gewünschte inf"=sup"=Schranke bestimmen können.
 
 Es sei also durch
 \begin{equation}
     a(u, v; \bm \sigma) = \sum_{q = 1}^{Q_a} \theta_{q}^{a} a_{q}(u, v), \quad u,v \in \mathcal X,
 \end{equation}
-eine abstrakte symmetrische, parametrisch-affine Bilinearform $a \colon \mathcal X \times \mathcal X \times \mathcal P \to \mathbb{R}$ gegeben, wobei $\theta_{q}^{a} \colon \mathcal P \to \mathbb{R}$ stetige Funktionen und $a_{q} \colon \mathcal X \times \mathcal X \to \mathbb{R}$ symmetrische, stetige und parameterunabhängige Bilinearformen seien.
+eine abstrakte symmetrische, parametrisch"=affine Bilinearform $a \colon \mathcal X \times \mathcal X \times \mathcal P \to \mathbb{R}$ gegeben, wobei $\theta_{q}^{a} \colon \mathcal P \to \mathbb{R}$ stetige Funktionen und $a_{q} \colon \mathcal X \times \mathcal X \to \mathbb{R}$ symmetrische, stetige und parameterunabhängige Bilinearformen seien.
 Wie zuvor sei $\mathcal X_{\mathcal N} \subset \mathcal X$ eine Diskretisierung eines Galerkin"=Verfahrens.
 Wir wollen nun eine untere Schranke $\alpha_{\mathrm{LB}}(\bm \sigma)$ für die \emph{Koerzivitätskonstante} $\alpha_{\mathcal N}(\bm \sigma)$ bestimmen, welche als
 \begin{equation}
@@ -552,7 +552,7 @@ Schließlich seien durch $M_{\alpha}, M_{+} \in \mathbb{N}$ die Anzahl der Stabi
         $\mathcal C_{K + 1} \gets \mathcal C_{K} \cup \Set{\bm \sigma_{K + 1}}$\;
         $K \gets K + 1$\;
     }
-    \caption{Successive Constraint Method, Greedy-Konstruktion der $\mathcal C_{K}$.}
+    \caption{Successive Constraint Method, Greedy"=Konstruktion der $\mathcal C_{K}$.}
     \label{algorithm:scm_greedy}
 \end{algorithm}
 
@@ -583,13 +583,13 @@ auswerten, für die nach \cite[Proposition 1]{Huynh2007} nachgewiesen werden kan
     \alpha_{\mathrm{LB}}(\bm \sigma; \mathcal C_{K}) \leq \alpha_{\mathcal N}(\bm \sigma) \leq \alpha_{\mathrm{UB}}(\bm \sigma; \mathcal C_{K}) \quad \fa \bm \sigma \in \mathcal P
 \end{equation}
 erfüllen.
-\cref{algorithm:scm_greedy} zeigt auf, wie die noch fehlenden Teilmengen $\mathcal C_{K} \subset \mathcal P$ mittels eines Greedy-Ansatzes möglichst optimal konstruiert werden können.
+\cref{algorithm:scm_greedy} zeigt auf, wie die noch fehlenden Teilmengen $\mathcal C_{K} \subset \mathcal P$ mittels eines Greedy"=Ansatzes möglichst optimal konstruiert werden können.
 
-Um mit diesem Vorgehen eine Schranke für die inf-sup-Konstante $\beta_{\mathcal N}(\bm \sigma)$ zu bestimmen, müssen wir lediglich erneut auf den zugehörigen Supremizing-Operator aus \cref{definition:supremizing_operator} zurückgreifen.
+Um mit diesem Vorgehen eine Schranke für die inf"=sup"=Konstante $\beta_{\mathcal N}(\bm \sigma)$ zu bestimmen, müssen wir lediglich erneut auf den zugehörigen Supremizing"=Operator aus \cref{definition:supremizing_operator} zurückgreifen.
 Gleichung \cref{eq:quadrat_der_inf_sup_konstante_ueber_supremizer} erlaubt uns dann, $\beta_{\mathcal N}^{2}(\bm \sigma)$ als Koerzivitätskonstante einer entsprechenden Bilinearform aufzufassen.
 
 Abschließend wollen wir auf die Laufzeit dieses Verfahrens eingehen.
-Dazu erfolgt erneut eine Zerlegung in Offline- und Online-Phase.
+Dazu erfolgt erneut eine Zerlegung in Offline- und Online"=Phase.
 
 \begin{onoffdescription}
     \item[Offline:]
@@ -607,20 +607,20 @@ Dazu erfolgt erneut eine Zerlegung in Offline- und Online-Phase.
 \end{onoffdescription}
 
 
-\paragraph{Zerlegung der Reduzierte"=Basis"=Methode in Offline- und Online-Phase.} % (fold)
+\paragraph{Zerlegung der Reduzierte"=Basis"=Methode in Offline- und Online"=Phase.} % (fold)
 \label{sub:zerlegung_in_offline_und_online_phase}
 
-Um die RB"=Methode als ganzes in eine Offline- und eine Online-Phase zu zerlegen, müssen wir lediglich die bereits behandelten Bausteine zusammensetzen.
+Um die RB"=Methode als ganzes in eine Offline- und eine Online"=Phase zu zerlegen, müssen wir lediglich die bereits behandelten Bausteine zusammensetzen.
 Der Aufwand der jeweiligen Berechnungen wurde an den entsprechenden Stellen angegeben.
 
 \begin{onoffdescription}
     \item[Offline:]
-    Zunächst muss die Offline-Phase der \acl{scm} durchgeführt werden.
-    Nach Beendigung dieser kann der Greedy-Algorithmus \ref{algorithm:scm_greedy} zur Konstruktion der RB"=Ansatz- und Testräume ausgeführt werden.
+    Zunächst muss die Offline"=Phase der \acl{scm} durchgeführt werden.
+    Nach Beendigung dieser kann der Greedy"=Algorithmus \ref{algorithm:scm_greedy} zur Konstruktion der RB"=Ansatz- und Testräume ausgeführt werden.
 
     \item[Online:]
     Hier wird zu einem gegebenen Parameter $\bm \sigma \in \mathcal P$ die Reduzierte"=Basis"=Lösung $u_{N}(\bm \sigma)$ bestimmt und anschließend der a posteriori"=Fehlerschätzer $\Delta_{N}(\bm \sigma)$ ausgewertet.
-    Der Aufwand dieser Berechnungen ist unabhängig von der Dimension $\mathcal N$ der zugrundeliegenden Truth-Diskretisierung.
+    Der Aufwand dieser Berechnungen ist unabhängig von der Dimension $\mathcal N$ der zugrundeliegenden Truth"=Diskretisierung.
 \end{onoffdescription}
 
 
@@ -649,12 +649,12 @@ mit dem Parameter $\sigma \in \mathcal P := [-1, 1]$.
 Wir verzichten auf einen Quellterm und verwenden als Anfangswert $u_{0} = \tfrac{1}{2} \sin(\pi \blank)$.
 
 Als Dimensionen für die Truth"=Diskretisierung nach \cref{chapter:galerkin} verwenden wir für die zeitliche Komponente $\mathcal K = 250$ und für die räumliche $\mathcal J = 20$.
-Die Diskretisierung $\mathcal P_{\mathrm{train}}$ des Parameterraums für die Greedy-Algorithmen wählen wir als äquidistantes Gitter auf $\mathcal P$ mit $1000$ Punkten.
-Dies stellt eine relativ geringe Anzahl dar und ist hauptsächlich der Laufzeit der Analyse-Prozeduren geschuldet.
+Die Diskretisierung $\mathcal P_{\mathrm{train}}$ des Parameterraums für die Greedy"=Algorithmen wählen wir als äquidistantes Gitter auf $\mathcal P$ mit $1000$ Punkten.
+Dies stellt eine relativ geringe Anzahl dar und ist hauptsächlich der Laufzeit der Analyse"=Prozeduren geschuldet.
 
 Wir wollen nun auf die verschiedenen numerischen Ergebnisse der Reduzierte"=Basis"=Methode und der \acl{scm} eingehen.
-Die benötigte Laufzeit für die Durchführung setzt sich zusammen aus $9\,\mathrm{min}~43\,\mathrm{s}$ für die Durchführung der Offline-Phase der \ac{scm} und $6\,\mathrm{min}~13\,\mathrm{s}$ für die RB-Offline-Phase.
-Vergleicht man dies mit den Laufzeiten für einen Aufruf des Truth- beziehungsweise RB-Lösers, die gemittelt die Werte $0.0817\,\mathrm{s}$ respektive $0.0637\,\mathrm{s}$ haben, dann wird deutlich, dass die Dauer der Offline-Phase unpraktikabel lange dauert, da circa $53000$ Löser-Aufrufe nötig sind, um diese zu amortisieren.
+Die benötigte Laufzeit für die Durchführung setzt sich zusammen aus $9\,\mathrm{min}~43\,\mathrm{s}$ für die Durchführung der Offline"=Phase der \ac{scm} und $6\,\mathrm{min}~13\,\mathrm{s}$ für die RB"=Offline"=Phase.
+Vergleicht man dies mit den Laufzeiten für einen Aufruf des Truth- beziehungsweise RB"=Lösers, die gemittelt die Werte $0.0817\,\mathrm{s}$ respektive $0.0637\,\mathrm{s}$ haben, dann wird deutlich, dass die Dauer der Offline"=Phase unpraktikabel lange dauert, da circa $53000$ Löser"=Aufrufe nötig sind, um diese zu amortisieren.
 Zwar können diese Laufzeiten durch Optimierung der Implementierung zweifelsfrei deutlich verbessert werden, allerdings handelt es sich hierbei um das denkbar einfachste Beispiel.
 Dies lässt bereits vermuten, dass die Laufzeiten für realitätsnähere Beispiele unhandlich groß werden könnten.
 
@@ -680,9 +680,9 @@ Dies lässt bereits vermuten, dass die Laufzeiten für realitätsnähere Beispie
         \includegraphics[width=1\textwidth]{figures/chapter5/ch5ex1_scm_plot_8.pdf}
         \caption{Nach acht Iterationsschritten.}
     \end{subfigure}
-    \caption[Vergleich der SCM-Schranke über mehrere Iterationsschritte, erstes Beispiel.]{%
-        Vergleich zwischen exakt bestimmter inf-sup-Konstante $\beta_{\mathcal N}(\sigma)$ (blau), der unteren Schranke $\beta_{\mathrm{LB}}(\sigma)$ (orange gestrichelt) sowie der oberen Schranke $\beta_{\mathrm{UB}}(\sigma)$ (gelb gestrichelt) der \ac{scm} beim ersten Beispiel.
-        Die horizontale Achse stellt den Parameterraum dar, wobei die Markierungen die vom Greedy-Verfahren ausgewählten Parameter anzeigen.
+    \caption[Vergleich der SCM"=Schranke über mehrere Iterationsschritte, erstes Beispiel.]{%
+        Vergleich zwischen exakt bestimmter inf"=sup"=Konstante $\beta_{\mathcal N}(\sigma)$ (blau), der unteren Schranke $\beta_{\mathrm{LB}}(\sigma)$ (orange gestrichelt) sowie der oberen Schranke $\beta_{\mathrm{UB}}(\sigma)$ (gelb gestrichelt) der \ac{scm} beim ersten Beispiel.
+        Die horizontale Achse stellt den Parameterraum dar, wobei die Markierungen die vom Greedy"=Verfahren ausgewählten Parameter anzeigen.
     }
     \label{figure:vergleich_scm_iterationen}
 \end{figure}
@@ -701,13 +701,13 @@ Dies lässt bereits vermuten, dass die Laufzeiten für realitätsnähere Beispie
      $8$ & $9.824040{\times}10^{-3}$ \\ \hline
     \end{tabular}
     \caption[Entwicklung der maximalen relativen Spanne bei der \ac{scm}, erstes Beispiel.]{%
-        Entwicklung der maximalen relativen Spanne \cref{eq:max_rel_spanne_scm} während der Greedy-Iteration der \ac{scm} beim ersten Beispiel.
+        Entwicklung der maximalen relativen Spanne \cref{eq:max_rel_spanne_scm} während der Greedy"=Iteration der \ac{scm} beim ersten Beispiel.
     }
     \label{table:entwicklung_scm_abweichung}
 \end{table}
 
 Neben der Laufzeit sind natürlich auch die Ergebnisse der \ac{scm} und der RB"=Methode interessant.
-Anhand von \cref{figure:vergleich_scm_iterationen} wird die Funktionsweise der Greedy-Iteration der \ac{scm} deutlich.
+Anhand von \cref{figure:vergleich_scm_iterationen} wird die Funktionsweise der Greedy"=Iteration der \ac{scm} deutlich.
 Diese hat bereits nach acht Iterationsschritten die Fehlertoleranz von $10^{-2}$ unterschritten.
 Die Entwicklung der maximalen relativen Spanne (vergleiche \cref{algorithm:scm_greedy})
 \begin{equation}\label{eq:max_rel_spanne_scm}
@@ -721,11 +721,11 @@ Verwenden wir die hier gegebenen Größen und nehmen wir weiter als grobe parame
 Konkret lässt sich dies so interpretieren, dass die hinreichende Bedingung nur für den Parameterteilraum $[-0.1, 0.1] \subset \mathcal P$ die analytische Regularität der Lösung garantiert.
 Dies ist offensichtlich ein äußerst kleiner Spielraum für den Parameter, welcher bei Hinzunahme weiterer Parameter noch weiter eingeschränkt wird.
 
-In ähnlicher Weise zur \ac{scm} kann auch die Greedy-Iteration der RB"=Methode dargestellt werden.
+In ähnlicher Weise zur \ac{scm} kann auch die Greedy"=Iteration der RB"=Methode dargestellt werden.
 Diese terminiert bereits nach sechs Iterationsschritten nach Unterschreiten der Fehlertoleranz $10^{-6}$.
-\cref{figure:vergleich_rbm_iterationen} zeigt, wie sich der a posteriori-Fehlerschätzer und der tatsächliche Fehler zwischen Truth- und RB-Lösung für wachsende Sample-Anzahl $N$ verändern.
-Weiter ist in \cref{table:entwicklung_rbm} die Entwicklung des Maximums des a posteriori-Fehlerschätzers sowie des arithmetischen Mittels, des Medians und des Maximums der Effektivität $\eta_{N}$ über $\mathcal P_{\mathrm{train}}$ verzeichnet.
-Die für die Ausreißer der Effektivität verantwortlichen Spitzen treten bei den gewählten Parameter-Samples auf und sind vermutlich durch numerische Ungenauigkeiten bedingt, da sie für wachsendes $N$ abgeschwächt werden.
+\cref{figure:vergleich_rbm_iterationen} zeigt, wie sich der a posteriori"=Fehlerschätzer und der tatsächliche Fehler zwischen Truth- und RB"=Lösung für wachsende Sample"=Anzahl $N$ verändern.
+Weiter ist in \cref{table:entwicklung_rbm} die Entwicklung des Maximums des a posteriori"=Fehlerschätzers sowie des arithmetischen Mittels, des Medians und des Maximums der Effektivität $\eta_{N}$ über $\mathcal P_{\mathrm{train}}$ verzeichnet.
+Die für die Ausreißer der Effektivität verantwortlichen Spitzen treten bei den gewählten Parameter"=Samples auf und sind vermutlich durch numerische Ungenauigkeiten bedingt, da sie für wachsendes $N$ abgeschwächt werden.
 
 \begin{figure}[tb]
     \centering
@@ -749,9 +749,9 @@ Die für die Ausreißer der Effektivität verantwortlichen Spitzen treten bei de
         \includegraphics[width=1\textwidth]{figures/chapter5/ch5ex1_rbmerr_plot_6.pdf}
         \caption{Nach sechs Iterationsschritten.}
     \end{subfigure}
-    \caption[Entwicklung des Fehlers zwischen Truth- und RB-Lösung für verschiedene RB-Dimensionen $N$, erstes Beispiel.]{%
-    Entwicklung des Fehlers zwischen Truth- und RB-Lösung für verschiedene Sample-Anzahlen $N$ beim ersten Beispiel.
-    Sowohl der exakt bestimmte Fehler (blau), als auch der a posteriori-Fehlerschätzer (orange) sind abgebildet.}
+    \caption[Entwicklung des Fehlers zwischen Truth- und RB"=Lösung für verschiedene RB"=Dimensionen $N$, erstes Beispiel.]{%
+    Entwicklung des Fehlers zwischen Truth- und RB"=Lösung für verschiedene Sample"=Anzahlen $N$ beim ersten Beispiel.
+    Sowohl der exakt bestimmte Fehler (blau), als auch der a posteriori"=Fehlerschätzer (orange) sind abgebildet.}
     \label{figure:vergleich_rbm_iterationen}
 \end{figure}
 
@@ -767,7 +767,7 @@ Die für die Ausreißer der Effektivität verantwortlichen Spitzen treten bei de
      6 & $1.892436{\times}10^{-7}$ & $1.136721{\times}10^{1}$ &  8.233159  & $2.421902{\times}10^{2}$ \\ \hline
     \end{tabular}
     \caption[Entwicklung der relevanten Größen der RB"=Methode, erstes Beispiel.]{%
-        Entwicklung des Maximums $\Delta_{N}^{\mathrm{max}}$ des a posteriori-Fehlerschätzers sowie des arithmetischen Mittels $\eta_{N}^{\mathrm{ave}}$, des Medians $\eta_{N}^{\mathrm{med}}$ und des Maximums $\eta_{N}^{\mathrm{max}}$ der Effektivität $\eta_{N}$ über $\mathcal P_{\mathrm{train}}$ beim ersten Beispiel.
+        Entwicklung des Maximums $\Delta_{N}^{\mathrm{max}}$ des a posteriori"=Fehlerschätzers sowie des arithmetischen Mittels $\eta_{N}^{\mathrm{ave}}$, des Medians $\eta_{N}^{\mathrm{med}}$ und des Maximums $\eta_{N}^{\mathrm{max}}$ der Effektivität $\eta_{N}$ über $\mathcal P_{\mathrm{train}}$ beim ersten Beispiel.
     }
     \label{table:entwicklung_rbm}
 \end{table}
@@ -789,24 +789,24 @@ mit dem Parameter $\bm \sigma \in \mathcal P := [-1, 1]^{4}$.
 Die Diskretisierung $\mathcal P_{\mathrm{train}}$ konstruieren wir mittels $5000$ zufällig gleichverteilt gewählter Punkte aus $\mathcal P$.
 
 Die benötigte Laufzeit für dieses Modell ist um ein Vielfaches höher als beim einfachen Beispiel.
-So benötigt die Offline-Phase der \ac{scm} $7\,\mathrm{h}~12\,\mathrm{min}$, um nach der gewählten maximalen Iterationsanzahl von $500$ zu terminieren, ohne die Fehlertoleranz von $10^{-2}$ zu unterschreiten.
+So benötigt die Offline"=Phase der \ac{scm} $7\,\mathrm{h}~12\,\mathrm{min}$, um nach der gewählten maximalen Iterationsanzahl von $500$ zu terminieren, ohne die Fehlertoleranz von $10^{-2}$ zu unterschreiten.
 Weiter wird hier deutlich, dass die Trainingsparametermenge die tatsächliche Parametermenge nur unzureichend ausschöpft, da für viele Parameter die gelieferte untere Schranke $\alpha_{\mathrm{LB}}$ einen negativen Wert annimmt und daher in einem imaginären Wert für $\beta_{\mathrm{LB}} = \sqrt{\alpha_{\mathrm{LB}}}$ resultiert.
-Dies verfälscht natürlich die Wahl der Parameter-Samples sowohl bei der \ac{scm} als auch bei der RB"=Methode.
+Dies verfälscht natürlich die Wahl der Parameter"=Samples sowohl bei der \ac{scm} als auch bei der RB"=Methode.
 
-Auch die Offline-Phase der RB"=Methode benötigt mit $5\,\mathrm{h}~58\,\mathrm{min}$ deutlich länger.
+Auch die Offline"=Phase der RB"=Methode benötigt mit $5\,\mathrm{h}~58\,\mathrm{min}$ deutlich länger.
 Weiter können wir hier nicht angeben, ab wie vielen Auswertungen diese Laufzeit amortisiert werden würde.
-Bei dieser relativ niedrigen Dimension der Truth-Diskretisierung benötigt diese gemittelt $0.0849\,\mathrm{s}$ für eine Lösung, während die RB-Methode $0.1311\,\mathrm{s}$ für die Lösung inklusive der Auswertung des a posteriori-Fehlerschätzers benötigt.
-Letzterer sorgt für den Großteil dieser Laufzeit und würde bei einer höheren Dimension der Truth-Diskretisierung vermutlich weit weniger ins Gewicht fallen.
-Dies kann hier aber nicht weiter untersucht werden, da dies natürlich eine weitere Steigerung der Laufzeiten für die Offline-Phasen bedeutet.
+Bei dieser relativ niedrigen Dimension der Truth"=Diskretisierung benötigt diese gemittelt $0.0849\,\mathrm{s}$ für eine Lösung, während die RB"=Methode $0.1311\,\mathrm{s}$ für die Lösung inklusive der Auswertung des a posteriori"=Fehlerschätzers benötigt.
+Letzterer sorgt für den Großteil dieser Laufzeit und würde bei einer höheren Dimension der Truth"=Diskretisierung vermutlich weit weniger ins Gewicht fallen.
+Dies kann hier aber nicht weiter untersucht werden, da dies natürlich eine weitere Steigerung der Laufzeiten für die Offline"=Phasen bedeutet.
 
-\cref{figure:entwicklung_rbm_fehler} und \cref{table:entwicklung_rbm_2} zeigen die Entwicklung des a posteriori-Fehlerschätzers.
-Es fällt auf, das bei lediglich vier Parametern bereits eine deutlich höhere Anzahl an Samples benötigt wird um eine Fehlertoleranz von $10^{-6}$ zu unterschreiten, der maximale a posteriori-Fehlerschätzer aber weiterhin monoton fällt.
+\cref{figure:entwicklung_rbm_fehler} und \cref{table:entwicklung_rbm_2} zeigen die Entwicklung des a posteriori"=Fehlerschätzers.
+Es fällt auf, das bei lediglich vier Parametern bereits eine deutlich höhere Anzahl an Samples benötigt wird um eine Fehlertoleranz von $10^{-6}$ zu unterschreiten, der maximale a posteriori"=Fehlerschätzer aber weiterhin monoton fällt.
 
 \begin{figure}[tb!]
     \centering
     \includegraphics[width=1\textwidth]{figures/chapter5/ch5ex2_rbm_error.pdf}
-    \caption[Entwicklung des Maximums des a posteriori-Fehlerschätzers für steigendes $N$, zweites Beispiel.]{%
-        Entwicklung des Maximums des a posteriori-Fehlerschätzers für steigendes $N$ beim zweiten Beispiel.
+    \caption[Entwicklung des Maximums des a posteriori"=Fehlerschätzers für steigendes $N$, zweites Beispiel.]{%
+        Entwicklung des Maximums des a posteriori"=Fehlerschätzers für steigendes $N$ beim zweiten Beispiel.
         Die geforderte Toleranz $10^{-6}$ wird beim $41.$ Iterationsschritt unterschritten.
         Siehe auch \cref{table:entwicklung_rbm_2}.
         }
@@ -828,8 +828,8 @@ Es fällt auf, das bei lediglich vier Parametern bereits eine deutlich höhere A
      40 & $1.417054{\times}10^{-6}$ \\ %\hline
      41 & $9.452339{\times}10^{-7}$ \\ \hline
     \end{tabular}
-    \caption[Entwicklung des Maximums des a posteriori-Fehlerschätzers für einige $N$, zweites Beispiel.]{%
-        Entwicklung des Maximums des a posteriori-Fehlerschätzers für steigendes $N$ beim zweiten Beispiel.
+    \caption[Entwicklung des Maximums des a posteriori"=Fehlerschätzers für einige $N$, zweites Beispiel.]{%
+        Entwicklung des Maximums des a posteriori"=Fehlerschätzers für steigendes $N$ beim zweiten Beispiel.
         Siehe auch \cref{figure:entwicklung_rbm_fehler}.
     }
     \label{table:entwicklung_rbm_2}
