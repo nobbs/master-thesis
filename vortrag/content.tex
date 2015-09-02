@@ -5,7 +5,7 @@
 \begin{frame}[t]
     \frametitle{Overarching goal}
 
-    We want to study the separation behavior of polymers.
+    We want to study the phase separation behavior of polymers.
 
     \vfill
 
@@ -13,7 +13,7 @@
         \begin{column}{0.6\textwidth}
             \begin{itemize}
                 \item \onslide<2-> A \emph{polymer} is a large molecule, composed of many repeated subunits (\emph{monomers}, smaller molecules).
-                \item \onslide<3-> Momoners interact with each other in and across polymers.
+                \item \onslide<3-> Monomers interact with each other in and across polymers.
                 \item \onslide<4-> Simplest kinds of polymers are of linear chain type.
                 \item Stochastic models (e.g. random walks, ideal chain models) are used to model these.
             \end{itemize}
@@ -55,13 +55,13 @@
     \includegraphics[scale=0.15]{figures/gyroid_separation.png}
 
     \onslide<2->
-    So how can we predict the microphase separation of polymers through theoretical models?
+    Can we predict the microphase separation of polymers through theoretical models?
 \end{frame}
 
 \begin{frame}[t]
     \frametitle{So, what's self-consistent field theory?}
 
-    Self-consistent field theory (scft) allows us to study the behavior of large stochastic models through simplified models.
+    Self-consistent field theory (SCFT) allows us to study the behavior of large stochastic models through simplified models.
 
     \vfill
     \begin{itemize}
@@ -91,14 +91,14 @@
     \frametitle{So, what's self-consistent field theory?}
 
     Most costly part of one iteration:
-    calculating a solution to the modified diffusion equation (mde)
+    calculating a solution to the modified diffusion equation (MDE)
         \begin{equation}
             \frac{\partial}{\partial s}q(\vec{r}, s) = \Delta q(\vec{r}, s) - w(\vec{r}, s)q(\vec{r}, s), \quad q(\vec{r}, 0) = 1,
         \end{equation}
     with
     \begin{itemize}
         \item the normalized polymer chain contour $s \in [0, 1]$,
-        \item a position in a small volume cell $\vec{r}$,
+        \item a position $\vec{r}$ in a small volume cell $\Omega \subset \mathbb{R}^{n}$ (bounded domain),
         \item the combined external field
         \begin{equation}
             w(\vec{r}, s) = \begin{cases}
@@ -116,14 +116,14 @@
     \vfill
 
     \begin{itemize}
-        \item Mde has to be solved several hundred / thousand times with slight variations in the external fields.
+        \item MDE has to be solved several hundred / thousand times with mostly slight variations in the external fields.
         \item \onslide<2-> Some kind of model reduction resulting in a speed up of the iterative scheme would be useful!
     \end{itemize}
 
     \vfill
     \onslide<3->
     Let's look at some examples that can be obtained by the iterative scheme in the case of one spatial dimension
-    (using a de facto default pseudospectral method for the mde).
+    (using a de facto default pseudospectral method for the MDE).
     \vfill
 \end{frame}
 
@@ -133,7 +133,7 @@
     \begin{itemize}
         \item Let $f = 1/2$.
         \item \uncover<2->{On the left: the final fields $w_A$ and $w_B$.}
-        \item \uncover<3->{On the right: the corresponding fourier coefficients (in the order $\cos(2 \pi), \sin(2 \pi), \cos(4 \pi), \dots$).}
+        \item \uncover<3->{On the right: the corresponding Fourier coefficients (in the order $\cos(2 \pi x), \sin(2 \pi x), \cos(4 \pi x), \dots$).}
     \end{itemize}
 
     \vfill
@@ -167,7 +167,7 @@
     \frametitle{What's striking?}
 
     \begin{itemize}
-        \item External fields exhibit regularity and some kind of symmetry.
+        \item External fields often exhibit regularity and some kind of symmetry.
     \end{itemize}
 
     \vfill
@@ -183,7 +183,7 @@
 
     \onslide<2->
     Maybe this can be used as a leverage point for a model reduction by only considering the functions with significant coefficients
-    $\rightarrow$ Reduced basis method.
+    $\rightarrow$ model reduction by reduced basis method.
 \end{frame}
 
 \begin{frame}[t]
@@ -192,37 +192,44 @@
 
     Given a parametric variational problem
     \begin{equation}
-        b(u, v; \bm \sigma) = f(v), \qquad u \in \mathcal X, v \in \mathcal Y,
+        b(u, v; \bm \sigma) = f(v; \bm \sigma), \qquad u \in \mathcal X, v \in \mathcal Y,
     \end{equation}
     where
     \begin{itemize}
         \item $\mathcal X, \mathcal Y$ are Hilbert spaces,
         \item $\mathcal P \subset \mathbb{R}^{P}$, $P \in \mathbb{N}$, is a closed parameter space,
         \item $b \colon \mathcal X \times \mathcal Y \times \mathcal P \to \mathbb{R}$ is a parametric continuous bilinear form,
-        \item $f \colon \mathcal Y \to \mathbb{R}$ is a continuous linear functional.
+        \item $f \colon \mathcal Y \times \mathcal P \to \mathbb{R}$ is a parametric continuous linear functional.
     \end{itemize}
 
-    \onslide<2->
-    Let's assume we want to compute the solution $u(\bm \sigma)$ in real time or for lots of different parameters $\bm \sigma \in \mathcal P$
-    $\rightarrow$ standard galerkin methods are likely too slow!
+    \onslide<2>
+    Let's assume
+    \begin{equation}
+        \beta(\bm \sigma) := \infsup{u \in \mathcal X}{v \in \mathcal Y} \frac{b(u, v; \bm \sigma)}{\norm{u}_{\mathcal X}\norm{v}_{\mathcal Y}}  > 0 \qquad \text{for all } \bm \sigma \in \mathcal P.
+    \end{equation}
+    $+$ some minor assumptions $\Rightarrow$ for every $\bm \sigma \in \mathcal P$ exists an unique solution $u(\bm \sigma)$.
 \end{frame}
 
 \begin{frame}[t]
     \frametitle{Intermission: Reduced Basis Method}
     \framesubtitle{Basic idea}
 
+    \onslide
+    Let's assume we want to compute the solution $\bm \sigma \mapsto u(\bm \sigma)$ in real time or for lots of different parameters $\bm \sigma \in \mathcal P$
+    $\rightarrow$ standard Galerkin methods are likely too slow!
+
     \begin{itemize}
-        \item Let $\mathcal M := \Set{ u(\bm \sigma) \given \bm \sigma \in \mathcal P }$.
+        \item \onslide<2->Let $\mathcal M := \Set{ u(\bm \sigma) \given \bm \sigma \in \mathcal P }$.
         \item Depending on the properties of the variational problem, $\mathcal M$ is often a smooth manifold with low dimension.
-        \item \onslide<2-> This can be used for model reduction: instead of $\mathcal X$ use $\mathcal M$ as the ansatz space!
+        \item \onslide<3-> This can be used for model reduction: instead of $\mathcal X$ use $\mathcal M$ as the ansatz space!
     \end{itemize}
 
     \vfill
 
-    \onslide<3->
-    Further we won't use the continuous variational problem, but instead the \emph{truth} variational problem based on a high dimensional galerkin method:
+    \onslide<4->
+    Further we won't use the continuous variational problem, but instead the \emph{truth} variational problem based on a high dimensional Galerkin method:
     \begin{equation}
-        b(u, v; \bm \sigma) = f(v), \qquad u \in \mathcal X_{\mathcal N}, v \in \mathcal Y_{\mathcal N},
+        b(u, v; \bm \sigma) = f(v; \bm \sigma), \qquad u \in \mathcal X_{\mathcal N}, v \in \mathcal Y_{\mathcal N},
     \end{equation}
     with subspaces $\mathcal X_{\mathcal N} \subset \mathcal X$, $\mathcal Y_{\mathcal N} \subset \mathcal Y$.
 \end{frame}
@@ -234,48 +241,132 @@
     The reduced basis method consists off two stages:
 
     \begin{itemize}
-        \item \onslide<2-> \emph{Offline-Stage:} Construction of \enquote{optimal} reduced basis spaces $\mathcal X_{N} := \Set{u_{\mathcal N}(\bm \sigma_n) \given n = 1, \dots, N} \subset \mathcal M_{\mathcal N}$ and $\mathcal Y_{N} \subset \mathcal Y_{\mathcal N}$ with low dimension.
-        \item \onslide<3-> \emph{Online-Stage:} Given a parameter $\bm \sigma \in \mathcal P$, compute the rb-solution $u_{N}(\bm \sigma)$ and a certified bound for the error $\norm{u_{N}(\bm \sigma) - u_{\mathcal N}(\bm \sigma)}_{\mathcal X}$ (both independent of $\mathcal N$).
+        \item \onslide<2-> \emph{Offline stage:} Construction of \enquote{optimal} reduced basis spaces $\mathcal X_{N} := \Set{u_{\mathcal N}(\bm \sigma_n) \given n = 1, \dots, N} \subset \mathcal M_{\mathcal N}$ and $\mathcal Y_{N} \subset \mathcal Y_{\mathcal N}$ with low dimension.
+        \item \onslide<4-> \emph{Online stage:} Given a parameter $\bm \sigma \in \mathcal P$, compute the rb-solution $u_{N}(\bm \sigma)$ and a certified bound for the error $\norm{u_{N}(\bm \sigma) - u_{\mathcal N}(\bm \sigma)}_{\mathcal X}$ (both independent of $\mathcal N$).
     \end{itemize}
-    \\[-2em]
     \centering
-    \onslide<2->\includegraphics[width=0.6\textwidth]{figures/rb.pdf}
+    $\;$\\[-3.7em]
+    \onslide<3-> \includegraphics[width=0.58\textwidth]{figures/rb.pdf}
 \end{frame}
 
 \begin{frame}[t]
     \frametitle{Intermission: Reduced Basis Method}
     \framesubtitle{Certified error bound}
+    Let $r_{N} \colon \mathcal Y_{\mathcal N} \times \mathcal P \to \mathbb{R}$ be the residual
+    \begin{equation}
+        r_{N}(v; \bm \sigma) := b(u_{\mathcal N}(\bm \sigma) - u_{N}(\bm \sigma), v; \bm \sigma) = f(v; \bm \sigma) - b(u_{N}(\bm \sigma), v; \bm \sigma).
+    \end{equation}
+    $\Rightarrow$ linear functional for every $\bm \sigma \in \mathcal P$.
 
+    \onslide<2>
+    Standard theorems leads to a posteriori error bound
+    \begin{equation}
+        \norm{u_{N}(\bm \sigma) - u_{\mathcal N}(\bm \sigma)}_{\mathcal X} \leq \frac{\norm{r_{N}(\blank; \bm \sigma)}_{\mathcal Y_{\mathcal N}'}}{\beta_{\mathrm{LB}}(\bm \sigma)} =: \Delta_{N}(\bm \sigma),
+    \end{equation}
+    where
+    \begin{itemize}
+        \item norm of the residual can be efficiently computed through Riesz representation theorem,
+        \item $\beta_{\mathrm{LB}}(\bm \sigma)$ is a computable lower bound for $\beta(\bm \sigma)$.
+    \end{itemize}
 \end{frame}
 
 \begin{frame}[t]
     \frametitle{Intermission: Reduced Basis Method}
-    \framesubtitle{inf-sup-constant}
+    \framesubtitle{Inf-sup-constant}
 
-\end{frame}
+    Problem: how to compute $\beta_{\mathrm{LB}}(\bm \sigma)$ efficiently?
 
-\begin{frame}[t]
-    \frametitle{Intermission: Reduced Basis Method}
-    \framesubtitle{Offline stage}
-
-\end{frame}
-
-\begin{frame}[t]
-    \frametitle{Intermission: Reduced Basis Method}
-    \framesubtitle{Online stage}
-
-\end{frame}
-
-
-\begin{frame}[t]
-    \frametitle{Reduced basis method}
+    \vfill
+    \onslide<2->
+    Default is the so called successive constraint method.
 
     \begin{itemize}
-        \item Replace the fields $w_A, w_B$ with parametric functions
+        \item Reinterpret the calculation of $\beta(\bm \sigma)$ as an optimization problem
+        \\$\rightarrow$ linear objective function, but feasible region in general not a convex polytope.
+        \item \onslide<3->\emph{Offline stage:} Construct \enquote{optimal} lower and upper bounds for the feasible region.
+        \item \onslide<4->\emph{Online stage:} Compute $\beta_{\mathrm{LB}}(\bm \sigma)$ through small linear program.
+    \end{itemize}
+
+    \vfill
+\end{frame}
+
+\begin{frame}[t]
+    \frametitle{Intermission: Reduced Basis Method}
+    \framesubtitle{Offline and online stage}
+
+    Offline stage needs a discrete \enquote{training set} $\mathcal P_{\mathrm{train}} \subset \mathcal P$.\newline
+    Iterative greedy scheme, start with random $\bm \sigma_{1} \in \mathcal P_{\mathrm{train}}$, $\mathcal X_{1} := \Set{u_{\mathcal N}(\bm \sigma_{1})}$:\\[0em]
+    \onslide<2->
+    \begin{enumerate}
+        \item find $\bm \sigma_{N + 1} := \argmax_{\bm \sigma \in \mathcal P_{\mathrm{train}}} \Delta_{N}(\bm \sigma)$,
+        \item set $\mathcal X_{N + 1} := \spn (\mathcal X_{N} \cup \Set{u_{\mathcal N}(\bm \sigma)})$,
+        \item repeat until maximum in step 1 is smaller than a given tolerance.
+    \end{enumerate}
+    $\rightarrow$ computationally intensive part.
+    \vfill
+
+    \onslide<3->
+    Online stage, given a $\bm \sigma \in \mathcal P$:\\[0em]
+    \begin{enumerate}
+        \item solve reduced basis system for $u_{N}(\bm \sigma) \in \mathcal X_{N}$,
+        \item compute certified error bound $\Delta_{N}(\bm \sigma)$.
+    \end{enumerate}
+    $\rightarrow$ runtime depends only on low dimension $N$, not $\mathcal N$.
+\end{frame}
+
+\begin{frame}[t]
+    \frametitle{Intermission: Reduced Basis Method}
+    \framesubtitle{Examples}
+
+    Typical results of the offline stage, one dimensional parameter space.
+
+    \centering
+    \includegraphics<1>[width=0.9\textwidth]{figures/1d_par_s_1.pdf}
+    \includegraphics<2>[width=0.9\textwidth]{figures/1d_par_s_2.pdf}
+    \includegraphics<3>[width=0.9\textwidth]{figures/1d_par_s_3.pdf}
+    \includegraphics<4>[width=0.9\textwidth]{figures/1d_par_s_4.pdf}
+\end{frame}
+
+\begin{frame}[t]
+    \frametitle{Intermission: Reduced Basis Method}
+    \framesubtitle{Examples}
+
+    And now a three dimensional parameter space.
+
+    \centering
+    \includegraphics[width=0.9\textwidth]{figures/3dplot.pdf}
+\end{frame}
+
+
+\begin{frame}[t]
+    \frametitle{Back to the SCFT}
+
+    What we've already done:
+
+    \begin{itemize}
+        \item<1-> Derived a space-time variational formulation (STVP) of the MDE based on Bochner spaces.
+        \item<2-> Replaced the fields $w_A, w_B$ with parametric functions
         \begin{equation}
             w(\bm \sigma) = \sum_{j = 1}^{N} \sigma_{j} \phi_{j},
         \end{equation}
-        where $N \in \mathbb{N} \cup \Set{ \infty }$, $\bm \sigma \in [-1, 1]^{N}$ and $\phi_{j} \in L_{\infty}$, $j = 1, \dots, N$.
+        where $N \in \mathbb{N} \cup \Set{ \infty }$, $\bm \sigma \in [-1, 1]^{N}$ and $\phi_{j} \in L_{\infty}(\Omega)$, $j = 1, \dots, N$.
+        \item<2-> Shown, that the solution of the STVP depends analytically on the parameters (given some restrictive sufficient conditions).
+        \item<3-> Applied a Petrov-Galerkin method to solve the STVP.
+        \item<3-> Experimented with the application of the reduced basis method on the STVP.
+    \end{itemize}
+
+\end{frame}
+
+\begin{frame}[t]
+    \frametitle{Back to the SCFT}
+
+    Problems encountered so far:
+
+    \begin{itemize}
+        \item<1-> The fact that $\mathcal X \neq \mathcal Y$ complicates lots of things.
+        \item<2-> Most suitable Petrov-Galerkin methods aren't unconditionally stable.
+        \item<3-> Successive constraint method suffers from curse of dimensionality and is quite slow for more than a handful of parameters.
+        \\ $\rightarrow$ a priori knowledge about field expansion functions required to obtain a small number of parameters.
     \end{itemize}
 
 \end{frame}
