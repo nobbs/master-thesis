@@ -7,15 +7,14 @@
 \label{chapter:einleitung}
 
 Der Begriff \emph{Polymer} bezeichnet einen aus Makromolekülen bestehenden Stoff.
-Diese Makromoleküle setzen sich wiederum aus vielen kleineren, sich wiederholenden Molekülen, in diesem Zusammenhang Monomere genannt, zusammen.
+Diese Makromoleküle setzen sich wiederum aus vielen kleineren, sich wiederholenden Molekülen, in diesem Zusammenhang \emph{Monomere} genannt, zusammen.
 Besteht ein Polymer aus nur einer Monomer-Gattung, dann spricht man von einem Homopolymer, sonst von einem Heteropolymer oder auch Copolymer.
 Obwohl Polymere in vielen verschiedenen Konfigurationen, beispielsweise ring- oder sternförmig, auftreten können, beschränken wir uns hier auf den Fall eines kettenförmigen Aufbaus.
 Weiter interessieren wir uns nur für Copolymere, vor allem die sogenannten Blockcopolymere, welche aus mehreren Monomer-Gattungen, die homogene zusammenhängende Blöcke bilden, aufgebaut sind (siehe \cref{figure:polymerketten}).
 
-% TODO: zu einer Graphik mit Sidecap machen
 \begin{SCfigure}[][tb]
     \centering
-    \includegraphics[width=0.5\textwidth]{figures/einleitung/copoly1.pdf}
+    \includegraphics[width=0.5\textwidth]{figures/chapter1/copolys.pdf}
     \caption[Skizzenhafte Darstellung verschiedener Polymerarten.]{%
         Skizzenhafte Darstellung verschiedener Polymerarten.
         Von oben nach unten: Homopolymer, ein AB-Diblockcopolymer und ein sogenanntes statistisches AB-Copolymer, bei dem die beiden Monomer-Arten zufällig verteilt sind.
@@ -37,19 +36,19 @@ Diese basiert auf einer makroskopischen Darstellung der Polymere und vernachläs
 \begin{figure}[tb]
     \centering
     \begin{subfigure}[b]{0.15\textwidth}
-        \includegraphics[width=\textwidth]{figures/einleitung/phase1}
+        \includegraphics[width=\textwidth]{figures/chapter1/phase1.eps}
     \end{subfigure}
     \begin{subfigure}[b]{0.15\textwidth}
-        \includegraphics[width=\textwidth]{figures/einleitung/phase2}
+        \includegraphics[width=\textwidth]{figures/chapter1/phase2.eps}
     \end{subfigure}
     \begin{subfigure}[b]{0.15\textwidth}
-        \includegraphics[width=\textwidth]{figures/einleitung/phase3}
+        \includegraphics[width=\textwidth]{figures/chapter1/phase3.eps}
     \end{subfigure}
     \begin{subfigure}[b]{0.15\textwidth}
-        \includegraphics[width=\textwidth]{figures/einleitung/phase4}
+        \includegraphics[width=\textwidth]{figures/chapter1/phase4.eps}
     \end{subfigure}
     \begin{subfigure}[b]{0.15\textwidth}
-        \includegraphics[width=\textwidth]{figures/einleitung/phase5}
+        \includegraphics[width=\textwidth]{figures/chapter1/phase5.eps}
     \end{subfigure}
     \caption[Verschiedene Phasen bei Diblockcopolymeren.]{%
         Verschiedene Phasen bei Diblockcopolymeren, welche experimentell beobachtet wurden, wobei hier nur eine der beiden Monomer-Gattungen dargestellt wird.
@@ -76,7 +75,7 @@ Dabei wird die Polymerkette als stetige, linear elastische Faser aufgefasst und 
 
 \begin{SCfigure}[][tb]
     \centering
-        \includegraphics[width=0.55\textwidth]{figures/einleitung/chainmodell.pdf}
+        \includegraphics[width=0.55\textwidth]{figures/chapter1/chainmodell.pdf}
     \caption[%
         Polymerkette in diskretem und Gaußschem Kettenmodell.
     ]{%
@@ -105,7 +104,6 @@ Aufbauend auf den beschriebenen Modellen, in diesem Fall dem stetigen Gaußschen
 
 Wir beschränken uns im Folgenden auf die Beschreibung der \ac{scft} für die inkompressible Schmelze eines AB-Diblockcopolymers und folgen dabei größtenteils den Ausführungen von \textcite{Matsen:1994bz} sowie \textcite{Stasiak:2011ba}.
 
-% TODO: neue begriffe kenntlich machen
 Erneut wird eine einzelne Volumenzelle betrachtet, beispielsweise ein Würfel, welche selbst Teil eines größeren Systems sein kann.
 Diese Zelle enthalte $n$ AB"=Diblockcopolymere, welche jeweils aus einem A-Block und einem B-Block bestehen, wobei diese wiederum aus $N_{\mathrm{A}}$ Monomeren vom Typ A und aus $N_{\mathrm{B}}$ Monomeren vom Typ B zusammengesetzt sind.
 Der \emph{Polymerisationsgrad},, das heißt die Gesamtanzahl an Monomeren in einem Polymer, ist durch $N = N_{\mathrm{A}} + N_{\mathrm{B}}$ gegeben.
@@ -225,25 +223,25 @@ So wird in \cite{Drolet:1999bs} ein Crank-Nicolson-Verfahren eingesetzt, wobei h
     \centering
     \begin{subfigure}[b]{0.485\textwidth}
         \centering
-        \includegraphics[width=1\textwidth]{figures/einleitung/scft1.pdf}
+        \includegraphics[width=1\textwidth]{figures/chapter1/scft1.pdf}
         \caption{Felder}
     \end{subfigure}
     % ~
     \begin{subfigure}[b]{0.485\textwidth}
         \centering
-        \includegraphics[width=1\textwidth]{figures/einleitung/scft2.pdf}
+        \includegraphics[width=1\textwidth]{figures/chapter1/scft2.pdf}
         \caption{Fourier-Koeffizienten}
     \end{subfigure}
     \\
     \begin{subfigure}[b]{0.485\textwidth}
         \centering
-        \includegraphics[width=1\textwidth]{figures/einleitung/scft_example2_fields.pdf}
+        \includegraphics[width=1\textwidth]{figures/chapter1/scft_example2_fields.pdf}
         \caption{Felder}
     \end{subfigure}
     % ~
     \begin{subfigure}[b]{0.485\textwidth}
         \centering
-        \includegraphics[width=1\textwidth]{figures/einleitung/scft_example2_fourier_coeffs.pdf}
+        \includegraphics[width=1\textwidth]{figures/chapter1/scft_example2_fourier_coeffs.pdf}
         \caption{Fourier-Koeffizienten}
     \end{subfigure}
     \caption[%
