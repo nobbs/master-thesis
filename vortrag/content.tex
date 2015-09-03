@@ -82,7 +82,7 @@
 
 
     \begin{itemize}
-        \item Model leads to a free energy functional depending on external fields $w_{A}$ and $w_{B}$, where saddle points correspond to stable microphase separations!
+        \item Model leads to a free energy functional depending on external fields $w_{A}$ and $w_{B}$, where saddle points correspond to stable microphase separations.
         \item \onslide<2-> Allows an iterative scheme that adjusts the external fields until these satisfy some saddle point equations (\emph{self consistency}).
     \end{itemize}
 \end{frame}
@@ -90,23 +90,24 @@
 \begin{frame}[t]
     \frametitle{So, what's self-consistent field theory?}
 
-    Most costly part of one iteration:
+    Most costly part of each iteration:
     calculating a solution to the modified diffusion equation (MDE)
         \begin{equation}
-            \frac{\partial}{\partial s}q(\vec{r}, s) = \Delta q(\vec{r}, s) - w(\vec{r}, s)q(\vec{r}, s), \quad q(\vec{r}, 0) = 1,
+            \frac{\partial}{\partial s}q(\vec{r}, s) = c\,\Delta q(\vec{r}, s) - w(\vec{r}, s)q(\vec{r}, s), \quad q(\vec{r}, 0) = 1,
         \end{equation}
-    with
+    with $c > 0$ and
+    \onslide<2->
     \begin{itemize}
         \item the normalized polymer chain contour $s \in [0, 1]$,
         \item a position $\vec{r}$ in a small volume cell $\Omega \subset \mathbb{R}^{n}$ (bounded domain),
-        \item the combined external field
+        \item \onslide<3-> the combined external field
         \begin{equation}
             w(\vec{r}, s) = \begin{cases}
                 w_{A}(\vec{r}), & 1 \leq s < f \\
-                w_{B}(\vec{r}), & f < s \leq 1
+                w_{B}(\vec{r}), & f \leq s \leq 1
             \end{cases}
         \end{equation}
-        with the proportion $f \in [0, 1]$ of $A$-type monomers in the polymer chain.
+        with the ratio $f \in [0, 1]$ of $A$-type monomers in the polymer chain.
     \end{itemize}
 \end{frame}
 
@@ -117,7 +118,7 @@
 
     \begin{itemize}
         \item MDE has to be solved several hundred / thousand times with mostly slight variations in the external fields.
-        \item \onslide<2-> Some kind of model reduction resulting in a speed up of the iterative scheme would be useful!
+        \item \onslide<2-> Some kind of model reduction resulting in a speed up of the iterative scheme would be useful.
     \end{itemize}
 
     \vfill
@@ -131,9 +132,9 @@
     \frametitle{Example}
 
     \begin{itemize}
-        \item Let $f = 1/2$.
+        \item Let $\Omega = [0, 10]$ and $f = 1/2$.
         \item \uncover<2->{On the left: the final fields $w_A$ and $w_B$.}
-        \item \uncover<3->{On the right: the corresponding Fourier coefficients (in the order $\cos(2 \pi x), \sin(2 \pi x), \cos(4 \pi x), \dots$).}
+        \item \uncover<3->{On the right: the corresponding Fourier coefficients (absolute value, in the order $\cos(2 \pi x), \sin(2 \pi x), \cos(4 \pi x), \dots$).}
     \end{itemize}
 
     \vfill
@@ -174,15 +175,15 @@
 
     \begin{columns}
         \begin{column}{0.5\textwidth}
-            \includegraphics[width=\textwidth]{figures/scft2.pdf}
+            \includegraphics[width=\textwidth]{figures/scft1.pdf}
         \end{column}
         \begin{column}{0.5\textwidth}
-            \includegraphics[width=\textwidth]{figures/scft_example2_fourier_coeffs.pdf}
+            \includegraphics[width=\textwidth]{figures/scft_example2_fields.pdf}
         \end{column}
     \end{columns}
 
     \onslide<2->
-    Maybe this can be used as a leverage point for a model reduction by only considering the functions with significant coefficients
+    Maybe this can be used as a leverage point for a model reduction by only considering the functions with significant coefficients\\
     $\rightarrow$ model reduction by reduced basis method.
 \end{frame}
 
@@ -192,7 +193,7 @@
 
     Given a parametric variational problem
     \begin{equation}
-        b(u, v; \bm \sigma) = f(v; \bm \sigma), \qquad u \in \mathcal X, v \in \mathcal Y,
+        b(u, v; \bm \sigma) = f(v; \bm \sigma), \qquad u \in \mathcal X,~v \in \mathcal Y,
     \end{equation}
     where
     \begin{itemize}
@@ -207,7 +208,7 @@
     \begin{equation}
         \beta(\bm \sigma) := \infsup{u \in \mathcal X}{v \in \mathcal Y} \frac{b(u, v; \bm \sigma)}{\norm{u}_{\mathcal X}\norm{v}_{\mathcal Y}}  > 0 \qquad \text{for all } \bm \sigma \in \mathcal P.
     \end{equation}
-    $+$ some minor assumptions $\Rightarrow$ for every $\bm \sigma \in \mathcal P$ exists an unique solution $u(\bm \sigma)$.
+    $+$ some minor assumptions $\Rightarrow$ for every $\bm \sigma \in \mathcal P$ exists a unique solution $u(\bm \sigma)$.
 \end{frame}
 
 \begin{frame}[t]
@@ -215,7 +216,7 @@
     \framesubtitle{Basic idea}
 
     \onslide
-    Let's assume we want to compute the solution $\bm \sigma \mapsto u(\bm \sigma)$ in real time or for lots of different parameters $\bm \sigma \in \mathcal P$
+    Let's assume we want to compute the solution $\bm \sigma \mapsto u(\bm \sigma)$ in real time or for lots of different parameters $\bm \sigma \in \mathcal P$\\
     $\rightarrow$ standard Galerkin methods are likely too slow!
 
     \begin{itemize}
@@ -238,11 +239,11 @@
     \frametitle{Intermission: Reduced Basis Method}
     \framesubtitle{Basic idea}
 
-    The reduced basis method consists off two stages:
+    The reduced basis method consists of two stages:
 
     \begin{itemize}
-        \item \onslide<2-> \emph{Offline stage:} Construction of \enquote{optimal} reduced basis spaces $\mathcal X_{N} := \Set{u_{\mathcal N}(\bm \sigma_n) \given n = 1, \dots, N} \subset \mathcal M_{\mathcal N}$ and $\mathcal Y_{N} \subset \mathcal Y_{\mathcal N}$ with low dimension.
-        \item \onslide<4-> \emph{Online stage:} Given a parameter $\bm \sigma \in \mathcal P$, compute the rb-solution $u_{N}(\bm \sigma)$ and a certified bound for the error $\norm{u_{N}(\bm \sigma) - u_{\mathcal N}(\bm \sigma)}_{\mathcal X}$ (both independent of $\mathcal N$).
+        \item \onslide<2-> \emph{Offline stage:} Construction of \enquote{optimal} reduced basis spaces $\mathcal X_{N} := \Set{u_{\mathcal N}(\bm \sigma_n) \given n = 1, \dots, N} \subset \mathcal M_{\mathcal N}$ and $\mathcal Y_{N} \subset \mathcal Y_{\mathcal N}$ with low dimension $N \ll \mathcal N$.
+        \item \onslide<4-> \emph{Online stage:} Given a parameter $\bm \sigma \in \mathcal P$, compute the rb-solution $u_{N}(\bm \sigma)$ and a certified bound for the error $\norm{u_{N}(\bm \sigma) - u_{\mathcal N}(\bm \sigma)}_{\mathcal X}$ \\(both independent of $\mathcal N$).
     \end{itemize}
     \centering
     $\;$\\[-3.7em]
@@ -256,16 +257,16 @@
     \begin{equation}
         r_{N}(v; \bm \sigma) := b(u_{\mathcal N}(\bm \sigma) - u_{N}(\bm \sigma), v; \bm \sigma) = f(v; \bm \sigma) - b(u_{N}(\bm \sigma), v; \bm \sigma).
     \end{equation}
-    $\Rightarrow$ linear functional for every $\bm \sigma \in \mathcal P$.
+    $\Rightarrow$ continuous linear functional for every $\bm \sigma \in \mathcal P$.
 
     \onslide<2>
-    Standard theorems leads to a posteriori error bound
+    Standard theorems lead to a posteriori error bound
     \begin{equation}
         \norm{u_{N}(\bm \sigma) - u_{\mathcal N}(\bm \sigma)}_{\mathcal X} \leq \frac{\norm{r_{N}(\blank; \bm \sigma)}_{\mathcal Y_{\mathcal N}'}}{\beta_{\mathrm{LB}}(\bm \sigma)} =: \Delta_{N}(\bm \sigma),
     \end{equation}
     where
     \begin{itemize}
-        \item norm of the residual can be efficiently computed through Riesz representation theorem,
+        \item the norm of the residual can be efficiently computed through the Riesz representation theorem,
         \item $\beta_{\mathrm{LB}}(\bm \sigma)$ is a computable lower bound for $\beta(\bm \sigma)$.
     \end{itemize}
 \end{frame}
@@ -278,7 +279,7 @@
 
     \vfill
     \onslide<2->
-    Default is the so called successive constraint method.
+    Default: successive constraint method.
 
     \begin{itemize}
         \item Reinterpret the calculation of $\beta(\bm \sigma)$ as an optimization problem
@@ -294,12 +295,12 @@
     \frametitle{Intermission: Reduced Basis Method}
     \framesubtitle{Offline and online stage}
 
-    Offline stage needs a discrete \enquote{training set} $\mathcal P_{\mathrm{train}} \subset \mathcal P$.\newline
+    Offline stage of RBM needs a discrete \enquote{training set} $\mathcal P_{\mathrm{train}} \subset \mathcal P$.\newline
     Iterative greedy scheme, start with random $\bm \sigma_{1} \in \mathcal P_{\mathrm{train}}$, $\mathcal X_{1} := \Set{u_{\mathcal N}(\bm \sigma_{1})}$:\\[0em]
     \onslide<2->
     \begin{enumerate}
         \item find $\bm \sigma_{N + 1} := \argmax_{\bm \sigma \in \mathcal P_{\mathrm{train}}} \Delta_{N}(\bm \sigma)$,
-        \item set $\mathcal X_{N + 1} := \spn (\mathcal X_{N} \cup \Set{u_{\mathcal N}(\bm \sigma)})$,
+        \item set $\mathcal X_{N + 1} := \spn (\mathcal X_{N} \cup \Set{u_{\mathcal N}(\bm \sigma_{N + 1})})$,
         \item repeat until maximum in step 1 is smaller than a given tolerance.
     \end{enumerate}
     $\rightarrow$ computationally intensive part.
@@ -331,10 +332,10 @@
     \frametitle{Intermission: Reduced Basis Method}
     \framesubtitle{Examples}
 
-    And now a three dimensional parameter space.
+    And now a four dimensional parameter space.
 
     \centering
-    \includegraphics[width=0.9\textwidth]{figures/3dplot.pdf}
+    \includegraphics[width=0.9\textwidth]{figures/ch5ex2_rbm_error.pdf}
 \end{frame}
 
 
@@ -350,7 +351,7 @@
             w(\bm \sigma) = \sum_{j = 1}^{N} \sigma_{j} \phi_{j},
         \end{equation}
         where $N \in \mathbb{N} \cup \Set{ \infty }$, $\bm \sigma \in [-1, 1]^{N}$ and $\phi_{j} \in L_{\infty}(\Omega)$, $j = 1, \dots, N$.
-        \item<2-> Shown, that the solution of the STVP depends analytically on the parameters (given some restrictive sufficient conditions).
+        \item<2-> Shown that the solution of the STVP depends analytically on the parameters (given some restrictive sufficient conditions).
         \item<3-> Applied a Petrov-Galerkin method to solve the STVP.
         \item<3-> Experimented with the application of the reduced basis method on the STVP.
     \end{itemize}
@@ -366,7 +367,7 @@
         \item<1-> The fact that $\mathcal X \neq \mathcal Y$ complicates lots of things.
         \item<2-> Most suitable Petrov-Galerkin methods aren't unconditionally stable.
         \item<3-> Successive constraint method suffers from curse of dimensionality and is quite slow for more than a handful of parameters.
-        \\ $\rightarrow$ a priori knowledge about field expansion functions required to obtain a small number of parameters.
+        \\ $\rightarrow$ a priori knowledge about field expansion functions required to reduce number of parameters.
     \end{itemize}
 
 \end{frame}
