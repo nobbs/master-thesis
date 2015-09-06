@@ -12,9 +12,9 @@
     \begin{columns}
         \begin{column}{0.6\textwidth}
             \begin{itemize}
-                \item \onslide<2-> A \emph{polymer} is a large molecule, composed of many repeated subunits (\emph{monomers}, smaller molecules).
-                \item \onslide<3-> Monomers interact with each other in and across polymers.
-                \item \onslide<4-> Simplest kinds of polymers are of linear chain type.
+                \item A \emph{polymer} is a large molecule, composed of many repeated subunits (\emph{monomers}, smaller molecules).
+                \item Monomers interact with each other in and across polymers.
+                \item \onslide<2-> Simplest kinds of polymers are of \emph{linear chain} type.
                 \item Stochastic models (e.g. random walks, ideal chain models) are used to model these.
             \end{itemize}
         \end{column}
@@ -32,12 +32,11 @@
 
     \begin{itemize}
         \item Polymer melts (liquid phase) can exhibit different separation behaviors:
-        \onslide<2->
         \begin{itemize}
             \item \emph{macrophase separation:} liquid-liquid separation (e.g. like water / oil); mostly seen in blends of different polymers.
             \item \emph{microphase separation:} distinct ordering of individual polymer chains.
         \end{itemize}
-        \onslide<3->
+        \onslide<2->
         \item We are interested in the microphase separation of \emph{diblock copolymers}.
         \item These consist of two types of monomers (e.g. A and B) forming two large blocks.
     \end{itemize}
@@ -54,7 +53,6 @@
     \centering
     \includegraphics[scale=0.15]{figures/gyroid_separation.png}
 
-    \onslide<2->
     Can we predict the microphase separation of polymers through theoretical models?
 \end{frame}
 
@@ -63,15 +61,16 @@
 
     Self-consistent field theory (SCFT) allows us to study the behavior of large stochastic models through simplified models.
 
+    \onslide<2->
     \vfill
     \begin{itemize}
-        \item \onslide<2-> \emph{Goal:} study a complex stochastic model (e.g. a polymer melt) with a huge number of small individual interacting components (e.g. monomers).
-        \item \onslide<3-> \emph{Idea:} instead of considering interactions between all the individual components, approximate the effect on a given individual by a single averaged effect (so called \emph{external field}).
+        \item \emph{Goal:} study a complex stochastic model (e.g. a polymer melt) with a huge number of small individual interacting components (e.g. monomers).
+        \item \emph{Idea:} instead of considering interactions between all the individual components, approximate the effect on a given individual by a single averaged effect (so called \emph{external field}).
     \end{itemize}
 
     \vfill
     \centering
-    \onslide<4->
+    \onslide<3->
     \emph{This reduces a many-body problem to a one-body problem!}
 \end{frame}
 
@@ -83,7 +82,7 @@
 
     \begin{itemize}
         \item Model leads to a free energy functional depending on external fields $w_{A}$ and $w_{B}$, where saddle points correspond to stable microphase separations.
-        \item \onslide<2-> Allows an iterative scheme that adjusts the external fields until these satisfy some saddle point equations (\emph{self consistency}).
+        \item Allows an iterative scheme that adjusts the external fields until these satisfy some saddle point equations (\emph{self consistency}).
     \end{itemize}
 \end{frame}
 
@@ -91,7 +90,7 @@
     \frametitle{So, what's self-consistent field theory?}
 
     Most costly part of each iteration:
-    calculating a solution to the modified diffusion equation (MDE)
+    calculating a solution to the \emph{modified diffusion equation} (MDE)
         \begin{equation}
             \frac{\partial}{\partial s}q(\vec{r}, s) = c\,\Delta q(\vec{r}, s) - w(\vec{r}, s)q(\vec{r}, s), \quad q(\vec{r}, 0) = 1,
         \end{equation}
@@ -117,12 +116,12 @@
     \vfill
 
     \begin{itemize}
-        \item MDE has to be solved several hundred / thousand times with mostly slight variations in the external fields.
-        \item \onslide<2-> Some kind of model reduction resulting in a speed up of the iterative scheme would be useful.
+        \item MDE has to be solved \emph{several hundred / thousand times} with mostly slight variations in the external fields.
+        \item Some kind of model reduction resulting in a speed up of the iterative scheme would be useful.
     \end{itemize}
 
     \vfill
-    \onslide<3->
+    \onslide<2->
     Let's look at some examples that can be obtained by the iterative scheme in the case of one spatial dimension
     (using a de facto default pseudospectral method for the MDE).
     \vfill
@@ -184,14 +183,14 @@
 
     \onslide<2->
     Maybe this can be used as a leverage point for a model reduction by only considering the functions with significant coefficients\\
-    $\rightarrow$ model reduction by reduced basis method.
+    $\rightarrow$ model reduction by \emph{reduced basis method}.
 \end{frame}
 
 \begin{frame}[t]
     \frametitle{Intermission: Reduced Basis Method}
     \framesubtitle{Preliminaries}
 
-    Given a parametric variational problem
+    Given a \emph{parametric variational problem}
     \begin{equation}
         b(u, v; \bm \sigma) = f(v; \bm \sigma), \qquad u \in \mathcal X,~v \in \mathcal Y,
     \end{equation}
@@ -221,14 +220,14 @@
 
     \begin{itemize}
         \item \onslide<2->Let $\mathcal M := \Set{ u(\bm \sigma) \given \bm \sigma \in \mathcal P }$.
-        \item Depending on the properties of the variational problem, $\mathcal M$ is often a smooth manifold with low dimension.
-        \item \onslide<3-> This can be used for model reduction: instead of $\mathcal X$ use $\mathcal M$ as the ansatz space!
+        \item Depending on the properties of the variational problem, $\mathcal M$ is often a \emph{smooth manifold with low dimension}.
+        \item This can be used for model reduction: instead of $\mathcal X$ use $\mathcal M$ as the ansatz space!
     \end{itemize}
 
     \vfill
 
-    \onslide<4->
-    Further we won't use the continuous variational problem, but instead the \emph{truth} variational problem based on a high dimensional Galerkin method:
+    \onslide<3->
+    Further we won't use the continuous variational problem, but instead the \emph{truth variational problem} based on a high dimensional Galerkin method:
     \begin{equation}
         b(u, v; \bm \sigma) = f(v; \bm \sigma), \qquad u \in \mathcal X_{\mathcal N}, v \in \mathcal Y_{\mathcal N},
     \end{equation}
@@ -243,24 +242,24 @@
 
     \begin{itemize}
         \item \onslide<2-> \emph{Offline stage:} Construction of \enquote{optimal} reduced basis spaces $\mathcal X_{N} := \Set{u_{\mathcal N}(\bm \sigma_n) \given n = 1, \dots, N} \subset \mathcal M_{\mathcal N}$ and $\mathcal Y_{N} \subset \mathcal Y_{\mathcal N}$ with low dimension $N \ll \mathcal N$.
-        \item \onslide<4-> \emph{Online stage:} Given a parameter $\bm \sigma \in \mathcal P$, compute the rb-solution $u_{N}(\bm \sigma)$ and a certified bound for the error $\norm{u_{N}(\bm \sigma) - u_{\mathcal N}(\bm \sigma)}_{\mathcal X}$ \\(both independent of $\mathcal N$).
+        \item \onslide<3-> \emph{Online stage:} Given a parameter $\bm \sigma \in \mathcal P$, compute the rb-solution $u_{N}(\bm \sigma)$ and a certified bound for the error $\norm{u_{N}(\bm \sigma) - u_{\mathcal N}(\bm \sigma)}_{\mathcal X}$ \\(both independent of $\mathcal N$).
     \end{itemize}
     \centering
     $\;$\\[-3.7em]
-    \onslide<3-> \includegraphics[width=0.58\textwidth]{figures/rb.pdf}
+    \onslide<2-> \includegraphics[width=0.58\textwidth]{figures/rb.pdf}
 \end{frame}
 
 \begin{frame}[t]
     \frametitle{Intermission: Reduced Basis Method}
     \framesubtitle{Certified error bound}
-    Let $r_{N} \colon \mathcal Y_{\mathcal N} \times \mathcal P \to \mathbb{R}$ be the residual
+    Let $r_{N} \colon \mathcal Y_{\mathcal N} \times \mathcal P \to \mathbb{R}$ be the \emph{residual}
     \begin{equation}
         r_{N}(v; \bm \sigma) := b(u_{\mathcal N}(\bm \sigma) - u_{N}(\bm \sigma), v; \bm \sigma) = f(v; \bm \sigma) - b(u_{N}(\bm \sigma), v; \bm \sigma).
     \end{equation}
     $\Rightarrow$ continuous linear functional for every $\bm \sigma \in \mathcal P$.
 
     \onslide<2>
-    Standard theorems lead to a posteriori error bound
+    Standard theorems lead to \emph{a posteriori error bound}
     \begin{equation}
         \norm{u_{N}(\bm \sigma) - u_{\mathcal N}(\bm \sigma)}_{\mathcal X} \leq \frac{\norm{r_{N}(\blank; \bm \sigma)}_{\mathcal Y_{\mathcal N}'}}{\beta_{\mathrm{LB}}(\bm \sigma)} =: \Delta_{N}(\bm \sigma),
     \end{equation}
@@ -279,13 +278,13 @@
 
     \vfill
     \onslide<2->
-    Default: successive constraint method.
+    Default: \emph{successive constraint method}.
 
     \begin{itemize}
         \item Reinterpret the calculation of $\beta(\bm \sigma)$ as an optimization problem
         \\$\rightarrow$ linear objective function, but feasible region in general not a convex polytope.
         \item \onslide<3->\emph{Offline stage:} Construct \enquote{optimal} lower and upper bounds for the feasible region.
-        \item \onslide<4->\emph{Online stage:} Compute $\beta_{\mathrm{LB}}(\bm \sigma)$ through small linear program.
+        \item \emph{Online stage:} Compute $\beta_{\mathrm{LB}}(\bm \sigma)$ through small linear program.
     \end{itemize}
 
     \vfill
@@ -296,8 +295,7 @@
     \framesubtitle{Offline and online stage}
 
     Offline stage of RBM needs a discrete \enquote{training set} $\mathcal P_{\mathrm{train}} \subset \mathcal P$.\newline
-    Iterative greedy scheme, start with random $\bm \sigma_{1} \in \mathcal P_{\mathrm{train}}$, $\mathcal X_{1} := \Set{u_{\mathcal N}(\bm \sigma_{1})}$:\\[0em]
-    \onslide<2->
+    \emph{Iterative greedy scheme}, start with random $\bm \sigma_{1} \in \mathcal P_{\mathrm{train}}$, $\mathcal X_{1} := \Set{u_{\mathcal N}(\bm \sigma_{1})}$:\\[0em]
     \begin{enumerate}
         \item find $\bm \sigma_{N + 1} := \argmax_{\bm \sigma \in \mathcal P_{\mathrm{train}}} \Delta_{N}(\bm \sigma)$,
         \item set $\mathcal X_{N + 1} := \spn (\mathcal X_{N} \cup \Set{u_{\mathcal N}(\bm \sigma_{N + 1})})$,
@@ -306,13 +304,13 @@
     $\rightarrow$ computationally intensive part.
     \vfill
 
-    \onslide<3->
+    \onslide<2->
     Online stage, given a $\bm \sigma \in \mathcal P$:\\[0em]
     \begin{enumerate}
         \item solve reduced basis system for $u_{N}(\bm \sigma) \in \mathcal X_{N}$,
         \item compute certified error bound $\Delta_{N}(\bm \sigma)$.
     \end{enumerate}
-    $\rightarrow$ runtime depends only on low dimension $N$, not $\mathcal N$.
+    \emph{$\rightarrow$ runtime depends only on low dimension $N$, not $\mathcal N$}.
 \end{frame}
 
 \begin{frame}[t]
@@ -345,14 +343,14 @@
     What we've already done:
 
     \begin{itemize}
-        \item<1-> Derived a space-time variational formulation (STVP) of the MDE based on Bochner spaces.
+        \item<1-> Derived a \emph{space-time variational formulation} (STVP) of the MDE based on \emph{Bochner spaces}.
         \item<2-> Replaced the fields $w_A, w_B$ with parametric functions
         \begin{equation}
             w(\bm \sigma) = \sum_{j = 1}^{N} \sigma_{j} \phi_{j},
         \end{equation}
         where $N \in \mathbb{N} \cup \Set{ \infty }$, $\bm \sigma \in [-1, 1]^{N}$ and $\phi_{j} \in L_{\infty}(\Omega)$, $j = 1, \dots, N$.
-        \item<2-> Shown that the solution of the STVP depends analytically on the parameters (given some restrictive sufficient conditions).
-        \item<3-> Applied a Petrov-Galerkin method to solve the STVP.
+        \item<2-> Shown that the solution of the STVP depends \emph{analytically} on the parameters (given some restrictive sufficient conditions).
+        \item<3-> Applied a \emph{Petrov-Galerkin} method to solve the STVP.
         \item<3-> Experimented with the application of the reduced basis method on the STVP.
     \end{itemize}
 
