@@ -1026,7 +1026,7 @@ legend style={at={(1,0.03)},anchor=south east,legend cell align=left,align=left,
 9.90572	3.01682e-11	\\
 9.932	1.56689e-11	\\
 };
-\addlegendentry{$\norm{u_{N}(\sigma) - u_{\mathcal N}(\sigma)}_{\mathcal X}$};
+\addlegendentry{$\Delta_{N}(\sigma)$};
 
 \addplot [color=matlab2, densely dotted]
   table[row sep=crcr]{
@@ -2031,7 +2031,7 @@ legend style={at={(1,0.03)},anchor=south east,legend cell align=left,align=left,
 9.90572	5.54529e-12	\\
 9.932	2.87281e-12	\\
 };
-\addlegendentry{$\Delta_{N}(\sigma)$};
+\addlegendentry{$\norm{u_{N}(\sigma) - u_{\mathcal N}(\sigma)}_{\mathcal X}$};
 
 \end{axis}
 \end{tikzpicture}%

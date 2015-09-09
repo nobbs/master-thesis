@@ -1,4 +1,8 @@
-\documentclass[10pt]{beamer}
+\documentclass[
+    10pt,
+    % notes,
+    % handout
+]{beamer}
 
 % Verwende etex als zugrundeliegende Implementierung (-> mehr Speicher für Tex!)
 \usepackage{etex}
@@ -107,12 +111,7 @@
 %% Metadaten des Dokuments
 \title{First Steps towards a Reduced Basis Method for Self-Consistent Field Theory Models}
 \author{Alexej Disterhoft}
-\institute[Johannes Gutenberg Universität] % (optional)
-{
-  Institut für Mathematik\\
-  Johannes Gutenberg Universität Mainz
-}
-\date{\today}
+\date{9. September 2015}
 
 %% Einzug nach Absatz und Zwischenraum
 \setlength{\parindent}{0pt}
@@ -131,6 +130,12 @@
 \input{commands.tex}
 
 \addbibresource{literature.bib}
+
+\setbeamercolor{bibliography entry title}{fg=gray}
+\setbeamercolor{bibliography entry author}{fg=gray}
+\setbeamercolor{bibliography entry location}{fg=gray}
+\setbeamercolor{bibliography entry note}{fg=gray}
+\setbeamertemplate{note page}[plain]
 
 \begin{document}
 \input{content.tex}
