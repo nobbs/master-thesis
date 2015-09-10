@@ -49,7 +49,7 @@ An dieser Stelle wollen wir in aller Kürze die wichtigen Dateien der Implementi
     Beide sind als Klassen implementiert und zu großen Teilen unabhängig von der zugrundeliegenden Petrov"=Galerkin"=Implementierung.
     \item \verb!/code/src/galerkin! enthält die Bausteine des verwendeten Petrov"=Galerkin"=Verfahrens, die in folgende die Verzeichnisse aufgeteilt sind:
     \begin{itemize}[leftmargin=1.5em]
-        \item \verb!./spatial! enthält die abstrakte Klasse \verb!SpatialAssemblyAbstract.m! sowie die beiden abgeleiteten Implementierungen \verb!SpatialAssemblyFourier.m! und \verb!SpatialAssemblySine.m!.
+        \item \verb!./spatial! enthält neben der abstrakten Klasse \verb!SpatialAssemblyAbstract.m! die Implementierungen \verb!SpatialAssemblyFourier.m! und \verb!SpatialAssemblySine.m!.
         Letztere unterscheiden sich theoretisch zwar nur in der Wahl der Basisfunktionen, da die benötigten Gramschen Matrizen aber nicht durch numerische Quadratur sondern anhand äquivalenter Ausdrücke ausgewertet werden, ergeben sich größere Unterschiede im Quellcode.
         \item \verb!./temporal! umfasst die abstrakte Klasse \verb!TemporalAssemblyAbstract.m! und die Implementierung \verb!TemporalAssemblyNodal.m! sowie ferner eine weitere Implementierung \verb!TemporalAssemblyLegendre.m!, welche ein Überbleibsel aus den Anfängen dieser Arbeit ist.
         Da letztere Legendre"=Polynome für die zeitliche Diskretisierung verwendet und dementsprechend den zeitlichen Wechsel der Felder nur schlecht abbildet, wurde stattdessen zu dem aus \cref{chapter:galerkin} bekannten Finite-Elemente-Ansatz in \verb!TemporalAssemblyNodal.m! gewechselt.

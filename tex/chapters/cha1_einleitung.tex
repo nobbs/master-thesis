@@ -10,20 +10,20 @@ Der Begriff \emph{Polymer} bezeichnet einen aus Makromolekülen bestehenden Stof
 Diese Makromoleküle setzen sich wiederum aus vielen kleineren, sich wiederholenden Molekülen, in diesem Zusammenhang \emph{Monomere} genannt, zusammen.
 Besteht ein Polymer aus nur einer Monomer-Gattung, dann spricht man von einem Homopolymer, sonst von einem Heteropolymer oder auch Copolymer.
 Obwohl Polymere in vielen verschiedenen Konfigurationen, beispielsweise ring- oder sternförmig, auftreten können, beschränken wir uns hier auf den Fall eines kettenförmigen Aufbaus.
-Weiter interessieren wir uns nur für Copolymere, vor allem die sogenannten Blockcopolymere, welche aus mehreren Monomer-Gattungen, die homogene zusammenhängende Blöcke bilden, aufgebaut sind (siehe \cref{figure:polymerketten}).
+Weiter interessieren wir uns nur für Copolymere, vor allem die sogenannten Blockcopolymere, welche aus mehreren Monomer-Gattungen, die homogene zusammenhängende Blöcke bilden, aufgebaut sind (siehe Abbildung \ref{figure:polymerketten}).
 
-\begin{SCfigure}[][tb]
-    \centering
-    \includegraphics[width=0.5\textwidth]{figures/chapter1/copolys.pdf}
-    \caption[Skizzenhafte Darstellung verschiedener Polymerarten.]{%
+\begin{figure}[tb]
+    \begin{captionbeside}[Skizzenhafte Darstellung verschiedener Polymerarten.]{%
         Skizzenhafte Darstellung verschiedener Polymerarten.
         Von oben nach unten: Homopolymer, ein AB-Diblockcopolymer und ein sogenanntes statistisches AB-Copolymer, bei dem die beiden Monomer-Arten zufällig verteilt sind.
-    }
+    }[i][\textwidth-2em][1em]
+    \includegraphics[width=0.6\textwidth]{figures/chapter1/copolys.pdf}
+    \end{captionbeside}
     \label{figure:polymerketten}
-\end{SCfigure}
+\end{figure}
 
 Von besonderem Interesse ist nun das Verhalten von Polymerschmelzen (\foreign{engl.}{polymer melt}), das heißt des flüssigen Aggregatzustands eines Polymers, sowie das Verhalten von Gemischen verschiedener polymerer Stoffe.
-So neigen die Gemische vieler Paare von Homopolymeren zu makroskopischer Phasenseparation, wie man es beispielsweise auch von Öl und Essig kennt.
+So neigen die Gemische vieler Paare von Homopolymeren zu makroskopischer Phasenseparation, wie man es beispielsweise auch von Öl und Wasser kennt.
 Eine ähnliche Tendenz zur Separation findet man auch bei Schmelzen von Blockcopolymeren.
 Hierbei ist aber aufgrund der Verbindung zwischen den verschiedenen Monomer-Blöcken keine makroskopische Phasenseparation möglich, stattdessen kommt es zu einer periodischen mikroskopischen Separation (vergleiche \cref{figure:phasen}).
 
@@ -35,19 +35,19 @@ Diese basiert auf einer makroskopischen Darstellung der Polymere und vernachläs
 
 \begin{figure}[tb]
     \centering
-    \begin{subfigure}[b]{0.15\textwidth}
+    \begin{subfigure}[b]{0.14\textwidth}
         \includegraphics[width=\textwidth]{figures/chapter1/phase1.eps}
     \end{subfigure}
-    \begin{subfigure}[b]{0.15\textwidth}
+    \begin{subfigure}[b]{0.14\textwidth}
         \includegraphics[width=\textwidth]{figures/chapter1/phase2.eps}
     \end{subfigure}
-    \begin{subfigure}[b]{0.15\textwidth}
+    \begin{subfigure}[b]{0.14\textwidth}
         \includegraphics[width=\textwidth]{figures/chapter1/phase3.eps}
     \end{subfigure}
-    \begin{subfigure}[b]{0.15\textwidth}
+    \begin{subfigure}[b]{0.14\textwidth}
         \includegraphics[width=\textwidth]{figures/chapter1/phase4.eps}
     \end{subfigure}
-    \begin{subfigure}[b]{0.15\textwidth}
+    \begin{subfigure}[b]{0.14\textwidth}
         \includegraphics[width=\textwidth]{figures/chapter1/phase5.eps}
     \end{subfigure}
     \caption[Verschiedene Phasen bei Diblockcopolymeren.]{%
@@ -68,22 +68,20 @@ Im Folgenden betrachten wir eine nicht näher spezifizierte Volumenzelle und geb
 
 Das diskrete Modell stellt die Polymerkette als eine diskrete Kette von Partikeln derart dar, dass aneinanderhängende Monomere ähnlich einem Scharnier frei beweglich sind.
 Dabei werden Wechselwirkungen zwischen benachbarten Monomeren berücksichtigt, während auf der Kette weit auseinanderliegende Partikel ignoriert werden.
-Diese Wechselwirkungen können in \cref{figure:kettenmodelle} beispielsweise als Einschränkung des Winkels $\vartheta_9$ durch die gegenseitige Beeinflussung der Partikel $8, 9$ und $10$ auftreten.
+Diese Wechselwirkungen können in Abbildung \ref{figure:kettenmodelle} beispielsweise als Einschränkung des Winkels $\vartheta_9$ durch die gegenseitige Beeinflussung der Partikel $8, 9$ und $10$ auftreten.
 
 Das stetige Gaußsche Kettenmodell, welches man unter anderem auch als stetigen Grenzfall des beschriebenen diskreten Modells erhält, hat sich sowohl bei analytischen als auch numerischen Betrachtungen als besonders nützlich erwiesen.
 Dabei wird die Polymerkette als stetige, linear elastische Faser aufgefasst und durch eine Kurve $\vec{r}(s)$ parametrisiert, wobei $s \in [0, 1]$ eine entlang der normalisierten Kontur der Kette verlaufende Variable ist.
 
-\begin{SCfigure}[][tb]
-    \centering
-        \includegraphics[width=0.55\textwidth]{figures/chapter1/chainmodell.pdf}
-    \caption[%
-        Polymerkette in diskretem und Gaußschem Kettenmodell.
-    ]{%
+\begin{figure}[tb]
+    \begin{captionbeside}[Polymerkette in diskretem und Gaußschem Kettenmodell.]{%
         Schematische Darstellung einer Polymerkette im diskreten Kettenmodell (links) und im stetigen Gaußschen Kettenmodell (rechts).
         Abbildung reproduziert nach \cite[Figure 2.1 und 2.5]{Fredrickson:2006th}.
-    }
+    }[i][\textwidth-2em][1em]
+        \includegraphics[width=0.5\textwidth]{figures/chapter1/chainmodell.pdf}
+    \end{captionbeside}
     \label{figure:kettenmodelle}
-\end{SCfigure}
+\end{figure}
 
 Sowohl das diskrete als auch das stetige Kettenmodell haben einen starken Bezug zur Stochastik, da sie sich auch als Random Walks beziehungsweise stochastische Prozesse auffassen lassen.
 Dies stellt einen umfangreichen \enquote{Werkzeugkasten} zur Untersuchung dieser zur Verfügung.

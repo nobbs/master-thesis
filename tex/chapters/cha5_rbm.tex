@@ -47,19 +47,17 @@ Die Truth"=Lösungsmenge sei nun definiert als
     \mathcal M_{\mathcal N} := \Set{u_{\mathcal N}(\bm \sigma) \in \mathcal X_{\mathcal N} \given \bm \sigma \in \mathcal P}.
 \end{equation}
 Dies erlaubt die Konstruktion eines niedrigdimensionalen Unterraums $\mathcal X_{N} \subset \mathcal M_{\mathcal N} \subset \mathcal X_{\mathcal N}$ der Dimension $N$, welcher als Ansatzraum eines weiteren Galerkin"=Verfahrens dienen wird.
-Dies ist die Grundidee der RB"=Methoden, die in \cref{figure:rbm_loesungsmenge} noch einmal skizzenhaft veranschaulicht wird.
+Dies ist die Grundidee der RB"=Methoden, die in Abbildung \ref{figure:rbm_loesungsmenge} noch einmal skizzenhaft veranschaulicht wird.
 
-\begin{SCfigure}[][tb]
-    \centering
-    \includegraphics[width=0.5\textwidth]{figures/chapter5/rb.pdf}
-    \caption[%
-    Skizze zur Motivation der Reduzierte"=Basis"=Methode.
-    ]{
+\begin{figure}[tb]
+    \begin{captionbeside}[Skizze zur Motivation der Reduzierte"=Basis"=Methode.]{%
         Skizze der Funktionsweise der Reduzierte"=Basis"=Methode im Falle eines eindimensionalen Parameters $\sigma$.
         Die Reduzierte"=Basis"=Lösung $u_{N}(\sigma)$ ergibt sich als Linearkombinationen der Truth"=Lösungen $u_{\mathcal N}(\sigma_{i})$ für gewisse $\sigma_{i} \in \mathcal P$.
-        }
+    }[o][\textwidth-2em][1em]
+        \includegraphics[width=0.5\textwidth]{figures/chapter5/rb.pdf}
+    \end{captionbeside}
     \label{figure:rbm_loesungsmenge}
-\end{SCfigure}
+\end{figure}
 
 Die Konstruktion des niedrigdimensionalen Ansatzraumes $\mathcal X_{N}$ erfolgt unter dem Aspekt, den durch das zweite Galerkin"=Verfahren zusätzlich eingeführten Fehler für alle Parameter des Parameterraums $\mathcal P$ zu minimieren, was in einem hohen Rechenaufwand resultiert.
 Dies motiviert die bei RB"=Methoden übliche Zerlegung in zwei Stufen.
@@ -797,7 +795,7 @@ Bei dieser relativ niedrigen Dimension der Truth"=Diskretisierung benötigt dies
 Letzterer sorgt für den Großteil dieser Laufzeit und würde bei einer höheren Dimension der Truth"=Diskretisierung vermutlich weit weniger ins Gewicht fallen.
 Dies kann hier aber nicht weiter untersucht werden, da dies natürlich eine weitere Steigerung der Laufzeiten für die Offline"=Phasen bedeutet.
 
-\cref{figure:entwicklung_rbm_fehler} und \cref{table:entwicklung_rbm_2} zeigen die Entwicklung des a posteriori"=Fehlerschätzers.
+\cref{figure:entwicklung_rbm_fehler} und Tabelle \ref{table:entwicklung_rbm_2} zeigen die Entwicklung des a posteriori"=Fehlerschätzers.
 Es fällt auf, das bei lediglich vier Parametern bereits eine deutlich höhere Anzahl an Samples benötigt wird um eine Fehlertoleranz von $10^{-6}$ zu unterschreiten, der maximale a posteriori"=Fehlerschätzer aber weiterhin monoton fällt.
 
 \begin{figure}[tb!]
@@ -806,32 +804,32 @@ Es fällt auf, das bei lediglich vier Parametern bereits eine deutlich höhere A
     \caption[Entwicklung des Maximums des a posteriori"=Fehlerschätzers für steigendes $N$, zweites Beispiel.]{%
         Entwicklung des Maximums des a posteriori"=Fehlerschätzers für steigendes $N$ beim zweiten Beispiel.
         Die geforderte Toleranz $10^{-6}$ wird beim $41.$ Iterationsschritt unterschritten.
-        Siehe auch \cref{table:entwicklung_rbm_2}.
+        Siehe auch Tabelle \ref{table:entwicklung_rbm_2}.
         }
     \label{figure:entwicklung_rbm_fehler}
 \end{figure}
 
-\begin{SCtable}[][tb!]
-    \centering
-    \begin{tabular}{|c|c|}\hline
-      $N$ & $\Delta_{N}^{\mathrm{max}}$ \\ \hline
-      1 & $5.335096{\times}10^{-1}$ \\ %\hline
-      5 & $8.204675{\times}10^{-2}$ \\ %\hline
-     10 & $8.472017{\times}10^{-3}$ \\ %\hline
-     15 & $1.249758{\times}10^{-3}$ \\ %\hline
-     20 & $1.637375{\times}10^{-4}$ \\ %\hline
-     25 & $4.508788{\times}10^{-5}$ \\ %\hline
-     30 & $1.337444{\times}10^{-5}$ \\ %\hline
-     35 & $4.012193{\times}10^{-6}$ \\ %\hline
-     40 & $1.417054{\times}10^{-6}$ \\ %\hline
-     41 & $9.452339{\times}10^{-7}$ \\ \hline
-    \end{tabular}
-    \caption[Entwicklung des Maximums des a posteriori"=Fehlerschätzers für einige $N$, zweites Beispiel.]{%
-        Entwicklung des Maximums des a posteriori"=Fehlerschätzers für steigendes $N$ beim zweiten Beispiel.
-        Siehe auch \cref{figure:entwicklung_rbm_fehler}.
-    }
+\begin{table}[tb!]
+    \begin{captionbeside}[Entwicklung des Maximums des a posteriori"=Fehlerschätzers für einige $N$, zweites Beispiel.]{%
+            Entwicklung des Maximums des a posteriori"=Fehlerschätzers für steigendes $N$ beim zweiten Beispiel.
+            Siehe auch \cref{figure:entwicklung_rbm_fehler}.
+        }[i][\textwidth-2em][1em]
+        \begin{tabular}{|c|c|}\hline
+          $N$ & $\Delta_{N}^{\mathrm{max}}$ \\ \hline
+          1 & $5.335096{\times}10^{-1}$ \\ %\hline
+          5 & $8.204675{\times}10^{-2}$ \\ %\hline
+         10 & $8.472017{\times}10^{-3}$ \\ %\hline
+         15 & $1.249758{\times}10^{-3}$ \\ %\hline
+         20 & $1.637375{\times}10^{-4}$ \\ %\hline
+         25 & $4.508788{\times}10^{-5}$ \\ %\hline
+         30 & $1.337444{\times}10^{-5}$ \\ %\hline
+         35 & $4.012193{\times}10^{-6}$ \\ %\hline
+         40 & $1.417054{\times}10^{-6}$ \\ %\hline
+         41 & $9.452339{\times}10^{-7}$ \\ \hline
+        \end{tabular}
+    \end{captionbeside}
     \label{table:entwicklung_rbm_2}
-\end{SCtable}
+\end{table}
 
 \paragraph{}
 Die Ergebnisse beider Beispiele sind unbefriedigend, zeigen sie doch, dass die in der Theorie auf diese Problemstellung durchaus gut anwendbare Reduzierte"=Basis"=Methode in der Praxis mit übermäßig hohen Laufzeiten einhergeht.

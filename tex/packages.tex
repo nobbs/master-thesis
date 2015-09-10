@@ -44,7 +44,8 @@
 \input{misc/colors}
 
 % Caption anpassen und Subfigures erlauben
-\usepackage[style=base,font+=small,labelfont+=bf,margin=1em,labelsep=period]{caption}
+% \usepackage{sidecap}
+\usepackage[style=base,font+=small,labelfont+=bf,margin=1em,labelsep=space]{caption}
 \usepackage{subcaption}
 
 % Tikz ist kein Zeichenprogramm!
@@ -113,11 +114,12 @@
 
 \usepackage[
 	colorlinks=true,
+  hidelinks,
 	linkcolor=jgu_rot,          % color of internal links (change box color with linkbordercolor)
 	citecolor=jgu_rot,        % color of links to bibliography
 	filecolor=jgu_rot,      % color of file links
 	urlcolor=jgu_rot,
-    hypertexnames=false
+  hypertexnames=false
 ]{hyperref}
 
 
@@ -287,5 +289,3 @@
   leftmargin=2em,
   font={\normalfont\bfseries}
 }
-
-\usepackage{sidecap}
