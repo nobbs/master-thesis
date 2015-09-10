@@ -54,7 +54,7 @@ Dies ist die Grundidee der RB"=Methoden, die in Abbildung \ref{figure:rbm_loesun
         Skizze der Funktionsweise der Reduzierte"=Basis"=Methode im Falle eines eindimensionalen Parameters $\sigma$.
         Die Reduzierte"=Basis"=Lösung $u_{N}(\sigma)$ ergibt sich als Linearkombinationen der Truth"=Lösungen $u_{\mathcal N}(\sigma_{i})$ für gewisse $\sigma_{i} \in \mathcal P$.
     }[o][\textwidth-2em][1em]
-        \includegraphics[width=0.5\textwidth]{figures/chapter5/rb.pdf}
+        \includegraphics[width=0.55\textwidth]{figures/chapter5/rb.pdf}
     \end{captionbeside}
     \label{figure:rbm_loesungsmenge}
 \end{figure}
@@ -624,7 +624,7 @@ Der Aufwand der jeweiligen Berechnungen wurde an den entsprechenden Stellen ange
 \label{sec:cha5_rbm:beispiele}
 
 Erneut wollen wir die numerische Umsetzung durch Betrachtung verschiedener Beispiele abschließen.
-Wir konzentrieren uns dabei hauptsächlich auf ein einfaches Beispiel mit einem eindimensionalen Parameterraum, da dies beste Möglichkeit bietet, das Verhalten der Reduzierte"=Basis"=Methode zu veranschaulichen.
+Wir konzentrieren uns dabei hauptsächlich auf ein einfaches Beispiel mit einem eindimensionalen Parameterraum, da dies die beste Möglichkeit bietet, das Verhalten der Reduzierte"=Basis"=Methode zu veranschaulichen.
 Weiter gehen wir auch auf ein komplexeres Beispiel ein, halten die Untersuchung dessen vor allem aus Laufzeitgründen jedoch sehr simpel.
 
 Der Einfachheit halber nehmen wir bei beiden Beispielen homogene Randbedingungen an.
@@ -654,7 +654,7 @@ Vergleicht man dies mit den Laufzeiten für einen Aufruf des Truth- beziehungswe
 Zwar können diese Laufzeiten durch Optimierung der Implementierung zweifelsfrei deutlich verbessert werden, allerdings handelt es sich hierbei um das denkbar einfachste Beispiel.
 Dies lässt bereits vermuten, dass die Laufzeiten für realitätsnähere Beispiele unhandlich groß werden könnten.
 
-\begin{figure}[tb]
+\begin{figure}[tb!]
     \centering
     \begin{subfigure}[b]{0.495\textwidth}
         \centering
@@ -683,9 +683,11 @@ Dies lässt bereits vermuten, dass die Laufzeiten für realitätsnähere Beispie
     \label{figure:vergleich_scm_iterationen}
 \end{figure}
 
-\begin{table}[tb]
-    \centering
-    \begin{tabular}{|c|c|}\hline
+\begin{table}[tb!]
+    \begin{captionbeside}[Entwicklung der maximalen relativen Spanne bei der \ac{scm}, erstes Beispiel.]{%
+        Entwicklung der maximalen relativen Spanne \cref{eq:max_rel_spanne_scm} während der Greedy"=Iteration der \ac{scm} beim ersten Beispiel.
+    }[i][\textwidth-2em][1em]
+    \begin{tabular}[b]{|c|c|}\hline
      $K$ &      max. rel. Spanne \\ \hline
      $1$ &          $1$              \\ %\hline
      $2$ & $1.553973{\times}10^{-1}$ \\ %\hline
@@ -696,9 +698,10 @@ Dies lässt bereits vermuten, dass die Laufzeiten für realitätsnähere Beispie
      $7$ & $2.378906{\times}10^{-2}$ \\ %\hline
      $8$ & $9.824040{\times}10^{-3}$ \\ \hline
     \end{tabular}
-    \caption[Entwicklung der maximalen relativen Spanne bei der \ac{scm}, erstes Beispiel.]{%
-        Entwicklung der maximalen relativen Spanne \cref{eq:max_rel_spanne_scm} während der Greedy"=Iteration der \ac{scm} beim ersten Beispiel.
-    }
+    \end{captionbeside}
+    % \caption[Entwicklung der maximalen relativen Spanne bei der \ac{scm}, erstes Beispiel.]{%
+    %     Entwicklung der maximalen relativen Spanne \cref{eq:max_rel_spanne_scm} während der Greedy"=Iteration der \ac{scm} beim ersten Beispiel.
+    % }
     \label{table:entwicklung_scm_abweichung}
 \end{table}
 
@@ -710,20 +713,14 @@ Die Entwicklung der maximalen relativen Spanne (vergleiche \cref{algorithm:scm_g
     \max_{\bm \sigma \in \mathcal P_{\mathrm{train}}}
     \frac{\alpha_{\mathrm{UB}}(\bm \sigma; \mathcal C_{K}) - \alpha_{\mathrm{LB}}(\bm \sigma; \mathcal C_{K})}{\alpha_{\mathrm{UB}}(\bm \sigma; \mathcal C_{K})}
 \end{equation}
-für $\alpha = \beta^{2}$ kann in \cref{table:entwicklung_scm_abweichung} abgelesen werden.
+für $\alpha = \beta^{2}$ kann in Tabelle \ref{table:entwicklung_scm_abweichung} abgelesen werden.
 
 Da für diese Veranschaulichung die exakte diskrete inf"=sup"=Konstante $\beta_{\mathcal N}(\sigma)$ bereits berechnet wurde, können wir dies auch nutzen, um auf die hinreichende Bedingung für die parametrische Abhängigkeit aus \cref{section:regularitaet_bezueglich_der_parameter} einzugehen.
 Verwenden wir die hier gegebenen Größen und nehmen wir weiter als grobe parameterunabhängige Näherung für $\beta_{\mathcal N}$ den Wert $0.1$ an, dann reduziert sich die Bedingung zu $\norm{C \sin(\pi \blank)}_{L_{\infty}([0, 1])} < 0.1$, wobei $C > 0$ an dieser Stelle eine Skalierungsvariable sei.
 Konkret lässt sich dies so interpretieren, dass die hinreichende Bedingung nur für den Parameterteilraum $[-0.1, 0.1] \subset \mathcal P$ die analytische Regularität der Lösung garantiert.
 Dies ist offensichtlich ein äußerst kleiner Spielraum für den Parameter, welcher bei Hinzunahme weiterer Parameter noch weiter eingeschränkt wird.
 
-In ähnlicher Weise zur \ac{scm} kann auch die Greedy"=Iteration der RB"=Methode dargestellt werden.
-Diese terminiert bereits nach sechs Iterationsschritten nach Unterschreiten der Fehlertoleranz $10^{-6}$.
-\cref{figure:vergleich_rbm_iterationen} zeigt, wie sich der a posteriori"=Fehlerschätzer und der tatsächliche Fehler zwischen Truth- und RB"=Lösung für wachsende Sample"=Anzahl $N$ verändern.
-Weiter ist in \cref{table:entwicklung_rbm} die Entwicklung des Maximums des a posteriori"=Fehlerschätzers sowie des arithmetischen Mittels, des Medians und des Maximums der Effektivität $\eta_{N}$ über $\mathcal P_{\mathrm{train}}$ verzeichnet.
-Die für die Ausreißer der Effektivität verantwortlichen Spitzen treten bei den gewählten Parameter"=Samples auf und sind vermutlich durch numerische Ungenauigkeiten bedingt, da sie für wachsendes $N$ abgeschwächt werden.
-
-\begin{figure}[tb]
+\begin{figure}[tb!]
     \centering
     \begin{subfigure}[b]{0.495\textwidth}
         \centering
@@ -751,7 +748,7 @@ Die für die Ausreißer der Effektivität verantwortlichen Spitzen treten bei de
     \label{figure:vergleich_rbm_iterationen}
 \end{figure}
 
-\begin{table}[tb]
+\begin{table}[tb!]
     \centering
     \begin{tabular}{|c|c|c|c|c|}\hline
      $N$ & $\Delta_{N}^{\mathrm{max}}$ & $\eta_{N}^{\mathrm{ave}}$ & $\eta_{N}^{\mathrm{med}}$ & $\eta_{N}^{\mathrm{max}}$\\ \hline
@@ -767,6 +764,12 @@ Die für die Ausreißer der Effektivität verantwortlichen Spitzen treten bei de
     }
     \label{table:entwicklung_rbm}
 \end{table}
+
+In ähnlicher Weise zur \ac{scm} kann auch die Greedy"=Iteration der RB"=Methode dargestellt werden.
+Diese terminiert bereits nach sechs Iterationsschritten nach Unterschreiten der Fehlertoleranz $10^{-6}$.
+\cref{figure:vergleich_rbm_iterationen} zeigt, wie sich der a posteriori"=Fehlerschätzer und der tatsächliche Fehler zwischen Truth- und RB"=Lösung für wachsende Sample"=Anzahl $N$ verändern.
+Weiter ist in \cref{table:entwicklung_rbm} die Entwicklung des Maximums des a posteriori"=Fehlerschätzers sowie des arithmetischen Mittels, des Medians und des Maximums der Effektivität $\eta_{N}$ über $\mathcal P_{\mathrm{train}}$ verzeichnet.
+Die für die Ausreißer der Effektivität verantwortlichen Spitzen treten bei den gewählten Parameter"=Samples auf und sind vermutlich durch numerische Ungenauigkeiten bedingt, da sie für wachsendes $N$ abgeschwächt werden.
 
 \paragraph{Mehrdimensionaler Parameterraum.} % (fold)
 
@@ -814,7 +817,7 @@ Es fällt auf, das bei lediglich vier Parametern bereits eine deutlich höhere A
             Entwicklung des Maximums des a posteriori"=Fehlerschätzers für steigendes $N$ beim zweiten Beispiel.
             Siehe auch \cref{figure:entwicklung_rbm_fehler}.
         }[i][\textwidth-2em][1em]
-        \begin{tabular}{|c|c|}\hline
+        \begin{tabular}[b]{|c|c|}\hline
           $N$ & $\Delta_{N}^{\mathrm{max}}$ \\ \hline
           1 & $5.335096{\times}10^{-1}$ \\ %\hline
           5 & $8.204675{\times}10^{-2}$ \\ %\hline

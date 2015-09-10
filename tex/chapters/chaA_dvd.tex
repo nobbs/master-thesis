@@ -47,7 +47,7 @@ An dieser Stelle wollen wir in aller Kürze die wichtigen Dateien der Implementi
     \item \verb!/code/src/ProblemData.m! enthält eine Klasse, deren einziger Zweck ist, eine übersichtliche Definition der Modelldaten zu ermöglichen.
     \item \verb!/code/src/rbm! enthält die beiden Dateien \verb!RBM.m! und \verb!SCM.m!, welche die Implementierung der Reduzierte"=Basis"=Methode beziehungsweise der \acl{scm} enthalten.
     Beide sind als Klassen implementiert und zu großen Teilen unabhängig von der zugrundeliegenden Petrov"=Galerkin"=Implementierung.
-    \item \verb!/code/src/galerkin! enthält die Bausteine des verwendeten Petrov"=Galerkin"=Verfahrens, die in folgende die Verzeichnisse aufgeteilt sind:
+    \item \verb!/code/src/galerkin! enthält die Bausteine des verwendeten Petrov"=Galerkin"=Verfahrens, die in folgende Verzeichnisse aufgeteilt sind:
     \begin{itemize}[leftmargin=1.5em]
         \item \verb!./spatial! enthält neben der abstrakten Klasse \verb!SpatialAssemblyAbstract.m! die Implementierungen \verb!SpatialAssemblyFourier.m! und \verb!SpatialAssemblySine.m!.
         Letztere unterscheiden sich theoretisch zwar nur in der Wahl der Basisfunktionen, da die benötigten Gramschen Matrizen aber nicht durch numerische Quadratur sondern anhand äquivalenter Ausdrücke ausgewertet werden, ergeben sich größere Unterschiede im Quellcode.
@@ -55,7 +55,7 @@ An dieser Stelle wollen wir in aller Kürze die wichtigen Dateien der Implementi
         Da letztere Legendre"=Polynome für die zeitliche Diskretisierung verwendet und dementsprechend den zeitlichen Wechsel der Felder nur schlecht abbildet, wurde stattdessen zu dem aus \cref{chapter:galerkin} bekannten Finite-Elemente-Ansatz in \verb!TemporalAssemblyNodal.m! gewechselt.
         \item \verb!./solver! beinhaltet die abstrakte Klasse \verb!SolverAbstract.m! und deren einzige Implementierung \verb!SolverNodal.m!, welche die Klassen aus \verb!./spatial! und \verb!./temporal! zu dem Petrov"=Galerkin"=Verfahren kombiniert.
     \end{itemize}
-    \item \verb!/code/test! enthält schließlich einige UnitTests zur Kontrolle der Diskretisierungen in \verb!../src/galerkin/spatial! und \verb!../src/galerkin/temporal!, da diese wie bereits erwähnt, nicht mittels numerischer Quadratur umgesetzt wurden.
+    \item \verb!/code/test! enthält schließlich einige UnitTests zur Kontrolle der Diskretisierungen in \verb!../src/galerkin/spatial!, da diese wie bereits erwähnt, nicht mittels numerischer Quadratur umgesetzt wurden.
 \end{itemize}
 
 \end{document}

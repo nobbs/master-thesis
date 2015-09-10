@@ -91,7 +91,7 @@ Die nachfolgende Definition ist eine leichte Abwandlung von \cite[Abschnitt 10.2
     Weiter verwenden wir die Schreibweise $\skp{\blank}{\blank}{V' \times V}$ auch für die duale Paarung auf $V' \times V$, welche die eindeutige stetige Fortsetzung von $\skp{\blank}{\blank}{H}$ ist.
     Dadurch gilt insbesondere
     \begin{equation}
-        \skp{u}{v}{V' \times V} = \skp{u}{v}{H}, \quad \fa u \in H, v \in V.
+        \skp{u}{v}{V' \times V} = \skp{u}{v}{H} \quad \fa u \in H, v \in V.
     \end{equation}
 \end{Bemerkung}
 
@@ -207,7 +207,7 @@ Weiter seien $0 < T < \infty$ und $I := [0, T]$.
 Wir betrachten nun eine Familie $\Set{A(t) \in \mathcal L(V, V')}_{t \in I}$ von stetigen linearen Operatoren.
 Nach dem Rieszschen Darstellungssatz, genauer siehe \cite[Theorem \S{}22.1]{Halmos:1957vd}, können wir diesen Operatoren eine Familie von Bilinearformen $\Set{a(\blank, \blank; t) \in \mathcal L(V \times V, \mathbb{R})}_{t \in I}$ zuordnen, wobei diese durch
 \begin{equation}
-    \skp{A(t)\eta}{\zeta}{V' \times V} = a(\eta, \zeta; t), \quad \fa \eta, \zeta \in V,
+    \skp{A(t)\eta}{\zeta}{V' \times V} = a(\eta, \zeta; t) \quad \fa \eta, \zeta \in V
 \end{equation}
 induziert werden.
 
@@ -218,9 +218,9 @@ Wie wir später sehen werden, stellt die nachfolgende Annahme sicher, dass die a
     Die Familie $\Set{a(\blank, \blank; t) \in \mathcal L(V \times V, \mathbb{R})}_{t \in I}$ von Bilinearformen erfülle die folgenden Eigenschaften:
     \leavevmode
     \begin{thmenumerate}
-        \item \emph{Messbarkeit:} die Abbildung $I \ni t \mapsto a(\eta, \zeta; t)$ sei messbar für alle $\eta, \zeta \in V$.
+        \item \emph{Messbarkeit:} Die Abbildung $I \ni t \mapsto a(\eta, \zeta; t)$ sei messbar für alle $\eta, \zeta \in V$.
         \item \emph{Stetigkeit:}
-        es existiere ein $0 < \gamma_{a} < \infty$ mit
+        Es existiere ein $0 < \gamma_{a} < \infty$ mit
         \begin{equation}
             \label{eq:eigenschaften_der_bilinearform_a:stetigkeit}
             \abs{a(\eta, \zeta; t)} \leq \gamma_{a} \norm{\eta}_{V} \norm{\zeta}_{V} \quad \fa \eta, \zeta \in V \text{ und fast alle } t \in I.
@@ -378,7 +378,7 @@ Wir wiederholen die Kernaussage \cite[Theorem 5.1]{Schwab:2009ec} und verweisen 
 
 \begin{Satz}
 \label{satz:ss09:theorem51}
-    Seien $\mathcal X$ und $\mathcal Y$ wie in \cref{eq:ansatzraum_X,eq:testraum_Y} und sei $\Set{a(\blank, \blank; t) \in \mathcal L (V \times V)}_{t \in I}$ eine Familie von Bilinearformen, welche \cref{annahme:eigenschaften_der_bilinearform_a} erfüllt.
+    Seien $\mathcal X$ und $\mathcal Y$ wie in \cref{eq:ansatzraum_X,eq:testraum_Y} und sei $\Set{a(\blank, \blank; t) \in \mathcal L (V \times V, \mathbb{R})}_{t \in I}$ eine Familie von Bilinearformen, welche \cref{annahme:eigenschaften_der_bilinearform_a} erfüllt.
     Dann ist das Raum"=Zeit"=Variationsproblem \cref{eq:absktrakte_raum_zeit_formulierung} korrekt gestellt, das heißt, für alle $f \in \mathcal Y'$ existiert eine eindeutige Lösung $u \in \mathcal X$ so, dass
     \begin{equation}
         b(u, v) = f(v) \quad \fa v \in \mathcal Y
@@ -484,7 +484,7 @@ gegeben seien.
                 = f(v)
             \end{aligned}
         \end{equation}
-        und damit die insgesamt die Behauptung.
+        und damit insgesamt die Behauptung.
     \end{Beweis}
 \end{Proposition}
 

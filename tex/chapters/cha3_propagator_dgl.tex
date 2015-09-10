@@ -20,7 +20,7 @@ Für letztere weisen wir abschließend nach, dass sie korrekt gestellt ist und u
 
 Wir wollen nun zunächst die aus der Einführung bekannten Propagator"=Differentialgleichungen in einem allgemeineren Rahmen formulieren.
 Dabei halten wir an dem Fall zweier Felder fest, wobei diese Einschränkung nicht notwendig ist, da die nachfolgenden Ergebnisse in gleicher Weise auch für jede andere endliche Felderanzahl nachgewiesen werden können.
-Weiter sei an dieser Stelle angemerkt, dass es ausreicht sich auf die Betrachtung des Vorwärts"=Propagators \cref{eq:forward_propagator} zu beschränken, da der Rückwärts"=Propagator \cref{eq:backward_propagator} durch die einfache Transformation $s \mapsto 1 - s$ auf dieselbe Form, lediglich mit vertauschen Rollen bei den Feldern, gebracht werden kann.
+Weiter sei an dieser Stelle angemerkt, dass es ausreicht sich auf die Betrachtung des Vorwärts"=Propagators \cref{eq:forward_propagator} zu beschränken, da der Rückwärts"=Propagator \cref{eq:backward_propagator} durch die einfache Transformation $s \mapsto 1 - s$ auf dieselbe Form, lediglich mit vertauschten Rollen bei den Feldern, gebracht werden kann.
 
 Seien nun $0 < T_{f} < T < \infty$ reelle Konstanten und $I := [0, T]$ ein reelles Intervall, welches wir in die beiden disjunkten Teilintervalle $I_{1} := [0, T_{f})$ und $I_{2} := [T_{f}, T]$ zerlegen.
 Wir interpretieren die Größe $t \in I$ als Zeit, wobei dies einen rein notationellen und keinen physikalischen Hintergrund hat.
@@ -33,7 +33,7 @@ Dies dient vor allem der einfacheren Notation und Benennung, weswegen wir den de
 \label{definition:feld_raum_zeit_feld}
     Unter einem \emph{Feld} verstehen wir eine $L_{\infty}(\Omega)$-Abbildung $w$.
     Seien $w_{1}, w_{2}$ Felder und $\chi_{I_{1}}, \chi_{I_{2}}$ charakteristische Funktionen.
-    Wir bezeichnen die Abbildung
+    Wir bezeichnen die Abbildung\newline
     \begin{equation}
     \label{eq:raum_zeit_feld}
         \omega \colon I \times \Omega \to \mathbb{R}, \quad \omega(t, \vec{x}) :=
@@ -481,7 +481,7 @@ Wie zuvor wollen wir \cref{satz:ss09:theorem51} verwenden.
 \begin{Satz}
 \label{satz:parametrische_bilinearform_messbar_stetig_garding}
     Sei $a(\blank, \blank; t; \bm\sigma)$, $t \in I$ und $\bm\sigma \in \mathcal P$, die Familie von Bilinearformen aus \cref{eq:bilinearform_zeit_parameter}.
-    Dann gelten für alle $t \in I$ und $\bm\sigma \in \mathcal P$ die folgenden Eigenschaften:
+    Dann gelten für alle $\bm\sigma \in \mathcal P$ die folgenden Eigenschaften:
     \begin{thmenumerate}
         \item\label{satz:parametrische_bilinearform_messbar_stetig_garding:messbar}
         \emph{Messbarkeit}: Die Abbildung $I \ni t \mapsto a(\eta, \zeta; t, \bm\sigma)$ ist messbar für alle $\eta, \zeta \in V$.
@@ -570,7 +570,7 @@ Wir fixieren nun die rechte Seite $f \in \mathcal Y'$ der schwachen Formulierung
     \begin{equation}
         \norm{u - \tilde{u}}_{\mathcal X} \leq \frac{\norm{f}_{\mathcal Y'}}{\beta^{2}} \norm{\omega - \tilde{\omega}}_{L_{\infty}(I; L_{\infty}(\Omega))},
     \end{equation}
-    wobei $\beta$ eine Feld-unabhängige inf-sup"=Konstante ist.
+    wobei $\beta$ eine feldunabhängige inf-sup"=Konstante ist.
 
     \begin{Beweis}
         Wir vernachlässigen der Kürze wegen im Folgenden die explizite Angabe der Zeitabhängigkeit der jeweiligen Funktionen.
@@ -598,7 +598,7 @@ Wir fixieren nun die rechte Seite $f \in \mathcal Y'$ der schwachen Formulierung
         Wir weisen nun die Stetigkeit nach, betrachten also
         \begin{align}
             \norm{h}_{\mathcal Y'}
-            &= \sup_{\norm{v}_{\mathcal Y} = 1} \abs{\int_{I} \skp{(w - \tilde{w})\tilde{u}}{v_{1}}{H} \diff t}
+            &= \sup_{\norm{v}_{\mathcal Y} = 1} \abs[\Big]{\int_{I} \skp{(w - \tilde{w})\tilde{u}}{v_{1}}{H} \diff t}
             \\&\leq \norm{w - \tilde{w}}_{L_{\infty}(I; L_{\infty}(\Omega))} \sup_{\norm{v}_{\mathcal Y} = 1} \abs{\skp{\tilde{u}}{v_{1}}{L_{2}(I; H)}}
             \\&\leq \norm{w - \tilde{w}}_{L_{\infty}(I; L_{\infty}(\Omega))} \sup_{\norm{v}_{\mathcal Y} = 1} \norm{\tilde{u}}_{L_{2}(I; H)} \norm{v_{1}}_{L_{2}(I; H)}
             \\&\leq \norm{w - \tilde{w}}_{L_{\infty}(I; L_{\infty}(\Omega))} \sup_{\norm{v}_{\mathcal Y} = 1} \norm{\tilde{u}}_{\mathcal X} \norm{v}_{\mathcal Y}
@@ -875,7 +875,7 @@ Dabei werden wir feststellen, dass auf Grund der Struktur der Propagator-Differe
 
 Zunächst müssen wir die Rahmenbedingungen für die Betrachtung periodischer Randbedingungen festlegen.
 Dazu beschränken wir uns auf den Fall, dass $\Omega = \bigtimes_{i = 1}^{n} (0, l_{i}) \subset \mathbb{R}^{n}$ ein beschränkter offener Quader ist, wobei $l_{i} \in \mathbb{R}_{+}$ für $i = 1 \dots n$ sei.
-Weiter führen wir nun die Äquivalente des Lebesgue-Raums $L_{2}(\Omega)$ und des Sobolev-Raums $H^{1}(\Omega)$ für periodische Funktionen ein.
+Weiter führen wir nun die Analoga des Lebesgue-Raums $L_{2}(\Omega)$ und des Sobolev-Raums $H^{1}(\Omega)$ für periodische Funktionen ein.
 Da dies für die diese Arbeit von untergeordneter Bedeutung ist, wird an dieser Stelle nur ein Überblick über die benötigten Ergebnisse gegeben.
 Genauere Ausführungen findet man beispielsweise bei \textcite{Han2009}.
 

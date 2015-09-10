@@ -9,10 +9,10 @@ $pdf_previewer = 'open -a /Applications/Skim.app';
 # system( "makeglossaries \"$_[0]\"" );
 # }
 
-add_cus_dep( 'syg', 'syi', 0, 'makeglossaries' );
-sub makeglossaries {
-system( "makeglossaries \"$_[0]\"" );
-}
+# add_cus_dep( 'syg', 'syi', 0, 'makeglossaries' );
+# sub makeglossaries {
+# system( "makeglossaries \"$_[0]\"" );
+# }
 
 
 # Custom dependency and function for nomencl package
