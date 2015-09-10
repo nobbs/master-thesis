@@ -38,7 +38,7 @@ Wir beginnen nun mit der folgenden Definition der Bochner"=Räume nach \cite[Def
     Der Bochner-Raum $L_{2}(a, b; X)$ ist ein Banachraum.
     Ist ferner $H$ ein Hilbertraum, so auch $L_{2}(a, b; H)$ mit dem Skalarprodukt
     \begin{equation}
-        \skp{u}{v}{L_{2}(a, b; H)} := \int_{a}^{b} \skp{u(t)}{v(t)}{H} \diff t, \quad \text{für}~u,v \in L_{2}(a, b; H).
+        \skp{u}{v}{L_{2}(a, b; H)} := \int_{a}^{b} \skp{u(t)}{v(t)}{H} \diff t \quad \text{für}~u,v \in L_{2}(a, b; H).
     \end{equation}
 
     \begin{Beweis}
@@ -53,7 +53,7 @@ Weiter können wir für Funktionen aus einem Bochner"=Raum eine Zeitableitung de
     Seien $X$ und $Y$ Banachräume mit stetiger Einbettung $X \hookrightarrow Y$ und sei $u \in L_{2}(a, b; X)$.
     Existiert ein $v \in L_{2}(a, b; Y)$ mit
     \begin{equation}
-        \int_{a}^{b} v(t) \varphi(t) \diff t = - \int_{a}^{b} u(t) \varphi'(t) \diff t, \quad \fa \varphi \in \mathcal C^{\infty}_{0}((a, b), \mathbb{R}),
+        \int_{a}^{b} v(t) \varphi(t) \diff t = - \int_{a}^{b} u(t) \varphi'(t) \diff t \quad \fa \varphi \in \mathcal C^{\infty}_{0}((a, b), \mathbb{R}),
     \end{equation}
     so bezeichnen wir diese distributionelle Ableitung $u_{t} := v$ als \emph{Zeitableitung} von $u$.
 \end{Definition}
@@ -81,8 +81,8 @@ Die nachfolgende Definition ist eine leichte Abwandlung von \cite[Abschnitt 10.2
 \begin{Definition}
 \label{definition:gelfand_tripel}
     Seien $V$ und $H$ separable Hilberträume mit den Dualräumen $V'$ und $H'$.
-    Weiter sei die Einbettung $V \denseinclusion H$ dicht und stetig.
-    Durch die Identifikation $H \cong H'$ erhalten wir das sogenannte \emph{Gelfand"=Tripel} $V \denseinclusion H \denseinclusion V'$, wobei die zweite Inklusionen ebenfalls eine dichte stetige Einbettung ist.
+    Weiter sei die Einbettung $V \hookrightarrow H$ dicht und stetig.
+    Durch die Identifikation $H \cong H'$ erhalten wir das sogenannte \emph{Gelfand"=Tripel} $V \hookrightarrow H \hookrightarrow V'$, wobei die zweite Inklusionen ebenfalls eine dichte stetige Einbettung ist.
 \end{Definition}
 
 \begin{Bemerkung}
@@ -100,7 +100,7 @@ Dies geschieht analog zu \cite[Definition XVIII.2.4]{Dautray:1992by}.
 
 \begin{Definition}
 \label{definition:bochner_raum_W}
-    Sei $V \denseinclusion H \denseinclusion V'$ ein Gelfand"=Tripel.
+    Sei $V \hookrightarrow H \hookrightarrow V'$ ein Gelfand"=Tripel.
     Wir definieren den Raum
     \begin{equation}
         W(a, b; V, V') := \Set{u \in L_{2}(a, b; V) \given u' \in L_{2}(a, b; V')},
@@ -137,7 +137,7 @@ Dies führt zum sogenannten Spursatz, welchen wir durch die folgende Einbettungs
 
 \begin{Satz}
 \label{satz:bochner_raum_W_stetige_einbettung_C0}
-    Seien $V \denseinclusion H \denseinclusion V'$ ein Gelfand"=Tripel und $a, b \in \mathbb{R}$.
+    Seien $V \hookrightarrow H \hookrightarrow V'$ ein Gelfand"=Tripel und $a, b \in \mathbb{R}$.
     Ferner sei $\mathcal C([a, b]; H)$ die Menge aller stetigen Funktionen $f \colon [a, b] \to H$.
     Dann ist die Einbettung
     \begin{equation}
@@ -177,13 +177,6 @@ Ferner erhalten wir aus obiger Einbettungsaussage auch das folgende Ergebnis, we
         Siehe \cites[Section 5]{Schwab:2009ec}[Beweis zu Theorem XVIII.2.1]{Dautray:1992by}.
     \end{Beweis}
 \end{Korollar}
-%
-\newglossaryentry{sym:einbettungskonsanten_gamma_e}{
-    sort={kEinbettungskonstante_gamma_e},
-    name={$\gamma_{e}$},
-    description={Einbettungskonstante, siehe \cref{korollar:einbettungskonstante_M_e}},
-    type=symbolslist
-}
 
 Abschließen wollen wir diesen Abschnitt mit einer alternativen Charakterisierung der hier betrachteten Bochner"=Räume als Tensor"=Produkt, welche erst bei der numerischen Umsetzung in \cref{chapter:galerkin} relevant wird.
 
@@ -209,7 +202,7 @@ Wir orientieren uns hierbei an \textcite{Lions:1971wp}, \textcite{Schwab:2009ec}
 definieren den Begriff der linearen Evolutionsgleichungen, leiten eine schwache Formulierung her und weisen abschließend nach, dass diese korrekt gestellt ist.
 
 Um den Begriff der linearen Evolutionsgleichungen definieren zu können, müssen wir zunächst die richtigen Rahmenbedingungen schaffen.
-Sei $V \denseinclusion H \denseinclusion V'$ ein Gelfand-Tripel im Sinne von \cref{definition:gelfand_tripel}, das heißt, $V$ und $H$ seien separable Hilberträume und die Inklusionen seien jeweils dicht und stetig.
+Sei $V \hookrightarrow H \hookrightarrow V'$ ein Gelfand-Tripel im Sinne von \cref{definition:gelfand_tripel}, das heißt, $V$ und $H$ seien separable Hilberträume und die Inklusionen seien jeweils dicht und stetig.
 Weiter seien $0 < T < \infty$ und $I := [0, T]$.
 Wir betrachten nun eine Familie $\Set{A(t) \in \mathcal L(V, V')}_{t \in I}$ von stetigen linearen Operatoren.
 Nach dem Rieszschen Darstellungssatz, genauer siehe \cite[Theorem \S{}22.1]{Halmos:1957vd}, können wir diesen Operatoren eine Familie von Bilinearformen $\Set{a(\blank, \blank; t) \in \mathcal L(V \times V, \mathbb{R})}_{t \in I}$ zuordnen, wobei diese durch
@@ -240,13 +233,6 @@ Wie wir später sehen werden, stellt die nachfolgende Annahme sicher, dass die a
         \end{equation}
     \end{thmenumerate}
 \end{Annahme}
-%
-\newglossaryentry{sym:stetigkeitskonstante_gamma_a_b}{
-    sort={kStetigkeitskonstanten},
-    name={$\gamma_{a}$, $\gamma_{b}$},
-    description={Stetigkeitskonstanten},
-    type=symbolslist
-}
 
 Für den Rest dieses Abschnitts nehmen wir stets an, dass die obige Annahme erfüllt ist.
 Diese Vorarbeit erlaubt uns nun die nachfolgende Definition.

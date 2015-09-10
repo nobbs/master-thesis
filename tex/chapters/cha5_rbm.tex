@@ -396,7 +396,7 @@ Seien $\bm \sigma \in \mathcal P$ ein Parameter und $T_{\bm \sigma} \colon \math
 \end{Satz}
 
 Da der Testraum $\mathcal Y_{N}^{\bm \sigma}$ für jeden Parameter neu aufgebaut werden muss, ist eine sinnvolle Zerlegung in Offline- und Online"=Phase wünschenswert.
-Dazu nutzen wir die parametrisch"=affine Darstellung \cref{eq:bilinearform_parametrisch_affin} und definieren für jedes $\restr{b_{q}}{\mathcal X_{\mathcal N} \times \mathcal Y_{\mathcal N}}$, $q = 1, \dots, Q_b$, den zugehörigen Supremizing"=Operator $T_{q}$.
+Dazu nutzen wir die parametrisch affine Darstellung \cref{eq:bilinearform_parametrisch_affin} und definieren für jedes $\restr{b_{q}}{\mathcal X_{\mathcal N} \times \mathcal Y_{\mathcal N}}$, $q = 1, \dots, Q_b$, den zugehörigen Supremizing"=Operator $T_{q}$.
 Dann gilt
 \begin{equation}
     T_{\bm \sigma} = \sum_{q = 1}^{Q_b} \theta_{q}^{b}(\bm \sigma) T_{q}.
@@ -425,7 +425,7 @@ Wir erhalten dadurch für jedes $\bm \sigma \in \mathcal P$ ein $\hat{e}_{N}(\bm
     \norm{\hat{e}_{N}(\bm \sigma)}_{\mathcal Y} = \norm{r_{N}(\blank; \bm \sigma)}_{\mathcal Y_{\mathcal N}'}, \qquad
     r_{N}(v; \bm \sigma) = \skp{\hat{e}_{N}(\bm \sigma)}{v}{\mathcal Y_{\mathcal N}} \quad \fa v \in \mathcal Y.
 \end{equation}
-Aufgrund der Darstellung \cref{eq:residuum_durch_funktional_und_bilinearform} des Residuums und der parametrisch"=affinen Darstellung \cref{eq:bilinearform_parametrisch_affin} der Bilinearform gilt für alle $v \in \mathcal Y_{\mathcal N}$ die Gleichung
+Aufgrund der Darstellung \cref{eq:residuum_durch_funktional_und_bilinearform} des Residuums und der parametrisch affinen Darstellung \cref{eq:bilinearform_parametrisch_affin} der Bilinearform gilt für alle $v \in \mathcal Y_{\mathcal N}$ die Gleichung
 \begin{equation}
     \skp{\hat{e}_{N}(\bm \sigma)}{v}{\mathcal Y}
     = r_{N}(v; \bm \sigma)
@@ -502,7 +502,7 @@ Es sei also durch
 \begin{equation}
     a(u, v; \bm \sigma) = \sum_{q = 1}^{Q_a} \theta_{q}^{a} a_{q}(u, v), \quad u,v \in \mathcal X,
 \end{equation}
-eine abstrakte symmetrische, parametrisch"=affine Bilinearform $a \colon \mathcal X \times \mathcal X \times \mathcal P \to \mathbb{R}$ gegeben, wobei $\theta_{q}^{a} \colon \mathcal P \to \mathbb{R}$ stetige Funktionen und $a_{q} \colon \mathcal X \times \mathcal X \to \mathbb{R}$ symmetrische, stetige und parameterunabhängige Bilinearformen seien.
+eine abstrakte symmetrische, parametrisch affine Bilinearform $a \colon \mathcal X \times \mathcal X \times \mathcal P \to \mathbb{R}$ gegeben, wobei $\theta_{q}^{a} \colon \mathcal P \to \mathbb{R}$ stetige Funktionen und $a_{q} \colon \mathcal X \times \mathcal X \to \mathbb{R}$ symmetrische, stetige und parameterunabhängige Bilinearformen seien.
 Wie zuvor sei $\mathcal X_{\mathcal N} \subset \mathcal X$ eine Diskretisierung eines Galerkin"=Verfahrens.
 Wir wollen nun eine untere Schranke $\alpha_{\mathrm{LB}}(\bm \sigma)$ für die \emph{Koerzivitätskonstante} $\alpha_{\mathcal N}(\bm \sigma)$ bestimmen, welche als
 \begin{equation}
@@ -627,7 +627,7 @@ Der Aufwand der jeweiligen Berechnungen wurde an den entsprechenden Stellen ange
 
 Erneut wollen wir die numerische Umsetzung durch Betrachtung verschiedener Beispiele abschließen.
 Wir konzentrieren uns dabei hauptsächlich auf ein einfaches Beispiel mit einem eindimensionalen Parameterraum, da dies beste Möglichkeit bietet, das Verhalten der Reduzierte"=Basis"=Methode zu veranschaulichen.
-Weiter gehen wir auch auf ein komplexeres Beispiel ein, halten die Untersuchung dessen vor allem aus Gründen der Laufzeit jedoch sehr simpel.
+Weiter gehen wir auch auf ein komplexeres Beispiel ein, halten die Untersuchung dessen vor allem aus Laufzeitgründen jedoch sehr simpel.
 
 Der Einfachheit halber nehmen wir bei beiden Beispielen homogene Randbedingungen an.
 Weiter wählen wir die Truth"=Diskretisierung wie im ersten Beispiel in \cref{sec:cha4_galerkin:beispiele}.
@@ -836,7 +836,7 @@ Es fällt auf, das bei lediglich vier Parametern bereits eine deutlich höhere A
 \paragraph{}
 Die Ergebnisse beider Beispiele sind unbefriedigend, zeigen sie doch, dass die in der Theorie auf diese Problemstellung durchaus gut anwendbare Reduzierte"=Basis"=Methode in der Praxis mit übermäßig hohen Laufzeiten einhergeht.
 Diese können zu Teilen auf die nicht optimierte Implementierung zurückgeführt werden.
-Vergleicht man aber beispielsweise die Laufzeit mit der in \cref{chapter:einleitung} erwähnten Pseudospektralmethoden, welche bei ähnlichen Rahmenbedingungen im einstelligen Minutenbereich für das gesamte Iterationsverfahren liegt, so wird deutlich, dass eine direkte Anwendung der Reduzierte"=Basis"=Methode unter diesen Umständen nicht die sinnvollste Herangehensweise zu sein scheint.
-Weitere, über diese Arbeit hinausgehende Untersuchungen sind von Nöten, um zu klären, ob der hier vorliegende Ansatz zu einem praktikablen Verfahren verarbeitet werden kann.
+Vergleicht man aber beispielsweise die Laufzeit mit der in \cref{chapter:einleitung} erwähnten Pseudospektralmethoden, welche bei ähnlichen Rahmenbedingungen und einer ähnlichen Genauigkeit im einstelligen Minutenbereich für das gesamte Iterationsverfahren liegt, so wird deutlich,
+dass der hier vorliegende Ansatz zur Modellreduktion weitere Untersuchungen benötigt, bevor daraus ein praktikables Verfahren gewonnen werden kann.
 
 \end{document}

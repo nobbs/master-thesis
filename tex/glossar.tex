@@ -1,15 +1,23 @@
 % -*- root: main.tex -*-
 
-\newglossaryentry{sym:banachraum}{
-    sort={rBanach},
-    name={$X$},
-    description={Banachraum},
-    type=symbolslist
+\newcommand{\addglossentry}[3]{%
+    \newglossaryentry{#1}{
+        name={#2},
+        sort={#1},
+        description={#3},
+        type=symbolslist
+    }
 }
 
-\newglossaryentry{sym:hilbertraum}{
-    sort={rHilbert},
-    name={$V$, $H$},
-    description={Hilberträume},
-    type=symbolslist
-}
+% Symbole
+\addglossentry{aEinbettung}{$\hookrightarrow$}{Stetige Einbettung}
+\addglossentry{aSkalarprodukt}{$\skp{\blank}{\blank}{}$}{Skalarprodukt respektive duale Paarung}
+
+% Räume
+\addglossentry{bFunktionalRaum}{$\mathcal L(V, W)$}{Raum der beschränkten linearen Abbildung von $V$ nach $W$}
+\addglossentry{bBochnerLebesgue}{$L_{2}(IX X)$, $L_{\infty}(I; X)$}{Bochnerräume}
+\addglossentry{bBochnerSobolev}{$H^{1}(I; X)$}{Bochner-Sobolev-Raum erster Ordnung}
+
+% Größen
+\addglossentry{cStetigkeitskonstanten}{$\gamma_{\blank}$}{Stetigkeitskonstante}
+\addglossentry{cGarding}{arg2}{arg3}

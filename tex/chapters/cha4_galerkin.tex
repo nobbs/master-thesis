@@ -30,7 +30,7 @@ erfüllt.
 Als \emph{Petrov"=Galerkin"=Verfahren} werden diejenigen Galerkin"=Verfahren bezeichnet, die auf Variationsprobleme mit nicht-übereinstimmendem Ansatz- und Testraum $\mathcal X$ und $\mathcal Y$ zugeschnitten sind.
 
 Wie es bei Galerkin"=Verfahren üblich ist, wird eine Diskretisierung des Variationsproblems \cref{eq:galerkin_abstraktes_variationsproblem} durch Approximation der im Allgemeinen unendlichdimensionalen Hilberträume mittels $\mathcal N$- beziehungsweise $\mathcal M$-dimensionaler Unterräume $\mathcal X_{\mathcal N} \subset \mathcal X$ und $\mathcal Y_{\mathcal M} \subset \mathcal Y$ erreicht.
-Zwar ist auch für den Fall $\mathcal M > \mathcal N$ eine sinnvolle Formulierung einer Diskretisierung möglich, diese erfolgt dann allerdings im Sinne einer Residuums-Minimierung, wie beispielsweise bei \cite{Andreev:2012ep}.
+Zwar ist auch für den Fall $\mathcal M > \mathcal N$ eine sinnvolle Formulierung einer Diskretisierung möglich, diese erfolgt dann allerdings im Sinne einer Residuum-Minimierung, wie beispielsweise bei \cite{Andreev:2012ep}.
 Da sich dies nicht ohne Weiteres mit der beabsichtigten Verwendung als Grundlage für eine Reduzierte"=Basis"=Methode verträgt, beschränken wir uns auf den Fall $\mathcal N = \mathcal M$.
 
 Wir orientieren uns an \cite[Section 3.1]{Nochetto:2009il}, beschränken uns aber auf eine minimale Einführung.
@@ -247,7 +247,7 @@ Die hier konstruierte Diskretisierung führt hauptsächlich zu einer Bedingung a
 Bevor wir diese angeben können, benötigen wir die nachfolgende Definition nach \cite[62]{Andreev:2012ep}, die in etwas anderer Form oft bei der Behandlung von hyperbolischen partiellen Differentialgleichungen auftritt.
 
 \begin{Definition}\label{definiton:cfl_zahl}
-    Es seien $V_{\mathcal J} \subset V$ ein endlichdimensionaler Unterraum, $\mathcal T_{\mathcal K}$ ein Gitter des Zeitintervalls $I$ und weiter sei durch $\max \Delta \mathcal T_{\mathcal K} := \max_{k = 1, \dots, \mathcal K} \abs{t_{k} - t_{k - 1}}$ die maximale Schrittweite des Zeitgitters gegeben.
+    Es seien $V_{\mathcal J} \subset V$ ein endlichdimensionaler Unterraum, $\mathcal T_{\mathcal K}$ ein Gitter des Zeitintervalls $I$ und weiter durch $\max \Delta \mathcal T_{\mathcal K} := \max_{k = 1, \dots, \mathcal K} \abs{t_{k} - t_{k - 1}}$ die maximale Schrittweite des Zeitgitters gegeben.
     Wir bezeichnen die Größe
     \begin{equation}
         \label{eq:cfl_zahl}
@@ -351,7 +351,7 @@ wobei $b$ und $f$ wie in \cref{definition:parametrische_rz_variationsformulierun
                 b_{i} &:= \int_{I} \chi_{i} \skp{\varphi_{i}u}{v_{1}}{H} \diff t, \quad i = 1, \dots, N_{\mathcal P},
             \end{aligned}
         \end{equation}
-        wobei die Stetigkeit durch einfache Abschätzungen folgt und nicht weiter nachgerechnet wird.
+        wobei die Stetigkeit durch einfache Abschätzungen folgt und hier nicht weiter ausgeführt wird.
         Unter Verwendung dieser gilt nun offenbar
         \begin{align}
                 b(u, v; \bm \sigma)
@@ -644,7 +644,7 @@ Insbesondere gilt damit $\beta_{\mathcal N}(\bm \sigma) = \sqrt{\lambda_{\min}}$
 \section{Beispiele} % (fold)
 \label{sec:cha4_galerkin:beispiele}
 
-Wir widmen uns nun einigen Beispielen, wobei wir uns im Rahmen dieser Arbeit aus laufzeittechnischen Gründen auf den Fall einer Raumdimension beschränken müssen.
+Wir widmen uns nun einigen Beispielen, wobei wir uns im Rahmen dieser Arbeit aus laufzeittechnischen Gründen auf den Fall einer Raumdimension beschränken wollen.
 
 Zunächst erinnern wir an dieser Stelle an einige Modellgrößen.
 Das Zeitintervall sei durch $I := [0, T]$ für ein $0 < T < \infty$ gegeben.
