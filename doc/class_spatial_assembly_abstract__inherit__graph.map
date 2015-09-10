@@ -1,0 +1,5 @@
+<map id="SpatialAssemblyAbstract" name="SpatialAssemblyAbstract">
+<area shape="rect" id="node3" href="$class_spatial_assembly_fourier.html" title="Assemble the spatial mass and stiffness matrices for a fourier basis. The resulting spatial discretiz..." alt="" coords="5,152,167,177"/>
+<area shape="rect" id="node4" href="$class_spatial_assembly_sine.html" title="Assemble the spatial mass and stiffness matrices for a sine basis. The resulting spatial discretizati..." alt="" coords="192,152,338,177"/>
+<area shape="rect" id="node2" href="$classhandle.html" title="Matlab&#39;s base handle class (documentation generation substitute) " alt="" coords="145,5,206,31"/>
+</map>

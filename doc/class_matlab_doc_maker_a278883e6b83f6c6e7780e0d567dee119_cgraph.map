@@ -1,0 +1,12 @@
+<map id="MatlabDocMaker::create" name="MatlabDocMaker::create">
+<area shape="rect" id="node2" href="$class_matlab_doc_maker.html#a11a2a8ec616df969a911b325e39b0b4f" title="Returns the directory where the applications documentation configuration files reside. " alt="" coords="489,116,675,155"/>
+<area shape="rect" id="node5" href="$class_matlab_doc_maker.html#a9f84ff8d3f39824b54626862780b342c" title="Returns the project name. " alt="" coords="1211,64,1436,90"/>
+<area shape="rect" id="node6" href="$class_matlab_doc_maker.html#a1957c12ff4fb6a9d8e1b009961a5f499" title="Returns the directory where the applications source files reside. " alt="" coords="488,294,676,332"/>
+<area shape="rect" id="node7" href="$class_matlab_doc_maker.html#af63bb7f2a5008a7b786d2b83b4f72b1b" title="Returns the short project description. " alt="" coords="487,231,677,270"/>
+<area shape="rect" id="node8" href="$class_matlab_doc_maker.html#a6767085b13dc2600cb6beda7f7d6acd9" title="Returns the logo image file for the project. Either an absolute path or a plain filename. For the latter case the image file is assumed to reside inside the directory returned by MatlabDocMaker.getConfigDirectory. " alt="" coords="220,174,439,199"/>
+<area shape="rect" id="node9" href="$class_matlab_doc_maker.html#afce5384fb7c395546431b7a6c4e1f790" title="Returns the current version of the project. " alt="" coords="487,363,677,402"/>
+<area shape="rect" id="node10" href="$class_matlab_doc_maker.html#a1481c6e95be338b758ec97b8090ee7c9" title="Returns the directory where the applications source files reside. " alt="" coords="234,59,425,98"/>
+<area shape="rect" id="node11" href="$class_matlab_doc_maker.html#ac0a03050ca09039ccd6a1fc97367a38b" title="Opens the generated documentation. " alt="" coords="250,326,409,351"/>
+<area shape="rect" id="node3" href="$class_matlab_doc_maker.html#adfcdad653761f551bf2413e949f9dff1" title="MatlabDocMaker::getPref" alt="" coords="725,180,897,206"/>
+<area shape="rect" id="node4" href="$class_matlab_doc_maker.html#a61ba93ad0e3a332ec42e5624ca9b0842" title="Gets the tag for the MatLab preferences struct. " alt="" coords="945,120,1163,146"/>
+</map>

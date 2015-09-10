@@ -1,0 +1,17 @@
+<map id="MatlabDocMaker::getProjectName" name="MatlabDocMaker::getProjectName">
+<area shape="rect" id="node2" href="$class_matlab_doc_maker.html#a278883e6b83f6c6e7780e0d567dee119" title="Creates the Doxygen documentation. " alt="" coords="1270,199,1437,224"/>
+<area shape="rect" id="node3" href="$class_matlab_doc_maker.html#a61ba93ad0e3a332ec42e5624ca9b0842" title="Gets the tag for the MatLab preferences struct. " alt="" coords="278,379,496,404"/>
+<area shape="rect" id="node8" href="$class_matlab_doc_maker.html#a434c176c2421dd18a40003919b19f4f2" title="Runs the setup script for MatlabDocMaker and collects all necessary paths in order for the documentat..." alt="" coords="1272,535,1435,560"/>
+<area shape="rect" id="node4" href="$class_matlab_doc_maker.html#adfcdad653761f551bf2413e949f9dff1" title="MatlabDocMaker::getPref" alt="" coords="544,298,717,323"/>
+<area shape="rect" id="node14" href="$class_matlab_doc_maker.html#a2043a41c02b5922142bb5513ac2cc312" title="MatlabDocMaker::setPref" alt="" coords="774,535,946,560"/>
+<area shape="rect" id="node5" href="$class_matlab_doc_maker.html#a11a2a8ec616df969a911b325e39b0b4f" title="Returns the directory where the applications documentation configuration files reside. " alt="" coords="767,376,953,415"/>
+<area shape="rect" id="node6" href="$class_matlab_doc_maker.html#a6767085b13dc2600cb6beda7f7d6acd9" title="Returns the logo image file for the project. Either an absolute path or a plain filename. For the latter case the image file is assumed to reside inside the directory returned by MatlabDocMaker.getConfigDirectory. " alt="" coords="1003,326,1222,351"/>
+<area shape="rect" id="node9" href="$class_matlab_doc_maker.html#a1957c12ff4fb6a9d8e1b009961a5f499" title="Returns the directory where the applications source files reside. " alt="" coords="766,199,954,238"/>
+<area shape="rect" id="node11" href="$class_matlab_doc_maker.html#af63bb7f2a5008a7b786d2b83b4f72b1b" title="Returns the short project description. " alt="" coords="1018,59,1207,98"/>
+<area shape="rect" id="node12" href="$class_matlab_doc_maker.html#afce5384fb7c395546431b7a6c4e1f790" title="Returns the current version of the project. " alt="" coords="765,131,955,170"/>
+<area shape="rect" id="node13" href="$class_matlab_doc_maker.html#a1481c6e95be338b758ec97b8090ee7c9" title="Returns the directory where the applications source files reside. " alt="" coords="765,262,955,300"/>
+<area shape="rect" id="node7" href="$class_matlab_doc_maker.html#a6e84afe2189a851665133b6e7c412d4c" title="Sets the project logo. Set to &#39; to unset. " alt="" coords="1003,427,1222,452"/>
+<area shape="rect" id="node10" href="$class_matlab_doc_maker.html#ac0a03050ca09039ccd6a1fc97367a38b" title="Opens the generated documentation. " alt="" coords="1033,224,1192,250"/>
+<area shape="rect" id="node15" href="$class_matlab_doc_maker.html#a88037a33f6ed26b8b3e60e1cbfd5dfd6" title="Sets the project description. " alt="" coords="1018,643,1207,682"/>
+<area shape="rect" id="node16" href="$class_matlab_doc_maker.html#a532ff6bc4beaeff5c3d2f12305bbaa5d" title="Sets the project version. " alt="" coords="1018,528,1207,567"/>
+</map>

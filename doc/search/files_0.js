@@ -1,0 +1,21 @@
+var searchData=
+[
+  ['ch1_5fplot_5fscft_5fexample_2em',['ch1_plot_scft_example.m',['../ch1__plot__scft__example_8m.html',1,'']]],
+  ['ch4_5fcompute_5fstability_2em',['ch4_compute_stability.m',['../ch4__compute__stability_8m.html',1,'']]],
+  ['ch4_5fload_5fprecomputed_5fdata_2em',['ch4_load_precomputed_data.m',['../ch4__load__precomputed__data_8m.html',1,'']]],
+  ['ch4_5fprecompute_5fexamples_2em',['ch4_precompute_examples.m',['../ch4__precompute__examples_8m.html',1,'']]],
+  ['ch4ex1_5frun_2em',['ch4ex1_run.m',['../ch4ex1__run_8m.html',1,'']]],
+  ['ch4ex2_5frun_2em',['ch4ex2_run.m',['../ch4ex2__run_8m.html',1,'']]],
+  ['ch4ex3_5frun_2em',['ch4ex3_run.m',['../ch4ex3__run_8m.html',1,'']]],
+  ['ch5ex1_5fplot_5feverything_2em',['ch5ex1_plot_everything.m',['../ch5ex1__plot__everything_8m.html',1,'']]],
+  ['ch5ex1_5fprecompute_5fexample_2em',['ch5ex1_precompute_example.m',['../ch5ex1__precompute__example_8m.html',1,'']]],
+  ['ch5ex1_5fproblem_5fdata_2em',['ch5ex1_problem_data.m',['../ch5ex1__problem__data_8m.html',1,'']]],
+  ['ch5ex1_5frun_2em',['ch5ex1_run.m',['../ch5ex1__run_8m.html',1,'']]],
+  ['ch5ex1_5frun_5fanalysis_2em',['ch5ex1_run_analysis.m',['../ch5ex1__run__analysis_8m.html',1,'']]],
+  ['ch5ex2_5fplot_5feverything_2em',['ch5ex2_plot_everything.m',['../ch5ex2__plot__everything_8m.html',1,'']]],
+  ['ch5ex2_5fprecompute_5fexample_2em',['ch5ex2_precompute_example.m',['../ch5ex2__precompute__example_8m.html',1,'']]],
+  ['ch5ex2_5fproblem_5fdata_2em',['ch5ex2_problem_data.m',['../ch5ex2__problem__data_8m.html',1,'']]],
+  ['ch5ex2_5frun_2em',['ch5ex2_run.m',['../ch5ex2__run_8m.html',1,'']]],
+  ['class_5fsubstitutes_2ec',['class_substitutes.c',['../class__substitutes_8c.html',1,'']]],
+  ['computeminmaxev_2em',['computeMinMaxEv.m',['../compute_min_max_ev_8m.html',1,'']]]
+];

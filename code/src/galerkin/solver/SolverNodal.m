@@ -196,7 +196,6 @@ classdef SolverNodal < SolverAbstract
       % iterate over the fields
       for fdx = 1:obj.pd.nF
         % temporal mass matrices for the given interval part
-        %| @todo add back the field support!
         MtAT = obj.temporal.massMatrix('both', [tpoints(fdx), tpoints(fdx + 1)]);
 
         % and iterate over the coefficients
@@ -230,7 +229,6 @@ classdef SolverNodal < SolverAbstract
       % iterate over the fields
       for fdx = 1:obj.pd.nF
         % temporal mass matrices for the given interval part
-        %| @todo add back the field support!
         MtAT = obj.temporal.massMatrix('both', [tpoints(fdx), tpoints(fdx + 1)]);
 
         % and iterate over the coefficients

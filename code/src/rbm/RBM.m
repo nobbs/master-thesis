@@ -125,6 +125,7 @@ classdef RBM < handle
       %
       % Parameters:
       %   paramTrain: parameter training set. @type matrix
+      %   tol: error tolerance @type double
 
       % default values
       if nargin < 2

@@ -1,0 +1,5 @@
+<map id="TemporalAssemblyAbstract" name="TemporalAssemblyAbstract">
+<area shape="rect" id="node3" href="$class_temporal_assembly_legendre.html" title="Assemble the temporal mass and stiffness matrices for a basis given through shifted legendre polynomi..." alt="" coords="5,152,196,177"/>
+<area shape="rect" id="node4" href="$class_temporal_assembly_nodal.html" title="Assemble the temporal mass and stiffness matrices for a basis given through piecewise linear nodal ba..." alt="" coords="220,152,389,177"/>
+<area shape="rect" id="node2" href="$classhandle.html" title="Matlab&#39;s base handle class (documentation generation substitute) " alt="" coords="171,5,233,31"/>
+</map>

@@ -1,0 +1,6 @@
+<map id="MatlabDocMaker::setPref" name="MatlabDocMaker::setPref">
+<area shape="rect" id="node2" href="$class_matlab_doc_maker.html#a88037a33f6ed26b8b3e60e1cbfd5dfd6" title="Sets the project description. " alt="" coords="240,5,429,44"/>
+<area shape="rect" id="node3" href="$class_matlab_doc_maker.html#a6e84afe2189a851665133b6e7c412d4c" title="Sets the project logo. Set to &#39; to unset. " alt="" coords="225,68,444,93"/>
+<area shape="rect" id="node4" href="$class_matlab_doc_maker.html#a434c176c2421dd18a40003919b19f4f2" title="Runs the setup script for MatlabDocMaker and collects all necessary paths in order for the documentat..." alt="" coords="492,93,654,119"/>
+<area shape="rect" id="node5" href="$class_matlab_doc_maker.html#a532ff6bc4beaeff5c3d2f12305bbaa5d" title="Sets the project version. " alt="" coords="240,169,429,208"/>
+</map>
