@@ -1,6 +1,7 @@
 ## Beispiele für Kapitel 5 - Reduzierte-Basis-Methode
 
 Die Unterordner `example{1,2}` enthalten die beiden Beispiele, die am Ende von Kapitel 5 zu finden sind. Neben den benötigten Skripten um die Berechnungen auszuführen finden sich auch bereits vorberechnete Daten, da die Berechnungen vor allem bei zweitem Beispiele mehrere Stunden dauern.
+Beide Beispiele enthalten jeweils eine Datei vom Typ `ch5ex*_online_query.m`, welche einen zufälligen Parameter erzeugt, sowohl die Truth- als auch die RB-Lösung bestimmt und anschließend tatsächlichen Fehler und a posteriori-Fehlerschätzer ausgibt.
 
 ### Beispiel 1
 

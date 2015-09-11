@@ -111,30 +111,31 @@ $(document).ready(function(){initNavTree('code_2examples_2chapter5_2_r_e_a_d_m_e
 <a href="code_2examples_2chapter5_2_r_e_a_d_m_e_8md.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;## Beispiele für Kapitel 5 - Reduzierte-Basis-Methode</div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;</div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;Die Unterordner `example{1,2}` enthalten die beiden Beispiele, die am Ende von Kapitel 5 zu finden sind. Neben den benötigten Skripten um die Berechnungen auszuführen finden sich auch bereits vorberechnete Daten, da die Berechnungen vor allem bei zweitem Beispiele mehrere Stunden dauern.</div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;</div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;### Beispiel 1</div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;</div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;Um die Abbildungen und Tabellen nachzustellen, reicht es aus, das Skript `ch5ex1_plot_everything.m` auszuführen. </div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;Dieses lädt die bereits vorberechneten Daten und erzeugt die Abbildungen.</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;Will man die Daten neu berechnen, dann sollte dafür die Datei `ch5ex1_precompute_example.m` verwendet werden.</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;Diese führt zunächst `ch5ex1_run.m` aus, was die Offline-Phasen der SCM und RBM ausführt.</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;Anschließend wird `ch5ex1_run_analysis.m` ausgeführt, was weitere Berechnungen durchführt die zur Erzeugung der Abbildungen notwendig sind.</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;Die letzte verbleibende Datei `ch5ex1_problem_data.m` enthält die Modelldaten des Beispiels.</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;### Beispiel 2</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;Auch hier können mittels `ch5ex2_plot_everything.m` die Abbildung und die Tabelle nachgestellt werden.</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;Um die Berechnungen komplett neu auszuführen, sollte `ch5ex2_precompute_example.m` verwendet werden, welche `ch5ex2_run.m` ausführt und die generierten Daten speichert.</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;Erneut finden sich in `ch5ex2_problem_data.m` die Modelldaten des Beispiels.</div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;Beide Beispiele enthalten jeweils eine Datei vom Typ `ch5ex*_online_query.m`, welche einen zufälligen Parameter erzeugt, sowohl die Truth- als auch die RB-Lösung bestimmt und anschließend tatsächlichen Fehler und a posteriori-Fehlerschätzer ausgibt.</div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;</div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;### Beispiel 1</div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;</div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;Um die Abbildungen und Tabellen nachzustellen, reicht es aus, das Skript `ch5ex1_plot_everything.m` auszuführen. </div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;Dieses lädt die bereits vorberechneten Daten und erzeugt die Abbildungen.</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;Will man die Daten neu berechnen, dann sollte dafür die Datei `ch5ex1_precompute_example.m` verwendet werden.</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;Diese führt zunächst `ch5ex1_run.m` aus, was die Offline-Phasen der SCM und RBM ausführt.</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;Anschließend wird `ch5ex1_run_analysis.m` ausgeführt, was weitere Berechnungen durchführt die zur Erzeugung der Abbildungen notwendig sind.</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;Die letzte verbleibende Datei `ch5ex1_problem_data.m` enthält die Modelldaten des Beispiels.</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;### Beispiel 2</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;Auch hier können mittels `ch5ex2_plot_everything.m` die Abbildung und die Tabelle nachgestellt werden.</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;Um die Berechnungen komplett neu auszuführen, sollte `ch5ex2_precompute_example.m` verwendet werden, welche `ch5ex2_run.m` ausführt und die generierten Daten speichert.</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;Erneut finden sich in `ch5ex2_problem_data.m` die Modelldaten des Beispiels.</div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="code_2examples_2chapter5_2_r_e_a_d_m_e_8md.html">README.md</a></li>
-    <li class="footer">Generated on Thu Sep 10 2015 19:55:03 for SCFT-RBM by
+    <li class="footer">Generated on Fri Sep 11 2015 20:20:01 for SCFT-RBM by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.10 </li>
   </ul>

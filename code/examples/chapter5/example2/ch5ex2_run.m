@@ -28,3 +28,4 @@ rbm.offlineStage(ptrain, 1e-6);
 runTimes.rbm = toc(t);
 
 % now we are ready to use the rbm solver in the online stage!
+% ch5ex2_online_query

@@ -102,7 +102,7 @@ $(document).ready(function(){initNavTree('md_examples_chapter5__r_e_a_d_m_e.html
 <div class="title">Beispiele für Kapitel 5 - Reduzierte-Basis-Methode </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>Die Unterordner <code>example{1,2}</code> enthalten die beiden Beispiele, die am Ende von Kapitel 5 zu finden sind. Neben den benötigten Skripten um die Berechnungen auszuführen finden sich auch bereits vorberechnete Daten, da die Berechnungen vor allem bei zweitem Beispiele mehrere Stunden dauern.</p>
+<div class="textblock"><p>Die Unterordner <code>example{1,2}</code> enthalten die beiden Beispiele, die am Ende von Kapitel 5 zu finden sind. Neben den benötigten Skripten um die Berechnungen auszuführen finden sich auch bereits vorberechnete Daten, da die Berechnungen vor allem bei zweitem Beispiele mehrere Stunden dauern. Beide Beispiele enthalten jeweils eine Datei vom Typ <code>ch5ex*_online_query.m</code>, welche einen zufälligen Parameter erzeugt, sowohl die Truth- als auch die RB-Lösung bestimmt und anschließend tatsächlichen Fehler und a posteriori-Fehlerschätzer ausgibt.</p>
 <h3>Beispiel 1</h3>
 <p>Um die Abbildungen und Tabellen nachzustellen, reicht es aus, das Skript <code><a class="el" href="ch5ex1__plot__everything_8m.html" title="handle the tikz generation toggle ">ch5ex1_plot_everything.m</a></code> auszuführen. Dieses lädt die bereits vorberechneten Daten und erzeugt die Abbildungen.</p>
 <p>Will man die Daten neu berechnen, dann sollte dafür die Datei <code><a class="el" href="ch5ex1__precompute__example_8m.html" title="run the offline stages ">ch5ex1_precompute_example.m</a></code> verwendet werden. Diese führt zunächst <code><a class="el" href="ch5ex1__run_8m.html" title="load model data ">ch5ex1_run.m</a></code> aus, was die Offline-Phasen der <a class="el" href="class_s_c_m.html" title="Successive constraint method. ">SCM</a> und <a class="el" href="class_r_b_m.html" title="Reduced basis method. ">RBM</a> ausführt. Anschließend wird <code><a class="el" href="ch5ex1__run__analysis_8m.html" title="% computation compute the exact scm bounds ">ch5ex1_run_analysis.m</a></code> ausgeführt, was weitere Berechnungen durchführt die zur Erzeugung der Abbildungen notwendig sind. Die letzte verbleibende Datei <code><a class="el" href="ch5ex1__problem__data_8m.html" title="Chapter 5 - First example. ">ch5ex1_problem_data.m</a></code> enthält die Modelldaten des Beispiels.</p>
@@ -114,7 +114,7 @@ $(document).ready(function(){initNavTree('md_examples_chapter5__r_e_a_d_m_e.html
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Sep 10 2015 19:55:03 for SCFT-RBM by
+    <li class="footer">Generated on Fri Sep 11 2015 20:20:01 for SCFT-RBM by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.10 </li>
   </ul>
