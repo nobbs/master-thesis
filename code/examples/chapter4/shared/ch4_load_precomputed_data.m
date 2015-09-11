@@ -34,7 +34,7 @@ if generate_tikz
     matlab2tikz('stability_sine_dataset1_fig_2.tikz');
 end
 
-clear;
+% clear;
 
 %% example 2
 load('ch4ex2_precomputed.mat');
@@ -67,7 +67,7 @@ if generate_tikz
     matlab2tikz('stability_sine_dataset2_fig_2.tikz');
 end
 
-clear;
+% clear;
 
 %% example 3
 load('ch4ex3_precomputed.mat');
@@ -100,4 +100,4 @@ if generate_tikz
     matlab2tikz('stability_fourier_dataset1_fig_2.tikz');
 end
 
-clear;
+% clear;
