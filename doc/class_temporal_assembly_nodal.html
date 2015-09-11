@@ -147,19 +147,19 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a92e3f2082fe8234febc5f2b9d60d6a6b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for this assembly class.  <a href="#a92e3f2082fe8234febc5f2b9d60d6a6b">More...</a><br /></td></tr>
 <tr class="separator:a92e3f2082fe8234febc5f2b9d60d6a6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab6ec3c04a7e3ef17692f112beb2de8d6"><td class="memItemLeft" align="right" valign="top">function <a class="el" href="classmatrix.html">matrix</a> Mt  =&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_temporal_assembly_nodal.html#ab6ec3c04a7e3ef17692f112beb2de8d6">massMatrix</a> (string space,<a class="el" href="classvector.html">vector</a> span)</td></tr>
-<tr class="memdesc:ab6ec3c04a7e3ef17692f112beb2de8d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assemble the temporal mass Matrix, that means we evaluate the integral <img class="formulaInl" alt="$\int_{I} \theta_k(t) \xi_m(t) \diff t$" src="form_5.png"/> for <img class="formulaInl" alt="$k = 1 \dots K$" src="form_6.png"/> and <img class="formulaInl" alt="$m = 1 \dots K'$" src="form_7.png"/>.  <a href="#ab6ec3c04a7e3ef17692f112beb2de8d6">More...</a><br /></td></tr>
+<tr class="memdesc:ab6ec3c04a7e3ef17692f112beb2de8d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assemble the temporal mass Matrix, that means we evaluate the integral <img class="formulaInl" alt="$\int_{I} \theta_k(t) \xi_m(t) \diff t$" src="form_18.png"/> for <img class="formulaInl" alt="$k = 1 \dots K$" src="form_19.png"/> and <img class="formulaInl" alt="$m = 1 \dots K'$" src="form_20.png"/>.  <a href="#ab6ec3c04a7e3ef17692f112beb2de8d6">More...</a><br /></td></tr>
 <tr class="separator:ab6ec3c04a7e3ef17692f112beb2de8d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a419972e36bef9d8ca771440b66d4e688"><td class="memItemLeft" align="right" valign="top">function <a class="el" href="classmatrix.html">matrix</a> Ct  =&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_temporal_assembly_nodal.html#a419972e36bef9d8ca771440b66d4e688">halfStiffnessMatrix</a> ()</td></tr>
-<tr class="memdesc:a419972e36bef9d8ca771440b66d4e688"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assemble the temporal "half stiffness" matrix, that means we evaluate the integral <img class="formulaInl" alt="$\int_{I} \theta'_k(t) \xi_m(t) \diff t$" src="form_8.png"/> for <img class="formulaInl" alt="$k = 1 \dots K$" src="form_6.png"/> and <img class="formulaInl" alt="$m = 1 \dots K'$" src="form_7.png"/>.  <a href="#a419972e36bef9d8ca771440b66d4e688">More...</a><br /></td></tr>
+<tr class="memdesc:a419972e36bef9d8ca771440b66d4e688"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assemble the temporal "half stiffness" matrix, that means we evaluate the integral <img class="formulaInl" alt="$\int_{I} \theta'_k(t) \xi_m(t) \diff t$" src="form_21.png"/> for <img class="formulaInl" alt="$k = 1 \dots K$" src="form_19.png"/> and <img class="formulaInl" alt="$m = 1 \dots K'$" src="form_20.png"/>.  <a href="#a419972e36bef9d8ca771440b66d4e688">More...</a><br /></td></tr>
 <tr class="separator:a419972e36bef9d8ca771440b66d4e688"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac271b04f663386d97fa7bb367886be86"><td class="memItemLeft" align="right" valign="top">function <a class="el" href="classmatrix.html">matrix</a> At  =&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_temporal_assembly_nodal.html#ac271b04f663386d97fa7bb367886be86">stiffnessMatrix</a> ()</td></tr>
-<tr class="memdesc:ac271b04f663386d97fa7bb367886be86"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assemble the temporal stiffness matrix, that means we evaluate the integral <img class="formulaInl" alt="$\int_{I} \theta'_{k_1}(t) \theta'_{k_2}(t) \diff t$" src="form_9.png"/> for <img class="formulaInl" alt="$k_1, k_2 = 1 \dots K$" src="form_10.png"/>.  <a href="#ac271b04f663386d97fa7bb367886be86">More...</a><br /></td></tr>
+<tr class="memdesc:ac271b04f663386d97fa7bb367886be86"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assemble the temporal stiffness matrix, that means we evaluate the integral <img class="formulaInl" alt="$\int_{I} \theta'_{k_1}(t) \theta'_{k_2}(t) \diff t$" src="form_22.png"/> for <img class="formulaInl" alt="$k_1, k_2 = 1 \dots K$" src="form_23.png"/>.  <a href="#ac271b04f663386d97fa7bb367886be86">More...</a><br /></td></tr>
 <tr class="separator:ac271b04f663386d97fa7bb367886be86"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abefc9026c63f8ac9ffda54f36f6faeb1"><td class="memItemLeft" align="right" valign="top">function <a class="el" href="classvector.html">vector</a> et  =&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_temporal_assembly_nodal.html#abefc9026c63f8ac9ffda54f36f6faeb1">forwardInitVector</a> ()</td></tr>
-<tr class="memdesc:abefc9026c63f8ac9ffda54f36f6faeb1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assemble the temporal row vector responsible for the propagation of the initial condition in the case of the forward propagator, that means we evaluate <img class="formulaInl" alt="$\theta_k(0)$" src="form_11.png"/> for <img class="formulaInl" alt="$k = 1 \dots K$" src="form_6.png"/>.  <a href="#abefc9026c63f8ac9ffda54f36f6faeb1">More...</a><br /></td></tr>
+<tr class="memdesc:abefc9026c63f8ac9ffda54f36f6faeb1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assemble the temporal row vector responsible for the propagation of the initial condition in the case of the forward propagator, that means we evaluate <img class="formulaInl" alt="$\theta_k(0)$" src="form_24.png"/> for <img class="formulaInl" alt="$k = 1 \dots K$" src="form_19.png"/>.  <a href="#abefc9026c63f8ac9ffda54f36f6faeb1">More...</a><br /></td></tr>
 <tr class="separator:abefc9026c63f8ac9ffda54f36f6faeb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a16322b5bc88e04aaf30cf10f429ffb21"><td class="memItemLeft" align="right" valign="top">function <a class="el" href="classvector.html">vector</a> et  =&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_temporal_assembly_nodal.html#a16322b5bc88e04aaf30cf10f429ffb21">backwardInitVector</a> ()</td></tr>
-<tr class="memdesc:a16322b5bc88e04aaf30cf10f429ffb21"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assemble the temporal row vector responsible for the propagation of the initial condition in the case of the forward propagator, that means we evaluate <img class="formulaInl" alt="$\theta_k(L)$" src="form_12.png"/> for <img class="formulaInl" alt="$k = 1 \dots K$" src="form_6.png"/>.  <a href="#a16322b5bc88e04aaf30cf10f429ffb21">More...</a><br /></td></tr>
+<tr class="memdesc:a16322b5bc88e04aaf30cf10f429ffb21"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assemble the temporal row vector responsible for the propagation of the initial condition in the case of the forward propagator, that means we evaluate <img class="formulaInl" alt="$\theta_k(L)$" src="form_25.png"/> for <img class="formulaInl" alt="$k = 1 \dots K$" src="form_19.png"/>.  <a href="#a16322b5bc88e04aaf30cf10f429ffb21">More...</a><br /></td></tr>
 <tr class="separator:a16322b5bc88e04aaf30cf10f429ffb21"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_class_temporal_assembly_abstract"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_temporal_assembly_abstract')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_temporal_assembly_abstract.html">TemporalAssemblyAbstract</a></td></tr>
 <tr class="memitem:a7235f7d54d294ad4ea0dfd4d7d39cf46 inherit pub_methods_class_temporal_assembly_abstract"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_temporal_assembly_abstract.html#a7235f7d54d294ad4ea0dfd4d7d39cf46">TemporalAssemblyAbstract</a> (<a class="el" href="class_problem_data.html">ProblemData</a> <a class="el" href="class_temporal_assembly_abstract.html#a58d0c07c61c5c76348064cb8eb768572">pd</a>)</td></tr>
@@ -169,7 +169,7 @@ Public Member Functions</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:aad90be00018d86d9d6193fc6975400d1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classlogical.html">logical</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_temporal_assembly_nodal.html#aad90be00018d86d9d6193fc6975400d1">useRefinement</a> = false</td></tr>
-<tr class="memdesc:aad90be00018d86d9d6193fc6975400d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">toggle, whether refinement for the test space should be used  <a href="#aad90be00018d86d9d6193fc6975400d1">More...</a><br /></td></tr>
+<tr class="memdesc:aad90be00018d86d9d6193fc6975400d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">toggle, whether refinement for the test space should be used won<code>t work together with rbm, so let</code>s disable it by default  <a href="#aad90be00018d86d9d6193fc6975400d1">More...</a><br /></td></tr>
 <tr class="separator:aad90be00018d86d9d6193fc6975400d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_attribs_class_temporal_assembly_abstract"><td colspan="2" onclick="javascript:toggleInherit('pub_attribs_class_temporal_assembly_abstract')"><img src="closed.png" alt="-"/>&#160;Public Attributes inherited from <a class="el" href="class_temporal_assembly_abstract.html">TemporalAssemblyAbstract</a></td></tr>
 <tr class="memitem:a58d0c07c61c5c76348064cb8eb768572 inherit pub_attribs_class_temporal_assembly_abstract"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_problem_data.html">ProblemData</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_temporal_assembly_abstract.html#a58d0c07c61c5c76348064cb8eb768572">pd</a></td></tr>
@@ -285,7 +285,7 @@ Private Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="_temporal_assembly_nodal_8m_source.html#l00047">47</a> of file <a class="el" href="_temporal_assembly_nodal_8m_source.html">TemporalAssemblyNodal.m</a>.</p>
+<p>Definition at line <a class="el" href="_temporal_assembly_nodal_8m_source.html#l00048">48</a> of file <a class="el" href="_temporal_assembly_nodal_8m_source.html">TemporalAssemblyNodal.m</a>.</p>
 
 <p>References <a class="el" href="_temporal_assembly_abstract_8m_source.html#l00059">TemporalAssemblyAbstract.TemporalAssemblyAbstract()</a>, and <a class="el" href="_temporal_assembly_nodal_8m_source.html#l00036">useRefinement</a>.</p>
 
@@ -323,7 +323,7 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p>Assemble the temporal row vector responsible for the propagation of the initial condition in the case of the forward propagator, that means we evaluate <img class="formulaInl" alt="$\theta_k(L)$" src="form_12.png"/> for <img class="formulaInl" alt="$k = 1 \dots K$" src="form_6.png"/>. </p>
+<p>Assemble the temporal row vector responsible for the propagation of the initial condition in the case of the forward propagator, that means we evaluate <img class="formulaInl" alt="$\theta_k(L)$" src="form_25.png"/> for <img class="formulaInl" alt="$k = 1 \dots K$" src="form_19.png"/>. </p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">et</td><td>backward propagation vector </td></tr>
@@ -333,7 +333,7 @@ Here is the call graph for this function:</div>
 
 <p>Implements <a class="el" href="class_temporal_assembly_abstract.html#ae85db127830e2422113cc1fca62edc1a">TemporalAssemblyAbstract</a>.</p>
 
-<p>Definition at line <a class="el" href="_temporal_assembly_nodal_8m_source.html#l00172">172</a> of file <a class="el" href="_temporal_assembly_nodal_8m_source.html">TemporalAssemblyNodal.m</a>.</p>
+<p>Definition at line <a class="el" href="_temporal_assembly_nodal_8m_source.html#l00173">173</a> of file <a class="el" href="_temporal_assembly_nodal_8m_source.html">TemporalAssemblyNodal.m</a>.</p>
 
 </div>
 </div>
@@ -358,7 +358,7 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p>Assemble the temporal row vector responsible for the propagation of the initial condition in the case of the forward propagator, that means we evaluate <img class="formulaInl" alt="$\theta_k(0)$" src="form_11.png"/> for <img class="formulaInl" alt="$k = 1 \dots K$" src="form_6.png"/>. </p>
+<p>Assemble the temporal row vector responsible for the propagation of the initial condition in the case of the forward propagator, that means we evaluate <img class="formulaInl" alt="$\theta_k(0)$" src="form_24.png"/> for <img class="formulaInl" alt="$k = 1 \dots K$" src="form_19.png"/>. </p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">et</td><td>forward propagation vector </td></tr>
@@ -368,7 +368,7 @@ Here is the call graph for this function:</div>
 
 <p>Implements <a class="el" href="class_temporal_assembly_abstract.html#ad9bc22e96c6cc56277335f8452da06fe">TemporalAssemblyAbstract</a>.</p>
 
-<p>Definition at line <a class="el" href="_temporal_assembly_nodal_8m_source.html#l00153">153</a> of file <a class="el" href="_temporal_assembly_nodal_8m_source.html">TemporalAssemblyNodal.m</a>.</p>
+<p>Definition at line <a class="el" href="_temporal_assembly_nodal_8m_source.html#l00154">154</a> of file <a class="el" href="_temporal_assembly_nodal_8m_source.html">TemporalAssemblyNodal.m</a>.</p>
 
 </div>
 </div>
@@ -393,7 +393,7 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p>Assemble the temporal "half stiffness" matrix, that means we evaluate the integral <img class="formulaInl" alt="$\int_{I} \theta'_k(t) \xi_m(t) \diff t$" src="form_8.png"/> for <img class="formulaInl" alt="$k = 1 \dots K$" src="form_6.png"/> and <img class="formulaInl" alt="$m = 1 \dots K'$" src="form_7.png"/>. </p>
+<p>Assemble the temporal "half stiffness" matrix, that means we evaluate the integral <img class="formulaInl" alt="$\int_{I} \theta'_k(t) \xi_m(t) \diff t$" src="form_21.png"/> for <img class="formulaInl" alt="$k = 1 \dots K$" src="form_19.png"/> and <img class="formulaInl" alt="$m = 1 \dots K'$" src="form_20.png"/>. </p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">Ct</td><td>temporal "half stiffness" matrix </td></tr>
@@ -403,7 +403,7 @@ Here is the call graph for this function:</div>
 
 <p>Implements <a class="el" href="class_temporal_assembly_abstract.html#a39cd38d2b854054f68a45fe29fd5f346">TemporalAssemblyAbstract</a>.</p>
 
-<p>Definition at line <a class="el" href="_temporal_assembly_nodal_8m_source.html#l00107">107</a> of file <a class="el" href="_temporal_assembly_nodal_8m_source.html">TemporalAssemblyNodal.m</a>.</p>
+<p>Definition at line <a class="el" href="_temporal_assembly_nodal_8m_source.html#l00108">108</a> of file <a class="el" href="_temporal_assembly_nodal_8m_source.html">TemporalAssemblyNodal.m</a>.</p>
 
 </div>
 </div>
@@ -455,7 +455,7 @@ Here is the call graph for this function:</div>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="_temporal_assembly_nodal_8m_source.html#l00279">279</a> of file <a class="el" href="_temporal_assembly_nodal_8m_source.html">TemporalAssemblyNodal.m</a>.</p>
+<p>Definition at line <a class="el" href="_temporal_assembly_nodal_8m_source.html#l00280">280</a> of file <a class="el" href="_temporal_assembly_nodal_8m_source.html">TemporalAssemblyNodal.m</a>.</p>
 
 </div>
 </div>
@@ -491,7 +491,7 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p>Assemble the temporal mass Matrix, that means we evaluate the integral <img class="formulaInl" alt="$\int_{I} \theta_k(t) \xi_m(t) \diff t$" src="form_5.png"/> for <img class="formulaInl" alt="$k = 1 \dots K$" src="form_6.png"/> and <img class="formulaInl" alt="$m = 1 \dots K'$" src="form_7.png"/>. </p>
+<p>Assemble the temporal mass Matrix, that means we evaluate the integral <img class="formulaInl" alt="$\int_{I} \theta_k(t) \xi_m(t) \diff t$" src="form_18.png"/> for <img class="formulaInl" alt="$k = 1 \dots K$" src="form_19.png"/> and <img class="formulaInl" alt="$m = 1 \dots K'$" src="form_20.png"/>. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">space</td><td>switch for which space the matrix should be assembled. possible values are <code>trial</code>, <code>test</code> and <code>both</code>. </td></tr>
@@ -508,7 +508,7 @@ Here is the call graph for this function:</div>
 
 <p>Implements <a class="el" href="class_temporal_assembly_abstract.html#a2887c848914616dcc7fecd4cf5078fd2">TemporalAssemblyAbstract</a>.</p>
 
-<p>Definition at line <a class="el" href="_temporal_assembly_nodal_8m_source.html#l00069">69</a> of file <a class="el" href="_temporal_assembly_nodal_8m_source.html">TemporalAssemblyNodal.m</a>.</p>
+<p>Definition at line <a class="el" href="_temporal_assembly_nodal_8m_source.html#l00070">70</a> of file <a class="el" href="_temporal_assembly_nodal_8m_source.html">TemporalAssemblyNodal.m</a>.</p>
 
 </div>
 </div>
@@ -566,7 +566,7 @@ Here is the call graph for this function:</div>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="_temporal_assembly_nodal_8m_source.html#l00219">219</a> of file <a class="el" href="_temporal_assembly_nodal_8m_source.html">TemporalAssemblyNodal.m</a>.</p>
+<p>Definition at line <a class="el" href="_temporal_assembly_nodal_8m_source.html#l00220">220</a> of file <a class="el" href="_temporal_assembly_nodal_8m_source.html">TemporalAssemblyNodal.m</a>.</p>
 
 </div>
 </div>
@@ -617,7 +617,7 @@ Here is the call graph for this function:</div>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="_temporal_assembly_nodal_8m_source.html#l00256">256</a> of file <a class="el" href="_temporal_assembly_nodal_8m_source.html">TemporalAssemblyNodal.m</a>.</p>
+<p>Definition at line <a class="el" href="_temporal_assembly_nodal_8m_source.html#l00257">257</a> of file <a class="el" href="_temporal_assembly_nodal_8m_source.html">TemporalAssemblyNodal.m</a>.</p>
 
 </div>
 </div>
@@ -650,7 +650,7 @@ Here is the call graph for this function:</div>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="_temporal_assembly_nodal_8m_source.html#l00204">204</a> of file <a class="el" href="_temporal_assembly_nodal_8m_source.html">TemporalAssemblyNodal.m</a>.</p>
+<p>Definition at line <a class="el" href="_temporal_assembly_nodal_8m_source.html#l00205">205</a> of file <a class="el" href="_temporal_assembly_nodal_8m_source.html">TemporalAssemblyNodal.m</a>.</p>
 
 </div>
 </div>
@@ -677,7 +677,7 @@ Here is the call graph for this function:</div>
 
 <p>(Re-)Set the number of trial and test basis functions. </p>
 
-<p>Definition at line <a class="el" href="_temporal_assembly_nodal_8m_source.html#l00193">193</a> of file <a class="el" href="_temporal_assembly_nodal_8m_source.html">TemporalAssemblyNodal.m</a>.</p>
+<p>Definition at line <a class="el" href="_temporal_assembly_nodal_8m_source.html#l00194">194</a> of file <a class="el" href="_temporal_assembly_nodal_8m_source.html">TemporalAssemblyNodal.m</a>.</p>
 
 </div>
 </div>
@@ -702,7 +702,7 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p>Assemble the temporal stiffness matrix, that means we evaluate the integral <img class="formulaInl" alt="$\int_{I} \theta'_{k_1}(t) \theta'_{k_2}(t) \diff t$" src="form_9.png"/> for <img class="formulaInl" alt="$k_1, k_2 = 1 \dots K$" src="form_10.png"/>. </p>
+<p>Assemble the temporal stiffness matrix, that means we evaluate the integral <img class="formulaInl" alt="$\int_{I} \theta'_{k_1}(t) \theta'_{k_2}(t) \diff t$" src="form_22.png"/> for <img class="formulaInl" alt="$k_1, k_2 = 1 \dots K$" src="form_23.png"/>. </p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">At</td><td>temporal stiffness matrix </td></tr>
@@ -712,7 +712,7 @@ Here is the call graph for this function:</div>
 
 <p>Implements <a class="el" href="class_temporal_assembly_abstract.html#a5e64b0d4f1a0efff41bff5f1695d9c70">TemporalAssemblyAbstract</a>.</p>
 
-<p>Definition at line <a class="el" href="_temporal_assembly_nodal_8m_source.html#l00132">132</a> of file <a class="el" href="_temporal_assembly_nodal_8m_source.html">TemporalAssemblyNodal.m</a>.</p>
+<p>Definition at line <a class="el" href="_temporal_assembly_nodal_8m_source.html#l00133">133</a> of file <a class="el" href="_temporal_assembly_nodal_8m_source.html">TemporalAssemblyNodal.m</a>.</p>
 
 </div>
 </div>
@@ -727,13 +727,13 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>toggle, whether refinement for the test space should be used </p>
+<p>toggle, whether refinement for the test space should be used won<code>t work together with rbm, so let</code>s disable it by default </p>
 <p><br />
 <b>Default:</b> false </p>
 
 <p>Definition at line <a class="el" href="_temporal_assembly_nodal_8m_source.html#l00036">36</a> of file <a class="el" href="_temporal_assembly_nodal_8m_source.html">TemporalAssemblyNodal.m</a>.</p>
 
-<p>Referenced by <a class="el" href="_temporal_assembly_nodal_8m_source.html#l00047">TemporalAssemblyNodal()</a>.</p>
+<p>Referenced by <a class="el" href="_temporal_assembly_nodal_8m_source.html#l00048">TemporalAssemblyNodal()</a>.</p>
 
 </div>
 </div>
@@ -746,7 +746,7 @@ Here is the call graph for this function:</div>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="class_temporal_assembly_nodal.html">TemporalAssemblyNodal</a></li>
-    <li class="footer">Generated on Fri Sep 11 2015 20:33:22 for SCFT-RBM by
+    <li class="footer">Generated on Fri Sep 11 2015 20:39:05 for SCFT-RBM by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.10 </li>
   </ul>

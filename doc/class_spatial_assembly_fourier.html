@@ -145,10 +145,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a96327295c3e79469f8dc17263e290df1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for this assembly class.  <a href="#a96327295c3e79469f8dc17263e290df1">More...</a><br /></td></tr>
 <tr class="separator:a96327295c3e79469f8dc17263e290df1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab7f2fbf7f75a469abefa269533ad3ef0"><td class="memItemLeft" align="right" valign="top">function <a class="el" href="classmatrix.html">matrix</a> Mx  =&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_spatial_assembly_fourier.html#ab7f2fbf7f75a469abefa269533ad3ef0">massMatrix</a> ()</td></tr>
-<tr class="memdesc:ab7f2fbf7f75a469abefa269533ad3ef0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assemble the spatial mass matrix, that means we evaluate the integral <img class="formulaInl" alt="$\int_{\Omega} \sigma_j(x) \sigma_l(x) \diff x$" src="form_1.png"/> for some <img class="formulaInl" alt="$j$" src="form_2.png"/> and <img class="formulaInl" alt="$l$" src="form_3.png"/>.  <a href="#ab7f2fbf7f75a469abefa269533ad3ef0">More...</a><br /></td></tr>
+<tr class="memdesc:ab7f2fbf7f75a469abefa269533ad3ef0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assemble the spatial mass matrix, that means we evaluate the integral <img class="formulaInl" alt="$\int_{\Omega} \sigma_j(x) \sigma_l(x) \diff x$" src="form_14.png"/> for some <img class="formulaInl" alt="$j$" src="form_15.png"/> and <img class="formulaInl" alt="$l$" src="form_16.png"/>.  <a href="#ab7f2fbf7f75a469abefa269533ad3ef0">More...</a><br /></td></tr>
 <tr class="separator:ab7f2fbf7f75a469abefa269533ad3ef0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8cfbe6baca967a8a02ed0b857a4fa54e"><td class="memItemLeft" align="right" valign="top">function <a class="el" href="classmatrix.html">matrix</a> Ax  =&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_spatial_assembly_fourier.html#a8cfbe6baca967a8a02ed0b857a4fa54e">stiffnessMatrix</a> ()</td></tr>
-<tr class="memdesc:a8cfbe6baca967a8a02ed0b857a4fa54e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assemble the spatial stiffness matrix, that means we evaluate the integral <img class="formulaInl" alt="$\int_{\Omega} \sigma'_j(x) \sigma'_l(x) \diff x$" src="form_4.png"/> for some <img class="formulaInl" alt="$j$" src="form_2.png"/> and <img class="formulaInl" alt="$l$" src="form_3.png"/>.  <a href="#a8cfbe6baca967a8a02ed0b857a4fa54e">More...</a><br /></td></tr>
+<tr class="memdesc:a8cfbe6baca967a8a02ed0b857a4fa54e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assemble the spatial stiffness matrix, that means we evaluate the integral <img class="formulaInl" alt="$\int_{\Omega} \sigma'_j(x) \sigma'_l(x) \diff x$" src="form_17.png"/> for some <img class="formulaInl" alt="$j$" src="form_15.png"/> and <img class="formulaInl" alt="$l$" src="form_16.png"/>.  <a href="#a8cfbe6baca967a8a02ed0b857a4fa54e">More...</a><br /></td></tr>
 <tr class="separator:a8cfbe6baca967a8a02ed0b857a4fa54e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a15209851198eb446715b2fcb19957d3a"><td class="memItemLeft" align="right" valign="top">function <a class="el" href="classdouble.html">double</a> val  =&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_spatial_assembly_fourier.html#a15209851198eb446715b2fcb19957d3a">evaluateFunctional</a> (<a class="el" href="classfunction__handle.html">function_handle</a> fun,<a class="el" href="classinteger.html">integer</a> index)</td></tr>
 <tr class="memdesc:a15209851198eb446715b2fcb19957d3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Evaluate the functional given by a basis function.  <a href="#a15209851198eb446715b2fcb19957d3a">More...</a><br /></td></tr>
@@ -452,7 +452,7 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p>Assemble the spatial mass matrix, that means we evaluate the integral <img class="formulaInl" alt="$\int_{\Omega} \sigma_j(x) \sigma_l(x) \diff x$" src="form_1.png"/> for some <img class="formulaInl" alt="$j$" src="form_2.png"/> and <img class="formulaInl" alt="$l$" src="form_3.png"/>. </p>
+<p>Assemble the spatial mass matrix, that means we evaluate the integral <img class="formulaInl" alt="$\int_{\Omega} \sigma_j(x) \sigma_l(x) \diff x$" src="form_14.png"/> for some <img class="formulaInl" alt="$j$" src="form_15.png"/> and <img class="formulaInl" alt="$l$" src="form_16.png"/>. </p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">Mx</td><td>spatial mass matrix </td></tr>
@@ -487,7 +487,7 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p>Assemble the spatial stiffness matrix, that means we evaluate the integral <img class="formulaInl" alt="$\int_{\Omega} \sigma'_j(x) \sigma'_l(x) \diff x$" src="form_4.png"/> for some <img class="formulaInl" alt="$j$" src="form_2.png"/> and <img class="formulaInl" alt="$l$" src="form_3.png"/>. </p>
+<p>Assemble the spatial stiffness matrix, that means we evaluate the integral <img class="formulaInl" alt="$\int_{\Omega} \sigma'_j(x) \sigma'_l(x) \diff x$" src="form_17.png"/> for some <img class="formulaInl" alt="$j$" src="form_15.png"/> and <img class="formulaInl" alt="$l$" src="form_16.png"/>. </p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">Ax</td><td>spatial stiffness matrix </td></tr>
@@ -510,7 +510,7 @@ Here is the call graph for this function:</div>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="class_spatial_assembly_fourier.html">SpatialAssemblyFourier</a></li>
-    <li class="footer">Generated on Fri Sep 11 2015 20:33:22 for SCFT-RBM by
+    <li class="footer">Generated on Fri Sep 11 2015 20:39:05 for SCFT-RBM by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.10 </li>
   </ul>

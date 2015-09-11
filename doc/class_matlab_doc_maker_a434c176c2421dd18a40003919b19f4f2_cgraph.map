@@ -1,8 +1,0 @@
-<map id="MatlabDocMaker::setup" name="MatlabDocMaker::setup">
-<area shape="rect" id="node2" href="$class_matlab_doc_maker.html#adfcdad653761f551bf2413e949f9dff1" title="MatlabDocMaker::getPref" alt="" coords="717,99,889,125"/>
-<area shape="rect" id="node4" href="$class_matlab_doc_maker.html#a9f84ff8d3f39824b54626862780b342c" title="Returns the project name. " alt="" coords="1203,18,1428,43"/>
-<area shape="rect" id="node5" href="$class_matlab_doc_maker.html#a2043a41c02b5922142bb5513ac2cc312" title="MatlabDocMaker::setPref" alt="" coords="489,43,661,69"/>
-<area shape="rect" id="node6" href="$class_matlab_doc_maker.html#a6e84afe2189a851665133b6e7c412d4c" title="Sets the project logo. Set to &#39; to unset. " alt="" coords="215,94,434,119"/>
-<area shape="rect" id="node3" href="$class_matlab_doc_maker.html#a61ba93ad0e3a332ec42e5624ca9b0842" title="Gets the tag for the MatLab preferences struct. " alt="" coords="937,43,1155,69"/>
-<area shape="rect" id="node7" href="$class_matlab_doc_maker.html#a11a2a8ec616df969a911b325e39b0b4f" title="Returns the directory where the applications documentation configuration files reside. " alt="" coords="482,93,669,131"/>
-</map>

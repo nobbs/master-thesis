@@ -146,19 +146,19 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a7235f7d54d294ad4ea0dfd4d7d39cf46"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor.  <a href="#a7235f7d54d294ad4ea0dfd4d7d39cf46">More...</a><br /></td></tr>
 <tr class="separator:a7235f7d54d294ad4ea0dfd4d7d39cf46"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2887c848914616dcc7fecd4cf5078fd2"><td class="memItemLeft" align="right" valign="top">virtual function <a class="el" href="classmatrix.html">matrix</a> Mt  =&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_temporal_assembly_abstract.html#a2887c848914616dcc7fecd4cf5078fd2">massMatrix</a> (string space,<a class="el" href="classvector.html">vector</a> spanidx)</td></tr>
-<tr class="memdesc:a2887c848914616dcc7fecd4cf5078fd2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assemble the temporal mass Matrix, that means we evaluate the integral <img class="formulaInl" alt="$\int_{I} \theta_k(t) \xi_m(t) \diff t$" src="form_5.png"/> for <img class="formulaInl" alt="$k = 1 \dots K$" src="form_6.png"/> and <img class="formulaInl" alt="$m = 1 \dots K'$" src="form_7.png"/>.  <a href="#a2887c848914616dcc7fecd4cf5078fd2">More...</a><br /></td></tr>
+<tr class="memdesc:a2887c848914616dcc7fecd4cf5078fd2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assemble the temporal mass Matrix, that means we evaluate the integral <img class="formulaInl" alt="$\int_{I} \theta_k(t) \xi_m(t) \diff t$" src="form_18.png"/> for <img class="formulaInl" alt="$k = 1 \dots K$" src="form_19.png"/> and <img class="formulaInl" alt="$m = 1 \dots K'$" src="form_20.png"/>.  <a href="#a2887c848914616dcc7fecd4cf5078fd2">More...</a><br /></td></tr>
 <tr class="separator:a2887c848914616dcc7fecd4cf5078fd2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a39cd38d2b854054f68a45fe29fd5f346"><td class="memItemLeft" align="right" valign="top">virtual function <a class="el" href="classmatrix.html">matrix</a> Ct  =&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_temporal_assembly_abstract.html#a39cd38d2b854054f68a45fe29fd5f346">halfStiffnessMatrix</a> ()</td></tr>
-<tr class="memdesc:a39cd38d2b854054f68a45fe29fd5f346"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assemble the temporal "half stiffness" matrix, that means we evaluate the integral <img class="formulaInl" alt="$\int_{I} \theta'_k(t) \xi_m(t) \diff t$" src="form_8.png"/> for <img class="formulaInl" alt="$k = 1 \dots K$" src="form_6.png"/> and <img class="formulaInl" alt="$m = 1 \dots K'$" src="form_7.png"/>.  <a href="#a39cd38d2b854054f68a45fe29fd5f346">More...</a><br /></td></tr>
+<tr class="memdesc:a39cd38d2b854054f68a45fe29fd5f346"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assemble the temporal "half stiffness" matrix, that means we evaluate the integral <img class="formulaInl" alt="$\int_{I} \theta'_k(t) \xi_m(t) \diff t$" src="form_21.png"/> for <img class="formulaInl" alt="$k = 1 \dots K$" src="form_19.png"/> and <img class="formulaInl" alt="$m = 1 \dots K'$" src="form_20.png"/>.  <a href="#a39cd38d2b854054f68a45fe29fd5f346">More...</a><br /></td></tr>
 <tr class="separator:a39cd38d2b854054f68a45fe29fd5f346"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5e64b0d4f1a0efff41bff5f1695d9c70"><td class="memItemLeft" align="right" valign="top">virtual function <a class="el" href="classmatrix.html">matrix</a> At  =&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_temporal_assembly_abstract.html#a5e64b0d4f1a0efff41bff5f1695d9c70">stiffnessMatrix</a> ()</td></tr>
-<tr class="memdesc:a5e64b0d4f1a0efff41bff5f1695d9c70"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assemble the temporal stiffness matrix, that means we evaluate the integral <img class="formulaInl" alt="$\int_{I} \theta'_{k_1}(t) \theta'_{k_2}(t) \diff t$" src="form_9.png"/> for <img class="formulaInl" alt="$k_1, k_2 = 1 \dots K$" src="form_10.png"/>.  <a href="#a5e64b0d4f1a0efff41bff5f1695d9c70">More...</a><br /></td></tr>
+<tr class="memdesc:a5e64b0d4f1a0efff41bff5f1695d9c70"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assemble the temporal stiffness matrix, that means we evaluate the integral <img class="formulaInl" alt="$\int_{I} \theta'_{k_1}(t) \theta'_{k_2}(t) \diff t$" src="form_22.png"/> for <img class="formulaInl" alt="$k_1, k_2 = 1 \dots K$" src="form_23.png"/>.  <a href="#a5e64b0d4f1a0efff41bff5f1695d9c70">More...</a><br /></td></tr>
 <tr class="separator:a5e64b0d4f1a0efff41bff5f1695d9c70"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad9bc22e96c6cc56277335f8452da06fe"><td class="memItemLeft" align="right" valign="top">virtual function <a class="el" href="classvector.html">vector</a> et  =&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_temporal_assembly_abstract.html#ad9bc22e96c6cc56277335f8452da06fe">forwardInitVector</a> ()</td></tr>
-<tr class="memdesc:ad9bc22e96c6cc56277335f8452da06fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assemble the temporal row vector responsible for the propagation of the initial condition in the case of the forward propagator, that means we evaluate <img class="formulaInl" alt="$\theta_k(0)$" src="form_11.png"/> for <img class="formulaInl" alt="$k = 1 \dots K$" src="form_6.png"/>.  <a href="#ad9bc22e96c6cc56277335f8452da06fe">More...</a><br /></td></tr>
+<tr class="memdesc:ad9bc22e96c6cc56277335f8452da06fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assemble the temporal row vector responsible for the propagation of the initial condition in the case of the forward propagator, that means we evaluate <img class="formulaInl" alt="$\theta_k(0)$" src="form_24.png"/> for <img class="formulaInl" alt="$k = 1 \dots K$" src="form_19.png"/>.  <a href="#ad9bc22e96c6cc56277335f8452da06fe">More...</a><br /></td></tr>
 <tr class="separator:ad9bc22e96c6cc56277335f8452da06fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae85db127830e2422113cc1fca62edc1a"><td class="memItemLeft" align="right" valign="top">virtual function <a class="el" href="classvector.html">vector</a> et  =&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_temporal_assembly_abstract.html#ae85db127830e2422113cc1fca62edc1a">backwardInitVector</a> ()</td></tr>
-<tr class="memdesc:ae85db127830e2422113cc1fca62edc1a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assemble the temporal row vector responsible for the propagation of the initial condition in the case of the forward propagator, that means we evaluate <img class="formulaInl" alt="$\theta_k(L)$" src="form_12.png"/> for <img class="formulaInl" alt="$k = 1 \dots K$" src="form_6.png"/>.  <a href="#ae85db127830e2422113cc1fca62edc1a">More...</a><br /></td></tr>
+<tr class="memdesc:ae85db127830e2422113cc1fca62edc1a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assemble the temporal row vector responsible for the propagation of the initial condition in the case of the forward propagator, that means we evaluate <img class="formulaInl" alt="$\theta_k(L)$" src="form_25.png"/> for <img class="formulaInl" alt="$k = 1 \dots K$" src="form_19.png"/>.  <a href="#ae85db127830e2422113cc1fca62edc1a">More...</a><br /></td></tr>
 <tr class="separator:ae85db127830e2422113cc1fca62edc1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
@@ -252,7 +252,7 @@ Public Attributes</h2></td></tr>
 
 <p>References <a class="el" href="_temporal_assembly_abstract_8m_source.html#l00035">pd</a>.</p>
 
-<p>Referenced by <a class="el" href="_temporal_assembly_legendre_8m_source.html#l00034">TemporalAssemblyLegendre.TemporalAssemblyLegendre()</a>, and <a class="el" href="_temporal_assembly_nodal_8m_source.html#l00047">TemporalAssemblyNodal.TemporalAssemblyNodal()</a>.</p>
+<p>Referenced by <a class="el" href="_temporal_assembly_legendre_8m_source.html#l00034">TemporalAssemblyLegendre.TemporalAssemblyLegendre()</a>, and <a class="el" href="_temporal_assembly_nodal_8m_source.html#l00048">TemporalAssemblyNodal.TemporalAssemblyNodal()</a>.</p>
 
 <p><div class="dynheader">
 Here is the caller graph for this function:</div>
@@ -289,7 +289,7 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p>Assemble the temporal row vector responsible for the propagation of the initial condition in the case of the forward propagator, that means we evaluate <img class="formulaInl" alt="$\theta_k(L)$" src="form_12.png"/> for <img class="formulaInl" alt="$k = 1 \dots K$" src="form_6.png"/>. </p>
+<p>Assemble the temporal row vector responsible for the propagation of the initial condition in the case of the forward propagator, that means we evaluate <img class="formulaInl" alt="$\theta_k(L)$" src="form_25.png"/> for <img class="formulaInl" alt="$k = 1 \dots K$" src="form_19.png"/>. </p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">et</td><td>backward propagation vector </td></tr>
@@ -322,7 +322,7 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p>Assemble the temporal row vector responsible for the propagation of the initial condition in the case of the forward propagator, that means we evaluate <img class="formulaInl" alt="$\theta_k(0)$" src="form_11.png"/> for <img class="formulaInl" alt="$k = 1 \dots K$" src="form_6.png"/>. </p>
+<p>Assemble the temporal row vector responsible for the propagation of the initial condition in the case of the forward propagator, that means we evaluate <img class="formulaInl" alt="$\theta_k(0)$" src="form_24.png"/> for <img class="formulaInl" alt="$k = 1 \dots K$" src="form_19.png"/>. </p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">et</td><td>forward propagation vector </td></tr>
@@ -355,7 +355,7 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p>Assemble the temporal "half stiffness" matrix, that means we evaluate the integral <img class="formulaInl" alt="$\int_{I} \theta'_k(t) \xi_m(t) \diff t$" src="form_8.png"/> for <img class="formulaInl" alt="$k = 1 \dots K$" src="form_6.png"/> and <img class="formulaInl" alt="$m = 1 \dots K'$" src="form_7.png"/>. </p>
+<p>Assemble the temporal "half stiffness" matrix, that means we evaluate the integral <img class="formulaInl" alt="$\int_{I} \theta'_k(t) \xi_m(t) \diff t$" src="form_21.png"/> for <img class="formulaInl" alt="$k = 1 \dots K$" src="form_19.png"/> and <img class="formulaInl" alt="$m = 1 \dots K'$" src="form_20.png"/>. </p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">Ct</td><td>temporal "half stiffness" matrix </td></tr>
@@ -399,7 +399,7 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p>Assemble the temporal mass Matrix, that means we evaluate the integral <img class="formulaInl" alt="$\int_{I} \theta_k(t) \xi_m(t) \diff t$" src="form_5.png"/> for <img class="formulaInl" alt="$k = 1 \dots K$" src="form_6.png"/> and <img class="formulaInl" alt="$m = 1 \dots K'$" src="form_7.png"/>. </p>
+<p>Assemble the temporal mass Matrix, that means we evaluate the integral <img class="formulaInl" alt="$\int_{I} \theta_k(t) \xi_m(t) \diff t$" src="form_18.png"/> for <img class="formulaInl" alt="$k = 1 \dots K$" src="form_19.png"/> and <img class="formulaInl" alt="$m = 1 \dots K'$" src="form_20.png"/>. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">space</td><td>switch for which space the matrix should be assembled. possible values are <code>trial</code>, <code>test</code> and <code>both</code>. </td></tr>
@@ -439,7 +439,7 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p>Assemble the temporal stiffness matrix, that means we evaluate the integral <img class="formulaInl" alt="$\int_{I} \theta'_{k_1}(t) \theta'_{k_2}(t) \diff t$" src="form_9.png"/> for <img class="formulaInl" alt="$k_1, k_2 = 1 \dots K$" src="form_10.png"/>. </p>
+<p>Assemble the temporal stiffness matrix, that means we evaluate the integral <img class="formulaInl" alt="$\int_{I} \theta'_{k_1}(t) \theta'_{k_2}(t) \diff t$" src="form_22.png"/> for <img class="formulaInl" alt="$k_1, k_2 = 1 \dots K$" src="form_23.png"/>. </p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">At</td><td>temporal stiffness matrix </td></tr>
@@ -515,7 +515,7 @@ Here is the caller graph for this function:</div>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="class_temporal_assembly_abstract.html">TemporalAssemblyAbstract</a></li>
-    <li class="footer">Generated on Fri Sep 11 2015 20:33:22 for SCFT-RBM by
+    <li class="footer">Generated on Fri Sep 11 2015 20:39:05 for SCFT-RBM by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.10 </li>
   </ul>

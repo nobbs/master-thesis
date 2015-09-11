@@ -34,8 +34,6 @@ classdef RBM < handle
     affineTestshotBase;
     % Needed for the computation of the residual @type matrix
     G;
-    % Toggle, whether the offline data was reset recently @type logical
-    % isFreshStart = true;
 
     % Logger handle @type log4m
     L;

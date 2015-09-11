@@ -11,6 +11,7 @@ classdef TemporalAssemblyNodal < TemporalAssemblyAbstract
 
   properties
     % toggle, whether refinement for the test space should be used @type logical
+    % won't work together with rbm, so let's disable it by default
     useRefinement = false;
   end
 

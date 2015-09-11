@@ -1,39 +1,34 @@
-\form#0:$\beta_{\mathcal N}$
-\form#1:$\int_{\Omega} \sigma_j(x) \sigma_l(x) \diff x$
-\form#2:$j$
-\form#3:$l$
-\form#4:$\int_{\Omega} \sigma'_j(x) \sigma'_l(x) \diff x$
-\form#5:$\int_{I} \theta_k(t) \xi_m(t) \diff t$
-\form#6:$k = 1 \dots K$
-\form#7:$m = 1 \dots K'$
-\form#8:$\int_{I} \theta'_k(t) \xi_m(t) \diff t$
-\form#9:$\int_{I} \theta'_{k_1}(t) \theta'_{k_2}(t) \diff t$
-\form#10:$k_1, k_2 = 1 \dots K$
-\form#11:$\theta_k(0)$
-\form#12:$\theta_k(L)$
-\form#13:$(\mat{A} + \text{shift} * \mat{B})\vec{x} = \lambda \mat{B} \vec{x}$
-\form#14:$[-1, 1]$
-\form#15:\[n P_n(x) = (2n - 1) x P_{n-1}(x) - (n - 1) P_{n-2}(x),\]
-\form#16:$P_0(x) = 1$
-\form#17:$P_1(x) = x$
-\form#18:\[(n - 1) P_n(x) = (2n - 1) x P_{n-1}(x) - n P_{n-2}(x)\]
-\form#19:$P_0(x) = 0$
-\form#20:$P_1(x) = 1$
-\form#21:$\int_{a}^{b} f(x) \diff x$
-\form#22:$f$
-\form#23:$[a, b]$
-\form#24:$[a, b)$
-\form#25:$\text{\LaTeX}$
-\form#26:$\Omega = [0, 1]$
-\form#27:$I = [0, 1]$
-\form#28:$A$
-\form#29:$A \eta = - \Delta \eta + \eta + \sin(\pi \blank) \eta.$
-\form#30:$A(t)$
-\form#31:$A(t)\eta = - \Delta \eta + 3 \eta + \chi_{[0, 0.5)}(t) \left[ \sin(\pi \blank) - \sin(6 \pi \blank) \right] \eta + \chi_{[0.5, 1]}(t) \left[ \sin(3 \pi \blank ) + \sin(6 \pi \blank) \right] \eta.$
-\form#32:$A(\sigma)$
-\form#33:$A \eta = - \frac{1}{10} \Delta \eta + \eta + \sigma \sin(\pi \blank) \eta.$
-\form#34:$\mathcal P = [-1, 1]$
-\form#35:$g = 0$
-\form#36:$u_0 = 0.5 sin(\pi \blank)$
-\form#37:$A \eta = - \frac{1}{10} \Delta \eta + 2\eta + \chi_{[0, 0.5)} [\sigma_1 \sin(\pi \blank) + \sigma_2 \sin(2 \pi \blank)] \eta + \chi_{[0.5, 1]} [\sigma_3 \sin(\pi \blank) + \sigma_4 \sin(2 \pi \blank)] \eta$
-\form#38:$\mathcal P = [-1, 1]^4$
+\form#0:$\Omega = [0, 1]$
+\form#1:$I = [0, 1]$
+\form#2:$A$
+\form#3:$A \eta = - \Delta \eta + \eta + \sin(\pi \blank) \eta.$
+\form#4:$A(t)$
+\form#5:$A(t)\eta = - \Delta \eta + 3 \eta + \chi_{[0, 0.5)}(t) \left[ \sin(\pi \blank) - \sin(6 \pi \blank) \right] \eta + \chi_{[0.5, 1]}(t) \left[ \sin(3 \pi \blank ) + \sin(6 \pi \blank) \right] \eta.$
+\form#6:$\beta_{\mathcal N}$
+\form#7:$A(\sigma)$
+\form#8:$A \eta = - \frac{1}{10} \Delta \eta + \eta + \sigma \sin(\pi \blank) \eta.$
+\form#9:$\mathcal P = [-1, 1]$
+\form#10:$g = 0$
+\form#11:$u_0 = 0.5 sin(\pi \blank)$
+\form#12:$A \eta = - \frac{1}{10} \Delta \eta + 2\eta + \chi_{[0, 0.5)} [\sigma_1 \sin(\pi \blank) + \sigma_2 \sin(2 \pi \blank)] \eta + \chi_{[0.5, 1]} [\sigma_3 \sin(\pi \blank) + \sigma_4 \sin(2 \pi \blank)] \eta$
+\form#13:$\mathcal P = [-1, 1]^4$
+\form#14:$\int_{\Omega} \sigma_j(x) \sigma_l(x) \diff x$
+\form#15:$j$
+\form#16:$l$
+\form#17:$\int_{\Omega} \sigma'_j(x) \sigma'_l(x) \diff x$
+\form#18:$\int_{I} \theta_k(t) \xi_m(t) \diff t$
+\form#19:$k = 1 \dots K$
+\form#20:$m = 1 \dots K'$
+\form#21:$\int_{I} \theta'_k(t) \xi_m(t) \diff t$
+\form#22:$\int_{I} \theta'_{k_1}(t) \theta'_{k_2}(t) \diff t$
+\form#23:$k_1, k_2 = 1 \dots K$
+\form#24:$\theta_k(0)$
+\form#25:$\theta_k(L)$
+\form#26:$(\mat{A} + \text{shift} * \mat{B})\vec{x} = \lambda \mat{B} \vec{x}$
+\form#27:$[-1, 1]$
+\form#28:\[n P_n(x) = (2n - 1) x P_{n-1}(x) - (n - 1) P_{n-2}(x),\]
+\form#29:$P_0(x) = 1$
+\form#30:$P_1(x) = x$
+\form#31:\[(n - 1) P_n(x) = (2n - 1) x P_{n-1}(x) - n P_{n-2}(x)\]
+\form#32:$P_0(x) = 0$
+\form#33:$P_1(x) = 1$

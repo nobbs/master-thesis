@@ -1,2 +1,0 @@
-/Users/nobbs/Dropbox/Studium/Thesis/code/src/rbm/RBM.m:226: warning: The following parameters of RBM::offlineStage(::matrix paramTrain, matlabtypesubstitute tol) are not documented:
-  parameter 'tol'

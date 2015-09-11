@@ -112,8 +112,4 @@ classdef SolverAbstract < handle
     end
   end % methods for dependent properties
 
-  % methods(Access = 'protected')
-
-  % end % protected methods
-
 end % classdef

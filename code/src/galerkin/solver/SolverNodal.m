@@ -5,10 +5,6 @@ classdef SolverNodal < SolverAbstract
   properties
     % Level of refinement for the temporal part of the test space. @type integer
     tref;
-
-    % Toggles whether temporal grid refinement should be used for the test
-    % space. Setting this to true guarantees stability! @type logical
-    % useRefinement;
   end % public properties
 
   methods
