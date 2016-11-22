@@ -479,9 +479,11 @@ classdef SCM < handle
         reLBStability  = zeros(obj.nMuTrain, 1);
         reLBPositivity = zeros(obj.nMuTrain, 1);
 
-        textprogressbar('checking parameters: ');
-        for idx = 1:obj.nMuTrain
-          textprogressbar(idx * 100 / obj.nMuTrain);
+        disp('checking parameters: ');
+        muTrainLB = obj.muTrainLB;
+        muTrainUB = obj.muTrainUB;
+        parfor idx = 1:obj.nMuTrain
+          %textprogressbar(idx * 100 / obj.nMuTrain);
           if ~obj.offMuChosen(idx)
             param = obj.offMuTrain(:, idx);
 
@@ -504,15 +506,17 @@ classdef SCM < handle
             % and we take the value from the last loop
             if reLBStability(idx) || reLBPositivity(idx)
               [lb, ub] = obj.onlineQuery(param, true);
-              obj.muTrainLB(idx) = lb;
-              obj.muTrainUB(idx) = ub;
+              muTrainLB(idx) = lb;
+              muTrainUB(idx) = ub;
             else
-              obj.muTrainLB(idx) = obj.offMuLB(idx);
-              obj.muTrainUB(idx) = min(obj.offYstarCk.' * obj.offMuTrainMapped(:, idx));
+              muTrainLB(idx) = obj.offMuLB(idx);
+              muTrainUB(idx) = min(obj.offYstarCk.' * obj.offMuTrainMapped(:, idx));
             end
           end
         end
-        textprogressbar(' done!');
+        obj.muTrainLB = muTrainLB;
+        obj.muTrainUB = muTrainUB;
+        disp(' done!');
 
         % save the newly calculated lower bounds for online use
         obj.offMuLB = obj.muTrainLB;

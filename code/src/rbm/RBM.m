@@ -196,21 +196,21 @@ classdef RBM < handle
         % and now lets iterate
         errests = zeros(size(paramTrain, 2), 1);
 
-        textprogressbar('checking parameters: ');
-        for idx = 1:size(paramTrain, 2)
-          textprogressbar(idx * 100 / size(paramTrain, 2));
+        disp('checking parameters: ');
+        parfor idx = 1:size(paramTrain, 2)
+          %textprogressbar(idx * 100 / size(paramTrain, 2));
           [rbsolvec, errest] = obj.onlineQuery(paramTrain(:, idx));
           errests(idx) = errest;
         end
-        textprogressbar(' done!');
+        disp(' done!');
 
         if obj.rbm_save_error_bounds
-          textprogressbar('computing truth solutions: ');
+          disp('computing truth solutions: ');
           esterr = zeros(size(paramTrainFull, 2), 1);
           realerr = zeros(size(paramTrainFull, 2), 1);
           % calculate real error
           for pdx = 1:size(paramTrainFull, 2)
-            textprogressbar(pdx / size(paramTrainFull, 2) * 100);
+            %textprogressbar(pdx / size(paramTrainFull, 2) * 100);
             [rbsolvec, rberrest] = obj.onlineQuery(paramTrainFull(:, pdx));
             errest(pdx)          = rberrest;
             truthsolvec          = obj.solver.solve(paramTrainFull(:, pdx));
@@ -219,7 +219,7 @@ classdef RBM < handle
           end
           obj.rbm_exact_error{curLoopCtr} = realerr;
           obj.rbm_error_bounds{curLoopCtr} = errest;
-          textprogressbar(' done!');
+          disp(' done!');
         end
 
         % get the parameter with the largest error estimate
