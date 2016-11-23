@@ -115,7 +115,7 @@ for tdx = 1:nt
     % seventh, finally, construct the generalized eigenvalue problem and solve it
     Yl         = Cl.' * (Mplus \ Cl);
     Yl         = (Yl + Yl.') / 2;
-    [mi, ~, ~] = computeMinMaxEv(Yl, Mminus);
+    [mi, ~, ~] = computeMinMaxEV(Yl, Mminus);
     betapm     = sqrt(mi);
 
     % calculate the CFL number
@@ -131,7 +131,7 @@ for tdx = 1:nt
     Ynorm        = solver.TeNorm;
     Xnorm        = solver.TrNorm;
     supNorm      = Lhs.' * (Ynorm \ Lhs);
-    [mi, ~, ~]   = computeMinMaxEv(supNorm, Xnorm);
+    [mi, ~, ~]   = computeMinMaxEV(supNorm, Xnorm);
     infsup_exact = sqrt(mi);
 
     % save the data

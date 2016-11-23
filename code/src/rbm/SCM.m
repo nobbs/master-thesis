@@ -293,11 +293,11 @@ classdef SCM < handle
       % chosen parameter and calculate the smallest eigenvalue and the
       % corresponding eigenvector
       M = obj.assembleAffineT(obj.offMuTrainMapped(:, obj.muCurIdx));
-      [mi, mivec] = obj.computeEV(M, obj.normX, 0);
+      [mi, mivec] = computeEVdense(M, obj.normX, 0);
       % if the eigenvalue mi is positive, then we got the largest eigenvalue
       % and have to do it again with a shift
       if mi >= 0
-        [mi, mivec] = obj.computeEV(M, obj.normX, mi);
+        [mi, mivec] = computeEVdense(M, obj.normX, mi);
       end
 
       % the eigenvalue is lower and upper bound for this parameter mu
@@ -382,7 +382,7 @@ classdef SCM < handle
       % solve the respective generalized eigenvalue problem to obtain the
       % smallest and largest eigenvalue.
       for idx = 1:obj.nQt
-        [mi, ma, retries] = obj.computeMinMaxEV(obj.affineT{idx}, obj.normX);
+        [mi, ma, retries] = computeMinMaxEVdense(obj.affineT{idx}, obj.normX);
         ub(idx) = ma;
         lb(idx) = mi;
 
@@ -546,11 +546,11 @@ classdef SCM < handle
         % problem. assemble the system for the chosen parameter and calculate
         % the smallest eigenvalue and the corresponding eigenvector
         M = obj.assembleAffineT(obj.offMuTrainMapped(:, obj.muCurIdx));
-        [mi, mivec] = obj.computeEV(M, obj.normX, 0);
+        [mi, mivec] = computeEVdense(M, obj.normX, 0);
         % if the eigenvalue mi is positive, then we got the largest eigenvalue
         % and have to do it again with a shift
         if mi >= 0
-          [mi, mivec] = obj.computeEV(M, obj.normX, mi);
+          [mi, mivec] = computeEVdense(M, obj.normX, mi);
         end
 
         % the new eigenvalue is lower and upper bound for this parameter mu
@@ -657,120 +657,6 @@ classdef SCM < handle
       for idx = 1:obj.nQt
         T = T + param(idx) * obj.affineT{idx};
       end
-    end
-
-    function [mi, ma, retries] = computeMinMaxEV(obj, A, B)
-      % Computes the minimal and maximal generalized eigenvalues.
-      %
-      % Parameters:
-      %   A: matrix on the left side @type matrix
-      %   B: matrix on the right side @type matrix
-      %
-      % Return values:
-      %   mi: minimal eigenvalue @type double
-      %   ma: maximal eigenvalue @type double
-
-      % first we calculate the eigenvalue with the largest absolute value
-      [lm, ~, retries1] = obj.computeEV(A, B, 0);
-      % if it's positive, then it's the maximal eigenvalue, else the
-      % minimal eigenvalue
-      if lm >= 0
-        ma = lm;
-        % now shift to get the minimal eigenvalue
-        [mi, ~, retries2] = obj.computeEV(A, B, lm);
-      else
-        mi = lm;
-        % now shift to get the maximal eigenvalue
-        [ma, ~, retries2] = obj.computeEV(A, B, lm);
-      end
-
-      retries = retries1 + retries2;
-    end
-
-    function [lm, lmvec, retries] = computeEV(~, A, B, shift)
-      % Compute the largest generalized eigenvalue.
-      %
-      % This method computes the largest eigenvalue and the respective
-      % eigenvector of the generalized eigenvalue problem `(\mat{A} +
-      % \text{shift} * \mat{B})\vec{x} = \lambda \mat{B} \vec{x}`.
-      %
-      % Attention:
-      %   There is some error handling included for the case that the matlab
-      %   function eigs can't get the eigenvalue with default settings. So it
-      %   may take some time, but it should get the eigenvalue most of the time,
-      %   but possibly with a bad accuracy.
-      %
-      % Parameters:
-      %   A: matrix on the left side of the eigenvalue problem @type matrix
-      %   B: matrix on the right side of the eigenvalue problem @type matrix
-      %   shift: shifts A on the left side by shift * B. this is needed if you
-      %     want to compute the smallest eigenvalue; in this case you have to
-      %     set shift to the value of the largest eigenvalue. @type double
-      %
-      % Return values:
-      %   lm: largest eigenvalue @type double
-      %   lmvec: eigenvector of the largest eigenvalue @type colvec
-
-      retries = 0;
-
-      % change the `eigenvalue won't converge` warning to an error, so that we
-      % can catch it.
-      origstate = warning;
-      warning('error', 'MATLAB:eigs:NoEigsConverged'); %#ok<CTPCT>
-
-      % setup the options structure
-      opts = struct();
-      opts.tol = eps;
-
-      try
-        % we first try to solve the eigenvalue problem with default settings.
-        [lmvec, lm] = eigs(A - shift * B, B, 1, 'lm');
-        % revert the shift
-        lm = lm + shift;
-      catch err
-        % if the the default settings won't work, we have to try again with some
-        % modifications
-        if strcmp(err.identifier, 'MATLAB:eigs:NoEigsConverged') || strcmp(err.identifier, 'MATLAB:eigs:ARPACKroutineErrorMinus14')
-          % flag to check whether we found a eigenvalue
-          hasEV = false;
-          % decrease the accuracy
-          opts.tol = opts.tol * 100;
-          % set the number of used Lanczos vectors
-          opts.p = 50;
-          while ~hasEV
-            try
-              retries = retries + 1;
-              % and now try again
-              [lmvec, lm] = eigs(A - shift * B, B, 1, 'lm', opts);
-              lm = lm  + shift;
-              hasEV = true;
-            catch err2
-              hasEV = false;
-              if strcmp(err2.identifier, 'MATLAB:eigs:NoEigsConverged') || strcmp(err2.identifier, 'MATLAB:eigs:ARPACKroutineErrorMinus14')
-                % decrease the accuracy
-                opts.tol = opts.tol * 100;
-                % set the number of used Lanczos vectors
-                opts.p = 50;
-              else
-                % other errors should be passed back
-                rethrow(err2);
-              end
-            end
-          end
-        else
-          % other errors should be passed back
-          rethrow(err);
-        end
-      end
-
-      % if we found an eigenvalue that looks like it's zero, it probably is
-      % zero, so ...
-      if abs(lm) < sqrt(eps)
-        lm = 0;
-      end
-
-      % revert the warning state changes
-      warning(origstate);
     end
 
     function prepare(obj)
