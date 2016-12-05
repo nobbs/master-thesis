@@ -554,6 +554,7 @@ classdef SCM < handle
 %         if mi >= 0
 %           [mi, mivec] = computeEV(M, obj.normX, mi);
 %         end
+        obj.L.info('SCM', sprintf('LB - smallest ev %g', mi));
 
         % the new eigenvalue is lower and upper bound for this parameter mu
         obj.muTrainLB(obj.muCurIdx) = mi;
