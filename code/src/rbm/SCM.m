@@ -482,6 +482,7 @@ classdef SCM < handle
         reLBPositivity = zeros(obj.nMuTrain, 1);
 
         disp('checking parameters: ');
+        obj.L.info('SCM', sprintf(' checking %d parameters:', obj.nMuTrain));
         muTrainLB = obj.muTrainLB;
         muTrainUB = obj.muTrainUB;
         parfor idx = 1:obj.nMuTrain
