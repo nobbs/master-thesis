@@ -382,7 +382,7 @@ classdef SCM < handle
       % solve the respective generalized eigenvalue problem to obtain the
       % smallest and largest eigenvalue.
 %       return
-      for idx = 1:obj.nQt
+      parfor idx = 1:obj.nQt
         tic;
         [mi, ma, retries] = computeMinMaxEV(obj.affineT{idx}, obj.normX);
         ub(idx) = ma;
