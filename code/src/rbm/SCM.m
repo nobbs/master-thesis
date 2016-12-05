@@ -293,12 +293,12 @@ classdef SCM < handle
       % chosen parameter and calculate the smallest eigenvalue and the
       % corresponding eigenvector
       M = obj.assembleAffineT(obj.offMuTrainMapped(:, obj.muCurIdx));
-      [mi, mivec] = computeEVdense(M, obj.normX, 0);
+      [mi, mivec] = computeMinEV(M, obj.normX);
       % if the eigenvalue mi is positive, then we got the largest eigenvalue
       % and have to do it again with a shift
-      if mi >= 0
-        [mi, mivec] = computeEVdense(M, obj.normX, mi);
-      end
+%       if mi >= 0
+%         [mi, mivec] = computeEV(M, obj.normX, mi);
+%       end
 
       % the eigenvalue is lower and upper bound for this parameter mu
       obj.muTrainLB(obj.muCurIdx) = mi;
@@ -381,11 +381,13 @@ classdef SCM < handle
 
       % solve the respective generalized eigenvalue problem to obtain the
       % smallest and largest eigenvalue.
+%       return
       for idx = 1:obj.nQt
-        [mi, ma, retries] = computeMinMaxEVdense(obj.affineT{idx}, obj.normX);
+        tic;
+        [mi, ma, retries] = computeMinMaxEV(obj.affineT{idx}, obj.normX);
         ub(idx) = ma;
         lb(idx) = mi;
-
+        toc
         % logging
         obj.L.info('SCM', ...
           sprintf(' solved eigenvalue problem %3d of %3d (after %2d retries): [%f, %f]', idx, obj.nQt, retries, mi, ma));
@@ -546,12 +548,12 @@ classdef SCM < handle
         % problem. assemble the system for the chosen parameter and calculate
         % the smallest eigenvalue and the corresponding eigenvector
         M = obj.assembleAffineT(obj.offMuTrainMapped(:, obj.muCurIdx));
-        [mi, mivec] = computeEVdense(M, obj.normX, 0);
+        [mi, mivec] = computeMinEV(M, obj.normX);
         % if the eigenvalue mi is positive, then we got the largest eigenvalue
         % and have to do it again with a shift
-        if mi >= 0
-          [mi, mivec] = computeEVdense(M, obj.normX, mi);
-        end
+%         if mi >= 0
+%           [mi, mivec] = computeEV(M, obj.normX, mi);
+%         end
 
         % the new eigenvalue is lower and upper bound for this parameter mu
         obj.muTrainLB(obj.muCurIdx) = mi;
