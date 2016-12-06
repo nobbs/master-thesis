@@ -11,7 +11,7 @@ solver   = SolverNodal(pd, spatial, temporal);
 %% create the parameter training set.
 % second, randomly chosen
 % ptrain = rand(4, paramNum) * (pspan(2) - pspan(1)) - (pspan(2) - pspan(1)) / 2;
-ptrain = git_gud_grid(pspan, paramNum, pd.nP);
+ptrain = git_gud_grid(pspan, paramNum, pd.nP).';
 
 %% and now the real stuff: first let's execute the scm offline part
 t = tic;
